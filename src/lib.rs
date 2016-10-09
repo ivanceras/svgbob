@@ -15,15 +15,46 @@ mod optimizer;
 pub struct Settings{
     text_width: f32,
     text_height: f32,
+    /// do optimization? if false then every piece are disconnected
+    optimize: bool,
+    /// if optmization is enabled, 
+    /// true means all reduceable paths will be in 1 path definition
+    compact_path: bool
+}
+
+impl Settings{
+    pub fn no_optimization() -> Settings{
+        let mut settings = Settings::default();
+        settings.optimize = false;
+        settings.compact_path = false;
+        settings
+    }
+
+    pub fn separate_lines() -> Settings{
+        let mut settings = Settings::default();
+        settings.optimize =true;
+        settings.compact_path = false;
+        settings
+    }
+
+    pub fn compact() -> Settings{
+        let mut settings = Settings::default();
+        settings.optimize = true;
+        settings.compact_path = true;
+        settings
+    }
 }
 
 impl Default for Settings{
     fn default()->Settings{
         Settings{
             text_width: 8.0,
-            text_height: 16.0
+            text_height: 16.0,
+            optimize: true,
+            compact_path: true,
         }
     }
+
 }
 
 enum SvgElement{
@@ -1165,9 +1196,15 @@ impl Grid {
     fn get_svg_nodes(&self, settings: &Settings)->Vec<SvgElement>{
         let mut nodes = vec![];
         let elements = self.get_all_elements(settings);
-        let optimizer = Optimizer::new(elements);
-        let optimized_elements = optimizer.optimize();
-        for elem in optimized_elements{
+        let input = 
+            if settings.optimize{
+                let optimizer = Optimizer::new(elements);
+                let optimized_elements = optimizer.optimize(settings);
+                optimized_elements
+            }else{
+                elements.into_iter().flat_map(|(l, elm)| elm).collect()
+            };
+        for elem in input{
             let element = elem.to_svg(settings); 
             nodes.push(element);
         }

@@ -3,6 +3,7 @@ use super::Element;
 use super::Stroke;
 use super::Feature;
 use super::Point;
+use super::Settings;
 
 pub struct Optimizer{
     elements: Vec<(Loc,Vec<Element>)>
@@ -109,7 +110,7 @@ impl Optimizer{
 
     //TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
-    pub fn optimize(&self)->Vec<Element>{
+    pub fn optimize(&self, settings:&Settings)->Vec<Element>{
         let mut optimized = vec![];
         for &(ref loc,ref elem) in &self.elements{
             if self.is_edible(&loc){
@@ -118,11 +119,14 @@ impl Optimizer{
                 for e in elem{
                     let traced = self.trace_elements(e,loc);
                     optimized.push(traced); 
-                    //optimized.push(e.clone()); 
                 }
             }
         } 
-        self.merge_paths(optimized)
+        if settings.compact_path{
+            self.merge_paths(optimized)
+        }else{
+            optimized
+        }
     }
     // take all paths and non-arrow line in 1 path
     // the text in separated

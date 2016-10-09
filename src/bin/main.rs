@@ -8,7 +8,10 @@ use svgbob::Settings;
 fn main() {
     let file = "image.svg";
     let g = Grid::from_str(get_arg());
-    let svg = g.get_svg(&Settings::default());
+    //let svg = g.get_svg(&Settings::default());
+    //let svg = g.get_svg(&Settings::no_optimization());
+    let svg = g.get_svg(&Settings::separate_lines());
+    let svg = g.get_svg(&Settings::compact());
     svg::save(file, &svg).unwrap();
     println!("Saved to {}",file);
 }
