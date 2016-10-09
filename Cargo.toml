@@ -1,0 +1,7 @@
+[package]
+name = "svgbob"
+version = "0.1.0"
+authors = ["lee"]
+
+[dependencies]
+svg = "0.5"

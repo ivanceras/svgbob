@@ -1,0 +1,14 @@
+[root]
+name = "svgbob"
+version = "0.1.0"
+dependencies = [
+ "svg 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "svg"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum svg 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)" = "05bb286337d5c2dc82ec0613e153d0df801d5cab5972c9343911f7bac0c7da1e"
