@@ -338,7 +338,7 @@ impl Element{
 }
 
 
-
+//3 points are collinear when the area of the triangle connecting them is 0;
 fn collinear(a:&Point, b:&Point, c:&Point)->bool{
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
