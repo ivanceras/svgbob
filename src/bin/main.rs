@@ -6,12 +6,11 @@ use svgbob::Settings;
 
 
 fn main() {
-    println!("Hello, world!");
+    let file = "image.svg";
     let g = Grid::from_str(get_arg());
     let svg = g.get_svg(&Settings::default());
-    //println!("paths: {}",svg);
-    //println!("gri: {:?}", g);
-    svg::save("image.svg", &svg).unwrap();
+    svg::save(file, &svg).unwrap();
+    println!("Saved to {}",file);
 }
 
 fn get_arg() -> &'static str{
@@ -40,10 +39,10 @@ let arg = r#"
 
 
     __________________
-    \                 \
+    \_________________\
      \                 \
       . another process .
-     /                 /
+     /_________________/
     /_________________/
 
   User code  ^               ^ OS code

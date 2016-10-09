@@ -89,9 +89,6 @@ impl Element{
     fn arc(s: &Point, e: &Point, radius: f32, sweep: bool)->Element{
         Element::Arc(s.clone(), e.clone(), radius, sweep)
     }
-    fn reverse(&self)->Element{
-        panic!("no"); 
-    }
     // this path can chain to the other path
     // chain means the paths can be arranged and express in path definition
     // if self.end == path.start
@@ -365,6 +362,7 @@ impl Grid {
         let bxcy_axcy = Element::solid_line(bxcy, axcy);
         let exay_dxby = Element::solid_line(exay, dxby);
         let cxey_cxdy = Element::solid_line(cxey, cxdy);
+        let dxdy_exey = Element::solid_line(dxdy, exey);
 
         //common arc
         let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
@@ -389,6 +387,7 @@ impl Grid {
         let arc_dxby_cxdy = Element::arc(dxby, cxdy, arc_radius * 4.0, false);
         let arc_bxdy_cxby = Element::arc(bxdy, cxby, arc_radius * 4.0, false);
         let arc_cxby_dxdy = Element::arc(cxby, dxdy, arc_radius * 4.0, false);
+        let arc_cxdy_bxby = Element::arc(cxdy, bxby, arc_radius * 4.0, false);
 
         //common path lines
         let vertical = Element::solid_line(center_top, center_bottom);
@@ -833,6 +832,26 @@ impl Grid {
                  && self.is_char(top, is_vertical)
                  && self.is_char(bottom_left, is_slant_right),
                  vec![cxay_cxby.clone(), axey_bxdy.clone(), arc_bxdy_cxby.clone()]
+                ),
+                /*
+                    \
+                     .  
+                     | 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(top_left, is_slant_left),
+                 vec![axay_bxby.clone(), cxdy_cxey.clone(), arc_cxdy_bxby.clone()]
+                ),
+                /*
+                     |
+                     .  
+                      \ 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![cxay_cxby.clone(), dxdy_exey.clone(), arc_cxby_dxdy.clone()]
                 ),
                 /*
                      /

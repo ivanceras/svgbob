@@ -554,6 +554,23 @@ s
 <line stroke="black" stroke-width="1" x1="160" x2="168" y1="384" y2="384"/>
 <line stroke="black" stroke-width="1" x1="168" x2="176" y1="384" y2="384"/>
 <line stroke="black" stroke-width="1" x1="32" x2="40" y1="384" y2="400"/>
+<line stroke="black" stroke-width="1" x1="40" x2="48" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="48" x2="56" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="56" x2="64" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="64" x2="72" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="72" x2="80" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="80" x2="88" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="88" x2="96" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="96" x2="104" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="104" x2="112" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="112" x2="120" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="120" x2="128" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="128" x2="136" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="136" x2="144" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="144" x2="152" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="152" x2="160" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="160" x2="168" y1="400" y2="400"/>
+<line stroke="black" stroke-width="1" x1="168" x2="184" y1="400" y2="400"/>
 <line stroke="black" stroke-width="1" x1="176" x2="184" y1="384" y2="400"/>
 <line stroke="black" stroke-width="1" x1="40" x2="48" y1="400" y2="416"/>
 <line stroke="black" stroke-width="1" x1="184" x2="192" y1="400" y2="416"/>
@@ -606,6 +623,23 @@ s
 <line stroke="black" stroke-width="1" x1="192" x2="194" y1="432" y2="428"/>
 <path d="M 194 428 A 8 8 0 0 0 194 420" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="40" x2="48" y1="448" y2="432"/>
+<line stroke="black" stroke-width="1" x1="56" x2="40" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="56" x2="64" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="64" x2="72" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="72" x2="80" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="80" x2="88" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="88" x2="96" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="96" x2="104" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="104" x2="112" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="112" x2="120" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="120" x2="128" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="128" x2="136" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="136" x2="144" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="144" x2="152" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="152" x2="160" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="160" x2="168" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="168" x2="176" y1="448" y2="448"/>
+<line stroke="black" stroke-width="1" x1="176" x2="184" y1="448" y2="448"/>
 <line stroke="black" stroke-width="1" x1="184" x2="192" y1="448" y2="432"/>
 <line stroke="black" stroke-width="1" x1="32" x2="40" y1="464" y2="448"/>
 <line stroke="black" stroke-width="1" x1="48" x2="32" y1="464" y2="464"/>
@@ -3397,18 +3431,18 @@ O
 <line stroke="black" stroke-width="1" x1="108" x2="108" y1="2688" y2="2704"/>
 <line stroke="black" stroke-width="1" x1="144" x2="152" y1="2704" y2="2688"/>
 <line stroke="black" stroke-width="1" x1="172" x2="172" y1="2688" y2="2704"/>
-<text x="58" y="2716">
-.
-</text>
+<line stroke="black" stroke-width="1" x1="56" x2="58" y1="2704" y2="2708"/>
+<line stroke="black" stroke-width="1" x1="60" x2="60" y1="2716" y2="2720"/>
+<path d="M 60 2716 A 16 16 0 0 0 58 2708" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="108" x2="108" y1="2704" y2="2708"/>
 <line stroke="black" stroke-width="1" x1="104" x2="106" y1="2720" y2="2716"/>
 <path d="M 106 2716 A 16 16 0 0 0 108 2708" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="144" x2="142" y1="2704" y2="2708"/>
 <line stroke="black" stroke-width="1" x1="140" x2="140" y1="2720" y2="2716"/>
 <path d="M 142 2708 A 16 16 0 0 0 140 2716" fill="none" stroke="black" stroke-width="1"/>
-<text x="170" y="2716">
-.
-</text>
+<line stroke="black" stroke-width="1" x1="172" x2="172" y1="2704" y2="2708"/>
+<line stroke="black" stroke-width="1" x1="174" x2="176" y1="2716" y2="2720"/>
+<path d="M 172 2708 A 16 16 0 0 0 174 2716" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="60" x2="60" y1="2720" y2="2736"/>
 <line stroke="black" stroke-width="1" x1="96" x2="104" y1="2736" y2="2720"/>
 <line stroke="black" stroke-width="1" x1="140" x2="140" y1="2720" y2="2736"/>
@@ -3517,8 +3551,8 @@ O
 <line stroke="black" stroke-width="1" x1="104" x2="112" y1="3280" y2="3296"/>
 <line stroke="black" stroke-width="1" x1="68" x2="68" y1="3312" y2="3328"/>
 <line stroke="black" stroke-width="1" x1="68" x2="68" y1="3328" y2="3332"/>
-<line stroke="black" stroke-width="1" x1="64" x2="66" y1="3344" y2="3340"/>
-<path d="M 66 3340 A 16 16 0 0 0 68 3332" fill="none" stroke="black" stroke-width="1"/>
+<line stroke="black" stroke-width="1" x1="70" x2="72" y1="3340" y2="3344"/>
+<path d="M 68 3332 A 16 16 0 0 0 70 3340" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="56" x2="64" y1="3360" y2="3344"/>
 <line stroke="black" stroke-width="1" x1="72" x2="80" y1="3344" y2="3360"/>
 <line stroke="black" stroke-width="1" x1="56" x2="64" y1="3376" y2="3392"/>
@@ -3565,9 +3599,9 @@ O
 <line stroke="black" stroke-width="1" x1="72" x2="70" y1="3600" y2="3604"/>
 <line stroke="black" stroke-width="1" x1="68" x2="68" y1="3616" y2="3612"/>
 <path d="M 70 3604 A 16 16 0 0 0 68 3612" fill="none" stroke="black" stroke-width="1"/>
-<text x="106" y="3612">
-.
-</text>
+<line stroke="black" stroke-width="1" x1="104" x2="106" y1="3600" y2="3604"/>
+<line stroke="black" stroke-width="1" x1="108" x2="108" y1="3612" y2="3616"/>
+<path d="M 108 3612 A 16 16 0 0 0 106 3604" fill="none" stroke="black" stroke-width="1"/>
 <line stroke="black" stroke-width="1" x1="68" x2="68" y1="3616" y2="3632"/>
 <line stroke="black" stroke-width="1" x1="108" x2="108" y1="3616" y2="3632"/>
 <line stroke="black" stroke-width="1" x1="56" x2="64" y1="3672" y2="3672"/>
