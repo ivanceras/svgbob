@@ -6,7 +6,7 @@ use svgbob::Settings;
 
 
 fn main() {
-    let file = "image.svg";
+    let file = "screenshots/image.svg";
     let g = Grid::from_str(get_arg());
     let svg = g.get_svg(&Settings::compact());
     svg::save(file, &svg).unwrap();
