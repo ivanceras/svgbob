@@ -124,6 +124,10 @@ let arg = r#"
                      /              '--- Last::One
        More::Stuff  V 
 
+                    /  \
+                   /    \
+                  /      \
+                 /        \
   Safety
     ^
     |                       *Rust
@@ -147,7 +151,8 @@ let arg = r#"
     ...
     ..
 
-
+  this is a sentence
+  separated  words  of nill
 
   TODO:
         
