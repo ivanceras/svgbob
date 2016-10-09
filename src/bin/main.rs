@@ -10,12 +10,12 @@ fn main() {
     let g = Grid::from_str(get_arg());
     let svg = g.get_svg(&Settings::compact());
     svg::save(file, &svg).unwrap();
-    println!("Saved to {}",file);
+    println!("Saved to {}", file);
 }
 
-fn get_arg() -> &'static str{
+fn get_arg() -> &'static str {
 
-let arg = r#"
+    let arg = r#"
 
 
 +------+   +-----+   +-----+   +-----+
@@ -339,5 +339,5 @@ let arg = r#"
 
 "#;
 
-arg
+    arg
 }

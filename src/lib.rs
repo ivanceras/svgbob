@@ -12,32 +12,32 @@ use optimizer::Optimizer;
 
 mod optimizer;
 
-pub struct Settings{
+pub struct Settings {
     text_width: f32,
     text_height: f32,
     /// do optimization? if false then every piece are disconnected
     optimize: bool,
-    /// if optmization is enabled, 
+    /// if optmization is enabled,
     /// true means all reduceable paths will be in 1 path definition
-    compact_path: bool
+    compact_path: bool,
 }
 
-impl Settings{
-    pub fn no_optimization() -> Settings{
+impl Settings {
+    pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
         settings.optimize = false;
         settings.compact_path = false;
         settings
     }
 
-    pub fn separate_lines() -> Settings{
+    pub fn separate_lines() -> Settings {
         let mut settings = Settings::default();
-        settings.optimize =true;
+        settings.optimize = true;
         settings.compact_path = false;
         settings
     }
 
-    pub fn compact() -> Settings{
+    pub fn compact() -> Settings {
         let mut settings = Settings::default();
         settings.optimize = true;
         settings.compact_path = true;
@@ -45,368 +45,391 @@ impl Settings{
     }
 }
 
-impl Default for Settings{
-    fn default()->Settings{
-        Settings{
+impl Default for Settings {
+    fn default() -> Settings {
+        Settings {
             text_width: 8.0,
             text_height: 16.0,
             optimize: true,
             compact_path: true,
         }
     }
-
 }
 
-enum SvgElement{
-   Line(SvgLine),
-   Path(SvgPath),
-   Text(SvgText)
+enum SvgElement {
+    Line(SvgLine),
+    Path(SvgPath),
+    Text(SvgText),
 }
 
 
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
-pub enum Stroke{
+pub enum Stroke {
     Solid,
-    Dashed
+    Dashed,
 }
 
 #[derive(Debug)]
 #[derive(Clone)]
-pub enum Feature{
-    Arrow
+pub enum Feature {
+    Arrow,
 }
 
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
-pub struct Point{
+pub struct Point {
     x: f32,
-    y: f32
+    y: f32,
 }
-impl Point{
-    fn new(x:f32, y:f32)->Point{
-        Point{x:x, y:y}
+impl Point {
+    fn new(x: f32, y: f32) -> Point {
+        Point { x: x, y: y }
     }
 }
 
 #[derive(Debug)]
 #[derive(Clone)]
 #[derive(PartialEq)]
-pub struct Loc{
-    x:isize,
-    y:isize
+pub struct Loc {
+    x: isize,
+    y: isize,
 }
 
-impl Loc{
-    fn new(x:isize, y:isize)->Loc{
-        Loc{x:x, y:y}
+impl Loc {
+    fn new(x: isize, y: isize) -> Loc {
+        Loc { x: x, y: y }
     }
 
-    pub fn top(&self) -> Loc{
-        Loc{x:self.x, y:self.y-1}
+    pub fn top(&self) -> Loc {
+        Loc {
+            x: self.x,
+            y: self.y - 1,
+        }
     }
-    pub fn left(&self) -> Loc{
-        Loc{x:self.x-1, y:self.y}
+    pub fn left(&self) -> Loc {
+        Loc {
+            x: self.x - 1,
+            y: self.y,
+        }
     }
-    pub fn bottom(&self) -> Loc{
-        Loc{x: self.x, y:self.y+1} 
+    pub fn bottom(&self) -> Loc {
+        Loc {
+            x: self.x,
+            y: self.y + 1,
+        }
     }
-    pub fn right(&self) -> Loc{
-        Loc{x:self.x+1, y:self.y}
-    }
-
-    pub fn top_left(&self) -> Loc{
-        Loc{x:self.x-1, y:self.y-1}
-    }
-
-    pub fn top_right(&self) -> Loc{
-        Loc{x:self.x+1, y:self.y-1}
-    }
-
-    pub fn bottom_left(&self) -> Loc{
-        Loc{x:self.x-1, y:self.y+1}
-    }
-    
-    pub fn bottom_right(&self) -> Loc{
-        Loc{x:self.x+1, y:self.y+1}
+    pub fn right(&self) -> Loc {
+        Loc {
+            x: self.x + 1,
+            y: self.y,
+        }
     }
 
-    pub fn left_left(&self) -> Loc{
-        Loc{x:self.x-2, y:self.y}
+    pub fn top_left(&self) -> Loc {
+        Loc {
+            x: self.x - 1,
+            y: self.y - 1,
+        }
     }
-    pub fn right_right(&self) -> Loc{
-        Loc{x:self.x+2, y:self.y}
+
+    pub fn top_right(&self) -> Loc {
+        Loc {
+            x: self.x + 1,
+            y: self.y - 1,
+        }
+    }
+
+    pub fn bottom_left(&self) -> Loc {
+        Loc {
+            x: self.x - 1,
+            y: self.y + 1,
+        }
+    }
+
+    pub fn bottom_right(&self) -> Loc {
+        Loc {
+            x: self.x + 1,
+            y: self.y + 1,
+        }
+    }
+
+    pub fn left_left(&self) -> Loc {
+        Loc {
+            x: self.x - 2,
+            y: self.y,
+        }
+    }
+    pub fn right_right(&self) -> Loc {
+        Loc {
+            x: self.x + 2,
+            y: self.y,
+        }
     }
 }
 
 #[derive(Debug)]
 #[derive(Clone)]
-pub enum Element{
-    Line (Point, Point, Stroke, Option<Feature>),
-    Arc (Point, Point, f32, bool),
-    Text (Loc, String),
-    Path (Point, Point, String)
+pub enum Element {
+    Line(Point, Point, Stroke, Option<Feature>),
+    Arc(Point, Point, f32, bool),
+    Text(Loc, String),
+    Path(Point, Point, String),
 }
 
-impl Element{
-    
-    fn solid_line(s: &Point, e: &Point)->Element{
+impl Element {
+    fn solid_line(s: &Point, e: &Point) -> Element {
         Element::line(s, e, Stroke::Solid, None)
     }
 
-    fn line(s: &Point, e: &Point, stroke:Stroke, feature:Option<Feature>)->Element{
+    fn line(s: &Point, e: &Point, stroke: Stroke, feature: Option<Feature>) -> Element {
         Element::Line(s.clone(), e.clone(), stroke, feature)
     }
-    fn arc(s: &Point, e: &Point, radius: f32, sweep: bool)->Element{
+    fn arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
         Element::Arc(s.clone(), e.clone(), radius, sweep)
     }
     // this path can chain to the other path
     // chain means the paths can be arranged and express in path definition
     // if self.end == path.start
-    fn chain(&self, other: &Element)->Option<Vec<Element>>{
-        match *self{
-            Element::Line (ref s, ref e, ref stroke, ref feature) => {
-                match *other{
-                    Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
-                       if e == s2 && stroke == stroke2 //must have same stroke and no feature
-                       && feature.is_none() //no arrow on the first
-                       {
+    fn chain(&self, other: &Element) -> Option<Vec<Element>> {
+        match *self {
+            Element::Line(ref s, ref e, ref stroke, ref feature) => {
+                match *other {
+                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                        if e == s2 && stroke == stroke2 //must have same stroke and no feature
+                       && feature.is_none()
+                        // no arrow on the first
+                        {
                             Some(vec![self.clone(), other.clone()])
-                        }else{
-                            None
-                        }
-                    },
-                    Element::Arc (ref s2, ref e2, radius, sweep) => {
-                        if e == s2 && feature.is_none(){
-                            Some(vec![self.clone(), other.clone()])
-                        }else{
-                            None
-                        }
-                    },
-                    _ => None
-                }
-            },
-            Element::Arc (ref s, ref e, radius, sweep) =>{
-                match *other{
-                    Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
-                        match *stroke2{
-                            Stroke::Solid => { //arcs are always solid, so match only solid line to arc
-                                if e == s2{
-                                    Some(vec![self.clone(), other.clone()])
-                                }else{
-                                    None
-                                }
-                            },
-                            _ => None
-                        }
-                    },
-                    Element::Arc (ref s2, ref e2, radius2, sweep2) => {
-                        if e == s2{
-                            Some(vec![self.clone(), other.clone()])
-                        }else{
+                        } else {
                             None
                         }
                     }
-                    _ => None
+                    Element::Arc(ref s2, ref e2, radius, sweep) => {
+                        if e == s2 && feature.is_none() {
+                            Some(vec![self.clone(), other.clone()])
+                        } else {
+                            None
+                        }
+                    }
+                    _ => None,
                 }
-            },
-            Element::Text (ref l, ref text) => {// text can reduce, but not chain
-                None
-            },
-            Element::Path(_,_,_,) => {
+            }
+            Element::Arc(ref s, ref e, radius, sweep) => {
+                match *other {
+                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                        match *stroke2 {
+                            Stroke::Solid => {
+                                // arcs are always solid, so match only solid line to arc
+                                if e == s2 {
+                                    Some(vec![self.clone(), other.clone()])
+                                } else {
+                                    None
+                                }
+                            }
+                            _ => None,
+                        }
+                    }
+                    Element::Arc(ref s2, ref e2, radius2, sweep2) => {
+                        if e == s2 {
+                            Some(vec![self.clone(), other.clone()])
+                        } else {
+                            None
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            Element::Text(ref l, ref text) => {
+                // text can reduce, but not chain
                 None
             }
+            Element::Path(_, _, _) => None,
         }
     }
-    
+
     // if this element can reduce the other, return the new reduced element
     // for line it has to be collinear and in can connect start->end->start
     // for text, the other text should apear on the right side of this text
-    fn reduce(&self, other: &Element)->Option<Element>{
-        match *self{
-            Element::Line (ref s, ref e, ref stroke, ref feature) => {
-                match *other{
-                    Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
-                        //note* dual 3 point check for trully collinear lines
-                        if collinear(s, e, s2) && collinear(s, e, e2) && e == s2 && stroke == stroke2
-                            && feature.is_none()
-                        {
-                            let reduced = Some(Element::Line(s.clone(), e2.clone(), stroke.clone(), feature2.clone()));   
+    fn reduce(&self, other: &Element) -> Option<Element> {
+        match *self {
+            Element::Line(ref s, ref e, ref stroke, ref feature) => {
+                match *other {
+                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                        // note* dual 3 point check for trully collinear lines
+                        if collinear(s, e, s2) && collinear(s, e, e2) && e == s2 &&
+                           stroke == stroke2 && feature.is_none() {
+                            let reduced = Some(Element::Line(s.clone(),
+                                                             e2.clone(),
+                                                             stroke.clone(),
+                                                             feature2.clone()));
                             reduced
-                        }else{
+                        } else {
                             None
                         }
-                    },
-                    _ => None
+                    }
+                    _ => None,
                 }
-            },
-            Element::Text (ref loc, ref text) => {
-                match *other{
-                    Element::Text (ref loc2, ref text2) => {
-                       // reduce if other is next to it 
-                       let len = text.len() as isize;
-                       if loc.y == loc2.y && loc.x+len == loc2.x{
+            }
+            Element::Text(ref loc, ref text) => {
+                match *other {
+                    Element::Text(ref loc2, ref text2) => {
+                        // reduce if other is next to it
+                        let len = text.len() as isize;
+                        if loc.y == loc2.y && loc.x + len == loc2.x {
                             let merged_text = text.clone() + text2;
                             let reduced = Some(Element::Text(loc.clone(), merged_text));
                             reduced
-                       }else{
+                        } else {
                             None
-                       }
+                        }
                     }
-                    _ => None
+                    _ => None,
                 }
-            },
-            _ => {
-                None
             }
+            _ => None,
         }
     }
 
-    //hard to solve, just false for now
-    fn cocircular(&self, path: &Element)->bool{
-        match *self{
-            Element::Arc (ref s, ref e, radius, sweep) => {
-                match *path{
-                    Element::Arc (ref s2, ref e2, radius2, sweep2) => {
-                        false
-                    },
-                    _ => false
+    // hard to solve, just false for now
+    fn cocircular(&self, path: &Element) -> bool {
+        match *self {
+            Element::Arc(ref s, ref e, radius, sweep) => {
+                match *path {
+                    Element::Arc(ref s2, ref e2, radius2, sweep2) => false,
+                    _ => false,
                 }
-            },
-            _ => {
-                false
             }
+            _ => false,
         }
     }
-    
-    fn to_svg(&self, settings:&Settings)->SvgElement{
+
+    fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
             Element::Line(ref s, ref e, ref stroke, ref feature) => {
-                let mut svg_line  = 
-                    SvgLine::new()
-                        .set("x1", s.x)
-                        .set("y1", s.y)
-                        .set("x2", e.x)
-                        .set("y2", e.y);
+                let mut svg_line = SvgLine::new()
+                    .set("x1", s.x)
+                    .set("y1", s.y)
+                    .set("x2", e.x)
+                    .set("y2", e.y);
 
-                    match *feature{
-                        Some(Feature::Arrow) => {
-                            svg_line.assign("marker-end", "url(#triangle)");
-                        },
-                        None => (),
-                    };
-                    match *stroke{
-                        Stroke::Solid => (),
-                        Stroke::Dashed => {
-                            svg_line.assign("stroke-dasharray", (3,3));
-                        }
-                    };
+                match *feature {
+                    Some(Feature::Arrow) => {
+                        svg_line.assign("marker-end", "url(#triangle)");
+                    }
+                    None => (),
+                };
+                match *stroke {
+                    Stroke::Solid => (),
+                    Stroke::Dashed => {
+                        svg_line.assign("stroke-dasharray", (3, 3));
+                    }
+                };
 
                 SvgElement::Line(svg_line)
-            },
-            Element::Arc(ref s, ref e, radius, sweep) =>{
-               let sweept = if sweep {"1"} else {"0"};
-               let d = format!("M {} {} A {} {} 0 0 {} {} {}", 
-                        s.x, s.y, radius, radius, sweept, e.x, e.y);
-               let svg_arc =
-                    SvgPath::new()
-                        .set("d",d)
-                        .set("fill","none");
-               SvgElement::Path(svg_arc)
-            },
+            }
+            Element::Arc(ref s, ref e, radius, sweep) => {
+                let sweept = if sweep { "1" } else { "0" };
+                let d = format!("M {} {} A {} {} 0 0 {} {} {}",
+                                s.x,
+                                s.y,
+                                radius,
+                                radius,
+                                sweept,
+                                e.x,
+                                e.y);
+                let svg_arc = SvgPath::new()
+                    .set("d", d)
+                    .set("fill", "none");
+                SvgElement::Path(svg_arc)
+            }
             Element::Text(ref loc, ref string) => {
-               let sx = loc.x as f32 * settings.text_width + settings.text_width / 4.0;
-               let sy = loc.y as f32 * settings.text_height + settings.text_height * 3.0 / 4.0;
-               let mut svg_text = 
-                    SvgText::new()
-                        .set("x", sx)
-                        .set("y", sy);
-                    let text_node = svg::node::Text::new(string.to_owned());
-                    svg_text.append(text_node);
+                let sx = loc.x as f32 * settings.text_width + settings.text_width / 4.0;
+                let sy = loc.y as f32 * settings.text_height + settings.text_height * 3.0 / 4.0;
+                let mut svg_text = SvgText::new()
+                    .set("x", sx)
+                    .set("y", sy);
+                let text_node = svg::node::Text::new(string.to_owned());
+                svg_text.append(text_node);
                 SvgElement::Text(svg_text)
-            },
+            }
             Element::Path(ref s, ref e, ref d) => {
                 let path = SvgPath::new()
-                        .set("d",d.to_owned())
-                        .set("fill","none");
-               SvgElement::Path(path)
+                    .set("d", d.to_owned())
+                    .set("fill", "none");
+                SvgElement::Path(path)
             }
-        } 
+        }
     }
 }
 
 
-//3 points are collinear when the area of the triangle connecting them is 0;
-fn collinear(a:&Point, b:&Point, c:&Point)->bool{
+// 3 points are collinear when the area of the triangle connecting them is 0;
+fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
 
 
 #[derive(Debug)]
-pub struct Grid{
+pub struct Grid {
     rows: usize,
     columns: usize,
-    lines:Vec<Vec<char>>
+    lines: Vec<Vec<char>>,
 }
 impl Grid {
+    pub fn from_str(s: &str) -> Grid {
+        let lines: Vec<Vec<char>> = s.split("\n")
+            .map(|l| l.trim_right().chars().collect())
+            .collect();
 
-    pub fn from_str(s:&str)->Grid{
-        let lines:Vec<Vec<char>> = 
-            s.split("\n").map(
-                |l| l.trim_right().chars().collect()
-            ).collect();
-        
         let max = lines.iter()
-                    .fold(0, |acc, ref x| 
-                        if x.len() > acc {x.len()} else {acc}
-                     );
+            .fold(0, |acc, ref x| if x.len() > acc { x.len() } else { acc });
 
-        Grid{
+        Grid {
             rows: lines.len(),
-            columns:max,
+            columns: max,
             lines: lines,
-        } 
-    }
-
-    fn get(&self, loc: &Loc) -> Option<&char>{
-        match self.lines.get(loc.y as usize){
-            Some(line) => {
-                line.get(loc.x as usize)
-            }
-            None => None
         }
     }
 
-    
-    fn is_char<F>(&self, loc: &Loc,  f:F) -> bool
-        where F: Fn(&char)->bool {
+    fn get(&self, loc: &Loc) -> Option<&char> {
+        match self.lines.get(loc.y as usize) {
+            Some(line) => line.get(loc.x as usize),
+            None => None,
+        }
+    }
+
+
+    fn is_char<F>(&self, loc: &Loc, f: F) -> bool
+        where F: Fn(&char) -> bool
+    {
         let ch = self.get(loc);
-        match ch{
+        match ch {
             Some(ch) => f(ch),
-            None => false
+            None => false,
         }
     }
 
 
-    //get the paths in the location x,y
-    //if non path, then see if it can return a text path
-    fn get_elements(&self, x:isize, y:isize, settings: &Settings) -> Option<Vec<Element>>{
+    // get the paths in the location x,y
+    // if non path, then see if it can return a text path
+    fn get_elements(&self, x: isize, y: isize, settings: &Settings) -> Option<Vec<Element>> {
         let text_width = settings.text_width;
         let text_height = settings.text_height;
         let measurex = x as f32 * text_width;
         let measurey = y as f32 * text_height;
         let arc_radius = text_width / 2.0;
 
-        //horizontal divide
+        // horizontal divide
         let ah = 0.0;
         let bh = text_width / 4.0;
         let ch = text_width / 2.0;
         let dh = text_width * 3.0 / 4.0;
         let eh = text_width;
 
-        //vertical divide
+        // vertical divide
         let av = 0.0;
         let bv = text_height / 4.0;
         let cv = text_height / 2.0;
@@ -425,8 +448,8 @@ impl Grid {
         let ey = measurey + ev;
 
         // point locations
-        let center_top = &Point::new(cx,ay);
-        let center_bottom = &Point::new(cx,ey);
+        let center_top = &Point::new(cx, ay);
+        let center_bottom = &Point::new(cx, ey);
         let mid_left = &Point::new(ax, cy);
         let mid_right = &Point::new(ex, cy);
         let high_left = &Point::new(ax, ay);
@@ -434,26 +457,26 @@ impl Grid {
         let low_left = &Point::new(ax, ey);
         let low_right = &Point::new(ex, ey);
 
-        //point 5x5 locations
-        let axay = &Point::new(ax,ay);
-        let bxby = &Point::new(bx,by);
-        let cxcy = &Point::new(cx,cy);
-        let dxdy = &Point::new(dx,dy);
-        let exey = &Point::new(ex,ey);
+        // point 5x5 locations
+        let axay = &Point::new(ax, ay);
+        let bxby = &Point::new(bx, by);
+        let cxcy = &Point::new(cx, cy);
+        let dxdy = &Point::new(dx, dy);
+        let exey = &Point::new(ex, ey);
 
-        //a start variants
-        let axcy = &Point::new(ax,cy);
-        let axey = &Point::new(ax,ey);
-        let bxdy = &Point::new(bx,dy);
-        let bxcy = &Point::new(bx,cy);
-        let cxay = &Point::new(cx,ay);
-        let cxey = &Point::new(cx,ey);
-        let cxdy = &Point::new(cx,dy);
-        let cxby = &Point::new(cx,by);
-        let dxby = &Point::new(dx,by);
-        let dxcy = &Point::new(dx,cy);
-        let excy = &Point::new(ex,cy);
-        let exay = &Point::new(ex,ay);
+        // a start variants
+        let axcy = &Point::new(ax, cy);
+        let axey = &Point::new(ax, ey);
+        let bxdy = &Point::new(bx, dy);
+        let bxcy = &Point::new(bx, cy);
+        let cxay = &Point::new(cx, ay);
+        let cxey = &Point::new(cx, ey);
+        let cxdy = &Point::new(cx, dy);
+        let cxby = &Point::new(cx, by);
+        let dxby = &Point::new(dx, by);
+        let dxcy = &Point::new(dx, cy);
+        let excy = &Point::new(ex, cy);
+        let exay = &Point::new(ex, ay);
 
 
         // grid lines
@@ -474,7 +497,7 @@ impl Grid {
         let cxey_cxdy = Element::solid_line(cxey, cxdy);
         let dxdy_exey = Element::solid_line(dxdy, exey);
 
-        //common arc
+        // common arc
         let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
         let arc_axcy_dxby = Element::arc(axcy, dxby, arc_radius * 2.0, false);
         let arc_bxby_excy = Element::arc(bxby, excy, arc_radius * 2.0, false);
@@ -499,39 +522,59 @@ impl Grid {
         let arc_cxby_dxdy = Element::arc(cxby, dxdy, arc_radius * 4.0, false);
         let arc_cxdy_bxby = Element::arc(cxdy, bxby, arc_radius * 4.0, false);
 
-        //common path lines
+        // common path lines
         let vertical = Element::solid_line(center_top, center_bottom);
         let horizontal = Element::solid_line(mid_left, mid_right);
         let slant_left = Element::solid_line(high_left, low_right);
         let slant_right = Element::solid_line(low_left, high_right);
         let low_horizontal = Element::solid_line(low_left, low_right);
 
-        //extended lines
-        let low_horizontal_extend_left_half = Element::solid_line(low_right, &Point::new(ax - ch, ey));
-        let low_horizontal_extend_right_half = Element::solid_line(low_left, &Point::new(ex + ch, ey));
-        let low_horizontal_extend_left_full = Element::solid_line(low_right, &Point::new(ax - eh, ey));
-        let low_horizontal_extend_right_full = Element::solid_line(low_left, &Point::new(ex + eh, ey));
+        // extended lines
+        let low_horizontal_extend_left_half = Element::solid_line(low_right,
+                                                                  &Point::new(ax - ch, ey));
+        let low_horizontal_extend_right_half = Element::solid_line(low_left,
+                                                                   &Point::new(ex + ch, ey));
+        let low_horizontal_extend_left_full = Element::solid_line(low_right,
+                                                                  &Point::new(ax - eh, ey));
+        let low_horizontal_extend_right_full = Element::solid_line(low_left,
+                                                                   &Point::new(ex + eh, ey));
 
         // dashed lines
         let vertical_dashed = Element::line(center_top, center_bottom, Stroke::Dashed, None);
         let horizontal_dashed = Element::line(mid_left, mid_right, Stroke::Dashed, None);
         let low_horizontal_dashed = Element::line(low_left, low_right, Stroke::Dashed, None);
 
-        let arrow_down = Element::line(center_top, center_bottom, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_down_dashed = Element::line(center_top, center_bottom, Stroke::Dashed, Some(Feature::Arrow));
-        let arrow_up = Element::line(center_bottom, center_top, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_up_dashed = Element::line(center_bottom, center_top, Stroke::Dashed, Some(Feature::Arrow));
+        let arrow_down = Element::line(center_top,
+                                       center_bottom,
+                                       Stroke::Solid,
+                                       Some(Feature::Arrow));
+        let arrow_down_dashed = Element::line(center_top,
+                                              center_bottom,
+                                              Stroke::Dashed,
+                                              Some(Feature::Arrow));
+        let arrow_up = Element::line(center_bottom,
+                                     center_top,
+                                     Stroke::Solid,
+                                     Some(Feature::Arrow));
+        let arrow_up_dashed = Element::line(center_bottom,
+                                            center_top,
+                                            Stroke::Dashed,
+                                            Some(Feature::Arrow));
         let arrow_left = Element::line(mid_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_left_dashed = Element::line(mid_right, cxcy, Stroke::Dashed, Some(Feature::Arrow));
-        let arrow_right = Element::line(mid_left,  cxcy, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_right_dashed = Element::line(mid_left,  cxcy, Stroke::Dashed, Some(Feature::Arrow));
-        let arrow_bottom_left = Element::line(high_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_bottom_right = Element::line(high_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
+        let arrow_left_dashed =
+            Element::line(mid_right, cxcy, Stroke::Dashed, Some(Feature::Arrow));
+        let arrow_right = Element::line(mid_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
+        let arrow_right_dashed =
+            Element::line(mid_left, cxcy, Stroke::Dashed, Some(Feature::Arrow));
+        let arrow_bottom_left =
+            Element::line(high_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
+        let arrow_bottom_right =
+            Element::line(high_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
         let arrow_top_left = Element::line(low_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
         let arrow_top_right = Element::line(low_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
-        
-        //relative location of characters
-        let this = &Loc::new(x,y);
+
+        // relative location of characters
+        let this = &Loc::new(x, y);
         let top = &this.top();
         let left = &this.left();
         let bottom = &this.bottom();
@@ -540,12 +583,12 @@ impl Grid {
         let top_right = &this.top_right();
         let bottom_left = &this.bottom_left();
         let bottom_right = &this.bottom_right();
-        
+
         // left of left
         let left_left = &this.left_left();
         let right_right = &this.right_right();
 
-        
+
         let match_list: Vec<(bool, Vec<Element>)> = 
             vec![
                 /*
@@ -1129,106 +1172,95 @@ impl Grid {
                  vec![vertical.clone(), horizontal.clone(), slant_left.clone(), slant_right.clone()]
                 ),
             ];
-        let match_path:Option<(bool, Vec<Element>)> =
-            match_list.into_iter().rev()
-                .find(
-                    |x| {
-                        let &(cond, ref paths) = x;
-                        cond
-                    }
-                );
+        let match_path: Option<(bool, Vec<Element>)> = match_list.into_iter()
+            .rev()
+            .find(|x| {
+                let &(cond, ref paths) = x;
+                cond
+            });
 
-        let paths:Option<Vec<Element>>  =
-            match match_path{
-                Some((_,paths))=>{
-                    Some(paths)
-                },
-                None =>{
-                    let ch = self.get(this);
-                    match ch{
-                        Some(ch) => {
-                            if !ch.is_whitespace() 
-                                || (*ch == ' ' 
-                                    && self.is_char(left, |c| c.is_alphanumeric()) 
-                                    && self.is_char(right, |c| c.is_alphanumeric())
-                                    )
-                                {
-                                let mut s = escape_char(ch);
-                                let text = Element::Text(Loc::new(x, y,), s);
-                                Some(vec![text])
-                            }else{
-                                None
-                            }
-                        },
-                        None => {
-                            None 
+        let paths: Option<Vec<Element>> = match match_path {
+            Some((_, paths)) => Some(paths),
+            None => {
+                let ch = self.get(this);
+                match ch {
+                    Some(ch) => {
+                        if !ch.is_whitespace() ||
+                           (*ch == ' ' && self.is_char(left, |c| c.is_alphanumeric()) &&
+                            self.is_char(right, |c| c.is_alphanumeric())) {
+                            let mut s = escape_char(ch);
+                            let text = Element::Text(Loc::new(x, y), s);
+                            Some(vec![text])
+                        } else {
+                            None
                         }
                     }
+                    None => None,
                 }
-            };
+            }
+        };
 
         paths
 
     }
 
-    fn get_all_elements(&self, settings: &Settings)->Vec<(Loc, Vec<Element>)>{
+    fn get_all_elements(&self, settings: &Settings) -> Vec<(Loc, Vec<Element>)> {
         let mut all_paths = vec![];
-        for row in 0..self.lines.len(){
+        for row in 0..self.lines.len() {
             let line = &self.lines[row];
-            for column in 0..line.len(){
+            for column in 0..line.len() {
                 let x = column as isize;
                 let y = row as isize;
-                match self.get_elements(x, y, settings){
+                match self.get_elements(x, y, settings) {
                     Some(paths) => {
-                        all_paths.push((Loc::new(x,y), paths));
+                        all_paths.push((Loc::new(x, y), paths));
                     }
                     None => {
                         ();
                     }
                 }
-            } 
+            }
         }
         all_paths
     }
 
     // each component has its relative location retain
     // use this info for optimizing svg by checking closest neigbor
-    fn get_svg_nodes(&self, settings: &Settings)->Vec<SvgElement>{
+    fn get_svg_nodes(&self, settings: &Settings) -> Vec<SvgElement> {
         let mut nodes = vec![];
         let elements = self.get_all_elements(settings);
-        let input = 
-            if settings.optimize{
-                let optimizer = Optimizer::new(elements);
-                let optimized_elements = optimizer.optimize(settings);
-                optimized_elements
-            }else{
-                elements.into_iter().flat_map(|(l, elm)| elm).collect()
-            };
-        for elem in input{
-            let element = elem.to_svg(settings); 
+        let input = if settings.optimize {
+            let optimizer = Optimizer::new(elements);
+            let optimized_elements = optimizer.optimize(settings);
+            optimized_elements
+        } else {
+            elements.into_iter().flat_map(|(l, elm)| elm).collect()
+        };
+        for elem in input {
+            let element = elem.to_svg(settings);
             nodes.push(element);
         }
         nodes
     }
 
-    pub fn get_svg(&self, settings: &Settings)->SVG{
+    pub fn get_svg(&self, settings: &Settings) -> SVG {
         let nodes = self.get_svg_nodes(settings);
         let width = settings.text_width * self.columns as f32;
         let height = settings.text_height * self.rows as f32;
         let mut svg = SVG::new()
-                .set("font-size",14)
-                .set("font-family", "Electrolize")
-                .set("width", width)
-                .set("height", height);
+            .set("font-size", 14)
+            .set("font-family", "Electrolize")
+            .set("width", width)
+            .set("height", height);
 
-            svg.append(get_defs());
-            svg.append(get_styles());
+        svg.append(get_defs());
+        svg.append(get_styles());
 
-        for node in nodes{
-            match node{
+        for node in nodes {
+            match node {
                 SvgElement::Line(line) => {
                     svg.append(line);
-                },
+                }
                 SvgElement::Path(path) => {
                     svg.append(path);
                 }
@@ -1236,20 +1268,18 @@ impl Grid {
                     svg.append(text);
                 }
             }
-        } 
+        }
         svg
     }
-
-
 }
 
-fn get_defs()->Definitions{
+fn get_defs() -> Definitions {
     let mut defs = Definitions::new();
-        defs.append(arrow_marker());
-        defs
+    defs.append(arrow_marker());
+    defs
 }
 
-fn get_styles()->Style{
+fn get_styles() -> Style {
     let style = r#"
     /* <![CDATA[ */
     line, path {
@@ -1258,36 +1288,35 @@ fn get_styles()->Style{
     }
  /* ]]> */
     "#;
-    Style::new(style) 
+    Style::new(style)
 }
 
-fn arrow_marker()->Marker{
+fn arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "triangle")
         .set("viewBox", "0 0 14 14")
         .set("refX", 0)
         .set("refY", 5)
         .set("markerUnits", "strokeWidth")
-        .set("markerWidth",10)
+        .set("markerWidth", 10)
         .set("markerHeight", 10)
         .set("orient", "auto");
-    
-    let path = SvgPath::new()
-            .set("d","M 0 0 L 10 5 L 0 10 z");
+
+    let path = SvgPath::new().set("d", "M 0 0 L 10 5 L 0 10 z");
     marker.append(path);
     marker
 
 }
 
-fn is_vertical(ch: &char)->bool{
+fn is_vertical(ch: &char) -> bool {
     *ch == '|'
 }
 
-fn is_horizontal(ch: &char)->bool{
+fn is_horizontal(ch: &char) -> bool {
     *ch == '-'
 }
 
-fn is_horizontal_dashed(ch: &char) -> bool{
+fn is_horizontal_dashed(ch: &char) -> bool {
     *ch == '='
 }
 
@@ -1295,91 +1324,80 @@ fn is_vertical_dashed(ch: &char) -> bool {
     *ch == ':'
 }
 
-fn is_low_horizontal(ch: &char)->bool{
+fn is_low_horizontal(ch: &char) -> bool {
     *ch == '_'
 }
 
-fn is_low_horizontal_dashed(ch: &char)->bool{
+fn is_low_horizontal_dashed(ch: &char) -> bool {
     *ch == '.'
 }
 
-fn is_slant_left(ch: &char)->bool{
+fn is_slant_left(ch: &char) -> bool {
     *ch == '\\'
 }
-fn is_slant_right(ch: &char)->bool{
+fn is_slant_right(ch: &char) -> bool {
     *ch == '/'
 }
 
-fn is_low_round(ch: &char) -> bool{
+fn is_low_round(ch: &char) -> bool {
     *ch == '.'
 }
 
-fn is_high_round(ch: &char) -> bool{
+fn is_high_round(ch: &char) -> bool {
     *ch == '\''
 }
 
-fn is_round(ch: &char) -> bool{
+fn is_round(ch: &char) -> bool {
     is_low_round(ch) || is_high_round(ch)
 }
 
-fn is_intersection(ch: &char) -> bool{
+fn is_intersection(ch: &char) -> bool {
     *ch == '+'
 }
 
-fn is_marker(ch: &char) -> bool{
+fn is_marker(ch: &char) -> bool {
     *ch == '*'
 }
 
-fn is_arrow_up(ch: &char) -> bool{
+fn is_arrow_up(ch: &char) -> bool {
     *ch == '^'
 }
 
-fn is_arrow_down(ch: &char) -> bool{
+fn is_arrow_down(ch: &char) -> bool {
     *ch == 'v' || *ch == 'V'
 }
 
-fn is_arrow_left(ch: &char) -> bool{
+fn is_arrow_left(ch: &char) -> bool {
     *ch == '<'
 }
 
-fn is_arrow_right(ch: &char) -> bool{
+fn is_arrow_right(ch: &char) -> bool {
     *ch == '>'
 }
 
-fn is_open_curve(ch: &char) -> bool{
+fn is_open_curve(ch: &char) -> bool {
     *ch == '('
 }
 
-fn is_close_curve(ch: &char) -> bool{
+fn is_close_curve(ch: &char) -> bool {
     *ch == ')'
 }
 
-fn escape_char(ch: &char)->String{
-    let escs = 
-        [('"', "&quot;")
-        ,('\'', "&apos;")
-        ,('<',  "&lt;")
-        ,('>',  "&gt;")
-        ,('&',  "&amp;")
-        ];
-    let quote_match:Option<&(char,&str)>  = 
-        escs.iter()
-            .find(|pair|
-                    { let &(e, s) =  *pair;
-                      e == *ch
-                    }
-                );
-    let quoted:String = 
-            match quote_match{
-                Some(&(c, quoted)) => {
-                    String::from(quoted)
-                }
-                None => {
-                    let mut s = String::new();
-                    s.push(*ch);
-                    s
-                }
-            };
+fn escape_char(ch: &char) -> String {
+    let escs = [('"', "&quot;"), ('\'', "&apos;"), ('<', "&lt;"), ('>', "&gt;"), ('&', "&amp;")];
+    let quote_match: Option<&(char, &str)> = escs.iter()
+        .find(|pair| {
+            let &(e, s) = *pair;
+            e == *ch
+        });
+    let quoted: String = match quote_match {
+        Some(&(c, quoted)) => String::from(quoted),
+        None => {
+            let mut s = String::new();
+            s.push(*ch);
+            s
+        }
+    };
     quoted
-    
+
 }
