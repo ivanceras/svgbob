@@ -4,9 +4,13 @@ use svg::Node;
 use svg::node::element::Path as SvgPath;
 use svg::node::element::Line as SvgLine;
 use svg::node::element::Text as SvgText;
+use svg::node::element::Style;
 use svg::node::element::SVG;
 use svg::node::element::Definitions;
 use svg::node::element::Marker;
+use optimizer::Optimizer;
+
+mod optimizer;
 
 pub struct Settings{
     text_width: f32,
@@ -32,21 +36,21 @@ enum SvgElement{
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
-enum Stroke{
+pub enum Stroke{
     Solid,
     Dashed
 }
 
 #[derive(Debug)]
 #[derive(Clone)]
-enum Feature{
+pub enum Feature{
     Arrow
 }
 
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
-struct Point{
+pub struct Point{
     x: f32,
     y: f32
 }
@@ -58,7 +62,8 @@ impl Point{
 
 #[derive(Debug)]
 #[derive(Clone)]
-struct Loc{
+#[derive(PartialEq)]
+pub struct Loc{
     x:isize,
     y:isize
 }
@@ -67,14 +72,51 @@ impl Loc{
     fn new(x:isize, y:isize)->Loc{
         Loc{x:x, y:y}
     }
+
+    pub fn top(&self) -> Loc{
+        Loc{x:self.x, y:self.y-1}
+    }
+    pub fn left(&self) -> Loc{
+        Loc{x:self.x-1, y:self.y}
+    }
+    pub fn bottom(&self) -> Loc{
+        Loc{x: self.x, y:self.y+1} 
+    }
+    pub fn right(&self) -> Loc{
+        Loc{x:self.x+1, y:self.y}
+    }
+
+    pub fn top_left(&self) -> Loc{
+        Loc{x:self.x-1, y:self.y-1}
+    }
+
+    pub fn top_right(&self) -> Loc{
+        Loc{x:self.x+1, y:self.y-1}
+    }
+
+    pub fn bottom_left(&self) -> Loc{
+        Loc{x:self.x-1, y:self.y+1}
+    }
+    
+    pub fn bottom_right(&self) -> Loc{
+        Loc{x:self.x+1, y:self.y+1}
+    }
+
+    pub fn left_left(&self) -> Loc{
+        Loc{x:self.x-2, y:self.y}
+    }
+    pub fn right_right(&self) -> Loc{
+        Loc{x:self.x+2, y:self.y}
+    }
 }
 
 #[derive(Debug)]
 #[derive(Clone)]
-enum Element{
+pub enum Element{
     Line (Point, Point, Stroke, Option<Feature>),
     Arc (Point, Point, f32, bool),
-    Text (Loc, String)
+    Text (Loc, String),
+    Path (Point, Point, String)
 }
 
 impl Element{
@@ -92,56 +134,101 @@ impl Element{
     // this path can chain to the other path
     // chain means the paths can be arranged and express in path definition
     // if self.end == path.start
-    fn can_chain(&self, path: &Element)->bool{
+    fn chain(&self, other: &Element)->Option<Vec<Element>>{
         match *self{
             Element::Line (ref s, ref e, ref stroke, ref feature) => {
-                match *path{
+                match *other{
                     Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
-                       e == s2
-                       && stroke == stroke2 //must have same stroke and no feature
-                       && feature.is_none() //no arrows
-                       && feature2.is_none() // on both lines
+                       if e == s2 && stroke == stroke2 //must have same stroke and no feature
+                       && feature.is_none() //no arrow on the first
+                       {
+                            Some(vec![self.clone(), other.clone()])
+                        }else{
+                            None
+                        }
                     },
                     Element::Arc (ref s2, ref e2, radius, sweep) => {
-                        e == s2
+                        if e == s2 && feature.is_none(){
+                            Some(vec![self.clone(), other.clone()])
+                        }else{
+                            None
+                        }
                     },
-                    _ => false
+                    _ => None
                 }
             },
             Element::Arc (ref s, ref e, radius, sweep) =>{
-                match *path{
+                match *other{
                     Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
                         match *stroke2{
                             Stroke::Solid => { //arcs are always solid, so match only solid line to arc
-                                e == s2
+                                if e == s2{
+                                    Some(vec![self.clone(), other.clone()])
+                                }else{
+                                    None
+                                }
                             },
-                            _ => false
+                            _ => None
                         }
                     },
                     Element::Arc (ref s2, ref e2, radius2, sweep2) => {
-                        e == s2
+                        if e == s2{
+                            Some(vec![self.clone(), other.clone()])
+                        }else{
+                            None
+                        }
                     }
-                    _ => false
+                    _ => None
                 }
             },
             Element::Text (ref l, ref text) => {// text can reduce, but not chain
-                false
+                None
+            },
+            Element::Path(_,_,_,) => {
+                None
             }
         }
     }
-    //if the lines lie on the same line, calculated using area 
-    fn collinear(&self, path: &Element)->bool{
+    
+    // if this element can reduce the other, return the new reduced element
+    // for line it has to be collinear and in can connect start->end->start
+    // for text, the other text should apear on the right side of this text
+    fn reduce(&self, other: &Element)->Option<Element>{
         match *self{
             Element::Line (ref s, ref e, ref stroke, ref feature) => {
-                match *path{
+                match *other{
                     Element::Line (ref s2, ref e2, ref stroke2, ref feature2) => {
-                        collinear(s, s2, e) 
+                        //note* dual 3 point check for trully collinear lines
+                        if collinear(s, e, s2) && collinear(s, e, e2) && e == s2 && stroke == stroke2
+                            && feature.is_none()
+                        {
+                            let reduced = Some(Element::Line(s.clone(), e2.clone(), stroke.clone(), feature2.clone()));   
+                            reduced
+                        }else{
+                            None
+                        }
                     },
-                    _ => false
+                    _ => None
+                }
+            },
+            Element::Text (ref loc, ref text) => {
+                match *other{
+                    Element::Text (ref loc2, ref text2) => {
+                       // reduce if other is next to it 
+                       let len = text.len() as isize;
+                       if loc.y == loc2.y && loc.x+len == loc2.x{
+                            let merged_text = text.clone() + text2;
+                            let reduced = Some(Element::Text(loc.clone(), merged_text));
+                            reduced
+                       }else{
+                            None
+                       }
+                    }
+                    _ => None
                 }
             },
             _ => {
-                false
+                None
             }
         }
     }
@@ -163,11 +250,6 @@ impl Element{
         }
     }
     
-    // 2 paths can reduce only if they are collinear and can chain, start->end->start
-    fn can_reduce(&self, path: &Element) -> bool{
-        self.can_chain(path) && self.collinear(path)
-    }
-
     fn to_svg(&self, settings:&Settings)->SvgElement{
         match *self {
             Element::Line(ref s, ref e, ref stroke, ref feature) => {
@@ -176,9 +258,7 @@ impl Element{
                         .set("x1", s.x)
                         .set("y1", s.y)
                         .set("x2", e.x)
-                        .set("y2", e.y)
-                        .set("stroke","black")
-                        .set("stroke-width",1);
+                        .set("y2", e.y);
 
                     match *feature{
                         Some(Feature::Arrow) => {
@@ -201,10 +281,8 @@ impl Element{
                         s.x, s.y, radius, radius, sweept, e.x, e.y);
                let svg_arc =
                     SvgPath::new()
-                        .set("fill","none")
-                        .set("stroke","black")
-                        .set("stroke-width",1)
-                        .set("d",d);
+                        .set("d",d)
+                        .set("fill","none");
                SvgElement::Path(svg_arc)
             },
             Element::Text(ref loc, ref string) => {
@@ -217,24 +295,23 @@ impl Element{
                     let text_node = svg::node::Text::new(string.to_owned());
                     svg_text.append(text_node);
                 SvgElement::Text(svg_text)
+            },
+            Element::Path(ref s, ref e, ref d) => {
+                let path = SvgPath::new()
+                        .set("d",d.to_owned())
+                        .set("fill","none");
+               SvgElement::Path(path)
             }
         } 
     }
 }
 
-// reorder paths in such a way start connects from start -> end -> start ->end
-fn reorder(paths: Vec<Element>)->Vec<Element>{
-    unimplemented!();
-}
 
-// reduce path is collinear and start -> end -> start ->end
-fn reduce(path1:Element, path2:Element)->Option<Element>{
-    unimplemented!();
-}
 
 fn collinear(a:&Point, b:&Point, c:&Point)->bool{
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
+
 
 #[derive(Debug)]
 pub struct Grid{
@@ -280,6 +357,8 @@ impl Grid {
             None => false
         }
     }
+
+
     //get the paths in the location x,y
     //if non path, then see if it can return a text path
     fn get_elements(&self, x:isize, y:isize, settings: &Settings) -> Option<Vec<Element>>{
@@ -422,18 +501,19 @@ impl Grid {
         
         //relative location of characters
         let this = &Loc::new(x,y);
-        let top = &Loc::new(x, y-1);
-        let bottom = &Loc::new(x, y+1);
-        let left = &Loc::new(x-1, y);
-        let right = &Loc::new(x+1, y);
-        let top_left = &Loc::new(x-1, y-1);
-        let top_right = &Loc::new(x+1, y-1);
-        let bottom_left = &Loc::new(x-1, y+1);
-        let bottom_right = &Loc::new(x+1, y+1);
+        let top = &this.top();
+        let left = &this.left();
+        let bottom = &this.bottom();
+        let right = &this.right();
+        let top_left = &this.top_left();
+        let top_right = &this.top_right();
+        let bottom_left = &this.bottom_left();
+        let bottom_right = &this.bottom_right();
         
         // left of left
-        let left_left = &Loc::new(x-2, y);
-        let right_right = &Loc::new(x+2, y);
+        let left_left = &this.left_left();
+        let right_right = &this.right_right();
+
         
         let match_list: Vec<(bool, Vec<Element>)> = 
             vec![
@@ -1036,7 +1116,12 @@ impl Grid {
                     let ch = self.get(this);
                     match ch{
                         Some(ch) => {
-                            if !ch.is_whitespace(){
+                            if !ch.is_whitespace() 
+                                || (*ch == ' ' 
+                                    && self.is_char(left, |c| c.is_alphanumeric()) 
+                                    && self.is_char(right, |c| c.is_alphanumeric())
+                                    )
+                                {
                                 let mut s = escape_char(ch);
                                 let text = Element::Text(Loc::new(x, y,), s);
                                 Some(vec![text])
@@ -1055,14 +1140,16 @@ impl Grid {
 
     }
 
-    fn get_all_elements(&self, settings: &Settings)->Vec<Element>{
+    fn get_all_elements(&self, settings: &Settings)->Vec<(Loc, Vec<Element>)>{
         let mut all_paths = vec![];
-        for y in 0..self.lines.len(){
-            let line = &self.lines[y];
-            for x in 0..line.len(){
-                match self.get_elements(x as isize,y as isize, settings){
+        for row in 0..self.lines.len(){
+            let line = &self.lines[row];
+            for column in 0..line.len(){
+                let x = column as isize;
+                let y = row as isize;
+                match self.get_elements(x, y, settings){
                     Some(paths) => {
-                        all_paths.extend(paths);
+                        all_paths.push((Loc::new(x,y), paths));
                     }
                     None => {
                         ();
@@ -1073,12 +1160,16 @@ impl Grid {
         all_paths
     }
 
+    // each component has its relative location retain
+    // use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self, settings: &Settings)->Vec<SvgElement>{
         let mut nodes = vec![];
         let elements = self.get_all_elements(settings);
-        for elem in elements{
-           let element = elem.to_svg(settings); 
-           nodes.push(element);
+        let optimizer = Optimizer::new(elements);
+        let optimized_elements = optimizer.optimize();
+        for elem in optimized_elements{
+            let element = elem.to_svg(settings); 
+            nodes.push(element);
         }
         nodes
     }
@@ -1089,11 +1180,12 @@ impl Grid {
         let height = settings.text_height * self.rows as f32;
         let mut svg = SVG::new()
                 .set("font-size",14)
-                .set("font-family", "monospace")
+                .set("font-family", "Electrolize")
                 .set("width", width)
                 .set("height", height);
 
             svg.append(get_defs());
+            svg.append(get_styles());
 
         for node in nodes{
             match node{
@@ -1118,6 +1210,18 @@ fn get_defs()->Definitions{
     let mut defs = Definitions::new();
         defs.append(arrow_marker());
         defs
+}
+
+fn get_styles()->Style{
+    let style = r#"
+    /* <![CDATA[ */
+    line, path {
+      stroke: black;
+      stroke-width: 1;
+    }
+ /* ]]> */
+    "#;
+    Style::new(style) 
 }
 
 fn arrow_marker()->Marker{
