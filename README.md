@@ -1,5 +1,9 @@
 # svgbobrus
-svgbobrus is an ascii to svg converter.
+SvgBobRus is an ascii to svg converter.
+
+![image](https://ivanceras.github.io/svgbobrus/examples/demo.svg)
+
+The SVG image is generated from the ascii text below.
 
 ```text
 
@@ -113,7 +117,6 @@ svgbobrus is an ascii to svg converter.
 
 
 ```
-![image](https://ivanceras.github.io/svgbobrus/examples/demo.svg)
 Originally written in elm from the original [project](https://github.com/ivanceras/svgbob)
 
 [Demo site](https://ivanceras.github.io/svgbobrus/)
