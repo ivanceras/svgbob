@@ -168,6 +168,18 @@ impl Loc {
             y: self.y,
         }
     }
+    /// get the 8 neighbors
+    pub fn neighbors(&self) -> Vec<Loc> {
+        vec![self.top(), 
+             self.bottom(),
+             self.left(),
+             self.right(),
+             self.top_left(),
+             self.top_right(),
+             self.bottom_left(),
+             self.bottom_right(),
+            ]
+    }
 }
 
 #[derive(Debug)]
@@ -398,13 +410,30 @@ impl Grid {
 
 
     fn is_char<F>(&self, loc: &Loc, f: F) -> bool
-        where F: Fn(&char) -> bool
-    {
+        where F: Fn(&char) -> bool {
         let ch = self.get(loc);
         match ch {
             Some(ch) => f(ch),
             None => false,
         }
+    }
+    
+    // if it is a simple piece of drawing element,
+    // make sure it is next to an other draing element
+    // else it will be treated as text
+    fn next_to_drawing_element(&self, loc: &Loc) -> bool {
+        loc.neighbors().iter()
+            .find(|&x| self.is_char(x, is_drawing_element) )
+                .map_or(false, |_| true)
+    }
+    
+    // determine if the character in this location is a drawing element
+    // but is used as text, such as a == b, cd to/path/file
+    // it is used as text when it is a drawing element, and left and righ is alphanumeric
+    fn used_as_text(&self, loc: &Loc) -> bool {
+        self.is_char(loc, is_drawing_element)
+            && self.is_char(&loc.left(), |&c| c.is_alphanumeric())
+            && self.is_char(&loc.right(), |&c| c.is_alphanumeric())
     }
 
 
@@ -587,20 +616,20 @@ impl Grid {
                 /*
                     |
                 */
-                (self.is_char(this, is_vertical),
+                (self.is_char(this, is_vertical) && !self.used_as_text(this),
                  vec![vertical.clone()]
                 ),
                 /*
                     -
                 */
-                (self.is_char(this, is_horizontal),
+                (self.is_char(this, is_horizontal) && !self.used_as_text(this),
                  vec![horizontal.clone()]
                 ),
 
                 /*
                     _
                 */
-                (self.is_char(this, is_low_horizontal),
+                (self.is_char(this, is_low_horizontal) && !self.used_as_text(this),
                  vec![low_horizontal.clone()]
                 ),
                 /*
@@ -653,13 +682,13 @@ impl Grid {
                 /*
                     /
                 */
-                (self.is_char(this, is_slant_right),
+                (self.is_char(this, is_slant_right) && !self.used_as_text(this),
                  vec![slant_right.clone()]
                 ),
                 /*
                     \
                 */
-                (self.is_char(this, is_slant_left),
+                (self.is_char(this, is_slant_left) && !self.used_as_text(this),
                  vec![slant_left.clone()]
                 ),
 
@@ -1242,7 +1271,7 @@ impl Grid {
         let height = settings.text_height * self.rows as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
-            .set("font-family", "Electrolize")
+            .set("font-family", "Electrolize,Titillium Web, Trebuchet MS, Arial")
             .set("width", width)
             .set("height", height);
 
@@ -1374,6 +1403,41 @@ fn is_open_curve(ch: &char) -> bool {
 
 fn is_close_curve(ch: &char) -> bool {
     *ch == ')'
+}
+
+
+fn is_drawing_element(ch: &char) -> bool{
+    [is_vertical,
+     is_horizontal,
+     is_vertical_dashed,
+     is_horizontal_dashed,
+     is_low_horizontal,
+     is_low_horizontal_dashed,
+     is_slant_left,
+     is_slant_right,
+     is_low_round,
+     is_high_round,
+     is_round,
+     is_intersection,
+     is_marker,
+     is_arrow_up,
+     is_arrow_down,
+     is_arrow_left,
+     is_arrow_right,
+     is_open_curve,
+     is_close_curve,
+    ].iter().find(|&x| x(ch))
+          .map_or(false, |_| true)
+
+}
+
+#[test]
+fn test_drawing_element(){
+    assert!(is_drawing_element(&'|'));
+    assert!(is_drawing_element(&'-'));
+    assert!(is_drawing_element(&'='));
+    assert!(is_drawing_element(&'_'));
+    assert!(is_drawing_element(&'/'));
 }
 
 fn escape_char(ch: &char) -> String {
