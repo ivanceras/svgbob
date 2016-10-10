@@ -4,7 +4,7 @@
 
 SvgBobRus is an ascii to svg converter.
 
-![image](https://ivanceras.github.io/svgbobrus/examples/demo.svg)
+<img src="https://ivanceras.github.io/svgbobrus/examples/demo.svg"/>
 
 The SVG image is generated from the ascii text below.
 
