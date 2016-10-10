@@ -176,7 +176,7 @@ pub enum Element {
     Line(Point, Point, Stroke, Option<Feature>),
     Arc(Point, Point, f32, bool),
     Text(Loc, String),
-    Path(Point, Point, String),
+    Path(Point, Point, String, Stroke),
 }
 
 impl Element {
@@ -195,9 +195,9 @@ impl Element {
     // if self.end == path.start
     fn chain(&self, other: &Element) -> Option<Vec<Element>> {
         match *self {
-            Element::Line(ref s, ref e, ref stroke, ref feature) => {
+            Element::Line(_, ref e, ref stroke, ref feature) => {
                 match *other {
-                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                    Element::Line(ref s2, _, ref stroke2, _) => {
                         if e == s2 && stroke == stroke2 //must have same stroke and no feature
                        && feature.is_none()
                         // no arrow on the first
@@ -207,7 +207,7 @@ impl Element {
                             None
                         }
                     }
-                    Element::Arc(ref s2, ref e2, radius, sweep) => {
+                    Element::Arc(ref s2, _, _, _) => {
                         if e == s2 && feature.is_none() {
                             Some(vec![self.clone(), other.clone()])
                         } else {
@@ -217,9 +217,9 @@ impl Element {
                     _ => None,
                 }
             }
-            Element::Arc(ref s, ref e, radius, sweep) => {
+            Element::Arc(_, ref e, _, _) => {
                 match *other {
-                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                    Element::Line(ref s2, _, ref stroke2, _) => {
                         match *stroke2 {
                             Stroke::Solid => {
                                 // arcs are always solid, so match only solid line to arc
@@ -232,7 +232,7 @@ impl Element {
                             _ => None,
                         }
                     }
-                    Element::Arc(ref s2, ref e2, radius2, sweep2) => {
+                    Element::Arc(ref s2, _, _, _) => {
                         if e == s2 {
                             Some(vec![self.clone(), other.clone()])
                         } else {
@@ -242,11 +242,11 @@ impl Element {
                     _ => None,
                 }
             }
-            Element::Text(ref l, ref text) => {
+            Element::Text(_, _) => {
                 // text can reduce, but not chain
                 None
             }
-            Element::Path(_, _, _) => None,
+            Element::Path(_, _, _,_) => None,
         }
     }
 
@@ -293,18 +293,6 @@ impl Element {
         }
     }
 
-    // hard to solve, just false for now
-    fn cocircular(&self, path: &Element) -> bool {
-        match *self {
-            Element::Arc(ref s, ref e, radius, sweep) => {
-                match *path {
-                    Element::Arc(ref s2, ref e2, radius2, sweep2) => false,
-                    _ => false,
-                }
-            }
-            _ => false,
-        }
-    }
 
     fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
@@ -355,10 +343,17 @@ impl Element {
                 svg_text.append(text_node);
                 SvgElement::Text(svg_text)
             }
-            Element::Path(ref s, ref e, ref d) => {
-                let path = SvgPath::new()
+            Element::Path(_, _, ref d, ref stroke) => {
+                let mut path = SvgPath::new()
                     .set("d", d.to_owned())
                     .set("fill", "none");
+
+                match *stroke {
+                    Stroke::Solid => (),
+                    Stroke::Dashed => {
+                        path.assign("stroke-dasharray", (3, 3));
+                    }
+                };
                 SvgElement::Path(path)
             }
         }
@@ -464,7 +459,6 @@ impl Grid {
         let dxdy = &Point::new(dx, dy);
         let exey = &Point::new(ex, ey);
 
-        // a start variants
         let axcy = &Point::new(ax, cy);
         let axey = &Point::new(ax, ey);
         let bxdy = &Point::new(bx, dy);
@@ -507,7 +501,6 @@ impl Grid {
         let arc_dxdy_axcy = Element::arc(dxdy, axcy, arc_radius * 2.0, false);
         let arc_excy_cxdy = Element::arc(excy, cxdy, arc_radius, false);
         let arc_excy_bxdy = Element::arc(excy, bxdy, arc_radius * 2.0, false);
-        let arc_exey_bxby = Element::arc(exey, bxby, arc_radius, false);
         let arc_dxby_excy = Element::arc(dxby, excy, arc_radius, false);
         let arc_bxdy_axcy = Element::arc(bxdy, axcy, arc_radius, false);
         let arc_excy_dxdy = Element::arc(excy, dxdy, arc_radius, false);
@@ -1175,7 +1168,7 @@ impl Grid {
         let match_path: Option<(bool, Vec<Element>)> = match_list.into_iter()
             .rev()
             .find(|x| {
-                let &(cond, ref paths) = x;
+                let &(cond, _) = x;
                 cond
             });
 
@@ -1188,7 +1181,7 @@ impl Grid {
                         if !ch.is_whitespace() ||
                            (*ch == ' ' && self.is_char(left, |c| c.is_alphanumeric()) &&
                             self.is_char(right, |c| c.is_alphanumeric())) {
-                            let mut s = escape_char(ch);
+                            let s = escape_char(ch);
                             let text = Element::Text(Loc::new(x, y), s);
                             Some(vec![text])
                         } else {
@@ -1234,7 +1227,7 @@ impl Grid {
             let optimized_elements = optimizer.optimize(settings);
             optimized_elements
         } else {
-            elements.into_iter().flat_map(|(l, elm)| elm).collect()
+            elements.into_iter().flat_map(|(_, elm)| elm).collect()
         };
         for elem in input {
             let element = elem.to_svg(settings);
@@ -1387,11 +1380,11 @@ fn escape_char(ch: &char) -> String {
     let escs = [('"', "&quot;"), ('\'', "&apos;"), ('<', "&lt;"), ('>', "&gt;"), ('&', "&amp;")];
     let quote_match: Option<&(char, &str)> = escs.iter()
         .find(|pair| {
-            let &(e, s) = *pair;
+            let &(e, _) = *pair;
             e == *ch
         });
     let quoted: String = match quote_match {
-        Some(&(c, quoted)) => String::from(quoted),
+        Some(&(_, quoted)) => String::from(quoted),
         None => {
             let mut s = String::new();
             s.push(*ch);

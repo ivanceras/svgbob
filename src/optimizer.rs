@@ -18,11 +18,11 @@ impl Optimizer {
         let found = self.elements
             .iter()
             .find(|x| {
-                let &(ref l, ref elm) = *x;
+                let &(ref l, _) = *x;
                 loc == l
             });
         match found {
-            Some(&(ref l, ref elm)) => Some(elm),    
+            Some(&(_, ref elm)) => Some(elm),    
             None => None,
         }
     }
@@ -138,20 +138,20 @@ impl Optimizer {
                 }
                 Element::Arc(_, _, _, _) => solid_paths.push(elm.clone()),
                 Element::Text(_, _) => text.push(elm.clone()),
-                Element::Path(_, _, _) => {
+                Element::Path(_, _, _,_) => {
                     merged.push(elm.clone());
                 }
             }
         }
-        merged.push(unify(solid_paths));
-        merged.push(unify(dashed_paths));
+        merged.push(unify(solid_paths, Stroke::Solid));
+        merged.push(unify(dashed_paths, Stroke::Dashed));
         merged.extend(arrows);
         merged.extend(text);
         merged
     }
 }
 
-fn unify(elements: Vec<Element>) -> Element {
+fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
     let mut paths = String::new();
     let mut last_loc = None;
     let mut start = None;
@@ -206,5 +206,5 @@ fn unify(elements: Vec<Element>) -> Element {
         Some(last_loc) => last_loc.clone(),
         None => Point::new(0.0, 0.0),
     };
-    Element::Path(el_start, el_end, paths)
+    Element::Path(el_start, el_end, paths, stroke)
 }
