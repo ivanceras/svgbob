@@ -1,7 +1,10 @@
 [package]
-name = "svgbob"
+name = "svgbobrus"
 version = "0.1.0"
-authors = ["lee"]
+authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
+description = "Transform your ascii diagrams into happy little SVG"
+repository = "https://github.com/ivanceras/svgbobrus"
+keyword = ["ascii", "svg", "convert"]
 
 [dependencies]
 svg = "0.5"
