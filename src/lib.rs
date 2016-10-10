@@ -246,7 +246,7 @@ impl Element {
                 // text can reduce, but not chain
                 None
             }
-            Element::Path(_, _, _,_) => None,
+            Element::Path(_, _, _, _) => None,
         }
     }
 
@@ -398,32 +398,32 @@ impl Grid {
 
 
     fn is_char<F>(&self, loc: &Loc, f: F) -> bool
-        where F: Fn(&char) -> bool {
+        where F: Fn(&char) -> bool
+    {
         let ch = self.get(loc);
         match ch {
             Some(ch) => f(ch),
             None => false,
         }
     }
-    
+
     // if it is a simple piece of drawing element,
     // make sure it is next to an other draing element
     // else it will be treated as text
     fn next_to_drawing_element(&self, loc: &Loc) -> bool {
-        loc.neighbors().iter()
-            .find(|&x| self.is_char(x, is_drawing_element) )
-                .map_or(false, |_| true)
+        loc.neighbors()
+            .iter()
+            .find(|&x| self.is_char(x, is_drawing_element))
+            .map_or(false, |_| true)
     }
-    
+
     // determine if the character in this location is a drawing element
     // but is used as text, such as a == b, cd to/path/file
     // it is used as text when it is a drawing element, and left and righ is alphanumeric
     fn used_as_text(&self, loc: &Loc) -> bool {
-        self.is_char(loc, is_drawing_element)
-            && 
-            (self.is_char(&loc.left(), |&c| c.is_alphanumeric())
-            || self.is_char(&loc.right(), |&c| c.is_alphanumeric())
-            )
+        self.is_char(loc, is_drawing_element) &&
+        (self.is_char(&loc.left(), |&c| c.is_alphanumeric()) ||
+         self.is_char(&loc.right(), |&c| c.is_alphanumeric()))
     }
 
 
@@ -442,7 +442,7 @@ impl Grid {
     /// and you will get the location of the points in the grid that describe the relative location
     /// of the point from the starting location of the elements
     /// all intersection and junction points fall exactly to any of the grid points
-    /// 
+    ///
     fn get_elements(&self, x: isize, y: isize, settings: &Settings) -> Option<Vec<Element>> {
         let text_width = settings.text_width;
         let text_height = settings.text_height;
@@ -510,7 +510,7 @@ impl Grid {
         let bxay = &Point::new(bx, ay);
         let bxey = &Point::new(bx, ey);
 
-        //extended points
+        // extended points
         let axbhey = &Point::new(ax - bh, ey);
         let exbhey = &Point::new(ex + bh, ey);
         let axbhay = &Point::new(ax - bh, ay);
@@ -563,7 +563,7 @@ impl Grid {
         let arc_excy_axcy = Element::arc(excy, axcy, arc_radius * 4.0, false);
         let arc_axcy_excy = Element::arc(axcy, excy, arc_radius * 4.0, false);
 
-        //extended arc
+        // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
         let arc_exbhey_axcy = Element::arc(exbhey, axcy, arc_radius * 4.0, false);
         let arc_axbhay_excy = Element::arc(axbhay, excy, arc_radius * 4.0, false);
@@ -1408,7 +1408,8 @@ impl Grid {
         let height = settings.text_height * self.rows as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
-            .set("font-family", "Electrolize,Titillium Web, Trebuchet MS, Arial")
+            .set("font-family",
+                 "Electrolize,Titillium Web, Trebuchet MS, Arial")
             .set("width", width)
             .set("height", height);
 
@@ -1543,7 +1544,7 @@ fn is_close_curve(ch: &char) -> bool {
 }
 
 
-fn is_drawing_element(ch: &char) -> bool{
+fn is_drawing_element(ch: &char) -> bool {
     [is_vertical,
      is_horizontal,
      is_vertical_dashed,
@@ -1562,14 +1563,15 @@ fn is_drawing_element(ch: &char) -> bool{
      is_arrow_left,
      is_arrow_right,
      is_open_curve,
-     is_close_curve,
-    ].iter().find(|&x| x(ch))
-          .map_or(false, |_| true)
+     is_close_curve]
+        .iter()
+        .find(|&x| x(ch))
+        .map_or(false, |_| true)
 
 }
 
 #[test]
-fn test_drawing_element(){
+fn test_drawing_element() {
     assert!(is_drawing_element(&'|'));
     assert!(is_drawing_element(&'-'));
     assert!(is_drawing_element(&'='));

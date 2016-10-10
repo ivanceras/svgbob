@@ -138,7 +138,7 @@ impl Optimizer {
                 }
                 Element::Arc(_, _, _, _) => solid_paths.push(elm.clone()),
                 Element::Text(_, _) => text.push(elm.clone()),
-                Element::Path(_, _, _,_) => {
+                Element::Path(_, _, _, _) => {
                     merged.push(elm.clone());
                 }
             }
