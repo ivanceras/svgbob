@@ -5,7 +5,7 @@ authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbobrus"
 keywords = ["ascii", "svg", "convert"]
-license = "Apache 2.0"
+license = "Apache-2.0"
 
 [dependencies]
 svg = "0.5"
