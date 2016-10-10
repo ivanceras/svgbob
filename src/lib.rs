@@ -427,8 +427,22 @@ impl Grid {
     }
 
 
-    // get the paths in the location x,y
-    // if non path, then see if it can return a text path
+    /// get the elements on this location
+    /// variable names:
+    /// the grid is 8x8 divided into 4 equal parts at each vertical and horizontal dimension.
+    /// a,b,c,d,e  is start,quater,center,3quarters, end respectively
+    ///
+    /// combining [a,b,c,d,e] * h]
+    /// ah,bh,ch,dh,eh are horizontal increments derived from dividing the textwidth into 4 equal parts.
+    ///
+    /// combining [a,b,c,d,e] * [v]
+    /// av,bv,cv,dv,ev are vertical increments derived from diving the textheight into 4 equal parts
+    ///
+    /// combining [a,b,c,d,e] * [x] and [a,b,c,d,e] * [y]
+    /// and you will get the location of the points in the grid that describe the relative location
+    /// of the point from the starting location of the elements
+    /// all intersection and junction points fall exactly to any of the grid points
+    /// 
     fn get_elements(&self, x: isize, y: isize, settings: &Settings) -> Option<Vec<Element>> {
         let text_width = settings.text_width;
         let text_height = settings.text_height;
