@@ -1,4 +1,7 @@
-# svgbobrus
+# SvgBobRus
+
+<img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge">
+
 SvgBobRus is an ascii to svg converter.
 
 ![image](https://ivanceras.github.io/svgbobrus/examples/demo.svg)
