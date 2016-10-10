@@ -156,18 +156,6 @@ impl Loc {
         }
     }
 
-    pub fn left_left(&self) -> Loc {
-        Loc {
-            x: self.x - 2,
-            y: self.y,
-        }
-    }
-    pub fn right_right(&self) -> Loc {
-        Loc {
-            x: self.x + 2,
-            y: self.y,
-        }
-    }
     /// get the 8 neighbors
     pub fn neighbors(&self) -> Vec<Loc> {
         vec![self.top(), 
@@ -630,8 +618,8 @@ impl Grid {
         let bottom_right = &this.bottom_right();
 
         // left of left
-        let left_left = &this.left_left();
-        let right_right = &this.right_right();
+        let left_left = &this.left().left();
+        let right_right = &this.right().right();
 
 
         let match_list: Vec<(bool, Vec<Element>)> = 
@@ -1105,22 +1093,23 @@ impl Grid {
                  vec![arc_axcy_cxby.clone(), cxay_cxby.clone()]
                 ),
                 /*
-                      .-.  but not   .-.
-                                     '
+                      .-.  
+                     (    
                 */
                 (self.is_char(this, is_horizontal) 
                  && self.is_char(left, is_low_round)
                  && self.is_char(right, is_low_round)
-                 && !self.is_char(bottom_left, is_high_round),
+                 && self.is_char(&this.bottom_left().left(), is_open_curve),
                  vec![arc_excy_axcy.clone()]
                 ),
-                /*                 .
-                      '-' but not  '-'
+                /*         
+                     (
+                      '-' 
                 */
                 (self.is_char(this, is_horizontal) 
                  && self.is_char(left, is_high_round)
                  && self.is_char(right, is_high_round)
-                 && !self.is_char(top_left, is_low_round),
+                 && self.is_char(&this.top_left().left(), is_open_curve),
                  vec![arc_axcy_excy.clone()]
                 ),
                 /*
