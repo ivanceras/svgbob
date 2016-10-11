@@ -17,6 +17,19 @@ use self::Stroke::Dashed;
 
 mod optimizer;
 
+
+/// generate an SVG from the ascii text using the default settings
+/// let input = r#"
+/// .-------------------------------------.
+/// | Hello here and there and everywhere |
+/// '-------------------------------------'
+/// "#;
+/// println!("svg: {}",svgbob::to_svg(input));
+/// 
+pub fn to_svg(input: &str) -> SVG {
+    Grid::from_str(input).get_svg(&Settings::default())
+}
+
 pub struct Settings {
     text_width: f32,
     text_height: f32,
@@ -391,6 +404,7 @@ pub struct Grid {
     lines: Vec<Vec<char>>,
 }
 impl Grid {
+    /// create a grid from str
     pub fn from_str(s: &str) -> Grid {
         let lines: Vec<Vec<char>> = s.split("\n")
             .map(|l| l.trim_right().chars().collect())
@@ -1410,6 +1424,8 @@ impl Grid {
         nodes
     }
 
+
+    /// get the generated svg
     pub fn get_svg(&self, settings: &Settings) -> SVG {
         let nodes = self.get_svg_nodes(settings);
         let width = settings.text_width * self.columns as f32;
