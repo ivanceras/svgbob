@@ -121,10 +121,13 @@ impl Optimizer {
             match elm {
                 Element::Line(_, _, ref stroke, ref feature) => {
                     match *feature {
-                        Some(Feature::Arrow) => {
+                        Feature::Arrow => {
                             arrows.push(elm.clone());
-                        }
-                        None => {
+                        },
+                        Feature::Circle =>{
+                            arrows.push(elm.clone());
+                        },
+                        Feature::Nothing => {
                             match *stroke {
                                 Stroke::Solid => {
                                     solid_paths.push(elm.clone());

@@ -71,10 +71,14 @@ pub enum Stroke {
     Dashed,
 }
 
+
+#[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
 pub enum Feature {
-    Arrow,
+    Arrow, //end
+    Circle, //start
+    Nothing,
 }
 
 #[derive(PartialEq)]
@@ -173,7 +177,7 @@ impl Loc {
 #[derive(Debug)]
 #[derive(Clone)]
 pub enum Element {
-    Line(Point, Point, Stroke, Option<Feature>),
+    Line(Point, Point, Stroke, Feature),
     Arc(Point, Point, f32, bool),
     Text(Loc, String),
     Path(Point, Point, String, Stroke),
@@ -181,10 +185,10 @@ pub enum Element {
 
 impl Element {
     fn solid_line(s: &Point, e: &Point) -> Element {
-        Element::line(s, e, Stroke::Solid, None)
+        Element::line(s, e, Stroke::Solid, Feature::Nothing)
     }
 
-    fn line(s: &Point, e: &Point, stroke: Stroke, feature: Option<Feature>) -> Element {
+    fn line(s: &Point, e: &Point, stroke: Stroke, feature: Feature) -> Element {
         Element::Line(s.clone(), e.clone(), stroke, feature)
     }
     fn arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
@@ -197,10 +201,10 @@ impl Element {
         match *self {
             Element::Line(_, ref e, ref stroke, ref feature) => {
                 match *other {
-                    Element::Line(ref s2, _, ref stroke2, _) => {
-                        if e == s2 && stroke == stroke2 //must have same stroke and no feature
-                       && feature.is_none()
-                        // no arrow on the first
+                    Element::Line(ref s2, _, ref stroke2, ref feature2) => {
+                        if e == s2 && stroke == stroke2 //must have same stroke
+                       && *feature != Feature::Arrow // no arrow on the first
+                       && *feature2 != Feature::Circle // no start marker on the second
                         {
                             Some(vec![self.clone(), other.clone()])
                         } else {
@@ -208,7 +212,7 @@ impl Element {
                         }
                     }
                     Element::Arc(ref s2, _, _, _) => {
-                        if e == s2 && feature.is_none() {
+                        if e == s2 && *feature != Feature::Arrow {
                             Some(vec![self.clone(), other.clone()])
                         } else {
                             None
@@ -260,7 +264,9 @@ impl Element {
                     Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
                         // note* dual 3 point check for trully collinear lines
                         if collinear(s, e, s2) && collinear(s, e, e2) && e == s2 &&
-                           stroke == stroke2 && feature.is_none() {
+                           stroke == stroke2 && *feature == Feature::Nothing
+                           && *feature2 != Feature::Circle
+                           {
                             let reduced = Some(Element::Line(s.clone(),
                                                              e2.clone(),
                                                              stroke.clone(),
@@ -304,10 +310,13 @@ impl Element {
                     .set("y2", e.y);
 
                 match *feature {
-                    Some(Feature::Arrow) => {
+                    Feature::Arrow => {
                         svg_line.assign("marker-end", "url(#triangle)");
-                    }
-                    None => (),
+                    },
+                    Feature::Circle => {
+                        svg_line.assign("marker-start", "url(#circle)");
+                    },
+                    Feature::Nothing => (),
                 };
                 match *stroke {
                     Stroke::Solid => (),
@@ -587,38 +596,38 @@ impl Grid {
                                                                    &Point::new(ex + eh, ey));
 
         // dashed lines
-        let vertical_dashed = Element::line(center_top, center_bottom, Stroke::Dashed, None);
-        let horizontal_dashed = Element::line(mid_left, mid_right, Stroke::Dashed, None);
-        let low_horizontal_dashed = Element::line(low_left, low_right, Stroke::Dashed, None);
+        let vertical_dashed = Element::line(center_top, center_bottom, Stroke::Dashed, Feature::Nothing);
+        let horizontal_dashed = Element::line(mid_left, mid_right, Stroke::Dashed, Feature::Nothing);
+        let low_horizontal_dashed = Element::line(low_left, low_right, Stroke::Dashed, Feature::Nothing);
 
         let arrow_down = Element::line(center_top,
                                        center_bottom,
                                        Stroke::Solid,
-                                       Some(Feature::Arrow));
+                                       Feature::Arrow);
         let arrow_down_dashed = Element::line(center_top,
                                               center_bottom,
                                               Stroke::Dashed,
-                                              Some(Feature::Arrow));
+                                              Feature::Arrow);
         let arrow_up = Element::line(center_bottom,
                                      center_top,
                                      Stroke::Solid,
-                                     Some(Feature::Arrow));
+                                     Feature::Arrow);
         let arrow_up_dashed = Element::line(center_bottom,
                                             center_top,
                                             Stroke::Dashed,
-                                            Some(Feature::Arrow));
-        let arrow_left = Element::line(mid_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
+                                            Feature::Arrow);
+        let arrow_left = Element::line(mid_right, cxcy, Stroke::Solid, Feature::Arrow);
         let arrow_left_dashed =
-            Element::line(mid_right, cxcy, Stroke::Dashed, Some(Feature::Arrow));
-        let arrow_right = Element::line(mid_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
+            Element::line(mid_right, cxcy, Stroke::Dashed, Feature::Arrow);
+        let arrow_right = Element::line(mid_left, cxcy, Stroke::Solid, Feature::Arrow);
         let arrow_right_dashed =
-            Element::line(mid_left, cxcy, Stroke::Dashed, Some(Feature::Arrow));
+            Element::line(mid_left, cxcy, Stroke::Dashed, Feature::Arrow);
         let arrow_bottom_left =
-            Element::line(high_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
+            Element::line(high_right, cxcy, Stroke::Solid, Feature::Arrow);
         let arrow_bottom_right =
-            Element::line(high_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_top_left = Element::line(low_right, cxcy, Stroke::Solid, Some(Feature::Arrow));
-        let arrow_top_right = Element::line(low_left, cxcy, Stroke::Solid, Some(Feature::Arrow));
+            Element::line(high_left, cxcy, Stroke::Solid, Feature::Arrow);
+        let arrow_top_left = Element::line(low_right, cxcy, Stroke::Solid, Feature::Arrow);
+        let arrow_top_right = Element::line(low_left, cxcy, Stroke::Solid, Feature::Arrow);
 
         // relative location of characters
         let this = &Loc::new(x, y);
