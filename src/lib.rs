@@ -645,7 +645,7 @@ impl Grid {
         let left_left = &this.left().left();
         let right_right = &this.right().right();
 
-
+        /// FIXME: need more exhaustive list, for use case that makes sense matching
         let match_list: Vec<(bool, Vec<Element>)> = 
             vec![
                 /*
