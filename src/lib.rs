@@ -9,6 +9,11 @@ use svg::node::element::SVG;
 use svg::node::element::Definitions;
 use svg::node::element::Marker;
 use optimizer::Optimizer;
+use self::Feature::Arrow;
+use self::Feature::Circle;
+use self::Feature::Nothing;
+use self::Stroke::Solid;
+use self::Stroke::Dashed;
 
 mod optimizer;
 
@@ -185,7 +190,7 @@ pub enum Element {
 
 impl Element {
     fn solid_line(s: &Point, e: &Point) -> Element {
-        Element::line(s, e, Stroke::Solid, Feature::Nothing)
+        Element::line(s, e, Solid, Nothing)
     }
 
     fn line(s: &Point, e: &Point, stroke: Stroke, feature: Feature) -> Element {
@@ -203,8 +208,8 @@ impl Element {
                 match *other {
                     Element::Line(ref s2, _, ref stroke2, ref feature2) => {
                         if e == s2 && stroke == stroke2 //must have same stroke
-                       && *feature != Feature::Arrow // no arrow on the first
-                       && *feature2 != Feature::Circle // no start marker on the second
+                       && *feature != Arrow // no arrow on the first
+                       && *feature2 != Circle // no start marker on the second
                         {
                             Some(vec![self.clone(), other.clone()])
                         } else {
@@ -212,7 +217,7 @@ impl Element {
                         }
                     }
                     Element::Arc(ref s2, _, _, _) => {
-                        if e == s2 && *feature != Feature::Arrow {
+                        if e == s2 && *feature != Arrow {
                             Some(vec![self.clone(), other.clone()])
                         } else {
                             None
@@ -225,7 +230,7 @@ impl Element {
                 match *other {
                     Element::Line(ref s2, _, ref stroke2, _) => {
                         match *stroke2 {
-                            Stroke::Solid => {
+                            Solid => {
                                 // arcs are always solid, so match only solid line to arc
                                 if e == s2 {
                                     Some(vec![self.clone(), other.clone()])
@@ -262,10 +267,10 @@ impl Element {
             Element::Line(ref s, ref e, ref stroke, ref feature) => {
                 match *other {
                     Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
-                        // note* dual 3 point check for trully collinear lines
+                        // note: dual 3 point check for trully collinear lines
                         if collinear(s, e, s2) && collinear(s, e, e2) && e == s2 &&
-                           stroke == stroke2 && *feature == Feature::Nothing
-                           && *feature2 != Feature::Circle
+                           stroke == stroke2 && *feature == Nothing
+                           && *feature2 != Circle
                            {
                             let reduced = Some(Element::Line(s.clone(),
                                                              e2.clone(),
@@ -310,17 +315,17 @@ impl Element {
                     .set("y2", e.y);
 
                 match *feature {
-                    Feature::Arrow => {
+                    Arrow => {
                         svg_line.assign("marker-end", "url(#triangle)");
                     },
-                    Feature::Circle => {
+                    Circle => {
                         svg_line.assign("marker-start", "url(#circle)");
                     },
-                    Feature::Nothing => (),
+                    Nothing => (),
                 };
                 match *stroke {
-                    Stroke::Solid => (),
-                    Stroke::Dashed => {
+                    Solid => (),
+                    Dashed => {
                         svg_line.assign("stroke-dasharray", (3, 3));
                         svg_line.assign("fill", "none");
                     }
@@ -359,8 +364,8 @@ impl Element {
                     .set("fill", "none");
 
                 match *stroke {
-                    Stroke::Solid => (),
-                    Stroke::Dashed => {
+                    Solid => (),
+                    Dashed => {
                         path.assign("stroke-dasharray", (3, 3));
                     }
                 };
@@ -597,38 +602,38 @@ impl Grid {
                                                                    &Point::new(ex + eh, ey));
 
         // dashed lines
-        let vertical_dashed = Element::line(center_top, center_bottom, Stroke::Dashed, Feature::Nothing);
-        let horizontal_dashed = Element::line(mid_left, mid_right, Stroke::Dashed, Feature::Nothing);
-        let low_horizontal_dashed = Element::line(low_left, low_right, Stroke::Dashed, Feature::Nothing);
+        let vertical_dashed = Element::line(center_top, center_bottom, Dashed, Nothing);
+        let horizontal_dashed = Element::line(mid_left, mid_right, Dashed, Nothing);
+        let low_horizontal_dashed = Element::line(low_left, low_right, Dashed, Nothing);
 
         let arrow_down = Element::line(center_top,
                                        center_bottom,
-                                       Stroke::Solid,
-                                       Feature::Arrow);
+                                       Solid,
+                                       Arrow);
         let arrow_down_dashed = Element::line(center_top,
                                               center_bottom,
-                                              Stroke::Dashed,
-                                              Feature::Arrow);
+                                              Dashed,
+                                              Arrow);
         let arrow_up = Element::line(center_bottom,
                                      center_top,
-                                     Stroke::Solid,
-                                     Feature::Arrow);
+                                     Solid,
+                                     Arrow);
         let arrow_up_dashed = Element::line(center_bottom,
                                             center_top,
-                                            Stroke::Dashed,
-                                            Feature::Arrow);
-        let arrow_left = Element::line(mid_right, cxcy, Stroke::Solid, Feature::Arrow);
+                                            Dashed,
+                                            Arrow);
+        let arrow_left = Element::line(mid_right, cxcy, Solid, Arrow);
         let arrow_left_dashed =
-            Element::line(mid_right, cxcy, Stroke::Dashed, Feature::Arrow);
-        let arrow_right = Element::line(mid_left, cxcy, Stroke::Solid, Feature::Arrow);
+            Element::line(mid_right, cxcy, Dashed, Arrow);
+        let arrow_right = Element::line(mid_left, cxcy, Solid, Arrow);
         let arrow_right_dashed =
-            Element::line(mid_left, cxcy, Stroke::Dashed, Feature::Arrow);
+            Element::line(mid_left, cxcy, Dashed, Arrow);
         let arrow_bottom_left =
-            Element::line(high_right, cxcy, Stroke::Solid, Feature::Arrow);
+            Element::line(high_right, cxcy, Solid, Arrow);
         let arrow_bottom_right =
-            Element::line(high_left, cxcy, Stroke::Solid, Feature::Arrow);
-        let arrow_top_left = Element::line(low_right, cxcy, Stroke::Solid, Feature::Arrow);
-        let arrow_top_right = Element::line(low_left, cxcy, Stroke::Solid, Feature::Arrow);
+            Element::line(high_left, cxcy, Solid, Arrow);
+        let arrow_top_left = Element::line(low_right, cxcy, Solid, Arrow);
+        let arrow_top_right = Element::line(low_left, cxcy, Solid, Arrow);
 
         // relative location of characters
         let this = &Loc::new(x, y);
@@ -645,7 +650,7 @@ impl Grid {
         let left_left = &this.left().left();
         let right_right = &this.right().right();
 
-        /// FIXME: need more exhaustive list, for use case that makes sense matching
+        // FIXME: need more exhaustive list, for use case that makes sense matching
         let match_list: Vec<(bool, Vec<Element>)> = 
             vec![
                 /*
@@ -1451,12 +1456,12 @@ fn get_defs() -> Definitions {
 
 fn get_styles() -> Style {
     let style = r#"
-    /* <![CDATA[ */
+     <![CDATA[ 
     line, path {
       stroke: black;
       stroke-width: 1;
     }
- /* ]]> */
+     ]]> 
     "#;
     Style::new(style)
 }
