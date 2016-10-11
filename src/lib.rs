@@ -202,6 +202,7 @@ impl Element {
     // this path can chain to the other path
     // chain means the paths can be arranged and express in path definition
     // if self.end == path.start
+    /*
     fn chain(&self, other: &Element) -> Option<Vec<Element>> {
         match *self {
             Element::Line(_, ref e, ref stroke, ref feature) => {
@@ -258,6 +259,7 @@ impl Element {
             Element::Path(_, _, _, _) => None,
         }
     }
+    */
 
     // if this element can reduce the other, return the new reduced element
     // for line it has to be collinear and in can connect start->end->start
@@ -422,15 +424,6 @@ impl Grid {
         }
     }
 
-    // if it is a simple piece of drawing element,
-    // make sure it is next to an other draing element
-    // else it will be treated as text
-    fn next_to_drawing_element(&self, loc: &Loc) -> bool {
-        loc.neighbors()
-            .iter()
-            .find(|&x| self.is_char(x, is_drawing_element))
-            .map_or(false, |_| true)
-    }
 
     // determine if the character in this location is a drawing element
     // but is used as text, such as a == b, cd to/path/file
