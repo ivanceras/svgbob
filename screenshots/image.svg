@@ -58,12 +58,12 @@
 <line marker-end="url(#triangle)" x1="36" x2="36" y1="1840" y2="1824"/>
 <line marker-end="url(#triangle)" x1="36" x2="276" y1="1912" y2="1912"/>
 <line marker-end="url(#triangle)" x1="40" x2="276" y1="1912" y2="1912"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="1952" y2="1936"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="8" x2="4" y1="2024" y2="2024"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="2016" y2="2080"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="32" x2="284" y1="2024" y2="2024"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="40" x2="284" y1="2024" y2="2024"/>
-<line marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="2032" y2="2080"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="1952" y2="1936"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="8" x2="4" y1="2024" y2="2024"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="2016" y2="2080"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="32" x2="284" y1="2024" y2="2024"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="40" x2="284" y1="2024" y2="2024"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="36" x2="36" y1="2032" y2="2080"/>
 <line marker-end="url(#triangle)" x1="56" x2="52" y1="2272" y2="2264"/>
 <line marker-end="url(#triangle)" x1="68" x2="68" y1="2272" y2="2256"/>
 <line marker-end="url(#triangle)" x1="72" x2="84" y1="2288" y2="2264"/>

@@ -322,6 +322,7 @@ impl Element {
                     Stroke::Solid => (),
                     Stroke::Dashed => {
                         svg_line.assign("stroke-dasharray", (3, 3));
+                        svg_line.assign("fill", "none");
                     }
                 };
 
@@ -1357,7 +1358,7 @@ impl Grid {
                            (*ch == ' ' && self.is_char(left, |c| c.is_alphanumeric()) &&
                             self.is_char(right, |c| c.is_alphanumeric())) {
                             let s = escape_char(ch);
-                            let text = Element::Text(Loc::new(x, y), s);
+                            let text = Element::Text(this.clone(), s);
                             Some(vec![text])
                         } else {
                             None
