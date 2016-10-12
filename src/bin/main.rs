@@ -1,361 +1,58 @@
+#[macro_use]
+extern crate clap;
+
 extern crate svgbob;
 extern crate svg;
 
 use svgbob::Grid;
 use svgbob::Settings;
 
-
 fn main() {
-    let file = "screenshots/image.svg";
-    let g = Grid::from_str(get_arg());
+    use clap::{Arg, App};
+    use std::io::Read;
+
+    let args = App::new("svgbob")
+        .version(crate_version!())
+        .about("SvgBobRus is an ascii to svg converter")
+        .arg(Arg::with_name("input").index(1).help("svgbob text file to parse [default: STDIN]"))
+        .arg(Arg::with_name("output")
+             .short("o").long("output")
+             .takes_value(true)
+             .help("where to write svg output [default: STDOUT]"))
+        .get_matches();
+
+    let mut bob = String::new();
+    if let Some(file) = args.value_of("input") {
+        use std::fs::File;
+        match File::open(file) {
+            Ok(mut f) => {
+                f.read_to_string(&mut bob).unwrap();
+            },
+            Err(e) => {
+                use std::io::Write;
+                use std::process::exit;
+
+                writeln!(&mut std::io::stderr(), "Failed to open input file {}: {}", file, e).unwrap();
+                exit(1);
+            }
+        }
+    } else {
+        use std::io;
+        io::stdin().read_to_string(&mut bob).unwrap();
+    }
+
+    let g = Grid::from_str(&*bob);
     let svg = g.get_svg(&Settings::compact());
-    svg::save(file, &svg).unwrap();
-    println!("Saved to {}", file);
-}
 
-fn get_arg() -> &'static str {
+    if let Some(file) = args.value_of("output") {
+        if let Err(e) = svg::save(file, &svg) {
+            use std::io::Write;
+            use std::process::exit;
 
-    let arg = r#"
-
-
-+------+   +-----+   +-----+   +-----+
-|      |   |     |   |     |   |     |
-| Foo  +-->| Bar +---+ Baz |<--+ Moo |
-|      |   |     |   |     |   |     |
-+------+   +-----+   +--+--+   +-----+
-              ^         |
-              |         V
-.-------------+-----------------------.
-| Hello here and there and everywhere |
-'-------------------------------------'
-
-
-                        ____________
-   .--------------.     \           \
-  / a == b         \     \           \     __________
- (    &&            )     ) process   )    \         \
-  \ 'string' ne '' /     /           /     / process /
-   '--------------'     /___________/     /_________/
-
-
-    __________________
-    \_________________\
-     \                 \
-      . another process .
-     /_________________/
-    /_________________/
-
-  User code  ^               ^ OS code
-              \             /
-               \        .--'
-                \      /
-  User code  <--- Mode ----> OS code
-                /      \
-            .--'        \___
-           /                \
-          v                  v 
-       User code            OS code
-
-             .---.  .---. .---.  .---.    .---.  .---.
-    OS API   '---'  '---' '---'  '---'    '---'  '---'
-               |      |     |      |        |      |
-               v      v     |      v        |      v
-             .------------. | .-----------. |  .-----.
-             | Filesystem | | | Scheduler | |  | MMU |
-             '------------' | '-----------' |  '-----'
-                    |       |      |        |
-                    v       |      |        v
-                 .----.     |      |    .---------.
-                 | IO |<----'      |    | Network |
-                 '----'            |    '---------'
-                    |              |         |
-                    v              v         v
-             .---------------------------------------.
-             |                  HAL                  |
-             '---------------------------------------'
-             
-
-   ____[]
-  | ___ |
-  ||   ||  device
-  ||___||  loads
-  | ooo |----------------------------------------------------------.
-  | ooo |    |                          |                          |
-  | ooo |    |                          |                          |
-  '-----'    |                          |                          |
-             |                          |                          |
-             v                          v                          v
-   .-------------------.  .---------------------------.  .-------------------.
-   | Loadable module C |  |     Loadable module A     |  | Loadable module B |
-   '-------------------'  |---------------------------|  |   (instrumented)  |
-             |            |         .-----.           |  '-------------------'
-             '------------+-------->| A.o |           |             |
-                 calls    |         '-----'           |             |
-                          |    .------------------.   |             |
-                          |   / A.instrumented.o /<---+-------------'
-                          |  '------------------'     |    calls
-                          '---------------------------'   
-
-        .--------------.
-         \              \
-          '--------------'
-
-                                        .--> Base::Class::Derived_A
-                                       /
-                                      .----> Base::Class::Derived_B    
-      Something -------.             /         \
-                        \           /           .---> Base::Class::Derived
-      Something::else    \         /             \
-            \             \       /               '--> Base::Class::Derived
-             \             \     /
-              \             \   .-----------> Base::Class::Derived_C 
-               \             \ /
-                '------ Base::Class
-                       /  \ \ \
-                      '    \ \ \  
-                      |     \ \ \
-                      .      \ \ '--- The::Latest
-                     /|       \ \      \
- With::Some::fantasy  '        \ \      '---- The::Latest::Greatest
-                     /|         \ \
-         More::Stuff  '          \ '- I::Am::Running::Out::Of::Ideas
-                     /|           \
-         More::Stuff  '            \
-                     /              '--- Last::One
-       More::Stuff  V 
-
-                    /  \
-                   /    \
-                  /      \
-                 /        \
-  Safety
-    ^
-    |                       *Rust
-    |           *Java
-    | *Python
-    |                        *C++
-    +-----------------------------> Control
-
-    ^
-    :
-    :
-    :
-    :
-<===+==============================>
-    :
-    :
-    V
-    
-    ..............................
-
-    ...
-    ..
-
-  this is a sentence
-  separated  words  of nill
-
-  TODO:
-        
-      ^ ^ ^
-       \|/
-        . 
-       /|\
-      v V v 
-
-      ^ ^ ^
-       \|/
-      <-+->
-       /|\
-      v V v 
-
-       \|/
-       -.-
-       /|\
-
-        |   \/   
-       -+-  /\      
-        |   
-        
-        |      |    |      |
-        +--  --+    +--  --+   +--  --+
-                    |      |   |      |
-
-                     |    |  |     |
-             .- -.   .-  -.  '-   -'
-             |   |
-
-        .-   -.  .-.       
-        '-   -'  | |  | |  
-                      '-'
-
-      \      |    /  |
-       .     '   '   .
-       |    /    |    \ 
-
-        \    / 
-         .  .
-        /    \
-
-       .    .
-      /|    |\
-
-      
-      \|   |/
-       '   '
-
-       \
-       /
-
-       /
-       \
-
-
-       /      \
-      '--    --'
-     /          \
-
-       /   \
-    --'     '--
-     /       \
-
-                       \         /
-       --.--  --.--   --.--   --.--
-        /        \     
-
-
-        |   |
-        .   .
-       /|   |\ 
-
-        |
-        .
-       / \
-
-       \|/
-        .
-       /|\
-
-       
-       \|/
-      --.--
-       /|\
-
-       \|/
-      --+--
-       /|\
-        
-        |/  \|
-        .    .
-        |    |
-
-
-       -.  -.
-       /     \
-
-        .-  .-
-       /     \
-
-      
-       /   /     \    \
-      '-  '-------'   -'
-       
-
-       .-.
-      (   )
-       '-'
-
-
-       .------.
-      (        )
-       '------'
-
-        ________  
-       /       /
-      /       /
-     /_______/
-
-
-        ________  
-        \       \
-         \       \
-          \_______\
-
-       ________ 
-      |________|
-
-
-       ________ 
-      |        |
-      |________|
-
-      .-.
-      '-'
-
-        ________  
-        \_______\
-
-       /\
-      /  \
-     /____\
-
-       /\
-      /  \
-     /    \
-    '------'
-
-       ___
-      /   \
-      \___/
-
-      ______
-     /      \
-    /        \
-    \        /
-     \______/
-        
-
-        +---------+
-        |         |                        +--------------+
-        |   NFS   |--+                     |              |
-        |         |  |                 +-->|   CacheFS    |
-        +---------+  |   +----------+  |   |  /dev/hda5/  |
-                     |   |          |  |   +--------------+
-        +---------+  +-->|          |  |
-        |         |      |          |--+
-        |   AFS   |----->| FS-Cache |
-        |         |      |          |--+
-        +---------+  +-->|          |  |
-                     |   |          |  |   +--------------+
-        +---------+  |   +----------+  |   |              |
-        |         |  |                 +-->|  CacheFiles  |
-        |  ISOFS  |--+                     |  /var/cache  |
-        |         |                        +--------------+
-        +---------+
-    
-
-     .--..--..--..--..--..--.
-    .' \  (`._   (_)     _   \
-  .'    |  '._)         (_)  |
-  \ _.')\      .----..---.   /
-  |(_.'  |    /    .-\-.  \  |
-  \     0|    |   ( O| O) | o|
-   |  _  |  .--.____.'._.-.  |
-   \ (_) | o         -` .-`  |
-    |    \   |`-._ _ _ _ _\ /
-    \    |   |  `. |_||_|   |
-    | o  |    \_      \     |     -.   .-.
-    |.-.  \     `--..-'   O |     `.`-' .'
-  _.'  .' |     `-.-'      /-.__   ' .-'
-.' `-.` '.|='=.='=.='=.='=|._/_ `-'.'
-`-._  `.  |________/\_____|    `-.'
-   .'   ).| '=' '='\/ '=' |
-   `._.`  '---------------'
-           //___\   //___\
-             ||       ||
-             ||_.-.   ||_.-.
-            (_.--__) (_.--__)
-
-"#;
-
-    arg
+            writeln!(&mut std::io::stderr(), "Failed to write to output file {}: {}", file, e).unwrap();
+            exit(2);
+        }
+    } else {
+        println!("{}", svg);
+    }
 }
