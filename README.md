@@ -122,6 +122,47 @@ The SVG image is generated from the ascii text below.
 
 
 ```
+
+#Using in command line
+
+`cargo install svgbob`
+
+`svgbob` normally operates on stdin and stdout:
+```console
+$ svgbob < examples/long.bob > long.svg
+```
+produces an SVG in `long.svg` similar to the one produced by the old `main` binary. `svgbob` also allows passing arguments instead:
+```console
+$ svgbob examples/long.bob -o long.svg
+```
+And you can mix and match:
+```console
+$ svgbob -o long.svg < examples/long.bob
+$ svgbob examples/long.bob > long.svg
+```
+
+This is also documented in the output of `svgbob --help`:
+```console
+$ svgbob --help
+svgbob 0.1.2
+SvgBobRus is an ascii to svg converter
+
+USAGE:
+    svgbob [OPTIONS] [input]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -o, --output <output>    where to write svg output [default: STDOUT]
+
+ARGS:
+    <input>    svgbob text file to parse [default: STDIN]
+```
+
+
+
 Originally written in elm from the original [project](https://github.com/ivanceras/svgbob)
 
 [Demo site](https://ivanceras.github.io/svgbobrus/)
