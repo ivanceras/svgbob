@@ -10,3 +10,9 @@ license = "Apache-2.0"
 
 [dependencies]
 svg = "0.5"
+clap = "2.13"
+
+[lib]
+
+[[bin]]
+name = "svgbob"
