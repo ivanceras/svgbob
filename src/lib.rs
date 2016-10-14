@@ -569,6 +569,10 @@ impl Grid {
         let exbhey = &Point::new(ex + bh, ey);
         let axbhay = &Point::new(ax - bh, ay);
         let exbhay = &Point::new(ex + bh, ay);
+        let axchay = &Point::new(ax - ch, ay);
+        let exchey = &Point::new(ex + ch, ey);
+        let exchay = &Point::new(ex + ch, ay);
+        let axchey = &Point::new(ax - ch, ey);
 
 
         // grid lines
@@ -588,6 +592,16 @@ impl Grid {
         let exay_dxby = Element::solid_line(exay, dxby);
         let cxey_cxdy = Element::solid_line(cxey, cxdy);
         let dxdy_exey = Element::solid_line(dxdy, exey);
+        let cxcy_exey = Element::solid_line(cxcy, exey);
+        let cxcy_axey = Element::solid_line(cxcy, axey);
+        let axay_cxcy = Element::solid_line(axay, cxcy);
+        let cxcy_exay = Element::solid_line(cxcy, exay);
+        let cxay_cxcy = Element::solid_line(cxay, cxcy);
+
+        let axchay_cxey = Element::solid_line(axchay, cxey);
+        let cxay_exchey = Element::solid_line(cxay, exchey);
+        let cxey_exchay = Element::solid_line(cxey, exchay);
+        let axchey_exchay = Element::solid_line(axchey, exchay);
 
         // common arc
         let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
@@ -603,7 +617,6 @@ impl Grid {
         let arc_bxdy_axcy = Element::arc(bxdy, axcy, arc_radius, false);
         let arc_excy_dxdy = Element::arc(excy, dxdy, arc_radius, false);
         let arc_dxcy_bxdy = Element::arc(dxcy, bxdy, arc_radius * 2.0, false);
-        let arc_bxcy_dxby = Element::arc(bxcy, dxby, arc_radius * 2.0, false);
         let arc_dxdy_bxcy = Element::arc(dxdy, bxcy, arc_radius * 2.0, false);
         let arc_bxby_dxcy = Element::arc(bxby, dxcy, arc_radius * 2.0, false);
         let arc_bxdy_bxby = Element::arc(bxdy, bxby, arc_radius * 2.0, false);
@@ -616,6 +629,7 @@ impl Grid {
         let arc_bxey_bxay = Element::arc(bxey, bxay, arc_radius * 4.0, false);
         let arc_excy_axcy = Element::arc(excy, axcy, arc_radius * 4.0, false);
         let arc_axcy_excy = Element::arc(axcy, excy, arc_radius * 4.0, false);
+        let arc_bxcy_dxby = Element::arc(bxcy, dxby, arc_radius * 4.0, false);
 
         // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
@@ -1221,6 +1235,42 @@ impl Grid {
                  vec![cxay_cxby.clone(), dxdy_exey.clone(), arc_cxby_dxdy.clone()]
                 ),
                 /*
+                     .  
+                     |\
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![cxcy_cxey.clone(), cxcy_exey.clone()]
+                ),
+                /*
+                      .  
+                     /|
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(bottom_left, is_slant_right),
+                 vec![cxcy_cxey.clone(), cxcy_axey.clone()]
+                ),
+                /*
+                     \|  
+                      '
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(top_left, is_slant_left),
+                 vec![axay_cxcy.clone(), cxcy_cxay.clone()]
+                ),
+                /*
+                      |/
+                      '
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(top_right, is_slant_right),
+                 vec![cxay_cxcy.clone(), cxcy_exay.clone()]
+                ),
+                /*
                      /
                     .-
                    /
@@ -1265,6 +1315,52 @@ impl Grid {
                  && self.is_char(top_left, is_slant_left)
                  && self.is_char(bottom_right, is_slant_left),
                  vec![slant_left.clone(),dxcy_excy.clone(), arc_bxby_dxcy.clone()]
+                ),
+                /*
+                    
+                    -.-
+                    / 
+                   
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(bottom_left, is_slant_right),
+                 vec![horizontal.clone(), axey_bxdy.clone(), arc_excy_bxdy.clone()]
+                ),
+                /*
+                    
+                    -.-
+                      \ 
+                   
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![horizontal.clone(), dxdy_exey.clone(), arc_dxdy_axcy.clone()]
+                ),
+                /*
+                      /
+                    -'-
+                   
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(top_right, is_slant_right),
+                 vec![horizontal.clone(), dxby_exay.clone(), arc_axcy_dxby.clone()]
+                ),
+                /*
+                    \ 
+                    -'-
+                   
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(top_left, is_slant_left),
+                 vec![horizontal.clone(), axay_bxby.clone(), arc_bxby_excy.clone()]
                 ),
                 /*
                      |
@@ -1329,6 +1425,83 @@ impl Grid {
                  && self.is_char(top, is_vertical)
                  && self.is_char(bottom_right, is_slant_left),
                  vec![vertical.clone(), exey_dxdy.clone(), arc_cxby_dxdy.clone()]
+                ),
+                /*
+                     | 
+                     .  
+                    / \
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(bottom_left, is_slant_right)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![cxay_cxcy.clone(), cxcy_exey.clone(), cxcy_axey.clone()]
+                ),
+                /*
+                     |/
+                     '  
+                     | 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(top_right, is_slant_right),
+                 vec![vertical.clone(), cxcy_exay.clone()]
+                ),
+                /*
+                    \|
+                     '  
+                     | 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(top_left, is_slant_left),
+                 vec![vertical.clone(), axay_cxcy.clone()]
+                ),
+                /*
+                     |
+                      \
+                      |
+                      
+                */
+                (self.is_char(this, is_slant_left)
+                 && self.is_char(top_left, is_vertical)
+                 && self.is_char(bottom, is_vertical),
+                 vec![axchay_cxey.clone()]
+                ),
+                /*
+                      |
+                      \
+                       |
+                      
+                */
+                (self.is_char(this, is_slant_left)
+                 && self.is_char(top, is_vertical)
+                 && self.is_char(bottom_right, is_vertical),
+                 vec![cxay_exchey.clone()]
+                ),
+                /*
+                      |
+                     /
+                     | 
+                       
+                */
+                (self.is_char(this, is_slant_right)
+                 && self.is_char(bottom, is_vertical)
+                 && self.is_char(top_right, is_vertical),
+                 vec![cxey_exchay.clone()]
+                ),
+                /*
+                      |
+                     /
+                    | 
+                       
+                */
+                (self.is_char(this, is_slant_right)
+                 && self.is_char(bottom_left, is_vertical)
+                 && self.is_char(top_right, is_vertical),
+                 vec![axchey_exchay.clone()]
                 ),
                 /*
                     |  
