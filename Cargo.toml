@@ -16,3 +16,6 @@ clap = "2.13"
 
 [[bin]]
 name = "svgbob"
+
+[dev-dependencies]
+handlebars = "0.21"
