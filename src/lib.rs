@@ -597,6 +597,12 @@ impl Grid {
         let axay_cxcy = Element::solid_line(axay, cxcy);
         let cxcy_exay = Element::solid_line(cxcy, exay);
         let cxay_cxcy = Element::solid_line(cxay, cxcy);
+        let axay_excy = Element::solid_line(axay, excy);
+        let axcy_exey = Element::solid_line(axcy, exey);
+        let axcy_exay = Element::solid_line(axcy, exay);
+        let axey_excy = Element::solid_line(axey, excy);
+        let exay_exey = Element::solid_line(exay, exey);
+        let cxay_exey = Element::solid_line(cxay, exey);
 
         let axchay_cxey = Element::solid_line(axchay, cxey);
         let cxay_exchey = Element::solid_line(cxay, exchey);
@@ -630,6 +636,10 @@ impl Grid {
         let arc_excy_axcy = Element::arc(excy, axcy, arc_radius * 4.0, false);
         let arc_axcy_excy = Element::arc(axcy, excy, arc_radius * 4.0, false);
         let arc_bxcy_dxby = Element::arc(bxcy, dxby, arc_radius * 4.0, false);
+        let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
+        let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
+        let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
+        let arc_exey_axcy = Element::arc(exey, axcy, arc_radius * 4.0, false);
 
         // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
@@ -919,6 +929,15 @@ impl Grid {
                  vec![low_horizontal_extend_right_full.clone()]
                 ),
                 /*
+                       |
+                       \
+                     
+                */
+                (self.is_char(this, is_slant_left)
+                 && self.is_char(top, is_vertical),
+                 vec![cxay_exey.clone()]
+                ),
+                /*
                       +-
                       | 
                 */
@@ -1176,6 +1195,44 @@ impl Grid {
                 ),
                 /*
                       .-.  
+                         
+                */
+                (self.is_char(this, is_horizontal) 
+                 && self.is_char(left, is_low_round)
+                 && self.is_char(right, is_low_round),
+                 vec![arc_excy_axcy.clone()]
+                ),
+                /*
+                      ._.  
+                         
+                */
+                (self.is_char(this, is_low_horizontal) 
+                 && self.is_char(left, is_low_round)
+                 && self.is_char(right, is_low_round),
+                 vec![arc_axey_exey.clone()]
+                ),
+                /*
+                     -.
+                       '
+                         
+                */
+                (self.is_char(this, is_low_round) 
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(bottom_right, is_high_round),
+                 vec![arc_exey_axcy.clone()]
+                ),
+                /*
+                      .
+                      .'
+                         
+                */
+                (self.is_char(this, is_high_round) 
+                 && self.is_char(left, is_low_round)
+                 && self.is_char(top_left, is_low_round),
+                 vec![arc_axcy_axay.clone()]
+                ),
+                /*
+                      .-.  
                      (    
                 */
                 (self.is_char(this, is_horizontal) 
@@ -1233,6 +1290,15 @@ impl Grid {
                  && self.is_char(top, is_vertical)
                  && self.is_char(bottom_right, is_slant_left),
                  vec![cxay_cxby.clone(), dxdy_exey.clone(), arc_cxby_dxdy.clone()]
+                ),
+                /*
+                     .  
+                    / \
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(bottom_left, is_slant_right)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![axey_bxdy.clone(), dxdy_exey.clone(), arc_dxdy_bxdy.clone()]
                 ),
                 /*
                      .  
@@ -1361,6 +1427,44 @@ impl Grid {
                  && self.is_char(left, is_horizontal)
                  && self.is_char(top_left, is_slant_left),
                  vec![horizontal.clone(), axay_bxby.clone(), arc_bxby_excy.clone()]
+                ),
+                /*
+                     _ 
+                      `- 
+                   
+                */
+                (self.is_char(this, is_backtick)
+                 && self.is_char(top_left, is_low_horizontal)
+                 && self.is_char(right, is_horizontal),
+                 vec![axay_excy.clone()]
+                ),
+                /*
+                       __
+                    --'
+                   
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(top_right, is_low_horizontal)
+                 && self.is_char(left, is_horizontal),
+                 vec![axcy_exay.clone()]
+                ),
+                /*
+                     -._ 
+                   
+                */
+                (self.is_char(this, is_low_round)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(right, is_low_horizontal),
+                 vec![axcy_exey.clone()]
+                ),
+                /*
+                     _.-
+                   
+                */
+                (self.is_char(this, is_low_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_low_horizontal),
+                 vec![axey_excy.clone()]
                 ),
                 /*
                      |
@@ -1502,6 +1606,17 @@ impl Grid {
                  && self.is_char(bottom_left, is_vertical)
                  && self.is_char(top_right, is_vertical),
                  vec![axchey_exchay.clone()]
+                ),
+                /*
+                      \ 
+                      | 
+                      / 
+                       
+                */
+                (self.is_char(this, is_vertical)
+                 && self.is_char(top, is_slant_left)
+                 && self.is_char(bottom, is_slant_right),
+                 vec![exay_exey.clone()]
                 ),
                 /*
                     |  
@@ -1734,6 +1849,10 @@ fn is_low_round(ch: &char) -> bool {
 
 fn is_high_round(ch: &char) -> bool {
     *ch == '\''
+}
+
+fn is_backtick(ch: &char) -> bool {
+    *ch == '`'
 }
 
 fn is_round(ch: &char) -> bool {
