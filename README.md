@@ -2,6 +2,8 @@
 
 <img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge">
 
+[![Build Status](https://api.travis-ci.org/ivanceras/svgbobrus.svg)](https://travis-ci.org/ivanceras/svgbobrus)
+
 SvgBobRus is an ascii to svg converter.
 
 [Docs](https://docs.rs/svgbob)
