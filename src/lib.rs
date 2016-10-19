@@ -1788,7 +1788,11 @@ fn get_styles() -> Style {
      <![CDATA[ 
     line, path {
       stroke: black;
-      stroke-width: 1;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
     }
      ]]> 
     "#;
@@ -1798,7 +1802,7 @@ fn get_styles() -> Style {
 fn arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "triangle")
-        .set("viewBox", "0 0 14 14")
+        .set("viewBox", "0 0 40 40")
         .set("refX", 0)
         .set("refY", 5)
         .set("markerUnits", "strokeWidth")
