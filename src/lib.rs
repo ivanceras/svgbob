@@ -335,7 +335,7 @@ impl Element {
                 match *other {
                     Element::Text(ref loc2, ref text2) => {
                         // reduce if other is next to it
-                        let len = text.len() as isize;
+                        let len = text.chars().count() as isize;
                         if loc.y == loc2.y && loc.x + len == loc2.x {
                             let merged_text = text.clone() + text2;
                             let reduced = Some(Element::Text(loc.clone(), merged_text));
