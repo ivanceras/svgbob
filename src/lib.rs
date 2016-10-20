@@ -335,7 +335,7 @@ impl Element {
                 match *other {
                     Element::Text(ref loc2, ref text2) => {
                         // reduce if other is next to it
-                        let len = text.len() as isize;
+                        let len = text.chars().count() as isize;
                         if loc.y == loc2.y && loc.x + len == loc2.x {
                             let merged_text = text.clone() + text2;
                             let reduced = Some(Element::Text(loc.clone(), merged_text));
@@ -1788,7 +1788,11 @@ fn get_styles() -> Style {
      <![CDATA[ 
     line, path {
       stroke: black;
-      stroke-width: 1;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
     }
      ]]> 
     "#;
@@ -1798,7 +1802,7 @@ fn get_styles() -> Style {
 fn arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "triangle")
-        .set("viewBox", "0 0 14 14")
+        .set("viewBox", "0 0 40 40")
         .set("refX", 0)
         .set("refY", 5)
         .set("markerUnits", "strokeWidth")
