@@ -396,12 +396,20 @@ impl Element {
                 SvgElement::Path(svg_arc)
             }
             Element::Text(ref loc, ref string) => {
+                fn pack_cjk(string: &String) -> String {
+                    let mut packed = String::new();
+                    for c in string.chars() {
+                        if c as u32 == 0x0 { continue; } // remove CJK character placeholder
+                        packed.push(c);
+                    }
+                    packed
+                }
                 let sx = loc.x as f32 * settings.text_width + settings.text_width / 4.0;
                 let sy = loc.y as f32 * settings.text_height + settings.text_height * 3.0 / 4.0;
                 let mut svg_text = SvgText::new()
                     .set("x", sx)
                     .set("y", sy);
-                let text_node = svg::node::Text::new(string.to_owned());
+                let text_node = svg::node::Text::new(pack_cjk(string));
                 svg_text.append(text_node);
                 SvgElement::Text(svg_text)
             }
@@ -438,8 +446,18 @@ pub struct Grid {
 impl Grid {
     /// instantiate a grid from input ascii textinstantiate a grid from input ascii text
     pub fn from_str(s: &str) -> Grid {
+        fn expand_cjk(c: char) -> Vec<char> {
+            let mut expanded = vec![c,];
+            if c as u32 >= 0x4e00 && c as u32 <= 0x9fff {
+                expanded.push(0x0 as char); // insert CJK character placeholder
+            }
+            expanded
+        }
+
         let lines: Vec<Vec<char>> = s.split("\n")
-            .map(|l| l.trim_right().chars().collect())
+            .map(|l| l.trim_right().chars()
+                 .map(|c| expand_cjk(c))
+                 .fold(vec![], |mut el, cv| { el.extend(cv); el }))
             .collect();
 
         let max = lines.iter()
