@@ -1,6 +1,6 @@
 [package]
 name = "svgbob"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbobrus"
