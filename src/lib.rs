@@ -566,7 +566,6 @@ impl Grid {
         let exey = &Point::new(ex, ey);
 
         let axcy = &Point::new(ax, cy);
-        let axey = &Point::new(ax, ey);
         let bxdy = &Point::new(bx, dy);
         let bxcy = &Point::new(bx, cy);
         let cxay = &Point::new(cx, ay);
@@ -576,11 +575,12 @@ impl Grid {
         let dxby = &Point::new(dx, by);
         let dxcy = &Point::new(dx, cy);
         let excy = &Point::new(ex, cy);
-        let exay = &Point::new(ex, ay);
         let dxey = &Point::new(dx, ey);
         let dxay = &Point::new(dx, ay);
         let bxay = &Point::new(bx, ay);
         let bxey = &Point::new(bx, ey);
+        let axey = &Point::new(ax, ey);
+        let exay = &Point::new(ex, ay);
 
         // extended points
         let axbhey = &Point::new(ax - bh, ey);
@@ -591,6 +591,14 @@ impl Grid {
         let exchey = &Point::new(ex + ch, ey);
         let exchay = &Point::new(ex + ch, ay);
         let axchey = &Point::new(ax - ch, ey);
+        let axehey = &Point::new(ax - eh, ey);
+        let axehay = &Point::new(ax - eh, ay);
+        let exdhey = &Point::new(ex + dh, ey);
+        let exehay = &Point::new(ex + eh, ay);
+        let axdhey = &Point::new(ax - dh, ey);
+        let exehey = &Point::new(ex + eh, ey);
+        let axdhay = &Point::new(ax - dh, ay);
+        let exdhay = &Point::new(ex + dh, ay);
 
 
         // grid lines
@@ -621,6 +629,10 @@ impl Grid {
         let axey_excy = Element::solid_line(axey, excy);
         let exay_exey = Element::solid_line(exay, exey);
         let cxay_exey = Element::solid_line(cxay, exey);
+        let exay_axcy = Element::solid_line(exay, axcy);
+        let excy_axey = Element::solid_line(excy, axey);
+        let exay_axehey = Element::solid_line(exay, axehey);
+        let axay_exehey = Element::solid_line(axay, exehey);
 
         let axchay_cxey = Element::solid_line(axchay, cxey);
         let cxay_exchey = Element::solid_line(cxay, exchey);
@@ -658,6 +670,14 @@ impl Grid {
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
         let arc_exey_axcy = Element::arc(exey, axcy, arc_radius * 4.0, false);
+        let arc_exdhey_axehay = Element::arc(exdhey, axehay, arc_radius * 10.0, false);
+        let arc_exchey_dxay = Element::arc(exchey, dxay, arc_radius * 10.0, false);
+        let arc_exehay_axdhey = Element::arc(exehay, axdhey, arc_radius * 10.0, false);
+        let arc_bxay_axchey = Element::arc(bxay, axchey, arc_radius * 10.0, false);
+        let arc_axdhay_exehey = Element::arc(axdhay, exehey, arc_radius * 10.0, false);
+        let arc_axchay_bxey = Element::arc(axchay, bxey, arc_radius * 10.0, false);
+        let arc_axehey_exdhay = Element::arc(axehey, exdhay, arc_radius * 10.0, false);
+        let arc_dxey_exchay = Element::arc(dxey, exchay, arc_radius * 10.0, false);
 
         // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
@@ -954,6 +974,192 @@ impl Grid {
                 (self.is_char(this, is_slant_left)
                  && self.is_char(top, is_vertical),
                  vec![cxay_exey.clone()]
+                ),
+                /*
+                      ,'    .'
+                */
+                (self.is_char(this, is_high_round)
+                 && (self.is_char(left, is_comma)
+                    || self.is_char(left, is_low_round)
+                    ),
+                 vec![exay_axcy.clone()]
+                ),
+                /*
+                      ,'    .'
+                */
+                (self.is_char(right, is_high_round)
+                 && (self.is_char(this, is_comma)
+                    || self.is_char(this, is_low_round)
+                    ),
+                 vec![excy_axey.clone()]
+                ),
+                /*
+                      ,     .
+                     '     '
+                */
+                (self.is_char(this, is_high_round)
+                 && (self.is_char(top_right, is_comma)
+                    || self.is_char(top_right, is_low_round)
+                    ),
+                 vec![exay_axehey.clone()]
+                ),
+                /*
+                     `.
+                */
+                (self.is_char(this, is_backtick)
+                 &&self.is_char(right, is_low_round),
+                 vec![axay_excy.clone()]
+                ),
+                /*
+                     .
+                      `
+                */
+                (self.is_char(this, is_low_round)
+                 &&self.is_char(bottom_right, is_backtick),
+                 vec![axcy_exey.clone()]
+                ),
+                /*
+                     .
+                      `
+                */
+                (self.is_char(this, is_backtick)
+                 &&self.is_char(top_left, is_low_round),
+                 vec![axay_exehey.clone()]
+                ),
+                /*
+                      `.
+                        \
+                     
+                */
+                (self.is_char(this, is_low_round)
+                 && self.is_char(left, is_backtick)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![arc_exdhey_axehay.clone()]
+                ),
+                /*
+                      `.
+                        \
+                     
+                */
+                (self.is_char(this, is_backtick)
+                 && self.is_char(right, is_low_round)
+                 && self.is_char(&right.bottom_right(), is_slant_left),
+                 vec![]
+                ),
+                /*
+                      `.
+                        \
+                     
+                */
+                (self.is_char(this, is_slant_left)
+                 && self.is_char(top_left, is_low_round)
+                 && self.is_char(&top_left.left(), is_backtick),
+                 vec![arc_exchey_dxay.clone()]
+                ),
+                /*
+                    ,' 
+                   /  
+                     
+                */
+                (self.is_char(this, is_comma)
+                 && self.is_char(right, is_high_round)
+                 && self.is_char(bottom_left, is_slant_right),
+                 vec![arc_exehay_axdhey.clone()]
+                ),
+                /*
+                    ,' 
+                   /  
+                     
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(left, is_comma)
+                 && self.is_char(&left.bottom_left(), is_slant_right),
+                 vec![]
+                ),
+                /*
+                    ,' 
+                   /  
+                     
+                */
+                (self.is_char(this, is_slant_right)
+                 && self.is_char(top_right, is_comma)
+                 && self.is_char(&top_right.right(), is_high_round),
+                 vec![arc_bxay_axchey.clone()]
+                ),
+                /*
+                   \    \
+                    `.   ',
+                     
+                */
+                ((self.is_char(this, is_high_round) 
+                 || self.is_char(this, is_backtick)
+                 )
+                 && (self.is_char(right, is_low_round)
+                    || self.is_char(right, is_comma)
+                    )
+                 && self.is_char(top_left, is_slant_left),
+                 vec![arc_axdhay_exehey.clone()]
+                ),
+                /*
+                   \    \
+                    `.   ',
+                     
+                */
+                ((self.is_char(left, is_high_round) 
+                 || self.is_char(left, is_backtick)
+                 )
+                 && (self.is_char(this, is_low_round)
+                    || self.is_char(this, is_comma)
+                    )
+                 && self.is_char(&left.top_left(), is_slant_left),
+                 vec![]
+                ),
+                /*
+                   \    \
+                    `.   ',
+                     
+                */
+                ((self.is_char(bottom_right, is_high_round) 
+                 || self.is_char(bottom_right, is_backtick)
+                 )
+                 && (self.is_char(&bottom_right.right(), is_low_round)
+                    || self.is_char(&bottom_right.right(), is_comma)
+                    )
+                 && self.is_char(this, is_slant_left),
+                 vec![arc_axchay_bxey.clone()]
+                ),
+                /*
+                       /   /
+                     .'  ,'
+                */
+                (self.is_char(this, is_high_round)
+                 && (self.is_char(left, is_low_round)
+                    || self.is_char(left, is_comma)
+                    )
+                 && self.is_char(top_right, is_slant_right),
+                 vec![arc_axehey_exdhay.clone()]
+                ),
+                /*
+                       /   /
+                     .'  ,'
+                */
+                (self.is_char(this, is_slant_right)
+                 && (self.is_char(&bottom_left.left(), is_low_round)
+                    || self.is_char(&bottom_left.left(), is_comma)
+                    )
+                 && self.is_char(bottom_left, is_high_round),
+                 vec![arc_dxey_exchay.clone()]
+                ),
+                /*
+                       /   /
+                     .'  ,'
+                */
+                (self.is_char(&right.top_right(), is_slant_right)
+                 && (self.is_char(this, is_low_round)
+                    || self.is_char(this, is_comma)
+                    )
+                 && self.is_char(right, is_high_round),
+                 vec![]
                 ),
                 /*
                       +-
@@ -1867,6 +2073,10 @@ fn is_slant_right(ch: &char) -> bool {
 
 fn is_low_round(ch: &char) -> bool {
     *ch == '.'
+}
+
+fn is_comma(ch: &char) -> bool {
+    *ch == ','
 }
 
 fn is_high_round(ch: &char) -> bool {
