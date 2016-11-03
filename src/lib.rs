@@ -30,6 +30,7 @@
 //! 
 //! 
 extern crate svg;
+extern crate unicode_width;
 
 use svg::Node;
 use svg::node::element::Path as SvgPath;
@@ -45,6 +46,7 @@ use self::Feature::Circle;
 use self::Feature::Nothing;
 use self::Stroke::Solid;
 use self::Stroke::Dashed;
+use unicode_width::UnicodeWidthChar;
 
 mod optimizer;
 
@@ -448,8 +450,11 @@ impl Grid {
     pub fn from_str(s: &str) -> Grid {
         fn expand_cjk(c: char) -> Vec<char> {
             let mut expanded = vec![c,];
-            if c as u32 >= 0x4e00 && c as u32 <= 0x9fff {
-                expanded.push(0x0 as char); // insert CJK character placeholder
+            let unicode_width = UnicodeWidthChar::width(c);
+            if let Some(unicode_width) = unicode_width {
+                for _ in 1..unicode_width{
+                   expanded.push(0x0 as char); 
+                }
             }
             expanded
         }
@@ -1364,13 +1369,17 @@ impl Grid {
                  vec![exay_dxby.clone(),exey_dxdy.clone(), arc_dxby_dxdy.clone()]
                 ),
                 /*
-                      .
-                     (
-                      '
-                */
+                      .      .     ,
+                     (  or  (  or (
+                      '      `     `
+                */  
                 (self.is_char(this, is_open_curve) 
-                 && self.is_char(top_right, is_round)
-                 && self.is_char(bottom_right, is_round),
+                 && (self.is_char(top_right, is_round)
+                    || self.is_char(top_right, is_comma)
+                    )
+                 && (self.is_char(bottom_right, is_high_round)
+                   || self.is_char(bottom_right, is_backtick)
+                   ),
                  vec![arc_dxay_dxey.clone()]
                 ),
                 /*
@@ -1402,10 +1411,12 @@ impl Grid {
                  vec![arc_exbhey_axcy.clone()]
                 ),
                 /*
-                    (  
-                     '- 
+                    (    or   (
+                     '-        `-
                 */
-                (self.is_char(this, is_round) 
+                ((self.is_char(this, is_high_round) 
+                  || self.is_char(this, is_backtick)
+                 )
                  && self.is_char(right, is_horizontal)
                  && self.is_char(top_left, is_open_curve),
                  vec![arc_axbhay_excy.clone()]
