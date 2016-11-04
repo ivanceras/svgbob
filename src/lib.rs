@@ -46,6 +46,7 @@ use self::Feature::Circle;
 use self::Feature::Nothing;
 use self::Stroke::Solid;
 use self::Stroke::Dashed;
+use unicode_width::UnicodeWidthStr;
 use unicode_width::UnicodeWidthChar;
 
 mod optimizer;
@@ -337,8 +338,8 @@ impl Element {
                 match *other {
                     Element::Text(ref loc2, ref text2) => {
                         // reduce if other is next to it
-                        let len = text.chars().count() as isize;
-                        if loc.y == loc2.y && loc.x + len == loc2.x {
+                        let uwidth = text.width() as isize;
+                        if loc.y == loc2.y && loc.x + uwidth == loc2.x {
                             let merged_text = text.clone() + text2;
                             let reduced = Some(Element::Text(loc.clone(), merged_text));
                             reduced
@@ -398,20 +399,12 @@ impl Element {
                 SvgElement::Path(svg_arc)
             }
             Element::Text(ref loc, ref string) => {
-                fn pack_cjk(string: &String) -> String {
-                    let mut packed = String::new();
-                    for c in string.chars() {
-                        if c as u32 == 0x0 { continue; } // remove CJK character placeholder
-                        packed.push(c);
-                    }
-                    packed
-                }
                 let sx = loc.x as f32 * settings.text_width + settings.text_width / 4.0;
                 let sy = loc.y as f32 * settings.text_height + settings.text_height * 3.0 / 4.0;
                 let mut svg_text = SvgText::new()
                     .set("x", sx)
                     .set("y", sy);
-                let text_node = svg::node::Text::new(pack_cjk(string));
+                let text_node = svg::node::Text::new(string.to_string());
                 svg_text.append(text_node);
                 SvgElement::Text(svg_text)
             }
@@ -438,58 +431,113 @@ fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
 
+#[derive(Debug)]
+#[derive(PartialEq)]
+pub struct GChar {
+    /// the characters in this Element
+    string: String,
+    /// total width of all characters in chars
+    width: usize,
+}
+
+impl GChar{
+    fn new(ch:char) -> Self {
+        let mut s = String::new();
+        s.push(ch);
+        let width =UnicodeWidthStr::width(&*s);
+        GChar{
+            string: s,
+            width: width
+        }
+    }
+
+    fn from_str(s:&str) -> Self{
+        let width =UnicodeWidthStr::width(s);
+        GChar{
+            string: s.into(),
+            width: width
+        }
+    }
+    
+    fn append(self, ch: char) -> Self {
+        let mut s = self.string.clone(); 
+        GChar::from_str(&s)
+    }
+}
+
 
 #[derive(Debug)]
 pub struct Grid {
     rows: usize,
     columns: usize,
-    lines: Vec<Vec<char>>,
+    lines: Vec<Vec<GChar>>,
 }
 impl Grid {
     /// instantiate a grid from input ascii textinstantiate a grid from input ascii text
     pub fn from_str(s: &str) -> Grid {
-        fn expand_cjk(c: char) -> Vec<char> {
-            let mut expanded = vec![c,];
-            let unicode_width = UnicodeWidthChar::width(c);
-            if let Some(unicode_width) = unicode_width {
-                for _ in 1..unicode_width{
-                   expanded.push(0x0 as char); 
+        let lines: Vec<&str> = s.lines().collect();
+        let mut line_gchars = vec![];
+        
+        for line in lines{
+            let mut gchars = vec![];
+            for ch in line.chars(){
+                let unicode_width = UnicodeWidthChar::width(ch).unwrap();
+                // if width is zero add the char to previous buffer
+                if unicode_width == 0 {
+                    let pop:Option<GChar> = gchars.pop();
+                    if let Some(pop) = pop{
+                        let last:GChar = pop.append(ch);
+                        gchars.push(last);
+                    }
+                }else{
+                    let gchar = GChar::new(ch);
+                    gchars.push(gchar);
                 }
+            } 
+            line_gchars.push(gchars);
+        }
+        let mut max = 0;
+        for lg in &line_gchars{
+            let mut line_width = 0;
+            for gchar in lg{
+                line_width += gchar.width; 
+            } 
+            if line_width >= max{
+                max = line_width;
             }
-            expanded
         }
 
-        let lines: Vec<Vec<char>> = s.split("\n")
-            .map(|l| l.trim_right().chars()
-                 .map(|c| expand_cjk(c))
-                 .fold(vec![], |mut el, cv| { el.extend(cv); el }))
-            .collect();
-
-        let max = lines.iter()
-            .fold(0, |acc, ref x| if x.len() > acc { x.len() } else { acc });
-
         Grid {
-            rows: lines.len(),
+            rows: line_gchars.len(),
             columns: max,
-            lines: lines,
+            lines: line_gchars,
         }
     }
 
-    fn get(&self, loc: &Loc) -> Option<&char> {
+    fn get(&self, loc: &Loc) -> Option<&GChar> {
         match self.lines.get(loc.y as usize) {
-            Some(line) => line.get(loc.x as usize),
+            Some(line) => {
+                let mut total_width = 0;
+                for gchar in line{
+                    if total_width == loc.x{
+                        return Some(gchar)
+                    }
+                    total_width += gchar.width as isize;
+                }
+                None
+            }
             None => None,
         }
     }
 
 
     fn is_char<F>(&self, loc: &Loc, f: F) -> bool
-        where F: Fn(&char) -> bool
+        where F: Fn(&str) -> bool
     {
-        let ch = self.get(loc);
-        match ch {
-            Some(ch) => f(ch),
-            None => false,
+        if let Some(gchar) = self.get(loc){
+             f(&gchar.string)
+        }else{
+            false
         }
     }
 
@@ -499,9 +547,10 @@ impl Grid {
     // it is used as text when it is a drawing element, and left and righ is alphanumeric
     fn used_as_text(&self, loc: &Loc) -> bool {
         self.is_char(loc, is_drawing_element) &&
-        (self.is_char(&loc.left(), |&c| c.is_alphanumeric()) ||
-         self.is_char(&loc.right(), |&c| c.is_alphanumeric()))
+        (self.is_char(&loc.left(), is_alphanumeric) ||
+         self.is_char(&loc.right(), is_alphanumeric))
     }
+
 
 
     /// get the elements on this location
@@ -2073,10 +2122,10 @@ impl Grid {
                 let ch = self.get(this);
                 match ch {
                     Some(ch) => {
-                        if !ch.is_whitespace() ||
-                           (*ch == ' ' && self.is_char(left, |c| c.is_alphanumeric()) &&
-                            self.is_char(right, |c| c.is_alphanumeric())) {
-                            let s = escape_char(ch);
+                        if !(ch.string == " ") ||
+                           (ch.string == " " && self.is_char(left, is_alphanumeric) &&
+                            self.is_char(right, is_alphanumeric)) {
+                            let s = escape_char(&ch.string);
                             let text = Element::Text(this.clone(), s);
                             Some(vec![text])
                         } else {
@@ -2092,11 +2141,20 @@ impl Grid {
 
     }
 
+
     fn get_all_elements(&self, settings: &Settings) -> Vec<(Loc, Vec<Element>)> {
+        fn get_line_width(line: &Vec<GChar>) -> usize{
+            let mut total_width = 0;
+            for gch in line{
+               total_width += gch.width;
+            }
+            total_width
+        }
         let mut all_paths = vec![];
         for row in 0..self.lines.len() {
             let line = &self.lines[row];
-            for column in 0..line.len() {
+            let line_width = get_line_width(line);
+            for column in 0..line_width {
                 let x = column as isize;
                 let y = row as isize;
                 match self.get_elements(x, y, settings) {
@@ -2203,91 +2261,91 @@ fn arrow_marker() -> Marker {
 
 }
 
-fn is_vertical(ch: &char) -> bool {
-    *ch == '|'
+fn is_vertical(ch: &str) -> bool {
+    ch == "|"
 }
 
-fn is_horizontal(ch: &char) -> bool {
-    *ch == '-'
+fn is_horizontal(ch: &str) -> bool {
+    ch == "-"
 }
 
-fn is_horizontal_dashed(ch: &char) -> bool {
-    *ch == '='
+fn is_horizontal_dashed(ch: &str) -> bool {
+    ch == "="
 }
 
-fn is_vertical_dashed(ch: &char) -> bool {
-    *ch == ':'
+fn is_vertical_dashed(ch: &str) -> bool {
+    ch == ":"
 }
 
-fn is_low_horizontal(ch: &char) -> bool {
-    *ch == '_'
+fn is_low_horizontal(ch: &str) -> bool {
+    ch == "_"
 }
 
-fn is_low_horizontal_dashed(ch: &char) -> bool {
-    *ch == '.'
+fn is_low_horizontal_dashed(ch: &str) -> bool {
+    ch == "."
 }
 
-fn is_slant_left(ch: &char) -> bool {
-    *ch == '\\'
+fn is_slant_left(ch: &str) -> bool {
+    ch == "\\"
 }
-fn is_slant_right(ch: &char) -> bool {
-    *ch == '/'
-}
-
-fn is_low_round(ch: &char) -> bool {
-    *ch == '.'
+fn is_slant_right(ch: &str) -> bool {
+    ch == "/"
 }
 
-fn is_comma(ch: &char) -> bool {
-    *ch == ','
+fn is_low_round(ch: &str) -> bool {
+    ch == "."
 }
 
-fn is_high_round(ch: &char) -> bool {
-    *ch == '\''
+fn is_comma(ch: &str) -> bool {
+    ch == ","
 }
 
-fn is_backtick(ch: &char) -> bool {
-    *ch == '`'
+fn is_high_round(ch: &str) -> bool {
+    ch == "\'"
 }
 
-fn is_round(ch: &char) -> bool {
+fn is_backtick(ch: &str) -> bool {
+    ch == "`"
+}
+
+fn is_round(ch: &str) -> bool {
     is_low_round(ch) || is_high_round(ch)
 }
 
-fn is_intersection(ch: &char) -> bool {
-    *ch == '+'
+fn is_intersection(ch: &str) -> bool {
+    ch == "+"
 }
 
-fn is_marker(ch: &char) -> bool {
-    *ch == '*'
+fn is_marker(ch: &str) -> bool {
+    ch == "*"
 }
 
-fn is_arrow_up(ch: &char) -> bool {
-    *ch == '^'
+fn is_arrow_up(ch: &str) -> bool {
+    ch == "^"
 }
 
-fn is_arrow_down(ch: &char) -> bool {
-    *ch == 'v' || *ch == 'V'
+fn is_arrow_down(ch: &str) -> bool {
+    ch == "v" || ch == "V"
 }
 
-fn is_arrow_left(ch: &char) -> bool {
-    *ch == '<'
+fn is_arrow_left(ch: &str) -> bool {
+    ch == "<"
 }
 
-fn is_arrow_right(ch: &char) -> bool {
-    *ch == '>'
+fn is_arrow_right(ch: &str) -> bool {
+    ch == ">"
 }
 
-fn is_open_curve(ch: &char) -> bool {
-    *ch == '('
+fn is_open_curve(ch: &str) -> bool {
+    ch == "("
 }
 
-fn is_close_curve(ch: &char) -> bool {
-    *ch == ')'
+fn is_close_curve(ch: &str) -> bool {
+    ch == ")"
 }
 
 
-fn is_drawing_element(ch: &char) -> bool {
+fn is_drawing_element(ch: &str) -> bool {
     [is_vertical,
      is_horizontal,
      is_vertical_dashed,
@@ -2315,28 +2373,59 @@ fn is_drawing_element(ch: &char) -> bool {
 
 #[test]
 fn test_drawing_element() {
-    assert!(is_drawing_element(&'|'));
-    assert!(is_drawing_element(&'-'));
-    assert!(is_drawing_element(&'='));
-    assert!(is_drawing_element(&'_'));
-    assert!(is_drawing_element(&'/'));
+    assert!(is_drawing_element("|"));
+    assert!(is_drawing_element("-"));
+    assert!(is_drawing_element("="));
+    assert!(is_drawing_element("_"));
+    assert!(is_drawing_element("/"));
 }
 
-fn escape_char(ch: &char) -> String {
-    let escs = [('"', "&quot;"), ('\'', "&apos;"), ('<', "&lt;"), ('>', "&gt;"), ('&', "&amp;")];
-    let quote_match: Option<&(char, &str)> = escs.iter()
+fn escape_char(ch: &str) -> String {
+    let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;")];
+    let quote_match: Option<&(&str, &str)> = escs.iter()
         .find(|pair| {
             let &(e, _) = *pair;
-            e == *ch
+            e == ch
         });
     let quoted: String = match quote_match {
         Some(&(_, quoted)) => String::from(quoted),
         None => {
             let mut s = String::new();
-            s.push(*ch);
+            s.push_str(&ch);
             s
         }
     };
     quoted
 
+}
+
+
+fn is_alphanumeric(ch:&str) -> bool{
+    ch.chars().all(|c| c.is_alphanumeric())
+}
+
+fn is_whitespace(ch: &str) -> bool{
+    ch.chars().all(|c| c.is_whitespace())
+}
+
+#[test]
+fn test_bob(){
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("<pre>");
+    let bob = "|mmu--文件系统---- 调度器--------------4";
+    println!("total width: {}", UnicodeWidthStr::width(bob));
+    let mut acc_width = 0;
+    for ch in bob.chars(){
+        let uwidth =  UnicodeWidthChar::width(ch).unwrap();
+        println!("[{}] {}",acc_width, ch);
+        acc_width += uwidth;
+    }
+    let grid = Grid::from_str(bob);
+    let loc = &Loc::new(39,0);
+    let c = grid.get(loc);
+    println!("{:?} {:?}", loc, c);
+    println!("{:?}", grid);
+    let svg = grid.get_svg(&Settings::no_optimization());
+    println!("svg:{}", svg);
+    assert_eq!(c, Some(&GChar::from_str("4")));
 }
