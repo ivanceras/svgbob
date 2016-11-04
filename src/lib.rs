@@ -481,13 +481,17 @@ impl Grid {
         for line in lines{
             let mut gchars = vec![];
             for ch in line.chars(){
-                let unicode_width = UnicodeWidthChar::width(ch).unwrap();
-                // if width is zero add the char to previous buffer
-                if unicode_width == 0 {
-                    let pop:Option<GChar> = gchars.pop();
-                    if let Some(pop) = pop{
-                        let last:GChar = pop.append(ch);
-                        gchars.push(last);
+                if let Some(unicode_width) = UnicodeWidthChar::width(ch){
+                    // if width is zero add the char to previous buffer
+                    if unicode_width == 0 {
+                        let pop:Option<GChar> = gchars.pop();
+                        if let Some(pop) = pop{
+                            let last:GChar = pop.append(ch);
+                            gchars.push(last);
+                        }
+                    }else{
+                        let gchar = GChar::new(ch);
+                        gchars.push(gchar);
                     }
                 }else{
                     let gchar = GChar::new(ch);

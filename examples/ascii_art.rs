@@ -14,8 +14,11 @@ fn main() {
     let html_file = "ascii_art.html";
     let bob_str = include_str!("ascii_art.bob");
     let svg = svgbob::to_svg(bob_str);
-    svg::save(svg_file, &svg).unwrap();
-    println!("Saved to {}",svg_file);
+    if let Ok(_) = svg::save(svg_file, &svg){
+        println!("Saved to {}",svg_file);
+    }else{
+        println!("Error saving to file {}", svg_file);
+    }
 
     let handlebars = Handlebars::new();
     let mut m: BTreeMap<String, String> = BTreeMap::new();
