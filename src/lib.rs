@@ -545,10 +545,24 @@ impl Grid {
     // determine if the character in this location is a drawing element
     // but is used as text, such as a == b, cd to/path/file
     // it is used as text when it is a drawing element, and left and righ is alphanumeric
+    // and it does not connect to any drawing element
     fn used_as_text(&self, loc: &Loc) -> bool {
         self.is_char(loc, is_drawing_element) &&
+        !self.connects(loc) &&
         (self.is_char(&loc.left(), is_alphanumeric) ||
          self.is_char(&loc.right(), is_alphanumeric))
+    }
+    
+    // determine if the character in this location
+    // connects to any of the 8 direction
+    fn connects(&self, loc:&Loc) -> bool {
+        if self.is_char(loc, is_vertical){
+           return  self.is_char(&loc.top(), is_vertical)
+                    || self.is_char(&loc.bottom(), is_vertical)
+                    || self.is_char(&loc.top(), is_round)
+                    || self.is_char(&loc.bottom(), is_round)
+        }
+        false
     }
 
 
@@ -899,7 +913,44 @@ impl Grid {
                 (self.is_char(this, is_slant_left) && !self.used_as_text(this),
                  vec![slant_left.clone()]
                 ),
-
+                /*
+                     _ 
+                      `- 
+                   
+                */
+                (self.is_char(this, is_backtick)
+                 && self.is_char(top_left, is_low_horizontal)
+                 && self.is_char(right, is_horizontal),
+                 vec![axay_excy.clone()]
+                ),
+                /*
+                       __
+                    --'
+                   
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(top_right, is_low_horizontal)
+                 && self.is_char(left, is_horizontal),
+                 vec![axcy_exay.clone()]
+                ),
+                /*
+                     -._ 
+                   
+                */
+                (self.is_char(this, is_low_round)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(right, is_low_horizontal),
+                 vec![axcy_exey.clone()]
+                ),
+                /*
+                     _.-
+                   
+                */
+                (self.is_char(this, is_low_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(left, is_low_horizontal),
+                 vec![axey_excy.clone()]
+                ),
                 /*
                     ^
                     |
@@ -1442,10 +1493,12 @@ impl Grid {
                  vec![arc_bxey_bxay.clone()]
                 ),
                 /*
-                      .-
-                     (
+                      .-          ,-
+                     (     or    (
                 */
-                (self.is_char(this, is_round) 
+                ((self.is_char(this, is_low_round) 
+                  || self.is_char(this, is_comma)
+                  )
                  && self.is_char(right, is_horizontal)
                  && self.is_char(bottom_left, is_open_curve),
                  vec![arc_excy_axbhey.clone()]
@@ -1534,16 +1587,6 @@ impl Grid {
                  vec![arc_axey_exey.clone()]
                 ),
                 /*
-                     -.
-                       '
-                         
-                */
-                (self.is_char(this, is_low_round) 
-                 && self.is_char(left, is_horizontal)
-                 && self.is_char(bottom_right, is_high_round),
-                 vec![arc_exey_axcy.clone()]
-                ),
-                /*
                       .
                       .'
                          
@@ -1564,11 +1607,13 @@ impl Grid {
                  vec![arc_excy_axcy.clone()]
                 ),
                 /*         
-                     (
-                      '-' 
+                     (     or  (
+                      '-'       `-'
                 */
                 (self.is_char(this, is_horizontal) 
-                 && self.is_char(left, is_high_round)
+                 && (self.is_char(left, is_high_round)
+                    || self.is_char(left, is_backtick)
+                    )
                  && self.is_char(right, is_high_round)
                  && self.is_char(&this.top_left().left(), is_open_curve),
                  vec![arc_axcy_excy.clone()]
@@ -1863,44 +1908,6 @@ impl Grid {
                  && self.is_char(left, is_horizontal)
                  && self.is_char(top_left, is_slant_left),
                  vec![horizontal.clone(), axay_bxby.clone(), arc_bxby_excy.clone()]
-                ),
-                /*
-                     _ 
-                      `- 
-                   
-                */
-                (self.is_char(this, is_backtick)
-                 && self.is_char(top_left, is_low_horizontal)
-                 && self.is_char(right, is_horizontal),
-                 vec![axay_excy.clone()]
-                ),
-                /*
-                       __
-                    --'
-                   
-                */
-                (self.is_char(this, is_high_round)
-                 && self.is_char(top_right, is_low_horizontal)
-                 && self.is_char(left, is_horizontal),
-                 vec![axcy_exay.clone()]
-                ),
-                /*
-                     -._ 
-                   
-                */
-                (self.is_char(this, is_low_round)
-                 && self.is_char(left, is_horizontal)
-                 && self.is_char(right, is_low_horizontal),
-                 vec![axcy_exey.clone()]
-                ),
-                /*
-                     _.-
-                   
-                */
-                (self.is_char(this, is_low_round)
-                 && self.is_char(right, is_horizontal)
-                 && self.is_char(left, is_low_horizontal),
-                 vec![axey_excy.clone()]
                 ),
                 /*
                      |
@@ -2198,7 +2205,8 @@ impl Grid {
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
-                 "Arial")
+                r#"Consolas, "Liberation Mono", Menlo, Courier, monospace"#
+                )
             .set("width", width)
             .set("height", height);
 
@@ -2230,7 +2238,6 @@ fn get_defs() -> Definitions {
 
 fn get_styles() -> Style {
     let style = r#"
-     <![CDATA[ 
     line, path {
       stroke: black;
       stroke-width: 2;
@@ -2239,7 +2246,6 @@ fn get_styles() -> Style {
       stroke-linecap: round;
       stroke-linejoin: miter;
     }
-     ]]> 
     "#;
     Style::new(style)
 }
@@ -2309,7 +2315,7 @@ fn is_backtick(ch: &str) -> bool {
 }
 
 fn is_round(ch: &str) -> bool {
-    is_low_round(ch) || is_high_round(ch)
+    is_low_round(ch) || is_high_round(ch) || is_backtick(ch) || is_comma(ch)
 }
 
 fn is_intersection(ch: &str) -> bool {
