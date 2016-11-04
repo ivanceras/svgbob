@@ -756,7 +756,6 @@ impl Grid {
         let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
-        let arc_exey_axcy = Element::arc(exey, axcy, arc_radius * 4.0, false);
         let arc_cxay_exey = Element::arc(cxay, exey, arc_radius * 8.0, false);
         let arc_exay_cxey = Element::arc(exay, cxey, arc_radius * 8.0, false);
         let arc_cxey_axay = Element::arc(cxey, axay, arc_radius * 8.0, false);
