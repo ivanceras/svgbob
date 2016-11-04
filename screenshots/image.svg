@@ -567,40 +567,16 @@ O
 )
 </text>
 <text x="2" y="5788">
-test测
-</text>
-<text x="50" y="5788">
-试
+test测试
 </text>
 <text x="98" y="5788">
-测
-</text>
-<text x="114" y="5788">
-试
-</text>
-<text x="130" y="5788">
-test
+测试test
 </text>
 <text x="122" y="5836">
-测
-</text>
-<text x="138" y="5836">
-试
-</text>
-<text x="154" y="5836">
-test
+测试test
 </text>
 <text x="66" y="5916">
-中
-</text>
-<text x="82" y="5916">
-文
-</text>
-<text x="98" y="5916">
-处
-</text>
-<text x="114" y="5916">
-理
+中文处理
 </text>
 <text x="66" y="5932">
 12345678
@@ -609,25 +585,10 @@ test
 OS API
 </text>
 <text x="130" y="6076">
-文
-</text>
-<text x="146" y="6076">
-件
-</text>
-<text x="162" y="6076">
-系
-</text>
-<text x="178" y="6076">
-统
+文件系统
 </text>
 <text x="274" y="6076">
-调
-</text>
-<text x="290" y="6076">
-度
-</text>
-<text x="306" y="6076">
-器
+调度器
 </text>
 <text x="394" y="6076">
 MMU
@@ -636,25 +597,10 @@ MMU
 IO
 </text>
 <text x="354" y="6156">
-网
-</text>
-<text x="370" y="6156">
-络
+网络
 </text>
 <text x="226" y="6236">
-硬
-</text>
-<text x="242" y="6236">
-件
-</text>
-<text x="258" y="6236">
-抽
-</text>
-<text x="274" y="6236">
-象
-</text>
-<text x="290" y="6236">
-层
+硬件抽象层
 </text>
 <text x="66" y="6572">
 create Ascii art

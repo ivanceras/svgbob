@@ -47,7 +47,8 @@ impl Optimizer {
     fn is_edible(&self, loc: &Loc) -> bool {
         self.can_loc_reduce(&loc.top(), loc) || self.can_loc_reduce(&loc.left(), loc) ||
         self.can_loc_reduce(&loc.top_left(), loc) ||
-        self.can_loc_reduce(&loc.bottom_left(), loc)
+        self.can_loc_reduce(&loc.bottom_left(), loc) ||
+        self.can_loc_reduce(&loc.left().left(), loc) //full width character CJK can reduce 2 cells apart
     }
     // determine if element in location1
     // can reduce the element in location2
@@ -79,7 +80,13 @@ impl Optimizer {
                                     Some(reduced) => {
                                         self.trace_elements(&reduced, &loc.top_right())
                                     }
-                                    None => element.clone(),
+                                    None => {
+                                        //full width character CJK can reduce 2 cells apart
+                                        match self.reduce(element, &loc.right().right()){
+                                            Some(reduced) => self.trace_elements(&reduced, &loc.right().right()),
+                                            None => element.clone(),
+                                        }
+                                    }
                                 }
                             }
                         }
