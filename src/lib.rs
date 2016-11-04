@@ -62,7 +62,7 @@ mod optimizer;
 /// ``` 
 /// 
 pub fn to_svg(input: &str) -> SVG {
-    Grid::from_str(input).get_svg(&Settings::no_optimization())
+    Grid::from_str(input).get_svg(&Settings::default())
 }
 
 pub struct Settings {
@@ -2219,7 +2219,7 @@ impl Grid {
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
-                r#"Consolas, "Liberation Mono", Menlo, Courier, monospace"#
+                "arial"
                 )
             .set("width", width)
             .set("height", height);
@@ -2463,8 +2463,8 @@ fn test_meme(){
     println!("<pre>");
     println!("{}", meme);
     let grid = Grid::from_str(meme);
-    println!("{:?}",grid);
-    panic!();
+    println!("{:#?}",grid);
+    assert_eq!(grid.get(&Loc::new(6,0)), Some(&GChar::from_str(" ͡°")));
 }
 
 #[test]
@@ -2487,5 +2487,5 @@ fn test_eye_brow(){
             println!("ch: {:?}", ch as u32);
         }
     }
-    panic!();
+    assert_eq!(ch, Some(&GChar::from_str(" ͡°")));
 }
