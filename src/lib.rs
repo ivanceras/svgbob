@@ -62,7 +62,7 @@ mod optimizer;
 /// ``` 
 /// 
 pub fn to_svg(input: &str) -> SVG {
-    Grid::from_str(input).get_svg(&Settings::default())
+    Grid::from_str(input).get_svg(&Settings::no_optimization())
 }
 
 pub struct Settings {
@@ -459,9 +459,10 @@ impl GChar{
         }
     }
     
-    fn append(self, ch: char) -> Self {
-        let mut s = self.string.clone(); 
-        GChar::from_str(&s)
+    fn push_str(self, s: &str) -> Self {
+        let mut string = self.string.clone();
+        string.push_str(s);
+        GChar::from_str(&string)
     }
 }
 
@@ -480,22 +481,31 @@ impl Grid {
         
         for line in lines{
             let mut gchars = vec![];
+            let mut zero_ch = None;
             for ch in line.chars(){
-                if let Some(unicode_width) = UnicodeWidthChar::width(ch){
+                if let Some(unicode_width) = ch.width(){
                     // if width is zero add the char to previous buffer
                     if unicode_width == 0 {
-                        let pop:Option<GChar> = gchars.pop();
-                        if let Some(pop) = pop{
-                            let last:GChar = pop.append(ch);
-                            gchars.push(last);
-                        }
+                        zero_ch = Some(ch);
                     }else{
-                        let gchar = GChar::new(ch);
-                        gchars.push(gchar);
+                        match zero_ch{
+                            Some(prefend_ch) => {
+                                let mut s = String::new();
+                                s.push(prefend_ch);
+                                s.push(ch);
+                                let last_gchar:Option<GChar> = gchars.pop();
+                                if let Some(last_gchar) = last_gchar{
+                                    let gchar = last_gchar.push_str(&s);
+                                    gchars.push(gchar);
+                                }
+                                zero_ch = None;
+                            }
+                            None => {
+                                let gchar = GChar::new(ch);
+                                gchars.push(gchar);
+                            }
+                        }
                     }
-                }else{
-                    let gchar = GChar::new(ch);
-                    gchars.push(gchar);
                 }
             } 
             line_gchars.push(gchars);
@@ -2438,4 +2448,44 @@ fn test_bob(){
     let svg = grid.get_svg(&Settings::no_optimization());
     println!("svg:{}", svg);
     assert_eq!(c, Some(&GChar::from_str("4")));
+}
+
+#[test]
+fn test_meme(){
+    let meme = r#"[( ͡° ͜ʖ ͡°)]ﾟ"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{} alphanumeric {}",m, m as u32, m.width().unwrap(), m.is_alphanumeric());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:?}",grid);
+    panic!();
+}
+
+#[test]
+fn test_eye_brow(){
+    let meme = r#" ͡°"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{}",m, m as u32, m.width().unwrap());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:?}",grid);
+    let ch = grid.get(&Loc::new(0,0));
+    if let Some(ch) = ch{
+        for ch in ch.string.chars(){
+            println!("ch: {:?}", ch as u32);
+        }
+    }
+    panic!();
 }

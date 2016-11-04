@@ -1,12 +1,3 @@
-<html>
-<head>
-<meta charset="utf-8" />
-<title>SvgBobRus(Ascii to svg converter)</title>
-</head>
-<body>
-    <div style="display:flex">
-    <pre>
-        <code>
 
 
 ( ͡° ͜ʖ ͡°)
@@ -63,7 +54,7 @@ Meh ¯\_(ツ)_/¯ ヽ(。_°)ノ ヾ(ｏ･ω･)ﾉ
 ╰(⇀︿⇀)つ-]═──
 
 
-(∩ ͡ ° ʖ ͡ °) ⊃-(===&gt;
+(∩ ͡ ° ʖ ͡ °) ⊃-(===>
 
 dota_memes
 ( ͡°╭͜ʖ╮͡° ) DAY TUCKER NIGHT FUCKER ( ͡°╭͜ʖ╮͡° )
@@ -96,7 +87,7 @@ dota_memes
 (º_لº(º_لº(º_لº(º_لº)º_لº)º_لº)You either die a DONG, or live long enough to become the DONGER(º_لº(º_لº(º_لº(º_لº)º_لº)º_لº)
 
 
-&lt;MESSAGE DONGERED&gt;
+<MESSAGE DONGERED>
 
 
 ( ººººº_لººººº ) I AM SUPER DONG ( ººººº_لººººº )
@@ -105,7 +96,7 @@ hearthstone_memes
  ( ͡° ͜◯ ͡°) ﻿ＣＬＯＷＮ ＦＩＥＳＴＡ ( ͡° ͜◯ ͡°)
 
 
-( • ∀•)–Ψ &quot;I'd Fork His Repo&quot;
+( • ∀•)–Ψ "I'd Fork His Repo"
 
 
 └( ° ͜ʖ͡°)┐Born too late to explore the Earth, born too soon to explore the Galaxy. Born just in time to post DANK MEMEs └( ° ͜ʖ͡°)┐
@@ -228,7 +219,7 @@ Boom Box ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılı
 Party Time ┏(-_-)┛┗(-_- )┓┗(-_-)┛┏(-_-)┓
 
 
-Sunglasses ( •_•) ( •_•)&gt;⌐■-■ (⌐■_■)
+Sunglasses ( •_•) ( •_•)>⌐■-■ (⌐■_■)
 
 
 Help ٩(͡๏̯͡๏)۶
@@ -237,7 +228,7 @@ Help ٩(͡๏̯͡๏)۶
 Fuck Off t(-.-t)
 
 
-Facepalm (&gt;ლ)
+Facepalm (>ლ)
 
 
 Happy ۜ \(סּںסּَ` )/ۜ
@@ -270,7 +261,7 @@ Love Note 웃❤유
 \m/
 
 
-\m/(&gt;.&lt;)\m/
+\m/(>.<)\m/
 
 
 Love in my eyes (♥_♥)
@@ -294,7 +285,7 @@ Yay! \(ˆ˚ˆ)/
 OMG! Insane Happy Ｏ(≧▽≦)Ｏ
 
 
-Love You »-(¯`·.·´¯)-&gt;NAME&lt;-(¯`·.·´¯)-« OMG,
+Love You »-(¯`·.·´¯)->NAME<-(¯`·.·´¯)-« OMG,
 
 
 Yes! Success. (•̀ᴗ•́)و ̑̑
@@ -312,13 +303,13 @@ Weather ☼ ☀ ☁ ☂ ☃ ☄ ☾ ☽ ❄ ☇ ☈ ⊙ ☉ ℃ ℉ ° ❅ ✺ �
 Band Aid ( ̲̅:̲̅:̲̅:̲̅[̲̅ ̲̅]̲̅:̲̅:̲̅:̲̅ )
 
 
-Fish Swimming ¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸&gt;&lt;(((º&gt;
+Fish Swimming ¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>
 
 
 Polar Bear ˁ˚ᴥ˚ˀ
 
 
-Mouse —-{,_,”&gt;
+Mouse —-{,_,”>
 
 
 Cat ^˚ᴥ˚^
@@ -443,29 +434,3 @@ o͡͡͡╮( • ʖ̯ • )╭o͡͡͡
 
 [¬º-°]¬
 
-
-        </code>
-    </pre>
-    <img src="screenshots/image.svg"/>
-    </div>
-
-Support this project:
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="5QZ5LDXWVS4RU">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-8925673-11', 'auto');
-  ga('send', 'pageview');
-
-</script>
-</body>
-</html>
