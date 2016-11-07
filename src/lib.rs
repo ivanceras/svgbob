@@ -62,7 +62,8 @@ mod optimizer;
 /// ``` 
 /// 
 pub fn to_svg(input: &str) -> SVG {
-    Grid::from_str(input).get_svg(&Settings::default())
+    //Grid::from_str(input).get_svg(&Settings::default())
+    Grid::from_str(input).get_svg(&Settings::no_optimization())
 }
 
 pub struct Settings {
@@ -469,6 +470,7 @@ impl GChar{
 
 #[derive(Debug)]
 pub struct Grid {
+    source: String,
     rows: usize,
     columns: usize,
     lines: Vec<Vec<GChar>>,
@@ -522,6 +524,7 @@ impl Grid {
         }
 
         Grid {
+            source: s.into(),
             rows: line_gchars.len(),
             columns: max,
             lines: line_gchars,
@@ -2258,6 +2261,15 @@ fn get_styles() -> Style {
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 1;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
     }
     "#;
     Style::new(style)
