@@ -12,6 +12,7 @@ license = "Apache-2.0"
 svg = "0.5"
 clap = "2.16"
 unicode-width = "0.1"
+memenhancer = {path = "../memenhancer", optional = true}
 
 
 [lib]

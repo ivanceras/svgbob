@@ -1,4 +1,4 @@
-<svg font-family="arial" font-size="14" height="6976" width="1032" xmlns="http://www.w3.org/2000/svg">
+<svg font-family="arial" font-size="14" height="7200" width="944" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="0" refY="5" viewBox="0 0 40 40">
 <path d="M 0 0 L 10 5 L 0 10 z"/>
@@ -23,9969 +23,2159 @@
       stroke-linejoin: miter;
       fill:white;
     }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
     
 </style>
-<circle cx="64" cy="8" r="28"/>
-<text x="26" y="12">
- ͡° ͜ʖ ͡°
-</text>
-<circle cx="112" cy="8" r="28"/>
-<text x="50" y="12">
-̲̅ ͡° ͜ʖ ͡°̲̅
-</text>
-<circle cx="24" cy="8" r="20"/>
-<text x="10" y="12">
-⌐■_■
-</text>
-<circle cx="60" cy="8" r="24"/>
-<text x="26" y="12">
- •̀_•́ 
-</text>
-<circle cx="52" cy="8" r="32"/>
-<text x="18" y="12">
- • ͜ʖ • 
-</text>
-<circle cx="36" cy="8" r="16"/>
-<text x="18" y="12">
-◣_◢
-</text>
-<circle cx="64" cy="8" r="12"/>
-<text x="34" y="12">
-ツ
-</text>
-<circle cx="128" cy="8" r="12"/>
-<text x="66" y="12">
-ツ
-</text>
-<circle cx="296" cy="8" r="20"/>
-<text x="146" y="12">
-。_°
-</text>
-<circle cx="476" cy="8" r="24"/>
-<text x="234" y="12">
-ｏ･ω･
-</text>
-<circle cx="40" cy="8" r="20"/>
-<text x="18" y="12">
-⇀︿⇀
-</text>
-<circle cx="44" cy="8" r="40"/>
-<text x="10" y="12">
-∩ ͡ ° ʖ ͡ °
-</text>
-<circle cx="36" cy="8" r="32"/>
-<text x="10" y="12">
- ͡°╭͜ʖ╮͡° 
-</text>
-<circle cx="40" cy="8" r="20"/>
-<text x="18" y="12">
-ಠ益ಠ
-</text>
-<circle cx="264" cy="8" r="20"/>
-<text x="130" y="12">
-ಠ益ಠ
-</text>
-<circle cx="40" cy="8" r="20"/>
-<text x="18" y="12">
-ಠ益ಠ
-</text>
-<circle cx="344" cy="8" r="20"/>
-<text x="170" y="12">
-ಠ益ಠ
-</text>
-<circle cx="32" cy="8" r="28"/>
-<text x="10" y="12">
-つಠ益ಠ
-</text>
-<circle cx="264" cy="8" r="20"/>
-<text x="130" y="12">
-º_لº
-</text>
-<circle cx="1128" cy="8" r="20"/>
-<text x="562" y="12">
-º_لº
-</text>
-<circle cx="20" cy="8" r="16"/>
-<text x="10" y="12">
-ʘ̚ل͜ʘ̚
-</text>
-<circle cx="1404" cy="8" r="24"/>
-<text x="698" y="12">
-ง╭ರ_•́
-</text>
-<circle cx="264" cy="8" r="20"/>
-<text x="130" y="12">
-º_لº
-</text>
-<circle cx="1768" cy="8" r="20"/>
-<text x="882" y="12">
-º_لº
-</text>
-<circle cx="64" cy="8" r="60"/>
-<text x="10" y="12">
- ººººº_لººººº 
-</text>
-<circle cx="48" cy="8" r="28"/>
-<text x="18" y="12">
- ͡° ͜◯ ͡°
-</text>
-<circle cx="28" cy="8" r="24"/>
-<text x="10" y="12">
- • ∀•
-</text>
-<circle cx="44" cy="8" r="24"/>
-<text x="18" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="1948" cy="8" r="24"/>
-<text x="970" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="44" cy="8" r="24"/>
-<text x="18" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="1964" cy="8" r="24"/>
-<text x="978" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="36" cy="8" r="32"/>
-<text x="10" y="12">
-ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="564" cy="8" r="32"/>
-<text x="274" y="12">
-ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="732" cy="8" r="24"/>
-<text x="362" y="12">
-ง •̀_•́
-</text>
-<circle cx="1100" cy="8" r="24"/>
-<text x="546" y="12">
-ง •̀_•́
-</text>
-<circle cx="40" cy="8" r="36"/>
-<text x="10" y="12">
- ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="468" cy="8" r="32"/>
-<text x="226" y="12">
-ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="636" cy="8" r="24"/>
-<text x="314" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="1020" cy="8" r="24"/>
-<text x="506" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="40" cy="8" r="36"/>
-<text x="10" y="12">
- ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="516" cy="8" r="32"/>
-<text x="250" y="12">
-ง ͠° ͟ʖ ͡°
-</text>
-<circle cx="684" cy="8" r="24"/>
-<text x="338" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="1084" cy="8" r="24"/>
-<text x="538" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="32" cy="8" r="28"/>
-<text x="10" y="12">
- ͡° ͜ʖ ͡°
-</text>
-<circle cx="28" cy="8" r="24"/>
-<text x="10" y="12">
-ง •̀_•́
-</text>
-<circle cx="652" cy="8" r="24"/>
-<text x="322" y="12">
-ง •̀_•́
-</text>
-<circle cx="800" cy="8" r="28"/>
-<text x="394" y="12">
- ͡° ͜ʖ ͡°
-</text>
-<circle cx="1504" cy="8" r="28"/>
-<text x="746" y="12">
- ͡° ͜ʖ ͡°
-</text>
-<circle cx="36" cy="8" r="32"/>
-<text x="10" y="12">
-∩ ͡° ͜ʖ ͡°
-</text>
-<circle cx="36" cy="8" r="32"/>
-<text x="10" y="12">
-∩ ͡° ͜ʖ ͡°
-</text>
-<circle cx="32" cy="8" r="28"/>
-<text x="10" y="12">
- ͡° ͜ʖ ͡°
-</text>
-<circle cx="80" cy="8" r="28"/>
-<text x="34" y="12">
-︶︿︶
-</text>
-<circle cx="116" cy="8" r="16"/>
-<text x="58" y="12">
-◣_◢
-</text>
-<circle cx="244" cy="8" r="16"/>
-<text x="122" y="12">
-ಠ_ಠ
-</text>
-<circle cx="288" cy="8" r="28"/>
-<text x="138" y="12">
-︶︿︶
-</text>
-<circle cx="56" cy="8" r="20"/>
-<text x="26" y="12">
- ^o^
-</text>
-<circle cx="216" cy="8" r="20"/>
-<text x="106" y="12">
-^_^ 
-</text>
-<circle cx="328" cy="8" r="20"/>
-<text x="162" y="12">
-⇀‸↼‶
-</text>
-<circle cx="180" cy="8" r="16"/>
-<text x="90" y="12">
-‾-‾
-</text>
-<circle cx="312" cy="8" r="20"/>
-<text x="154" y="12">
-☞ﾟ∀ﾟ
-</text>
-<circle cx="136" cy="8" r="36"/>
-<text x="58" y="12">
- つ º_º 
-</text>
-<circle cx="436" cy="8" r="16"/>
-<text x="218" y="12">
-‿|‿
-</text>
-<circle cx="276" cy="8" r="16"/>
-<text x="138" y="12">
-òÓ,
-</text>
-<circle cx="24" cy="8" r="20"/>
-<text x="10" y="12">
- •_•
-</text>
-<circle cx="200" cy="8" r="20"/>
-<text x="98" y="12">
-╯°□°
-</text>
-<circle cx="452" cy="8" r="16"/>
-<text x="226" y="12">
-°□°
-</text>
-<circle cx="276" cy="8" r="16"/>
-<text x="138" y="12">
-˚Õ˚
-</text>
-<circle cx="312" cy="8" r="20"/>
-<text x="154" y="12">
- •᷄ὤ•᷅
-</text>
-<circle cx="204" cy="8" r="24"/>
-<text x="98" y="12">
- ° ͜ʖ͡°
-</text>
-<circle cx="212" cy="8" r="16"/>
-<text x="106" y="12">
--_-
-</text>
-<circle cx="564" cy="8" r="16"/>
-<text x="282" y="12">
--_-
-</text>
-<circle cx="200" cy="8" r="20"/>
-<text x="98" y="12">
- •_•
-</text>
-<circle cx="312" cy="8" r="20"/>
-<text x="154" y="12">
- •_•
-</text>
-<circle cx="112" cy="8" r="12"/>
-<text x="58" y="12">
-͡๏̯͡๏
-</text>
-<circle cx="156" cy="8" r="24"/>
-<text x="74" y="12">
-סּںסּَ` 
-</text>
-<circle cx="148" cy="8" r="16"/>
-<text x="74" y="12">
-◕‿-
-</text>
-<circle cx="164" cy="8" r="16"/>
-<text x="82" y="12">
--.-
-</text>
-<circle cx="120" cy="8" r="20"/>
-<text x="58" y="12">
-ಠ益ಠ
-</text>
-<circle cx="68" cy="8" r="16"/>
-<text x="34" y="12">
-&gt;.&lt;
-</text>
-<circle cx="324" cy="8" r="16"/>
-<text x="162" y="12">
-✰‿✰
-</text>
-<circle cx="116" cy="8" r="16"/>
-<text x="58" y="12">
-ˆ˚ˆ
-</text>
-<circle cx="340" cy="8" r="16"/>
-<text x="170" y="12">
-≧▽≦
-</text>
-<circle cx="484" cy="8" r="32"/>
-<text x="234" y="12">
-¯`·.·´¯
-</text>
-<circle cx="244" cy="8" r="16"/>
-<text x="122" y="12">
-•̀ᴗ•́
-</text>
-<circle cx="108" cy="8" r="24"/>
-<text x="50" y="12">
-.☉ʖ̫☉.
-</text>
-<circle cx="36" cy="8" r="16"/>
-<text x="18" y="12">
-☉Д☉
-</text>
-<circle cx="28" cy="8" r="24"/>
-<text x="10" y="12">
-つ•̀ᴥ•́
-</text>
-<circle cx="32" cy="8" r="28"/>
-<text x="10" y="12">
-つ°ヮ°
-</text>
-<circle cx="64" cy="8" r="28"/>
-<text x="26" y="12">
- ʘ̆ ۝ ʘ̆ 
-</text>
-<circle cx="68" cy="8" r="48"/>
-<text x="18" y="12">
- , ⊙ – ⊙ , 
-</text>
-<circle cx="68" cy="8" r="32"/>
-<text x="26" y="12">
- • ʖ̯ • 
-</text>
-<circle cx="32" cy="8" r="12"/>
-<text x="18" y="12">
-͡๏̯͡๏
-</text>
-<circle cx="32" cy="8" r="12"/>
-<text x="18" y="12">
--̮̮̃•̃
-</text>
-<circle cx="36" cy="8" r="16"/>
-<text x="18" y="12">
-̾●̮̮̃ ̾•̃̾
-</text>
-<circle cx="36" cy="8" r="16"/>
-<text x="18" y="12">
--̮̮̃- ̃
-</text>
-<text x="2" y="44">
-(
-</text>
-<text x="10" y="44">
- ͡°
-</text>
-<text x="26" y="44">
- ͜ʖ
-</text>
-<text x="42" y="44">
- ͡°
-</text>
-<text x="58" y="44">
-)
-</text>
-<text x="2" y="92">
-(
-</text>
-<text x="10" y="92">
- ͡↑
-</text>
-<text x="26" y="92">
- ͜ʖ
-</text>
-<text x="42" y="92">
- ͡↑
-</text>
-<text x="58" y="92">
-)
-</text>
-<text x="2" y="140">
-─
-</text>
-<text x="10" y="140">
-=
-</text>
-<text x="18" y="140">
-≡
-</text>
-<text x="26" y="140">
-Σ
-</text>
-<text x="34" y="140">
-(
-</text>
-<text x="42" y="140">
- ͡°
-</text>
-<text x="58" y="140">
- ͜ʖ
-</text>
-<text x="74" y="140">
- ͡°
-</text>
-<text x="90" y="140">
-)
-</text>
-<text x="2" y="188">
-█
-</text>
-<text x="10" y="188">
-▄
-</text>
-<text x="18" y="188">
-(
+<path d=" M 84 44 L 84 64 M 88 40 A 4 4 0 0 0 84 44 M 88 40 L 456 40 M 460 44 L 460 64 M 460 44 A 4 4 0 0 0 456 40 M 84 48 L 84 64 M 460 48 L 460 64 M 84 64 L 84 68 A 4 4 0 0 0 88 72 L 456 72 M 460 64 L 460 68 M 456 72 A 4 4 0 0 0 460 68 M 48 96 L 72 144 M 80 112 L 96 80 M 0 144 L 24 144 L 48 96 M 40 144 L 24 144 M 40 144 L 48 144 M 56 144 L 88 144 M 80 128 L 88 144 M 88 128 L 96 144 L 104 128 M 92 144 L 92 224 M 40 176 L 24 176 M 40 176 L 92 176 M 56 160 L 64 176 M 16 192 L 32 160 M 16 208 L 24 192 M 64 192 L 72 208 M 14 212 L 24 192 M 14 212 A 4 4 0 0 0 16 216 L 24 216 M 64 216 L 72 216 M 72 208 L 74 212 M 72 216 A 4 4 0 0 0 74 212 M 104 1128 L 112 1128 M 272 3344 L 280 3328 M 312 3344 L 320 3328 M 16 3624 L 24 3624 M 24 3632 L 32 3632 M 32 3624 L 40 3624 M 88 3864 L 96 3864 M 80 4056 L 88 4056 M 96 4056 L 104 4056 M 164 4240 L 164 4256 M 128 4296 L 136 4296 M 160 4296 L 168 4296 M 60 4624 L 60 4640 M 88 4640 L 96 4640 M 124 4624 L 124 4640 M 100 4672 L 100 4688 M 112 4688 L 100 4688 M 148 4672 L 148 4688 M 72 4928 L 80 4928 M 56 5208 L 64 5208 M 80 5216 L 88 5216 M 56 5304 L 64 5304 M 72 5312 L 80 5312 M 88 5312 L 96 5312 M 0 5744 L 8 5728 M 16 5744 L 24 5728 L 32 5744 M 72 5744 L 80 5744 M 120 5744 L 128 5728 L 136 5744 M 0 6128 L 8 6112 M 8 6160 L 16 6176 L 24 6176 M 104 6176 L 112 6176 L 120 6160 M 8 6368 L 16 6368 M 24 6608 L 32 6608 M 8 6656 L 16 6656 M 8 6704 L 16 6704" fill="none"/>
+<path d="" fill="none" stroke-dasharray="3 3"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="120" x2="148" y1="1128" y2="1128"/>
+<text x="98" y="60">
+/home/shani/Applications/terraform/terraform
 </text>
 <text x="26" y="188">
- ͡°
+)
 </text>
 <text x="42" y="188">
- ͜ʖ
-</text>
-<text x="58" y="188">
- ͡°
-</text>
-<text x="74" y="188">
-)
-</text>
-<text x="82" y="188">
-▄
-</text>
-<text x="90" y="188">
-█
-</text>
-<text x="106" y="188">
-y
-</text>
-<text x="114" y="188">
-e
-</text>
-<text x="122" y="188">
-a
-</text>
-<text x="130" y="188">
-h
-</text>
-<text x="138" y="188">
- 
-</text>
-<text x="146" y="188">
-i
-</text>
-<text x="154" y="188">
- 
-</text>
-<text x="162" y="188">
-w
-</text>
-<text x="170" y="188">
-o
-</text>
-<text x="178" y="188">
-r
-</text>
-<text x="186" y="188">
-k
-</text>
-<text x="194" y="188">
- 
-</text>
-<text x="202" y="188">
-o
-</text>
-<text x="210" y="188">
-u
-</text>
-<text x="218" y="188">
-t
-</text>
-<text x="2" y="236">
-･
-</text>
-<text x="10" y="236">
-｡
-</text>
-<text x="18" y="236">
-ﾟ
-</text>
-<text x="26" y="236">
-[̅$̅(̅ ͡°
-</text>
-<text x="66" y="236">
- ͜ʖ
-</text>
-<text x="82" y="236">
- ͡°̅)̅$̅]
-</text>
-<text x="122" y="236">
-｡
-</text>
-<text x="130" y="236">
-ﾟ
-</text>
-<text x="138" y="236">
-.
-</text>
-<text x="146" y="236">
-*
-</text>
-<text x="2" y="284">
-(
-</text>
-<text x="10" y="284">
-⌐
-</text>
-<text x="18" y="284">
-■
-</text>
-<line x1="24" x2="32" y1="288" y2="288"/>
-<text x="34" y="284">
-■
-</text>
-<text x="42" y="284">
-)
-</text>
-<text x="2" y="332">
-(
-</text>
-<text x="10" y="332">
-⌐
-</text>
-<text x="18" y="332">
-■
-</text>
-<line x1="24" x2="32" y1="336" y2="336"/>
-<text x="34" y="332">
-■
-</text>
-<text x="42" y="332">
-)
-</text>
-<text x="58" y="332">
-♪
-</text>
-<text x="66" y="332">
-♬
-</text>
-<text x="2" y="380">
-(
-</text>
-<text x="10" y="380">
-˚
-</text>
-<text x="18" y="380">
-ㄥ
-</text>
-<line x1="32" x2="40" y1="384" y2="384"/>
-<text x="42" y="380">
-˚
-</text>
-<text x="50" y="380">
-)
-</text>
-<text x="2" y="428">
-凸
-</text>
-<text x="18" y="428">
-(
-</text>
-<text x="34" y="428">
-•̀_
-</text>
-<text x="50" y="428">
-•́ 
-</text>
-<text x="66" y="428">
-)
-</text>
-<text x="74" y="428">
-凸
-</text>
-<text x="2" y="476">
-┌
-</text>
-<text x="10" y="476">
-[
-</text>
-<text x="26" y="476">
-•
-</text>
-<text x="34" y="476">
- ͜ 
-</text>
-<text x="50" y="476">
-ʖ
-</text>
-<text x="66" y="476">
-•
-</text>
-<text x="82" y="476">
-]
-</text>
-<text x="90" y="476">
-┐
-</text>
-<text x="2" y="524">
-໒
-</text>
-<text x="10" y="524">
-(
-</text>
-<text x="26" y="524">
-•
-</text>
-<text x="34" y="524">
- ͜ʖ
-</text>
-<text x="58" y="524">
-•
-</text>
-<text x="74" y="524">
-)
-</text>
-<text x="82" y="524">
-७
-</text>
-<text x="2" y="572">
-(
-</text>
-<text x="18" y="572">
-✖
-</text>
-<line x1="32" x2="40" y1="576" y2="576"/>
-<text x="50" y="572">
-✖
-</text>
-<text x="66" y="572">
-)
-</text>
-<text x="2" y="620">
-⊂
-</text>
-<text x="10" y="620">
-(
-</text>
-<text x="18" y="620">
-◣
-</text>
-<line x1="24" x2="32" y1="624" y2="624"/>
-<text x="34" y="620">
-◢
-</text>
-<text x="42" y="620">
-)
-</text>
-<text x="50" y="620">
-つ
-</text>
-<text x="2" y="668">
-¯
-</text>
-<line x1="8" x2="16" y1="656" y2="672"/>
-<line x1="16" x2="24" y1="672" y2="672"/>
-<text x="26" y="668">
-(
-</text>
-<text x="34" y="668">
-ツ
-</text>
-<text x="50" y="668">
-)
-</text>
-<line x1="56" x2="64" y1="672" y2="672"/>
-<line x1="64" x2="72" y1="672" y2="656"/>
-<text x="74" y="668">
-¯
-</text>
-<text x="2" y="716">
-M
-</text>
-<text x="10" y="716">
-e
-</text>
-<text x="18" y="716">
-h
-</text>
-<text x="34" y="716">
-¯
-</text>
-<line x1="40" x2="48" y1="704" y2="720"/>
-<line x1="48" x2="56" y1="720" y2="720"/>
-<text x="58" y="716">
-(
-</text>
-<text x="66" y="716">
-ツ
-</text>
-<text x="82" y="716">
-)
-</text>
-<line x1="88" x2="96" y1="720" y2="720"/>
-<line x1="96" x2="104" y1="720" y2="704"/>
-<text x="106" y="716">
-¯
-</text>
-<text x="122" y="716">
-ヽ
-</text>
-<text x="138" y="716">
-(
-</text>
-<text x="146" y="716">
-。
-</text>
-<line x1="160" x2="168" y1="720" y2="720"/>
-<text x="170" y="716">
-°
-</text>
-<text x="178" y="716">
-)
-</text>
-<text x="186" y="716">
-ノ
-</text>
-<text x="210" y="716">
-ヾ
-</text>
-<text x="226" y="716">
-(
-</text>
-<text x="234" y="716">
-ｏ
-</text>
-<text x="250" y="716">
-･
-</text>
-<text x="258" y="716">
-ω
-</text>
-<text x="266" y="716">
-･
-</text>
-<text x="274" y="716">
-)
-</text>
-<text x="282" y="716">
-ﾉ
-</text>
-<text x="2" y="764">
-ツ
-</text>
-<text x="2" y="812">
-【
-</text>
-<text x="18" y="812">
-ツ
-</text>
-<text x="34" y="812">
-】
-</text>
-<text x="2" y="860">
-╰
-</text>
-<text x="10" y="860">
-(
-</text>
-<text x="18" y="860">
-⇀
-</text>
-<text x="26" y="860">
-︿
-</text>
-<text x="42" y="860">
-⇀
-</text>
-<text x="50" y="860">
-)
-</text>
-<text x="58" y="860">
-つ
-</text>
-<line x1="72" x2="80" y1="856" y2="856"/>
-<text x="82" y="860">
-]
-</text>
-<text x="90" y="860">
-═
-</text>
-<text x="98" y="860">
-─
-</text>
-<text x="106" y="860">
-─
-</text>
-<text x="2" y="908">
-(
-</text>
-<text x="10" y="908">
-∩
-</text>
-<text x="18" y="908">
- ͡ 
-</text>
-<text x="34" y="908">
-°
-</text>
-<text x="50" y="908">
-ʖ
-</text>
-<text x="58" y="908">
- ͡ 
-</text>
-<text x="74" y="908">
-°
-</text>
-<text x="82" y="908">
-)
-</text>
-<text x="98" y="908">
-⊃
-</text>
-<line x1="104" x2="112" y1="904" y2="904"/>
-<text x="114" y="908">
-(
-</text>
-<line fill="none" stroke-dasharray="3 3" x1="120" x2="128" y1="904" y2="904"/>
-<line fill="none" stroke-dasharray="3 3" x1="128" x2="136" y1="904" y2="904"/>
-<line fill="none" stroke-dasharray="3 3" x1="136" x2="144" y1="904" y2="904"/>
-<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="144" x2="148" y1="904" y2="904"/>
-<text x="2" y="940">
-d
-</text>
-<text x="10" y="940">
-o
-</text>
-<text x="18" y="940">
-t
-</text>
-<text x="26" y="940">
-a
-</text>
-<text x="34" y="940">
-_
-</text>
-<text x="42" y="940">
-m
-</text>
-<text x="50" y="940">
-e
-</text>
-<text x="58" y="940">
-m
-</text>
-<text x="66" y="940">
-e
-</text>
-<text x="74" y="940">
-s
-</text>
-<text x="2" y="956">
-(
-</text>
-<text x="10" y="956">
- ͡°
-</text>
-<text x="26" y="956">
-╭͜ʖ
-</text>
-<text x="42" y="956">
-╮͡°
-</text>
-<text x="66" y="956">
-)
-</text>
-<text x="82" y="956">
-D
-</text>
-<text x="90" y="956">
-A
-</text>
-<text x="98" y="956">
-Y
-</text>
-<text x="106" y="956">
- 
-</text>
-<text x="114" y="956">
-T
-</text>
-<text x="122" y="956">
-U
-</text>
-<text x="130" y="956">
-C
-</text>
-<text x="138" y="956">
-K
-</text>
-<text x="146" y="956">
-E
-</text>
-<text x="154" y="956">
-R
-</text>
-<text x="162" y="956">
- 
-</text>
-<text x="170" y="956">
-N
-</text>
-<text x="178" y="956">
-I
-</text>
-<text x="186" y="956">
-G
-</text>
-<text x="194" y="956">
-H
-</text>
-<text x="202" y="956">
-T
-</text>
-<text x="210" y="956">
- 
-</text>
-<text x="218" y="956">
-F
-</text>
-<text x="226" y="956">
-U
-</text>
-<text x="234" y="956">
-C
-</text>
-<text x="242" y="956">
-K
-</text>
-<text x="250" y="956">
-E
-</text>
-<text x="258" y="956">
-R
-</text>
-<text x="274" y="956">
-(
-</text>
-<text x="282" y="956">
- ͡°
-</text>
-<text x="298" y="956">
-╭͜ʖ
-</text>
-<text x="314" y="956">
-╮͡°
-</text>
-<text x="338" y="956">
-)
-</text>
-<text x="2" y="1004">
-ಠ
-</text>
-<text x="10" y="1004">
-益
-</text>
-<text x="26" y="1004">
-ಠ
-</text>
-<text x="2" y="1052">
-୧
-</text>
-<text x="10" y="1052">
-(
-</text>
-<text x="18" y="1052">
-ಠ
-</text>
-<text x="26" y="1052">
-益
-</text>
-<text x="42" y="1052">
-ಠ
-</text>
-<text x="50" y="1052">
-)
-</text>
-<text x="58" y="1052">
-୨
-</text>
-<text x="66" y="1052">
- 
-</text>
-<text x="74" y="1052">
-R
-</text>
-<text x="82" y="1052">
-I
-</text>
-<text x="90" y="1052">
-O
-</text>
-<text x="98" y="1052">
-T
-</text>
-<text x="106" y="1052">
- 
-</text>
-<text x="114" y="1052">
-୧
-</text>
-<text x="122" y="1052">
-(
-</text>
-<text x="130" y="1052">
-ಠ
-</text>
-<text x="138" y="1052">
-益
-</text>
-<text x="154" y="1052">
-ಠ
-</text>
-<text x="162" y="1052">
-)
-</text>
-<text x="170" y="1052">
-୨
-</text>
-<text x="2" y="1100">
-୧
-</text>
-<text x="10" y="1100">
-(
-</text>
-<text x="18" y="1100">
-ಠ
-</text>
-<text x="26" y="1100">
-益
-</text>
-<text x="42" y="1100">
-ಠ
-</text>
-<text x="50" y="1100">
-)
-</text>
-<text x="58" y="1100">
-୨
-</text>
-<text x="66" y="1100">
- 
-</text>
-<text x="74" y="1100">
-M
-</text>
-<text x="82" y="1100">
-R
-</text>
-<text x="90" y="1100">
-G
-</text>
-<text x="98" y="1100">
-L
-</text>
-<text x="106" y="1100">
-R
-</text>
-<text x="114" y="1100">
-L
-</text>
-<text x="122" y="1100">
-R
-</text>
-<text x="130" y="1100">
-L
-</text>
-<text x="138" y="1100">
-R
-</text>
-<text x="146" y="1100">
- 
-</text>
-<text x="154" y="1100">
-୧
-</text>
-<text x="162" y="1100">
-(
-</text>
-<text x="170" y="1100">
-ಠ
-</text>
-<text x="178" y="1100">
-益
-</text>
-<text x="194" y="1100">
-ಠ
-</text>
-<text x="202" y="1100">
-)
-</text>
-<text x="210" y="1100">
-୨
-</text>
-<text x="2" y="1148">
-(
-</text>
-<text x="10" y="1148">
-つ
-</text>
-<text x="26" y="1148">
-ಠ
-</text>
-<text x="34" y="1148">
-益
-</text>
-<text x="50" y="1148">
-ಠ
-</text>
-<text x="58" y="1148">
-)
-</text>
-<text x="66" y="1148">
-つ
-</text>
-<text x="90" y="1148">
-─
-</text>
-<text x="98" y="1148">
-=
-</text>
-<text x="106" y="1148">
-≡
-</text>
-<text x="114" y="1148">
-Σ
-</text>
-<text x="122" y="1148">
-O
-</text>
-<text x="130" y="1148">
-)
-</text>
-<text x="138" y="1148">
-)
-</text>
-<text x="154" y="1148">
-H
-</text>
-<text x="162" y="1148">
-A
-</text>
-<text x="170" y="1148">
-D
-</text>
-<text x="178" y="1148">
-O
-</text>
-<text x="186" y="1148">
-U
-</text>
-<text x="194" y="1148">
-K
-</text>
-<text x="202" y="1148">
-E
-</text>
-<text x="210" y="1148">
-N
-</text>
-<text x="2" y="1196">
-Y
-</text>
-<text x="10" y="1196">
- 
-</text>
-<text x="18" y="1196">
-u
-</text>
-<text x="26" y="1196">
- 
-</text>
-<text x="34" y="1196">
-d
-</text>
-<text x="42" y="1196">
-o
-</text>
-<text x="50" y="1196">
- 
-</text>
-<text x="58" y="1196">
-d
-</text>
-<text x="66" y="1196">
-i
-</text>
-<text x="74" y="1196">
-s
-</text>
-<text x="82" y="1196">
-!
-</text>
-<text x="90" y="1196">
-?
-</text>
-<text x="106" y="1196">
-ლ
-</text>
-<text x="114" y="1196">
-(
-</text>
-<text x="122" y="1196">
-ಠ
-</text>
-<text x="130" y="1196">
-益
-</text>
-<text x="146" y="1196">
-ಠ
-</text>
-<text x="154" y="1196">
-ლ
-</text>
-<text x="162" y="1196">
-)
-</text>
-<text x="2" y="1228">
-h
-</text>
-<text x="10" y="1228">
-e
-</text>
-<text x="18" y="1228">
-a
-</text>
-<text x="26" y="1228">
-r
-</text>
-<text x="34" y="1228">
-t
-</text>
-<text x="42" y="1228">
-h
-</text>
-<text x="50" y="1228">
-s
-</text>
-<text x="58" y="1228">
-t
-</text>
-<text x="66" y="1228">
-o
-</text>
-<text x="74" y="1228">
-n
-</text>
-<text x="82" y="1228">
-e
-</text>
-<text x="90" y="1228">
-_
-</text>
-<text x="98" y="1228">
-m
-</text>
-<text x="106" y="1228">
-e
-</text>
-<text x="114" y="1228">
-m
-</text>
-<text x="122" y="1228">
-e
-</text>
-<text x="130" y="1228">
-s
-</text>
-<text x="2" y="1244">
-(
-</text>
-<text x="10" y="1244">
-º
-</text>
-<text x="18" y="1244">
-_
-</text>
-<text x="26" y="1244">
-ل
-</text>
-<text x="34" y="1244">
-º
-</text>
-<text x="42" y="1244">
-(
-</text>
-<text x="50" y="1244">
-º
-</text>
-<text x="58" y="1244">
-_
-</text>
-<text x="66" y="1244">
-ل
-</text>
-<text x="74" y="1244">
-º
-</text>
-<text x="82" y="1244">
-(
-</text>
-<text x="90" y="1244">
-º
-</text>
-<text x="98" y="1244">
-_
-</text>
-<text x="106" y="1244">
-ل
-</text>
-<text x="114" y="1244">
-º
-</text>
-<text x="122" y="1244">
-(
-</text>
-<text x="130" y="1244">
-º
-</text>
-<text x="138" y="1244">
-_
-</text>
-<text x="146" y="1244">
-ل
-</text>
-<text x="154" y="1244">
-º
-</text>
-<text x="162" y="1244">
-)
-</text>
-<text x="170" y="1244">
-º
-</text>
-<text x="178" y="1244">
-_
-</text>
-<text x="186" y="1244">
-ل
-</text>
-<text x="194" y="1244">
-º
-</text>
-<text x="202" y="1244">
-)
-</text>
-<text x="210" y="1244">
-º
-</text>
-<text x="218" y="1244">
-_
-</text>
-<text x="226" y="1244">
-ل
-</text>
-<text x="234" y="1244">
-º
-</text>
-<text x="242" y="1244">
-)
-</text>
-<text x="258" y="1244">
-E
-</text>
-<text x="266" y="1244">
-V
-</text>
-<text x="274" y="1244">
-E
-</text>
-<text x="282" y="1244">
-R
-</text>
-<text x="290" y="1244">
-Y
-</text>
-<text x="298" y="1244">
-O
-</text>
-<text x="306" y="1244">
-N
-</text>
-<text x="314" y="1244">
-E
-</text>
-<text x="322" y="1244">
- 
-</text>
-<text x="330" y="1244">
-G
-</text>
-<text x="338" y="1244">
-E
-</text>
-<text x="346" y="1244">
-T
-</text>
-<text x="354" y="1244">
- 
-</text>
-<text x="362" y="1244">
-I
-</text>
-<text x="370" y="1244">
-N
-</text>
-<text x="378" y="1244">
- 
-</text>
-<text x="386" y="1244">
-H
-</text>
-<text x="394" y="1244">
-E
-</text>
-<text x="402" y="1244">
-R
-</text>
-<text x="410" y="1244">
-E
-</text>
-<text x="418" y="1244">
-!
-</text>
-<text x="434" y="1244">
-(
-</text>
-<text x="442" y="1244">
-º
-</text>
-<text x="450" y="1244">
-_
-</text>
-<text x="458" y="1244">
-ل
-</text>
-<text x="466" y="1244">
-º
-</text>
-<text x="474" y="1244">
-(
-</text>
-<text x="482" y="1244">
-º
-</text>
-<text x="490" y="1244">
-_
-</text>
-<text x="498" y="1244">
-ل
-</text>
-<text x="506" y="1244">
-º
-</text>
-<text x="514" y="1244">
-(
-</text>
-<text x="522" y="1244">
-º
-</text>
-<text x="530" y="1244">
-_
-</text>
-<text x="538" y="1244">
-ل
-</text>
-<text x="546" y="1244">
-º
-</text>
-<text x="554" y="1244">
-(
-</text>
-<text x="562" y="1244">
-º
-</text>
-<text x="570" y="1244">
-_
-</text>
-<text x="578" y="1244">
-ل
-</text>
-<text x="586" y="1244">
-º
-</text>
-<text x="594" y="1244">
-)
-</text>
-<text x="602" y="1244">
-º
-</text>
-<text x="610" y="1244">
-_
-</text>
-<text x="618" y="1244">
-ل
-</text>
-<text x="626" y="1244">
-º
-</text>
-<text x="634" y="1244">
-)
-</text>
-<text x="642" y="1244">
-º
-</text>
-<text x="650" y="1244">
-_
-</text>
-<text x="658" y="1244">
-ل
-</text>
-<text x="666" y="1244">
-º
-</text>
-<text x="674" y="1244">
-)
-</text>
-<text x="2" y="1276">
-h
-</text>
-<text x="10" y="1276">
-e
-</text>
-<text x="18" y="1276">
-a
-</text>
-<text x="26" y="1276">
-r
-</text>
-<text x="34" y="1276">
-t
-</text>
-<text x="42" y="1276">
-h
-</text>
-<text x="50" y="1276">
-s
-</text>
-<text x="58" y="1276">
-t
-</text>
-<text x="66" y="1276">
-o
-</text>
-<text x="74" y="1276">
-n
-</text>
-<text x="82" y="1276">
-e
-</text>
-<text x="90" y="1276">
-_
-</text>
-<text x="98" y="1276">
-m
-</text>
-<text x="106" y="1276">
-e
-</text>
-<text x="114" y="1276">
-m
-</text>
-<text x="122" y="1276">
-e
-</text>
-<text x="130" y="1276">
-s
-</text>
-<text x="2" y="1292">
-(
-</text>
-<text x="10" y="1292">
-ʘ̚ل͜ʘ̚)
-</text>
-<text x="50" y="1292">
-M
-</text>
-<text x="58" y="1292">
-Y
-</text>
-<text x="66" y="1292">
- 
-</text>
-<text x="74" y="1292">
-E
-</text>
-<text x="82" y="1292">
-Y
-</text>
-<text x="90" y="1292">
-E
-</text>
-<text x="98" y="1292">
-S
-</text>
-<text x="106" y="1292">
- 
-</text>
-<text x="114" y="1292">
-A
-</text>
-<text x="122" y="1292">
-R
-</text>
-<text x="130" y="1292">
-E
-</text>
-<text x="138" y="1292">
- 
-</text>
-<text x="146" y="1292">
-O
-</text>
-<text x="154" y="1292">
-P
-</text>
-<text x="162" y="1292">
-E
-</text>
-<text x="170" y="1292">
-N
-</text>
-<text x="186" y="1292">
-(
-</text>
-<text x="194" y="1292">
-ʘ̚ل͜ʘ̚)
-</text>
-<text x="2" y="1324">
-d
-</text>
-<text x="10" y="1324">
-o
-</text>
-<text x="18" y="1324">
-t
-</text>
-<text x="26" y="1324">
-a
-</text>
-<text x="34" y="1324">
-_
-</text>
-<text x="42" y="1324">
-m
-</text>
-<text x="50" y="1324">
-e
-</text>
-<text x="58" y="1324">
-m
-</text>
-<text x="66" y="1324">
-e
-</text>
-<text x="74" y="1324">
-s
-</text>
-<text x="2" y="1340">
-ง
-</text>
-<text x="10" y="1340">
-╭
-</text>
-<text x="18" y="1340">
-ರ
-</text>
-<text x="26" y="1340">
-_
-</text>
-<text x="34" y="1340">
-•́)
-</text>
-<text x="50" y="1340">
-ง
-</text>
-<text x="58" y="1340">
- 
-</text>
-<text x="66" y="1340">
-W
-</text>
-<text x="74" y="1340">
-e
-</text>
-<text x="82" y="1340">
- 
-</text>
-<text x="90" y="1340">
-p
-</text>
-<text x="98" y="1340">
-o
-</text>
-<text x="106" y="1340">
-l
-</text>
-<text x="114" y="1340">
-i
-</text>
-<text x="122" y="1340">
-t
-</text>
-<text x="130" y="1340">
-e
-</text>
-<text x="138" y="1340">
-l
-</text>
-<text x="146" y="1340">
-y
-</text>
-<text x="154" y="1340">
- 
-</text>
-<text x="162" y="1340">
-a
-</text>
-<text x="170" y="1340">
-s
-</text>
-<text x="178" y="1340">
-k
-</text>
-<text x="186" y="1340">
- 
-</text>
-<text x="194" y="1340">
-f
-</text>
-<text x="202" y="1340">
-o
-</text>
-<text x="210" y="1340">
-r
-</text>
-<text x="218" y="1340">
- 
-</text>
-<text x="226" y="1340">
-t
-</text>
-<text x="234" y="1340">
-h
-</text>
-<text x="242" y="1340">
-i
-</text>
-<text x="250" y="1340">
-s
-</text>
-<text x="258" y="1340">
- 
-</text>
-<text x="266" y="1340">
-g
-</text>
-<text x="274" y="1340">
-a
-</text>
-<text x="282" y="1340">
-m
-</text>
-<text x="290" y="1340">
-e
-</text>
-<text x="298" y="1340">
- 
-</text>
-<text x="306" y="1340">
-t
-</text>
-<text x="314" y="1340">
-o
-</text>
-<text x="322" y="1340">
- 
-</text>
-<text x="330" y="1340">
-b
-</text>
-<text x="338" y="1340">
-e
-</text>
-<text x="346" y="1340">
- 
-</text>
-<text x="354" y="1340">
-s
-</text>
-<text x="362" y="1340">
-t
-</text>
-<text x="370" y="1340">
-a
-</text>
-<text x="378" y="1340">
-r
-</text>
-<text x="386" y="1340">
-t
-</text>
-<text x="394" y="1340">
-e
-</text>
-<text x="402" y="1340">
-d
-</text>
-<text x="410" y="1340">
- 
-</text>
-<text x="418" y="1340">
-f
-</text>
-<text x="426" y="1340">
-o
-</text>
-<text x="434" y="1340">
-r
-</text>
-<text x="442" y="1340">
- 
-</text>
-<text x="450" y="1340">
-a
-</text>
-<text x="458" y="1340">
-l
-</text>
-<text x="466" y="1340">
-a
-</text>
-<text x="474" y="1340">
-s
-</text>
-<text x="482" y="1340">
- 
-</text>
-<text x="490" y="1340">
-w
-</text>
-<text x="498" y="1340">
-e
-</text>
-<text x="506" y="1340">
- 
-</text>
-<text x="514" y="1340">
-w
-</text>
-<text x="522" y="1340">
-i
-</text>
-<text x="530" y="1340">
-l
-</text>
-<text x="538" y="1340">
-l
-</text>
-<text x="546" y="1340">
- 
-</text>
-<text x="554" y="1340">
-s
-</text>
-<text x="562" y="1340">
-t
-</text>
-<text x="570" y="1340">
-i
-</text>
-<text x="578" y="1340">
-r
-</text>
-<text x="586" y="1340">
- 
-</text>
-<text x="594" y="1340">
-u
-</text>
-<text x="602" y="1340">
-p
-</text>
-<text x="610" y="1340">
- 
-</text>
-<text x="618" y="1340">
-a
-</text>
-<text x="626" y="1340">
- 
-</text>
-<text x="634" y="1340">
-r
-</text>
-<text x="642" y="1340">
-u
-</text>
-<text x="650" y="1340">
-c
-</text>
-<text x="658" y="1340">
-k
-</text>
-<text x="666" y="1340">
-u
-</text>
-<text x="674" y="1340">
-s
-</text>
-<text x="690" y="1340">
-(
-</text>
-<text x="698" y="1340">
-ง
-</text>
-<text x="706" y="1340">
-╭
-</text>
-<text x="714" y="1340">
-ರ
-</text>
-<text x="722" y="1340">
-_
-</text>
-<text x="730" y="1340">
-•́)
-</text>
-<text x="746" y="1340">
-ง
-</text>
-<text x="2" y="1388">
-(
-</text>
-<text x="10" y="1388">
-º
-</text>
-<text x="18" y="1388">
-_
-</text>
-<text x="26" y="1388">
-ل
-</text>
-<text x="34" y="1388">
-º
-</text>
-<text x="42" y="1388">
-(
-</text>
-<text x="50" y="1388">
-º
-</text>
-<text x="58" y="1388">
-_
-</text>
-<text x="66" y="1388">
-ل
-</text>
-<text x="74" y="1388">
-º
-</text>
-<text x="82" y="1388">
-(
-</text>
-<text x="90" y="1388">
-º
-</text>
-<text x="98" y="1388">
-_
-</text>
-<text x="106" y="1388">
-ل
-</text>
-<text x="114" y="1388">
-º
-</text>
-<text x="122" y="1388">
-(
-</text>
-<text x="130" y="1388">
-º
-</text>
-<text x="138" y="1388">
-_
-</text>
-<text x="146" y="1388">
-ل
-</text>
-<text x="154" y="1388">
-º
-</text>
-<text x="162" y="1388">
-)
-</text>
-<text x="170" y="1388">
-º
-</text>
-<text x="178" y="1388">
-_
-</text>
-<text x="186" y="1388">
-ل
-</text>
-<text x="194" y="1388">
-º
-</text>
-<text x="202" y="1388">
-)
-</text>
-<text x="210" y="1388">
-º
-</text>
-<text x="218" y="1388">
-_
-</text>
-<text x="226" y="1388">
-ل
-</text>
-<text x="234" y="1388">
-º
-</text>
-<text x="242" y="1388">
-)
-</text>
-<text x="250" y="1388">
-Y
-</text>
-<text x="258" y="1388">
-o
-</text>
-<text x="266" y="1388">
-u
-</text>
-<text x="274" y="1388">
- 
-</text>
-<text x="282" y="1388">
-e
-</text>
-<text x="290" y="1388">
-i
-</text>
-<text x="298" y="1388">
-t
-</text>
-<text x="306" y="1388">
-h
-</text>
-<text x="314" y="1388">
-e
-</text>
-<text x="322" y="1388">
-r
-</text>
-<text x="330" y="1388">
- 
-</text>
-<text x="338" y="1388">
-d
-</text>
-<text x="346" y="1388">
-i
-</text>
-<text x="354" y="1388">
-e
-</text>
-<text x="362" y="1388">
- 
-</text>
-<text x="370" y="1388">
-a
-</text>
-<text x="378" y="1388">
- 
-</text>
-<text x="386" y="1388">
-D
-</text>
-<text x="394" y="1388">
-O
-</text>
-<text x="402" y="1388">
-N
-</text>
-<text x="410" y="1388">
-G
-</text>
-<text x="418" y="1388">
-,
-</text>
-<text x="434" y="1388">
-o
-</text>
-<text x="442" y="1388">
-r
-</text>
-<text x="450" y="1388">
- 
-</text>
-<text x="458" y="1388">
-l
-</text>
-<text x="466" y="1388">
-i
-</text>
-<text x="474" y="1388">
-v
-</text>
-<text x="482" y="1388">
-e
-</text>
-<text x="490" y="1388">
- 
-</text>
-<text x="498" y="1388">
-l
-</text>
-<text x="506" y="1388">
-o
-</text>
-<text x="514" y="1388">
-n
-</text>
-<text x="522" y="1388">
-g
-</text>
-<text x="530" y="1388">
- 
-</text>
-<text x="538" y="1388">
-e
-</text>
-<text x="546" y="1388">
-n
-</text>
-<text x="554" y="1388">
-o
-</text>
-<text x="562" y="1388">
-u
-</text>
-<text x="570" y="1388">
-g
-</text>
-<text x="578" y="1388">
-h
-</text>
-<text x="586" y="1388">
- 
-</text>
-<text x="594" y="1388">
-t
-</text>
-<text x="602" y="1388">
-o
-</text>
-<text x="610" y="1388">
- 
-</text>
-<text x="618" y="1388">
-b
-</text>
-<text x="626" y="1388">
-e
-</text>
-<text x="634" y="1388">
-c
-</text>
-<text x="642" y="1388">
-o
-</text>
-<text x="650" y="1388">
-m
-</text>
-<text x="658" y="1388">
-e
-</text>
-<text x="666" y="1388">
- 
-</text>
-<text x="674" y="1388">
-t
-</text>
-<text x="682" y="1388">
-h
-</text>
-<text x="690" y="1388">
-e
-</text>
-<text x="698" y="1388">
- 
-</text>
-<text x="706" y="1388">
-D
-</text>
-<text x="714" y="1388">
-O
-</text>
-<text x="722" y="1388">
-N
-</text>
-<text x="730" y="1388">
-G
-</text>
-<text x="738" y="1388">
-E
-</text>
-<text x="746" y="1388">
-R
-</text>
-<text x="754" y="1388">
-(
-</text>
-<text x="762" y="1388">
-º
-</text>
-<text x="770" y="1388">
-_
-</text>
-<text x="778" y="1388">
-ل
-</text>
-<text x="786" y="1388">
-º
-</text>
-<text x="794" y="1388">
-(
-</text>
-<text x="802" y="1388">
-º
-</text>
-<text x="810" y="1388">
-_
-</text>
-<text x="818" y="1388">
-ل
-</text>
-<text x="826" y="1388">
-º
-</text>
-<text x="834" y="1388">
-(
-</text>
-<text x="842" y="1388">
-º
-</text>
-<text x="850" y="1388">
-_
-</text>
-<text x="858" y="1388">
-ل
-</text>
-<text x="866" y="1388">
-º
-</text>
-<text x="874" y="1388">
-(
-</text>
-<text x="882" y="1388">
-º
-</text>
-<text x="890" y="1388">
-_
-</text>
-<text x="898" y="1388">
-ل
-</text>
-<text x="906" y="1388">
-º
-</text>
-<text x="914" y="1388">
-)
-</text>
-<text x="922" y="1388">
-º
-</text>
-<text x="930" y="1388">
-_
-</text>
-<text x="938" y="1388">
-ل
-</text>
-<text x="946" y="1388">
-º
-</text>
-<text x="954" y="1388">
-)
-</text>
-<text x="962" y="1388">
-º
-</text>
-<text x="970" y="1388">
-_
-</text>
-<text x="978" y="1388">
-ل
-</text>
-<text x="986" y="1388">
-º
-</text>
-<text x="994" y="1388">
-)
-</text>
-<text x="2" y="1436">
-&lt;
-</text>
-<text x="10" y="1436">
-M
-</text>
-<text x="18" y="1436">
-E
-</text>
-<text x="26" y="1436">
-S
-</text>
-<text x="34" y="1436">
-S
-</text>
-<text x="42" y="1436">
-A
-</text>
-<text x="50" y="1436">
-G
-</text>
-<text x="58" y="1436">
-E
-</text>
-<text x="66" y="1436">
- 
-</text>
-<text x="74" y="1436">
-D
-</text>
-<text x="82" y="1436">
-O
-</text>
-<text x="90" y="1436">
-N
-</text>
-<text x="98" y="1436">
-G
-</text>
-<text x="106" y="1436">
-E
-</text>
-<text x="114" y="1436">
-R
-</text>
-<text x="122" y="1436">
-E
-</text>
-<text x="130" y="1436">
-D
-</text>
-<text x="138" y="1436">
-&gt;
-</text>
-<text x="2" y="1484">
-(
-</text>
-<text x="18" y="1484">
-º
-</text>
-<text x="26" y="1484">
-º
-</text>
-<text x="34" y="1484">
-º
-</text>
-<text x="42" y="1484">
-º
-</text>
-<text x="50" y="1484">
-º
-</text>
-<text x="58" y="1484">
-_
-</text>
-<text x="66" y="1484">
-ل
-</text>
-<text x="74" y="1484">
-º
-</text>
-<text x="82" y="1484">
-º
-</text>
-<text x="90" y="1484">
-º
-</text>
-<text x="98" y="1484">
-º
-</text>
-<text x="106" y="1484">
-º
-</text>
-<text x="122" y="1484">
-)
-</text>
-<text x="138" y="1484">
-I
-</text>
-<text x="146" y="1484">
- 
-</text>
-<text x="154" y="1484">
-A
-</text>
-<text x="162" y="1484">
-M
-</text>
-<text x="170" y="1484">
- 
-</text>
-<text x="178" y="1484">
-S
-</text>
-<text x="186" y="1484">
-U
-</text>
-<text x="194" y="1484">
-P
-</text>
-<text x="202" y="1484">
-E
-</text>
-<text x="210" y="1484">
-R
-</text>
-<text x="218" y="1484">
- 
-</text>
-<text x="226" y="1484">
-D
-</text>
-<text x="234" y="1484">
-O
-</text>
-<text x="242" y="1484">
-N
-</text>
-<text x="250" y="1484">
-G
-</text>
-<text x="266" y="1484">
-(
-</text>
-<text x="282" y="1484">
-º
-</text>
-<text x="290" y="1484">
-º
-</text>
-<text x="298" y="1484">
-º
-</text>
-<text x="306" y="1484">
-º
-</text>
-<text x="314" y="1484">
-º
-</text>
-<text x="322" y="1484">
-_
-</text>
-<text x="330" y="1484">
-ل
-</text>
-<text x="338" y="1484">
-º
-</text>
-<text x="346" y="1484">
-º
-</text>
-<text x="354" y="1484">
-º
-</text>
-<text x="362" y="1484">
-º
-</text>
-<text x="370" y="1484">
-º
-</text>
-<text x="386" y="1484">
-)
-</text>
-<text x="2" y="1516">
-h
-</text>
-<text x="10" y="1516">
-e
-</text>
-<text x="18" y="1516">
-a
-</text>
-<text x="26" y="1516">
-r
-</text>
-<text x="34" y="1516">
-t
-</text>
-<text x="42" y="1516">
-h
-</text>
-<text x="50" y="1516">
-s
-</text>
-<text x="58" y="1516">
-t
-</text>
-<text x="66" y="1516">
-o
-</text>
-<text x="74" y="1516">
-n
-</text>
-<text x="82" y="1516">
-e
-</text>
-<text x="90" y="1516">
-_
-</text>
-<text x="98" y="1516">
-m
-</text>
-<text x="106" y="1516">
-e
-</text>
-<text x="114" y="1516">
-m
-</text>
-<text x="122" y="1516">
-e
-</text>
-<text x="130" y="1516">
-s
-</text>
-<text x="10" y="1532">
-(
-</text>
-<text x="18" y="1532">
- ͡°
-</text>
-<text x="34" y="1532">
- ͜◯
-</text>
-<text x="50" y="1532">
- ͡°
-</text>
-<text x="66" y="1532">
-)
-</text>
-<text x="74" y="1532">
- ﻿Ｃ
-</text>
-<text x="98" y="1532">
-Ｌ
-</text>
-<text x="114" y="1532">
-Ｏ
-</text>
-<text x="130" y="1532">
-Ｗ
-</text>
-<text x="146" y="1532">
-Ｎ
-</text>
-<text x="170" y="1532">
-Ｆ
-</text>
-<text x="186" y="1532">
-Ｉ
-</text>
-<text x="202" y="1532">
-Ｅ
-</text>
-<text x="218" y="1532">
-Ｓ
-</text>
-<text x="234" y="1532">
-Ｔ
-</text>
-<text x="250" y="1532">
-Ａ
-</text>
-<text x="274" y="1532">
-(
-</text>
-<text x="282" y="1532">
- ͡°
-</text>
-<text x="298" y="1532">
- ͜◯
-</text>
-<text x="314" y="1532">
- ͡°
-</text>
-<text x="330" y="1532">
-)
-</text>
-<text x="2" y="1580">
-(
-</text>
-<text x="18" y="1580">
-•
-</text>
-<text x="34" y="1580">
-∀
-</text>
-<text x="42" y="1580">
-•
-</text>
-<text x="50" y="1580">
-)
-</text>
-<text x="58" y="1580">
-–
-</text>
-<text x="66" y="1580">
-Ψ
-</text>
-<text x="82" y="1580">
-&quot;
-</text>
-<text x="90" y="1580">
-I
-</text>
-<text x="98" y="1580">
-&apos;
-</text>
-<text x="106" y="1580">
-d
-</text>
-<text x="114" y="1580">
- 
-</text>
-<text x="122" y="1580">
-F
-</text>
-<text x="130" y="1580">
-o
-</text>
-<text x="138" y="1580">
-r
-</text>
-<text x="146" y="1580">
-k
-</text>
-<text x="154" y="1580">
- 
-</text>
-<text x="162" y="1580">
-H
-</text>
-<text x="170" y="1580">
-i
-</text>
-<text x="178" y="1580">
-s
-</text>
-<text x="186" y="1580">
- 
-</text>
-<text x="194" y="1580">
-R
-</text>
-<text x="202" y="1580">
-e
-</text>
-<text x="210" y="1580">
-p
-</text>
-<text x="218" y="1580">
-o
-</text>
-<text x="226" y="1580">
-&quot;
-</text>
-<text x="2" y="1628">
-└
-</text>
-<text x="10" y="1628">
-(
-</text>
-<text x="26" y="1628">
-°
-</text>
-<text x="34" y="1628">
- ͜ʖ͡°
-</text>
-<text x="58" y="1628">
-)
-</text>
-<text x="66" y="1628">
-┐
-</text>
-<text x="74" y="1628">
-B
-</text>
-<text x="82" y="1628">
-o
-</text>
-<text x="90" y="1628">
-r
-</text>
-<text x="98" y="1628">
-n
-</text>
-<text x="106" y="1628">
- 
-</text>
-<text x="114" y="1628">
-t
-</text>
-<text x="122" y="1628">
-o
-</text>
-<text x="130" y="1628">
-o
-</text>
-<text x="138" y="1628">
- 
-</text>
-<text x="146" y="1628">
-l
-</text>
-<text x="154" y="1628">
-a
-</text>
-<text x="162" y="1628">
-t
-</text>
-<text x="170" y="1628">
-e
-</text>
-<text x="178" y="1628">
- 
-</text>
-<text x="186" y="1628">
-t
-</text>
-<text x="194" y="1628">
-o
-</text>
-<text x="202" y="1628">
- 
-</text>
-<text x="210" y="1628">
-e
-</text>
-<text x="218" y="1628">
-x
-</text>
-<text x="226" y="1628">
-p
-</text>
-<text x="234" y="1628">
-l
-</text>
-<text x="242" y="1628">
-o
-</text>
-<text x="250" y="1628">
-r
-</text>
-<text x="258" y="1628">
-e
-</text>
-<text x="266" y="1628">
- 
-</text>
-<text x="274" y="1628">
-t
-</text>
-<text x="282" y="1628">
-h
-</text>
-<text x="290" y="1628">
-e
-</text>
-<text x="298" y="1628">
- 
-</text>
-<text x="306" y="1628">
-E
-</text>
-<text x="314" y="1628">
-a
-</text>
-<text x="322" y="1628">
-r
-</text>
-<text x="330" y="1628">
-t
-</text>
-<text x="338" y="1628">
-h
-</text>
-<text x="346" y="1628">
-,
-</text>
-<text x="362" y="1628">
-b
-</text>
-<text x="370" y="1628">
-o
-</text>
-<text x="378" y="1628">
-r
-</text>
-<text x="386" y="1628">
-n
-</text>
-<text x="394" y="1628">
- 
-</text>
-<text x="402" y="1628">
-t
-</text>
-<text x="410" y="1628">
-o
-</text>
-<text x="418" y="1628">
-o
-</text>
-<text x="426" y="1628">
- 
-</text>
-<text x="434" y="1628">
-s
-</text>
-<text x="442" y="1628">
-o
-</text>
-<text x="450" y="1628">
-o
-</text>
-<text x="458" y="1628">
-n
-</text>
-<text x="466" y="1628">
- 
-</text>
-<text x="474" y="1628">
-t
-</text>
-<text x="482" y="1628">
-o
-</text>
-<text x="490" y="1628">
- 
-</text>
-<text x="498" y="1628">
-e
-</text>
-<text x="506" y="1628">
-x
-</text>
-<text x="514" y="1628">
-p
-</text>
-<text x="522" y="1628">
-l
-</text>
-<text x="530" y="1628">
-o
-</text>
-<text x="538" y="1628">
-r
-</text>
-<text x="546" y="1628">
-e
-</text>
-<text x="554" y="1628">
- 
-</text>
-<text x="562" y="1628">
-t
-</text>
-<text x="570" y="1628">
-h
-</text>
-<text x="578" y="1628">
-e
-</text>
-<text x="586" y="1628">
- 
-</text>
-<text x="594" y="1628">
-G
-</text>
-<text x="602" y="1628">
-a
-</text>
-<text x="610" y="1628">
-l
-</text>
-<text x="618" y="1628">
-a
-</text>
-<text x="626" y="1628">
-x
-</text>
-<text x="634" y="1628">
-y
-</text>
-<text x="642" y="1628">
-.
-</text>
-<text x="658" y="1628">
-B
-</text>
-<text x="666" y="1628">
-o
-</text>
-<text x="674" y="1628">
-r
-</text>
-<text x="682" y="1628">
-n
-</text>
-<text x="690" y="1628">
- 
-</text>
-<text x="698" y="1628">
-j
-</text>
-<text x="706" y="1628">
-u
-</text>
-<text x="714" y="1628">
-s
-</text>
-<text x="722" y="1628">
-t
-</text>
-<text x="730" y="1628">
- 
-</text>
-<text x="738" y="1628">
-i
-</text>
-<text x="746" y="1628">
-n
-</text>
-<text x="754" y="1628">
- 
-</text>
-<text x="762" y="1628">
-t
-</text>
-<text x="770" y="1628">
-i
-</text>
-<text x="778" y="1628">
-m
-</text>
-<text x="786" y="1628">
-e
-</text>
-<text x="794" y="1628">
- 
-</text>
-<text x="802" y="1628">
-t
-</text>
-<text x="810" y="1628">
-o
-</text>
-<text x="818" y="1628">
- 
-</text>
-<text x="826" y="1628">
-p
-</text>
-<text x="834" y="1628">
-o
-</text>
-<text x="842" y="1628">
-s
-</text>
-<text x="850" y="1628">
-t
-</text>
-<text x="858" y="1628">
- 
-</text>
-<text x="866" y="1628">
-D
-</text>
-<text x="874" y="1628">
-A
-</text>
-<text x="882" y="1628">
-N
-</text>
-<text x="890" y="1628">
-K
-</text>
-<text x="898" y="1628">
- 
-</text>
-<text x="906" y="1628">
-M
-</text>
-<text x="914" y="1628">
-E
-</text>
-<text x="922" y="1628">
-M
-</text>
-<text x="930" y="1628">
-E
-</text>
-<text x="938" y="1628">
-s
-</text>
-<text x="954" y="1628">
-└
-</text>
-<text x="962" y="1628">
-(
-</text>
-<text x="978" y="1628">
-°
-</text>
-<text x="986" y="1628">
- ͜ʖ͡°
-</text>
-<text x="1010" y="1628">
-)
-</text>
-<text x="1018" y="1628">
-┐
-</text>
-<text x="2" y="1660">
-h
-</text>
-<text x="10" y="1660">
-e
-</text>
-<text x="18" y="1660">
-a
-</text>
-<text x="26" y="1660">
-r
-</text>
-<text x="34" y="1660">
-t
-</text>
-<text x="42" y="1660">
-h
-</text>
-<text x="50" y="1660">
-s
-</text>
-<text x="58" y="1660">
-t
-</text>
-<text x="66" y="1660">
-o
-</text>
-<text x="74" y="1660">
-n
-</text>
-<text x="82" y="1660">
-e
-</text>
-<text x="90" y="1660">
-_
-</text>
-<text x="98" y="1660">
-m
-</text>
-<text x="106" y="1660">
-e
-</text>
-<text x="114" y="1660">
-m
-</text>
-<text x="122" y="1660">
-e
-</text>
-<text x="130" y="1660">
-s
-</text>
-<text x="2" y="1676">
-└
-</text>
-<text x="10" y="1676">
-(
-</text>
-<text x="26" y="1676">
-°
-</text>
-<text x="34" y="1676">
- ͜ʖ͡°
-</text>
-<text x="58" y="1676">
-)
-</text>
-<text x="66" y="1676">
-┐
-</text>
-<text x="74" y="1676">
-B
-</text>
-<text x="82" y="1676">
-o
-</text>
-<text x="90" y="1676">
-r
-</text>
-<text x="98" y="1676">
-n
-</text>
-<text x="106" y="1676">
- 
-</text>
-<text x="114" y="1676">
-t
-</text>
-<text x="122" y="1676">
-o
-</text>
-<text x="130" y="1676">
-o
-</text>
-<text x="138" y="1676">
- 
-</text>
-<text x="146" y="1676">
-l
-</text>
-<text x="154" y="1676">
-a
-</text>
-<text x="162" y="1676">
-t
-</text>
-<text x="170" y="1676">
-e
-</text>
-<text x="178" y="1676">
- 
-</text>
-<text x="186" y="1676">
-t
-</text>
-<text x="194" y="1676">
-o
-</text>
-<text x="202" y="1676">
- 
-</text>
-<text x="210" y="1676">
-e
-</text>
-<text x="218" y="1676">
-x
-</text>
-<text x="226" y="1676">
-p
-</text>
-<text x="234" y="1676">
-l
-</text>
-<text x="242" y="1676">
-o
-</text>
-<text x="250" y="1676">
-r
-</text>
-<text x="258" y="1676">
-e
-</text>
-<text x="266" y="1676">
- 
-</text>
-<text x="274" y="1676">
-t
-</text>
-<text x="282" y="1676">
-h
-</text>
-<text x="290" y="1676">
-e
-</text>
-<text x="298" y="1676">
- 
-</text>
-<text x="306" y="1676">
-E
-</text>
-<text x="314" y="1676">
-a
-</text>
-<text x="322" y="1676">
-r
-</text>
-<text x="330" y="1676">
-t
-</text>
-<text x="338" y="1676">
-h
-</text>
-<text x="346" y="1676">
-,
-</text>
-<text x="362" y="1676">
-b
-</text>
-<text x="370" y="1676">
-o
-</text>
-<text x="378" y="1676">
-r
-</text>
-<text x="386" y="1676">
-n
-</text>
-<text x="394" y="1676">
- 
-</text>
-<text x="402" y="1676">
-t
-</text>
-<text x="410" y="1676">
-o
-</text>
-<text x="418" y="1676">
-o
-</text>
-<text x="426" y="1676">
- 
-</text>
-<text x="434" y="1676">
-s
-</text>
-<text x="442" y="1676">
-o
-</text>
-<text x="450" y="1676">
-o
-</text>
-<text x="458" y="1676">
-n
-</text>
-<text x="466" y="1676">
- 
-</text>
-<text x="474" y="1676">
-t
-</text>
-<text x="482" y="1676">
-o
-</text>
-<text x="490" y="1676">
- 
-</text>
-<text x="498" y="1676">
-e
-</text>
-<text x="506" y="1676">
-x
-</text>
-<text x="514" y="1676">
-p
-</text>
-<text x="522" y="1676">
-l
-</text>
-<text x="530" y="1676">
-o
-</text>
-<text x="538" y="1676">
-r
-</text>
-<text x="546" y="1676">
-e
-</text>
-<text x="554" y="1676">
- 
-</text>
-<text x="562" y="1676">
-t
-</text>
-<text x="570" y="1676">
-h
-</text>
-<text x="578" y="1676">
-e
-</text>
-<text x="586" y="1676">
- 
-</text>
-<text x="594" y="1676">
-G
-</text>
-<text x="602" y="1676">
-a
-</text>
-<text x="610" y="1676">
-l
-</text>
-<text x="618" y="1676">
-a
-</text>
-<text x="626" y="1676">
-x
-</text>
-<text x="634" y="1676">
-y
-</text>
-<text x="642" y="1676">
-.
-</text>
-<text x="658" y="1676">
-B
-</text>
-<text x="666" y="1676">
-o
-</text>
-<text x="674" y="1676">
-r
-</text>
-<text x="682" y="1676">
-n
-</text>
-<text x="690" y="1676">
- 
-</text>
-<text x="698" y="1676">
-j
-</text>
-<text x="706" y="1676">
-u
-</text>
-<text x="714" y="1676">
-s
-</text>
-<text x="722" y="1676">
-t
-</text>
-<text x="730" y="1676">
- 
-</text>
-<text x="738" y="1676">
-i
-</text>
-<text x="746" y="1676">
-n
-</text>
-<text x="754" y="1676">
- 
-</text>
-<text x="762" y="1676">
-t
-</text>
-<text x="770" y="1676">
-i
-</text>
-<text x="778" y="1676">
-m
-</text>
-<text x="786" y="1676">
-e
-</text>
-<text x="794" y="1676">
- 
-</text>
-<text x="802" y="1676">
-t
-</text>
-<text x="810" y="1676">
-o
-</text>
-<text x="818" y="1676">
- 
-</text>
-<text x="826" y="1676">
-T
-</text>
-<text x="834" y="1676">
- 
-</text>
-<text x="842" y="1676">
-U
-</text>
-<text x="850" y="1676">
- 
-</text>
-<text x="858" y="1676">
-C
-</text>
-<text x="866" y="1676">
- 
-</text>
-<text x="874" y="1676">
-K
-</text>
-<text x="882" y="1676">
- 
-</text>
-<text x="890" y="1676">
-F
-</text>
-<text x="898" y="1676">
- 
-</text>
-<text x="906" y="1676">
-R
-</text>
-<text x="914" y="1676">
- 
-</text>
-<text x="922" y="1676">
-U
-</text>
-<text x="930" y="1676">
- 
-</text>
-<text x="938" y="1676">
-M
-</text>
-<text x="946" y="1676">
- 
-</text>
-<text x="954" y="1676">
-P
-</text>
-<text x="962" y="1676">
-└
-</text>
-<text x="970" y="1676">
-(
-</text>
-<text x="986" y="1676">
-°
-</text>
-<text x="994" y="1676">
- ͜ʖ͡°
-</text>
-<text x="1018" y="1676">
-)
-</text>
-<text x="1026" y="1676">
-┐
-</text>
-<text x="2" y="1708">
-h
-</text>
-<text x="10" y="1708">
-e
-</text>
-<text x="18" y="1708">
-a
-</text>
-<text x="26" y="1708">
-r
-</text>
-<text x="34" y="1708">
-t
-</text>
-<text x="42" y="1708">
-h
-</text>
-<text x="50" y="1708">
-s
-</text>
-<text x="58" y="1708">
-t
-</text>
-<text x="66" y="1708">
-o
-</text>
-<text x="74" y="1708">
-n
-</text>
-<text x="82" y="1708">
-e
-</text>
-<text x="90" y="1708">
-_
-</text>
-<text x="98" y="1708">
-m
-</text>
-<text x="106" y="1708">
-e
-</text>
-<text x="114" y="1708">
-m
-</text>
-<text x="122" y="1708">
-e
-</text>
-<text x="130" y="1708">
-s
-</text>
-<text x="2" y="1724">
-(
-</text>
-<text x="10" y="1724">
-ง
-</text>
-<text x="18" y="1724">
- ͠°
-</text>
-<text x="34" y="1724">
- ͟ʖ
-</text>
-<text x="50" y="1724">
- ͡°
-</text>
-<text x="66" y="1724">
-)
-</text>
-<text x="74" y="1724">
-ง
-</text>
-<text x="82" y="1724">
- 
-</text>
-<text x="90" y="1724">
-T
-</text>
-<text x="98" y="1724">
-h
-</text>
-<text x="106" y="1724">
-i
-</text>
-<text x="114" y="1724">
-s
-</text>
-<text x="122" y="1724">
- 
-</text>
-<text x="130" y="1724">
-i
-</text>
-<text x="138" y="1724">
-s
-</text>
-<text x="146" y="1724">
- 
-</text>
-<text x="154" y="1724">
-o
-</text>
-<text x="162" y="1724">
-u
-</text>
-<text x="170" y="1724">
-r
-</text>
-<text x="178" y="1724">
- 
-</text>
-<text x="186" y="1724">
-c
-</text>
-<text x="194" y="1724">
-h
-</text>
-<text x="202" y="1724">
-a
-</text>
-<text x="210" y="1724">
-t
-</text>
-<text x="218" y="1724">
- 
-</text>
-<text x="226" y="1724">
-m
-</text>
-<text x="234" y="1724">
-o
-</text>
-<text x="242" y="1724">
-d
-</text>
-<text x="250" y="1724">
-s
-</text>
-<text x="266" y="1724">
-(
-</text>
-<text x="274" y="1724">
-ง
-</text>
-<text x="282" y="1724">
- ͠°
-</text>
-<text x="298" y="1724">
- ͟ʖ
-</text>
-<text x="314" y="1724">
- ͡°
-</text>
-<text x="330" y="1724">
-)
-</text>
-<text x="338" y="1724">
-ง
-</text>
-<text x="354" y="1724">
-(
-</text>
-<text x="362" y="1724">
-ง
-</text>
-<text x="378" y="1724">
-•̀_
-</text>
-<text x="394" y="1724">
-•́)
-</text>
-<text x="410" y="1724">
-ง
-</text>
-<text x="418" y="1724">
- 
-</text>
-<text x="426" y="1724">
-Y
-</text>
-<text x="434" y="1724">
-e
-</text>
-<text x="442" y="1724">
-a
-</text>
-<text x="450" y="1724">
-h
-</text>
-<text x="458" y="1724">
- 
-</text>
-<text x="466" y="1724">
-b
-</text>
-<text x="474" y="1724">
-e
-</text>
-<text x="482" y="1724">
-a
-</text>
-<text x="490" y="1724">
-t
-</text>
-<text x="498" y="1724">
- 
-</text>
-<text x="506" y="1724">
-i
-</text>
-<text x="514" y="1724">
-t
-</text>
-<text x="522" y="1724">
-!
-</text>
-<text x="538" y="1724">
-(
-</text>
-<text x="546" y="1724">
-ง
-</text>
-<text x="562" y="1724">
-•̀_
-</text>
-<text x="578" y="1724">
-•́)
-</text>
-<text x="594" y="1724">
-ง
-</text>
-<text x="2" y="1756">
-h
-</text>
-<text x="10" y="1756">
-e
-</text>
-<text x="18" y="1756">
-a
-</text>
-<text x="26" y="1756">
-r
-</text>
-<text x="34" y="1756">
-t
-</text>
-<text x="42" y="1756">
-h
-</text>
-<text x="50" y="1756">
-s
-</text>
-<text x="58" y="1756">
-t
-</text>
-<text x="66" y="1756">
-o
-</text>
-<text x="74" y="1756">
-n
-</text>
-<text x="82" y="1756">
-e
-</text>
-<text x="90" y="1756">
-_
-</text>
-<text x="98" y="1756">
-m
-</text>
-<text x="106" y="1756">
-e
-</text>
-<text x="114" y="1756">
-m
-</text>
-<text x="122" y="1756">
-e
-</text>
-<text x="130" y="1756">
-s
-</text>
-<text x="2" y="1772">
-(
-</text>
-<text x="18" y="1772">
-ง
-</text>
-<text x="26" y="1772">
- ͠°
-</text>
-<text x="42" y="1772">
- ͟ʖ
-</text>
-<text x="58" y="1772">
- ͡°
-</text>
-<text x="74" y="1772">
-)
-</text>
-<text x="82" y="1772">
-ง
-</text>
-<text x="90" y="1772">
- 
-</text>
-<text x="98" y="1772">
-R
-</text>
-<text x="106" y="1772">
-N
-</text>
-<text x="114" y="1772">
-G
-</text>
-<text x="122" y="1772">
-,
-</text>
-<text x="138" y="1772">
-A
-</text>
-<text x="146" y="1772">
-T
-</text>
-<text x="154" y="1772">
-T
-</text>
-<text x="162" y="1772">
-E
-</text>
-<text x="170" y="1772">
-N
-</text>
-<text x="178" y="1772">
-D
-</text>
-<text x="186" y="1772">
- 
-</text>
-<text x="194" y="1772">
-M
-</text>
-<text x="202" y="1772">
-E
-</text>
-<text x="218" y="1772">
-(
-</text>
-<text x="226" y="1772">
-ง
-</text>
-<text x="234" y="1772">
- ͠°
-</text>
-<text x="250" y="1772">
- ͟ʖ
-</text>
-<text x="266" y="1772">
- ͡°
-</text>
-<text x="282" y="1772">
-)
-</text>
-<text x="290" y="1772">
-ง
-</text>
-<text x="306" y="1772">
-(
-</text>
-<text x="322" y="1772">
-°
-</text>
-<text x="330" y="1772">
- ͜ʖ͡°
-</text>
-<text x="354" y="1772">
-)
-</text>
-<text x="362" y="1772">
-╭
-</text>
-<text x="370" y="1772">
-∩
-</text>
-<text x="378" y="1772">
-╮
-</text>
-<text x="394" y="1772">
-N
-</text>
-<text x="402" y="1772">
-E
-</text>
-<text x="410" y="1772">
-V
-</text>
-<text x="418" y="1772">
-E
-</text>
-<text x="426" y="1772">
-R
-</text>
-<text x="434" y="1772">
-,
-</text>
-<text x="450" y="1772">
-K
-</text>
-<text x="458" y="1772">
-R
-</text>
-<text x="466" y="1772">
-I
-</text>
-<text x="474" y="1772">
-P
-</text>
-<text x="482" y="1772">
-P
-</text>
-<text x="498" y="1772">
-(
-</text>
-<text x="514" y="1772">
-°
-</text>
-<text x="522" y="1772">
- ͜ʖ͡°
-</text>
-<text x="546" y="1772">
-)
-</text>
-<text x="554" y="1772">
-╭
-</text>
-<text x="562" y="1772">
-∩
-</text>
-<text x="570" y="1772">
-╮
-</text>
-<text x="2" y="1804">
-h
-</text>
-<text x="10" y="1804">
-e
-</text>
-<text x="18" y="1804">
-a
-</text>
-<text x="26" y="1804">
-r
-</text>
-<text x="34" y="1804">
-t
-</text>
-<text x="42" y="1804">
-h
-</text>
-<text x="50" y="1804">
-s
-</text>
-<text x="58" y="1804">
-t
-</text>
-<text x="66" y="1804">
-o
-</text>
-<text x="74" y="1804">
-n
-</text>
-<text x="82" y="1804">
-e
-</text>
-<text x="90" y="1804">
-_
-</text>
-<text x="98" y="1804">
-m
-</text>
-<text x="106" y="1804">
-e
-</text>
-<text x="114" y="1804">
-m
-</text>
-<text x="122" y="1804">
-e
-</text>
-<text x="130" y="1804">
-s
-</text>
-<text x="2" y="1820">
-(
-</text>
-<text x="18" y="1820">
-ง
-</text>
-<text x="26" y="1820">
- ͠°
-</text>
-<text x="42" y="1820">
- ͟ʖ
-</text>
-<text x="58" y="1820">
- ͡°
-</text>
-<text x="74" y="1820">
-)
-</text>
-<text x="82" y="1820">
-ง
-</text>
-<text x="90" y="1820">
- 
-</text>
-<text x="98" y="1820">
-L
-</text>
-<text x="106" y="1820">
-E
-</text>
-<text x="114" y="1820">
-T
-</text>
-<text x="122" y="1820">
-H
-</text>
-<text x="130" y="1820">
-A
-</text>
-<text x="138" y="1820">
-L
-</text>
-<text x="146" y="1820">
-,
-</text>
-<text x="162" y="1820">
-A
-</text>
-<text x="170" y="1820">
-T
-</text>
-<text x="178" y="1820">
-T
-</text>
-<text x="186" y="1820">
-E
-</text>
-<text x="194" y="1820">
-N
-</text>
-<text x="202" y="1820">
-D
-</text>
-<text x="210" y="1820">
- 
-</text>
-<text x="218" y="1820">
-M
-</text>
-<text x="226" y="1820">
-E
-</text>
-<text x="242" y="1820">
-(
-</text>
-<text x="250" y="1820">
-ง
-</text>
-<text x="258" y="1820">
- ͠°
-</text>
-<text x="274" y="1820">
- ͟ʖ
-</text>
-<text x="290" y="1820">
- ͡°
-</text>
-<text x="306" y="1820">
-)
-</text>
-<text x="314" y="1820">
-ง
-</text>
-<text x="330" y="1820">
-(
-</text>
-<text x="346" y="1820">
-°
-</text>
-<text x="354" y="1820">
- ͜ʖ͡°
-</text>
-<text x="378" y="1820">
-)
-</text>
-<text x="386" y="1820">
-╭
-</text>
-<text x="394" y="1820">
-∩
-</text>
-<text x="402" y="1820">
-╮
-</text>
-<text x="418" y="1820">
-N
-</text>
-<text x="426" y="1820">
-E
-</text>
-<text x="434" y="1820">
-V
-</text>
-<text x="442" y="1820">
-E
-</text>
-<text x="450" y="1820">
-R
-</text>
-<text x="458" y="1820">
-,
-</text>
-<text x="474" y="1820">
-F
-</text>
-<text x="482" y="1820">
-O
-</text>
-<text x="490" y="1820">
-R
-</text>
-<text x="498" y="1820">
-S
-</text>
-<text x="506" y="1820">
-E
-</text>
-<text x="514" y="1820">
-N
-</text>
-<text x="530" y="1820">
-(
-</text>
-<text x="546" y="1820">
-°
-</text>
-<text x="554" y="1820">
- ͜ʖ͡°
-</text>
-<text x="578" y="1820">
-)
-</text>
-<text x="586" y="1820">
-╭
-</text>
-<text x="594" y="1820">
-∩
-</text>
-<text x="602" y="1820">
-╮
-</text>
-<text x="2" y="1868">
-(
-</text>
-<text x="10" y="1868">
- ͡°
-</text>
-<text x="26" y="1868">
- ͜ʖ
-</text>
-<text x="42" y="1868">
- ͡°
-</text>
-<text x="58" y="1868">
-)
-</text>
-<text x="74" y="1868">
-E
-</text>
-<text x="82" y="1868">
-v
-</text>
-<text x="90" y="1868">
-e
-</text>
-<text x="98" y="1868">
-r
-</text>
-<text x="106" y="1868">
-y
-</text>
-<text x="114" y="1868">
- 
-</text>
-<text x="122" y="1868">
-6
-</text>
-<text x="130" y="1868">
-0
-</text>
-<text x="138" y="1868">
- 
-</text>
-<text x="146" y="1868">
-s
-</text>
-<text x="154" y="1868">
-e
-</text>
-<text x="162" y="1868">
-c
-</text>
-<text x="170" y="1868">
-o
-</text>
-<text x="178" y="1868">
-n
-</text>
-<text x="186" y="1868">
-d
-</text>
-<text x="194" y="1868">
-s
-</text>
-<text x="202" y="1868">
- 
-</text>
-<text x="210" y="1868">
-i
-</text>
-<text x="218" y="1868">
-n
-</text>
-<text x="226" y="1868">
- 
-</text>
-<text x="234" y="1868">
-A
-</text>
-<text x="242" y="1868">
-f
-</text>
-<text x="250" y="1868">
-r
-</text>
-<text x="258" y="1868">
-i
-</text>
-<text x="266" y="1868">
-c
-</text>
-<text x="274" y="1868">
-a
-</text>
-<text x="282" y="1868">
-,
-</text>
-<text x="298" y="1868">
-a
-</text>
-<text x="306" y="1868">
- 
-</text>
-<text x="314" y="1868">
-m
-</text>
-<text x="322" y="1868">
-i
-</text>
-<text x="330" y="1868">
-n
-</text>
-<text x="338" y="1868">
-u
-</text>
-<text x="346" y="1868">
-t
-</text>
-<text x="354" y="1868">
-e
-</text>
-<text x="362" y="1868">
- 
-</text>
-<text x="370" y="1868">
-p
-</text>
-<text x="378" y="1868">
-a
-</text>
-<text x="386" y="1868">
-s
-</text>
-<text x="394" y="1868">
-s
-</text>
-<text x="402" y="1868">
-e
-</text>
-<text x="410" y="1868">
-s
-</text>
-<text x="418" y="1868">
-.
-</text>
-<text x="434" y="1868">
-T
-</text>
-<text x="442" y="1868">
-o
-</text>
-<text x="450" y="1868">
-g
-</text>
-<text x="458" y="1868">
-e
-</text>
-<text x="466" y="1868">
-t
-</text>
-<text x="474" y="1868">
-h
-</text>
-<text x="482" y="1868">
-e
-</text>
-<text x="490" y="1868">
-r
-</text>
-<text x="498" y="1868">
- 
-</text>
-<text x="506" y="1868">
-w
-</text>
-<text x="514" y="1868">
-e
-</text>
-<text x="522" y="1868">
- 
-</text>
-<text x="530" y="1868">
-c
-</text>
-<text x="538" y="1868">
-a
-</text>
-<text x="546" y="1868">
-n
-</text>
-<text x="554" y="1868">
- 
-</text>
-<text x="562" y="1868">
-s
-</text>
-<text x="570" y="1868">
-t
-</text>
-<text x="578" y="1868">
-o
-</text>
-<text x="586" y="1868">
-p
-</text>
-<text x="594" y="1868">
- 
-</text>
-<text x="602" y="1868">
-t
-</text>
-<text x="610" y="1868">
-h
-</text>
-<text x="618" y="1868">
-i
-</text>
-<text x="626" y="1868">
-s
-</text>
-<text x="634" y="1868">
-.
-</text>
-<text x="650" y="1868">
-P
-</text>
-<text x="658" y="1868">
-l
-</text>
-<text x="666" y="1868">
-e
-</text>
-<text x="674" y="1868">
-a
-</text>
-<text x="682" y="1868">
-s
-</text>
-<text x="690" y="1868">
-e
-</text>
-<text x="698" y="1868">
- 
-</text>
-<text x="706" y="1868">
-s
-</text>
-<text x="714" y="1868">
-p
-</text>
-<text x="722" y="1868">
-r
-</text>
-<text x="730" y="1868">
-e
-</text>
-<text x="738" y="1868">
-a
-</text>
-<text x="746" y="1868">
-d
-</text>
-<text x="754" y="1868">
- 
-</text>
-<text x="762" y="1868">
-t
-</text>
-<text x="770" y="1868">
-h
-</text>
-<text x="778" y="1868">
-e
-</text>
-<text x="786" y="1868">
- 
-</text>
-<text x="794" y="1868">
-w
-</text>
-<text x="802" y="1868">
-o
-</text>
-<text x="810" y="1868">
-r
-</text>
-<text x="818" y="1868">
-d
-</text>
-<text x="834" y="1868">
-(
-</text>
-<text x="842" y="1868">
- ͡°
-</text>
-<text x="858" y="1868">
- ͜ʖ
-</text>
-<text x="874" y="1868">
- ͡°
-</text>
-<text x="890" y="1868">
-)
-</text>
-<text x="2" y="1900">
-d
-</text>
-<text x="10" y="1900">
-o
-</text>
-<text x="18" y="1900">
-t
-</text>
-<text x="26" y="1900">
-a
-</text>
-<text x="34" y="1900">
-_
-</text>
-<text x="42" y="1900">
-m
-</text>
-<text x="50" y="1900">
-e
-</text>
-<text x="58" y="1900">
-m
-</text>
-<text x="66" y="1900">
-e
-</text>
-<text x="74" y="1900">
-s
-</text>
-<text x="2" y="1916">
-(
-</text>
-<text x="10" y="1916">
-ง
-</text>
-<text x="26" y="1916">
-•̀_
-</text>
-<text x="42" y="1916">
-•́)
-</text>
-<text x="58" y="1916">
-ง
-</text>
-<text x="66" y="1916">
- 
-</text>
-<text x="74" y="1916">
-S
-</text>
-<text x="82" y="1916">
-E
-</text>
-<text x="90" y="1916">
-C
-</text>
-<text x="98" y="1916">
-R
-</text>
-<text x="106" y="1916">
-E
-</text>
-<text x="114" y="1916">
-T
-</text>
-<text x="122" y="1916">
- 
-</text>
-<text x="130" y="1916">
-G
-</text>
-<text x="138" y="1916">
-I
-</text>
-<text x="146" y="1916">
-V
-</text>
-<text x="154" y="1916">
-E
-</text>
-<text x="162" y="1916">
- 
-</text>
-<text x="170" y="1916">
-M
-</text>
-<text x="178" y="1916">
-E
-</text>
-<text x="186" y="1916">
- 
-</text>
-<text x="194" y="1916">
-M
-</text>
-<text x="202" y="1916">
-Y
-</text>
-<text x="210" y="1916">
- 
-</text>
-<text x="218" y="1916">
-E
-</text>
-<text x="226" y="1916">
-N
-</text>
-<text x="234" y="1916">
-E
-</text>
-<text x="242" y="1916">
-R
-</text>
-<text x="250" y="1916">
-G
-</text>
-<text x="258" y="1916">
-Y
-</text>
-<text x="266" y="1916">
- 
-</text>
-<text x="274" y="1916">
-B
-</text>
-<text x="282" y="1916">
-A
-</text>
-<text x="290" y="1916">
-C
-</text>
-<text x="298" y="1916">
-K
-</text>
-<text x="314" y="1916">
-(
-</text>
-<text x="322" y="1916">
-ง
-</text>
-<text x="338" y="1916">
-•̀_
-</text>
-<text x="354" y="1916">
-•́)
-</text>
-<text x="370" y="1916">
-ง
-</text>
-<text x="2" y="1964">
-F
-</text>
-<text x="10" y="1964">
-i
-</text>
-<text x="18" y="1964">
-r
-</text>
-<text x="26" y="1964">
-s
-</text>
-<text x="34" y="1964">
-t
-</text>
-<text x="42" y="1964">
- 
-</text>
-<text x="50" y="1964">
-y
-</text>
-<text x="58" y="1964">
-o
-</text>
-<text x="66" y="1964">
-u
-</text>
-<text x="74" y="1964">
- 
-</text>
-<text x="82" y="1964">
-b
-</text>
-<text x="90" y="1964">
-o
-</text>
-<text x="98" y="1964">
-i
-</text>
-<text x="106" y="1964">
-l
-</text>
-<text x="114" y="1964">
- 
-</text>
-<text x="122" y="1964">
-s
-</text>
-<text x="130" y="1964">
-o
-</text>
-<text x="138" y="1964">
-m
-</text>
-<text x="146" y="1964">
-e
-</text>
-<text x="154" y="1964">
- 
-</text>
-<text x="162" y="1964">
-p
-</text>
-<text x="170" y="1964">
-a
-</text>
-<text x="178" y="1964">
-s
-</text>
-<text x="186" y="1964">
-t
-</text>
-<text x="194" y="1964">
-a
-</text>
-<text x="202" y="1964">
-,
-</text>
-<text x="218" y="1964">
-p
-</text>
-<text x="226" y="1964">
-r
-</text>
-<text x="234" y="1964">
-e
-</text>
-<text x="242" y="1964">
-f
-</text>
-<text x="250" y="1964">
-e
-</text>
-<text x="258" y="1964">
-r
-</text>
-<text x="266" y="1964">
-a
-</text>
-<text x="274" y="1964">
-b
-</text>
-<text x="282" y="1964">
-l
-</text>
-<text x="290" y="1964">
-y
-</text>
-<text x="298" y="1964">
- 
-</text>
-<text x="306" y="1964">
-F
-</text>
-<text x="314" y="1964">
-a
-</text>
-<text x="322" y="1964">
-g
-</text>
-<text x="330" y="1964">
-o
-</text>
-<text x="338" y="1964">
-t
-</text>
-<text x="346" y="1964">
-t
-</text>
-<text x="354" y="1964">
-i
-</text>
-<text x="362" y="1964">
-n
-</text>
-<text x="370" y="1964">
-i
-</text>
-<text x="386" y="1964">
-(
-</text>
-<text x="394" y="1964">
- ͡°
-</text>
-<text x="410" y="1964">
- ͜ʖ
-</text>
-<text x="426" y="1964">
- ͡°
-</text>
-<text x="442" y="1964">
-)
-</text>
-<text x="450" y="1964">
-ﾉ
-</text>
-<text x="466" y="1964">
-~
-</text>
-<text x="474" y="1964">
-~
-</text>
-<text x="482" y="1964">
-~
-</text>
-<text x="490" y="1964">
-~
-</text>
-<text x="498" y="1964">
-~
-</text>
-<text x="506" y="1964">
-T
-</text>
-<text x="514" y="1964">
-h
-</text>
-<text x="522" y="1964">
-e
-</text>
-<text x="530" y="1964">
-n
-</text>
-<text x="538" y="1964">
- 
-</text>
-<text x="546" y="1964">
-y
-</text>
-<text x="554" y="1964">
-o
-</text>
-<text x="562" y="1964">
-u
-</text>
-<text x="570" y="1964">
- 
-</text>
-<text x="578" y="1964">
-s
-</text>
-<text x="586" y="1964">
-a
-</text>
-<text x="594" y="1964">
-u
-</text>
-<text x="602" y="1964">
-t
-</text>
-<text x="610" y="1964">
-é
-</text>
-<text x="618" y="1964">
- 
-</text>
-<text x="626" y="1964">
-t
-</text>
-<text x="634" y="1964">
-h
-</text>
-<text x="642" y="1964">
-e
-</text>
-<text x="650" y="1964">
- 
-</text>
-<text x="658" y="1964">
-P
-</text>
-<text x="666" y="1964">
-e
-</text>
-<text x="674" y="1964">
-p
-</text>
-<text x="682" y="1964">
-p
-</text>
-<text x="690" y="1964">
-e
-</text>
-<text x="698" y="1964">
-r
-</text>
-<text x="706" y="1964">
-o
-</text>
-<text x="714" y="1964">
-n
-</text>
-<text x="722" y="1964">
-i
-</text>
-<text x="738" y="1964">
-(
-</text>
-<text x="746" y="1964">
- ͡°
-</text>
-<text x="762" y="1964">
- ͜ʖ
-</text>
-<text x="778" y="1964">
- ͡°
-</text>
-<text x="794" y="1964">
-)
-</text>
-<text x="802" y="1964">
-⊃
-</text>
-<text x="810" y="1964">
-━
-</text>
-<text x="826" y="1964">
-(
-</text>
-<text x="834" y="1964">
-o
-</text>
-<text x="842" y="1964">
- 
-</text>
-<text x="850" y="1964">
-o
-</text>
-<text x="858" y="1964">
- 
-</text>
-<text x="866" y="1964">
-o
-</text>
-<text x="874" y="1964">
-)
-</text>
-<text x="2" y="1996">
-d
-</text>
-<text x="10" y="1996">
-o
-</text>
-<text x="18" y="1996">
-t
-</text>
-<text x="26" y="1996">
-a
-</text>
-<text x="34" y="1996">
-_
-</text>
-<text x="42" y="1996">
-m
-</text>
-<text x="50" y="1996">
-e
-</text>
-<text x="58" y="1996">
-m
-</text>
-<text x="66" y="1996">
-e
-</text>
-<text x="74" y="1996">
-s
-</text>
-<text x="2" y="2012">
-ʕ
-</text>
-<text x="10" y="2012">
- ͡•
-</text>
-<text x="26" y="2012">
-ᴥ
-</text>
-<text x="34" y="2012">
- ͡•
-</text>
-<text x="58" y="2012">
-ʔ
-</text>
-<text x="66" y="2012">
-(
-</text>
-<text x="74" y="2012">
-_̅_̅_̅F
-</text>
-<text x="106" y="2012">
-I
-</text>
-<text x="114" y="2012">
-S
-</text>
-<text x="122" y="2012">
-S
-</text>
-<text x="130" y="2012">
-U
-</text>
-<text x="138" y="2012">
-R
-</text>
-<text x="146" y="2012">
-E
-</text>
-<text x="154" y="2012">
-_̅_̅_̅_̅_̅(
-</text>
-<text x="202" y="2012">
-)
-</text>
-<text x="2" y="2044">
-d
-</text>
-<text x="10" y="2044">
-o
-</text>
-<text x="18" y="2044">
-t
-</text>
-<text x="26" y="2044">
-a
-</text>
-<text x="34" y="2044">
-_
-</text>
-<text x="42" y="2044">
-m
-</text>
-<text x="50" y="2044">
-e
-</text>
-<text x="58" y="2044">
-m
-</text>
-<text x="66" y="2044">
-e
-</text>
-<text x="74" y="2044">
-s
-</text>
-<text x="2" y="2060">
-(
-</text>
-<text x="10" y="2060">
-∩
-</text>
-<text x="18" y="2060">
- ͡°
-</text>
-<text x="34" y="2060">
- ͜ʖ
-</text>
-<text x="50" y="2060">
- ͡°
-</text>
-<text x="66" y="2060">
-)
-</text>
-<text x="74" y="2060">
-⊃
-</text>
-<text x="82" y="2060">
-━
-</text>
-<text x="90" y="2060">
-☆
-</text>
-<text x="98" y="2060">
-ﾟ
-</text>
-<text x="106" y="2060">
-.
-</text>
-<text x="122" y="2060">
-*
-</text>
-<text x="138" y="2060">
-･
-</text>
-<text x="154" y="2060">
-｡
-</text>
-<text x="162" y="2060">
-ﾟ
-</text>
-<text x="170" y="2060">
-.
-</text>
-<text x="186" y="2060">
-*
-</text>
-<text x="202" y="2060">
-3
-</text>
-<text x="210" y="2060">
-2
-</text>
-<text x="218" y="2060">
-2
-</text>
-<text x="234" y="2060">
-☆
-</text>
-<text x="242" y="2060">
-ﾟ
-</text>
-<text x="250" y="2060">
-.
-</text>
-<text x="266" y="2060">
-*
-</text>
-<text x="282" y="2060">
-･
-</text>
-<text x="298" y="2060">
-｡
-</text>
-<text x="306" y="2060">
-ﾟ
-</text>
-<text x="314" y="2060">
-.
-</text>
-<text x="330" y="2060">
-*
-</text>
-<text x="2" y="2092">
-h
-</text>
-<text x="10" y="2092">
-e
-</text>
-<text x="18" y="2092">
-a
-</text>
-<text x="26" y="2092">
-r
-</text>
-<text x="34" y="2092">
-t
-</text>
-<text x="42" y="2092">
-h
-</text>
-<text x="50" y="2092">
-s
-</text>
-<text x="58" y="2092">
-t
-</text>
-<text x="66" y="2092">
-o
-</text>
-<text x="74" y="2092">
-n
-</text>
-<text x="82" y="2092">
-e
-</text>
-<text x="90" y="2092">
-_
-</text>
-<text x="98" y="2092">
-m
-</text>
-<text x="106" y="2092">
-e
-</text>
-<text x="114" y="2092">
-m
-</text>
-<text x="122" y="2092">
-e
-</text>
-<text x="130" y="2092">
-s
-</text>
-<text x="2" y="2108">
-◥
-</text>
-<text x="10" y="2108">
-█̆◤
-</text>
-<text x="34" y="2108">
-T
-</text>
-<text x="42" y="2108">
-O
-</text>
-<text x="50" y="2108">
-T
-</text>
-<text x="58" y="2108">
-E
-</text>
-<text x="66" y="2108">
-M
-</text>
-<text x="74" y="2108">
-I
-</text>
-<text x="82" y="2108">
-C
-</text>
-<text x="90" y="2108">
- 
-</text>
-<text x="98" y="2108">
-M
-</text>
-<text x="106" y="2108">
-I
-</text>
-<text x="114" y="2108">
-G
-</text>
-<text x="122" y="2108">
-H
-</text>
-<text x="130" y="2108">
-T
-</text>
-<text x="146" y="2108">
-◥
-</text>
-<text x="154" y="2108">
-█̆◤
-</text>
-<text x="2" y="2140">
-L
-</text>
-<text x="10" y="2140">
-o
-</text>
-<text x="18" y="2140">
-L
-</text>
-<text x="26" y="2140">
-_
-</text>
-<text x="34" y="2140">
-m
-</text>
-<text x="42" y="2140">
-e
-</text>
-<text x="50" y="2140">
-m
-</text>
-<text x="58" y="2140">
-e
-</text>
-<text x="66" y="2140">
-s
-</text>
-<text x="2" y="2156">
-(
-</text>
-<text x="10" y="2156">
-∩
-</text>
-<text x="18" y="2156">
- ͡°
-</text>
-<text x="34" y="2156">
- ͜ʖ
-</text>
-<text x="50" y="2156">
- ͡°
-</text>
-<text x="66" y="2156">
-)
-</text>
-<text x="74" y="2156">
-⊃
-</text>
-<text x="82" y="2156">
-━
-</text>
-<text x="90" y="2156">
-☆
-</text>
-<text x="98" y="2156">
-ﾟ
-</text>
-<text x="106" y="2156">
-.
-</text>
-<text x="122" y="2156">
-･
-</text>
-<text x="138" y="2156">
-｡
-</text>
-<text x="146" y="2156">
-ﾟ
-</text>
-<text x="154" y="2156">
-M
-</text>
-<text x="162" y="2156">
-y
-</text>
-<text x="170" y="2156">
- 
-</text>
-<text x="178" y="2156">
-d
-</text>
-<text x="186" y="2156">
-i
-</text>
-<text x="194" y="2156">
-c
-</text>
-<text x="202" y="2156">
-k
-</text>
-<text x="210" y="2156">
- 
-</text>
-<text x="218" y="2156">
-i
-</text>
-<text x="226" y="2156">
-s
-</text>
-<text x="234" y="2156">
- 
-</text>
-<text x="242" y="2156">
-s
-</text>
-<text x="250" y="2156">
-m
-</text>
-<text x="258" y="2156">
-a
-</text>
-<text x="266" y="2156">
-l
-</text>
-<text x="274" y="2156">
-l
-</text>
-<text x="282" y="2156">
-,
-</text>
-<text x="298" y="2156">
-m
-</text>
-<text x="306" y="2156">
-y
-</text>
-<text x="314" y="2156">
- 
-</text>
-<text x="322" y="2156">
-b
-</text>
-<text x="330" y="2156">
-u
-</text>
-<text x="338" y="2156">
-t
-</text>
-<text x="346" y="2156">
-t
-</text>
-<text x="354" y="2156">
-h
-</text>
-<text x="362" y="2156">
-o
-</text>
-<text x="370" y="2156">
-l
-</text>
-<text x="378" y="2156">
-e
-</text>
-<text x="386" y="2156">
- 
-</text>
-<text x="394" y="2156">
-i
-</text>
-<text x="402" y="2156">
-s
-</text>
-<text x="410" y="2156">
- 
-</text>
-<text x="418" y="2156">
-l
-</text>
-<text x="426" y="2156">
-e
-</text>
-<text x="434" y="2156">
-a
-</text>
-<text x="442" y="2156">
-k
-</text>
-<text x="450" y="2156">
-y
-</text>
-<text x="458" y="2156">
-,
-</text>
-<text x="474" y="2156">
-I
-</text>
-<text x="482" y="2156">
- 
-</text>
-<text x="490" y="2156">
-u
-</text>
-<text x="498" y="2156">
-s
-</text>
-<text x="506" y="2156">
-e
-</text>
-<text x="514" y="2156">
- 
-</text>
-<text x="522" y="2156">
-t
-</text>
-<text x="530" y="2156">
-h
-</text>
-<text x="538" y="2156">
-i
-</text>
-<text x="546" y="2156">
-s
-</text>
-<text x="554" y="2156">
- 
-</text>
-<text x="562" y="2156">
-c
-</text>
-<text x="570" y="2156">
-h
-</text>
-<text x="578" y="2156">
-a
-</text>
-<text x="586" y="2156">
-n
-</text>
-<text x="594" y="2156">
-t
-</text>
-<text x="602" y="2156">
-,
-</text>
-<text x="618" y="2156">
-t
-</text>
-<text x="626" y="2156">
-o
-</text>
-<text x="634" y="2156">
- 
-</text>
-<text x="642" y="2156">
-s
-</text>
-<text x="650" y="2156">
-u
-</text>
-<text x="658" y="2156">
-m
-</text>
-<text x="666" y="2156">
-m
-</text>
-<text x="674" y="2156">
-o
-</text>
-<text x="682" y="2156">
-n
-</text>
-<text x="690" y="2156">
- 
-</text>
-<text x="698" y="2156">
-S
-</text>
-<text x="706" y="2156">
-n
-</text>
-<text x="714" y="2156">
-e
-</text>
-<text x="722" y="2156">
-a
-</text>
-<text x="730" y="2156">
-k
-</text>
-<text x="738" y="2156">
-y
-</text>
-<text x="2" y="2188">
-L
-</text>
-<text x="10" y="2188">
-o
-</text>
-<text x="18" y="2188">
-L
-</text>
-<text x="26" y="2188">
-_
-</text>
-<text x="34" y="2188">
-m
-</text>
-<text x="42" y="2188">
-e
-</text>
-<text x="50" y="2188">
-m
-</text>
-<text x="58" y="2188">
-e
-</text>
-<text x="66" y="2188">
-s
-</text>
-<text x="2" y="2204">
-(
-</text>
-<text x="10" y="2204">
- ͡°
-</text>
-<text x="26" y="2204">
- ͜ʖ
-</text>
-<text x="42" y="2204">
- ͡°
-</text>
-<text x="58" y="2204">
-)
-</text>
-<text x="74" y="2204">
-W
-</text>
-<text x="82" y="2204">
-e
-</text>
-<text x="90" y="2204">
-l
-</text>
-<text x="98" y="2204">
-c
-</text>
-<text x="106" y="2204">
-o
-</text>
-<text x="114" y="2204">
-m
-</text>
-<text x="122" y="2204">
-e
-</text>
-<text x="130" y="2204">
- 
-</text>
-<text x="138" y="2204">
-t
-</text>
-<text x="146" y="2204">
-o
-</text>
-<text x="154" y="2204">
- 
-</text>
-<text x="162" y="2204">
-t
-</text>
-<text x="170" y="2204">
-h
-</text>
-<text x="178" y="2204">
-e
-</text>
-<text x="186" y="2204">
- 
-</text>
-<text x="194" y="2204">
-l
-</text>
-<text x="202" y="2204">
-e
-</text>
-<text x="210" y="2204">
-a
-</text>
-<text x="218" y="2204">
-g
-</text>
-<text x="226" y="2204">
-u
-</text>
-<text x="234" y="2204">
-e
-</text>
-<text x="242" y="2204">
- 
-</text>
-<text x="250" y="2204">
-o
-</text>
-<text x="258" y="2204">
-f
-</text>
-<text x="266" y="2204">
- 
-</text>
-<text x="274" y="2204">
-D
-</text>
-<text x="282" y="2204">
-r
-</text>
-<text x="290" y="2204">
-a
-</text>
-<text x="298" y="2204">
-v
-</text>
-<text x="306" y="2204">
-e
-</text>
-<text x="314" y="2204">
-n
-</text>
-<text x="322" y="2204">
-!
-</text>
-<text x="338" y="2204">
-(
-</text>
-<text x="346" y="2204">
- ͡°
-</text>
-<text x="362" y="2204">
- ͜ʖ
-</text>
-<text x="378" y="2204">
- ͡°
-</text>
-<text x="394" y="2204">
-)
-</text>
-<text x="2" y="2252">
-╭
-</text>
-<text x="10" y="2252">
-∩
-</text>
-<text x="18" y="2252">
-╮
-</text>
-<text x="26" y="2252">
-(
-</text>
-<text x="34" y="2252">
-︶
-</text>
-<text x="50" y="2252">
-︿
-</text>
-<text x="66" y="2252">
-︶
-</text>
-<text x="82" y="2252">
-)
-</text>
-<text x="90" y="2252">
-╭
-</text>
-<text x="98" y="2252">
-∩
-</text>
-<text x="106" y="2252">
-╮
-</text>
-<text x="130" y="2252">
-I
-</text>
-<text x="138" y="2252">
- 
-</text>
-<text x="146" y="2252">
-d
-</text>
-<text x="154" y="2252">
-o
-</text>
-<text x="162" y="2252">
-n
-</text>
-<text x="170" y="2252">
-&apos;
-</text>
-<text x="178" y="2252">
-t
-</text>
-<text x="186" y="2252">
- 
-</text>
-<text x="194" y="2252">
-C
-</text>
-<text x="202" y="2252">
-A
-</text>
-<text x="210" y="2252">
-R
-</text>
-<text x="218" y="2252">
-E
-</text>
-<text x="226" y="2252">
-?
-</text>
-<text x="2" y="2300">
-F
-</text>
-<text x="10" y="2300">
-U
-</text>
-<text x="26" y="2300">
-┌
-</text>
-<text x="34" y="2300">
-∩
-</text>
-<text x="42" y="2300">
-┐
-</text>
-<text x="50" y="2300">
-(
-</text>
-<text x="58" y="2300">
-◣
-</text>
-<line x1="64" x2="72" y1="2304" y2="2304"/>
-<text x="74" y="2300">
-◢
-</text>
-<text x="82" y="2300">
-)
-</text>
-<text x="90" y="2300">
-┌
-</text>
-<text x="98" y="2300">
-∩
-</text>
-<text x="106" y="2300">
-┐
-</text>
-<text x="2" y="2348">
-S
-</text>
-<text x="10" y="2348">
-e
-</text>
-<text x="18" y="2348">
-r
-</text>
-<text x="26" y="2348">
-i
-</text>
-<text x="34" y="2348">
-o
-</text>
-<text x="42" y="2348">
-u
-</text>
-<text x="50" y="2348">
-s
-</text>
-<text x="58" y="2348">
-l
-</text>
-<text x="66" y="2348">
-y
-</text>
-<text x="74" y="2348">
-,
-</text>
-<text x="90" y="2348">
-F
-</text>
-<text x="98" y="2348">
-U
-</text>
-<text x="114" y="2348">
-(
-</text>
-<text x="122" y="2348">
-ಠ
-</text>
-<text x="130" y="2348">
-_
-</text>
-<text x="138" y="2348">
-ಠ
-</text>
-<text x="146" y="2348">
-)
-</text>
-<text x="154" y="2348">
-┌
-</text>
-<text x="162" y="2348">
-∩
-</text>
-<text x="170" y="2348">
-┐
-</text>
-<text x="2" y="2396">
-I
-</text>
-<text x="10" y="2396">
- 
-</text>
-<text x="18" y="2396">
-d
-</text>
-<text x="26" y="2396">
-o
-</text>
-<text x="34" y="2396">
-n
-</text>
-<text x="42" y="2396">
-’
-</text>
-<text x="50" y="2396">
-t
-</text>
-<text x="58" y="2396">
- 
-</text>
-<text x="66" y="2396">
-c
-</text>
-<text x="74" y="2396">
-a
-</text>
-<text x="82" y="2396">
-r
-</text>
-<text x="90" y="2396">
-e
-</text>
-<text x="106" y="2396">
-╭
-</text>
-<text x="114" y="2396">
-∩
-</text>
-<text x="122" y="2396">
-╮
-</text>
-<text x="130" y="2396">
-(
-</text>
-<text x="138" y="2396">
-︶
-</text>
-<text x="154" y="2396">
-︿
-</text>
-<text x="170" y="2396">
-︶
-</text>
-<text x="186" y="2396">
-)
-</text>
-<text x="194" y="2396">
-╭
-</text>
-<text x="202" y="2396">
-∩
-</text>
-<text x="210" y="2396">
-╮
-</text>
-<text x="2" y="2444">
-ヘ
-</text>
-<text x="18" y="2444">
-(
-</text>
-<text x="34" y="2444">
-^
-</text>
-<text x="42" y="2444">
-o
-</text>
-<text x="50" y="2444">
-^
-</text>
-<text x="58" y="2444">
-)
-</text>
-<text x="66" y="2444">
-ノ
-</text>
-<text x="82" y="2444">
-＼
-</text>
-<text x="98" y="2444">
-(
-</text>
-<text x="106" y="2444">
-^
-</text>
-<line x1="112" x2="120" y1="2448" y2="2448"/>
-<text x="122" y="2444">
-^
-</text>
-<text x="138" y="2444">
-)
-</text>
-<text x="154" y="2444">
-G
-</text>
-<text x="162" y="2444">
-i
-</text>
-<text x="170" y="2444">
-m
-</text>
-<text x="178" y="2444">
-m
-</text>
-<text x="186" y="2444">
-e
-</text>
-<text x="194" y="2444">
- 
-</text>
-<text x="202" y="2444">
-F
-</text>
-<text x="210" y="2444">
-i
-</text>
-<text x="218" y="2444">
-v
-</text>
-<text x="226" y="2444">
-e
-</text>
-<text x="2" y="2492">
-P
-</text>
-<text x="10" y="2492">
-u
-</text>
-<text x="18" y="2492">
-n
-</text>
-<text x="26" y="2492">
-c
-</text>
-<text x="34" y="2492">
-h
-</text>
-<text x="42" y="2492">
-!
-</text>
-<text x="58" y="2492">
-O
-</text>
-<text x="66" y="2492">
-=
-</text>
-<text x="74" y="2492">
-(
-</text>
-<text x="82" y="2492">
-‘
-</text>
-<line x1="88" x2="96" y1="2488" y2="2488"/>
-<text x="98" y="2492">
-‘
-</text>
-<text x="106" y="2492">
-Q
-</text>
-<text x="114" y="2492">
-)
-</text>
-<text x="2" y="2540">
-F
-</text>
-<text x="10" y="2540">
-l
-</text>
-<text x="18" y="2540">
-e
-</text>
-<text x="26" y="2540">
-x
-</text>
-<text x="34" y="2540">
-,
-</text>
-<text x="50" y="2540">
-D
-</text>
-<text x="58" y="2540">
-o
-</text>
-<text x="66" y="2540">
-n
-</text>
-<text x="74" y="2540">
-’
-</text>
-<text x="82" y="2540">
-t
-</text>
-<text x="90" y="2540">
- 
-</text>
-<text x="98" y="2540">
-M
-</text>
-<text x="106" y="2540">
-e
-</text>
-<text x="114" y="2540">
-s
-</text>
-<text x="122" y="2540">
-s
-</text>
-<text x="130" y="2540">
- 
-</text>
-<text x="138" y="2540">
-ヽ
-</text>
-<text x="154" y="2540">
-(
-</text>
-<text x="162" y="2540">
-⇀
-</text>
-<text x="170" y="2540">
-‸
-</text>
-<text x="178" y="2540">
-↼
-</text>
-<text x="186" y="2540">
-‶
-</text>
-<text x="194" y="2540">
-)
-</text>
-<text x="202" y="2540">
-ノ
-</text>
-<text x="2" y="2588">
-P
-</text>
-<text x="10" y="2588">
-e
-</text>
-<text x="18" y="2588">
-a
-</text>
-<text x="26" y="2588">
-c
-</text>
-<text x="34" y="2588">
-e
-</text>
-<text x="42" y="2588">
- 
-</text>
-<text x="50" y="2588">
-Y
-</text>
-<text x="58" y="2588">
-o
-</text>
-<text x="66" y="2588">
-!
-</text>
-<text x="82" y="2588">
-(
-</text>
-<text x="90" y="2588">
-‾
-</text>
-<line x1="96" x2="104" y1="2584" y2="2584"/>
-<text x="106" y="2588">
-‾
-</text>
-<text x="114" y="2588">
-)
-</text>
-<text x="122" y="2588">
-☮
-</text>
-<text x="2" y="2636">
-R
-</text>
-<text x="10" y="2636">
-i
-</text>
-<text x="18" y="2636">
-g
-</text>
-<text x="26" y="2636">
-h
-</text>
-<text x="34" y="2636">
-t
-</text>
-<text x="42" y="2636">
- 
-</text>
-<text x="50" y="2636">
-B
-</text>
-<text x="58" y="2636">
-a
-</text>
-<text x="66" y="2636">
-c
-</text>
-<text x="74" y="2636">
-k
-</text>
-<text x="82" y="2636">
- 
-</text>
-<text x="90" y="2636">
-A
-</text>
-<text x="98" y="2636">
-t
-</text>
-<text x="106" y="2636">
- 
-</text>
-<text x="114" y="2636">
-Y
-</text>
-<text x="122" y="2636">
-a
-</text>
-<text x="130" y="2636">
-!
-</text>
-<text x="146" y="2636">
-(
-</text>
-<text x="154" y="2636">
-☞
-</text>
-<text x="162" y="2636">
-ﾟ
-</text>
-<text x="170" y="2636">
-∀
-</text>
-<text x="178" y="2636">
-ﾟ
-</text>
-<text x="186" y="2636">
-)
-</text>
-<text x="194" y="2636">
-☞
-</text>
-<text x="2" y="2684">
-G
-</text>
-<text x="10" y="2684">
-i
-</text>
-<text x="18" y="2684">
-m
-</text>
-<text x="26" y="2684">
-m
-</text>
-<text x="34" y="2684">
-e
-</text>
-<text x="50" y="2684">
-(
-</text>
-<text x="66" y="2684">
-つ
-</text>
-<text x="90" y="2684">
-º
-</text>
-<text x="98" y="2684">
-_
-</text>
-<text x="106" y="2684">
-º
-</text>
-<text x="122" y="2684">
-)
-</text>
-<text x="130" y="2684">
-つ
-</text>
-<text x="2" y="2732">
-S
-</text>
-<text x="10" y="2732">
-o
-</text>
-<text x="18" y="2732">
- 
-</text>
-<text x="26" y="2732">
-S
-</text>
-<text x="34" y="2732">
-o
-</text>
-<text x="42" y="2732">
-r
-</text>
-<text x="50" y="2732">
-r
-</text>
-<text x="58" y="2732">
-y
-</text>
-<text x="74" y="2732">
-(
-</text>
-<text x="82" y="2732">
-ﾉ
-</text>
-<text x="90" y="2732">
-´
-</text>
-<text x="98" y="2732">
-д
-</text>
-<text x="106" y="2732">
-｀
-</text>
-<text x="122" y="2732">
-)
-</text>
-<text x="2" y="2780">
-T
-</text>
-<text x="10" y="2780">
-h
-</text>
-<text x="18" y="2780">
-e
-</text>
-<text x="26" y="2780">
- 
-</text>
-<text x="34" y="2780">
-F
-</text>
-<text x="42" y="2780">
-i
-</text>
-<text x="50" y="2780">
-n
-</text>
-<text x="58" y="2780">
-g
-</text>
-<text x="66" y="2780">
-e
-</text>
-<text x="74" y="2780">
-r
-</text>
-<text x="82" y="2780">
- 
-</text>
-<text x="90" y="2780">
-A
-</text>
-<text x="98" y="2780">
-n
-</text>
-<text x="106" y="2780">
-d
-</text>
-<text x="114" y="2780">
- 
-</text>
-<text x="122" y="2780">
-T
-</text>
-<text x="130" y="2780">
-h
-</text>
-<text x="138" y="2780">
-e
-</text>
-<text x="146" y="2780">
- 
-</text>
-<text x="154" y="2780">
-A
-</text>
-<text x="162" y="2780">
-s
-</text>
-<text x="170" y="2780">
-s
-</text>
-<text x="186" y="2780">
-┌
-</text>
-<text x="194" y="2780">
-∩
-</text>
-<text x="202" y="2780">
-┐
-</text>
-<text x="210" y="2780">
-(
-</text>
-<text x="218" y="2780">
-‿
-</text>
-<line x1="228" x2="228" y1="2768" y2="2784"/>
-<text x="234" y="2780">
-‿
-</text>
-<text x="242" y="2780">
-)
-</text>
-<text x="250" y="2780">
-┌
-</text>
-<text x="258" y="2780">
-∩
-</text>
-<text x="266" y="2780">
-┐
-</text>
-<text x="2" y="2828">
-O
-</text>
-<text x="10" y="2828">
-h
-</text>
-<text x="18" y="2828">
- 
-</text>
-<text x="26" y="2828">
-Y
-</text>
-<text x="34" y="2828">
-e
-</text>
-<text x="42" y="2828">
-a
-</text>
-<text x="50" y="2828">
-h
-</text>
-<text x="58" y="2828">
-?
-</text>
-<text x="74" y="2828">
-F
-</text>
-<text x="82" y="2828">
-U
-</text>
-<text x="98" y="2828">
-╭
-</text>
-<text x="106" y="2828">
-∩
-</text>
-<text x="114" y="2828">
-╮
-</text>
-<text x="130" y="2828">
-(
-</text>
-<text x="138" y="2828">
-ò
-</text>
-<text x="146" y="2828">
-Ó
-</text>
-<text x="154" y="2828">
-,
-</text>
-<text x="162" y="2828">
-)
-</text>
-<text x="178" y="2828">
-╭
-</text>
-<text x="186" y="2828">
-∩
-</text>
-<text x="194" y="2828">
-╮
-</text>
-<text x="2" y="2876">
-(
-</text>
-<text x="18" y="2876">
-•
-</text>
-<line x1="24" x2="32" y1="2880" y2="2880"/>
-<text x="34" y="2876">
-•
-</text>
-<text x="42" y="2876">
-)
-</text>
-<text x="50" y="2876">
-O
-</text>
-<text x="58" y="2876">
-*
-</text>
-<text x="66" y="2876">
-¯
-</text>
-<text x="74" y="2876">
-`
-</text>
-<text x="82" y="2876">
-·
-</text>
-<text x="90" y="2876">
-.
-</text>
-<text x="98" y="2876">
-¸
-</text>
-<text x="106" y="2876">
-.
-</text>
-<text x="114" y="2876">
-·
-</text>
-<text x="122" y="2876">
-´
-</text>
-<text x="130" y="2876">
-¯
-</text>
-<text x="138" y="2876">
-`
-</text>
-<text x="146" y="2876">
-°
-</text>
-<text x="154" y="2876">
-Q
-</text>
-<text x="162" y="2876">
-(
-</text>
-<text x="170" y="2876">
-•
-</text>
-<line x1="176" x2="184" y1="2880" y2="2880"/>
-<text x="186" y="2876">
-•
-</text>
-<text x="202" y="2876">
-)
-</text>
-<text x="2" y="2924">
-T
-</text>
-<text x="10" y="2924">
-a
-</text>
-<text x="18" y="2924">
-b
-</text>
-<text x="26" y="2924">
-l
-</text>
-<text x="34" y="2924">
-e
-</text>
-<text x="42" y="2924">
- 
-</text>
-<text x="50" y="2924">
-F
-</text>
-<text x="58" y="2924">
-l
-</text>
-<text x="66" y="2924">
-i
-</text>
-<text x="74" y="2924">
-p
-</text>
-<text x="90" y="2924">
-(
-</text>
-<text x="98" y="2924">
-╯
-</text>
-<text x="106" y="2924">
-°
-</text>
-<text x="114" y="2924">
-□
-</text>
-<text x="122" y="2924">
-°
-</text>
-<text x="130" y="2924">
-)
-</text>
-<text x="138" y="2924">
-╯
-</text>
-<text x="146" y="2924">
-︵
-</text>
-<text x="170" y="2924">
-┻
-</text>
-<text x="178" y="2924">
-━
-</text>
-<text x="186" y="2924">
-┻
-</text>
-<text x="2" y="2972">
-F
-</text>
-<text x="10" y="2972">
-l
-</text>
-<text x="18" y="2972">
-i
-</text>
-<text x="26" y="2972">
-p
-</text>
-<text x="34" y="2972">
- 
-</text>
-<text x="42" y="2972">
-A
-</text>
-<text x="50" y="2972">
-l
-</text>
-<text x="58" y="2972">
-l
-</text>
-<text x="66" y="2972">
- 
-</text>
-<text x="74" y="2972">
-D
-</text>
-<text x="82" y="2972">
-e
-</text>
-<text x="90" y="2972">
-m
-</text>
-<text x="98" y="2972">
- 
-</text>
-<text x="106" y="2972">
-T
-</text>
-<text x="114" y="2972">
-a
-</text>
-<text x="122" y="2972">
-b
-</text>
-<text x="130" y="2972">
-l
-</text>
-<text x="138" y="2972">
-e
-</text>
-<text x="146" y="2972">
-z
-</text>
-<text x="162" y="2972">
-┻
-</text>
-<text x="170" y="2972">
-━
-</text>
-<text x="178" y="2972">
-┻
-</text>
-<text x="186" y="2972">
-︵
-</text>
-<line x1="208" x2="216" y1="2960" y2="2976"/>
-<text x="218" y="2972">
-(
-</text>
-<text x="226" y="2972">
-°
-</text>
-<text x="234" y="2972">
-□
-</text>
-<text x="242" y="2972">
-°
-</text>
-<text x="250" y="2972">
-)
-</text>
-<line x1="256" x2="264" y1="2976" y2="2960"/>
-<text x="274" y="2972">
-︵
-</text>
-<text x="298" y="2972">
-┻
-</text>
-<text x="306" y="2972">
-━
-</text>
-<text x="314" y="2972">
-┻
-</text>
-<text x="2" y="3020">
-E
-</text>
-<text x="10" y="3020">
-p
-</text>
-<text x="18" y="3020">
-i
-</text>
-<text x="26" y="3020">
-c
-</text>
-<text x="34" y="3020">
- 
-</text>
-<text x="42" y="3020">
-T
-</text>
-<text x="50" y="3020">
-a
-</text>
-<text x="58" y="3020">
-b
-</text>
-<text x="66" y="3020">
-l
-</text>
-<text x="74" y="3020">
-e
-</text>
-<text x="82" y="3020">
- 
-</text>
-<text x="90" y="3020">
-F
-</text>
-<text x="98" y="3020">
-l
-</text>
-<text x="106" y="3020">
-i
-</text>
-<text x="114" y="3020">
-p
-</text>
-<text x="130" y="3020">
-(
-</text>
-<text x="138" y="3020">
-˚
-</text>
-<text x="146" y="3020">
-Õ
-</text>
-<text x="154" y="3020">
-˚
-</text>
-<text x="162" y="3020">
-)
-</text>
-<text x="170" y="3020">
-ر
-</text>
-<text x="186" y="3020">
-~
-</text>
-<text x="194" y="3020">
-~
-</text>
-<text x="202" y="3020">
-~
-</text>
-<text x="210" y="3020">
-~
-</text>
-<text x="218" y="3020">
-╚
-</text>
-<text x="226" y="3020">
-╩
-</text>
-<text x="234" y="3020">
-╩
-</text>
-<text x="242" y="3020">
-╝
-</text>
-<text x="2" y="3068">
-O
-</text>
-<text x="10" y="3068">
-k
-</text>
-<text x="18" y="3068">
-.
-</text>
-<text x="34" y="3068">
-I
-</text>
-<text x="42" y="3068">
- 
-</text>
-<text x="50" y="3068">
-P
-</text>
-<text x="58" y="3068">
-u
-</text>
-<text x="66" y="3068">
-t
-</text>
-<text x="74" y="3068">
- 
-</text>
-<text x="82" y="3068">
-T
-</text>
-<text x="90" y="3068">
-a
-</text>
-<text x="98" y="3068">
-b
-</text>
-<text x="106" y="3068">
-l
-</text>
-<text x="114" y="3068">
-e
-</text>
-<text x="122" y="3068">
- 
-</text>
-<text x="130" y="3068">
-B
-</text>
-<text x="138" y="3068">
-a
-</text>
-<text x="146" y="3068">
-c
-</text>
-<text x="154" y="3068">
-k
-</text>
-<text x="170" y="3068">
-┬
-</text>
-<text x="178" y="3068">
-─
-</text>
-<text x="186" y="3068">
-─
-</text>
-<text x="194" y="3068">
-┬
-</text>
-<text x="210" y="3068">
-ノ
-</text>
-<text x="226" y="3068">
-(
-</text>
-<text x="242" y="3068">
-゜
-</text>
-<line x1="256" x2="264" y1="3064" y2="3064"/>
-<text x="266" y="3068">
-゜
-</text>
-<text x="282" y="3068">
-ノ
-</text>
-<text x="298" y="3068">
-)
-</text>
-<text x="2" y="3116">
-P
-</text>
-<text x="10" y="3116">
-u
-</text>
-<text x="18" y="3116">
-t
-</text>
-<text x="26" y="3116">
- 
-</text>
-<text x="34" y="3116">
-M
-</text>
-<text x="42" y="3116">
-o
-</text>
-<text x="50" y="3116">
-r
-</text>
-<text x="58" y="3116">
-e
-</text>
-<text x="66" y="3116">
- 
-</text>
-<text x="74" y="3116">
-T
-</text>
-<text x="82" y="3116">
-a
-</text>
-<text x="90" y="3116">
-b
-</text>
-<text x="98" y="3116">
-l
-</text>
-<text x="106" y="3116">
-e
-</text>
-<text x="114" y="3116">
-s
-</text>
-<text x="122" y="3116">
- 
-</text>
-<text x="130" y="3116">
-B
-</text>
-<text x="138" y="3116">
-a
-</text>
-<text x="146" y="3116">
-c
-</text>
-<text x="154" y="3116">
-k
-</text>
-<text x="170" y="3116">
-┏
-</text>
-<text x="178" y="3116">
-━
-</text>
-<text x="186" y="3116">
-┓
-</text>
-<text x="194" y="3116">
-┏
-</text>
-<text x="202" y="3116">
-━
-</text>
-<text x="210" y="3116">
-┓
-</text>
-<text x="218" y="3116">
-┏
-</text>
-<text x="226" y="3116">
-━
-</text>
-<text x="234" y="3116">
-┓
-</text>
-<text x="250" y="3116">
-︵
-</text>
-<line x1="272" x2="280" y1="3120" y2="3104"/>
-<text x="282" y="3116">
-(
-</text>
-<text x="290" y="3116">
-^
-</text>
-<text x="298" y="3116">
-.
-</text>
-<text x="306" y="3116">
-^
-</text>
-<line x1="312" x2="320" y1="3120" y2="3104"/>
-<text x="322" y="3116">
-)
-</text>
-<text x="2" y="3164">
-W
-</text>
-<text x="10" y="3164">
-o
-</text>
-<text x="18" y="3164">
-t
-</text>
-<text x="26" y="3164">
-?
-</text>
-<text x="42" y="3164">
-I
-</text>
-<text x="50" y="3164">
-’
-</text>
-<text x="58" y="3164">
-m
-</text>
-<text x="66" y="3164">
- 
-</text>
-<text x="74" y="3164">
-C
-</text>
-<text x="82" y="3164">
-o
-</text>
-<text x="90" y="3164">
-n
-</text>
-<text x="98" y="3164">
-f
-</text>
-<text x="106" y="3164">
-u
-</text>
-<text x="114" y="3164">
-s
-</text>
-<text x="122" y="3164">
-e
-</text>
-<text x="130" y="3164">
-d
-</text>
-<text x="146" y="3164">
-(
-</text>
-<text x="162" y="3164">
-•᷄ὤ
-</text>
-<text x="178" y="3164">
-•᷅)
-</text>
-<text x="194" y="3164">
-？
-</text>
-<text x="2" y="3212">
-C
-</text>
-<text x="10" y="3212">
-r
-</text>
-<text x="18" y="3212">
-a
-</text>
-<text x="26" y="3212">
-z
-</text>
-<text x="34" y="3212">
-y
-</text>
-<text x="42" y="3212">
- 
-</text>
-<text x="50" y="3212">
-B
-</text>
-<text x="58" y="3212">
-a
-</text>
-<text x="66" y="3212">
-s
-</text>
-<text x="74" y="3212">
-t
-</text>
-<text x="82" y="3212">
-a
-</text>
-<text x="90" y="3212">
-r
-</text>
-<text x="98" y="3212">
-d
-</text>
-<text x="114" y="3212">
-(
-</text>
-<text x="122" y="3212">
-⊙
-</text>
-<line x1="128" x2="136" y1="3216" y2="3216"/>
-<text x="138" y="3212">
-◎
-</text>
-<text x="146" y="3212">
-)
-</text>
-<text x="2" y="3260">
-C
-</text>
-<text x="10" y="3260">
-r
-</text>
-<text x="18" y="3260">
-a
-</text>
-<text x="26" y="3260">
-z
-</text>
-<text x="34" y="3260">
-y
-</text>
-<text x="42" y="3260">
- 
-</text>
-<text x="50" y="3260">
-B
-</text>
-<text x="58" y="3260">
-i
-</text>
-<text x="66" y="3260">
-t
-</text>
-<text x="74" y="3260">
-c
-</text>
-<text x="82" y="3260">
-h
-</text>
-<text x="98" y="3260">
-(
-</text>
-<text x="106" y="3260">
-⊙
-</text>
-<text x="114" y="3260">
-﹏
-</text>
-<text x="130" y="3260">
-⊙
-</text>
-<text x="138" y="3260">
-✿
-</text>
-<text x="146" y="3260">
-)
-</text>
-<text x="2" y="3308">
-I
-</text>
-<text x="10" y="3308">
- 
-</text>
-<text x="18" y="3308">
-C
-</text>
-<text x="26" y="3308">
-a
-</text>
-<text x="34" y="3308">
-n
-</text>
-<text x="42" y="3308">
-’
-</text>
-<text x="50" y="3308">
-t
-</text>
-<text x="58" y="3308">
- 
-</text>
-<text x="66" y="3308">
-E
-</text>
-<text x="74" y="3308">
-v
-</text>
-<text x="82" y="3308">
-e
-</text>
-<text x="90" y="3308">
-n
-</text>
-<text x="106" y="3308">
-(
-</text>
-<text x="114" y="3308">
-｡
-</text>
-<text x="122" y="3308">
-☉
-</text>
-<text x="130" y="3308">
-౪
-</text>
-<text x="146" y="3308">
-⊙
-</text>
-<text x="154" y="3308">
-｡
-</text>
-<text x="162" y="3308">
-)
-</text>
-<text x="2" y="3340">
-d
-</text>
-<text x="10" y="3340">
-o
-</text>
-<text x="18" y="3340">
-t
-</text>
-<text x="26" y="3340">
-a
-</text>
-<text x="34" y="3340">
-_
-</text>
-<text x="42" y="3340">
-m
-</text>
-<text x="50" y="3340">
-e
-</text>
-<text x="58" y="3340">
-m
-</text>
-<text x="66" y="3340">
-e
-</text>
-<text x="74" y="3340">
-s
-</text>
-<text x="2" y="3356">
-H
-</text>
-<text x="10" y="3356">
-E
-</text>
-<text x="18" y="3356">
-Y
-</text>
-<text x="26" y="3356">
- 
-</text>
-<text x="34" y="3356">
-I
-</text>
-<text x="42" y="3356">
-X
-</text>
-<text x="50" y="3356">
-M
-</text>
-<text x="58" y="3356">
-I
-</text>
-<text x="66" y="3356">
-K
-</text>
-<text x="74" y="3356">
-E
-</text>
-<text x="90" y="3356">
-(
-</text>
-<text x="106" y="3356">
-°
-</text>
-<text x="114" y="3356">
- ͜ʖ͡°
-</text>
-<text x="138" y="3356">
-)
-</text>
-<text x="146" y="3356">
-╭
-</text>
-<text x="154" y="3356">
-∩
-</text>
-<text x="162" y="3356">
-╮
-</text>
-<text x="2" y="3404">
-d
-</text>
-<text x="10" y="3404">
-[
-</text>
-<line x1="16" x2="24" y1="3400" y2="3400"/>
-<line x1="24" x2="32" y1="3408" y2="3408"/>
-<line x1="32" x2="40" y1="3400" y2="3400"/>
-<text x="42" y="3404">
-]
-</text>
-<text x="50" y="3404">
-b
-</text>
-<text x="2" y="3452">
-B
-</text>
-<text x="10" y="3452">
-o
-</text>
-<text x="18" y="3452">
-o
-</text>
-<text x="26" y="3452">
-m
-</text>
-<text x="34" y="3452">
- 
-</text>
-<text x="42" y="3452">
-B
-</text>
-<text x="50" y="3452">
-o
-</text>
-<text x="58" y="3452">
-x
-</text>
-<text x="74" y="3452">
-♫
-</text>
-<text x="82" y="3452">
-♪
-</text>
-<text x="90" y="3452">
-.
-</text>
-<text x="98" y="3452">
-ı
-</text>
-<text x="106" y="3452">
-l
-</text>
-<text x="114" y="3452">
-ı
-</text>
-<text x="122" y="3452">
-l
-</text>
-<text x="130" y="3452">
-ı
-</text>
-<text x="138" y="3452">
-l
-</text>
-<text x="146" y="3452">
-l
-</text>
-<text x="154" y="3452">
-|̅●̅|̅=̅|̅●̅|
-</text>
-<text x="210" y="3452">
-l
-</text>
-<text x="218" y="3452">
-l
-</text>
-<text x="226" y="3452">
-ı
-</text>
-<text x="234" y="3452">
-l
-</text>
-<text x="242" y="3452">
-ı
-</text>
-<text x="250" y="3452">
-l
-</text>
-<text x="258" y="3452">
-ı
-</text>
-<text x="266" y="3452">
-.
-</text>
-<text x="274" y="3452">
-♫
-</text>
-<text x="282" y="3452">
-♪
-</text>
-<text x="2" y="3500">
-P
-</text>
-<text x="10" y="3500">
-a
-</text>
-<text x="18" y="3500">
-r
-</text>
-<text x="26" y="3500">
-t
-</text>
-<text x="34" y="3500">
-y
-</text>
-<text x="42" y="3500">
- 
-</text>
-<text x="50" y="3500">
-T
-</text>
-<text x="58" y="3500">
-i
-</text>
-<text x="66" y="3500">
-m
-</text>
-<text x="74" y="3500">
-e
-</text>
-<text x="90" y="3500">
-┏
-</text>
-<text x="98" y="3500">
-(
-</text>
-<line x1="104" x2="112" y1="3496" y2="3496"/>
-<line x1="112" x2="120" y1="3504" y2="3504"/>
-<line x1="120" x2="128" y1="3496" y2="3496"/>
-<text x="130" y="3500">
-)
-</text>
-<text x="138" y="3500">
-┛
-</text>
-<text x="146" y="3500">
-┗
-</text>
-<text x="154" y="3500">
-(
-</text>
-<line x1="160" x2="168" y1="3496" y2="3496"/>
-<line x1="168" x2="176" y1="3504" y2="3504"/>
-<line x1="176" x2="184" y1="3496" y2="3496"/>
-<text x="194" y="3500">
-)
-</text>
-<text x="202" y="3500">
-┓
-</text>
-<text x="210" y="3500">
-┗
-</text>
-<text x="218" y="3500">
-(
-</text>
-<line x1="224" x2="232" y1="3496" y2="3496"/>
-<line x1="232" x2="240" y1="3504" y2="3504"/>
-<line x1="240" x2="248" y1="3496" y2="3496"/>
-<text x="250" y="3500">
-)
-</text>
-<text x="258" y="3500">
-┛
-</text>
-<text x="266" y="3500">
-┏
-</text>
-<text x="274" y="3500">
-(
-</text>
-<line x1="280" x2="288" y1="3496" y2="3496"/>
-<line x1="288" x2="296" y1="3504" y2="3504"/>
-<line x1="296" x2="304" y1="3496" y2="3496"/>
-<text x="306" y="3500">
-)
-</text>
-<text x="314" y="3500">
-┓
-</text>
-<text x="2" y="3548">
-S
-</text>
-<text x="10" y="3548">
-u
-</text>
-<text x="18" y="3548">
-n
-</text>
-<text x="26" y="3548">
-g
-</text>
-<text x="34" y="3548">
-l
-</text>
-<text x="42" y="3548">
-a
-</text>
-<text x="50" y="3548">
-s
-</text>
-<text x="58" y="3548">
-s
-</text>
-<text x="66" y="3548">
-e
-</text>
-<text x="74" y="3548">
-s
-</text>
-<text x="90" y="3548">
-(
-</text>
-<text x="106" y="3548">
-•
-</text>
-<line x1="112" x2="120" y1="3552" y2="3552"/>
-<text x="122" y="3548">
-•
-</text>
-<text x="130" y="3548">
-)
-</text>
-<text x="146" y="3548">
-(
-</text>
-<text x="162" y="3548">
-•
-</text>
-<line x1="168" x2="176" y1="3552" y2="3552"/>
-<text x="178" y="3548">
-•
-</text>
-<text x="186" y="3548">
-)
-</text>
-<text x="194" y="3548">
-&gt;
-</text>
-<text x="202" y="3548">
-⌐
-</text>
-<text x="210" y="3548">
-■
-</text>
-<line x1="216" x2="224" y1="3544" y2="3544"/>
-<text x="226" y="3548">
-■
-</text>
-<text x="242" y="3548">
-(
-</text>
-<text x="250" y="3548">
-⌐
-</text>
-<text x="258" y="3548">
-■
-</text>
-<line x1="264" x2="272" y1="3552" y2="3552"/>
-<text x="274" y="3548">
-■
-</text>
-<text x="282" y="3548">
-)
-</text>
-<text x="2" y="3596">
-H
-</text>
-<text x="10" y="3596">
-e
-</text>
-<text x="18" y="3596">
-l
-</text>
-<text x="26" y="3596">
-p
-</text>
-<text x="34" y="3596">
- 
-</text>
-<text x="42" y="3596">
-٩
-</text>
-<text x="50" y="3596">
-(͡๏͡๏
-</text>
-<text x="74" y="3596">
-)
-</text>
-<text x="82" y="3596">
-۶
-</text>
-<text x="2" y="3644">
-F
-</text>
-<text x="10" y="3644">
-u
-</text>
-<text x="18" y="3644">
-c
-</text>
-<text x="26" y="3644">
-k
-</text>
-<text x="34" y="3644">
- 
-</text>
-<text x="42" y="3644">
-O
-</text>
-<text x="50" y="3644">
-f
-</text>
-<text x="58" y="3644">
-f
-</text>
-<text x="66" y="3644">
- 
-</text>
-<text x="74" y="3644">
-t
-</text>
-<text x="82" y="3644">
-(
-</text>
-<line x1="88" x2="96" y1="3640" y2="3640"/>
-<text x="98" y="3644">
-.
-</text>
-<text x="106" y="3644">
--
-</text>
-<text x="114" y="3644">
-t
-</text>
-<text x="122" y="3644">
-)
-</text>
-<text x="2" y="3692">
-F
-</text>
-<text x="10" y="3692">
-a
-</text>
-<text x="18" y="3692">
-c
-</text>
-<text x="26" y="3692">
-e
-</text>
-<text x="34" y="3692">
-p
-</text>
-<text x="42" y="3692">
-a
-</text>
-<text x="50" y="3692">
-l
-</text>
-<text x="58" y="3692">
-m
-</text>
-<text x="74" y="3692">
-(
-</text>
-<text x="82" y="3692">
-&gt;
-</text>
-<text x="90" y="3692">
-ლ
-</text>
-<text x="98" y="3692">
-)
-</text>
-<text x="2" y="3740">
-H
-</text>
-<text x="10" y="3740">
-a
-</text>
-<text x="18" y="3740">
-p
-</text>
-<text x="26" y="3740">
-p
-</text>
-<text x="34" y="3740">
-y
-</text>
-<text x="42" y="3740">
- ۜ 
-</text>
-<line x1="56" x2="64" y1="3728" y2="3744"/>
-<text x="66" y="3740">
-(
-</text>
-<text x="74" y="3740">
-סּ
-</text>
-<text x="82" y="3740">
-ں
-</text>
-<text x="90" y="3740">
-סּَ`
-</text>
-<text x="114" y="3740">
-)
-</text>
-<line x1="120" x2="128" y1="3744" y2="3728"/>
-<text x="2" y="3788">
-P
-</text>
-<text x="10" y="3788">
-i
-</text>
-<text x="18" y="3788">
-r
-</text>
-<text x="26" y="3788">
-a
-</text>
-<text x="34" y="3788">
-t
-</text>
-<text x="42" y="3788">
-e
-</text>
-<text x="58" y="3788">
-✌
-</text>
-<text x="66" y="3788">
-(
-</text>
-<text x="74" y="3788">
-◕
-</text>
-<text x="82" y="3788">
-‿
-</text>
-<line x1="88" x2="96" y1="3784" y2="3784"/>
-<text x="98" y="3788">
-)
-</text>
-<text x="106" y="3788">
-✌
-</text>
-<text x="2" y="3836">
-S
-</text>
-<text x="10" y="3836">
-l
-</text>
-<text x="18" y="3836">
-e
-</text>
-<text x="26" y="3836">
-e
-</text>
-<text x="34" y="3836">
-p
-</text>
-<text x="42" y="3836">
-i
-</text>
-<text x="50" y="3836">
-n
-</text>
-<text x="58" y="3836">
-g
-</text>
-<text x="74" y="3836">
-(
-</text>
-<line x1="80" x2="88" y1="3832" y2="3832"/>
-<text x="90" y="3836">
-.
-</text>
-<line x1="96" x2="104" y1="3832" y2="3832"/>
-<text x="106" y="3836">
-)
-</text>
-<text x="114" y="3836">
-Z
-</text>
-<text x="122" y="3836">
-z
-</text>
-<text x="130" y="3836">
-z
-</text>
-<text x="138" y="3836">
-…
-</text>
-<text x="2" y="3884">
-S
-</text>
-<text x="10" y="3884">
-a
-</text>
-<text x="18" y="3884">
-d
-</text>
-<text x="34" y="3884">
-(
-</text>
-<text x="42" y="3884">
-╥
-</text>
-<text x="50" y="3884">
-﹏
-</text>
-<text x="66" y="3884">
-╥
-</text>
-<text x="74" y="3884">
-)
-</text>
-<text x="2" y="3932">
-R
-</text>
-<text x="10" y="3932">
-a
-</text>
-<text x="18" y="3932">
-g
-</text>
-<text x="26" y="3932">
-e
-</text>
-<text x="34" y="3932">
- 
-</text>
-<text x="42" y="3932">
-t
-</text>
-<text x="50" y="3932">
-(
-</text>
-<text x="58" y="3932">
-ಠ
-</text>
-<text x="66" y="3932">
-益
-</text>
-<text x="82" y="3932">
-ಠ
-</text>
-<text x="90" y="3932">
-)
-</text>
-<text x="98" y="3932">
-t
-</text>
-<text x="2" y="3980">
-S
-</text>
-<text x="10" y="3980">
-u
-</text>
-<text x="18" y="3980">
-n
-</text>
-<text x="26" y="3980">
-n
-</text>
-<text x="34" y="3980">
-y
-</text>
-<text x="42" y="3980">
- 
-</text>
-<text x="50" y="3980">
-D
-</text>
-<text x="58" y="3980">
-a
-</text>
-<text x="66" y="3980">
-y
-</text>
-<text x="82" y="3980">
-☁
-</text>
-<text x="90" y="3980">
-☼
-</text>
-<text x="106" y="3980">
-▅
-</text>
-<text x="114" y="3980">
-▒
-</text>
-<text x="122" y="3980">
-░
-</text>
-<text x="130" y="3980">
-✿͜ 
-</text>
-<text x="146" y="3980">
-✿
-</text>
-<text x="154" y="3980">
-░
-</text>
-<text x="162" y="3980">
-▒
-</text>
-<text x="170" y="3980">
-▅
-</text>
-<text x="186" y="3980">
-☼
-</text>
-<text x="194" y="3980">
-☁
-</text>
-<text x="2" y="4028">
-S
-</text>
-<text x="10" y="4028">
-m
-</text>
-<text x="18" y="4028">
-u
-</text>
-<text x="26" y="4028">
-g
-</text>
-<text x="34" y="4028">
- 
-</text>
-<text x="42" y="4028">
-B
-</text>
-<text x="50" y="4028">
-a
-</text>
-<text x="58" y="4028">
-s
-</text>
-<text x="66" y="4028">
-t
-</text>
-<text x="74" y="4028">
-a
-</text>
-<text x="82" y="4028">
-r
-</text>
-<text x="90" y="4028">
-d
-</text>
-<text x="106" y="4028">
-•
-</text>
-<text x="114" y="4028">
-|
-</text>
-<text x="122" y="4028">
-龴
-</text>
-<text x="138" y="4028">
-◡
-</text>
-<text x="146" y="4028">
-龴
-</text>
-<line x1="164" x2="164" y1="4016" y2="4032"/>
-<text x="170" y="4028">
-•
-</text>
-<text x="2" y="4076">
-S
-</text>
-<text x="10" y="4076">
-p
-</text>
-<text x="18" y="4076">
-a
-</text>
-<text x="26" y="4076">
-r
-</text>
-<text x="34" y="4076">
-k
-</text>
-<text x="42" y="4076">
-l
-</text>
-<text x="50" y="4076">
-i
-</text>
-<text x="58" y="4076">
-n
-</text>
-<text x="66" y="4076">
-g
-</text>
-<text x="74" y="4076">
- 
-</text>
-<text x="82" y="4076">
-H
-</text>
-<text x="90" y="4076">
-e
-</text>
-<text x="98" y="4076">
-a
-</text>
-<text x="106" y="4076">
-r
-</text>
-<text x="114" y="4076">
-t
-</text>
-<line x1="128" x2="136" y1="4072" y2="4072"/>
-<text x="138" y="4076">
-`
-</text>
-<text x="146" y="4076">
-ღ
-</text>
-<text x="154" y="4076">
-´
-</text>
-<line x1="160" x2="168" y1="4072" y2="4072"/>
-<text x="2" y="4124">
-L
-</text>
-<text x="10" y="4124">
-o
-</text>
-<text x="18" y="4124">
-v
-</text>
-<text x="26" y="4124">
-e
-</text>
-<text x="34" y="4124">
- 
-</text>
-<text x="42" y="4124">
-N
-</text>
-<text x="50" y="4124">
-o
-</text>
-<text x="58" y="4124">
-t
-</text>
-<text x="66" y="4124">
-e
-</text>
-<text x="74" y="4124">
- 
-</text>
-<text x="82" y="4124">
-웃
-</text>
-<text x="98" y="4124">
-❤
-</text>
-<text x="106" y="4124">
-유
-</text>
-<text x="2" y="4172">
-\
-</text>
-<text x="10" y="4172">
-m
-</text>
-<text x="18" y="4172">
-/
-</text>
-<text x="2" y="4220">
-\
-</text>
-<text x="10" y="4220">
-m
-</text>
-<text x="18" y="4220">
-/
-</text>
-<text x="26" y="4220">
-(
-</text>
-<text x="34" y="4220">
-&gt;
-</text>
-<text x="42" y="4220">
-.
-</text>
-<text x="50" y="4220">
-&lt;
-</text>
-<text x="58" y="4220">
-)
-</text>
-<text x="66" y="4220">
-\
-</text>
-<text x="74" y="4220">
-m
-</text>
-<text x="82" y="4220">
-/
-</text>
-<text x="2" y="4268">
-L
-</text>
-<text x="10" y="4268">
-o
-</text>
-<text x="18" y="4268">
-v
-</text>
-<text x="26" y="4268">
-e
-</text>
-<text x="34" y="4268">
- 
-</text>
-<text x="42" y="4268">
-i
-</text>
-<text x="50" y="4268">
-n
-</text>
-<text x="58" y="4268">
- 
-</text>
-<text x="66" y="4268">
-m
-</text>
-<text x="74" y="4268">
-y
-</text>
-<text x="82" y="4268">
- 
-</text>
-<text x="90" y="4268">
-e
-</text>
-<text x="98" y="4268">
-y
-</text>
-<text x="106" y="4268">
-e
-</text>
-<text x="114" y="4268">
-s
-</text>
-<text x="130" y="4268">
-(
-</text>
-<text x="138" y="4268">
-♥
-</text>
-<line x1="144" x2="152" y1="4272" y2="4272"/>
-<text x="154" y="4268">
-♥
-</text>
-<text x="162" y="4268">
-)
-</text>
-<text x="2" y="4316">
-S
-</text>
-<text x="10" y="4316">
-t
-</text>
-<text x="18" y="4316">
-a
-</text>
-<text x="26" y="4316">
-r
-</text>
-<text x="34" y="4316">
-s
-</text>
-<text x="42" y="4316">
- 
-</text>
-<text x="50" y="4316">
-i
-</text>
-<text x="58" y="4316">
-n
-</text>
-<text x="66" y="4316">
- 
-</text>
-<text x="74" y="4316">
-m
-</text>
-<text x="82" y="4316">
-y
-</text>
-<text x="90" y="4316">
- 
-</text>
-<text x="98" y="4316">
-E
-</text>
-<text x="106" y="4316">
-y
-</text>
-<text x="114" y="4316">
-e
-</text>
-<text x="122" y="4316">
-s
-</text>
-<text x="138" y="4316">
-✌
-</text>
-<text x="146" y="4316">
-⊂
-</text>
-<text x="154" y="4316">
-(
-</text>
-<text x="162" y="4316">
-✰
-</text>
-<text x="170" y="4316">
-‿
-</text>
-<text x="178" y="4316">
-✰
-</text>
-<text x="186" y="4316">
-)
-</text>
-<text x="194" y="4316">
-つ
-</text>
-<text x="210" y="4316">
-✌
-</text>
-<text x="2" y="4364">
-F
-</text>
-<text x="10" y="4364">
-u
-</text>
-<text x="18" y="4364">
-c
-</text>
-<text x="26" y="4364">
-k
-</text>
-<text x="34" y="4364">
-i
-</text>
-<text x="42" y="4364">
-n
-</text>
-<text x="50" y="4364">
- 
-</text>
-<text x="58" y="4364">
-M
-</text>
-<text x="66" y="4364">
-a
-</text>
-<text x="74" y="4364">
-n
-</text>
-<text x="82" y="4364">
- 
-</text>
-<text x="90" y="4364">
-T
-</text>
-<text x="98" y="4364">
-e
-</text>
-<text x="106" y="4364">
-a
-</text>
-<text x="114" y="4364">
-r
-</text>
-<text x="122" y="4364">
-s
-</text>
-<text x="130" y="4364">
- 
-</text>
-<text x="138" y="4364">
-ಥ
-</text>
-<text x="146" y="4364">
-_
-</text>
-<text x="154" y="4364">
-ಥ
-</text>
-<text x="2" y="4412">
-A
-</text>
-<text x="10" y="4412">
-t
-</text>
-<text x="18" y="4412">
-i
-</text>
-<text x="26" y="4412">
-s
-</text>
-<text x="34" y="4412">
-h
-</text>
-<text x="50" y="4412">
-(
-</text>
-<line x1="60" x2="60" y1="4400" y2="4416"/>
-<text x="74" y="4412">
-–
-</text>
-<line x1="88" x2="96" y1="4416" y2="4416"/>
-<text x="106" y="4412">
-–
-</text>
-<line x1="124" x2="124" y1="4400" y2="4416"/>
-<text x="130" y="4412">
-)
-</text>
-<text x="2" y="4460">
-S
-</text>
-<text x="10" y="4460">
-h
-</text>
-<text x="18" y="4460">
-i
-</text>
-<text x="26" y="4460">
-t
-</text>
-<text x="34" y="4460">
-,
-</text>
-<text x="50" y="4460">
-H
-</text>
-<text x="58" y="4460">
-i
-</text>
-<text x="66" y="4460">
-d
-</text>
-<text x="74" y="4460">
-e
-</text>
-<text x="82" y="4460">
-!
-</text>
-<line x1="100" x2="100" y1="4448" y2="4464"/>
-<line x1="112" x2="100" y1="4464" y2="4464"/>
-<text x="114" y="4460">
-・
-</text>
-<text x="130" y="4460">
-)
-</text>
-<line x1="148" x2="148" y1="4448" y2="4464"/>
-<text x="154" y="4460">
-･
-</text>
-<text x="162" y="4460">
-ω
-</text>
-<text x="170" y="4460">
-･
-</text>
-<text x="178" y="4460">
-｀
-</text>
-<text x="194" y="4460">
-)
-</text>
-<text x="2" y="4508">
-Y
-</text>
-<text x="10" y="4508">
-a
-</text>
-<text x="18" y="4508">
-y
-</text>
-<text x="26" y="4508">
-!
-</text>
-<line x1="40" x2="48" y1="4496" y2="4512"/>
-<text x="50" y="4508">
-(
-</text>
-<text x="58" y="4508">
-ˆ
-</text>
-<text x="66" y="4508">
-˚
-</text>
-<text x="74" y="4508">
-ˆ
-</text>
-<text x="82" y="4508">
-)
-</text>
-<line x1="88" x2="96" y1="4512" y2="4496"/>
-<text x="2" y="4556">
-O
-</text>
-<text x="10" y="4556">
-M
-</text>
-<text x="18" y="4556">
-G
-</text>
-<text x="26" y="4556">
-!
-</text>
-<text x="42" y="4556">
-I
-</text>
-<text x="50" y="4556">
-n
-</text>
-<text x="58" y="4556">
-s
-</text>
-<text x="66" y="4556">
-a
-</text>
-<text x="74" y="4556">
-n
-</text>
-<text x="82" y="4556">
-e
-</text>
-<text x="90" y="4556">
- 
-</text>
-<text x="98" y="4556">
-H
-</text>
-<text x="106" y="4556">
-a
-</text>
-<text x="114" y="4556">
-p
-</text>
-<text x="122" y="4556">
-p
-</text>
-<text x="130" y="4556">
-y
-</text>
-<text x="138" y="4556">
- 
-</text>
-<text x="146" y="4556">
-Ｏ
-</text>
-<text x="162" y="4556">
-(
-</text>
-<text x="170" y="4556">
-≧
-</text>
-<text x="178" y="4556">
-▽
-</text>
-<text x="186" y="4556">
-≦
-</text>
-<text x="194" y="4556">
-)
-</text>
-<text x="202" y="4556">
-Ｏ
-</text>
-<text x="2" y="4604">
-L
-</text>
-<text x="10" y="4604">
-o
-</text>
-<text x="18" y="4604">
-v
-</text>
-<text x="26" y="4604">
-e
-</text>
-<text x="34" y="4604">
- 
-</text>
-<text x="42" y="4604">
-Y
-</text>
-<text x="50" y="4604">
-o
-</text>
-<text x="58" y="4604">
-u
-</text>
-<text x="74" y="4604">
-»
-</text>
-<line x1="80" x2="88" y1="4600" y2="4600"/>
-<text x="90" y="4604">
-(
-</text>
-<text x="98" y="4604">
-¯
-</text>
-<text x="106" y="4604">
-`
-</text>
-<text x="114" y="4604">
-·
-</text>
-<text x="122" y="4604">
-.
-</text>
-<text x="130" y="4604">
-·
-</text>
-<text x="138" y="4604">
-´
-</text>
-<text x="146" y="4604">
-¯
-</text>
-<text x="154" y="4604">
-)
-</text>
-<line x1="160" x2="168" y1="4600" y2="4600"/>
-<line marker-end="url(#triangle)" x1="168" x2="172" y1="4600" y2="4600"/>
-<text x="178" y="4604">
-N
-</text>
-<text x="186" y="4604">
-A
-</text>
-<text x="194" y="4604">
-M
-</text>
-<text x="202" y="4604">
-E
-</text>
-<line marker-end="url(#triangle)" x1="216" x2="212" y1="4600" y2="4600"/>
-<line x1="216" x2="224" y1="4600" y2="4600"/>
-<text x="226" y="4604">
-(
-</text>
-<text x="234" y="4604">
-¯
-</text>
-<text x="242" y="4604">
-`
-</text>
-<text x="250" y="4604">
-·
-</text>
-<text x="258" y="4604">
-.
-</text>
-<text x="266" y="4604">
-·
-</text>
-<text x="274" y="4604">
-´
-</text>
-<text x="282" y="4604">
-¯
-</text>
-<text x="290" y="4604">
-)
-</text>
-<line x1="296" x2="304" y1="4600" y2="4600"/>
-<text x="306" y="4604">
-«
-</text>
-<text x="322" y="4604">
-O
-</text>
-<text x="330" y="4604">
-M
-</text>
-<text x="338" y="4604">
-G
-</text>
-<text x="346" y="4604">
-,
-</text>
-<text x="2" y="4652">
-Y
-</text>
-<text x="10" y="4652">
-e
-</text>
-<text x="18" y="4652">
-s
-</text>
-<text x="26" y="4652">
-!
-</text>
-<text x="42" y="4652">
-S
-</text>
-<text x="50" y="4652">
-u
-</text>
-<text x="58" y="4652">
-c
-</text>
-<text x="66" y="4652">
-c
-</text>
-<text x="74" y="4652">
-e
-</text>
-<text x="82" y="4652">
-s
-</text>
-<text x="90" y="4652">
-s
-</text>
-<text x="98" y="4652">
-.
-</text>
-<text x="114" y="4652">
-(
-</text>
-<text x="122" y="4652">
-•̀ᴗ
-</text>
-<text x="138" y="4652">
-•́)
-</text>
-<text x="154" y="4652">
-و
-</text>
-<text x="2" y="4700">
-C
-</text>
-<text x="10" y="4700">
-o
-</text>
-<text x="18" y="4700">
-f
-</text>
-<text x="26" y="4700">
-f
-</text>
-<text x="34" y="4700">
-e
-</text>
-<text x="42" y="4700">
-e
-</text>
-<text x="50" y="4700">
- 
-</text>
-<text x="58" y="4700">
-c
-</text>
-<text x="66" y="4700">
-[
-</text>
-<line x1="72" x2="80" y1="4704" y2="4704"/>
-<text x="82" y="4700">
-]
-</text>
-<text x="2" y="4748">
-A
-</text>
-<text x="10" y="4748">
-i
-</text>
-<text x="18" y="4748">
-r
-</text>
-<text x="26" y="4748">
-p
-</text>
-<text x="34" y="4748">
-l
-</text>
-<text x="42" y="4748">
-a
-</text>
-<text x="50" y="4748">
-n
-</text>
-<text x="58" y="4748">
-e
-</text>
-<text x="74" y="4748">
-✈
-</text>
-<text x="2" y="4796">
-W
-</text>
-<text x="10" y="4796">
-e
-</text>
-<text x="18" y="4796">
-a
-</text>
-<text x="26" y="4796">
-t
-</text>
-<text x="34" y="4796">
-h
-</text>
-<text x="42" y="4796">
-e
-</text>
-<text x="50" y="4796">
-r
-</text>
-<text x="66" y="4796">
-☼
-</text>
-<text x="82" y="4796">
-☀
-</text>
-<text x="98" y="4796">
-☁
-</text>
-<text x="114" y="4796">
-☂
-</text>
-<text x="130" y="4796">
-☃
-</text>
-<text x="146" y="4796">
-☄
-</text>
-<text x="162" y="4796">
-☾
-</text>
-<text x="178" y="4796">
-☽
-</text>
-<text x="194" y="4796">
-❄
-</text>
-<text x="210" y="4796">
-☇
-</text>
-<text x="226" y="4796">
-☈
-</text>
-<text x="242" y="4796">
-⊙
-</text>
-<text x="258" y="4796">
-☉
-</text>
-<text x="274" y="4796">
-℃
-</text>
-<text x="290" y="4796">
-℉
-</text>
-<text x="306" y="4796">
-°
-</text>
-<text x="322" y="4796">
-❅
-</text>
-<text x="338" y="4796">
-✺
-</text>
-<text x="354" y="4796">
-ϟ
-</text>
-<text x="2" y="4844">
-B
-</text>
-<text x="10" y="4844">
-a
-</text>
-<text x="18" y="4844">
-n
-</text>
-<text x="26" y="4844">
-d
-</text>
-<text x="34" y="4844">
- 
-</text>
-<text x="42" y="4844">
-A
-</text>
-<text x="50" y="4844">
-i
-</text>
-<text x="58" y="4844">
-d
-</text>
-<text x="74" y="4844">
-(
-</text>
-<text x="82" y="4844">
- ̅:̅:̅:̅[̅ ̅]̅:̅:̅:̅ 
-</text>
-<text x="170" y="4844">
-)
-</text>
-<text x="2" y="4892">
-F
-</text>
-<text x="10" y="4892">
-i
-</text>
-<text x="18" y="4892">
-s
-</text>
-<text x="26" y="4892">
-h
-</text>
-<text x="34" y="4892">
- 
-</text>
-<text x="42" y="4892">
-S
-</text>
-<text x="50" y="4892">
-w
-</text>
-<text x="58" y="4892">
-i
-</text>
-<text x="66" y="4892">
-m
-</text>
-<text x="74" y="4892">
-m
-</text>
-<text x="82" y="4892">
-i
-</text>
-<text x="90" y="4892">
-n
-</text>
-<text x="98" y="4892">
-g
-</text>
-<text x="114" y="4892">
-¸
-</text>
-<text x="122" y="4892">
-.
-</text>
-<text x="130" y="4892">
-·
-</text>
-<text x="138" y="4892">
-´
-</text>
-<text x="146" y="4892">
-¯
-</text>
-<text x="154" y="4892">
-`
-</text>
-<text x="162" y="4892">
-·
-</text>
-<text x="170" y="4892">
-.
-</text>
-<text x="178" y="4892">
-´
-</text>
-<text x="186" y="4892">
-¯
-</text>
-<text x="194" y="4892">
-`
-</text>
-<text x="202" y="4892">
-·
-</text>
-<text x="210" y="4892">
-.
-</text>
-<text x="218" y="4892">
-¸
-</text>
-<text x="226" y="4892">
-¸
-</text>
-<text x="234" y="4892">
-.
-</text>
-<text x="242" y="4892">
-·
-</text>
-<text x="250" y="4892">
-´
-</text>
-<text x="258" y="4892">
-¯
-</text>
-<text x="266" y="4892">
-`
-</text>
-<text x="274" y="4892">
-·
-</text>
-<text x="282" y="4892">
-.
-</text>
-<text x="290" y="4892">
-¸
-</text>
-<text x="298" y="4892">
-&gt;
-</text>
-<text x="306" y="4892">
-&lt;
-</text>
-<text x="314" y="4892">
-(
-</text>
-<text x="322" y="4892">
-(
-</text>
-<text x="330" y="4892">
-(
-</text>
-<text x="338" y="4892">
-º
-</text>
-<text x="346" y="4892">
-&gt;
-</text>
-<text x="2" y="4940">
-P
-</text>
-<text x="10" y="4940">
-o
-</text>
-<text x="18" y="4940">
-l
-</text>
-<text x="26" y="4940">
-a
-</text>
-<text x="34" y="4940">
-r
-</text>
-<text x="42" y="4940">
- 
-</text>
-<text x="50" y="4940">
-B
-</text>
-<text x="58" y="4940">
-e
-</text>
-<text x="66" y="4940">
-a
-</text>
-<text x="74" y="4940">
-r
-</text>
-<text x="82" y="4940">
- 
-</text>
-<text x="90" y="4940">
-ˁ
-</text>
-<text x="98" y="4940">
-˚
-</text>
-<text x="106" y="4940">
-ᴥ
-</text>
-<text x="114" y="4940">
-˚
-</text>
-<text x="122" y="4940">
-ˀ
-</text>
-<text x="2" y="4988">
-M
-</text>
-<text x="10" y="4988">
-o
-</text>
-<text x="18" y="4988">
-u
-</text>
-<text x="26" y="4988">
-s
-</text>
-<text x="34" y="4988">
-e
-</text>
-<text x="50" y="4988">
-—
-</text>
-<line x1="56" x2="64" y1="4984" y2="4984"/>
-<text x="66" y="4988">
-{
-</text>
-<text x="74" y="4988">
-,
-</text>
-<line x1="80" x2="88" y1="4992" y2="4992"/>
-<text x="90" y="4988">
-,
-</text>
-<text x="98" y="4988">
-”
-</text>
-<text x="106" y="4988">
-&gt;
-</text>
-<text x="2" y="5036">
-C
-</text>
-<text x="10" y="5036">
-a
-</text>
-<text x="18" y="5036">
-t
-</text>
-<text x="34" y="5036">
-^
-</text>
-<text x="42" y="5036">
-˚
-</text>
-<text x="50" y="5036">
-ᴥ
-</text>
-<text x="58" y="5036">
-˚
-</text>
-<text x="66" y="5036">
-^
-</text>
-<text x="2" y="5084">
-S
-</text>
-<text x="10" y="5084">
-n
-</text>
-<text x="18" y="5084">
-a
-</text>
-<text x="26" y="5084">
-i
-</text>
-<text x="34" y="5084">
-l
-</text>
-<text x="50" y="5084">
-‘
-</text>
-<line x1="56" x2="64" y1="5080" y2="5080"/>
-<text x="66" y="5084">
-‘
-</text>
-<line x1="72" x2="80" y1="5088" y2="5088"/>
-<text x="82" y="5084">
-@
-</text>
-<line x1="88" x2="96" y1="5088" y2="5088"/>
-<text x="2" y="5132">
-M
-</text>
-<text x="10" y="5132">
-u
-</text>
-<text x="18" y="5132">
-s
-</text>
-<text x="26" y="5132">
-i
-</text>
-<text x="34" y="5132">
-c
-</text>
-<text x="42" y="5132">
-a
-</text>
-<text x="50" y="5132">
-l
-</text>
-<text x="66" y="5132">
-¸
-</text>
-<text x="74" y="5132">
-¸
-</text>
-<text x="82" y="5132">
-♬
-</text>
-<text x="90" y="5132">
-·
-</text>
-<text x="98" y="5132">
-¯
-</text>
-<text x="106" y="5132">
-·
-</text>
-<text x="114" y="5132">
-♩
-</text>
-<text x="122" y="5132">
-¸
-</text>
-<text x="130" y="5132">
-¸
-</text>
-<text x="138" y="5132">
-♪
-</text>
-<text x="146" y="5132">
-·
-</text>
-<text x="154" y="5132">
-¯
-</text>
-<text x="162" y="5132">
-·
-</text>
-<text x="170" y="5132">
-♫
-</text>
-<text x="178" y="5132">
-¸
-</text>
-<text x="2" y="5180">
-H
-</text>
-<text x="10" y="5180">
-a
-</text>
-<text x="18" y="5180">
-p
-</text>
-<text x="26" y="5180">
-p
-</text>
-<text x="34" y="5180">
-y
-</text>
-<text x="42" y="5180">
- 
-</text>
-<text x="50" y="5180">
-B
-</text>
-<text x="58" y="5180">
-i
-</text>
-<text x="66" y="5180">
-r
-</text>
-<text x="74" y="5180">
-t
-</text>
-<text x="82" y="5180">
-h
-</text>
-<text x="90" y="5180">
-d
-</text>
-<text x="98" y="5180">
-a
-</text>
-<text x="106" y="5180">
-y
-</text>
-<text x="114" y="5180">
- 
-</text>
-<text x="122" y="5180">
-T
-</text>
-<text x="130" y="5180">
-o
-</text>
-<text x="138" y="5180">
- 
-</text>
-<text x="146" y="5180">
-Y
-</text>
-<text x="154" y="5180">
-o
-</text>
-<text x="162" y="5180">
-u
-</text>
-<text x="170" y="5180">
-¸
-</text>
-<text x="178" y="5180">
-¸
-</text>
-<text x="186" y="5180">
-♬
-</text>
-<text x="194" y="5180">
-·
-</text>
-<text x="202" y="5180">
-¯
-</text>
-<text x="210" y="5180">
-·
-</text>
-<text x="218" y="5180">
-♩
-</text>
-<text x="226" y="5180">
-¸
-</text>
-<text x="234" y="5180">
-¸
-</text>
-<text x="242" y="5180">
-♪
-</text>
-<text x="250" y="5180">
-·
-</text>
-<text x="258" y="5180">
-¯
-</text>
-<text x="266" y="5180">
-·
-</text>
-<text x="274" y="5180">
-♫
-</text>
-<text x="282" y="5180">
-¸
-</text>
-<text x="2" y="5228">
-▂
-</text>
-<text x="10" y="5228">
-▃
-</text>
-<text x="18" y="5228">
-▅
-</text>
-<text x="26" y="5228">
-▇
-</text>
-<text x="34" y="5228">
-█
-</text>
-<text x="42" y="5228">
-▓
-</text>
-<text x="50" y="5228">
-▒
-</text>
-<text x="58" y="5228">
-░
-</text>
-<text x="66" y="5228">
-۩
-</text>
-<text x="74" y="5228">
-۞
-</text>
-<text x="82" y="5228">
-۩
-</text>
-<text x="98" y="5228">
-۩
-</text>
-<text x="106" y="5228">
-۞
-</text>
-<text x="114" y="5228">
-۩
-</text>
-<text x="122" y="5228">
-░
-</text>
-<text x="130" y="5228">
-▒
-</text>
-<text x="138" y="5228">
-▓
-</text>
-<text x="146" y="5228">
-█
-</text>
-<text x="154" y="5228">
-▇
-</text>
-<text x="162" y="5228">
-▅
-</text>
-<text x="170" y="5228">
-▃
-</text>
-<text x="178" y="5228">
-▂
-</text>
-<text x="2" y="5276">
-P
-</text>
-<text x="10" y="5276">
-l
-</text>
-<text x="18" y="5276">
-a
-</text>
-<text x="26" y="5276">
-y
-</text>
-<text x="34" y="5276">
- 
-</text>
-<text x="42" y="5276">
-C
-</text>
-<text x="50" y="5276">
-a
-</text>
-<text x="58" y="5276">
-r
-</text>
-<text x="66" y="5276">
-d
-</text>
-<text x="74" y="5276">
-s
-</text>
-<text x="90" y="5276">
-[
-</text>
-<text x="98" y="5276">
-♥
-</text>
-<text x="106" y="5276">
-]
-</text>
-<text x="114" y="5276">
-]
-</text>
-<text x="122" y="5276">
-]
-</text>
-<text x="138" y="5276">
-[
-</text>
-<text x="146" y="5276">
-♦
-</text>
-<text x="154" y="5276">
-]
-</text>
-<text x="162" y="5276">
-]
-</text>
-<text x="170" y="5276">
-]
-</text>
-<text x="186" y="5276">
-[
-</text>
-<text x="194" y="5276">
-♣
-</text>
-<text x="202" y="5276">
-]
-</text>
-<text x="210" y="5276">
-]
-</text>
-<text x="218" y="5276">
-]
-</text>
-<text x="234" y="5276">
-[
-</text>
-<text x="242" y="5276">
-♠
-</text>
-<text x="250" y="5276">
-]
-</text>
-<text x="258" y="5276">
-]
-</text>
-<text x="266" y="5276">
-]
-</text>
-<text x="2" y="5324">
-P
-</text>
-<text x="10" y="5324">
-l
-</text>
-<text x="18" y="5324">
-a
-</text>
-<text x="26" y="5324">
-y
-</text>
-<text x="34" y="5324">
- 
-</text>
-<text x="42" y="5324">
-C
-</text>
-<text x="50" y="5324">
-h
-</text>
-<text x="58" y="5324">
-e
-</text>
-<text x="66" y="5324">
-s
-</text>
-<text x="74" y="5324">
-s
-</text>
-<text x="90" y="5324">
-♚
-</text>
-<text x="106" y="5324">
-♛
-</text>
-<text x="122" y="5324">
-♜
-</text>
-<text x="138" y="5324">
-♝
-</text>
-<text x="154" y="5324">
-♞
-</text>
-<text x="170" y="5324">
-♟
-</text>
-<text x="186" y="5324">
-♔
-</text>
-<text x="202" y="5324">
-♕
-</text>
-<text x="218" y="5324">
-♖
-</text>
-<text x="234" y="5324">
-♗
-</text>
-<text x="250" y="5324">
-♘
-</text>
-<text x="266" y="5324">
-♙
-</text>
-<text x="2" y="5372">
-웃
-</text>
-<text x="18" y="5372">
-웃
-</text>
-<text x="34" y="5372">
-웃
-</text>
-<text x="50" y="5372">
-v
-</text>
-<text x="58" y="5372">
-s
-</text>
-<text x="66" y="5372">
-웃
-</text>
-<text x="82" y="5372">
-웃
-</text>
-<text x="98" y="5372">
-웃
-</text>
-<text x="2" y="5420">
-♋
-</text>
-<text x="18" y="5420">
-♂
-</text>
-<text x="34" y="5420">
-♀
-</text>
-<text x="50" y="5420">
-☿
-</text>
-<text x="66" y="5420">
-웃
-</text>
-<text x="90" y="5420">
-유
-</text>
-<text x="2" y="5468">
-♪
-</text>
-<text x="18" y="5468">
-♫
-</text>
-<text x="34" y="5468">
-♩
-</text>
-<text x="50" y="5468">
-♬
-</text>
-<text x="66" y="5468">
-♭
-</text>
-<text x="82" y="5468">
-♮
-</text>
-<line x1="0" x2="8" y1="5520" y2="5504"/>
-<text x="10" y="5516">
-╲
-</text>
-<line x1="16" x2="24" y1="5520" y2="5504"/>
-<line x1="24" x2="32" y1="5504" y2="5520"/>
-<text x="34" y="5516">
-╭
-</text>
-<text x="42" y="5516">
-[
-</text>
-<text x="58" y="5516">
-•
-</text>
-<line x1="72" x2="80" y1="5520" y2="5520"/>
-<text x="90" y="5516">
-•
-</text>
-<text x="106" y="5516">
-]
-</text>
-<text x="114" y="5516">
-╮
-</text>
-<line x1="120" x2="128" y1="5520" y2="5504"/>
-<line x1="128" x2="136" y1="5504" y2="5520"/>
-<text x="138" y="5516">
-╱﻿\
-</text>
-<line x1="0" x2="8" y1="5568" y2="5552"/>
-<text x="10" y="5564">
-╲
-</text>
-<line x1="16" x2="24" y1="5568" y2="5552"/>
-<line x1="24" x2="32" y1="5552" y2="5568"/>
-<text x="34" y="5564">
-╭
-</text>
-<text x="42" y="5564">
-(
-</text>
-<text x="50" y="5564">
-.
-</text>
-<text x="58" y="5564">
-☉
-</text>
-<text x="66" y="5564">
-ʖ̫☉
-</text>
-<text x="82" y="5564">
-.
-</text>
-<text x="90" y="5564">
-)
-</text>
-<text x="98" y="5564">
-╮
-</text>
-<line x1="104" x2="112" y1="5568" y2="5552"/>
-<line x1="112" x2="120" y1="5552" y2="5568"/>
-<text x="122" y="5564">
-╱﻿\
-</text>
-<text x="2" y="5612">
-(
-</text>
-<text x="26" y="5612">
- ͡°
-</text>
-<text x="42" y="5612">
-╭
-</text>
-<text x="50" y="5612">
-╮
-</text>
-<text x="58" y="5612">
-ʖ
-</text>
-<text x="82" y="5612">
- ͡°
-</text>
-<text x="98" y="5612">
-)
-</text>
-<text x="2" y="5660">
-ԅ
-</text>
-<text x="10" y="5660">
-(
-</text>
-<text x="18" y="5660">
-☉
-</text>
-<text x="26" y="5660">
-Д
-</text>
-<text x="34" y="5660">
-☉
-</text>
-<text x="42" y="5660">
-)
-</text>
-<text x="50" y="5660">
-╮
-</text>
-<text x="2" y="5708">
-(
-</text>
-<text x="10" y="5708">
-つ
-</text>
-<text x="26" y="5708">
-•̀ᴥ
-</text>
-<text x="42" y="5708">
-•́)
-</text>
-<text x="58" y="5708">
-つ
-</text>
-<text x="74" y="5708">
-*
-</text>
-<text x="82" y="5708">
 :
 </text>
-<text x="90" y="5708">
+<text x="58" y="188">
+(
+</text>
+<text x="122" y="204">
+ldb
+</text>
+<text x="26" y="220">
+-v-v-
+</text>
+<text x="106" y="412">
+yeah i work out
+</text>
+<text x="58" y="556">
+♪♬
+</text>
+<text x="2" y="700">
+┌[
+</text>
+<text x="26" y="700">
+• ͜ ʖ
+</text>
+<text x="66" y="700">
+•
+</text>
+<text x="82" y="700">
+]┐
+</text>
+<text x="2" y="940">
+Meh
+</text>
+<text x="2" y="988">
+ツ
+</text>
+<text x="2" y="1036">
+【ツ】
+</text>
+<text x="2" y="1132">
+(∩ ͡ °
+</text>
+<text x="50" y="1132">
+ʖ ͡ °)
+</text>
+<text x="98" y="1132">
+⊃
+</text>
+<text x="114" y="1132">
+(
+</text>
+<text x="2" y="1164">
+dota_memes
+</text>
+<text x="82" y="1180">
+DAY TUCKER NIGHT FUCKER
+</text>
+<text x="2" y="1228">
+ಠ益ಠ
+</text>
+<text x="74" y="1276">
+RIOT
+</text>
+<text x="74" y="1324">
+MRGLRLRLR
+</text>
+<text x="90" y="1372">
+─=≡ΣO))
+</text>
+<text x="154" y="1372">
+HADOUKEN
+</text>
+<text x="2" y="1420">
+Y u do dis!?
+</text>
+<text x="2" y="1452">
+hearthstone_memes
+</text>
+<text x="258" y="1468">
+EVERYONE GET IN HERE!
+</text>
+<text x="2" y="1500">
+hearthstone_memes
+</text>
+<text x="50" y="1516">
+MY EYES ARE OPEN
+</text>
+<text x="2" y="1548">
+dota_memes
+</text>
+<text x="2" y="1564">
+ง╭ರ_•́)ง We politely ask for this game to be started for alas we will stir up a ruckus
+</text>
+<text x="282" y="1612">
+either die a DONG,
+</text>
+<text x="434" y="1612">
+or live long enough to become the
+</text>
+<text x="2" y="1660">
+&lt;
+</text>
+<text x="10" y="1660">
+MESSAGE DONGERED&gt;
+</text>
+<text x="2" y="1708">
+(
+</text>
+<text x="18" y="1708">
+ººººº_لººººº
+</text>
+<text x="122" y="1708">
+)
+</text>
+<text x="138" y="1708">
+I AM SUPER DONG
+</text>
+<text x="266" y="1708">
+(
+</text>
+<text x="282" y="1708">
+ººººº_لººººº
+</text>
+<text x="386" y="1708">
+)
+</text>
+<text x="2" y="1740">
+hearthstone_memes
+</text>
+<text x="74" y="1756">
+ ﻿Ｃ
+</text>
+<text x="98" y="1756">
+ＬＯＷＮ
+</text>
+<text x="170" y="1756">
+ＦＩＥＳＴＡ
+</text>
+<text x="82" y="1804">
+&quot;
+</text>
+<text x="90" y="1804">
+I&apos;
+</text>
+<text x="106" y="1804">
+d Fork His Repo&quot;
+</text>
+<text x="114" y="1852">
+too late to explore the Earth,
+</text>
+<text x="362" y="1852">
+born too soon to explore the Galaxy.
+</text>
+<text x="658" y="1852">
+Born just in time to post DANK MEMEs
+</text>
+<text x="2" y="1884">
+hearthstone_memes
+</text>
+<text x="114" y="1900">
+too late to explore the Earth,
+</text>
+<text x="362" y="1900">
+born too soon to explore the Galaxy.
+</text>
+<text x="658" y="1900">
+Born just in time to T U C K F R U M
+</text>
+<text x="2" y="1932">
+hearthstone_memes
+</text>
+<text x="90" y="1948">
+This is our chat mods
+</text>
+<text x="426" y="1948">
+Yeah beat it!
+</text>
+<text x="2" y="1980">
+hearthstone_memes
+</text>
+<text x="98" y="1996">
+RNG,
+</text>
+<text x="138" y="1996">
+ATTEND ME
+</text>
+<text x="394" y="1996">
+NEVER,
+</text>
+<text x="450" y="1996">
+KRIPP
+</text>
+<text x="2" y="2028">
+hearthstone_memes
+</text>
+<text x="98" y="2044">
+LETHAL,
+</text>
+<text x="162" y="2044">
+ATTEND ME
+</text>
+<text x="418" y="2044">
+NEVER,
+</text>
+<text x="474" y="2044">
+FORSEN
+</text>
+<text x="74" y="2092">
+Every 60 seconds in Africa,
+</text>
+<text x="298" y="2092">
+a minute passes.
+</text>
+<text x="434" y="2092">
+Together we can stop this.
+</text>
+<text x="650" y="2092">
+Please spread the word
+</text>
+<text x="2" y="2124">
+dota_memes
+</text>
+<text x="74" y="2140">
+SECRET GIVE ME MY ENERGY BACK
+</text>
+<text x="2" y="2188">
+First you boil some pasta,
+</text>
+<text x="218" y="2188">
+preferably Fagottini
+</text>
+<text x="466" y="2188">
+~~~~~Then you sauté the Pepperoni
+</text>
+<text x="866" y="2188">
+o)o o o
+</text>
+<text x="2" y="2220">
+dota_memes
+</text>
+<text x="2" y="2236">
+ʕ ͡•ᴥ ͡•
+</text>
+<text x="58" y="2236">
+ʔ(_̅_̅_̅F
+</text>
+<text x="106" y="2236">
+ISSURE_̅_̅_̅_̅_̅(
+</text>
+<text x="202" y="2236">
+)
+</text>
+<text x="2" y="2268">
+dota_memes
+</text>
+<text x="122" y="2284">
+*
+</text>
+<text x="138" y="2284">
 ･
 </text>
-<text x="98" y="5708">
-ﾟ
+<text x="154" y="2284">
+｡ﾟ.
 </text>
-<text x="106" y="5708">
-✧
+<text x="186" y="2284">
+*
 </text>
-<text x="2" y="5756">
-(
+<text x="202" y="2284">
+322
 </text>
-<text x="10" y="5756">
-⊙
+<text x="234" y="2284">
+☆ﾟ.
 </text>
-<line x1="16" x2="24" y1="5760" y2="5760"/>
-<text x="26" y="5756">
-⊙
+<text x="266" y="2284">
+*
 </text>
-<text x="34" y="5756">
+<text x="282" y="2284">
+･
+</text>
+<text x="298" y="2284">
+｡ﾟ.
+</text>
+<text x="330" y="2284">
+*
+</text>
+<text x="2" y="2316">
+hearthstone_memes
+</text>
+<text x="2" y="2332">
+◥█̆◤
+</text>
+<text x="34" y="2332">
+TOTEMIC MIGHT
+</text>
+<text x="146" y="2332">
+◥█̆◤
+</text>
+<text x="2" y="2364">
+LoL_memes
+</text>
+<text x="122" y="2380">
+･
+</text>
+<text x="138" y="2380">
+｡ﾟMy dick is small,
+</text>
+<text x="298" y="2380">
+my butthole is leaky,
+</text>
+<text x="474" y="2380">
+I use this chant,
+</text>
+<text x="618" y="2380">
+to summon Sneaky
+</text>
+<text x="2" y="2412">
+LoL_memes
+</text>
+<text x="74" y="2428">
+Welcome to the league of Draven!
+</text>
+<text x="130" y="2476">
+I don&apos;
+</text>
+<text x="178" y="2476">
+t CARE?
+</text>
+<text x="2" y="2524">
+FU
+</text>
+<text x="2" y="2572">
+Seriously,
+</text>
+<text x="90" y="2572">
+FU
+</text>
+<text x="2" y="2620">
+I don’t care
+</text>
+<text x="154" y="2668">
+Gimme Five
+</text>
+<text x="2" y="2716">
+Punch!
+</text>
+<text x="2" y="2764">
+Flex,
+</text>
+<text x="50" y="2764">
+Don’t Mess
+</text>
+<text x="2" y="2812">
+Peace Yo!
+</text>
+<text x="2" y="2860">
+Right Back At Ya!
+</text>
+<text x="2" y="2908">
+Gimme
+</text>
+<text x="2" y="2956">
+So Sorry
+</text>
+<text x="2" y="3004">
+The Finger And The Ass
+</text>
+<text x="2" y="3052">
+Oh Yeah?
+</text>
+<text x="74" y="3052">
+FU
+</text>
+<text x="98" y="3052">
+╭∩╮
+</text>
+<text x="178" y="3052">
+╭∩╮
+</text>
+<text x="2" y="3148">
+Table Flip
+</text>
+<text x="170" y="3148">
+┻━┻
+</text>
+<text x="2" y="3196">
+Flip All Dem Tablez
+</text>
+<text x="162" y="3196">
+┻━┻︵
+</text>
+<text x="274" y="3196">
+︵
+</text>
+<text x="298" y="3196">
+┻━┻
+</text>
+<text x="2" y="3244">
+Epic Table Flip
+</text>
+<text x="186" y="3244">
+~~~~╚╩╩╝
+</text>
+<text x="2" y="3292">
+Ok.
+</text>
+<text x="34" y="3292">
+I Put Table Back
+</text>
+<text x="170" y="3292">
+┬──┬
+</text>
+<text x="2" y="3340">
+Put More Tables Back
+</text>
+<text x="170" y="3340">
+┏━┓┏━┓┏━┓
+</text>
+<text x="250" y="3340">
+︵
+</text>
+<text x="282" y="3340">
+(^.^
+</text>
+<text x="322" y="3340">
 )
 </text>
-<text x="2" y="5804">
+<text x="2" y="3388">
+Wot?
+</text>
+<text x="42" y="3388">
+I’m Confused
+</text>
+<text x="2" y="3436">
+Crazy Bastard
+</text>
+<text x="2" y="3484">
+Crazy Bitch
+</text>
+<text x="2" y="3532">
+I Can’t Even
+</text>
+<text x="2" y="3564">
+dota_memes
+</text>
+<text x="2" y="3580">
+HEY IXMIKE
+</text>
+<text x="2" y="3628">
+d[
+</text>
+<text x="42" y="3628">
+]b
+</text>
+<text x="2" y="3676">
+Boom Box
+</text>
+<text x="74" y="3676">
+♫♪.ılılıll|̅●̅|̅=̅|̅●̅|
+</text>
+<text x="210" y="3676">
+llılılı.♫♪
+</text>
+<text x="2" y="3724">
+Party Time
+</text>
+<text x="2" y="3772">
+Sunglasses
+</text>
+<text x="2" y="3820">
+Help
+</text>
+<text x="2" y="3868">
+Fuck Off t(
+</text>
+<text x="98" y="3868">
+.-t)
+</text>
+<text x="2" y="3916">
+Facepalm
+</text>
+<text x="2" y="3964">
+Happy
+</text>
+<text x="2" y="4012">
+Pirate
+</text>
+<text x="2" y="4060">
+Sleeping
+</text>
+<text x="74" y="4060">
 (
 </text>
-<text x="10" y="5804">
-=
-</text>
-<text x="18" y="5804">
-ಠ
-</text>
-<text x="34" y="5804">
-ل͟ 
-</text>
-<text x="50" y="5804">
-ಠ
-</text>
-<text x="58" y="5804">
-=
-</text>
-<text x="66" y="5804">
-)
-</text>
-<text x="2" y="5852">
-(
-</text>
-<text x="10" y="5852">
-つ
-</text>
-<text x="26" y="5852">
-°
-</text>
-<text x="34" y="5852">
-ヮ
-</text>
-<text x="50" y="5852">
-°
-</text>
-<text x="58" y="5852">
-)
-</text>
-<text x="66" y="5852">
-つ
-</text>
-<text x="98" y="5852">
-└
-</text>
-<text x="106" y="5852">
-⋃
-</text>
-<text x="114" y="5852">
-┘
-</text>
-<line x1="0" x2="8" y1="5904" y2="5888"/>
-<text x="18" y="5900">
-•́ 
-</text>
-<text x="34" y="5900">
-﹏
-</text>
-<text x="58" y="5900">
-•̀\
-</text>
-<text x="2" y="5948">
-¯
-</text>
-<line x1="8" x2="16" y1="5936" y2="5952"/>
-<line x1="16" x2="24" y1="5952" y2="5952"/>
-<text x="26" y="5948">
-╏
-</text>
-<text x="42" y="5948">
-՞
-</text>
-<text x="58" y="5948">
-︿
-</text>
-<text x="82" y="5948">
-՞
-</text>
-<text x="98" y="5948">
-╏
-</text>
-<line x1="104" x2="112" y1="5952" y2="5952"/>
-<line x1="112" x2="120" y1="5952" y2="5936"/>
-<text x="122" y="5948">
-¯
-</text>
-<text x="2" y="5996">
-o͡╮
-</text>
-<text x="18" y="5996">
-(
-</text>
-<text x="34" y="5996">
-ʘ̆ ۝ 
-</text>
-<text x="58" y="5996">
-ʘ̆ 
-</text>
-<text x="74" y="5996">
-)
-</text>
-<text x="82" y="5996">
-╭
-</text>
-<text x="90" y="5996">
-o
-</text>
-<text x="2" y="6044">
-७
-</text>
-<text x="10" y="6044">
-(
-</text>
-<text x="26" y="6044">
-,
-</text>
-<text x="42" y="6044">
-⊙
-</text>
-<text x="58" y="6044">
-–
-</text>
-<text x="74" y="6044">
-⊙
-</text>
-<text x="90" y="6044">
-,
-</text>
-<text x="106" y="6044">
-)
-</text>
-<text x="114" y="6044">
-७
-</text>
-<text x="2" y="6092">
-o͡╮
-</text>
-<text x="18" y="6092">
-(
-</text>
-<text x="34" y="6092">
-•
-</text>
-<text x="50" y="6092">
-ʖ̯ 
-</text>
-<text x="66" y="6092">
-•
-</text>
-<text x="82" y="6092">
-)
-</text>
-<text x="90" y="6092">
-╭
-</text>
-<text x="98" y="6092">
-o
-</text>
-<text x="2" y="6140">
-⇎
-</text>
-<line x1="8" x2="16" y1="6144" y2="6144"/>
-<text x="18" y="6140">
-⇎
-</text>
-<text x="2" y="6188">
-句
-</text>
-<text x="18" y="6188">
-_
-</text>
-<text x="26" y="6188">
-句
-</text>
-<text x="2" y="6236">
-१
-</text>
-<text x="10" y="6236">
-|
-</text>
-<text x="18" y="6236">
-˚
-</text>
-<text x="26" y="6236">
-–
-</text>
-<text x="34" y="6236">
-˚
-</text>
-<text x="42" y="6236">
-|
-</text>
-<text x="50" y="6236">
-५
-</text>
-<text x="2" y="6284">
-ộ
-</text>
-<text x="10" y="6284">
-_
-</text>
-<text x="18" y="6284">
-ộ
-</text>
-<text x="2" y="6332">
-δ
-</text>
-<text x="10" y="6332">
-ﺡ
-</text>
-<text x="18" y="6332">
-ό
-</text>
-<text x="2" y="6380">
-⊂
-</text>
-<text x="10" y="6380">
-•
-</text>
-<text x="18" y="6380">
-⊃
-</text>
-<line x1="24" x2="32" y1="6384" y2="6384"/>
-<text x="34" y="6380">
-⊂
-</text>
-<text x="42" y="6380">
-•
-</text>
-<text x="50" y="6380">
-⊃
-</text>
-<text x="2" y="6428">
-❂
-</text>
-<line x1="8" x2="16" y1="6432" y2="6432"/>
-<text x="18" y="6428">
-❂
-</text>
-<text x="2" y="6476">
-❐
-</text>
-<line x1="8" x2="16" y1="6480" y2="6480"/>
-<text x="18" y="6476">
-❑
-</text>
-<text x="2" y="6524">
-(
-</text>
-<text x="10" y="6524">
-•̪●
-</text>
-<text x="26" y="6524">
-)
-</text>
-<text x="2" y="6572">
-(॔)
-</text>
-<text x="2" y="6620">
-٩
-</text>
-<text x="10" y="6620">
-(͡๏͡๏
-</text>
-<text x="34" y="6620">
-)
-</text>
-<text x="42" y="6620">
-۶
-</text>
-<text x="2" y="6668">
-٩
-</text>
-<text x="10" y="6668">
-(
-</text>
-<text x="18" y="6668">
--̃•̃)
-</text>
-<text x="50" y="6668">
-۶
-</text>
-<text x="2" y="6716">
-٩
-</text>
-<text x="10" y="6716">
-(̾●̃ ̾•̾)
-</text>
-<text x="50" y="6716">
-۶
-</text>
-<text x="2" y="6764">
-٩
-</text>
-<text x="10" y="6764">
-(
-</text>
-<text x="18" y="6764">
--̃-
-</text>
-<text x="34" y="6764">
- ̃)
-</text>
-<text x="50" y="6764">
-۶
-</text>
-<text x="2" y="6812">
-๏͡๏
-</text>
-<text x="26" y="6812">
- 
-</text>
-<text x="34" y="6812">
- ̃๏̃๏
-</text>
-<text x="2" y="6860">
-๏̃๏
-</text>
-<text x="2" y="6908">
-[
-</text>
-<text x="10" y="6908">
-O
-</text>
-<text x="18" y="6908">
+<text x="90" y="4060">
 .
 </text>
-<text x="26" y="6908">
-o
+<text x="106" y="4060">
+)Zzz…
 </text>
-<text x="34" y="6908">
+<text x="2" y="4108">
+Sad
+</text>
+<text x="2" y="4156">
+Rage
+</text>
+<text x="2" y="4204">
+Sunny Day
+</text>
+<text x="82" y="4204">
+☁☼
+</text>
+<text x="106" y="4204">
+▅▒░✿͜ ✿░▒▅
+</text>
+<text x="186" y="4204">
+☼☁
+</text>
+<text x="2" y="4252">
+Smug Bastard
+</text>
+<text x="106" y="4252">
+•|龴◡龴
+</text>
+<text x="170" y="4252">
+•
+</text>
+<text x="2" y="4300">
+Sparkling Heart
+</text>
+<text x="138" y="4300">
+`ღ´
+</text>
+<text x="2" y="4348">
+Love Note 웃❤유
+</text>
+<text x="2" y="4396">
+\m/
+</text>
+<text x="2" y="4492">
+Love in my eyes
+</text>
+<text x="2" y="4540">
+Stars in my Eyes
+</text>
+<text x="2" y="4588">
+Fuckin Man Tears ಥ_ಥ
+</text>
+<text x="2" y="4636">
+Atish
+</text>
+<text x="50" y="4636">
+(
+</text>
+<text x="74" y="4636">
+–
+</text>
+<text x="106" y="4636">
+–
+</text>
+<text x="130" y="4636">
+)
+</text>
+<text x="2" y="4684">
+Shit,
+</text>
+<text x="50" y="4684">
+Hide!
+</text>
+<text x="114" y="4684">
+・)
+</text>
+<text x="154" y="4684">
+･ω･｀)
+</text>
+<text x="2" y="4732">
+Yay!
+</text>
+<text x="2" y="4780">
+OMG!
+</text>
+<text x="42" y="4780">
+Insane Happy
+</text>
+<text x="2" y="4828">
+Love You
+</text>
+<text x="322" y="4828">
+OMG,
+</text>
+<text x="2" y="4876">
+Yes!
+</text>
+<text x="42" y="4876">
+Success.
+</text>
+<text x="2" y="4924">
+Coffee c[
+</text>
+<text x="82" y="4924">
 ]
 </text>
-<text x="2" y="6956">
-[
+<text x="2" y="4972">
+Airplane
 </text>
-<text x="10" y="6956">
-¬
+<text x="74" y="4972">
+✈
 </text>
-<text x="18" y="6956">
-º
+<text x="2" y="5020">
+Weather
 </text>
-<text x="26" y="6956">
--
+<text x="66" y="5020">
+☼
 </text>
-<text x="34" y="6956">
+<text x="82" y="5020">
+☀
+</text>
+<text x="98" y="5020">
+☁
+</text>
+<text x="114" y="5020">
+☂
+</text>
+<text x="130" y="5020">
+☃
+</text>
+<text x="146" y="5020">
+☄
+</text>
+<text x="162" y="5020">
+☾
+</text>
+<text x="178" y="5020">
+☽
+</text>
+<text x="194" y="5020">
+❄
+</text>
+<text x="210" y="5020">
+☇
+</text>
+<text x="226" y="5020">
+☈
+</text>
+<text x="242" y="5020">
+⊙
+</text>
+<text x="258" y="5020">
+☉
+</text>
+<text x="274" y="5020">
+℃
+</text>
+<text x="290" y="5020">
+℉
+</text>
+<text x="306" y="5020">
 °
 </text>
-<text x="42" y="6956">
-]
+<text x="322" y="5020">
+❅
 </text>
-<text x="50" y="6956">
-¬
+<text x="338" y="5020">
+✺
+</text>
+<text x="354" y="5020">
+ϟ
+</text>
+<text x="2" y="5068">
+Band Aid
+</text>
+<text x="74" y="5068">
+( ̅:̅:̅:̅[̅ ̅]̅:̅:̅:̅ 
+</text>
+<text x="170" y="5068">
+)
+</text>
+<text x="2" y="5116">
+Fish Swimming
+</text>
+<text x="114" y="5116">
+¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸&gt;
+</text>
+<text x="306" y="5116">
+&lt;
+</text>
+<text x="314" y="5116">
+(((º&gt;
+</text>
+<text x="2" y="5164">
+Polar Bear ˁ˚ᴥ˚ˀ
+</text>
+<text x="2" y="5212">
+Mouse
+</text>
+<text x="50" y="5212">
+—
+</text>
+<text x="66" y="5212">
+{,
+</text>
+<text x="90" y="5212">
+,”&gt;
+</text>
+<text x="2" y="5260">
+Cat
+</text>
+<text x="34" y="5260">
+^˚ᴥ˚^
+</text>
+<text x="2" y="5308">
+Snail
+</text>
+<text x="50" y="5308">
+‘
+</text>
+<text x="66" y="5308">
+‘
+</text>
+<text x="82" y="5308">
+@
+</text>
+<text x="2" y="5356">
+Musical
+</text>
+<text x="66" y="5356">
+¸¸♬·¯·♩¸¸♪·¯·♫¸
+</text>
+<text x="2" y="5404">
+Happy Birthday To You¸¸♬·¯·♩¸¸♪·¯·♫¸
+</text>
+<text x="2" y="5452">
+▂▃▅▇█▓▒░۩۞۩
+</text>
+<text x="98" y="5452">
+۩۞۩░▒▓█▇▅▃▂
+</text>
+<text x="2" y="5500">
+Play Cards
+</text>
+<text x="90" y="5500">
+[♥]]]
+</text>
+<text x="138" y="5500">
+[♦]]]
+</text>
+<text x="186" y="5500">
+[♣]]]
+</text>
+<text x="234" y="5500">
+[♠]]]
+</text>
+<text x="2" y="5548">
+Play Chess
+</text>
+<text x="90" y="5548">
+♚
+</text>
+<text x="106" y="5548">
+♛
+</text>
+<text x="122" y="5548">
+♜
+</text>
+<text x="138" y="5548">
+♝
+</text>
+<text x="154" y="5548">
+♞
+</text>
+<text x="170" y="5548">
+♟
+</text>
+<text x="186" y="5548">
+♔
+</text>
+<text x="202" y="5548">
+♕
+</text>
+<text x="218" y="5548">
+♖
+</text>
+<text x="234" y="5548">
+♗
+</text>
+<text x="250" y="5548">
+♘
+</text>
+<text x="266" y="5548">
+♙
+</text>
+<text x="2" y="5596">
+웃웃웃vs웃웃웃
+</text>
+<text x="2" y="5644">
+♋
+</text>
+<text x="18" y="5644">
+♂
+</text>
+<text x="34" y="5644">
+♀
+</text>
+<text x="50" y="5644">
+☿
+</text>
+<text x="66" y="5644">
+웃
+</text>
+<text x="90" y="5644">
+유
+</text>
+<text x="2" y="5692">
+♪
+</text>
+<text x="18" y="5692">
+♫
+</text>
+<text x="34" y="5692">
+♩
+</text>
+<text x="50" y="5692">
+♬
+</text>
+<text x="66" y="5692">
+♭
+</text>
+<text x="82" y="5692">
+♮
+</text>
+<text x="10" y="5740">
+╲
+</text>
+<text x="34" y="5740">
+╭[
+</text>
+<text x="58" y="5740">
+•
+</text>
+<text x="90" y="5740">
+•
+</text>
+<text x="106" y="5740">
+]╮
+</text>
+<text x="138" y="5740">
+╱﻿\
+</text>
+<text x="2" y="5836">
+(
+</text>
+<text x="26" y="5836">
+ ͡°╭╮ʖ
+</text>
+<text x="82" y="5836">
+ ͡°)
+</text>
+<text x="98" y="6076">
+└⋃┘
+</text>
+<text x="18" y="6124">
+•́ ﹏
+</text>
+<text x="58" y="6124">
+•̀\
+</text>
+<text x="2" y="6172">
+¯
+</text>
+<text x="26" y="6172">
+╏
+</text>
+<text x="42" y="6172">
+՞
+</text>
+<text x="58" y="6172">
+︿
+</text>
+<text x="82" y="6172">
+՞
+</text>
+<text x="98" y="6172">
+╏
+</text>
+<text x="122" y="6172">
+¯
+</text>
+<text x="2" y="6268">
+७(
+</text>
+<text x="26" y="6268">
+,
+</text>
+<text x="42" y="6268">
+⊙
+</text>
+<text x="58" y="6268">
+–
+</text>
+<text x="74" y="6268">
+⊙
+</text>
+<text x="90" y="6268">
+,
+</text>
+<text x="106" y="6268">
+)७
+</text>
+<text x="2" y="6364">
+⇎
+</text>
+<text x="18" y="6364">
+⇎
+</text>
+<text x="2" y="6412">
+句_句
+</text>
+<text x="2" y="6460">
+१|˚–˚|५
+</text>
+<text x="2" y="6508">
+ộ_ộ
+</text>
+<text x="2" y="6556">
+δﺡό
+</text>
+<text x="2" y="6604">
+⊂•⊃
+</text>
+<text x="34" y="6604">
+⊂•⊃
+</text>
+<text x="2" y="6652">
+❂
+</text>
+<text x="18" y="6652">
+❂
+</text>
+<text x="2" y="6700">
+❐
+</text>
+<text x="18" y="6700">
+❑
+</text>
+<text x="50" y="6892">
+۶
+</text>
+<text x="2" y="7036">
+๏͡๏
+</text>
+<text x="26" y="7036">
+  ̃๏̃๏
+</text>
+<text x="2" y="7084">
+๏̃๏
+</text>
+<text x="2" y="7132">
+[O.o]
+</text>
+<text x="2" y="7180">
+[¬º-°]¬
+</text>
+<text text-anchor="end" x="24" y="156">
+ &amp;
+</text>
+<circle cx="40" cy="152" r="16"/>
+<text text-anchor="middle" x="40" y="156">
+<tspan class='head'>(</tspan>O_~<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="156">
+% 
+</text>
+<text text-anchor="end" x="0" y="268">
+
+</text>
+<circle cx="28" cy="264" r="28"/>
+<text text-anchor="middle" x="28" y="268">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="268">
+
+</text>
+<text text-anchor="end" x="0" y="316">
+
+</text>
+<circle cx="28" cy="312" r="28"/>
+<text text-anchor="middle" x="28" y="316">
+<tspan class='head'>(</tspan> ͡↑ ͜ʖ ͡↑<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="316">
+
+</text>
+<text text-anchor="end" x="32" y="364">
+─=≡Σ
+</text>
+<circle cx="60" cy="360" r="28"/>
+<text text-anchor="middle" x="60" y="364">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="364">
+
+</text>
+<text text-anchor="end" x="16" y="412">
+█▄
+</text>
+<circle cx="44" cy="408" r="28"/>
+<text text-anchor="middle" x="44" y="412">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="412">
+▄█ 
+</text>
+<text text-anchor="end" x="40" y="460">
+･｡ﾟ[̲̅$̲̅
+</text>
+<circle cx="68" cy="456" r="28"/>
+<text text-anchor="middle" x="68" y="460">
+<tspan class='head'>(</tspan>̲̅ ͡° ͜ʖ ͡°̲̅<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="460">
+̲̅$̲̅]｡ﾟ.*
+</text>
+<text text-anchor="end" x="0" y="508">
+
+</text>
+<circle cx="20" cy="504" r="20"/>
+<text text-anchor="middle" x="20" y="508">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="508">
+
+</text>
+<text text-anchor="end" x="0" y="556">
+
+</text>
+<circle cx="20" cy="552" r="20"/>
+<text text-anchor="middle" x="20" y="556">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="556">
+ 
+</text>
+<text text-anchor="end" x="0" y="604">
+
+</text>
+<circle cx="24" cy="600" r="24"/>
+<text text-anchor="middle" x="24" y="604">
+<tspan class='head'>(</tspan>˚ㄥ_˚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="604">
+
+</text>
+<text text-anchor="end" x="16" y="652">
+凸
+</text>
+<circle cx="40" cy="648" r="24"/>
+<text text-anchor="middle" x="40" y="652">
+<tspan class='head'>(</tspan> •̀_•́ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="652">
+凸
+</text>
+<text text-anchor="end" x="8" y="748">
+໒
+</text>
+<circle cx="40" cy="744" r="32"/>
+<text text-anchor="middle" x="40" y="748">
+<tspan class='head'>(</tspan> • ͜ʖ • <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="748">
+७
+</text>
+<text text-anchor="end" x="0" y="796">
+
+</text>
+<circle cx="32" cy="792" r="32"/>
+<text text-anchor="middle" x="32" y="796">
+<tspan class='head'>(</tspan> ✖ _ ✖ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="796">
+
+</text>
+<text text-anchor="end" x="8" y="844">
+⊂
+</text>
+<circle cx="24" cy="840" r="16"/>
+<text text-anchor="middle" x="24" y="844">
+<tspan class='head'>(</tspan>◣_◢<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="844">
+つ
+</text>
+<text text-anchor="end" x="24" y="892">
+¯\_
+</text>
+<circle cx="36" cy="888" r="12"/>
+<text text-anchor="middle" x="36" y="892">
+<tspan class='head'>(</tspan>ツ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="892">
+_/¯
+</text>
+<text text-anchor="end" x="56" y="940">
+ ¯\_
+</text>
+<circle cx="68" cy="936" r="12"/>
+<text text-anchor="middle" x="68" y="940">
+<tspan class='head'>(</tspan>ツ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="940">
+_/¯ 
+</text>
+<text text-anchor="end" x="136" y="940">
+ ヽ
+</text>
+<circle cx="156" cy="936" r="20"/>
+<text text-anchor="middle" x="156" y="940">
+<tspan class='head'>(</tspan>。_°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="176" y="940">
+ノ 
+</text>
+<text text-anchor="end" x="224" y="940">
+ ヾ
+</text>
+<circle cx="248" cy="936" r="24"/>
+<text text-anchor="middle" x="248" y="940">
+<tspan class='head'>(</tspan>ｏ･ω･<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="272" y="940">
+ﾉ
+</text>
+<text text-anchor="end" x="8" y="1084">
+╰
+</text>
+<circle cx="28" cy="1080" r="20"/>
+<text text-anchor="middle" x="28" y="1084">
+<tspan class='head'>(</tspan>⇀︿⇀<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1084">
+つ-]═──
+</text>
+<text text-anchor="end" x="0" y="1180">
+
+</text>
+<circle cx="32" cy="1176" r="32"/>
+<text text-anchor="middle" x="32" y="1180">
+<tspan class='head'>(</tspan> ͡°╭͜ʖ╮͡° <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1180">
+ 
+</text>
+<text text-anchor="end" x="272" y="1180">
+ 
+</text>
+<circle cx="304" cy="1176" r="32"/>
+<text text-anchor="middle" x="304" y="1180">
+<tspan class='head'>(</tspan> ͡°╭͜ʖ╮͡° <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="336" y="1180">
+
+</text>
+<text text-anchor="end" x="8" y="1276">
+୧
+</text>
+<circle cx="28" cy="1272" r="20"/>
+<text text-anchor="middle" x="28" y="1276">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1276">
+୨ 
+</text>
+<text text-anchor="end" x="120" y="1276">
+ ୧
+</text>
+<circle cx="140" cy="1272" r="20"/>
+<text text-anchor="middle" x="140" y="1276">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1276">
+୨
+</text>
+<text text-anchor="end" x="8" y="1324">
+୧
+</text>
+<circle cx="28" cy="1320" r="20"/>
+<text text-anchor="middle" x="28" y="1324">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1324">
+୨ 
+</text>
+<text text-anchor="end" x="160" y="1324">
+ ୧
+</text>
+<circle cx="180" cy="1320" r="20"/>
+<text text-anchor="middle" x="180" y="1324">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="200" y="1324">
+୨
+</text>
+<text text-anchor="end" x="0" y="1372">
+
+</text>
+<circle cx="28" cy="1368" r="28"/>
+<text text-anchor="middle" x="28" y="1372">
+<tspan class='head'>(</tspan>つಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1372">
+つ 
+</text>
+<text text-anchor="end" x="112" y="1420">
+ ლ
+</text>
+<circle cx="136" cy="1416" r="24"/>
+<text text-anchor="middle" x="136" y="1420">
+<tspan class='head'>(</tspan>ಠ益ಠლ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1420">
+
+</text>
+<text text-anchor="end" x="120" y="1468">
+(º_لº(º_لº(º_لº
+</text>
+<circle cx="140" cy="1464" r="20"/>
+<text text-anchor="middle" x="140" y="1468">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1468">
+º_لº)º_لº) 
+</text>
+<text text-anchor="end" x="552" y="1468">
+ (º_لº(º_لº(º_لº
+</text>
+<circle cx="572" cy="1464" r="20"/>
+<text text-anchor="middle" x="572" y="1468">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="592" y="1468">
+º_لº)º_لº)
+</text>
+<text text-anchor="end" x="0" y="1516">
+
+</text>
+<circle cx="16" cy="1512" r="16"/>
+<text text-anchor="middle" x="16" y="1516">
+<tspan class='head'>(</tspan>ʘ̚ل͜ʘ̚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="1516">
+ 
+</text>
+<text text-anchor="end" x="184" y="1516">
+ 
+</text>
+<circle cx="200" cy="1512" r="16"/>
+<text text-anchor="middle" x="200" y="1516">
+<tspan class='head'>(</tspan>ʘ̚ل͜ʘ̚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="216" y="1516">
+
+</text>
+<text text-anchor="end" x="688" y="1564">
+ 
+</text>
+<circle cx="712" cy="1560" r="24"/>
+<text text-anchor="middle" x="712" y="1564">
+<tspan class='head'>(</tspan>ง╭ರ_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="736" y="1564">
+ง
+</text>
+<text text-anchor="end" x="120" y="1612">
+(º_لº(º_لº(º_لº
+</text>
+<circle cx="140" cy="1608" r="20"/>
+<text text-anchor="middle" x="140" y="1612">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1612">
+º_لº)º_لº)You 
+</text>
+<text text-anchor="end" x="872" y="1612">
+ DONGER(º_لº(º_لº(º_لº
+</text>
+<circle cx="892" cy="1608" r="20"/>
+<text text-anchor="middle" x="892" y="1612">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="912" y="1612">
+º_لº)º_لº)
+</text>
+<text text-anchor="end" x="8" y="1756">
+ 
+</text>
+<circle cx="36" cy="1752" r="28"/>
+<text text-anchor="middle" x="36" y="1756">
+<tspan class='head'>(</tspan> ͡° ͜◯ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1756">
+ 
+</text>
+<text text-anchor="end" x="272" y="1756">
+ 
+</text>
+<circle cx="300" cy="1752" r="28"/>
+<text text-anchor="middle" x="300" y="1756">
+<tspan class='head'>(</tspan> ͡° ͜◯ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="328" y="1756">
+
+</text>
+<text text-anchor="end" x="0" y="1804">
+
+</text>
+<circle cx="24" cy="1800" r="24"/>
+<text text-anchor="middle" x="24" y="1804">
+<tspan class='head'>(</tspan> • ∀•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1804">
+–Ψ 
+</text>
+<text text-anchor="end" x="8" y="1852">
+└
+</text>
+<circle cx="32" cy="1848" r="24"/>
+<text text-anchor="middle" x="32" y="1852">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1852">
+┐Born 
+</text>
+<text text-anchor="end" x="960" y="1852">
+ └
+</text>
+<circle cx="984" cy="1848" r="24"/>
+<text text-anchor="middle" x="984" y="1852">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="1008" y="1852">
+┐
+</text>
+<text text-anchor="end" x="8" y="1900">
+└
+</text>
+<circle cx="32" cy="1896" r="24"/>
+<text text-anchor="middle" x="32" y="1900">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1900">
+┐Born 
+</text>
+<text text-anchor="end" x="968" y="1900">
+ P└
+</text>
+<circle cx="992" cy="1896" r="24"/>
+<text text-anchor="middle" x="992" y="1900">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="1016" y="1900">
+┐
+</text>
+<text text-anchor="end" x="0" y="1948">
+
+</text>
+<circle cx="32" cy="1944" r="32"/>
+<text text-anchor="middle" x="32" y="1948">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="264" y="1948">
+ 
+</text>
+<circle cx="296" cy="1944" r="32"/>
+<text text-anchor="middle" x="296" y="1948">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="328" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="352" y="1948">
+ 
+</text>
+<circle cx="376" cy="1944" r="24"/>
+<text text-anchor="middle" x="376" y="1948">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="400" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="536" y="1948">
+ 
+</text>
+<circle cx="560" cy="1944" r="24"/>
+<text text-anchor="middle" x="560" y="1948">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="584" y="1948">
+ง
+</text>
+<text text-anchor="end" x="0" y="1996">
+
+</text>
+<circle cx="36" cy="1992" r="36"/>
+<text text-anchor="middle" x="36" y="1996">
+<tspan class='head'>(</tspan> ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="1996">
+ง 
+</text>
+<text text-anchor="end" x="216" y="1996">
+ 
+</text>
+<circle cx="248" cy="1992" r="32"/>
+<text text-anchor="middle" x="248" y="1996">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="280" y="1996">
+ง 
+</text>
+<text text-anchor="end" x="304" y="1996">
+ 
+</text>
+<circle cx="328" cy="1992" r="24"/>
+<text text-anchor="middle" x="328" y="1996">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="352" y="1996">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="496" y="1996">
+ 
+</text>
+<circle cx="520" cy="1992" r="24"/>
+<text text-anchor="middle" x="520" y="1996">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="544" y="1996">
+╭∩╮
+</text>
+<text text-anchor="end" x="0" y="2044">
+
+</text>
+<circle cx="36" cy="2040" r="36"/>
+<text text-anchor="middle" x="36" y="2044">
+<tspan class='head'>(</tspan> ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="2044">
+ง 
+</text>
+<text text-anchor="end" x="240" y="2044">
+ 
+</text>
+<circle cx="272" cy="2040" r="32"/>
+<text text-anchor="middle" x="272" y="2044">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="304" y="2044">
+ง 
+</text>
+<text text-anchor="end" x="328" y="2044">
+ 
+</text>
+<circle cx="352" cy="2040" r="24"/>
+<text text-anchor="middle" x="352" y="2044">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="376" y="2044">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="528" y="2044">
+ 
+</text>
+<circle cx="552" cy="2040" r="24"/>
+<text text-anchor="middle" x="552" y="2044">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="576" y="2044">
+╭∩╮
+</text>
+<text text-anchor="end" x="0" y="2092">
+
+</text>
+<circle cx="28" cy="2088" r="28"/>
+<text text-anchor="middle" x="28" y="2092">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="2092">
+ 
+</text>
+<text text-anchor="end" x="832" y="2092">
+ 
+</text>
+<circle cx="860" cy="2088" r="28"/>
+<text text-anchor="middle" x="860" y="2092">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="888" y="2092">
+
+</text>
+<text text-anchor="end" x="0" y="2140">
+
+</text>
+<circle cx="24" cy="2136" r="24"/>
+<text text-anchor="middle" x="24" y="2140">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="2140">
+ง 
+</text>
+<text text-anchor="end" x="312" y="2140">
+ 
+</text>
+<circle cx="336" cy="2136" r="24"/>
+<text text-anchor="middle" x="336" y="2140">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="360" y="2140">
+ง
+</text>
+<text text-anchor="end" x="384" y="2188">
+ 
+</text>
+<circle cx="412" cy="2184" r="28"/>
+<text text-anchor="middle" x="412" y="2188">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="440" y="2188">
+ﾉ 
+</text>
+<text text-anchor="end" x="736" y="2188">
+ 
+</text>
+<circle cx="764" cy="2184" r="28"/>
+<text text-anchor="middle" x="764" y="2188">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="792" y="2188">
+⊃━ 
+</text>
+<text text-anchor="end" x="0" y="2284">
+
+</text>
+<circle cx="32" cy="2280" r="32"/>
+<text text-anchor="middle" x="32" y="2284">
+<tspan class='head'>(</tspan>∩ ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="2284">
+⊃━☆ﾟ. 
+</text>
+<text text-anchor="end" x="0" y="2380">
+
+</text>
+<circle cx="32" cy="2376" r="32"/>
+<text text-anchor="middle" x="32" y="2380">
+<tspan class='head'>(</tspan>∩ ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="2380">
+⊃━☆ﾟ. 
+</text>
+<text text-anchor="end" x="0" y="2428">
+
+</text>
+<circle cx="28" cy="2424" r="28"/>
+<text text-anchor="middle" x="28" y="2428">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="2428">
+ 
+</text>
+<text text-anchor="end" x="336" y="2428">
+ 
+</text>
+<circle cx="364" cy="2424" r="28"/>
+<text text-anchor="middle" x="364" y="2428">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="392" y="2428">
+
+</text>
+<text text-anchor="end" x="24" y="2476">
+╭∩╮
+</text>
+<circle cx="52" cy="2472" r="28"/>
+<text text-anchor="middle" x="52" y="2476">
+<tspan class='head'>(</tspan>︶︿︶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="2476">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="48" y="2524">
+ ┌∩┐
+</text>
+<circle cx="64" cy="2520" r="16"/>
+<text text-anchor="middle" x="64" y="2524">
+<tspan class='head'>(</tspan>◣_◢<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="2524">
+┌∩┐
+</text>
+<text text-anchor="end" x="112" y="2572">
+ 
+</text>
+<circle cx="128" cy="2568" r="16"/>
+<text text-anchor="middle" x="128" y="2572">
+<tspan class='head'>(</tspan>ಠ_ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="2572">
+┌∩┐
+</text>
+<text text-anchor="end" x="128" y="2620">
+ ╭∩╮
+</text>
+<circle cx="156" cy="2616" r="28"/>
+<text text-anchor="middle" x="156" y="2620">
+<tspan class='head'>(</tspan>︶︿︶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="2620">
+╭∩╮
+</text>
+<text text-anchor="end" x="96" y="2668">
+ ^o^)ノ＼
+</text>
+<circle cx="116" cy="2664" r="20"/>
+<text text-anchor="middle" x="116" y="2668">
+<tspan class='head'>(</tspan>^_^ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="136" y="2668">
+ 
+</text>
+<text text-anchor="end" x="72" y="2716">
+ O=
+</text>
+<circle cx="92" cy="2712" r="20"/>
+<text text-anchor="middle" x="92" y="2716">
+<tspan class='head'>(</tspan>‘-‘Q<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="2716">
+
+</text>
+<text text-anchor="end" x="152" y="2764">
+ ヽ
+</text>
+<circle cx="172" cy="2760" r="20"/>
+<text text-anchor="middle" x="172" y="2764">
+<tspan class='head'>(</tspan>⇀‸↼‶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="192" y="2764">
+ノ
+</text>
+<text text-anchor="end" x="80" y="2812">
+ 
+</text>
+<circle cx="96" cy="2808" r="16"/>
+<text text-anchor="middle" x="96" y="2812">
+<tspan class='head'>(</tspan>‾-‾<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="2812">
+☮
+</text>
+<text text-anchor="end" x="144" y="2860">
+ 
+</text>
+<circle cx="164" cy="2856" r="20"/>
+<text text-anchor="middle" x="164" y="2860">
+<tspan class='head'>(</tspan>☞ﾟ∀ﾟ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="2860">
+☞
+</text>
+<text text-anchor="end" x="48" y="2908">
+ 
+</text>
+<circle cx="84" cy="2904" r="36"/>
+<text text-anchor="middle" x="84" y="2908">
+<tspan class='head'>(</tspan> つ º_º <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="120" y="2908">
+つ
+</text>
+<text text-anchor="end" x="72" y="2956">
+ 
+</text>
+<circle cx="96" cy="2952" r="24"/>
+<text text-anchor="middle" x="96" y="2956">
+<tspan class='head'>(</tspan>ﾉ´д｀<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="120" y="2956">
+
+</text>
+<text text-anchor="end" x="208" y="3004">
+ ┌∩┐
+</text>
+<circle cx="224" cy="3000" r="16"/>
+<text text-anchor="middle" x="224" y="3004">
+<tspan class='head'>(</tspan>‿|‿<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="240" y="3004">
+┌∩┐
+</text>
+<text text-anchor="end" x="128" y="3052">
+ 
+</text>
+<circle cx="144" cy="3048" r="16"/>
+<text text-anchor="middle" x="144" y="3052">
+<tspan class='head'>(</tspan>òÓ,<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3052">
+ 
+</text>
+<text text-anchor="end" x="0" y="3100">
+ •_•)O*¯`·.¸.·´¯`°Q
+</text>
+<circle cx="20" cy="3096" r="20"/>
+<text text-anchor="middle" x="20" y="3100">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="3100">
+O*¯`·.¸.·´¯`°Q(•_• 
+</text>
+<text text-anchor="end" x="160" y="3100">
+
+</text>
+<circle cx="180" cy="3096" r="20"/>
+<text text-anchor="middle" x="180" y="3100">
+<tspan class='head'>(</tspan>•_• <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="200" y="3100">
+
+</text>
+<text text-anchor="end" x="88" y="3148">
+ 
+</text>
+<circle cx="108" cy="3144" r="20"/>
+<text text-anchor="middle" x="108" y="3148">
+<tspan class='head'>(</tspan>╯°□°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3148">
+╯︵ 
+</text>
+<text text-anchor="end" x="216" y="3196">
+ \
+</text>
+<circle cx="232" cy="3192" r="16"/>
+<text text-anchor="middle" x="232" y="3196">
+<tspan class='head'>(</tspan>°□°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="248" y="3196">
+/ 
+</text>
+<text text-anchor="end" x="128" y="3244">
+ 
+</text>
+<circle cx="144" cy="3240" r="16"/>
+<text text-anchor="middle" x="144" y="3244">
+<tspan class='head'>(</tspan>˚Õ˚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3244">
+ر 
+</text>
+<text text-anchor="end" x="224" y="3292">
+ ノ
+</text>
+<circle cx="260" cy="3288" r="36"/>
+<text text-anchor="middle" x="260" y="3292">
+<tspan class='head'>(</tspan> ゜-゜ノ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="296" y="3292">
+
+</text>
+<text text-anchor="end" x="144" y="3388">
+ 
+</text>
+<circle cx="164" cy="3384" r="20"/>
+<text text-anchor="middle" x="164" y="3388">
+<tspan class='head'>(</tspan> •᷄ὤ•᷅<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="3388">
+？
+</text>
+<text text-anchor="end" x="112" y="3436">
+ 
+</text>
+<circle cx="128" cy="3432" r="16"/>
+<text text-anchor="middle" x="128" y="3436">
+<tspan class='head'>(</tspan>⊙_◎<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="3436">
+
+</text>
+<text text-anchor="end" x="96" y="3484">
+ 
+</text>
+<circle cx="120" cy="3480" r="24"/>
+<text text-anchor="middle" x="120" y="3484">
+<tspan class='head'>(</tspan>⊙﹏⊙✿<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="3484">
+
+</text>
+<text text-anchor="end" x="104" y="3532">
+ 
+</text>
+<circle cx="132" cy="3528" r="28"/>
+<text text-anchor="middle" x="132" y="3532">
+<tspan class='head'>(</tspan>｡☉౪ ⊙｡<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3532">
+
+</text>
+<text text-anchor="end" x="88" y="3580">
+ 
+</text>
+<circle cx="112" cy="3576" r="24"/>
+<text text-anchor="middle" x="112" y="3580">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="136" y="3580">
+╭∩╮
+</text>
+<text text-anchor="end" x="96" y="3724">
+ ┏(-_-)┛┗
+</text>
+<circle cx="112" cy="3720" r="16"/>
+<text text-anchor="middle" x="112" y="3724">
+<tspan class='head'>(</tspan>-_-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3724">
+┛┗(-_- 
+</text>
+<text text-anchor="end" x="272" y="3724">
+ )┓┗(-_-)┛┏
+</text>
+<circle cx="288" cy="3720" r="16"/>
+<text text-anchor="middle" x="288" y="3724">
+<tspan class='head'>(</tspan>-_-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="304" y="3724">
+┓┗(-_-)┛┏(-_-)┓
+</text>
+<text text-anchor="end" x="88" y="3772">
+ 
+</text>
+<circle cx="108" cy="3768" r="20"/>
+<text text-anchor="middle" x="108" y="3772">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3772">
+ 
+</text>
+<text text-anchor="end" x="144" y="3772">
+ 
+</text>
+<circle cx="164" cy="3768" r="20"/>
+<text text-anchor="middle" x="164" y="3772">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="3772">
+&gt;⌐■-■ 
+</text>
+<text text-anchor="end" x="240" y="3772">
+ 
+</text>
+<circle cx="260" cy="3768" r="20"/>
+<text text-anchor="middle" x="260" y="3772">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="280" y="3772">
+
+</text>
+<text text-anchor="end" x="48" y="3820">
+ ٩
+</text>
+<circle cx="60" cy="3816" r="12"/>
+<text text-anchor="middle" x="60" y="3820">
+<tspan class='head'>(</tspan>͡๏̯͡๏<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="3820">
+۶
+</text>
+<text text-anchor="end" x="72" y="3916">
+ 
+</text>
+<circle cx="84" cy="3912" r="12"/>
+<text text-anchor="middle" x="84" y="3916">
+<tspan class='head'>(</tspan>&gt;ლ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="3916">
+
+</text>
+<text text-anchor="end" x="64" y="3964">
+ \
+</text>
+<circle cx="88" cy="3960" r="24"/>
+<text text-anchor="middle" x="88" y="3964">
+<tspan class='head'>(</tspan>סּںסּَ` <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="3964">
+/ۜ
+</text>
+<text text-anchor="end" x="64" y="4012">
+ ✌
+</text>
+<circle cx="80" cy="4008" r="16"/>
+<text text-anchor="middle" x="80" y="4012">
+<tspan class='head'>(</tspan>◕‿-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="4012">
+✌
+</text>
+<text text-anchor="end" x="32" y="4108">
+ 
+</text>
+<circle cx="52" cy="4104" r="20"/>
+<text text-anchor="middle" x="52" y="4108">
+<tspan class='head'>(</tspan>╥﹏╥<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="4108">
+
+</text>
+<text text-anchor="end" x="48" y="4156">
+ t
+</text>
+<circle cx="68" cy="4152" r="20"/>
+<text text-anchor="middle" x="68" y="4156">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="4156">
+t
+</text>
+<text text-anchor="end" x="24" y="4444">
+\m/
+</text>
+<circle cx="40" cy="4440" r="16"/>
+<text text-anchor="middle" x="40" y="4444">
+<tspan class='head'>(</tspan>&gt;.&lt;<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="4444">
+\m/
+</text>
+<text text-anchor="end" x="128" y="4492">
+ 
+</text>
+<circle cx="144" cy="4488" r="16"/>
+<text text-anchor="middle" x="144" y="4492">
+<tspan class='head'>(</tspan>♥_♥<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="4492">
+
+</text>
+<text text-anchor="end" x="152" y="4540">
+ ✌⊂
+</text>
+<circle cx="168" cy="4536" r="16"/>
+<text text-anchor="middle" x="168" y="4540">
+<tspan class='head'>(</tspan>✰‿✰<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="4540">
+つ✌
+</text>
+<text text-anchor="end" x="48" y="4732">
+ \
+</text>
+<circle cx="64" cy="4728" r="16"/>
+<text text-anchor="middle" x="64" y="4732">
+<tspan class='head'>(</tspan>ˆ˚ˆ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="4732">
+/
+</text>
+<text text-anchor="end" x="160" y="4780">
+ Ｏ
+</text>
+<circle cx="176" cy="4776" r="16"/>
+<text text-anchor="middle" x="176" y="4780">
+<tspan class='head'>(</tspan>≧▽≦<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="192" y="4780">
+Ｏ
+</text>
+<text text-anchor="end" x="224" y="4828">
+ »-(¯`·.·´¯)-&gt;NAME&lt;-
+</text>
+<circle cx="256" cy="4824" r="32"/>
+<text text-anchor="middle" x="256" y="4828">
+<tspan class='head'>(</tspan>¯`·.·´¯<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="288" y="4828">
+-&gt;NAME&lt;-(¯`·.·´¯)-« 
+</text>
+<text text-anchor="end" x="112" y="4876">
+ 
+</text>
+<circle cx="128" cy="4872" r="16"/>
+<text text-anchor="middle" x="128" y="4876">
+<tspan class='head'>(</tspan>•̀ᴗ•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="4876">
+و 
+</text>
+<text text-anchor="end" x="40" y="5788">
+/╲/\╭
+</text>
+<circle cx="64" cy="5784" r="24"/>
+<text text-anchor="middle" x="64" y="5788">
+<tspan class='head'>(</tspan>.☉ʖ̫☉.<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="5788">
+╮/\╱﻿\
+</text>
+<text text-anchor="end" x="8" y="5884">
+ԅ
+</text>
+<circle cx="24" cy="5880" r="16"/>
+<text text-anchor="middle" x="24" y="5884">
+<tspan class='head'>(</tspan>☉Д☉<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="5884">
+╮
+</text>
+<text text-anchor="end" x="0" y="5932">
+
+</text>
+<circle cx="24" cy="5928" r="24"/>
+<text text-anchor="middle" x="24" y="5932">
+<tspan class='head'>(</tspan>つ•̀ᴥ•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="5932">
+つ*:･ﾟ✧
+</text>
+<text text-anchor="end" x="0" y="5980">
+
+</text>
+<circle cx="16" cy="5976" r="16"/>
+<text text-anchor="middle" x="16" y="5980">
+<tspan class='head'>(</tspan>⊙_⊙<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="5980">
+
+</text>
+<text text-anchor="end" x="0" y="6028">
+
+</text>
+<circle cx="32" cy="6024" r="32"/>
+<text text-anchor="middle" x="32" y="6028">
+<tspan class='head'>(</tspan>=ಠ ل͟ ಠ=<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="6028">
+
+</text>
+<text text-anchor="end" x="0" y="6076">
+
+</text>
+<circle cx="28" cy="6072" r="28"/>
+<text text-anchor="middle" x="28" y="6076">
+<tspan class='head'>(</tspan>つ°ヮ°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="6076">
+つ 
+</text>
+<text text-anchor="end" x="16" y="6220">
+o͡͡͡╮
+</text>
+<circle cx="44" cy="6216" r="28"/>
+<text text-anchor="middle" x="44" y="6220">
+<tspan class='head'>(</tspan> ʘ̆ ۝ ʘ̆ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="6220">
+╭o͡
+</text>
+<text text-anchor="end" x="16" y="6316">
+o͡͡͡╮
+</text>
+<circle cx="48" cy="6312" r="32"/>
+<text text-anchor="middle" x="48" y="6316">
+<tspan class='head'>(</tspan> • ʖ̯ • <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="6316">
+╭o͡͡͡
+</text>
+<text text-anchor="end" x="0" y="6748">
+
+</text>
+<circle cx="12" cy="6744" r="12"/>
+<text text-anchor="middle" x="12" y="6748">
+<tspan class='head'>(</tspan>•̪●<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="24" y="6748">
+
+</text>
+<text text-anchor="end" x="0" y="6796">
+
+</text>
+<circle cx="4" cy="6792" r="4"/>
+<text text-anchor="middle" x="4" y="6796">
+<tspan class='head'>(</tspan>॓॔<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="8" y="6796">
+
+</text>
+<text text-anchor="end" x="8" y="6844">
+٩
+</text>
+<circle cx="20" cy="6840" r="12"/>
+<text text-anchor="middle" x="20" y="6844">
+<tspan class='head'>(</tspan>͡๏̯͡๏<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="6844">
+۶
+</text>
+<text text-anchor="end" x="8" y="6892">
+٩
+</text>
+<circle cx="20" cy="6888" r="12"/>
+<text text-anchor="middle" x="20" y="6892">
+<tspan class='head'>(</tspan>-̮̮̃•̃<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="6892">
+ 
+</text>
+<text text-anchor="end" x="8" y="6940">
+٩
+</text>
+<circle cx="24" cy="6936" r="16"/>
+<text text-anchor="middle" x="24" y="6940">
+<tspan class='head'>(</tspan>̾●̮̮̃ ̾•̃̾<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="6940">
+۶
+</text>
+<text text-anchor="end" x="8" y="6988">
+٩
+</text>
+<circle cx="24" cy="6984" r="16"/>
+<text text-anchor="middle" x="24" y="6988">
+<tspan class='head'>(</tspan>-̮̮̃- ̃<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="6988">
+۶
 </text>
 </svg>

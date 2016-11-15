@@ -1,0 +1,47 @@
+<svg font-family="arial" font-size="14" height="112" width="168" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="0" refY="5" viewBox="0 0 40 40">
+<path d="M 0 0 L 10 5 L 0 10 z"/>
+</marker>
+</defs>
+<style>
+
+    line, path {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 1;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
+    
+</style>
+<path d=" M 68 28 L 68 48 M 72 24 A 4 4 0 0 0 68 28 M 72 24 L 160 24 M 164 28 L 164 48 M 164 28 A 4 4 0 0 0 160 24 M 68 32 L 68 48 M 164 32 L 164 48 M 68 60 L 68 48 M 68 60 A 4 4 0 0 0 72 64 L 96 64 M 112 64 L 160 64 A 4 4 0 0 0 164 60 L 164 48 M 104 72 L 96 80 M 112 64 L 104 72 M 80 96 L 96 64 M 96 80 L 80 96" fill="none"/>
+<path d="" fill="none" stroke-dasharray="3 3"/>
+<text x="82" y="44">
+Hey There
+</text>
+<text text-anchor="end" x="8" y="108">
+ 
+</text>
+<circle cx="36" cy="104" r="28"/>
+<text text-anchor="middle" x="36" y="108">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="108">
+
+</text>
+</svg>
