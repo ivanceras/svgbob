@@ -31,7 +31,6 @@
 //! 
 extern crate svg;
 extern crate unicode_width;
-#[cfg(feature = "memenhancer")]
 extern crate memenhancer;
 
 use svg::Node;
@@ -64,9 +63,10 @@ mod optimizer;
 /// println!("svg: {}", svgbob::to_svg(input));
 /// ``` 
 /// 
+/// commercial version enhances memes automatically
 pub fn to_svg(input: &str) -> SVG {
     let settings = &Settings::default();
-    let (svg_memes, updated_input) = get_meme_svg(input, settings); 
+    let (svg_memes, updated_input) = memenhancer::get_meme_svg(input, settings.text_width, settings.text_height); 
     let mut svg = Grid::from_str(&updated_input).get_svg(settings);
     for meme in svg_memes{
         let text_node = TextNode::new(meme.to_string());
@@ -77,34 +77,6 @@ pub fn to_svg(input: &str) -> SVG {
 
 
 
-#[cfg(not(feature = "memenhancer"))]
-fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
-    (vec![], input.to_string())
-}
-
-#[cfg(feature = "memenhancer")]
-fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
-    let mut svg_elements:Vec<Box<Node + 'static>> = vec![];
-    let mut relines = String::new();
-    let text_width = settings.text_width;
-    let text_height = settings.text_height;
-    let mut y = 0;
-    for line in input.lines(){
-        match  memenhancer::line_to_svg_with_excess_str(y, line, text_width, text_height){
-            Some((svg_elm, rest_text)) => {
-                relines.push_str(&rest_text);
-                relines.push('\n');
-                svg_elements.extend(svg_elm);
-            },
-            None => {
-                relines.push_str(line);
-                relines.push('\n');
-            }
-        }
-        y += 1;
-    } 
-    (svg_elements, relines)
-}
 
 pub struct Settings {
     text_width: f32,
