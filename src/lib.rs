@@ -31,6 +31,8 @@
 //! 
 extern crate svg;
 extern crate unicode_width;
+#[cfg(feature = "memenhancer")]
+extern crate memenhancer;
 
 use svg::Node;
 use svg::node::element::Path as SvgPath;
@@ -40,6 +42,7 @@ use svg::node::element::Style;
 use svg::node::element::SVG;
 use svg::node::element::Definitions;
 use svg::node::element::Marker;
+use svg::node::Text as TextNode;
 use optimizer::Optimizer;
 use self::Feature::Arrow;
 use self::Feature::Circle;
@@ -62,7 +65,45 @@ mod optimizer;
 /// ``` 
 /// 
 pub fn to_svg(input: &str) -> SVG {
-    Grid::from_str(input).get_svg(&Settings::default())
+    let settings = &Settings::default();
+    let (svg_memes, updated_input) = get_meme_svg(input, settings); 
+    let mut svg = Grid::from_str(&updated_input).get_svg(settings);
+    for meme in svg_memes{
+        let text_node = TextNode::new(meme.to_string());
+        svg.append(text_node);
+    }
+    svg
+}
+
+
+
+#[cfg(not(feature = "memenhancer"))]
+fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
+    (vec![], input.to_string())
+}
+
+#[cfg(feature = "memenhancer")]
+fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
+    let mut svg_elements:Vec<Box<Node + 'static>> = vec![];
+    let mut relines = String::new();
+    let text_width = settings.text_width;
+    let text_height = settings.text_height;
+    let mut y = 0;
+    for line in input.lines(){
+        match  memenhancer::line_to_svg_with_excess_str(y, line, text_width, text_height){
+            Some((svg_elm, rest_text)) => {
+                relines.push_str(&rest_text);
+                relines.push('\n');
+                svg_elements.extend(svg_elm);
+            },
+            None => {
+                relines.push_str(line);
+                relines.push('\n');
+            }
+        }
+        y += 1;
+    } 
+    (svg_elements, relines)
 }
 
 pub struct Settings {
@@ -459,15 +500,17 @@ impl GChar{
         }
     }
     
-    fn append(self, ch: char) -> Self {
-        let mut s = self.string.clone(); 
-        GChar::from_str(&s)
+    fn push_str(self, s: &str) -> Self {
+        let mut string = self.string.clone();
+        string.push_str(s);
+        GChar::from_str(&string)
     }
 }
 
 
 #[derive(Debug)]
 pub struct Grid {
+    source: String,
     rows: usize,
     columns: usize,
     lines: Vec<Vec<GChar>>,
@@ -480,22 +523,31 @@ impl Grid {
         
         for line in lines{
             let mut gchars = vec![];
+            let mut zero_ch = None;
             for ch in line.chars(){
-                if let Some(unicode_width) = UnicodeWidthChar::width(ch){
+                if let Some(unicode_width) = ch.width(){
                     // if width is zero add the char to previous buffer
                     if unicode_width == 0 {
-                        let pop:Option<GChar> = gchars.pop();
-                        if let Some(pop) = pop{
-                            let last:GChar = pop.append(ch);
-                            gchars.push(last);
-                        }
+                        zero_ch = Some(ch);
                     }else{
-                        let gchar = GChar::new(ch);
-                        gchars.push(gchar);
+                        match zero_ch{
+                            Some(prefend_ch) => {
+                                let mut s = String::new();
+                                s.push(prefend_ch);
+                                s.push(ch);
+                                let last_gchar:Option<GChar> = gchars.pop();
+                                if let Some(last_gchar) = last_gchar{
+                                    let gchar = last_gchar.push_str(&s);
+                                    gchars.push(gchar);
+                                }
+                                zero_ch = None;
+                            }
+                            None => {
+                                let gchar = GChar::new(ch);
+                                gchars.push(gchar);
+                            }
+                        }
                     }
-                }else{
-                    let gchar = GChar::new(ch);
-                    gchars.push(gchar);
                 }
             } 
             line_gchars.push(gchars);
@@ -512,6 +564,7 @@ impl Grid {
         }
 
         Grid {
+            source: s.into(),
             rows: line_gchars.len(),
             columns: max,
             lines: line_gchars,
@@ -715,6 +768,7 @@ impl Grid {
         let axcy_exchcy = Element::solid_line(axcy, exchcy);
         let axchey_exehey = Element::solid_line(axchey, exehey);
         let excy_axchcy = Element::solid_line(excy, axchcy);
+        let cxdy_cxay = Element::solid_line(cxdy, cxay);
 
         // common arc
         let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
@@ -746,7 +800,6 @@ impl Grid {
         let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
-        let arc_exey_axcy = Element::arc(exey, axcy, arc_radius * 4.0, false);
         let arc_cxay_exey = Element::arc(cxay, exey, arc_radius * 8.0, false);
         let arc_exay_cxey = Element::arc(exay, cxey, arc_radius * 8.0, false);
         let arc_cxey_axay = Element::arc(cxey, axay, arc_radius * 8.0, false);
@@ -763,6 +816,8 @@ impl Grid {
         let arc_axchay_bxey = Element::arc(axchay, bxey, arc_radius * 10.0, false);
         let arc_axehey_exdhay = Element::arc(axehey, exdhay, arc_radius * 10.0, false);
         let arc_dxey_exchay = Element::arc(dxey, exchay, arc_radius * 10.0, false);
+        let arc_axey_cxdy = Element::arc(axey, cxdy, arc_radius, false);
+        let arc_cxdy_exey = Element::arc(cxdy, exey, arc_radius, false);
 
         // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
@@ -1379,6 +1434,25 @@ impl Grid {
                  && self.is_char(left, is_horizontal)
                  && self.is_char(top, is_vertical),
                  vec![cxay_cxby.clone(), arc_axcy_cxby.clone()]
+                ),
+
+                /*
+                     | 
+                    _' 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(left, is_low_horizontal)
+                 && self.is_char(top, is_vertical),
+                 vec![arc_axey_cxdy.clone(),cxdy_cxay.clone() ]
+                ),
+                /*
+                     | 
+                     '_
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_low_horizontal)
+                 && self.is_char(top, is_vertical),
+                 vec![cxdy_cxay.clone(),arc_cxdy_exey.clone()]
                 ),
                 /*
                     .-  
@@ -2209,7 +2283,7 @@ impl Grid {
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
-                r#"Consolas, "Liberation Mono", Menlo, Courier, monospace"#
+                "arial"
                 )
             .set("width", width)
             .set("height", height);
@@ -2249,6 +2323,19 @@ fn get_styles() -> Style {
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 1;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
     }
     "#;
     Style::new(style)
@@ -2438,4 +2525,44 @@ fn test_bob(){
     let svg = grid.get_svg(&Settings::no_optimization());
     println!("svg:{}", svg);
     assert_eq!(c, Some(&GChar::from_str("4")));
+}
+
+#[test]
+fn test_meme(){
+    let meme = r#"[( ͡° ͜ʖ ͡°)]ﾟ"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{} alphanumeric {}",m, m as u32, m.width().unwrap(), m.is_alphanumeric());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:#?}",grid);
+    assert_eq!(grid.get(&Loc::new(6,0)), Some(&GChar::from_str(" ͡°")));
+}
+
+#[test]
+fn test_eye_brow(){
+    let meme = r#" ͡°"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{}",m, m as u32, m.width().unwrap());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:?}",grid);
+    let ch = grid.get(&Loc::new(0,0));
+    if let Some(ch) = ch{
+        for ch in ch.string.chars(){
+            println!("ch: {:?}", ch as u32);
+        }
+    }
+    assert_eq!(ch, Some(&GChar::from_str(" ͡°")));
 }

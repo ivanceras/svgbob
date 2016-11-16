@@ -10,9 +10,9 @@ extern crate svg;
 use handlebars::Context;
 
 fn main() {
-    let svg_file = "screenshots/image.svg";
-    let html_file = "index.html";
-    let bob_str = include_str!("long.bob");
+    let svg_file = "screenshots/memes3.svg";
+    let html_file = "memes3.html";
+    let bob_str = include_str!("memes3.bob");
     let svg = svgbob::to_svg(bob_str);
     svg::save(svg_file, &svg).unwrap();
     println!("Saved to {}",svg_file);

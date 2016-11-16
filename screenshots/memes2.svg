@@ -1,0 +1,2181 @@
+<svg font-family="arial" font-size="14" height="7200" width="944" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="0" refY="5" viewBox="0 0 40 40">
+<path d="M 0 0 L 10 5 L 0 10 z"/>
+</marker>
+</defs>
+<style>
+
+    line, path {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 1;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
+    
+</style>
+<path d=" M 84 44 L 84 64 M 88 40 A 4 4 0 0 0 84 44 M 88 40 L 456 40 M 460 44 L 460 64 M 460 44 A 4 4 0 0 0 456 40 M 84 48 L 84 64 M 460 48 L 460 64 M 84 64 L 84 68 A 4 4 0 0 0 88 72 L 456 72 M 460 64 L 460 68 M 456 72 A 4 4 0 0 0 460 68 M 48 96 L 72 144 M 80 112 L 96 80 M 0 144 L 24 144 L 48 96 M 40 144 L 24 144 M 40 144 L 48 144 M 56 144 L 88 144 M 80 128 L 88 144 M 88 128 L 96 144 L 104 128 M 92 144 L 92 224 M 40 176 L 24 176 M 40 176 L 92 176 M 56 160 L 64 176 M 16 192 L 32 160 M 16 208 L 24 192 M 64 192 L 72 208 M 14 212 L 24 192 M 14 212 A 4 4 0 0 0 16 216 L 24 216 M 64 216 L 72 216 M 72 208 L 74 212 M 72 216 A 4 4 0 0 0 74 212 M 104 1128 L 112 1128 M 272 3344 L 280 3328 M 312 3344 L 320 3328 M 16 3624 L 24 3624 M 24 3632 L 32 3632 M 32 3624 L 40 3624 M 88 3864 L 96 3864 M 80 4056 L 88 4056 M 96 4056 L 104 4056 M 164 4240 L 164 4256 M 128 4296 L 136 4296 M 160 4296 L 168 4296 M 60 4624 L 60 4640 M 88 4640 L 96 4640 M 124 4624 L 124 4640 M 100 4672 L 100 4688 M 112 4688 L 100 4688 M 148 4672 L 148 4688 M 72 4928 L 80 4928 M 56 5208 L 64 5208 M 80 5216 L 88 5216 M 56 5304 L 64 5304 M 72 5312 L 80 5312 M 88 5312 L 96 5312 M 0 5744 L 8 5728 M 16 5744 L 24 5728 L 32 5744 M 72 5744 L 80 5744 M 120 5744 L 128 5728 L 136 5744 M 0 6128 L 8 6112 M 8 6160 L 16 6176 L 24 6176 M 104 6176 L 112 6176 L 120 6160 M 8 6368 L 16 6368 M 24 6608 L 32 6608 M 8 6656 L 16 6656 M 8 6704 L 16 6704" fill="none"/>
+<path d="" fill="none" stroke-dasharray="3 3"/>
+<line fill="none" marker-end="url(#triangle)" stroke-dasharray="3 3" x1="120" x2="148" y1="1128" y2="1128"/>
+<text x="98" y="60">
+/home/shani/Applications/terraform/terraform
+</text>
+<text x="26" y="188">
+)
+</text>
+<text x="42" y="188">
+:
+</text>
+<text x="58" y="188">
+(
+</text>
+<text x="122" y="204">
+ldb
+</text>
+<text x="26" y="220">
+-v-v-
+</text>
+<text x="106" y="412">
+yeah i work out
+</text>
+<text x="58" y="556">
+♪♬
+</text>
+<text x="2" y="700">
+┌[
+</text>
+<text x="26" y="700">
+• ͜ ʖ
+</text>
+<text x="66" y="700">
+•
+</text>
+<text x="82" y="700">
+]┐
+</text>
+<text x="2" y="940">
+Meh
+</text>
+<text x="2" y="988">
+ツ
+</text>
+<text x="2" y="1036">
+【ツ】
+</text>
+<text x="2" y="1132">
+(∩ ͡ °
+</text>
+<text x="50" y="1132">
+ʖ ͡ °)
+</text>
+<text x="98" y="1132">
+⊃
+</text>
+<text x="114" y="1132">
+(
+</text>
+<text x="2" y="1164">
+dota_memes
+</text>
+<text x="82" y="1180">
+DAY TUCKER NIGHT FUCKER
+</text>
+<text x="2" y="1228">
+ಠ益ಠ
+</text>
+<text x="74" y="1276">
+RIOT
+</text>
+<text x="74" y="1324">
+MRGLRLRLR
+</text>
+<text x="90" y="1372">
+─=≡ΣO))
+</text>
+<text x="154" y="1372">
+HADOUKEN
+</text>
+<text x="2" y="1420">
+Y u do dis!?
+</text>
+<text x="2" y="1452">
+hearthstone_memes
+</text>
+<text x="258" y="1468">
+EVERYONE GET IN HERE!
+</text>
+<text x="2" y="1500">
+hearthstone_memes
+</text>
+<text x="50" y="1516">
+MY EYES ARE OPEN
+</text>
+<text x="2" y="1548">
+dota_memes
+</text>
+<text x="2" y="1564">
+ง╭ರ_•́)ง We politely ask for this game to be started for alas we will stir up a ruckus
+</text>
+<text x="282" y="1612">
+either die a DONG,
+</text>
+<text x="434" y="1612">
+or live long enough to become the
+</text>
+<text x="2" y="1660">
+&lt;
+</text>
+<text x="10" y="1660">
+MESSAGE DONGERED&gt;
+</text>
+<text x="2" y="1708">
+(
+</text>
+<text x="18" y="1708">
+ººººº_لººººº
+</text>
+<text x="122" y="1708">
+)
+</text>
+<text x="138" y="1708">
+I AM SUPER DONG
+</text>
+<text x="266" y="1708">
+(
+</text>
+<text x="282" y="1708">
+ººººº_لººººº
+</text>
+<text x="386" y="1708">
+)
+</text>
+<text x="2" y="1740">
+hearthstone_memes
+</text>
+<text x="74" y="1756">
+ ﻿Ｃ
+</text>
+<text x="98" y="1756">
+ＬＯＷＮ
+</text>
+<text x="170" y="1756">
+ＦＩＥＳＴＡ
+</text>
+<text x="82" y="1804">
+&quot;
+</text>
+<text x="90" y="1804">
+I&apos;
+</text>
+<text x="106" y="1804">
+d Fork His Repo&quot;
+</text>
+<text x="114" y="1852">
+too late to explore the Earth,
+</text>
+<text x="362" y="1852">
+born too soon to explore the Galaxy.
+</text>
+<text x="658" y="1852">
+Born just in time to post DANK MEMEs
+</text>
+<text x="2" y="1884">
+hearthstone_memes
+</text>
+<text x="114" y="1900">
+too late to explore the Earth,
+</text>
+<text x="362" y="1900">
+born too soon to explore the Galaxy.
+</text>
+<text x="658" y="1900">
+Born just in time to T U C K F R U M
+</text>
+<text x="2" y="1932">
+hearthstone_memes
+</text>
+<text x="90" y="1948">
+This is our chat mods
+</text>
+<text x="426" y="1948">
+Yeah beat it!
+</text>
+<text x="2" y="1980">
+hearthstone_memes
+</text>
+<text x="98" y="1996">
+RNG,
+</text>
+<text x="138" y="1996">
+ATTEND ME
+</text>
+<text x="394" y="1996">
+NEVER,
+</text>
+<text x="450" y="1996">
+KRIPP
+</text>
+<text x="2" y="2028">
+hearthstone_memes
+</text>
+<text x="98" y="2044">
+LETHAL,
+</text>
+<text x="162" y="2044">
+ATTEND ME
+</text>
+<text x="418" y="2044">
+NEVER,
+</text>
+<text x="474" y="2044">
+FORSEN
+</text>
+<text x="74" y="2092">
+Every 60 seconds in Africa,
+</text>
+<text x="298" y="2092">
+a minute passes.
+</text>
+<text x="434" y="2092">
+Together we can stop this.
+</text>
+<text x="650" y="2092">
+Please spread the word
+</text>
+<text x="2" y="2124">
+dota_memes
+</text>
+<text x="74" y="2140">
+SECRET GIVE ME MY ENERGY BACK
+</text>
+<text x="2" y="2188">
+First you boil some pasta,
+</text>
+<text x="218" y="2188">
+preferably Fagottini
+</text>
+<text x="466" y="2188">
+~~~~~Then you sauté the Pepperoni
+</text>
+<text x="866" y="2188">
+o)o o o
+</text>
+<text x="2" y="2220">
+dota_memes
+</text>
+<text x="2" y="2236">
+ʕ ͡•ᴥ ͡•
+</text>
+<text x="58" y="2236">
+ʔ(_̅_̅_̅F
+</text>
+<text x="106" y="2236">
+ISSURE_̅_̅_̅_̅_̅(
+</text>
+<text x="202" y="2236">
+)
+</text>
+<text x="2" y="2268">
+dota_memes
+</text>
+<text x="122" y="2284">
+*
+</text>
+<text x="138" y="2284">
+･
+</text>
+<text x="154" y="2284">
+｡ﾟ.
+</text>
+<text x="186" y="2284">
+*
+</text>
+<text x="202" y="2284">
+322
+</text>
+<text x="234" y="2284">
+☆ﾟ.
+</text>
+<text x="266" y="2284">
+*
+</text>
+<text x="282" y="2284">
+･
+</text>
+<text x="298" y="2284">
+｡ﾟ.
+</text>
+<text x="330" y="2284">
+*
+</text>
+<text x="2" y="2316">
+hearthstone_memes
+</text>
+<text x="2" y="2332">
+◥█̆◤
+</text>
+<text x="34" y="2332">
+TOTEMIC MIGHT
+</text>
+<text x="146" y="2332">
+◥█̆◤
+</text>
+<text x="2" y="2364">
+LoL_memes
+</text>
+<text x="122" y="2380">
+･
+</text>
+<text x="138" y="2380">
+｡ﾟMy dick is small,
+</text>
+<text x="298" y="2380">
+my butthole is leaky,
+</text>
+<text x="474" y="2380">
+I use this chant,
+</text>
+<text x="618" y="2380">
+to summon Sneaky
+</text>
+<text x="2" y="2412">
+LoL_memes
+</text>
+<text x="74" y="2428">
+Welcome to the league of Draven!
+</text>
+<text x="130" y="2476">
+I don&apos;
+</text>
+<text x="178" y="2476">
+t CARE?
+</text>
+<text x="2" y="2524">
+FU
+</text>
+<text x="2" y="2572">
+Seriously,
+</text>
+<text x="90" y="2572">
+FU
+</text>
+<text x="2" y="2620">
+I don’t care
+</text>
+<text x="154" y="2668">
+Gimme Five
+</text>
+<text x="2" y="2716">
+Punch!
+</text>
+<text x="2" y="2764">
+Flex,
+</text>
+<text x="50" y="2764">
+Don’t Mess
+</text>
+<text x="2" y="2812">
+Peace Yo!
+</text>
+<text x="2" y="2860">
+Right Back At Ya!
+</text>
+<text x="2" y="2908">
+Gimme
+</text>
+<text x="2" y="2956">
+So Sorry
+</text>
+<text x="2" y="3004">
+The Finger And The Ass
+</text>
+<text x="2" y="3052">
+Oh Yeah?
+</text>
+<text x="74" y="3052">
+FU
+</text>
+<text x="98" y="3052">
+╭∩╮
+</text>
+<text x="178" y="3052">
+╭∩╮
+</text>
+<text x="2" y="3148">
+Table Flip
+</text>
+<text x="170" y="3148">
+┻━┻
+</text>
+<text x="2" y="3196">
+Flip All Dem Tablez
+</text>
+<text x="162" y="3196">
+┻━┻︵
+</text>
+<text x="274" y="3196">
+︵
+</text>
+<text x="298" y="3196">
+┻━┻
+</text>
+<text x="2" y="3244">
+Epic Table Flip
+</text>
+<text x="186" y="3244">
+~~~~╚╩╩╝
+</text>
+<text x="2" y="3292">
+Ok.
+</text>
+<text x="34" y="3292">
+I Put Table Back
+</text>
+<text x="170" y="3292">
+┬──┬
+</text>
+<text x="2" y="3340">
+Put More Tables Back
+</text>
+<text x="170" y="3340">
+┏━┓┏━┓┏━┓
+</text>
+<text x="250" y="3340">
+︵
+</text>
+<text x="282" y="3340">
+(^.^
+</text>
+<text x="322" y="3340">
+)
+</text>
+<text x="2" y="3388">
+Wot?
+</text>
+<text x="42" y="3388">
+I’m Confused
+</text>
+<text x="2" y="3436">
+Crazy Bastard
+</text>
+<text x="2" y="3484">
+Crazy Bitch
+</text>
+<text x="2" y="3532">
+I Can’t Even
+</text>
+<text x="2" y="3564">
+dota_memes
+</text>
+<text x="2" y="3580">
+HEY IXMIKE
+</text>
+<text x="2" y="3628">
+d[
+</text>
+<text x="42" y="3628">
+]b
+</text>
+<text x="2" y="3676">
+Boom Box
+</text>
+<text x="74" y="3676">
+♫♪.ılılıll|̅●̅|̅=̅|̅●̅|
+</text>
+<text x="210" y="3676">
+llılılı.♫♪
+</text>
+<text x="2" y="3724">
+Party Time
+</text>
+<text x="2" y="3772">
+Sunglasses
+</text>
+<text x="2" y="3820">
+Help
+</text>
+<text x="2" y="3868">
+Fuck Off t(
+</text>
+<text x="98" y="3868">
+.-t)
+</text>
+<text x="2" y="3916">
+Facepalm
+</text>
+<text x="2" y="3964">
+Happy
+</text>
+<text x="2" y="4012">
+Pirate
+</text>
+<text x="2" y="4060">
+Sleeping
+</text>
+<text x="74" y="4060">
+(
+</text>
+<text x="90" y="4060">
+.
+</text>
+<text x="106" y="4060">
+)Zzz…
+</text>
+<text x="2" y="4108">
+Sad
+</text>
+<text x="2" y="4156">
+Rage
+</text>
+<text x="2" y="4204">
+Sunny Day
+</text>
+<text x="82" y="4204">
+☁☼
+</text>
+<text x="106" y="4204">
+▅▒░✿͜ ✿░▒▅
+</text>
+<text x="186" y="4204">
+☼☁
+</text>
+<text x="2" y="4252">
+Smug Bastard
+</text>
+<text x="106" y="4252">
+•|龴◡龴
+</text>
+<text x="170" y="4252">
+•
+</text>
+<text x="2" y="4300">
+Sparkling Heart
+</text>
+<text x="138" y="4300">
+`ღ´
+</text>
+<text x="2" y="4348">
+Love Note 웃❤유
+</text>
+<text x="2" y="4396">
+\m/
+</text>
+<text x="2" y="4492">
+Love in my eyes
+</text>
+<text x="2" y="4540">
+Stars in my Eyes
+</text>
+<text x="2" y="4588">
+Fuckin Man Tears ಥ_ಥ
+</text>
+<text x="2" y="4636">
+Atish
+</text>
+<text x="50" y="4636">
+(
+</text>
+<text x="74" y="4636">
+–
+</text>
+<text x="106" y="4636">
+–
+</text>
+<text x="130" y="4636">
+)
+</text>
+<text x="2" y="4684">
+Shit,
+</text>
+<text x="50" y="4684">
+Hide!
+</text>
+<text x="114" y="4684">
+・)
+</text>
+<text x="154" y="4684">
+･ω･｀)
+</text>
+<text x="2" y="4732">
+Yay!
+</text>
+<text x="2" y="4780">
+OMG!
+</text>
+<text x="42" y="4780">
+Insane Happy
+</text>
+<text x="2" y="4828">
+Love You
+</text>
+<text x="322" y="4828">
+OMG,
+</text>
+<text x="2" y="4876">
+Yes!
+</text>
+<text x="42" y="4876">
+Success.
+</text>
+<text x="2" y="4924">
+Coffee c[
+</text>
+<text x="82" y="4924">
+]
+</text>
+<text x="2" y="4972">
+Airplane
+</text>
+<text x="74" y="4972">
+✈
+</text>
+<text x="2" y="5020">
+Weather
+</text>
+<text x="66" y="5020">
+☼
+</text>
+<text x="82" y="5020">
+☀
+</text>
+<text x="98" y="5020">
+☁
+</text>
+<text x="114" y="5020">
+☂
+</text>
+<text x="130" y="5020">
+☃
+</text>
+<text x="146" y="5020">
+☄
+</text>
+<text x="162" y="5020">
+☾
+</text>
+<text x="178" y="5020">
+☽
+</text>
+<text x="194" y="5020">
+❄
+</text>
+<text x="210" y="5020">
+☇
+</text>
+<text x="226" y="5020">
+☈
+</text>
+<text x="242" y="5020">
+⊙
+</text>
+<text x="258" y="5020">
+☉
+</text>
+<text x="274" y="5020">
+℃
+</text>
+<text x="290" y="5020">
+℉
+</text>
+<text x="306" y="5020">
+°
+</text>
+<text x="322" y="5020">
+❅
+</text>
+<text x="338" y="5020">
+✺
+</text>
+<text x="354" y="5020">
+ϟ
+</text>
+<text x="2" y="5068">
+Band Aid
+</text>
+<text x="74" y="5068">
+( ̅:̅:̅:̅[̅ ̅]̅:̅:̅:̅ 
+</text>
+<text x="170" y="5068">
+)
+</text>
+<text x="2" y="5116">
+Fish Swimming
+</text>
+<text x="114" y="5116">
+¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸&gt;
+</text>
+<text x="306" y="5116">
+&lt;
+</text>
+<text x="314" y="5116">
+(((º&gt;
+</text>
+<text x="2" y="5164">
+Polar Bear ˁ˚ᴥ˚ˀ
+</text>
+<text x="2" y="5212">
+Mouse
+</text>
+<text x="50" y="5212">
+—
+</text>
+<text x="66" y="5212">
+{,
+</text>
+<text x="90" y="5212">
+,”&gt;
+</text>
+<text x="2" y="5260">
+Cat
+</text>
+<text x="34" y="5260">
+^˚ᴥ˚^
+</text>
+<text x="2" y="5308">
+Snail
+</text>
+<text x="50" y="5308">
+‘
+</text>
+<text x="66" y="5308">
+‘
+</text>
+<text x="82" y="5308">
+@
+</text>
+<text x="2" y="5356">
+Musical
+</text>
+<text x="66" y="5356">
+¸¸♬·¯·♩¸¸♪·¯·♫¸
+</text>
+<text x="2" y="5404">
+Happy Birthday To You¸¸♬·¯·♩¸¸♪·¯·♫¸
+</text>
+<text x="2" y="5452">
+▂▃▅▇█▓▒░۩۞۩
+</text>
+<text x="98" y="5452">
+۩۞۩░▒▓█▇▅▃▂
+</text>
+<text x="2" y="5500">
+Play Cards
+</text>
+<text x="90" y="5500">
+[♥]]]
+</text>
+<text x="138" y="5500">
+[♦]]]
+</text>
+<text x="186" y="5500">
+[♣]]]
+</text>
+<text x="234" y="5500">
+[♠]]]
+</text>
+<text x="2" y="5548">
+Play Chess
+</text>
+<text x="90" y="5548">
+♚
+</text>
+<text x="106" y="5548">
+♛
+</text>
+<text x="122" y="5548">
+♜
+</text>
+<text x="138" y="5548">
+♝
+</text>
+<text x="154" y="5548">
+♞
+</text>
+<text x="170" y="5548">
+♟
+</text>
+<text x="186" y="5548">
+♔
+</text>
+<text x="202" y="5548">
+♕
+</text>
+<text x="218" y="5548">
+♖
+</text>
+<text x="234" y="5548">
+♗
+</text>
+<text x="250" y="5548">
+♘
+</text>
+<text x="266" y="5548">
+♙
+</text>
+<text x="2" y="5596">
+웃웃웃vs웃웃웃
+</text>
+<text x="2" y="5644">
+♋
+</text>
+<text x="18" y="5644">
+♂
+</text>
+<text x="34" y="5644">
+♀
+</text>
+<text x="50" y="5644">
+☿
+</text>
+<text x="66" y="5644">
+웃
+</text>
+<text x="90" y="5644">
+유
+</text>
+<text x="2" y="5692">
+♪
+</text>
+<text x="18" y="5692">
+♫
+</text>
+<text x="34" y="5692">
+♩
+</text>
+<text x="50" y="5692">
+♬
+</text>
+<text x="66" y="5692">
+♭
+</text>
+<text x="82" y="5692">
+♮
+</text>
+<text x="10" y="5740">
+╲
+</text>
+<text x="34" y="5740">
+╭[
+</text>
+<text x="58" y="5740">
+•
+</text>
+<text x="90" y="5740">
+•
+</text>
+<text x="106" y="5740">
+]╮
+</text>
+<text x="138" y="5740">
+╱﻿\
+</text>
+<text x="2" y="5836">
+(
+</text>
+<text x="26" y="5836">
+ ͡°╭╮ʖ
+</text>
+<text x="82" y="5836">
+ ͡°)
+</text>
+<text x="98" y="6076">
+└⋃┘
+</text>
+<text x="18" y="6124">
+•́ ﹏
+</text>
+<text x="58" y="6124">
+•̀\
+</text>
+<text x="2" y="6172">
+¯
+</text>
+<text x="26" y="6172">
+╏
+</text>
+<text x="42" y="6172">
+՞
+</text>
+<text x="58" y="6172">
+︿
+</text>
+<text x="82" y="6172">
+՞
+</text>
+<text x="98" y="6172">
+╏
+</text>
+<text x="122" y="6172">
+¯
+</text>
+<text x="2" y="6268">
+७(
+</text>
+<text x="26" y="6268">
+,
+</text>
+<text x="42" y="6268">
+⊙
+</text>
+<text x="58" y="6268">
+–
+</text>
+<text x="74" y="6268">
+⊙
+</text>
+<text x="90" y="6268">
+,
+</text>
+<text x="106" y="6268">
+)७
+</text>
+<text x="2" y="6364">
+⇎
+</text>
+<text x="18" y="6364">
+⇎
+</text>
+<text x="2" y="6412">
+句_句
+</text>
+<text x="2" y="6460">
+१|˚–˚|५
+</text>
+<text x="2" y="6508">
+ộ_ộ
+</text>
+<text x="2" y="6556">
+δﺡό
+</text>
+<text x="2" y="6604">
+⊂•⊃
+</text>
+<text x="34" y="6604">
+⊂•⊃
+</text>
+<text x="2" y="6652">
+❂
+</text>
+<text x="18" y="6652">
+❂
+</text>
+<text x="2" y="6700">
+❐
+</text>
+<text x="18" y="6700">
+❑
+</text>
+<text x="50" y="6892">
+۶
+</text>
+<text x="2" y="7036">
+๏͡๏
+</text>
+<text x="26" y="7036">
+  ̃๏̃๏
+</text>
+<text x="2" y="7084">
+๏̃๏
+</text>
+<text x="2" y="7132">
+[O.o]
+</text>
+<text x="2" y="7180">
+[¬º-°]¬
+</text>
+<text text-anchor="end" x="24" y="156">
+ &amp;
+</text>
+<circle cx="40" cy="152" r="16"/>
+<text text-anchor="middle" x="40" y="156">
+<tspan class='head'>(</tspan>O_~<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="156">
+% 
+</text>
+<text text-anchor="end" x="0" y="268">
+
+</text>
+<circle cx="28" cy="264" r="28"/>
+<text text-anchor="middle" x="28" y="268">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="268">
+
+</text>
+<text text-anchor="end" x="0" y="316">
+
+</text>
+<circle cx="28" cy="312" r="28"/>
+<text text-anchor="middle" x="28" y="316">
+<tspan class='head'>(</tspan> ͡↑ ͜ʖ ͡↑<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="316">
+
+</text>
+<text text-anchor="end" x="32" y="364">
+─=≡Σ
+</text>
+<circle cx="60" cy="360" r="28"/>
+<text text-anchor="middle" x="60" y="364">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="364">
+
+</text>
+<text text-anchor="end" x="16" y="412">
+█▄
+</text>
+<circle cx="44" cy="408" r="28"/>
+<text text-anchor="middle" x="44" y="412">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="412">
+▄█ 
+</text>
+<text text-anchor="end" x="40" y="460">
+･｡ﾟ[̲̅$̲̅
+</text>
+<circle cx="68" cy="456" r="28"/>
+<text text-anchor="middle" x="68" y="460">
+<tspan class='head'>(</tspan>̲̅ ͡° ͜ʖ ͡°̲̅<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="460">
+̲̅$̲̅]｡ﾟ.*
+</text>
+<text text-anchor="end" x="0" y="508">
+
+</text>
+<circle cx="20" cy="504" r="20"/>
+<text text-anchor="middle" x="20" y="508">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="508">
+
+</text>
+<text text-anchor="end" x="0" y="556">
+
+</text>
+<circle cx="20" cy="552" r="20"/>
+<text text-anchor="middle" x="20" y="556">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="556">
+ 
+</text>
+<text text-anchor="end" x="0" y="604">
+
+</text>
+<circle cx="24" cy="600" r="24"/>
+<text text-anchor="middle" x="24" y="604">
+<tspan class='head'>(</tspan>˚ㄥ_˚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="604">
+
+</text>
+<text text-anchor="end" x="16" y="652">
+凸
+</text>
+<circle cx="40" cy="648" r="24"/>
+<text text-anchor="middle" x="40" y="652">
+<tspan class='head'>(</tspan> •̀_•́ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="652">
+凸
+</text>
+<text text-anchor="end" x="8" y="748">
+໒
+</text>
+<circle cx="40" cy="744" r="32"/>
+<text text-anchor="middle" x="40" y="748">
+<tspan class='head'>(</tspan> • ͜ʖ • <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="748">
+७
+</text>
+<text text-anchor="end" x="0" y="796">
+
+</text>
+<circle cx="32" cy="792" r="32"/>
+<text text-anchor="middle" x="32" y="796">
+<tspan class='head'>(</tspan> ✖ _ ✖ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="796">
+
+</text>
+<text text-anchor="end" x="8" y="844">
+⊂
+</text>
+<circle cx="24" cy="840" r="16"/>
+<text text-anchor="middle" x="24" y="844">
+<tspan class='head'>(</tspan>◣_◢<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="844">
+つ
+</text>
+<text text-anchor="end" x="24" y="892">
+¯\_
+</text>
+<circle cx="36" cy="888" r="12"/>
+<text text-anchor="middle" x="36" y="892">
+<tspan class='head'>(</tspan>ツ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="892">
+_/¯
+</text>
+<text text-anchor="end" x="56" y="940">
+ ¯\_
+</text>
+<circle cx="68" cy="936" r="12"/>
+<text text-anchor="middle" x="68" y="940">
+<tspan class='head'>(</tspan>ツ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="940">
+_/¯ 
+</text>
+<text text-anchor="end" x="136" y="940">
+ ヽ
+</text>
+<circle cx="156" cy="936" r="20"/>
+<text text-anchor="middle" x="156" y="940">
+<tspan class='head'>(</tspan>。_°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="176" y="940">
+ノ 
+</text>
+<text text-anchor="end" x="224" y="940">
+ ヾ
+</text>
+<circle cx="248" cy="936" r="24"/>
+<text text-anchor="middle" x="248" y="940">
+<tspan class='head'>(</tspan>ｏ･ω･<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="272" y="940">
+ﾉ
+</text>
+<text text-anchor="end" x="8" y="1084">
+╰
+</text>
+<circle cx="28" cy="1080" r="20"/>
+<text text-anchor="middle" x="28" y="1084">
+<tspan class='head'>(</tspan>⇀︿⇀<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1084">
+つ-]═──
+</text>
+<text text-anchor="end" x="0" y="1180">
+
+</text>
+<circle cx="32" cy="1176" r="32"/>
+<text text-anchor="middle" x="32" y="1180">
+<tspan class='head'>(</tspan> ͡°╭͜ʖ╮͡° <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1180">
+ 
+</text>
+<text text-anchor="end" x="272" y="1180">
+ 
+</text>
+<circle cx="304" cy="1176" r="32"/>
+<text text-anchor="middle" x="304" y="1180">
+<tspan class='head'>(</tspan> ͡°╭͜ʖ╮͡° <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="336" y="1180">
+
+</text>
+<text text-anchor="end" x="8" y="1276">
+୧
+</text>
+<circle cx="28" cy="1272" r="20"/>
+<text text-anchor="middle" x="28" y="1276">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1276">
+୨ 
+</text>
+<text text-anchor="end" x="120" y="1276">
+ ୧
+</text>
+<circle cx="140" cy="1272" r="20"/>
+<text text-anchor="middle" x="140" y="1276">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1276">
+୨
+</text>
+<text text-anchor="end" x="8" y="1324">
+୧
+</text>
+<circle cx="28" cy="1320" r="20"/>
+<text text-anchor="middle" x="28" y="1324">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1324">
+୨ 
+</text>
+<text text-anchor="end" x="160" y="1324">
+ ୧
+</text>
+<circle cx="180" cy="1320" r="20"/>
+<text text-anchor="middle" x="180" y="1324">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="200" y="1324">
+୨
+</text>
+<text text-anchor="end" x="0" y="1372">
+
+</text>
+<circle cx="28" cy="1368" r="28"/>
+<text text-anchor="middle" x="28" y="1372">
+<tspan class='head'>(</tspan>つಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1372">
+つ 
+</text>
+<text text-anchor="end" x="112" y="1420">
+ ლ
+</text>
+<circle cx="136" cy="1416" r="24"/>
+<text text-anchor="middle" x="136" y="1420">
+<tspan class='head'>(</tspan>ಠ益ಠლ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1420">
+
+</text>
+<text text-anchor="end" x="120" y="1468">
+(º_لº(º_لº(º_لº
+</text>
+<circle cx="140" cy="1464" r="20"/>
+<text text-anchor="middle" x="140" y="1468">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1468">
+º_لº)º_لº) 
+</text>
+<text text-anchor="end" x="552" y="1468">
+ (º_لº(º_لº(º_لº
+</text>
+<circle cx="572" cy="1464" r="20"/>
+<text text-anchor="middle" x="572" y="1468">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="592" y="1468">
+º_لº)º_لº)
+</text>
+<text text-anchor="end" x="0" y="1516">
+
+</text>
+<circle cx="16" cy="1512" r="16"/>
+<text text-anchor="middle" x="16" y="1516">
+<tspan class='head'>(</tspan>ʘ̚ل͜ʘ̚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="1516">
+ 
+</text>
+<text text-anchor="end" x="184" y="1516">
+ 
+</text>
+<circle cx="200" cy="1512" r="16"/>
+<text text-anchor="middle" x="200" y="1516">
+<tspan class='head'>(</tspan>ʘ̚ل͜ʘ̚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="216" y="1516">
+
+</text>
+<text text-anchor="end" x="688" y="1564">
+ 
+</text>
+<circle cx="712" cy="1560" r="24"/>
+<text text-anchor="middle" x="712" y="1564">
+<tspan class='head'>(</tspan>ง╭ರ_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="736" y="1564">
+ง
+</text>
+<text text-anchor="end" x="120" y="1612">
+(º_لº(º_لº(º_لº
+</text>
+<circle cx="140" cy="1608" r="20"/>
+<text text-anchor="middle" x="140" y="1612">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="1612">
+º_لº)º_لº)You 
+</text>
+<text text-anchor="end" x="872" y="1612">
+ DONGER(º_لº(º_لº(º_لº
+</text>
+<circle cx="892" cy="1608" r="20"/>
+<text text-anchor="middle" x="892" y="1612">
+<tspan class='head'>(</tspan>º_لº<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="912" y="1612">
+º_لº)º_لº)
+</text>
+<text text-anchor="end" x="8" y="1756">
+ 
+</text>
+<circle cx="36" cy="1752" r="28"/>
+<text text-anchor="middle" x="36" y="1756">
+<tspan class='head'>(</tspan> ͡° ͜◯ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1756">
+ 
+</text>
+<text text-anchor="end" x="272" y="1756">
+ 
+</text>
+<circle cx="300" cy="1752" r="28"/>
+<text text-anchor="middle" x="300" y="1756">
+<tspan class='head'>(</tspan> ͡° ͜◯ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="328" y="1756">
+
+</text>
+<text text-anchor="end" x="0" y="1804">
+
+</text>
+<circle cx="24" cy="1800" r="24"/>
+<text text-anchor="middle" x="24" y="1804">
+<tspan class='head'>(</tspan> • ∀•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="1804">
+–Ψ 
+</text>
+<text text-anchor="end" x="8" y="1852">
+└
+</text>
+<circle cx="32" cy="1848" r="24"/>
+<text text-anchor="middle" x="32" y="1852">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1852">
+┐Born 
+</text>
+<text text-anchor="end" x="960" y="1852">
+ └
+</text>
+<circle cx="984" cy="1848" r="24"/>
+<text text-anchor="middle" x="984" y="1852">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="1008" y="1852">
+┐
+</text>
+<text text-anchor="end" x="8" y="1900">
+└
+</text>
+<circle cx="32" cy="1896" r="24"/>
+<text text-anchor="middle" x="32" y="1900">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="1900">
+┐Born 
+</text>
+<text text-anchor="end" x="968" y="1900">
+ P└
+</text>
+<circle cx="992" cy="1896" r="24"/>
+<text text-anchor="middle" x="992" y="1900">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="1016" y="1900">
+┐
+</text>
+<text text-anchor="end" x="0" y="1948">
+
+</text>
+<circle cx="32" cy="1944" r="32"/>
+<text text-anchor="middle" x="32" y="1948">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="264" y="1948">
+ 
+</text>
+<circle cx="296" cy="1944" r="32"/>
+<text text-anchor="middle" x="296" y="1948">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="328" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="352" y="1948">
+ 
+</text>
+<circle cx="376" cy="1944" r="24"/>
+<text text-anchor="middle" x="376" y="1948">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="400" y="1948">
+ง 
+</text>
+<text text-anchor="end" x="536" y="1948">
+ 
+</text>
+<circle cx="560" cy="1944" r="24"/>
+<text text-anchor="middle" x="560" y="1948">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="584" y="1948">
+ง
+</text>
+<text text-anchor="end" x="0" y="1996">
+
+</text>
+<circle cx="36" cy="1992" r="36"/>
+<text text-anchor="middle" x="36" y="1996">
+<tspan class='head'>(</tspan> ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="1996">
+ง 
+</text>
+<text text-anchor="end" x="216" y="1996">
+ 
+</text>
+<circle cx="248" cy="1992" r="32"/>
+<text text-anchor="middle" x="248" y="1996">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="280" y="1996">
+ง 
+</text>
+<text text-anchor="end" x="304" y="1996">
+ 
+</text>
+<circle cx="328" cy="1992" r="24"/>
+<text text-anchor="middle" x="328" y="1996">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="352" y="1996">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="496" y="1996">
+ 
+</text>
+<circle cx="520" cy="1992" r="24"/>
+<text text-anchor="middle" x="520" y="1996">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="544" y="1996">
+╭∩╮
+</text>
+<text text-anchor="end" x="0" y="2044">
+
+</text>
+<circle cx="36" cy="2040" r="36"/>
+<text text-anchor="middle" x="36" y="2044">
+<tspan class='head'>(</tspan> ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="2044">
+ง 
+</text>
+<text text-anchor="end" x="240" y="2044">
+ 
+</text>
+<circle cx="272" cy="2040" r="32"/>
+<text text-anchor="middle" x="272" y="2044">
+<tspan class='head'>(</tspan>ง ͠° ͟ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="304" y="2044">
+ง 
+</text>
+<text text-anchor="end" x="328" y="2044">
+ 
+</text>
+<circle cx="352" cy="2040" r="24"/>
+<text text-anchor="middle" x="352" y="2044">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="376" y="2044">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="528" y="2044">
+ 
+</text>
+<circle cx="552" cy="2040" r="24"/>
+<text text-anchor="middle" x="552" y="2044">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="576" y="2044">
+╭∩╮
+</text>
+<text text-anchor="end" x="0" y="2092">
+
+</text>
+<circle cx="28" cy="2088" r="28"/>
+<text text-anchor="middle" x="28" y="2092">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="2092">
+ 
+</text>
+<text text-anchor="end" x="832" y="2092">
+ 
+</text>
+<circle cx="860" cy="2088" r="28"/>
+<text text-anchor="middle" x="860" y="2092">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="888" y="2092">
+
+</text>
+<text text-anchor="end" x="0" y="2140">
+
+</text>
+<circle cx="24" cy="2136" r="24"/>
+<text text-anchor="middle" x="24" y="2140">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="2140">
+ง 
+</text>
+<text text-anchor="end" x="312" y="2140">
+ 
+</text>
+<circle cx="336" cy="2136" r="24"/>
+<text text-anchor="middle" x="336" y="2140">
+<tspan class='head'>(</tspan>ง •̀_•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="360" y="2140">
+ง
+</text>
+<text text-anchor="end" x="384" y="2188">
+ 
+</text>
+<circle cx="412" cy="2184" r="28"/>
+<text text-anchor="middle" x="412" y="2188">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="440" y="2188">
+ﾉ 
+</text>
+<text text-anchor="end" x="736" y="2188">
+ 
+</text>
+<circle cx="764" cy="2184" r="28"/>
+<text text-anchor="middle" x="764" y="2188">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="792" y="2188">
+⊃━ 
+</text>
+<text text-anchor="end" x="0" y="2284">
+
+</text>
+<circle cx="32" cy="2280" r="32"/>
+<text text-anchor="middle" x="32" y="2284">
+<tspan class='head'>(</tspan>∩ ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="2284">
+⊃━☆ﾟ. 
+</text>
+<text text-anchor="end" x="0" y="2380">
+
+</text>
+<circle cx="32" cy="2376" r="32"/>
+<text text-anchor="middle" x="32" y="2380">
+<tspan class='head'>(</tspan>∩ ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="2380">
+⊃━☆ﾟ. 
+</text>
+<text text-anchor="end" x="0" y="2428">
+
+</text>
+<circle cx="28" cy="2424" r="28"/>
+<text text-anchor="middle" x="28" y="2428">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="2428">
+ 
+</text>
+<text text-anchor="end" x="336" y="2428">
+ 
+</text>
+<circle cx="364" cy="2424" r="28"/>
+<text text-anchor="middle" x="364" y="2428">
+<tspan class='head'>(</tspan> ͡° ͜ʖ ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="392" y="2428">
+
+</text>
+<text text-anchor="end" x="24" y="2476">
+╭∩╮
+</text>
+<circle cx="52" cy="2472" r="28"/>
+<text text-anchor="middle" x="52" y="2476">
+<tspan class='head'>(</tspan>︶︿︶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="2476">
+╭∩╮ 
+</text>
+<text text-anchor="end" x="48" y="2524">
+ ┌∩┐
+</text>
+<circle cx="64" cy="2520" r="16"/>
+<text text-anchor="middle" x="64" y="2524">
+<tspan class='head'>(</tspan>◣_◢<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="2524">
+┌∩┐
+</text>
+<text text-anchor="end" x="112" y="2572">
+ 
+</text>
+<circle cx="128" cy="2568" r="16"/>
+<text text-anchor="middle" x="128" y="2572">
+<tspan class='head'>(</tspan>ಠ_ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="2572">
+┌∩┐
+</text>
+<text text-anchor="end" x="128" y="2620">
+ ╭∩╮
+</text>
+<circle cx="156" cy="2616" r="28"/>
+<text text-anchor="middle" x="156" y="2620">
+<tspan class='head'>(</tspan>︶︿︶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="2620">
+╭∩╮
+</text>
+<text text-anchor="end" x="96" y="2668">
+ ^o^)ノ＼
+</text>
+<circle cx="116" cy="2664" r="20"/>
+<text text-anchor="middle" x="116" y="2668">
+<tspan class='head'>(</tspan>^_^ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="136" y="2668">
+ 
+</text>
+<text text-anchor="end" x="72" y="2716">
+ O=
+</text>
+<circle cx="92" cy="2712" r="20"/>
+<text text-anchor="middle" x="92" y="2716">
+<tspan class='head'>(</tspan>‘-‘Q<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="2716">
+
+</text>
+<text text-anchor="end" x="152" y="2764">
+ ヽ
+</text>
+<circle cx="172" cy="2760" r="20"/>
+<text text-anchor="middle" x="172" y="2764">
+<tspan class='head'>(</tspan>⇀‸↼‶<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="192" y="2764">
+ノ
+</text>
+<text text-anchor="end" x="80" y="2812">
+ 
+</text>
+<circle cx="96" cy="2808" r="16"/>
+<text text-anchor="middle" x="96" y="2812">
+<tspan class='head'>(</tspan>‾-‾<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="2812">
+☮
+</text>
+<text text-anchor="end" x="144" y="2860">
+ 
+</text>
+<circle cx="164" cy="2856" r="20"/>
+<text text-anchor="middle" x="164" y="2860">
+<tspan class='head'>(</tspan>☞ﾟ∀ﾟ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="2860">
+☞
+</text>
+<text text-anchor="end" x="48" y="2908">
+ 
+</text>
+<circle cx="84" cy="2904" r="36"/>
+<text text-anchor="middle" x="84" y="2908">
+<tspan class='head'>(</tspan> つ º_º <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="120" y="2908">
+つ
+</text>
+<text text-anchor="end" x="72" y="2956">
+ 
+</text>
+<circle cx="96" cy="2952" r="24"/>
+<text text-anchor="middle" x="96" y="2956">
+<tspan class='head'>(</tspan>ﾉ´д｀<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="120" y="2956">
+
+</text>
+<text text-anchor="end" x="208" y="3004">
+ ┌∩┐
+</text>
+<circle cx="224" cy="3000" r="16"/>
+<text text-anchor="middle" x="224" y="3004">
+<tspan class='head'>(</tspan>‿|‿<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="240" y="3004">
+┌∩┐
+</text>
+<text text-anchor="end" x="128" y="3052">
+ 
+</text>
+<circle cx="144" cy="3048" r="16"/>
+<text text-anchor="middle" x="144" y="3052">
+<tspan class='head'>(</tspan>òÓ,<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3052">
+ 
+</text>
+<text text-anchor="end" x="0" y="3100">
+ •_•)O*¯`·.¸.·´¯`°Q
+</text>
+<circle cx="20" cy="3096" r="20"/>
+<text text-anchor="middle" x="20" y="3100">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="3100">
+O*¯`·.¸.·´¯`°Q(•_• 
+</text>
+<text text-anchor="end" x="160" y="3100">
+
+</text>
+<circle cx="180" cy="3096" r="20"/>
+<text text-anchor="middle" x="180" y="3100">
+<tspan class='head'>(</tspan>•_• <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="200" y="3100">
+
+</text>
+<text text-anchor="end" x="88" y="3148">
+ 
+</text>
+<circle cx="108" cy="3144" r="20"/>
+<text text-anchor="middle" x="108" y="3148">
+<tspan class='head'>(</tspan>╯°□°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3148">
+╯︵ 
+</text>
+<text text-anchor="end" x="216" y="3196">
+ \
+</text>
+<circle cx="232" cy="3192" r="16"/>
+<text text-anchor="middle" x="232" y="3196">
+<tspan class='head'>(</tspan>°□°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="248" y="3196">
+/ 
+</text>
+<text text-anchor="end" x="128" y="3244">
+ 
+</text>
+<circle cx="144" cy="3240" r="16"/>
+<text text-anchor="middle" x="144" y="3244">
+<tspan class='head'>(</tspan>˚Õ˚<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3244">
+ر 
+</text>
+<text text-anchor="end" x="224" y="3292">
+ ノ
+</text>
+<circle cx="260" cy="3288" r="36"/>
+<text text-anchor="middle" x="260" y="3292">
+<tspan class='head'>(</tspan> ゜-゜ノ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="296" y="3292">
+
+</text>
+<text text-anchor="end" x="144" y="3388">
+ 
+</text>
+<circle cx="164" cy="3384" r="20"/>
+<text text-anchor="middle" x="164" y="3388">
+<tspan class='head'>(</tspan> •᷄ὤ•᷅<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="3388">
+？
+</text>
+<text text-anchor="end" x="112" y="3436">
+ 
+</text>
+<circle cx="128" cy="3432" r="16"/>
+<text text-anchor="middle" x="128" y="3436">
+<tspan class='head'>(</tspan>⊙_◎<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="3436">
+
+</text>
+<text text-anchor="end" x="96" y="3484">
+ 
+</text>
+<circle cx="120" cy="3480" r="24"/>
+<text text-anchor="middle" x="120" y="3484">
+<tspan class='head'>(</tspan>⊙﹏⊙✿<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="3484">
+
+</text>
+<text text-anchor="end" x="104" y="3532">
+ 
+</text>
+<circle cx="132" cy="3528" r="28"/>
+<text text-anchor="middle" x="132" y="3532">
+<tspan class='head'>(</tspan>｡☉౪ ⊙｡<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="3532">
+
+</text>
+<text text-anchor="end" x="88" y="3580">
+ 
+</text>
+<circle cx="112" cy="3576" r="24"/>
+<text text-anchor="middle" x="112" y="3580">
+<tspan class='head'>(</tspan> ° ͜ʖ͡°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="136" y="3580">
+╭∩╮
+</text>
+<text text-anchor="end" x="96" y="3724">
+ ┏(-_-)┛┗
+</text>
+<circle cx="112" cy="3720" r="16"/>
+<text text-anchor="middle" x="112" y="3724">
+<tspan class='head'>(</tspan>-_-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3724">
+┛┗(-_- 
+</text>
+<text text-anchor="end" x="272" y="3724">
+ )┓┗(-_-)┛┏
+</text>
+<circle cx="288" cy="3720" r="16"/>
+<text text-anchor="middle" x="288" y="3724">
+<tspan class='head'>(</tspan>-_-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="304" y="3724">
+┓┗(-_-)┛┏(-_-)┓
+</text>
+<text text-anchor="end" x="88" y="3772">
+ 
+</text>
+<circle cx="108" cy="3768" r="20"/>
+<text text-anchor="middle" x="108" y="3772">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="128" y="3772">
+ 
+</text>
+<text text-anchor="end" x="144" y="3772">
+ 
+</text>
+<circle cx="164" cy="3768" r="20"/>
+<text text-anchor="middle" x="164" y="3772">
+<tspan class='head'>(</tspan> •_•<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="3772">
+&gt;⌐■-■ 
+</text>
+<text text-anchor="end" x="240" y="3772">
+ 
+</text>
+<circle cx="260" cy="3768" r="20"/>
+<text text-anchor="middle" x="260" y="3772">
+<tspan class='head'>(</tspan>⌐■_■<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="280" y="3772">
+
+</text>
+<text text-anchor="end" x="48" y="3820">
+ ٩
+</text>
+<circle cx="60" cy="3816" r="12"/>
+<text text-anchor="middle" x="60" y="3820">
+<tspan class='head'>(</tspan>͡๏̯͡๏<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="3820">
+۶
+</text>
+<text text-anchor="end" x="72" y="3916">
+ 
+</text>
+<circle cx="84" cy="3912" r="12"/>
+<text text-anchor="middle" x="84" y="3916">
+<tspan class='head'>(</tspan>&gt;ლ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="3916">
+
+</text>
+<text text-anchor="end" x="64" y="3964">
+ \
+</text>
+<circle cx="88" cy="3960" r="24"/>
+<text text-anchor="middle" x="88" y="3964">
+<tspan class='head'>(</tspan>סּںסּَ` <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="112" y="3964">
+/ۜ
+</text>
+<text text-anchor="end" x="64" y="4012">
+ ✌
+</text>
+<circle cx="80" cy="4008" r="16"/>
+<text text-anchor="middle" x="80" y="4012">
+<tspan class='head'>(</tspan>◕‿-<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="96" y="4012">
+✌
+</text>
+<text text-anchor="end" x="32" y="4108">
+ 
+</text>
+<circle cx="52" cy="4104" r="20"/>
+<text text-anchor="middle" x="52" y="4108">
+<tspan class='head'>(</tspan>╥﹏╥<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="4108">
+
+</text>
+<text text-anchor="end" x="48" y="4156">
+ t
+</text>
+<circle cx="68" cy="4152" r="20"/>
+<text text-anchor="middle" x="68" y="4156">
+<tspan class='head'>(</tspan>ಠ益ಠ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="4156">
+t
+</text>
+<text text-anchor="end" x="24" y="4444">
+\m/
+</text>
+<circle cx="40" cy="4440" r="16"/>
+<text text-anchor="middle" x="40" y="4444">
+<tspan class='head'>(</tspan>&gt;.&lt;<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="4444">
+\m/
+</text>
+<text text-anchor="end" x="128" y="4492">
+ 
+</text>
+<circle cx="144" cy="4488" r="16"/>
+<text text-anchor="middle" x="144" y="4492">
+<tspan class='head'>(</tspan>♥_♥<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="160" y="4492">
+
+</text>
+<text text-anchor="end" x="152" y="4540">
+ ✌⊂
+</text>
+<circle cx="168" cy="4536" r="16"/>
+<text text-anchor="middle" x="168" y="4540">
+<tspan class='head'>(</tspan>✰‿✰<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="184" y="4540">
+つ✌
+</text>
+<text text-anchor="end" x="48" y="4732">
+ \
+</text>
+<circle cx="64" cy="4728" r="16"/>
+<text text-anchor="middle" x="64" y="4732">
+<tspan class='head'>(</tspan>ˆ˚ˆ<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="4732">
+/
+</text>
+<text text-anchor="end" x="160" y="4780">
+ Ｏ
+</text>
+<circle cx="176" cy="4776" r="16"/>
+<text text-anchor="middle" x="176" y="4780">
+<tspan class='head'>(</tspan>≧▽≦<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="192" y="4780">
+Ｏ
+</text>
+<text text-anchor="end" x="224" y="4828">
+ »-(¯`·.·´¯)-&gt;NAME&lt;-
+</text>
+<circle cx="256" cy="4824" r="32"/>
+<text text-anchor="middle" x="256" y="4828">
+<tspan class='head'>(</tspan>¯`·.·´¯<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="288" y="4828">
+-&gt;NAME&lt;-(¯`·.·´¯)-« 
+</text>
+<text text-anchor="end" x="112" y="4876">
+ 
+</text>
+<circle cx="128" cy="4872" r="16"/>
+<text text-anchor="middle" x="128" y="4876">
+<tspan class='head'>(</tspan>•̀ᴗ•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="144" y="4876">
+و 
+</text>
+<text text-anchor="end" x="40" y="5788">
+/╲/\╭
+</text>
+<circle cx="64" cy="5784" r="24"/>
+<text text-anchor="middle" x="64" y="5788">
+<tspan class='head'>(</tspan>.☉ʖ̫☉.<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="88" y="5788">
+╮/\╱﻿\
+</text>
+<text text-anchor="end" x="8" y="5884">
+ԅ
+</text>
+<circle cx="24" cy="5880" r="16"/>
+<text text-anchor="middle" x="24" y="5884">
+<tspan class='head'>(</tspan>☉Д☉<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="5884">
+╮
+</text>
+<text text-anchor="end" x="0" y="5932">
+
+</text>
+<circle cx="24" cy="5928" r="24"/>
+<text text-anchor="middle" x="24" y="5932">
+<tspan class='head'>(</tspan>つ•̀ᴥ•́<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="48" y="5932">
+つ*:･ﾟ✧
+</text>
+<text text-anchor="end" x="0" y="5980">
+
+</text>
+<circle cx="16" cy="5976" r="16"/>
+<text text-anchor="middle" x="16" y="5980">
+<tspan class='head'>(</tspan>⊙_⊙<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="5980">
+
+</text>
+<text text-anchor="end" x="0" y="6028">
+
+</text>
+<circle cx="32" cy="6024" r="32"/>
+<text text-anchor="middle" x="32" y="6028">
+<tspan class='head'>(</tspan>=ಠ ل͟ ಠ=<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="64" y="6028">
+
+</text>
+<text text-anchor="end" x="0" y="6076">
+
+</text>
+<circle cx="28" cy="6072" r="28"/>
+<text text-anchor="middle" x="28" y="6076">
+<tspan class='head'>(</tspan>つ°ヮ°<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="56" y="6076">
+つ 
+</text>
+<text text-anchor="end" x="16" y="6220">
+o͡͡͡╮
+</text>
+<circle cx="44" cy="6216" r="28"/>
+<text text-anchor="middle" x="44" y="6220">
+<tspan class='head'>(</tspan> ʘ̆ ۝ ʘ̆ <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="72" y="6220">
+╭o͡
+</text>
+<text text-anchor="end" x="16" y="6316">
+o͡͡͡╮
+</text>
+<circle cx="48" cy="6312" r="32"/>
+<text text-anchor="middle" x="48" y="6316">
+<tspan class='head'>(</tspan> • ʖ̯ • <tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="80" y="6316">
+╭o͡͡͡
+</text>
+<text text-anchor="end" x="0" y="6748">
+
+</text>
+<circle cx="12" cy="6744" r="12"/>
+<text text-anchor="middle" x="12" y="6748">
+<tspan class='head'>(</tspan>•̪●<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="24" y="6748">
+
+</text>
+<text text-anchor="end" x="0" y="6796">
+
+</text>
+<circle cx="4" cy="6792" r="4"/>
+<text text-anchor="middle" x="4" y="6796">
+<tspan class='head'>(</tspan>॓॔<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="8" y="6796">
+
+</text>
+<text text-anchor="end" x="8" y="6844">
+٩
+</text>
+<circle cx="20" cy="6840" r="12"/>
+<text text-anchor="middle" x="20" y="6844">
+<tspan class='head'>(</tspan>͡๏̯͡๏<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="6844">
+۶
+</text>
+<text text-anchor="end" x="8" y="6892">
+٩
+</text>
+<circle cx="20" cy="6888" r="12"/>
+<text text-anchor="middle" x="20" y="6892">
+<tspan class='head'>(</tspan>-̮̮̃•̃<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="32" y="6892">
+ 
+</text>
+<text text-anchor="end" x="8" y="6940">
+٩
+</text>
+<circle cx="24" cy="6936" r="16"/>
+<text text-anchor="middle" x="24" y="6940">
+<tspan class='head'>(</tspan>̾●̮̮̃ ̾•̃̾<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="6940">
+۶
+</text>
+<text text-anchor="end" x="8" y="6988">
+٩
+</text>
+<circle cx="24" cy="6984" r="16"/>
+<text text-anchor="middle" x="24" y="6988">
+<tspan class='head'>(</tspan>-̮̮̃- ̃<tspan class='head'>)</tspan>
+</text>
+<text text-anchor="start" x="40" y="6988">
+۶
+</text>
+</svg>
