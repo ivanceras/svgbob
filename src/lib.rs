@@ -31,8 +31,6 @@
 //! 
 extern crate svg;
 extern crate unicode_width;
-#[cfg(feature = "memenhancer")]
-extern crate memenhancer;
 
 use svg::Node;
 use svg::node::element::Path as SvgPath;
@@ -66,44 +64,8 @@ mod optimizer;
 /// 
 pub fn to_svg(input: &str) -> SVG {
     let settings = &Settings::default();
-    let (svg_memes, updated_input) = get_meme_svg(input, settings); 
-    let mut svg = Grid::from_str(&updated_input).get_svg(settings);
-    for meme in svg_memes{
-        let text_node = TextNode::new(meme.to_string());
-        svg.append(text_node);
-    }
+    let mut svg = Grid::from_str(&input).get_svg(settings);
     svg
-}
-
-
-
-#[cfg(not(feature = "memenhancer"))]
-fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
-    (vec![], input.to_string())
-}
-
-#[cfg(feature = "memenhancer")]
-fn get_meme_svg(input: &str, settings:&Settings) -> (Vec<Box<Node>>, String) {
-    let mut svg_elements:Vec<Box<Node + 'static>> = vec![];
-    let mut relines = String::new();
-    let text_width = settings.text_width;
-    let text_height = settings.text_height;
-    let mut y = 0;
-    for line in input.lines(){
-        match  memenhancer::line_to_svg_with_excess_str(y, line, text_width, text_height){
-            Some((svg_elm, rest_text)) => {
-                relines.push_str(&rest_text);
-                relines.push('\n');
-                svg_elements.extend(svg_elm);
-            },
-            None => {
-                relines.push_str(line);
-                relines.push('\n');
-            }
-        }
-        y += 1;
-    } 
-    (svg_elements, relines)
 }
 
 pub struct Settings {
@@ -726,6 +688,12 @@ impl Grid {
         let exdhay = &Point::new(ex + dh, ay);
         let exchcy = &Point::new(ex + ch, cy);
         let axchcy = &Point::new(ax - ch, cy);
+        let exchby = &Point::new(ex + ch, by);
+        let cxeybv = &Point::new(cx, ey + bv);
+        let exchdy = &Point::new(ex + ch, dy);
+        let cxaybv = &Point::new(cx, ay - bv);
+        let axchby = &Point::new(ax - ch, by);
+        let axchdy = &Point::new(ax - ch, dy);
 
 
         // grid lines
@@ -758,9 +726,14 @@ impl Grid {
         let cxay_exey = Element::solid_line(cxay, exey);
         let exay_axcy = Element::solid_line(exay, axcy);
         let excy_axey = Element::solid_line(excy, axey);
+        let axey_cxcy = Element::solid_line(axey, cxcy);
+
+        let axcy_exchby = Element::solid_line(axcy, exchby);
+        let cxdy_cxeybv = Element::solid_line(cxdy, cxeybv);
+        let cxaybv_cxby = Element::solid_line(cxaybv, cxby);
+
         let exay_axehey = Element::solid_line(exay, axehey);
         let axay_exehey = Element::solid_line(axay, exehey);
-
         let axchay_cxey = Element::solid_line(axchay, cxey);
         let cxay_exchey = Element::solid_line(cxay, exchey);
         let cxey_exchay = Element::solid_line(cxey, exchay);
@@ -769,9 +742,11 @@ impl Grid {
         let axchey_exehey = Element::solid_line(axchey, exehey);
         let excy_axchcy = Element::solid_line(excy, axchcy);
         let cxdy_cxay = Element::solid_line(cxdy, cxay);
+        let axcy_exchdy = Element::solid_line(axcy, exchdy);
+        let axchby_excy = Element::solid_line(axchby, excy);
+        let axchdy_excy = Element::solid_line(axchdy, excy);
 
         // common arc
-        let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
         let arc_axcy_dxby = Element::arc(axcy, dxby, arc_radius * 2.0, false);
         let arc_bxby_excy = Element::arc(bxby, excy, arc_radius * 2.0, false);
         let arc_axcy_bxby = Element::arc(axcy, bxby, arc_radius, false);
@@ -808,6 +783,8 @@ impl Grid {
         let arc_axcy_cxay = Element::arc(axcy, cxay, arc_radius * 2.0, false);
         let arc_excy_cxey = Element::arc(excy, cxey, arc_radius * 2.0, false);
         let arc_cxay_excy = Element::arc(cxay, excy, arc_radius * 2.0, false);
+
+        // extended arc
         let arc_exdhey_axehay = Element::arc(exdhey, axehay, arc_radius * 10.0, false);
         let arc_exchey_dxay = Element::arc(exchey, dxay, arc_radius * 10.0, false);
         let arc_exehay_axdhey = Element::arc(exehay, axdhey, arc_radius * 10.0, false);
@@ -818,12 +795,11 @@ impl Grid {
         let arc_dxey_exchay = Element::arc(dxey, exchay, arc_radius * 10.0, false);
         let arc_axey_cxdy = Element::arc(axey, cxdy, arc_radius, false);
         let arc_cxdy_exey = Element::arc(cxdy, exey, arc_radius, false);
-
-        // extended arc
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
         let arc_exbhey_axcy = Element::arc(exbhey, axcy, arc_radius * 4.0, false);
         let arc_axbhay_excy = Element::arc(axbhay, excy, arc_radius * 4.0, false);
         let arc_axcy_exbhay = Element::arc(axcy, exbhay, arc_radius * 4.0, false);
+        let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
 
         // common path lines
         let vertical = Element::solid_line(center_top, center_bottom);
@@ -1216,11 +1192,22 @@ impl Grid {
                  vec![axcy_exey.clone()]
                 ),
                 /*
+                    speech bubble
                      .
                       `\
                 */
                 (self.is_char(this, is_backtick)
                  && self.is_char(top_left, is_low_round)
+                 && self.is_char(right, is_slant_left),
+                 vec![axay_exehey.clone()]
+                ),
+                /*
+                    speech bubble
+                     _
+                      `\
+                */
+                (self.is_char(this, is_backtick)
+                 && self.is_char(top_left, is_low_horizontal)
                  && self.is_char(right, is_slant_left),
                  vec![axay_exehey.clone()]
                 ),
@@ -1746,6 +1733,15 @@ impl Grid {
                  vec![axey_bxdy.clone(), dxdy_exey.clone(), arc_dxdy_bxdy.clone()]
                 ),
                 /*
+                     |  
+                    / \
+                */
+                (self.is_char(this, is_vertical)
+                 && self.is_char(bottom_left, is_slant_right)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![axey_cxcy.clone(), cxcy_exey.clone(), cxay_cxcy.clone()]
+                ),
+                /*
                      .  
                      |\
                 */
@@ -1843,6 +1839,7 @@ impl Grid {
                  vec![arc_exay_cxey.clone()]
                 ),
                 /*
+                    expandable close bracket
                       
                       (
                        >
@@ -1875,6 +1872,7 @@ impl Grid {
                  vec![arc_cxey_axay.clone()]
                 ),
                 /*
+                    expandable open brcket
                       
                       )
                      <
@@ -1885,6 +1883,69 @@ impl Grid {
                  && self.is_char(top_right, is_close_curve)
                  && self.is_char(bottom_right, is_close_curve),
                  vec![axcy_exay.clone(), axcy_exey.clone()]
+                ),
+
+                /*
+                     .- 
+                    < 
+                */
+                (self.is_char(this, is_low_round) 
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(bottom_left, is_arrow_left),
+                 vec![arc_excy_cxdy.clone(), cxdy_cxeybv.clone()]
+                ),
+                /*
+                    left speech balloon pointer  
+                      .
+                     <
+                      '
+                      
+                */
+                (self.is_char(this, is_arrow_left)
+                 && self.is_char(top_right, is_low_round)
+                 && self.is_char(bottom_right, is_high_round),
+                 vec![axcy_exchby.clone(), axcy_exchdy.clone()]
+                ),
+                /*
+                    <  
+                     '-
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(top_left, is_arrow_left),
+                 vec![arc_cxby_excy.clone(), cxaybv_cxby.clone()]
+                ),
+                /*
+                    right speech balloon pointer  
+                      .
+                       >
+                      '
+                      
+                */
+                (self.is_char(this, is_arrow_right)
+                 && self.is_char(top_left, is_low_round)
+                 && self.is_char(bottom_left, is_high_round),
+                 vec![axchby_excy.clone(), axchdy_excy.clone()]
+                ),
+
+                /*
+                      > 
+                    -'
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(top_right, is_arrow_right),
+                 vec![arc_axcy_cxby.clone(), cxaybv_cxby.clone()]
+                ),
+                /*
+
+                    -. 
+                      > 
+                */
+                (self.is_char(this, is_low_round) 
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(bottom_right, is_arrow_right),
+                 vec![arc_cxdy_axcy.clone(), cxdy_cxeybv.clone()]
                 ),
                 /*
                       |_\
@@ -2278,8 +2339,8 @@ impl Grid {
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self, settings: &Settings) -> SVG {
         let nodes = self.get_svg_nodes(settings);
-        let width = settings.text_width * self.columns as f32;
-        let height = settings.text_height * self.rows as f32;
+        let width = settings.text_width * (self.columns + 4) as f32;
+        let height = settings.text_height * (self.rows + 2)as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
@@ -2326,7 +2387,7 @@ fn get_styles() -> Style {
     }
     circle {
       stroke: black;
-      stroke-width: 1;
+      stroke-width: 2;
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
@@ -2499,10 +2560,6 @@ fn escape_char(ch: &str) -> String {
 
 fn is_alphanumeric(ch:&str) -> bool{
     ch.chars().all(|c| c.is_alphanumeric())
-}
-
-fn is_whitespace(ch: &str) -> bool{
-    ch.chars().all(|c| c.is_whitespace())
 }
 
 #[test]
