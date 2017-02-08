@@ -1,0 +1,19 @@
+[package]
+name = "svgbob"
+version = "0.1.8"
+authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
+description = "Transform your ascii diagrams into happy little SVG"
+repository = "https://github.com/ivanceras/svgbobrus"
+documentation = "https://docs.rs/svgbob"
+keywords = ["ascii", "svg", "convert", "bob"]
+license = "Apache-2.0"
+
+[dependencies]
+svg = "0.5"
+unicode-width = "0.1"
+
+
+[lib]
+
+[dev-dependencies]
+handlebars = "0.21"

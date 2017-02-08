@@ -1,7 +1,6 @@
 #![deny(warnings)]
 #[macro_use]
 extern crate clap;
-// extern crate regex;
 
 extern crate svgbob;
 extern crate svg;

@@ -1,11 +1,11 @@
 [root]
-name = "svgbob"
+name = "svgbob_cli"
 version = "0.1.8"
 dependencies = [
  "clap 2.20.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "svgbob 0.1.8",
 ]
 
 [[package]]
@@ -87,6 +87,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "svg"
 version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "svgbob"
+version = "0.1.8"
+dependencies = [
+ "svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "term_size"
