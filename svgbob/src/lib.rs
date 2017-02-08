@@ -62,6 +62,7 @@ mod optimizer;
 /// println!("svg: {}", svgbob::to_svg(input));
 /// ``` 
 /// 
+/// commercial version enhances memes automatically
 pub fn to_svg(input: &str) -> SVG {
     let settings = &Settings::default();
     Grid::from_str(&input).get_svg(settings)
