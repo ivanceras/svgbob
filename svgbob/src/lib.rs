@@ -73,6 +73,13 @@ pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
     Grid::from_str(&input).get_svg(settings)
 }
 
+pub fn to_svg_with_size_nooptimization(input: &str, text_width: f32, text_height: f32) -> SVG {
+    let mut settings = Settings::no_optimization();
+    settings.text_width = text_width;
+    settings.text_height = text_height;
+    Grid::from_str(&input).get_svg(&settings)
+}
+
 
 pub struct Settings {
     text_width: f32,
@@ -121,8 +128,8 @@ impl Default for Settings {
         Settings {
             text_width: 8.0,
             text_height: 16.0,
-            optimize: true,
-            compact_path: true,
+            optimize: false,
+            compact_path: false,
         }
     }
 }
@@ -2420,15 +2427,15 @@ fn get_styles() -> Style {
 fn arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "triangle")
-        .set("viewBox", "0 0 40 40")
-        .set("refX", 0)
-        .set("refY", 5)
+        .set("viewBox", "0 0 50 20")
+        .set("refX", 15)
+        .set("refY", 10)
         .set("markerUnits", "strokeWidth")
         .set("markerWidth", 10)
         .set("markerHeight", 10)
         .set("orient", "auto");
 
-    let path = SvgPath::new().set("d", "M 0 0 L 10 5 L 0 10 z");
+    let path = SvgPath::new().set("d", "M 0 0 L 30 10 L 0 20 z");
     marker.append(path);
     marker
 
