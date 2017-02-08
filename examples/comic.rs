@@ -10,9 +10,9 @@ extern crate svg;
 use handlebars::Context;
 
 fn main() {
-    let svg_file = "screenshots/memes.svg";
-    let html_file = "memes.html";
-    let bob_str = include_str!("memes.bob");
+    let svg_file = "screenshots/comic.svg";
+    let html_file = "comic.html";
+    let bob_str = include_str!("comic.bob");
     let svg = svgbob::to_svg(bob_str);
     svg::save(svg_file, &svg).unwrap();
     println!("Saved to {}",svg_file);
@@ -20,6 +20,7 @@ fn main() {
     let handlebars = Handlebars::new();
     let mut m: BTreeMap<String, String> = BTreeMap::new();
     m.insert("bob".to_string(),bob_str.to_owned());
+    m.insert("svg_file".to_string(), svg_file.to_string());
     let context = Context::wraps(&m);
 
 

@@ -23,6 +23,7 @@ fn main() {
     let handlebars = Handlebars::new();
     let mut m: BTreeMap<String, String> = BTreeMap::new();
     m.insert("bob".to_string(),bob_str.to_owned());
+    m.insert("svg_file".to_string(), svg_file.to_string());
     let context = Context::wraps(&m);
 
 

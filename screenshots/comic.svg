@@ -1,0 +1,85 @@
+<svg font-family="arial" font-size="14" height="560" width="512" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="0" refY="5" viewBox="0 0 40 40">
+<path d="M 0 0 L 10 5 L 0 10 z"/>
+</marker>
+</defs>
+<style>
+
+    line, path {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
+    
+</style>
+<path d=" M 68 28 L 68 64 M 72 24 A 4 4 0 0 0 68 28 M 72 24 L 176 24 M 180 28 L 180 64 M 180 28 A 4 4 0 0 0 176 24 M 68 32 L 68 64 M 180 32 L 180 64 M 68 76 L 68 64 M 68 76 A 4 4 0 0 0 72 80 L 96 80 M 112 80 L 176 80 A 4 4 0 0 0 180 76 L 180 64 M 104 88 L 96 96 M 112 80 L 104 88 M 80 112 L 96 80 M 96 96 L 80 112 M 16 152 L 36 152 M 36 144 L 36 192 M 48 152 L 36 152 M 48 152 L 56 152 M 32 208 L 36 200 L 48 224 M 36 192 L 36 200 M 24 224 L 32 208 M 40 208 L 48 224 M 4 300 L 4 336 M 8 296 A 4 4 0 0 0 4 300 M 8 296 L 160 296 M 164 300 L 164 336 M 164 300 A 4 4 0 0 0 160 296 M 4 304 L 4 336 M 164 304 L 164 336 M 4 348 L 4 336 M 4 348 A 4 4 0 0 0 8 352 L 36 352 M 48 352 L 160 352 A 4 4 0 0 0 164 348 L 164 336 M 204 348 L 204 368 M 208 344 A 4 4 0 0 0 204 348 M 208 344 L 304 344 M 308 348 L 308 368 M 308 348 A 4 4 0 0 0 304 344 M 36 352 L 36 368 M 40 368 L 48 352 M 204 352 L 204 368 M 308 352 L 308 368 M 36 368 L 36 376 L 48 352 M 204 380 L 204 368 M 204 380 A 4 4 0 0 0 208 384 L 232 384 M 240 384 L 304 384 A 4 4 0 0 0 308 380 L 308 368 M 232 384 L 248 400 M 240 384 L 248 400 M 4 476 L 4 496 M 8 472 A 4 4 0 0 0 4 476 M 8 472 L 168 472 M 172 476 A 4 4 0 0 0 168 472 M 172 476 L 172 484 M 360 472 A 4 4 0 0 0 356 476 L 356 484 M 360 472 L 472 472 M 476 476 L 476 496 M 476 476 A 4 4 0 0 0 472 472 M 4 480 L 4 496 M 172 484 L 184 488 M 172 492 L 184 488 M 288 488 L 296 488 M 344 488 L 356 484 M 344 488 L 356 492 M 476 480 L 476 496 M 4 496 L 4 500 A 4 4 0 0 0 8 504 L 168 504 A 4 4 0 0 0 172 500 M 172 492 L 172 500 M 356 500 A 4 4 0 0 0 360 504 M 356 492 L 356 500 M 360 504 L 472 504 M 476 496 L 476 500 M 472 504 A 4 4 0 0 0 476 500" fill="none"/>
+<path d="" fill="none" stroke-dasharray="3 3"/>
+<text x="82" y="44">
+Hey there!
+</text>
+<text x="82" y="60">
+I haz skillz
+</text>
+<text x="10" y="124">
+( ͡° ͜ʖ ͡°)
+</text>
+<text x="2" y="268">
+Table Flip
+</text>
+<text x="98" y="268">
+(╯°□°)╯︵┻━┻
+</text>
+<text x="10" y="316">
+What have you done?
+</text>
+<text x="10" y="332">
+Put it back!
+</text>
+<text x="218" y="364">
+Y u do diz?
+</text>
+<text x="2" y="412">
+乁(ಥ౪ಥ;)ㄏ
+</text>
+<text x="258" y="428">
+ლ(ಠ益ಠლ)
+</text>
+<text x="10" y="492">
+Ok.
+</text>
+<text x="42" y="492">
+I Put Table Back
+</text>
+<text x="202" y="492">
+┬──┬
+</text>
+<text x="242" y="492">
+ノ(
+</text>
+<text x="274" y="492">
+゜
+</text>
+<text x="298" y="492">
+゜ノ)
+</text>
+<text x="362" y="492">
+Here you go
+</text>
+</svg>

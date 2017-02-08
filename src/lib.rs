@@ -29,6 +29,7 @@
 //! </svg>
 //! 
 //! 
+#![deny(warnings)]
 extern crate svg;
 extern crate unicode_width;
 
@@ -62,8 +63,15 @@ mod optimizer;
 /// ``` 
 /// 
 pub fn to_svg(input: &str) -> SVG {
-    Grid::from_str(input).get_svg(&Settings::default())
+    let settings = &Settings::default();
+    Grid::from_str(&input).get_svg(settings)
 }
+
+pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
+    let settings = &Settings::with_size(text_width, text_height);
+    Grid::from_str(&input).get_svg(settings)
+}
+
 
 pub struct Settings {
     text_width: f32,
@@ -76,6 +84,15 @@ pub struct Settings {
 }
 
 impl Settings {
+
+    pub fn with_size(text_width: f32, text_height: f32) -> Self{
+         Settings{
+            text_width: text_width,
+            text_height: text_height,
+            optimize: true,
+            compact_path: true,
+         }
+    }
     pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
         settings.optimize = false;
@@ -459,15 +476,17 @@ impl GChar{
         }
     }
     
-    fn append(self, ch: char) -> Self {
-        let mut s = self.string.clone(); 
-        GChar::from_str(&s)
+    fn push_str(self, s: &str) -> Self {
+        let mut string = self.string.clone();
+        string.push_str(s);
+        GChar::from_str(&string)
     }
 }
 
 
 #[derive(Debug)]
 pub struct Grid {
+    source: String,
     rows: usize,
     columns: usize,
     lines: Vec<Vec<GChar>>,
@@ -480,22 +499,31 @@ impl Grid {
         
         for line in lines{
             let mut gchars = vec![];
+            let mut zero_ch = None;
             for ch in line.chars(){
-                if let Some(unicode_width) = UnicodeWidthChar::width(ch){
+                if let Some(unicode_width) = ch.width(){
                     // if width is zero add the char to previous buffer
                     if unicode_width == 0 {
-                        let pop:Option<GChar> = gchars.pop();
-                        if let Some(pop) = pop{
-                            let last:GChar = pop.append(ch);
-                            gchars.push(last);
-                        }
+                        zero_ch = Some(ch);
                     }else{
-                        let gchar = GChar::new(ch);
-                        gchars.push(gchar);
+                        match zero_ch{
+                            Some(prefend_ch) => {
+                                let mut s = String::new();
+                                s.push(prefend_ch);
+                                s.push(ch);
+                                let last_gchar:Option<GChar> = gchars.pop();
+                                if let Some(last_gchar) = last_gchar{
+                                    let gchar = last_gchar.push_str(&s);
+                                    gchars.push(gchar);
+                                }
+                                zero_ch = None;
+                            }
+                            None => {
+                                let gchar = GChar::new(ch);
+                                gchars.push(gchar);
+                            }
+                        }
                     }
-                }else{
-                    let gchar = GChar::new(ch);
-                    gchars.push(gchar);
                 }
             } 
             line_gchars.push(gchars);
@@ -512,6 +540,7 @@ impl Grid {
         }
 
         Grid {
+            source: s.into(),
             rows: line_gchars.len(),
             columns: max,
             lines: line_gchars,
@@ -673,6 +702,12 @@ impl Grid {
         let exdhay = &Point::new(ex + dh, ay);
         let exchcy = &Point::new(ex + ch, cy);
         let axchcy = &Point::new(ax - ch, cy);
+        let exchby = &Point::new(ex + ch, by);
+        let cxeybv = &Point::new(cx, ey + bv);
+        let exchdy = &Point::new(ex + ch, dy);
+        let cxaybv = &Point::new(cx, ay - bv);
+        let axchby = &Point::new(ax - ch, by);
+        let axchdy = &Point::new(ax - ch, dy);
 
 
         // grid lines
@@ -705,9 +740,14 @@ impl Grid {
         let cxay_exey = Element::solid_line(cxay, exey);
         let exay_axcy = Element::solid_line(exay, axcy);
         let excy_axey = Element::solid_line(excy, axey);
+        let axey_cxcy = Element::solid_line(axey, cxcy);
+
+        let axcy_exchby = Element::solid_line(axcy, exchby);
+        let cxdy_cxeybv = Element::solid_line(cxdy, cxeybv);
+        let cxaybv_cxby = Element::solid_line(cxaybv, cxby);
+
         let exay_axehey = Element::solid_line(exay, axehey);
         let axay_exehey = Element::solid_line(axay, exehey);
-
         let axchay_cxey = Element::solid_line(axchay, cxey);
         let cxay_exchey = Element::solid_line(cxay, exchey);
         let cxey_exchay = Element::solid_line(cxey, exchay);
@@ -715,9 +755,12 @@ impl Grid {
         let axcy_exchcy = Element::solid_line(axcy, exchcy);
         let axchey_exehey = Element::solid_line(axchey, exehey);
         let excy_axchcy = Element::solid_line(excy, axchcy);
+        let cxdy_cxay = Element::solid_line(cxdy, cxay);
+        let axcy_exchdy = Element::solid_line(axcy, exchdy);
+        let axchby_excy = Element::solid_line(axchby, excy);
+        let axchdy_excy = Element::solid_line(axchdy, excy);
 
         // common arc
-        let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
         let arc_axcy_dxby = Element::arc(axcy, dxby, arc_radius * 2.0, false);
         let arc_bxby_excy = Element::arc(bxby, excy, arc_radius * 2.0, false);
         let arc_axcy_bxby = Element::arc(axcy, bxby, arc_radius, false);
@@ -746,7 +789,6 @@ impl Grid {
         let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
-        let arc_exey_axcy = Element::arc(exey, axcy, arc_radius * 4.0, false);
         let arc_cxay_exey = Element::arc(cxay, exey, arc_radius * 8.0, false);
         let arc_exay_cxey = Element::arc(exay, cxey, arc_radius * 8.0, false);
         let arc_cxey_axay = Element::arc(cxey, axay, arc_radius * 8.0, false);
@@ -755,6 +797,8 @@ impl Grid {
         let arc_axcy_cxay = Element::arc(axcy, cxay, arc_radius * 2.0, false);
         let arc_excy_cxey = Element::arc(excy, cxey, arc_radius * 2.0, false);
         let arc_cxay_excy = Element::arc(cxay, excy, arc_radius * 2.0, false);
+
+        // extended arc
         let arc_exdhey_axehay = Element::arc(exdhey, axehay, arc_radius * 10.0, false);
         let arc_exchey_dxay = Element::arc(exchey, dxay, arc_radius * 10.0, false);
         let arc_exehay_axdhey = Element::arc(exehay, axdhey, arc_radius * 10.0, false);
@@ -763,12 +807,13 @@ impl Grid {
         let arc_axchay_bxey = Element::arc(axchay, bxey, arc_radius * 10.0, false);
         let arc_axehey_exdhay = Element::arc(axehey, exdhay, arc_radius * 10.0, false);
         let arc_dxey_exchay = Element::arc(dxey, exchay, arc_radius * 10.0, false);
-
-        // extended arc
+        let arc_axey_cxdy = Element::arc(axey, cxdy, arc_radius, false);
+        let arc_cxdy_exey = Element::arc(cxdy, exey, arc_radius, false);
         let arc_excy_axbhey = Element::arc(excy, axbhey, arc_radius * 4.0, false);
         let arc_exbhey_axcy = Element::arc(exbhey, axcy, arc_radius * 4.0, false);
         let arc_axbhay_excy = Element::arc(axbhay, excy, arc_radius * 4.0, false);
         let arc_axcy_exbhay = Element::arc(axcy, exbhay, arc_radius * 4.0, false);
+        let arc_axcy_cxby = Element::arc(axcy, cxby, arc_radius, false);
 
         // common path lines
         let vertical = Element::solid_line(center_top, center_bottom);
@@ -1161,11 +1206,22 @@ impl Grid {
                  vec![axcy_exey.clone()]
                 ),
                 /*
+                    speech bubble
                      .
                       `\
                 */
                 (self.is_char(this, is_backtick)
                  && self.is_char(top_left, is_low_round)
+                 && self.is_char(right, is_slant_left),
+                 vec![axay_exehey.clone()]
+                ),
+                /*
+                    speech bubble
+                     _
+                      `\
+                */
+                (self.is_char(this, is_backtick)
+                 && self.is_char(top_left, is_low_horizontal)
                  && self.is_char(right, is_slant_left),
                  vec![axay_exehey.clone()]
                 ),
@@ -1379,6 +1435,25 @@ impl Grid {
                  && self.is_char(left, is_horizontal)
                  && self.is_char(top, is_vertical),
                  vec![cxay_cxby.clone(), arc_axcy_cxby.clone()]
+                ),
+
+                /*
+                     | 
+                    _' 
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(left, is_low_horizontal)
+                 && self.is_char(top, is_vertical),
+                 vec![arc_axey_cxdy.clone(),cxdy_cxay.clone() ]
+                ),
+                /*
+                     | 
+                     '_
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(right, is_low_horizontal)
+                 && self.is_char(top, is_vertical),
+                 vec![cxdy_cxay.clone(),arc_cxdy_exey.clone()]
                 ),
                 /*
                     .-  
@@ -1672,6 +1747,15 @@ impl Grid {
                  vec![axey_bxdy.clone(), dxdy_exey.clone(), arc_dxdy_bxdy.clone()]
                 ),
                 /*
+                     |  
+                    / \
+                */
+                (self.is_char(this, is_vertical)
+                 && self.is_char(bottom_left, is_slant_right)
+                 && self.is_char(bottom_right, is_slant_left),
+                 vec![axey_cxcy.clone(), cxcy_exey.clone(), cxay_cxcy.clone()]
+                ),
+                /*
                      .  
                      |\
                 */
@@ -1769,6 +1853,7 @@ impl Grid {
                  vec![arc_exay_cxey.clone()]
                 ),
                 /*
+                    expandable close bracket
                       
                       (
                        >
@@ -1801,6 +1886,7 @@ impl Grid {
                  vec![arc_cxey_axay.clone()]
                 ),
                 /*
+                    expandable open brcket
                       
                       )
                      <
@@ -1811,6 +1897,69 @@ impl Grid {
                  && self.is_char(top_right, is_close_curve)
                  && self.is_char(bottom_right, is_close_curve),
                  vec![axcy_exay.clone(), axcy_exey.clone()]
+                ),
+
+                /*
+                     .- 
+                    < 
+                */
+                (self.is_char(this, is_low_round) 
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(bottom_left, is_arrow_left),
+                 vec![arc_excy_cxdy.clone(), cxdy_cxeybv.clone()]
+                ),
+                /*
+                    left speech balloon pointer  
+                      .
+                     <
+                      '
+                      
+                */
+                (self.is_char(this, is_arrow_left)
+                 && self.is_char(top_right, is_low_round)
+                 && self.is_char(bottom_right, is_high_round),
+                 vec![axcy_exchby.clone(), axcy_exchdy.clone()]
+                ),
+                /*
+                    <  
+                     '-
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(right, is_horizontal)
+                 && self.is_char(top_left, is_arrow_left),
+                 vec![arc_cxby_excy.clone(), cxaybv_cxby.clone()]
+                ),
+                /*
+                    right speech balloon pointer  
+                      .
+                       >
+                      '
+                      
+                */
+                (self.is_char(this, is_arrow_right)
+                 && self.is_char(top_left, is_low_round)
+                 && self.is_char(bottom_left, is_high_round),
+                 vec![axchby_excy.clone(), axchdy_excy.clone()]
+                ),
+
+                /*
+                      > 
+                    -'
+                */
+                (self.is_char(this, is_high_round)
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(top_right, is_arrow_right),
+                 vec![arc_axcy_cxby.clone(), cxaybv_cxby.clone()]
+                ),
+                /*
+
+                    -. 
+                      > 
+                */
+                (self.is_char(this, is_low_round) 
+                 && self.is_char(left, is_horizontal)
+                 && self.is_char(bottom_right, is_arrow_right),
+                 vec![arc_cxdy_axcy.clone(), cxdy_cxeybv.clone()]
                 ),
                 /*
                       |_\
@@ -2204,12 +2353,12 @@ impl Grid {
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self, settings: &Settings) -> SVG {
         let nodes = self.get_svg_nodes(settings);
-        let width = settings.text_width * self.columns as f32;
-        let height = settings.text_height * self.rows as f32;
+        let width = settings.text_width * (self.columns + 4) as f32;
+        let height = settings.text_height * (self.rows + 2)as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
-                r#"Consolas, "Liberation Mono", Menlo, Courier, monospace"#
+                "arial"
                 )
             .set("width", width)
             .set("height", height);
@@ -2249,6 +2398,19 @@ fn get_styles() -> Style {
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+      fill:white;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
     }
     "#;
     Style::new(style)
@@ -2414,10 +2576,6 @@ fn is_alphanumeric(ch:&str) -> bool{
     ch.chars().all(|c| c.is_alphanumeric())
 }
 
-fn is_whitespace(ch: &str) -> bool{
-    ch.chars().all(|c| c.is_whitespace())
-}
-
 #[test]
 fn test_bob(){
     println!(r#"<meta charset="utf-8"/>"#);
@@ -2438,4 +2596,44 @@ fn test_bob(){
     let svg = grid.get_svg(&Settings::no_optimization());
     println!("svg:{}", svg);
     assert_eq!(c, Some(&GChar::from_str("4")));
+}
+
+#[test]
+fn test_meme(){
+    let meme = r#"[( ͡° ͜ʖ ͡°)]ﾟ"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{} alphanumeric {}",m, m as u32, m.width().unwrap(), m.is_alphanumeric());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:#?}",grid);
+    assert_eq!(grid.get(&Loc::new(6,0)), Some(&GChar::from_str(" ͡°")));
+}
+
+#[test]
+fn test_eye_brow(){
+    let meme = r#" ͡°"#;
+    println!(r#"<meta charset="utf-8"/>"#);
+    println!("char count {}", meme.chars().count());
+    println!("total bytes size {}", meme.len());
+    println!("total width {}", UnicodeWidthStr::width(&*meme));
+    for m in meme.chars(){
+        println!("{} {} width:{}",m, m as u32, m.width().unwrap());
+    }
+    println!("<pre>");
+    println!("{}", meme);
+    let grid = Grid::from_str(meme);
+    println!("{:?}",grid);
+    let ch = grid.get(&Loc::new(0,0));
+    if let Some(ch) = ch{
+        for ch in ch.string.chars(){
+            println!("ch: {:?}", ch as u32);
+        }
+    }
+    assert_eq!(ch, Some(&GChar::from_str(" ͡°")));
 }
