@@ -29,6 +29,7 @@
 //! </svg>
 //! 
 //! 
+#![deny(warnings)]
 extern crate svg;
 extern crate unicode_width;
 
@@ -40,7 +41,6 @@ use svg::node::element::Style;
 use svg::node::element::SVG;
 use svg::node::element::Definitions;
 use svg::node::element::Marker;
-use svg::node::Text as TextNode;
 use optimizer::Optimizer;
 use self::Feature::Arrow;
 use self::Feature::Circle;
@@ -64,9 +64,14 @@ mod optimizer;
 /// 
 pub fn to_svg(input: &str) -> SVG {
     let settings = &Settings::default();
-    let mut svg = Grid::from_str(&input).get_svg(settings);
-    svg
+    Grid::from_str(&input).get_svg(settings)
 }
+
+pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
+    let settings = &Settings::with_size(text_width, text_height);
+    Grid::from_str(&input).get_svg(settings)
+}
+
 
 pub struct Settings {
     text_width: f32,
@@ -79,6 +84,15 @@ pub struct Settings {
 }
 
 impl Settings {
+
+    pub fn with_size(text_width: f32, text_height: f32) -> Self{
+         Settings{
+            text_width: text_width,
+            text_height: text_height,
+            optimize: true,
+            compact_path: true,
+         }
+    }
     pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
         settings.optimize = false;
