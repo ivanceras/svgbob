@@ -5,7 +5,7 @@ dependencies = [
  "clap 2.22.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "svgbob 0.1.9",
+ "svgbob 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -101,6 +101,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "svgbob"
 version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -155,6 +156,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum rustc-serialize 0.3.23 (registry+https://github.com/rust-lang/crates.io-index)" = "684ce48436d6465300c9ea783b6b14c4361d6b8dcbb1375b486a69cc19e2dfb0"
 "checksum strsim 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b4d15c810519a91cf877e7e36e63fe068815c678181439f2f29e2562147c3694"
 "checksum svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)" = "4308c7f639ecd0062b4020323ca3fdce156190132211c337b82c7389f7a110c6"
+"checksum svgbob 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "d45f907fba9efb5c2eef2adbc1505a3cfe75d6db4b5b90b64b84ac4deb92c32c"
 "checksum term_size 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "07b6c1ac5b3fffd75073276bca1ceed01f67a28537097a2a9539e116e50fb21a"
 "checksum unicode-segmentation 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "18127285758f0e2c6cf325bb3f3d138a12fee27de4f23e146cd6a179f26c2cf3"
 "checksum unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "bf3a113775714a22dcb774d8ea3655c53a32debae63a063acc00a91cc586245f"
