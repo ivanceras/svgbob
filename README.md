@@ -127,7 +127,7 @@ The SVG image is generated from the ascii text below.
 
 #Using in command line
 
-`cargo install svgbob`
+`cargo install svgbob_cli`
 
 `svgbob` normally operates on stdin and stdout:
 ```console
