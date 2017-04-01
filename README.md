@@ -1,7 +1,6 @@
 # SvgBobRus
 
-<img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge">
-<a href="https://travis-ci.org/ivanceras/svgbobrus">
+<img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge"><a href="https://travis-ci.org/ivanceras/svgbobrus">
 <img src="https://api.travis-ci.org/ivanceras/svgbobrus.svg"/>
 </a>
 
