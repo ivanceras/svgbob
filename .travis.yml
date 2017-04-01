@@ -3,5 +3,6 @@ rust:
 - nightly
 
 script:
+- cd svgbob 
 - cargo build
 - cargo test

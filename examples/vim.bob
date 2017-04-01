@@ -1,0 +1,65 @@
+                      Colossal Typewriter
+                           by John McCarthy and Roland
+                               Silver for the PDP-1  |   Photon typesetter
+                                ?                    |   editors by Michael
+                                ?                     \  Barnett & Kalon
+             Expensive Typewriter        CREATE/EDIT   \  Kelley for      TECO
+           for PDP-1 by Steve Piner       for CTSS      \ IBM 704     for PDP-1
+                   /         |           /     |  \      \__  \   by Dan Murphy
+                  /          |          /      |   \        \  \            |
+  * Expensive Typewriter  editors      EDITS   | MEMO/MODIFY |  |   VEDIT   |
+    for PDP-1, improved    for       by Arthur | by Leslie   |  | by Victor |
+    by Peter Deutsch      PDP-4,       Samuel  |   Lowry    /   |  Yngve    |
+            |            PDP-5/8      for CTSS  \ for CTSS /  _/  for     PDP-6
+            |                            ?   \_  \    |   / _/   CTSS  TECO by
+           QED                           ?     \_ \   |  / /   /    Greenblatt,
+    for Berkeley SDS-940                 ?       \ \  | | |  /       Holloway,
+       by Deutsch and                  LINED    TYPSET for CTSS     and Nelson
+       Butler Lampson                for PDP-6  by Jerry Saltzer     ?  |   |
+         /           \                  |          |          |     ?   |   |
+        /             \                 |      PDP-7/9 editor |    ?  DEC   |
+      QED,          * QED               |                     |   ?  TECO   |
+  as published      for CTSS            |     ????????????????|???          |
+    in CACM     by Ken Thompson         |   ??                |            ITS
+        |               |               |  ?      ED (and EDL, EDA, EDB)  TECO
+        |               |             STOPGAP            for CTSS        /  |
+        |              QED           for PDP-10              |          /  /
+        |           for Multics    by Bill Weiher            |         /  |
+        |       by Ken Thompson          |                  edit      |   |
+        |         /         \           SOS            for Multics    |   |
+        |        /           \       for PDP-10    by Charles Garman  |   |
+        |      qedx          QED       by Steve           |       ___/    |
+        |  for Multics     for GCOS      Savitzky         |      /     EMACS
+        |               by Dennis Ritchie  ?            edm     /    in TECO
+        |                    |             ?       for Multics /  by RMS et al.
+      QUIDS                  |             ?                  /   /  |      |
+by George Coulouris       * ed             ?            _____/   /   |      |
+      et al.            for PDP-7 Unix     ?           /        /    |      |
+        |              by Ken Thompson     ?          |        /     |      |
+        |                   |              ?     ZED/DOC      /    Multics  |
+        |                   |              ?   by Vaughan    /      EMACS   |
+        |                  ed              ?    Pratt       /   by Bernard  |
+        |               for Unix           ?   in TECO     /    Greenberg   |
+        |           (various versions)     ?     |        /         |      /
+        |                 |                ?     |       /           \    /
+        |                 |               ?      |      /           GNU Emacs
+         \               ed              ?      /      /
+          \         for Unix v6         ?      /      /
+           \      /     |     \        ?      /      /
+            \   /   other eds  |      ?      /      /
+             em      (UCLA?)   |     ?      /      /
+Unix ed with additions    |    |    ?      |      /
+ from George Coulouris     \   |   ?       |     /
+   |      |          \__    |  |  ?        |    /
+   |      |             \__ |  | ?         |   /
+other     |                ex (v1)         |  /
+ em       |      Unix ed with additions   /  /
+variants  |      by Bill Joy and Charles /  /
+         DED                Haley       /  /
+   by Richard Bornat,         |        /  /
+   Harold Thimbleby         ex (v2)   /  /
+                    Unix ed with additions
+                          by Bill Joy
+                              |
+                             ex/vi (v3)
+                     extended by Mark Horton

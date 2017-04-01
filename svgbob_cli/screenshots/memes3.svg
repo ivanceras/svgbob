@@ -1,4 +1,4 @@
-<svg font-family="arial" font-size="14" height="6976" width="600" xmlns="http://www.w3.org/2000/svg">
+<svg font-family="arial" font-size="14" height="7008" width="632" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="0" refY="5" viewBox="0 0 40 40">
 <path d="M 0 0 L 10 5 L 0 10 z"/>
@@ -16,127 +16,19 @@
     }
     circle {
       stroke: black;
-      stroke-width: 1;
+      stroke-width: 2;
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
       fill:white;
     }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
     
 </style>
-<circle cx="32" cy="40" r="28"/>
-<circle cx="32" cy="88" r="28"/>
-<circle cx="64" cy="136" r="28"/>
-<circle cx="48" cy="184" r="28"/>
-<circle cx="72" cy="232" r="28"/>
-<circle cx="24" cy="280" r="20"/>
-<circle cx="24" cy="328" r="20"/>
-<circle cx="28" cy="376" r="24"/>
-<circle cx="44" cy="424" r="24"/>
-<circle cx="44" cy="520" r="32"/>
-<circle cx="36" cy="568" r="32"/>
-<circle cx="28" cy="616" r="16"/>
-<circle cx="40" cy="664" r="12"/>
-<circle cx="48" cy="712" r="12"/>
-<circle cx="136" cy="712" r="20"/>
-<circle cx="228" cy="712" r="24"/>
-<circle cx="32" cy="856" r="20"/>
-<circle cx="44" cy="904" r="40"/>
-<circle cx="36" cy="952" r="32"/>
-<circle cx="148" cy="952" r="32"/>
-<circle cx="32" cy="1048" r="20"/>
-<circle cx="112" cy="1048" r="20"/>
-<circle cx="32" cy="1096" r="20"/>
-<circle cx="112" cy="1096" r="20"/>
-<circle cx="84" cy="1192" r="24"/>
-<circle cx="20" cy="1288" r="16"/>
-<circle cx="100" cy="1288" r="16"/>
-<circle cx="228" cy="1336" r="24"/>
-<circle cx="64" cy="1480" r="60"/>
-<circle cx="232" cy="1480" r="60"/>
-<circle cx="40" cy="1528" r="28"/>
-<circle cx="304" cy="1528" r="28"/>
-<circle cx="28" cy="1576" r="24"/>
-<circle cx="36" cy="1624" r="24"/>
-<circle cx="300" cy="1624" r="24"/>
-<circle cx="36" cy="1672" r="24"/>
-<circle cx="340" cy="1672" r="24"/>
-<circle cx="36" cy="1720" r="32"/>
-<circle cx="164" cy="1720" r="32"/>
-<circle cx="244" cy="1720" r="24"/>
-<circle cx="348" cy="1720" r="24"/>
-<circle cx="40" cy="1768" r="36"/>
-<circle cx="164" cy="1768" r="32"/>
-<circle cx="244" cy="1768" r="24"/>
-<circle cx="356" cy="1768" r="24"/>
-<circle cx="40" cy="1816" r="36"/>
-<circle cx="164" cy="1816" r="32"/>
-<circle cx="244" cy="1816" r="24"/>
-<circle cx="356" cy="1816" r="24"/>
-<circle cx="32" cy="1864" r="28"/>
-<circle cx="280" cy="1864" r="28"/>
-<circle cx="28" cy="1912" r="24"/>
-<circle cx="148" cy="1912" r="24"/>
-<circle cx="96" cy="1960" r="28"/>
-<circle cx="264" cy="1960" r="28"/>
-<circle cx="36" cy="2056" r="32"/>
-<circle cx="36" cy="2152" r="32"/>
-<circle cx="32" cy="2200" r="28"/>
-<circle cx="160" cy="2200" r="28"/>
-<circle cx="52" cy="2296" r="16"/>
-<circle cx="44" cy="2344" r="16"/>
-<circle cx="44" cy="2488" r="16"/>
-<circle cx="80" cy="2536" r="20"/>
-<circle cx="44" cy="2584" r="16"/>
-<circle cx="64" cy="2632" r="20"/>
-<circle cx="48" cy="2680" r="36"/>
-<circle cx="84" cy="2776" r="16"/>
-<circle cx="84" cy="2824" r="16"/>
-<circle cx="24" cy="2872" r="20"/>
-<circle cx="168" cy="2872" r="20"/>
-<circle cx="108" cy="2968" r="16"/>
-<circle cx="44" cy="3016" r="16"/>
-<circle cx="144" cy="3064" r="36"/>
-<circle cx="64" cy="3160" r="20"/>
-<circle cx="36" cy="3208" r="16"/>
-<circle cx="44" cy="3256" r="24"/>
-<circle cx="64" cy="3304" r="28"/>
-<circle cx="44" cy="3352" r="24"/>
-<circle cx="32" cy="3544" r="20"/>
-<circle cx="88" cy="3544" r="20"/>
-<circle cx="184" cy="3544" r="20"/>
-<circle cx="32" cy="3592" r="12"/>
-<circle cx="24" cy="3688" r="12"/>
-<circle cx="52" cy="3736" r="24"/>
-<circle cx="36" cy="3784" r="16"/>
-<circle cx="32" cy="3880" r="20"/>
-<circle cx="32" cy="3928" r="20"/>
-<circle cx="52" cy="4264" r="16"/>
-<circle cx="68" cy="4312" r="16"/>
-<circle cx="52" cy="4408" r="40"/>
-<circle cx="44" cy="4504" r="16"/>
-<circle cx="68" cy="4552" r="16"/>
-<circle cx="68" cy="4600" r="32"/>
-<circle cx="172" cy="4600" r="32"/>
-<circle cx="52" cy="4648" r="16"/>
-<circle cx="68" cy="4840" r="48"/>
-<circle cx="68" cy="5560" r="24"/>
-<circle cx="52" cy="5608" r="48"/>
-<circle cx="28" cy="5656" r="16"/>
-<circle cx="28" cy="5704" r="24"/>
-<circle cx="20" cy="5752" r="16"/>
-<circle cx="36" cy="5800" r="32"/>
-<circle cx="32" cy="5848" r="28"/>
-<circle cx="40" cy="5992" r="28"/>
-<circle cx="60" cy="6040" r="48"/>
-<circle cx="44" cy="6088" r="32"/>
-<circle cx="16" cy="6520" r="12"/>
-<circle cx="8" cy="6568" r="4"/>
-<circle cx="24" cy="6616" r="12"/>
-<circle cx="24" cy="6664" r="12"/>
-<circle cx="28" cy="6712" r="16"/>
-<circle cx="28" cy="6760" r="16"/>
 <text x="2" y="44">
 (
 </text>
@@ -3868,19 +3760,19 @@ _
 <text x="2" y="5420">
 ♋
 </text>
-<text x="18" y="5420">
+<text x="26" y="5420">
 ♂
 </text>
-<text x="34" y="5420">
+<text x="42" y="5420">
 ♀
 </text>
-<text x="50" y="5420">
+<text x="58" y="5420">
 ☿
 </text>
-<text x="66" y="5420">
+<text x="74" y="5420">
 웃
 </text>
-<text x="90" y="5420">
+<text x="98" y="5420">
 유
 </text>
 <text x="2" y="5468">
