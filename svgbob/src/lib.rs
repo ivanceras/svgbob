@@ -128,8 +128,8 @@ impl Default for Settings {
         Settings {
             text_width: 8.0,
             text_height: 16.0,
-            optimize: false,
-            compact_path: false,
+            optimize: true,
+            compact_path: true,
         }
     }
 }
