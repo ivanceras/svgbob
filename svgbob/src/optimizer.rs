@@ -161,6 +161,7 @@ impl Optimizer {
     }
 }
 
+/// cramp all paths that can be connected here
 fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
     let mut paths = String::new();
     let mut last_loc = None;
