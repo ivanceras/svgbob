@@ -1,6 +1,6 @@
 [root]
 name = "svgbob"
-version = "0.1.10"
+version = "0.1.11"
 dependencies = [
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "svg 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
