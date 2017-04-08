@@ -30,8 +30,12 @@
 //! 
 //! 
 #![deny(warnings)]
+#![feature(test)]
 extern crate svg;
 extern crate unicode_width;
+extern crate test;
+
+
 
 use svg::Node;
 use svg::node::element::Path as SvgPath;
@@ -494,7 +498,7 @@ impl GChar{
 
 #[derive(Debug)]
 pub struct Grid {
-    source: String,
+    //source: String,
     rows: usize,
     columns: usize,
     lines: Vec<Vec<GChar>>,
@@ -503,10 +507,10 @@ impl Grid {
     /// instantiate a grid from input ascii textinstantiate a grid from input ascii text
     pub fn from_str(s: &str) -> Grid {
         let lines: Vec<&str> = s.lines().collect();
-        let mut line_gchars = vec![];
+        let mut line_gchars = Vec::with_capacity(lines.len());
         
         for line in lines{
-            let mut gchars = vec![];
+            let mut gchars = Vec::with_capacity(line.len());
             let mut zero_ch = None;
             for ch in line.chars(){
                 if let Some(unicode_width) = ch.width(){
@@ -548,7 +552,7 @@ impl Grid {
         }
 
         Grid {
-            source: s.into(),
+            //source: s.into(),
             rows: line_gchars.len(),
             columns: max,
             lines: line_gchars,
@@ -749,6 +753,16 @@ impl Grid {
         let exay_axcy = Element::solid_line(exay, axcy);
         let excy_axey = Element::solid_line(excy, axey);
         let axey_cxcy = Element::solid_line(axey, cxcy);
+        let cxey_cxcy = Element::solid_line(cxey, cxcy);
+        let axay_cxby = Element::solid_line(axay, cxby);
+        let cxby_exay = Element::solid_line(cxby, exay);
+        let axcy_cxdy = Element::solid_line(axcy, cxdy);
+        let cxdy_excy = Element::solid_line(cxdy, excy);
+        let cxdy_exey = Element::solid_line(cxdy, exey);
+        let cxdy_axcy = Element::solid_line(cxdy, axcy);
+        let cxdy_axey = Element::solid_line(cxdy, axey);
+        let cxby_axcy = Element::solid_line(cxby, axcy);
+        let cxby_excy = Element::solid_line(cxby, excy);
 
         let axcy_exchby = Element::solid_line(axcy, exchby);
         let cxdy_cxeybv = Element::solid_line(cxdy, cxeybv);
@@ -795,6 +809,7 @@ impl Grid {
         let arc_axcy_excy = Element::arc(axcy, excy, arc_radius * 4.0, false);
         let arc_bxcy_dxby = Element::arc(bxcy, dxby, arc_radius * 4.0, false);
         let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
+        let arc_bxby_dxby = Element::arc(bxby, dxby, arc_radius * 3.0 / 4.0, false);
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
         let arc_cxay_exey = Element::arc(cxay, exey, arc_radius * 8.0, false);
@@ -1167,22 +1182,49 @@ impl Grid {
                  vec![cxay_exey.clone()]
                 ),
                 /*
+                        ,     .
                       ,'    .'
                 */
                 (self.is_char(this, is_high_round)
-                 && (self.is_char(left, is_comma)
-                    || self.is_char(left, is_low_round)
-                    ),
+                 &&((self.is_char(left, is_comma)
+                      || self.is_char(left, is_low_round)
+                    )
+                ||(self.is_char(top_right, is_comma)
+                     || self.is_char(top_right, is_low_round)
+                  )
+                ),
                  vec![exay_axcy.clone()]
                 ),
                 /*
                       ,'    .'
+                     '     '
                 */
-                (self.is_char(right, is_high_round)
-                 && (self.is_char(this, is_comma)
-                    || self.is_char(this, is_low_round)
-                    ),
+                ((self.is_char(this, is_comma)
+                    ||self.is_char(this, is_low_round)
+                 )
+                &&(self.is_char(right, is_high_round)
+                   ||self.is_char(bottom_left, is_high_round)
+                ),
                  vec![excy_axey.clone()]
+                ),
+                /*
+                    `.
+                      `
+                */
+                (self.is_char(this, is_period)
+                 &&(self.is_char(bottom_right, is_backtick)
+                 || self.is_char(left, is_backtick)),
+                 vec![axcy_exey.clone()]
+                ),
+                /*
+                    .
+                     `.
+                       
+                */
+                (self.is_char(this, is_backtick)
+                 && (self.is_char(right, is_period)
+                 || self.is_char(top_left, is_period)),
+                 vec![axay_excy.clone()]
                 ),
                 /*
                       ,     .
@@ -1204,14 +1246,6 @@ impl Grid {
                  && self.is_char(top_left, is_low_horizontal)
                  &&self.is_char(right, is_low_round),
                  vec![axay_excy.clone()]
-                ),
-                /*
-                     .
-                      `
-                */
-                (self.is_char(this, is_low_round)
-                 &&self.is_char(bottom_right, is_backtick),
-                 vec![axcy_exey.clone()]
                 ),
                 /*
                     speech bubble
@@ -1368,6 +1402,79 @@ impl Grid {
                  && self.is_char(right, is_high_round),
                  vec![]
                 ),
+                /*
+                    . ,   . ,   
+                     '     `
+                       
+                */
+                ((self.is_char(this, is_high_round)
+                    ||self.is_char(this, is_backtick)
+                 )
+                 && self.is_char(top_right, is_comma)
+                 && self.is_char(top_left, is_low_round),
+                 vec![axay_cxby.clone(), cxby_exay.clone()]
+                ),
+                /*
+                 
+                  '.'  `.'
+                 
+                */
+                (self.is_char(this, is_low_round)
+                 && (self.is_char(left, is_high_round)
+                    || self.is_char(left, is_backtick)
+                    )
+                 && self.is_char(right, is_high_round),
+                 vec![axcy_cxdy.clone(), cxdy_excy.clone()]
+                ),
+                /*
+
+                    .'    or  .'
+                     `         '
+
+                 */
+                 (self.is_char(this, is_low_round)
+                  && self.is_char(right, is_high_round)
+                  && (self.is_char(bottom_right, is_high_round)
+                     ||self.is_char(bottom_right, is_backtick)),
+                  vec![cxdy_excy.clone(), cxdy_exey.clone()]
+                 ),
+                /*
+
+                     `,   or   `.  or  '.
+                     '         '       '
+
+                 */
+                 ((self.is_char(this, is_low_round)
+                    || self.is_char(this, is_comma))
+                  && (self.is_char(left, is_high_round)
+                    || self.is_char(left, is_backtick))
+                  && self.is_char(bottom_left, is_high_round),
+                  vec![cxdy_axcy.clone(), cxdy_axey.clone()]
+                 ),
+                 /*
+                      .       .  
+                     ' `  or ' '  
+                  
+                  */
+                 (self.is_char(this, is_low_round)
+                  && self.is_char(bottom_left, is_high_round)
+                  && (self.is_char(bottom_right, is_high_round)
+                     || self.is_char(bottom_right, is_backtick)),
+                  vec![cxdy_axey.clone(), cxdy_exey.clone()]
+                 ),
+
+                 /*
+                     .'.  or    ,'.
+                  
+                  */
+                 ((self.is_char(this, is_high_round)
+                    || self.is_char(this, is_backtick))
+                  && self.is_char(right, is_low_round)
+                  && (self.is_char(left, is_low_round)
+                     || self.is_char(left, is_comma)),
+                  vec![cxby_axcy.clone(), cxby_excy.clone()]
+                 ),
+
                 /*
                       +-
                       | 
@@ -1755,6 +1862,16 @@ impl Grid {
                  vec![axey_bxdy.clone(), dxdy_exey.clone(), arc_dxdy_bxdy.clone()]
                 ),
                 /*
+                    \ /
+                     .  
+
+                */
+                (self.is_char(this, is_round)
+                 && self.is_char(top_left, is_slant_left)
+                 && self.is_char(top_right, is_slant_right),
+                 vec![axay_bxby.clone(), dxby_exay.clone(), arc_bxby_dxby.clone()]
+                ),
+                /*
                      |  
                     / \
                 */
@@ -1762,6 +1879,16 @@ impl Grid {
                  && self.is_char(bottom_left, is_slant_right)
                  && self.is_char(bottom_right, is_slant_left),
                  vec![axey_cxcy.clone(), cxcy_exey.clone(), cxay_cxcy.clone()]
+                ),
+
+                /*
+                    \ / 
+                     | 
+                */
+                (self.is_char(this, is_vertical)
+                 && self.is_char(top_left, is_slant_left)
+                 && self.is_char(top_right, is_slant_right),
+                 vec![axay_cxcy.clone(), cxcy_exay.clone(), cxey_cxcy.clone()]
                 ),
                 /*
                      .  
@@ -2476,6 +2603,10 @@ fn is_low_round(ch: &str) -> bool {
     ch == "."
 }
 
+fn is_period(ch: &str) -> bool{
+    ch == "."
+}
+
 fn is_comma(ch: &str) -> bool {
     ch == ","
 }
@@ -2645,3 +2776,119 @@ fn test_eye_brow(){
     }
     assert_eq!(ch, Some(&GChar::from_str(" ͡°")));
 }
+
+
+#[cfg(test)]
+use test::Bencher;
+#[bench]
+fn bench_svgbob(b: &mut Bencher) {
+    b.iter(|| {
+        to_svg(get_arg());
+    });
+
+        fn get_arg() -> &'static str{
+
+        let arg = r#"
+        +------+   +-----+   +-----+   +-----+
+        |      |   |     |   |     |   |     |
+        | Foo  +-->| Bar +---+ Baz |<--+ Moo |
+        |      |   |     |   |     |   |     |
+        +------+   +-----+   +--+--+   +-----+
+                      ^         |
+                      |         V
+        .-------------+-----------------------.
+        | Hello here and there and everywhere |
+        '-------------------------------------'
+                                ____________
+           .--------------.     \           \
+          / a == b         \     \           \     __________
+         (    &&            )     ) process   )    \         \
+          \ 'string' ne '' /     /           /     / process /
+           '--------------'     /___________/     /_________/
+            __________________
+            \_________________\
+             \                 \
+              . another process .
+             /_________________/
+            /_________________/
+          User code  ^               ^ OS code
+                      \             /
+                       \        .--'
+                        \      /
+          User code  <--- Mode ----> OS code
+                        /      \
+                    .--'        \___
+                   /                \
+                  v                  v 
+               User code            OS code
+                     .---.  .---. .---.  .---.    .---.  .---.
+            OS API   '---'  '---' '---'  '---'    '---'  '---'
+                       |      |     |      |        |      |
+                       v      v     |      v        |      v
+                     .------------. | .-----------. |  .-----.
+                     | Filesystem | | | Scheduler | |  | MMU |
+                     '------------' | '-----------' |  '-----'
+                            |       |      |        |
+                            v       |      |        v
+                         .----.     |      |    .---------.
+                         | IO |<----'      |    | Network |
+                         '----'            |    '---------'
+                            |              |         |
+                            v              v         v
+                     .---------------------------------------.
+                     |                  HAL                  |
+                     '---------------------------------------'
+                     
+           ____[]
+          | ___ |
+          ||   ||  device
+          ||___||  loads
+          | ooo |----------------------------------------------------------.
+          | ooo |    |                          |                          |
+          | ooo |    |                          |                          |
+          '-----'    |                          |                          |
+                     |                          |                          |
+                     v                          v                          v
+           .-------------------.  .---------------------------.  .-------------------.
+           | Loadable module C |  |     Loadable module A     |  | Loadable module B |
+           '-------------------'  |---------------------------|  |   (instrumented)  |
+                     |            |         .-----.           |  '-------------------'
+                     '------------+-------->| A.o |           |             |
+                         calls    |         '-----'           |             |
+                                  |    .------------------.   |             |
+                                  |   / A.instrumented.o /<---+-------------'
+                                  |  '------------------'     |    calls
+                                  '---------------------------'   
+                .--------------.
+                 \              \
+                  '--------------'
+                                                .--> Base::Class::Derived_A
+                                               /
+                                              .----> Base::Class::Derived_B    
+              Something -------.             /         \
+                                \           /           .---> Base::Class::Derived
+              Something::else    \         /             \
+                    \             \       /               '--> Base::Class::Derived
+                     \             \     /
+                      \             \   .-----------> Base::Class::Derived_C 
+                       \             \ /
+                        '------ Base::Class
+                               /  \ \ \
+                              '    \ \ \  
+                              |     \ \ \
+                              .      \ \ '--- The::Latest
+                             /|       \ \      \
+         With::Some::fantasy  '        \ \      '---- The::Latest::Greatest
+                             /|         \ \
+                 More::Stuff  '          \ '- I::Am::Running::Out::Of::Ideas
+                             /|           \
+                 More::Stuff  '            \
+                             /              '--- Last::One
+               More::Stuff  V 
+        "#;
+
+        arg
+        }
+}
+
+
