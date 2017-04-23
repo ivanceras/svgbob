@@ -584,28 +584,7 @@ impl Grid {
     }
 
 
-    // determine if the character in this location is a drawing element
-    // but is used as text, such as a == b, cd to/path/file
-    // it is used as text when it is a drawing element, and left and righ is alphanumeric
-    // and it does not connect to any drawing element
-    fn used_as_text(&self, loc: &Loc) -> bool {
-        self.is_char(loc, is_drawing_element) &&
-        !self.connects(loc) &&
-        (self.is_char(&loc.left(), is_alphanumeric) ||
-         self.is_char(&loc.right(), is_alphanumeric))
-    }
     
-    // determine if the character in this location
-    // connects to any of the 8 direction
-    fn connects(&self, loc:&Loc) -> bool {
-        if self.is_char(loc, is_vertical){
-           return  self.is_char(&loc.top(), is_vertical)
-                    || self.is_char(&loc.bottom(), is_vertical)
-                    || self.is_char(&loc.top(), is_round)
-                    || self.is_char(&loc.bottom(), is_round)
-        }
-        false
-    }
 
 
 
@@ -913,20 +892,20 @@ impl Grid {
                 /*
                     |
                 */
-                (self.is_char(this, is_vertical) && !self.used_as_text(this),
+                (self.is_char(this, is_vertical),
                  vec![vertical.clone()]
                 ),
                 /*
                     -
                 */
-                (self.is_char(this, is_horizontal) && !self.used_as_text(this),
+                (self.is_char(this, is_horizontal),
                  vec![horizontal.clone()]
                 ),
 
                 /*
                     _
                 */
-                (self.is_char(this, is_low_horizontal) && !self.used_as_text(this),
+                (self.is_char(this, is_low_horizontal),
                  vec![low_horizontal.clone()]
                 ),
                 /*
@@ -979,13 +958,13 @@ impl Grid {
                 /*
                     /
                 */
-                (self.is_char(this, is_slant_right) && !self.used_as_text(this),
+                (self.is_char(this, is_slant_right),
                  vec![slant_right.clone()]
                 ),
                 /*
                     \
                 */
-                (self.is_char(this, is_slant_left) && !self.used_as_text(this),
+                (self.is_char(this, is_slant_left),
                  vec![slant_left.clone()]
                 ),
                 /*
@@ -2738,41 +2717,6 @@ fn is_close_curve(ch: &str) -> bool {
     ch == ")"
 }
 
-
-fn is_drawing_element(ch: &str) -> bool {
-    [is_vertical,
-     is_horizontal,
-     is_vertical_dashed,
-     is_horizontal_dashed,
-     is_low_horizontal,
-     is_low_horizontal_dashed,
-     is_slant_left,
-     is_slant_right,
-     is_low_round,
-     is_high_round,
-     is_round,
-     is_intersection,
-     is_marker,
-     is_arrow_up,
-     is_arrow_down,
-     is_arrow_left,
-     is_arrow_right,
-     is_open_curve,
-     is_close_curve]
-        .iter()
-        .find(|&x| x(ch))
-        .map_or(false, |_| true)
-
-}
-
-#[test]
-fn test_drawing_element() {
-    assert!(is_drawing_element("|"));
-    assert!(is_drawing_element("-"));
-    assert!(is_drawing_element("="));
-    assert!(is_drawing_element("_"));
-    assert!(is_drawing_element("/"));
-}
 
 fn escape_char(ch: &str) -> String {
     let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;")];
