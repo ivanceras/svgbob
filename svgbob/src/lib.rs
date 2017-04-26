@@ -790,8 +790,6 @@ impl Grid {
         let arc_excy_axcy = Element::arc(excy, axcy, arc_radius * 4.0, false);
         let arc_axcy_excy = Element::arc(axcy, excy, arc_radius * 4.0, false);
         let arc_bxcy_dxby = Element::arc(bxcy, dxby, arc_radius * 4.0, false);
-        let arc_dxdy_bxdy = Element::arc(dxdy, bxdy, arc_radius * 3.0 / 4.0, false);
-        let arc_bxby_dxby = Element::arc(bxby, dxby, arc_radius * 3.0 / 4.0, false);
         let arc_axcy_axay = Element::arc(axcy, axay, arc_radius * 4.0, false);
         let arc_axey_exey = Element::arc(axey, exey, arc_radius * 4.0, false);
         let arc_cxay_exey = Element::arc(cxay, exey, arc_radius * 8.0, false);
@@ -1145,6 +1143,14 @@ impl Grid {
                 (self.is_char(this, is_low_horizontal)
                  && self.is_char(left, is_slant_right),
                  vec![low_horizontal_extend_left_full.clone()]
+                ),
+                /*
+                       /_
+                     
+                */
+                (self.is_char(this, is_slant_right)
+                 && self.is_char(right, is_low_horizontal),
+                 vec![slant_right.clone(), low_horizontal_extend_right_full.clone()] 
                 ),
                 /*
                        _\
@@ -1970,23 +1976,23 @@ impl Grid {
                  vec![cxay_cxby.clone(), dxdy_exey.clone(), arc_cxby_dxdy.clone()]
                 ),
                 /*
-                     .  
-                    / \
+                     .       
+                    / \       
                 */
-                (self.is_char(this, is_round)
+                (self.is_char(this, is_low_round)
                  && self.is_char(bottom_left, is_slant_right)
                  && self.is_char(bottom_right, is_slant_left),
-                 vec![axey_bxdy.clone(), dxdy_exey.clone(), arc_dxdy_bxdy.clone()]
+                 vec![axey_cxcy.clone(), cxcy_exey.clone()]
                 ),
                 /*
-                    \ /
-                     .  
+                       \ /
+                        '
 
                 */
-                (self.is_char(this, is_round)
+                (self.is_char(this, is_high_round)
                  && self.is_char(top_left, is_slant_left)
                  && self.is_char(top_right, is_slant_right),
-                 vec![axay_bxby.clone(), dxby_exay.clone(), arc_bxby_dxby.clone()]
+                 vec![axay_cxcy.clone(), cxcy_exay.clone()]
                 ),
                 /*
                      |  
