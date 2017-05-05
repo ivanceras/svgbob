@@ -124,8 +124,12 @@ impl Optimizer {
         let mut dashed_paths = vec![];
         let mut arrows = vec![];
         let mut text = vec![];
+        let mut circles = vec![];
         for elm in elements {
             match elm {
+                Element::Circle(_,_,_) => {
+                    circles.push(elm.clone());
+                },
                 Element::Line(_, _, ref stroke, ref feature) => {
                     match *feature {
                         Feature::Arrow => {
@@ -157,6 +161,7 @@ impl Optimizer {
         merged.push(unify(dashed_paths, Stroke::Dashed));
         merged.extend(arrows);
         merged.extend(text);
+        merged.extend(circles);
         merged
     }
 }

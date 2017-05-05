@@ -36,6 +36,7 @@ extern crate unicode_width;
 
 
 use svg::Node;
+use svg::node::element::Circle as SvgCircle;
 use svg::node::element::Path as SvgPath;
 use svg::node::element::Line as SvgLine;
 use svg::node::element::Text as SvgText;
@@ -137,6 +138,7 @@ impl Default for Settings {
 }
 
 enum SvgElement {
+    Circle(SvgCircle),
     Line(SvgLine),
     Path(SvgPath),
     Text(SvgText),
@@ -257,6 +259,7 @@ impl Loc {
 #[derive(Debug)]
 #[derive(Clone)]
 pub enum Element {
+    Circle(Point, f32, String),
     Line(Point, Point, Stroke, Feature),
     Arc(Point, Point, f32, bool),
     Text(Loc, String),
@@ -264,6 +267,12 @@ pub enum Element {
 }
 
 impl Element {
+    fn solid_circle(c: &Point, r: f32) -> Element{
+        Element::Circle(c.clone(), r, "solid".into())
+    }
+    fn open_circle(c: &Point, r: f32) -> Element{
+        Element::Circle(c.clone(), r, "open".into())
+    }
     fn solid_line(s: &Point, e: &Point) -> Element {
         Element::line(s, e, Solid, Nothing)
     }
@@ -384,6 +393,15 @@ impl Element {
 
     fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
+            Element::Circle(ref c, r, ref class) => {
+                let svg_circle = SvgCircle::new()
+                    .set("class",class.clone())
+                    .set("cx", c.x)
+                    .set("cy", c.y)
+                    .set("r", r);
+
+                SvgElement::Circle(svg_circle)
+            },
             Element::Line(ref s, ref e, ref stroke, ref feature) => {
                 let mut svg_line = SvgLine::new()
                     .set("x1", s.x)
@@ -869,6 +887,9 @@ impl Grid {
         let arrow_top_left = Element::line(low_right, cxcy, Solid, Arrow);
         let arrow_top_right = Element::line(low_left, cxcy, Solid, Arrow);
 
+        let junction_circle = Element::solid_circle(cxcy,ch); 
+        let open_junction = Element::open_circle(cxcy,ch); 
+
         // relative location of characters
         let this = &Loc::new(x, y);
         let top = &this.top();
@@ -884,9 +905,41 @@ impl Grid {
         let left_left = &this.left().left();
         let right_right = &this.right().right();
 
+        let connects_left = self.is_char(left, is_horizontal);
+        let connects_right = self.is_char(right, is_horizontal);
+        let connects_top = self.is_char(top, is_vertical);
+        let connects_bottom = self.is_char(bottom, is_vertical);
+        let connects_top_left = self.is_char(top_left, is_slant_left);
+        let connects_top_right = self.is_char(top_right, is_slant_right);
+        let connects_bottom_left = self.is_char(bottom_left, is_slant_right);
+        let connects_bottom_right = self.is_char(bottom_right, is_slant_left);
+        let connects_major4 = connects_left || connects_right || connects_top || connects_bottom;
+        let connects_aux4 = connects_top_left || connects_top_right || connects_bottom_left || connects_bottom_right;
+        let connects = connects_major4 || connects_aux4;
+
         // FIXME: need more exhaustive list, for use case that makes sense matching
         let match_list: Vec<(bool, Vec<Element>)> = 
             vec![
+                /*
+
+                 \|/
+                 -*- (asterisk)
+                 /|\
+
+                */
+                (self.is_char(this, is_asterisk) && connects,
+                 vec![junction_circle.clone()]
+                ),
+                /*
+                  
+                \|/
+                -o-
+                /|\
+
+                */
+                (self.is_char(this, is_o) && connects,
+                 vec![open_junction.clone()]
+                ),
                 /*
                     |
                 */
@@ -2571,6 +2624,9 @@ impl Grid {
 
         for node in nodes {
             match node {
+                SvgElement::Circle(circle) => {
+                    svg.append(circle);
+                }
                 SvgElement::Line(line) => {
                     svg.append(line);
                 }
@@ -2609,6 +2665,12 @@ fn get_styles() -> Style {
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
+      fill:white;
+    }
+    circle.solid {
+      fill:black;
+    }
+    circle.open {
       fill:white;
     }
     tspan.head{
@@ -2697,6 +2759,14 @@ fn is_intersection(ch: &str) -> bool {
 
 fn is_marker(ch: &str) -> bool {
     ch == "*"
+}
+
+fn is_asterisk(ch: &str) -> bool {
+    ch == "*"
+}
+
+fn is_o(ch: &str) -> bool {
+    ch == "o"
 }
 
 fn is_arrow_up(ch: &str) -> bool {

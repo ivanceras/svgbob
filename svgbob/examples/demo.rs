@@ -17,6 +17,15 @@ fn get_arg() -> &'static str{
 
 let arg = r#"
 
+    -o----o---
+          |                    .--> D
+           \                  /
+A -> B -> C -----------------*---> .
+            \         ^  ^ ^  \
+             B -> C _/  / /    '--> D
+ *----->           \   / /
+                    *
+
                          180 ohms    .47uH
 from inverter output----\/\/\/--+---(((((----- xtal --+-- to input
                                 |             series  |
@@ -374,17 +383,17 @@ Part 1:
 ~~~~~~~                              C4-C10 - DISK CERAMICS
                     1M-1Watt
                        R3    100p       100p      100p      100p
-                  ----====----||---------||--------||--------||-------
-    D3-D11:      |            C4    /\   C6   /\   C8   /\  C10    /  |
-       high-     |  Diodes follow  /  \      /  \      /  \       /   |
-       voltage   |  direction to  D5   D6   D7   D8   D9   D10   D11  |
-       3kV diodes|  D11 from D5  /      \  /      \  /      \   /    | |R4
-  A              |              /   C5   \/   C7   \/   C9   \ /     | |47K
-  <--------------|------D3>|--------||--------||--------||-----       |
-              _  |             |   100p      100p      100p          | |R5
-     Diode   /|\ D4            |                                     | |33K
-     going    |  |          C2===0.1/1.6KV                            |
-     up.....> |  |             |                                  ____|
+                 +----====----||---------||--------||--------||------+
+    D3-D11:      |            C4    /\   C6   /\   C8   /\  C10   /  |
+       high-     |  Diodes follow  /  \      /  \      /  \      /   |
+       voltage   |  direction to  D5   D6   D7   D8   D9   D10  D11  |
+       3kV diodes|  D11 from D5  /      \  /      \  /      \  /    | |R4
+  A              |              /   C5   \/   C7   \/   C9   \/     | |47K
+  <--------------|------D3>|--------||--------||--------||-----      |
+              _  |             |   100p      100p      100p         | |R5
+     Diode   /|\ D4            |                                    | |33K
+     going    |  |          C2===0.1/1.6KV                           |
+     up.....> |  |             |                                  ___|
   B              |             |                           +VE -_|_
   /_____________/|\____________|                               |   |
   \              |             |                               |   | LASER
@@ -415,6 +424,7 @@ Part 1:
   55pf    ___       ___  60pf
           _|_       _|_
           \ /       \ /
+           '         '
 
                          .47 uH    56 pF        180 ohms
 from inverter output-----(((((------| |---------\/\/\/-+- to xtal
@@ -424,6 +434,7 @@ from inverter output-----(((((------| |---------\/\/\/-+- to xtal
                                                        |
                                                       _|_
                                                       \ /
+                                                       '
 
 A C-L-C pi filter and series resonant crystal is another solution:
                          180 ohms    .47uH
@@ -434,7 +445,7 @@ from inverter output----\/\/\/--+---(((((----- xtal --+-- to input
                                 |                     |
                                _|_                   _|_
                                \ /                   \ /
-
+                                '                     '
 
         VR1
 <G>-+-/\/\/\--+--+-----------+--------+--R6--+----+-----+-----<+12VDC>
@@ -530,7 +541,7 @@ C :  20 uf (or more) at at least 250 WVDC (observe polarity!)
                                    | |
     +---------------------+--------| |--------------> to amplifier
     |                     |        | |
-    | (positive lead)     |                 _   _
+    | (positive lead)     |           _   _
     |                     +----------/ \_/ \_/----------+
    MIC                          (resistor 1-2K or so)   |
     |                                                   | +
@@ -558,7 +569,7 @@ VDC                   |                      |                |
       - O-------------o----------------------o----------------o
 
 
-   R1=R2                   |---\/\/\/\/\\/\--|
+   R1=R2                      |---\/\/\/\/\\/\--|
                               |       R2        |
                               |                 |
                  R1           |     |\          |
@@ -623,7 +634,7 @@ IN>----||------+-------|  2N2222    O<--||---> High impedance output
          | \|                                 NPN, Emitter at bottom.
         D2  1N4148
 
-    +--------+
+            +--------+
             |        |
             |  7555  |
             |        |
