@@ -1,6 +1,6 @@
 [root]
 name = "svgbob_cli"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "clap 2.24.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
