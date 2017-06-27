@@ -17,3 +17,4 @@ unicode-width = "0.1"
 
 [dev-dependencies]
 handlebars = "0.21"
+pretty_assertions = "0.2"

@@ -150,7 +150,26 @@ impl Optimizer {
                         }
                     }
                 }
-                Element::Arc(_, _, _, _) => solid_paths.push(elm.clone()),
+                Element::Arc(_, _, _, _, ref stroke, ref feature) => {
+                    match *feature {
+                        Feature::Arrow => {
+                            arrows.push(elm.clone());
+                        },
+                        Feature::Circle =>{
+                            arrows.push(elm.clone());
+                        },
+                        Feature::Nothing => {
+                            match *stroke {
+                                Stroke::Solid => {
+                                    solid_paths.push(elm.clone());
+                                }
+                                Stroke::Dashed => {
+                                    dashed_paths.push(elm.clone());
+                                }
+                            }
+                        }
+                    }
+                }
                 Element::Text(_, _) => text.push(elm.clone()),
                 Element::Path(_, _, _, _) => {
                     merged.push(elm.clone());
@@ -187,7 +206,7 @@ fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
                 }
                 last_loc = Some(e.clone());
             }
-            Element::Arc(s, e, r, sw) => {
+            Element::Arc(s, e, r, sw, _, _) => {
                 if start.is_none() {
                     start = Some(s.clone());
                 }
