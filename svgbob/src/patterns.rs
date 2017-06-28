@@ -2,7 +2,7 @@ use Element;
 use Point;
 use Loc;
 use Grid;
-use GChar;
+
 use self::Direction::{
     Top,Bottom,
     Left,Right,
@@ -106,11 +106,7 @@ impl <'g>FocusChar<'g>{
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
     fn text(&self) -> String {
-        let gch = self.grid.get(&self.loc());    
-        match gch{
-            Some(gch) => gch.string.clone(),
-            None => "".to_string()
-        }
+        self.grid.get_string(&self.loc)
     }
 
     /// get the focus char at this location
@@ -123,9 +119,7 @@ impl <'g>FocusChar<'g>{
 
 
     fn get_char(&self) -> char {
-        let blank = &GChar::new('\0');
-        let ch = self.grid.get(&self.loc).unwrap_or(blank).string.chars().nth(0).unwrap();
-        ch
+        self.text().chars().nth(0).unwrap_or('\0')
     }
 
     /// if the character matches given argument
@@ -504,7 +498,7 @@ impl <'g>FocusChar<'g>{
 ///    .'
 ///   
     pub fn get_elements(&self) -> Vec<Element>{
-        let loc = &self.loc();
+        let loc = &self.loc;
         let top = self.top();
         let bottom = self.bottom();
         let left = self.left();
@@ -2400,42 +2394,37 @@ impl <'g>FocusChar<'g>{
     }
     
 
-    fn loc(&self) -> Loc {
-        self.loc.clone()
-    }
-
-
 
     fn top(&self) -> Self {
-        self.get(&self.loc().top())
+        self.get(&self.loc.top())
     }
 
     fn bottom(&self) -> Self {
-       self.get(&self.loc().bottom())
+       self.get(&self.loc.bottom())
     }
 
     fn left(&self) -> Self {
-       self.get(&self.loc().left())
+       self.get(&self.loc.left())
     }
 
     fn right(&self) -> Self {
-       self.get(&self.loc().right())
+       self.get(&self.loc.right())
     }
 
     fn top_left(&self) -> Self {
-       self.get(&self.loc().top_left())
+       self.get(&self.loc.top_left())
     }
 
     fn top_right(&self) -> Self {
-       self.get(&self.loc().top_right())
+       self.get(&self.loc.top_right())
     }
 
     fn bottom_left(&self) -> Self {
-       self.get(&self.loc().bottom_left())
+       self.get(&self.loc.bottom_left())
     }
 
     fn bottom_right(&self) -> Self {
-       self.get(&self.loc().bottom_right())
+       self.get(&self.loc.bottom_right())
     }
 
     fn text_width(&self) -> f32 {

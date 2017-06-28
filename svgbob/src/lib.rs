@@ -72,20 +72,19 @@ mod patterns;
 /// 
 /// commercial version enhances memes automatically
 pub fn to_svg(input: &str) -> SVG {
-    let settings = Settings::default();
-    Grid::from_str(&input,settings).get_svg()
+    Grid::from_str(&input, &Settings::default()).get_svg()
 }
 
 pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
     let settings = Settings::with_size(text_width, text_height);
-    Grid::from_str(&input, settings).get_svg()
+    Grid::from_str(&input, &settings).get_svg()
 }
 
 pub fn to_svg_with_size_nooptimization(input: &str, text_width: f32, text_height: f32) -> SVG {
     let mut settings = Settings::no_optimization();
     settings.text_width = text_width;
     settings.text_height = text_height;
-    Grid::from_str(&input, settings).get_svg()
+    Grid::from_str(&input, &settings).get_svg()
 }
 
 
@@ -94,9 +93,10 @@ pub fn to_svg_with_size_nooptimization(input: &str, text_width: f32, text_height
 ///  2. Fast -> Fast and correct looking (text are reduced)
 ///  3. All -> Correct looking but slow (paths and text are reduced)
 #[derive(Debug)]
+#[derive(Clone)]
 pub struct Settings {
-    text_width: f32,
-    text_height: f32,
+    pub text_width: f32,
+    pub text_height: f32,
     /// do optimization? if false then every piece are disconnected
     optimize: bool,
     /// if optmization is enabled,
@@ -190,62 +190,62 @@ impl Point {
 #[derive(Clone)]
 #[derive(PartialEq)]
 pub struct Loc {
-    x: isize,
-    y: isize,
+    pub x: i32,
+    pub y: i32,
 }
 
 impl Loc {
-    fn new(x: isize, y: isize) -> Loc {
+    pub fn new(x: i32, y: i32) -> Loc {
         Loc { x: x, y: y }
     }
 
-    fn top(&self) -> Loc {
+    pub fn top(&self) -> Loc {
         Loc {
             x: self.x,
             y: self.y - 1,
         }
     }
-    fn left(&self) -> Loc {
+    pub fn left(&self) -> Loc {
         Loc {
             x: self.x - 1,
             y: self.y,
         }
     }
-    fn bottom(&self) -> Loc {
+    pub fn bottom(&self) -> Loc {
         Loc {
             x: self.x,
             y: self.y + 1,
         }
     }
-    fn right(&self) -> Loc {
+    pub fn right(&self) -> Loc {
         Loc {
             x: self.x + 1,
             y: self.y,
         }
     }
 
-    fn top_left(&self) -> Loc {
+    pub fn top_left(&self) -> Loc {
         Loc {
             x: self.x - 1,
             y: self.y - 1,
         }
     }
 
-    fn top_right(&self) -> Loc {
+    pub fn top_right(&self) -> Loc {
         Loc {
             x: self.x + 1,
             y: self.y - 1,
         }
     }
 
-    fn bottom_left(&self) -> Loc {
+    pub fn bottom_left(&self) -> Loc {
         Loc {
             x: self.x - 1,
             y: self.y + 1,
         }
     }
 
-    fn bottom_right(&self) -> Loc {
+    pub fn bottom_right(&self) -> Loc {
         Loc {
             x: self.x + 1,
             y: self.y + 1,
@@ -320,7 +320,7 @@ impl Element {
                 match *other {
                     Element::Text(ref loc2, ref text2) => {
                         // reduce if other is next to it
-                        let uwidth = text.width() as isize;
+                        let uwidth = text.width() as i32;
                         if loc.y == loc2.y && loc.x + uwidth == loc2.x {
                             let merged_text = text.clone() + text2;
                             let reduced = Some(Element::Text(loc.clone(), merged_text));
@@ -431,91 +431,119 @@ fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
 
-#[derive(Debug)]
-#[derive(PartialEq)]
-pub struct GChar {
-    /// the characters in this Element
-    string: String,
-    /// total width of all characters in chars
-    width: usize,
-}
 
-impl GChar{
-    fn new(ch:char) -> Self {
-        GChar::from_str(&format!("{}",ch))
-    }
-
-    fn from_str(s:&str) -> Self{
-        let width =UnicodeWidthStr::width(s);
-        GChar{
-            string: s.into(),
-            width: width
-        }
-    }
-    
+pub struct Neighbor{
+    pub top_left_left: String,
+    pub top_left: String,
+    pub top: String,
+    pub top_right: String,
+    pub top_right_right: String,
+    pub left_left: String,
+    pub left: String,
+    pub this: String,
+    pub right: String,
+    pub right_right: String,
+    pub bottom_left_left: String,
+    pub bottom_left: String,
+    pub bottom: String,
+    pub bottom_right: String,
+    pub bottom_right_right: String
 }
 
 
 #[derive(Debug)]
 pub struct Grid {
-    rows: usize,
-    columns: usize,
-    lines: Vec<Vec<GChar>>,
+    pub rows: usize,
+    pub columns: usize,
     settings: Settings,
+    index: Vec<Vec<String>>
 }
 impl Grid {
     /// instantiate a grid from input ascii text
-    pub fn from_str(s: &str, settings: Settings) -> Grid {
+    /// Issues:
+    /// 1. 2-width, 5 bytes, single character  i.e. 统
+    /// 2. 1-width, 2 bytes, single character  i.e. ö 
+    /// 3. 1-width, 3 bytes, single character  i.e. o͡͡͡
+    pub fn from_str(s: &str, settings: &Settings) -> Grid {
+        let mut max_column_width = 0;
         let lines: Vec<&str> = s.lines().collect();
-        let mut line_gchars = Vec::with_capacity(lines.len());
-        
+        let mut rows: Vec<Vec<String>> = Vec::with_capacity(lines.len());
         for line in lines{
-            let mut gchars = Vec::with_capacity(line.len());
-            for ch in line.chars(){
-                if ch.width() == Some(0) {
-                }
-                else{
-                    gchars.push(GChar::new(ch));
-                }
-            } 
-            line_gchars.push(gchars);
-        }
-        let mut max = 0;
-        for lg in &line_gchars{
-            let mut line_width = 0;
-            for gchar in lg{
-                line_width += gchar.width; 
-            } 
-            if line_width >= max{
-                max = line_width;
+            if line.width() > max_column_width{
+                max_column_width = line.width();
             }
+            let mut row: Vec<String> = Vec::with_capacity(line.chars().count());
+            for ch in line.chars(){
+                if let Some(1) = ch.width(){
+                    row.push(format!("{}",ch));
+                }
+                else if let Some(2) = ch.width(){
+                    row.push(format!("{}",ch));
+                    row.push(format!("\0"));//push a blank
+                }
+                // if zero width char, append it to the previous string
+                else if let Some(0) = ch.width(){
+                    let prev: Option<String> = row.pop();
+                    match prev{
+                        Some(mut prev) => {
+                            prev.push(ch);
+                            row.push(prev);
+                        },
+                        None => (),
+                    }
+                }
+            }
+            rows.push(row);
         }
-
         Grid {
-            rows: line_gchars.len(),
-            columns: max,
-            lines: line_gchars,
-            settings: settings
+            rows: rows.len(), 
+            columns: max_column_width,
+            settings: settings.clone(),
+            index: rows,
         }
     }
 
-    fn get(&self, loc: &Loc) -> Option<&GChar> {
-        match self.lines.get(loc.y as usize) {
-            Some(line) => {
-                let mut total_width = 0;
-                for gchar in line{
-                    if total_width == loc.x{
-                        return Some(gchar)
-                    }
-                    total_width += gchar.width as isize;
-                }
-                None
+
+    /// get a character at this location
+    /// widths are computed since there are
+    /// characters that spans 2 columns
+    /// and characters that has 0 width
+    ///
+    pub fn get(&self, loc: &Loc) -> Option<&String> {
+        match self.index.get(loc.y as usize) {
+            Some(row) => {
+                row.get(loc.x as usize)
             }
             None => None,
         }
     }
 
+    fn get_string(&self, loc: &Loc) -> String {
+        match self.get(loc){
+            Some(s) => s.clone(),
+            None => "\0".to_string()
+        }
+    }
 
+    pub fn get_neighbor_text(&self, loc: &Loc) -> Neighbor {
+        Neighbor{
+            top_left_left: self.get_string(&loc.top_left().left()),
+            top_left: self.get_string(&loc.top_left()),
+            top: self.get_string(&loc.top()),
+            top_right: self.get_string(&loc.top_right()),
+            top_right_right: self.get_string(&loc.top_right().right()),
+            left_left: self.get_string(&loc.left().left()),
+            left: self.get_string(&loc.left()),
+            this: self.get_string(&loc),
+            right: self.get_string(&loc.right()),
+            right_right: self.get_string(&loc.right().right()),
+            bottom_left_left: self.get_string(&loc.bottom_left().left()),
+            bottom_left: self.get_string(&loc.bottom_left()),
+            bottom: self.get_string(&loc.bottom()),
+            bottom_right: self.get_string(&loc.bottom_right()),
+            bottom_right_right: self.get_string(&loc.bottom_right().right()),
+        }
+    }
 
     
 
@@ -537,77 +565,56 @@ impl Grid {
     /// of the point from the starting location of the elements
     /// all intersection and junction points fall exactly to any of the grid points
     ///
-    fn get_elements(&self, x: isize, y: isize) -> Option<Vec<Element>> {
-        let ch = self.get_focus_char(x, y);
-        match ch{
-            Some(ch) => {
-                Some(ch.get_elements())
-            },
-            None => None
-        }
+    fn get_elements(&self, loc: &Loc) ->Vec<Element> {
+        let ch = 
+            FocusChar{
+                loc: loc.clone(),
+                grid: self
+            };
+        ch.get_elements()
     }
 
-    fn get_focus_char(&self, x: isize, y: isize) -> Option<FocusChar> {
-        let loc = Loc::new(x,y);
-        let gch = self.get(&loc);
-        match gch{
-            Some(gch) => {
-                if gch.string.chars().count() > 1{
-                    println!("gch: {:?}", gch);
-                }
-                assert_eq!(gch.string.chars().count(), 1);
-                let fc = FocusChar{
-                        loc: loc,
-                        grid: self
-                    };
-                Some(fc)
-            },
-            None => None
-        }
-    }
-
-    fn get_all_elements(&self) -> Vec<(Loc, Vec<Element>)> {
-        fn get_line_width(line: &Vec<GChar>) -> usize{
-            let mut total_width = 0;
-            for gch in line{
-               total_width += gch.width;
+    /// vector of each elements arranged in rows x columns
+    fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>> {
+        let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
+        let mut y = 0;
+        for line in &self.index{
+            let mut x = 0;
+            let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
+            for _ in line {
+                let loc = Loc::new(x,y);
+                let cell = self.get_elements(&loc);
+                row.push(cell);
+                x += 1;
             }
-            total_width
+            rows.push(row);
+            y += 1;
         }
-        let mut all_paths = vec![];
-        for row in 0..self.lines.len() {
-            let line = &self.lines[row];
-            let line_width = get_line_width(line);
-            for column in 0..line_width {
-                let x = column as isize;
-                let y = row as isize;
-                match self.get_elements(x, y) {
-                    Some(paths) => {
-                        all_paths.push((Loc::new(x, y), paths));
-                    }
-                    None => {
-                        ();
-                    }
-                }
-            }
-        }
-        all_paths
+        rows
     }
 
     // each component has its relative location retain
     // use this info for optimizing svg by checking closest neigbor
-    fn get_svg_nodes(&self, settings: &Settings) -> Vec<SvgElement> {
+    fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
+        let start = std::time::SystemTime::now();
         let elements = self.get_all_elements();
-        let input = if settings.optimize {
+        println!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
+        let input = if self.settings.optimize {
+            let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements);
-            let optimized_elements = optimizer.optimize(settings);
+            let optimized_elements = optimizer.optimize(&self.settings);
+            println!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
             optimized_elements
         } else {
-            elements.into_iter().flat_map(|(_, elm)| elm).collect()
+            elements.into_iter().flat_map(
+                |elm| {
+                    elm.into_iter().flat_map(|e2|e2)
+                }
+            ).collect()
         };
         for elem in input {
-            let element = elem.to_svg(settings);
+            let element = elem.to_svg(&self.settings);
             nodes.push(element);
         }
         nodes
@@ -616,9 +623,9 @@ impl Grid {
 
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self) -> SVG {
-        let nodes = self.get_svg_nodes(&self.settings);
-        let width = self.settings.text_width * (self.columns + 4) as f32;
-        let height = self.settings.text_height * (self.rows + 2)as f32;
+        let nodes = self.get_svg_nodes();
+        let width = self.settings.text_width * self.columns  as f32;
+        let height = self.settings.text_height * self.rows as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",

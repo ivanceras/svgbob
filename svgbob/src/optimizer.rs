@@ -6,24 +6,18 @@ use super::Point;
 use super::Settings;
 
 pub struct Optimizer {
-    elements: Vec<(Loc, Vec<Element>)>,
+    elements: Vec<Vec<Vec<Element>>>,
 }
 
 impl Optimizer {
-    pub fn new(elements: Vec<(Loc, Vec<Element>)>) -> Optimizer {
+    pub fn new(elements: Vec<Vec<Vec<Element>>>) -> Optimizer {
         Optimizer { elements: elements }
     }
 
     fn get(&self, loc: &Loc) -> Option<&Vec<Element>> {
-        let found = self.elements
-            .iter()
-            .find(|x| {
-                let &(ref l, _) = *x;
-                loc == l
-            });
-        match found {
-            Some(&(_, ref elm)) => Some(elm),    
-            None => None,
+        match self.elements.get(loc.y as usize){
+            Some(row) => row.get(loc.x as usize),
+            None => None
         }
     }
 
@@ -100,15 +94,23 @@ impl Optimizer {
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
         let mut optimized = vec![];
-        for &(ref loc, ref elem) in &self.elements {
-            if self.is_edible(&loc) {
-                ;
-            } else {
-                for e in elem {
-                    let traced = self.trace_elements(e, loc);
-                    optimized.push(traced);
+        let mut y = 0;
+        for line in &self.elements {
+            let mut x = 0;
+            for cell in line{
+                let loc = &Loc::new(x,y);
+                for elm in cell{
+                    if self.is_edible(loc){
+                        ;
+                    }
+                    else{
+                        let traced = self.trace_elements(elm, loc);
+                        optimized.push(traced);
+                    }
                 }
+                x += 1;
             }
+            y += 1;
         }
         if settings.compact_path {
             self.merge_paths(optimized)
