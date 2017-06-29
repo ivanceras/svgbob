@@ -336,7 +336,7 @@ impl Element {
         }
     }
 
-
+    /// convert drawing element to SVG element
     fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
             Element::Circle(ref c, r, ref class) => {
@@ -549,31 +549,6 @@ impl Grid {
 
 
 
-    /// get the elements on this location
-    /// variable names:
-    /// the grid is 8x8 divided into 4 equal parts at each vertical and horizontal dimension.
-    /// a,b,c,d,e  is start,quater,center,3quarters, end respectively
-    ///
-    /// combining [a,b,c,d,e] * h]
-    /// ah,bh,ch,dh,eh are horizontal increments derived from dividing the textwidth into 4 equal parts.
-    ///
-    /// combining [a,b,c,d,e] * [v]
-    /// av,bv,cv,dv,ev are vertical increments derived from diving the textheight into 4 equal parts
-    ///
-    /// combining [a,b,c,d,e] * [x] and [a,b,c,d,e] * [y]
-    /// and you will get the location of the points in the grid that describe the relative location
-    /// of the point from the starting location of the elements
-    /// all intersection and junction points fall exactly to any of the grid points
-    ///
-    fn get_elements(&self, loc: &Loc) ->Vec<Element> {
-        let ch = 
-            FocusChar{
-                loc: loc.clone(),
-                grid: self
-            };
-        ch.get_elements()
-    }
-
     /// vector of each elements arranged in rows x columns
     fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>> {
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
@@ -583,8 +558,12 @@ impl Grid {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
             for _ in line {
                 let loc = Loc::new(x,y);
-                let cell = self.get_elements(&loc);
-                row.push(cell);
+                let focus_char = FocusChar{
+                            loc: loc.clone(),
+                            grid: self 
+                        };
+                let cell_elements = focus_char.get_elements();
+                row.push(cell_elements);
                 x += 1;
             }
             rows.push(row);
@@ -593,8 +572,8 @@ impl Grid {
         rows
     }
 
-    // each component has its relative location retain
-    // use this info for optimizing svg by checking closest neigbor
+    /// each component has its relative location retain
+    /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
@@ -607,6 +586,7 @@ impl Grid {
             println!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
             optimized_elements
         } else {
+            // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>
             elements.into_iter().flat_map(
                 |elm| {
                     elm.into_iter().flat_map(|e2|e2)
@@ -614,7 +594,7 @@ impl Grid {
             ).collect()
         };
         for elem in input {
-            let element = elem.to_svg(&self.settings);
+            let element:SvgElement = elem.to_svg(&self.settings);
             nodes.push(element);
         }
         nodes
@@ -732,3 +712,14 @@ fn escape_char(ch: &str) -> String {
 
 }
 
+#[cfg(test)]
+mod test{
+    use super::Grid;
+    use super::Settings;
+    #[test]
+    fn test_grid(){
+        let g = Grid::from_str("a统öo͡͡͡", &Settings::compact());
+        println!("{:?}", g.index);
+        assert_eq!(g.index, vec![vec!["a".to_string(), "统".to_string(), "\u{0}".to_string(), "ö".to_string(), "o͡͡͡".to_string()]]);
+    }
+}
