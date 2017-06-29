@@ -522,7 +522,7 @@ impl Grid {
     fn get_string(&self, loc: &Loc) -> String {
         match self.get(loc){
             Some(s) => s.clone(),
-            None => "\0".to_string()
+            None => "".to_string()
         }
     }
 
