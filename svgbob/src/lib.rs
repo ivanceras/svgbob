@@ -29,7 +29,8 @@
 //! </svg>
 //! 
 //! 
-#![deny(warnings)]
+//#![deny(warnings)]
+#![feature(test)]
 extern crate svg;
 extern crate unicode_width;
 #[cfg(test)]
@@ -578,12 +579,12 @@ impl Grid {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
         let elements = self.get_all_elements();
-        println!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
+        eprintln!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements);
             let optimized_elements = optimizer.optimize(&self.settings);
-            println!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
+            eprintln!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
             optimized_elements
         } else {
             // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>
@@ -713,13 +714,26 @@ fn escape_char(ch: &str) -> String {
 }
 
 #[cfg(test)]
-mod test{
+mod test_lib{
     use super::Grid;
     use super::Settings;
+
     #[test]
     fn test_grid(){
         let g = Grid::from_str("a统öo͡͡͡", &Settings::compact());
         println!("{:?}", g.index);
         assert_eq!(g.index, vec![vec!["a".to_string(), "统".to_string(), "\u{0}".to_string(), "ö".to_string(), "o͡͡͡".to_string()]]);
+    }
+}
+
+#[cfg(test)]
+mod benchmark{
+    extern crate test;
+    use self::test::Bencher;
+
+    #[bench]
+    fn convert(b: &mut Bencher) {
+        let arg = ".-----.";
+        b.iter(|| super::to_svg(arg))
     }
 }

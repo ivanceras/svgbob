@@ -2604,3 +2604,24 @@ impl <'g>FocusChar<'g>{
 }
 
 
+#[cfg(test)]
+mod test{
+use super::super::Settings;
+use super::Grid;
+use super::FocusChar;
+use super::super::Loc;
+
+    #[test]
+    fn test_adjascent(){
+
+
+            let g = Grid::from_str("a统öo͡͡͡", &Settings::compact());
+            let fc = FocusChar{
+                    loc: Loc::new(1,0),
+                    grid: &g
+            };
+            println!("{:?}", fc);
+            assert!(fc.left().is('a'));
+            assert!(fc.right().right().is('ö'));
+    }
+}
