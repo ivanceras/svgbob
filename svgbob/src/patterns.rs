@@ -96,12 +96,22 @@ impl Direction{
 
 #[derive(Debug)]
 pub struct FocusChar<'g>{
-    pub loc: Loc,
-    pub grid: &'g Grid
+    loc: Loc,
+    ch: char,
+    grid: &'g Grid
 }
 
 
 impl <'g>FocusChar<'g>{
+
+    pub fn new(loc: &Loc, grid: &'g Grid) -> Self {
+        let ch = grid.get_string(loc).chars().nth(0).unwrap_or('\0');
+        Self{
+            loc: loc.clone(),
+            ch: ch,
+            grid: grid
+        }
+    }
 
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
@@ -111,29 +121,22 @@ impl <'g>FocusChar<'g>{
 
     /// get the focus char at this location
     fn get(&self, loc: &Loc) -> Self{
-        Self{
-            loc: loc.clone(),
-            grid: self.grid
-        }
+        FocusChar::new(loc, self.grid)
     }
 
-
-    fn get_char(&self) -> char {
-        self.text().chars().nth(0).unwrap_or('\0')
-    }
 
     /// if the character matches given argument
     fn is(&self, ch: char) -> bool {
-        self.get_char() == ch
+        self.ch == ch
     }
 
     /// if character is any character in the string
     fn any(&self, ch: &str) -> bool {
-        ch.contains(self.get_char())
+        ch.contains(self.ch)
     }
 
     fn in_any(&self, chars: Vec<char>) -> bool {
-        chars.contains(&self.get_char())
+        chars.contains(&self.ch)
     }
 
     /// enumerate the direction self character can connect to

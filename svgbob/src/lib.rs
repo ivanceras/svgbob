@@ -559,10 +559,7 @@ impl Grid {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
             for _ in line {
                 let loc = Loc::new(x,y);
-                let focus_char = FocusChar{
-                            loc: loc.clone(),
-                            grid: self 
-                        };
+                let focus_char = FocusChar::new(&loc,self);
                 let cell_elements = focus_char.get_elements();
                 row.push(cell_elements);
                 x += 1;
