@@ -135,7 +135,7 @@ impl <'g>FocusChar<'g>{
 
 
     /// if the character matches given argument
-    fn is(&self, ch: char) -> bool {
+    pub fn is(&self, ch: char) -> bool {
         self.ch == ch
     }
 
@@ -437,8 +437,8 @@ impl <'g>FocusChar<'g>{
         self.any("┤┥┦┧┨┩┪┫")
     }
 
-    fn is_blank(&self) -> bool {
-        self.any("\0")
+    pub fn is_blank(&self) -> bool {
+        self.in_any(vec!['\0', ' '])
     }
 
     fn is_slant_left(&self) -> bool {
@@ -2407,35 +2407,35 @@ impl <'g>FocusChar<'g>{
     
 
 
-    fn top(&self) -> Self {
+    pub fn top(&self) -> Self {
         self.get(&self.loc.top())
     }
 
-    fn bottom(&self) -> Self {
+    pub fn bottom(&self) -> Self {
        self.get(&self.loc.bottom())
     }
 
-    fn left(&self) -> Self {
+    pub fn left(&self) -> Self {
        self.get(&self.loc.left())
     }
 
-    fn right(&self) -> Self {
+    pub fn right(&self) -> Self {
        self.get(&self.loc.right())
     }
 
-    fn top_left(&self) -> Self {
+    pub fn top_left(&self) -> Self {
        self.get(&self.loc.top_left())
     }
 
-    fn top_right(&self) -> Self {
+    pub fn top_right(&self) -> Self {
        self.get(&self.loc.top_right())
     }
 
-    fn bottom_left(&self) -> Self {
+    pub fn bottom_left(&self) -> Self {
        self.get(&self.loc.bottom_left())
     }
 
-    fn bottom_right(&self) -> Self {
+    pub fn bottom_right(&self) -> Self {
        self.get(&self.loc.bottom_right())
     }
 

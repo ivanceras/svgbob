@@ -528,6 +528,12 @@ impl Grid {
         }
     }
 
+    /// insert a new line to at this point
+    pub fn insert_line(&mut self, line: usize) {
+        self.accomodate(&Loc::new(0, line as i32));
+        self.index.insert(line, vec![]);
+    }
+
     /// prepare the grid to accomodate this loc
     /// if loc.y < 0 => insert abs(loc.y) rows at element 0 to self.index
     /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x 
@@ -586,7 +592,10 @@ impl Grid {
     }
 
     
-
+    /// get the focus char at this location
+    pub fn get_focuschar(&self, loc: &Loc) -> FocusChar {
+        FocusChar::new(&loc,self)
+    }
 
 
     /// vector of each elements arranged in rows x columns
@@ -598,7 +607,7 @@ impl Grid {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
             for _ in line {
                 let loc = Loc::new(x,y);
-                let focus_char = FocusChar::new(&loc,self);
+                let focus_char = self.get_focuschar(&loc);
                 let cell_elements = focus_char.get_elements();
                 row.push(cell_elements);
                 x += 1;
