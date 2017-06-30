@@ -515,12 +515,31 @@ impl Grid {
     }
 
     /// put a text into this location
+    /// prepare the grid for this location first
+    pub fn put(&mut self, loc: &Loc, s: &str) {
+        println!("putting: {} to {:?}", s, loc);
+        let index_y = loc.y as usize;
+        let index_x = loc.x as usize;
+        self.accomodate(loc);
+        if let Some(row) = self.index.get_mut(index_y){
+            if let Some(cell) = row.get_mut(index_x){
+                *cell = s.to_owned();
+            }
+        }
+    }
+
+    /// prepare the grid to accomodate this loc
     /// if loc.y < 0 => insert abs(loc.y) rows at element 0 to self.index
     /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x 
     /// if loc.x < 0 => insert abs(loc.x) columns at element 0, to all rows
     /// if loc.x > row.x => append (loc.x-row.x) elements to the row 
-    pub fn put(&mut self, loc: &Loc, s: &str) {
-        println!("putting: {} to {:?}", s, loc);
+    pub fn accomodate(&mut self, loc: &Loc) {
+        if loc.y < 0 {
+            println!("inserting to - row"); 
+        }
+        if loc.x < 0 {
+            println!("inserting to - column");
+        }
         let index_y = loc.y as usize;
         let index_x = loc.x as usize;
         if self.index.len() <= index_y {
@@ -533,20 +552,17 @@ impl Grid {
             }
             self.index.append(&mut add_rows);
         }
-        let mut row:Vec<String> = self.index.remove(index_y);
-        if row.len() <= index_x {
-            let lack_cell = index_x - row.len() + 1;
-            eprintln!("adding {} more columns", lack_cell);
-            let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell);
-            for ac in 0..lack_cell{
-                add_cells.push(" ".to_string());// use space for empty cells
+        if let Some(row) = self.index.get_mut(index_y){
+            if row.len() <= index_x {
+                let lack_cell = index_x - row.len() + 1;
+                eprintln!("adding {} more columns", lack_cell);
+                let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell);
+                for ac in 0..lack_cell{
+                    add_cells.push(" ".to_string());// use space for empty cells
+                }
+                (&mut *row).append(&mut add_cells);
             }
-            row.append(&mut add_cells);
         }
-        let mut cell:String = row.remove(index_x);
-        cell = s.to_owned();
-        row.insert(index_x,cell);
-        self.index.insert(index_y,row);
     }
 
 
