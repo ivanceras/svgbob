@@ -534,6 +534,18 @@ impl Grid {
         self.index.insert(line, vec![]);
     }
 
+    /// join this line to the previous line
+    pub fn join_line(&mut self, line: usize) {
+        let mut row = self.index.remove(line);
+        self.index.get_mut(line - 1)
+            .map( | prev | prev.append(&mut row));
+    }
+
+    /// get the line len at this index
+    pub fn get_line_len(&self, line: usize) -> Option<usize> {
+        self.index.get(line).map(|r|r.len())
+    }
+
     /// prepare the grid to accomodate this loc
     /// if loc.y < 0 => insert abs(loc.y) rows at element 0 to self.index
     /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x 
@@ -541,28 +553,36 @@ impl Grid {
     /// if loc.x > row.x => append (loc.x-row.x) elements to the row 
     pub fn accomodate(&mut self, loc: &Loc) {
         if loc.y < 0 {
-            println!("inserting to - row"); 
+            let lack_row = (0 - loc.y) as usize; // 0 - -5 = 5
+            println!("inserting lack row {} from top",lack_row); 
+            for _ in 0..lack_row{
+                self.index.insert(0,vec![]);
+            }
         }
         if loc.x < 0 {
-            println!("inserting to - column");
+            let lack_cell = (0 - loc.x) as usize;
+            println!("inserting from left {} cells", lack_cell);
+            let add_cells: String = " ".repeat(lack_cell);
+            // insert add_cells to all rows at 0
+            for row in self.index.iter_mut(){
+                row.insert(0, add_cells.clone());
+            }
         }
-        let index_y = loc.y as usize;
-        let index_x = loc.x as usize;
-        if self.index.len() <= index_y {
-            let lack_row = index_y - self.index.len() + 1;
+
+        if self.index.len() as i32 <= loc.y {
+            let lack_row = loc.y - self.index.len() as i32 + 1;
             eprintln!("adding {} more rows", lack_row);
-            let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row);
+            let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row as usize);
             for ar in 0..lack_row{
-                let empty_row: Vec<String> = vec![];
-                add_rows.push(empty_row);
+                add_rows.push(vec![]);
             }
             self.index.append(&mut add_rows);
         }
-        if let Some(row) = self.index.get_mut(index_y){
-            if row.len() <= index_x {
-                let lack_cell = index_x - row.len() + 1;
+        if let Some(row) = self.index.get_mut(loc.y as usize){
+            if row.len() as i32 <= loc.x {
+                let lack_cell = loc.x - row.len() as i32 + 1;
                 eprintln!("adding {} more columns", lack_cell);
-                let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell);
+                let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell as usize);
                 for ac in 0..lack_cell{
                     add_cells.push(" ".to_string());// use space for empty cells
                 }
