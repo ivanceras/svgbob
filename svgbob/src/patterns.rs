@@ -105,7 +105,13 @@ pub struct FocusChar<'g>{
 impl <'g>FocusChar<'g>{
 
     pub fn new(loc: &Loc, grid: &'g Grid) -> Self {
-        let ch = grid.get_string(loc).chars().nth(0).unwrap_or('\0');
+        let s:Option<&String> = grid.get(loc);
+        /// if there is a text in this location, take the first char as the focus char
+        let ch = match s{
+            Some(s) => {s.chars().nth(0).unwrap_or('\0')}
+            None => {'\0'}
+        };
+
         Self{
             loc: loc.clone(),
             ch: ch,
@@ -116,7 +122,10 @@ impl <'g>FocusChar<'g>{
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
     fn text(&self) -> String {
-        self.grid.get_string(&self.loc)
+        match self.grid.get(&self.loc){
+            Some(s) => s.to_owned(),
+            None => "".to_string()
+        }
     }
 
     /// get the focus char at this location

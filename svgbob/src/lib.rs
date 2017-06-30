@@ -253,6 +253,15 @@ impl Loc {
         }
     }
 
+    /// make a lower and upper bound loc with
+    /// ry units top + ry units bottom
+    /// rx units left + rx units right
+    pub fn get_range(&self, rx: i32, ry: i32 ) -> (Loc, Loc) {
+        let loc1 = Loc::new(self.x - rx, self.y - ry);
+        let loc2 = Loc::new(self.x + rx, self.y + ry);
+        (loc1, loc2)
+    }
+
 }
 
 #[derive(Debug)]
@@ -433,29 +442,9 @@ fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
 }
 
 
-pub struct Neighbor{
-    pub top_left_left: String,
-    pub top_left: String,
-    pub top: String,
-    pub top_right: String,
-    pub top_right_right: String,
-    pub left_left: String,
-    pub left: String,
-    pub this: String,
-    pub right: String,
-    pub right_right: String,
-    pub bottom_left_left: String,
-    pub bottom_left: String,
-    pub bottom: String,
-    pub bottom_right: String,
-    pub bottom_right_right: String
-}
-
 
 #[derive(Debug)]
 pub struct Grid {
-    pub rows: usize,
-    pub columns: usize,
     settings: Settings,
     index: Vec<Vec<String>>
 }
@@ -466,13 +455,9 @@ impl Grid {
     /// 2. 1-width, 2 bytes, single character  i.e. ö 
     /// 3. 1-width, 3 bytes, single character  i.e. o͡͡͡
     pub fn from_str(s: &str, settings: &Settings) -> Grid {
-        let mut max_column_width = 0;
         let lines: Vec<&str> = s.lines().collect();
         let mut rows: Vec<Vec<String>> = Vec::with_capacity(lines.len());
         for line in lines{
-            if line.width() > max_column_width{
-                max_column_width = line.width();
-            }
             let mut row: Vec<String> = Vec::with_capacity(line.chars().count());
             for ch in line.chars(){
                 if let Some(1) = ch.width(){
@@ -497,11 +482,21 @@ impl Grid {
             rows.push(row);
         }
         Grid {
-            rows: rows.len(), 
-            columns: max_column_width,
             settings: settings.clone(),
             index: rows,
         }
+    }
+
+    pub fn rows(&self) -> usize {
+        self.index.len()
+    }
+
+    /// get the maximum row len
+    pub fn columns(&self) -> usize {
+        self.index.iter()
+            .map(|r| r.len())
+            .max()
+            .unwrap_or(0)
     }
 
 
@@ -519,31 +514,59 @@ impl Grid {
         }
     }
 
-    fn get_string(&self, loc: &Loc) -> String {
-        match self.get(loc){
-            Some(s) => s.clone(),
-            None => "".to_string()
+    /// put a text into this location
+    /// if loc.y < 0 => insert abs(loc.y) rows at element 0 to self.index
+    /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x 
+    /// if loc.x < 0 => insert abs(loc.x) columns at element 0, to all rows
+    /// if loc.x > row.x => append (loc.x-row.x) elements to the row 
+    pub fn put(&mut self, loc: &Loc, s: &str) {
+        println!("putting: {} to {:?}", s, loc);
+        let index_y = loc.y as usize;
+        let index_x = loc.x as usize;
+        if self.index.len() <= index_y {
+            let lack_row = index_y - self.index.len() + 1;
+            eprintln!("adding {} more rows", lack_row);
+            let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row);
+            for ar in 0..lack_row{
+                let empty_row: Vec<String> = vec![];
+                add_rows.push(empty_row);
+            }
+            self.index.append(&mut add_rows);
         }
+        let mut row:Vec<String> = self.index.remove(index_y);
+        if row.len() <= index_x {
+            let lack_cell = index_x - row.len() + 1;
+            eprintln!("adding {} more columns", lack_cell);
+            let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell);
+            for ac in 0..lack_cell{
+                add_cells.push(" ".to_string());// use space for empty cells
+            }
+            row.append(&mut add_cells);
+        }
+        let mut cell:String = row.remove(index_x);
+        cell = s.to_owned();
+        row.insert(index_x,cell);
+        self.index.insert(index_y,row);
     }
 
-    pub fn get_neighbor_text(&self, loc: &Loc) -> Neighbor {
-        Neighbor{
-            top_left_left: self.get_string(&loc.top_left().left()),
-            top_left: self.get_string(&loc.top_left()),
-            top: self.get_string(&loc.top()),
-            top_right: self.get_string(&loc.top_right()),
-            top_right_right: self.get_string(&loc.top_right().right()),
-            left_left: self.get_string(&loc.left().left()),
-            left: self.get_string(&loc.left()),
-            this: self.get_string(&loc),
-            right: self.get_string(&loc.right()),
-            right_right: self.get_string(&loc.right().right()),
-            bottom_left_left: self.get_string(&loc.bottom_left().left()),
-            bottom_left: self.get_string(&loc.bottom_left()),
-            bottom: self.get_string(&loc.bottom()),
-            bottom_right: self.get_string(&loc.bottom_right()),
-            bottom_right_right: self.get_string(&loc.bottom_right().right()),
+
+    /// Vector arranged in row x col
+    pub fn get_text_in_range(&self, loc1: &Loc, loc2: &Loc) -> Vec<Vec<Option<&String>>> {
+        let x1 = std::cmp::min(loc1.x, loc2.x);
+        let y1 = std::cmp::min(loc1.y, loc2.y);
+        let x2 = std::cmp::max(loc2.x, loc1.x);
+        let y2 = std::cmp::max(loc2.y, loc1.y);
+        let mut text = Vec::with_capacity((y2 - y1 + 1) as usize);
+        for j in y1..y2+1{
+            let mut row = Vec::with_capacity((x2 - x1 + 1) as usize);
+            for i in x1..x2+1{
+                let loc = Loc::new(i,j);
+                let cell = self.get(&loc);
+                row.push(cell);
+            }
+            text.push(row);
         }
+        text
     }
 
     
@@ -602,8 +625,8 @@ impl Grid {
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self) -> SVG {
         let nodes = self.get_svg_nodes();
-        let width = self.settings.text_width * self.columns  as f32;
-        let height = self.settings.text_height * self.rows as f32;
+        let width = self.settings.text_width * self.columns()  as f32;
+        let height = self.settings.text_height * self.rows() as f32;
         let mut svg = SVG::new()
             .set("font-size", 14)
             .set("font-family",
@@ -714,6 +737,7 @@ fn escape_char(ch: &str) -> String {
 mod test_lib{
     use super::Grid;
     use super::Settings;
+    use super::Loc;
 
     #[test]
     fn test_grid(){
@@ -721,6 +745,29 @@ mod test_lib{
         println!("{:?}", g.index);
         assert_eq!(g.index, vec![vec!["a".to_string(), "统".to_string(), "\u{0}".to_string(), "ö".to_string(), "o͡͡͡".to_string()]]);
     }
+
+    #[test]
+    fn test_text_in_range(){
+        let txt = "
+1234567890
+abcdefghij
+klmnopqrst
+uvwxyz1234
+567890abcd
+        ";
+        let g = Grid::from_str(txt, &Settings::compact());
+        println!("{:?}", g.index);
+        let loc = Loc::new(4,3);// at 'o'
+        let (loc1, loc2) = loc.get_range(2,1);
+        let text = g.get_text_in_range(&loc1, &loc2);
+        assert_eq!(text, 
+        vec![
+            vec![Some(&"c".to_string()),Some(&"d".to_string()),Some(&"e".to_string()),Some(&"f".to_string()),Some(&"g".to_string())],
+            vec![Some(&"m".to_string()),Some(&"n".to_string()),Some(&"o".to_string()),Some(&"p".to_string()),Some(&"q".to_string())],
+            vec![Some(&"w".to_string()),Some(&"x".to_string()),Some(&"y".to_string()),Some(&"z".to_string()),Some(&"1".to_string())],
+        ]);
+    }
+
 }
 
 #[cfg(test)]
