@@ -537,10 +537,7 @@ impl Grid {
     /// put a text into this location
     /// prepare the grid for this location first
     pub fn put(&mut self, loc: &Loc, s: &str) {
-        println!("putting: {} to {:?}", s, loc);
-        println!("rows before accom: {}", self.rows());
         let new_loc = self.accomodate(loc);
-        println!("rows after accom: {}", self.rows());
         if let Some(row) = self.index.get_mut(new_loc.y as usize){
             if let Some(cell) = row.get_mut(new_loc.x as usize){
                 *cell = s.to_owned();
@@ -581,7 +578,6 @@ impl Grid {
         let mut new_loc = loc.clone();
         if loc.y < 0 {
             let lack_row = (0 - loc.y) as usize; // 0 - -5 = 5
-            println!("inserting lack row {} from top",lack_row); 
             for _ in 0..lack_row{
                 self.index.insert(0,vec![]);
             }
@@ -590,10 +586,8 @@ impl Grid {
         if loc.x < 0 {
             let lack_cell = (0 - loc.x) as usize;
             let add_cells: String = " ".repeat(lack_cell);
-            println!("inserting from left {} cells: [{}]", lack_cell, add_cells);
             // insert add_cells to all rows at 0
             for row in self.index.iter_mut(){
-                println!("[{}] inserted",add_cells);
                 row.insert(0, add_cells.clone());
             }
             new_loc.x = 0;
@@ -603,7 +597,6 @@ impl Grid {
         // for missing cells 
         if new_loc.y >= self.index.len() as i32 {
             let lack_row = new_loc.y - self.index.len() as i32 + 1;
-            eprintln!("adding {} more rows", lack_row);
             let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row as usize);
             for _ in 0..lack_row{
                 add_rows.push(vec![]);
@@ -617,7 +610,6 @@ impl Grid {
         if let Some(row) = self.index.get_mut(new_loc.y as usize){
             if new_loc.x >= row.len() as i32 {
                 let lack_cell = new_loc.x - row.len() as i32 + 1;
-                eprintln!("adding {} more columns", lack_cell);
                 let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell as usize);
                 for _ in 0..lack_cell{
                     add_cells.push(" ".to_string());// use space for empty cells
@@ -681,12 +673,10 @@ impl Grid {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
         let elements = self.get_all_elements();
-        //eprintln!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements);
             let optimized_elements = optimizer.optimize(&self.settings);
-            //eprintln!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
             optimized_elements
         } else {
             // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>
