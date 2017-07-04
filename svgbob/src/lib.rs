@@ -487,6 +487,26 @@ impl Grid {
         }
     }
 
+    /// reassemble the Grid content into a string
+    /// trimming unneeded whitespace to the right for every line
+    pub fn to_string(&self) -> String {
+        let mut buff = String::new();
+        let mut do_ln = false;
+        for row in self.index.iter(){
+            let mut line = String::new();
+            if do_ln{//first line don't do \n
+                buff.push('\n');
+            }else{
+                do_ln = true;
+            }
+            for cell in row{
+                line.push_str(cell);
+            }
+            buff.push_str(&line);
+        }
+        buff
+    }
+
     pub fn rows(&self) -> usize {
         self.index.len()
     }
@@ -518,13 +538,18 @@ impl Grid {
     /// prepare the grid for this location first
     pub fn put(&mut self, loc: &Loc, s: &str) {
         println!("putting: {} to {:?}", s, loc);
-        let index_y = loc.y as usize;
-        let index_x = loc.x as usize;
-        self.accomodate(loc);
-        if let Some(row) = self.index.get_mut(index_y){
-            if let Some(cell) = row.get_mut(index_x){
+        println!("rows before accom: {}", self.rows());
+        let new_loc = self.accomodate(loc);
+        println!("rows after accom: {}", self.rows());
+        if let Some(row) = self.index.get_mut(new_loc.y as usize){
+            if let Some(cell) = row.get_mut(new_loc.x as usize){
                 *cell = s.to_owned();
             }
+            else{
+                panic!("no cell on this {}", new_loc.x);
+            }
+        }else{
+            panic!("no row on this {}", new_loc.y);
         }
     }
 
@@ -551,44 +576,56 @@ impl Grid {
     /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x 
     /// if loc.x < 0 => insert abs(loc.x) columns at element 0, to all rows
     /// if loc.x > row.x => append (loc.x-row.x) elements to the row 
-    pub fn accomodate(&mut self, loc: &Loc) {
+    /// returns the corrected location, -1,-1 will be on 0,0
+    pub fn accomodate(&mut self, loc: &Loc) -> Loc {
+        let mut new_loc = loc.clone();
         if loc.y < 0 {
             let lack_row = (0 - loc.y) as usize; // 0 - -5 = 5
             println!("inserting lack row {} from top",lack_row); 
             for _ in 0..lack_row{
                 self.index.insert(0,vec![]);
             }
+            new_loc.y = 0;
         }
         if loc.x < 0 {
             let lack_cell = (0 - loc.x) as usize;
-            println!("inserting from left {} cells", lack_cell);
             let add_cells: String = " ".repeat(lack_cell);
+            println!("inserting from left {} cells: [{}]", lack_cell, add_cells);
             // insert add_cells to all rows at 0
             for row in self.index.iter_mut(){
+                println!("[{}] inserted",add_cells);
                 row.insert(0, add_cells.clone());
             }
+            new_loc.x = 0;
         }
 
-        if self.index.len() as i32 <= loc.y {
-            let lack_row = loc.y - self.index.len() as i32 + 1;
+        // check again using the new location adjusted
+        // for missing cells 
+        if new_loc.y >= self.index.len() as i32 {
+            let lack_row = new_loc.y - self.index.len() as i32 + 1;
             eprintln!("adding {} more rows", lack_row);
             let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row as usize);
-            for ar in 0..lack_row{
+            for _ in 0..lack_row{
                 add_rows.push(vec![]);
             }
             self.index.append(&mut add_rows);
         }
-        if let Some(row) = self.index.get_mut(loc.y as usize){
-            if row.len() as i32 <= loc.x {
-                let lack_cell = loc.x - row.len() as i32 + 1;
+        // IMPORTANT NOTE:
+        // using new_loc as adjusted when -negative
+        // is important since the priliminary rows inserted
+        // are just empty rows
+        if let Some(row) = self.index.get_mut(new_loc.y as usize){
+            if new_loc.x >= row.len() as i32 {
+                let lack_cell = new_loc.x - row.len() as i32 + 1;
                 eprintln!("adding {} more columns", lack_cell);
                 let mut add_cells:Vec<String> = Vec::with_capacity(lack_cell as usize);
-                for ac in 0..lack_cell{
+                for _ in 0..lack_cell{
                     add_cells.push(" ".to_string());// use space for empty cells
                 }
                 (&mut *row).append(&mut add_cells);
             }
         }
+        new_loc
     }
 
 
@@ -644,12 +681,12 @@ impl Grid {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
         let elements = self.get_all_elements();
-        eprintln!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
+        //eprintln!("getting elements took {:?} {} ms", start.elapsed().unwrap(), start.elapsed().unwrap().subsec_nanos() / 1_000_000);
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements);
             let optimized_elements = optimizer.optimize(&self.settings);
-            eprintln!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
+            //eprintln!("optimization took {:?} {} ms", now.elapsed().unwrap(), now.elapsed().unwrap().subsec_nanos() / 1_000_000);
             optimized_elements
         } else {
             // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>
@@ -801,7 +838,6 @@ uvwxyz1234
 567890abcd
         ";
         let g = Grid::from_str(txt, &Settings::compact());
-        println!("{:?}", g.index);
         let loc = Loc::new(4,3);// at 'o'
         let (loc1, loc2) = loc.get_range(2,1);
         let text = g.get_text_in_range(&loc1, &loc2);
@@ -813,6 +849,72 @@ uvwxyz1234
         ]);
     }
 
+    #[test]
+    fn test_to_string(){
+        let txt = "The quick brown fox
+jumps over
+     the lazy dog.
+       ]";
+        let g = Grid::from_str(txt, &Settings::compact());
+        assert_eq!(txt, &*g.to_string());
+    }
+    #[test]
+    fn test_to_trimmed_string(){
+        let txt = "
+
+The quick brown fox
+
+jumps over
+
+     the lazy dog.
+
+        ";
+        let g = Grid::from_str(txt, &Settings::compact());
+        assert_eq!(txt, &*g.to_string());
+    }
+
+    #[test]
+    fn test_insert_text(){
+        let txt = 
+"1234567890
+abcdefghij
+klmnopqrst
+uvwxyz1234
+567890abcd";
+        let mut g = Grid::from_str(txt, &Settings::compact());
+        g.put(&Loc::new(-1,-1),"-");
+        let expected = 
+"-
+ 1234567890
+ abcdefghij
+ klmnopqrst
+ uvwxyz1234
+ 567890abcd";
+        assert_eq!(expected, &*g.to_string());
+    }
+
+    #[test]
+    fn test_insert_text_after(){
+        let txt = "\
+1234567890
+abcdefghij
+klmnopqrst
+uvwxyz1234
+567890abcd\
+";
+        let mut g = Grid::from_str(txt, &Settings::compact());
+        g.put(&Loc::new(11,5),"1");
+        let expected = "\
+1234567890
+abcdefghij
+klmnopqrst
+uvwxyz1234
+567890abcd
+           1\
+";
+        assert_eq!(expected, &*g.to_string());
+    }
+
 }
 
 #[cfg(test)]
@@ -822,7 +924,125 @@ mod benchmark{
 
     #[bench]
     fn convert(b: &mut Bencher) {
-        let arg = ".-----.";
-        b.iter(|| super::to_svg(arg))
+        b.iter(|| super::to_svg(&get_str()))
     }
+    
+fn get_str() -> String {
+r#"
+Svgbob is a diagramming model
+which uses a set of typing characters
+to approximate the desired shape.
+
+       .---.
+      /-o-/--
+   .-/ / /->
+  ( *  \/
+   '-.  \
+      \ /
+       ' 
+It uses a combination of this characters "`[(/<^.|+v*>\)]'"
+
+It can do basic shapes such as:
+                                                    ,
+   +------+   .------.    .------.      /\        ,' `.
+   |      |   |      |   (        )    /  \     .'     `.
+   +------+   '------'    '------'    '----'     `.   ,'
+     _______            ________                   `.'
+    /       \      /\   \       \
+   /         \    /  \   )       )
+   \         /    \  /  /_______/
+    \_______/      \/
+
+    .-----------.       .   <.      .>  .
+   (             )     (      )    (     )
+    '-----+ ,---'       `>   '      `  <'
+          |/
+          
+
+Quick logo scribbles
+        .---.                      _
+       /-o-/--       .--.         | |               .--.       |\       
+    .-/ / /->       /--. \     .--(-|    .----.    //.-.\      | \..-.  
+   ( *  \/         / o  )|     |  | |    |->  |   (+(-*-))      \((   ) 
+    '-.  \        /\ |-//      .  * |    '----'    \\'-'/        \ '+'  
+       \ /        \ '+'/        \__/                '--'          '-'   
+        '          '--'            
+
+Even unicode box drawing characters are supported
+            ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
+            ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡
+            └─┴┘  ╚═╩╝  ╙─╨╜  ╘═╧╛
+
+Mindmaps
+
+                                        .-->  Alpha
+                                       /
+                                      .---->  Initial Release
+      Planning  -------.             /         \      
+                        \           /           '---> Patch 1
+  Initial research       \         /             \
+            \             \       /               '-->  Patch 2
+             \             \     /
+              \             \   .----------->   Beta
+               \             \ /
+                \          .---.
+                 '------  (     )
+                           `---'
+                           /  \ \ \
+                          /    \ \ \  
+                      .--'      \ \ \
+                     /           \ \ '---  Push backs
+                    .             \ \      \
+                   /|              \ \      '----> Setbacks
+         Team   __/ .               \ \
+                   /|                \ '-----> Reception
+       Workload __/ .                 \
+                   /|                  \
+       Holiday  __/ .                   '--- Career change
+                   / 
+                  V  
+            Bugs
+
+
+It can do complex stuff such as circuit diagrams
+
+
+ +10-15V           ___0,047R       
+  *------o------o-|___|-o--o---------o----o-------o
+         |      |       |  |         |    |       |
+        ---     |       | .-.        |    |       |
+  470uF ###     |       | | | 2k2    |    |       |
+         | +    |       | | |        |    |      .-.
+  *------o      '--.    | '-'       .+.   |      '-'
+         |         |6   |7 |8    1k | |   |       |
+        GND      .------------.     | |   |       |
+                 |            |     '+'   |       |
+                 |            |1     |  |/  BC    |
+                 |            |------o--|   547   |
+                 |            |      |  |`>       |
+                 |            |     ,+.   |       |
+                 |            | 220R| |   o----||-+  IRF9Z34
+                 |            |     | |   |    |+->
+                 |  MC34063   |     `+'   |    ||-+
+                 |            |      |    |       |  BYV29     -12V6
+                 |            |      '----'       o--|<-o----o--X OUT
+                 |            |2                  |     |    |
+                 |            |--|                C|    |    |
+                 |            | GND         30uH  C|    |   --- 470
+                 |            |3      1nF         C|    |   ###  uF
+                 |            |-------||--.       |     |    | +
+                 '------------'           |      GND    |   GND
+                      5|   4|             |             |
+                       |    '-------------o-------------o
+                       |                           ___  |
+                       '------/\/\/------------o--|___|-'
+                                               |       1k0
+                                              .-.
+                                              | | 5k6 + 3k3
+                                              | | in Serie
+                                              '-'
+                                               |
+                                              GND
+"#.to_string()
+}
 }

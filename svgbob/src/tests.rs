@@ -1,4 +1,3 @@
-#[cfg(test)]
 mod bench_test{
     #[feature(test)]
     extern crate test;

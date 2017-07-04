@@ -153,6 +153,9 @@ impl <'g>FocusChar<'g>{
         if self.is('+'){
             (Static, vec![Top,Bottom, Left, Right])
         }
+        else if self.any("xX"){
+            (Dynamic, vec![TopLeft, TopRight, BottomLeft, BottomRight])
+        }
         //   \|/
         //   -*-
         //   /|\
@@ -563,6 +566,7 @@ impl <'g>FocusChar<'g>{
         let y = &self.y();
 
         let tw2 = self.tw2();
+        let tw3 = self.tw3();
         let tw4 = self.tw4();
 
         let th2 = self.th2();
@@ -1008,6 +1012,37 @@ impl <'g>FocusChar<'g>{
             }
         }
 
+
+        //////////////////////////////////////////
+        //
+        //   \ /      \ /
+        //    x        X
+        //   / \      / \
+        //
+        ///////////////////////////////////////////
+        if self.any("xX"){
+            //    \
+            //     x
+            if top_left.can_static_connect(&BottomRight){
+               elm.push(line(a,m)); 
+            }
+            //    /
+            //   x
+            if top_right.can_static_connect(&BottomLeft){
+               elm.push(line(m,e)); 
+            }
+            //    x
+            //   /
+            if bottom_left.can_static_connect(&TopRight){
+                elm.push(line(m,u))
+            }
+            //   x
+            //    \
+            if bottom_right.can_static_connect(&TopLeft){
+                elm.push(line(m,y));
+            }
+        }
+
         /////////////////////////////////////////
         //
         //   -┬- -┭- -┮- -┯- -┰- -┱- -┲- -┳-
@@ -1113,7 +1148,14 @@ impl <'g>FocusChar<'g>{
                 connects = true;
             }
             if connects{
-                elm.push(open_circle(m,tw2));
+                // small circle
+                if self.is('o'){
+                    elm.push(open_circle(m,tw2));
+                }
+                // big circle
+                else if self.is('O'){
+                    elm.push(open_circle(m,tw3));
+                }
             }
         }
         ///////////////////////////////
@@ -2449,6 +2491,10 @@ impl <'g>FocusChar<'g>{
 
     fn tw2(&self) -> f32 {
         self.text_width() * 1.0/2.0
+    }
+
+    fn tw3(&self) -> f32 {
+        self.text_width() * 3.0/4.0
     }
 
     fn tw4(&self) -> f32 {
