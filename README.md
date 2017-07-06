@@ -6,6 +6,8 @@
 
 SvgBobRus is an ascii to svg converter.
 
+[Demo](http://ivanceras.github.io/svgbob-editor/)
+
 [Docs](https://docs.rs/svgbob)
 
 <img src="https://ivanceras.github.io/svgbobrus/svgbob/examples/demo.svg"/>
