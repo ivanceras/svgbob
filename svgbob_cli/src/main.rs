@@ -73,8 +73,8 @@ fn main() {
         io::stdin().read_to_string(&mut bob).unwrap();
     }
 
-    let g = Grid::from_str(&*bob);
-    let svg = g.get_svg(&Settings::compact());
+    let g = Grid::from_str(&*bob, &Settings::compact());
+    let svg = g.get_svg();
 
     if let Some(file) = args.value_of("output") {
         if let Err(e) = svg::save(file, &svg) {
@@ -151,8 +151,8 @@ fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<Error>> {
     let mut bob = String::new();
     let mut f = try!(File::open(&input));
     f.read_to_string(&mut bob).unwrap();
-    let g = Grid::from_str(&*bob);
-    let svg = g.get_svg(&Settings::compact());
+    let g = Grid::from_str(&*bob,&Settings::compact());
+    let svg = g.get_svg();
     try!(svg::save(&output, &svg));
     Ok(())
 }

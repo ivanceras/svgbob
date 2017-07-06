@@ -7,8 +7,8 @@ use svgbob::Settings;
 
 fn main() {
     let file = "examples/demo.svg";
-    let g = Grid::from_str(get_arg());
-    let svg = g.get_svg(&Settings::compact());
+    let g = Grid::from_str(get_arg(),&Settings::compact());
+    let svg = g.get_svg();
     svg::save(file, &svg).unwrap();
     println!("Saved to {}",file);
 }
