@@ -465,7 +465,12 @@ impl Grid {
                 }
                 else if let Some(2) = ch.width(){
                     row.push(format!("{}",ch));
-                    row.push(format!("\0"));//push a blank
+                    // HACK: push a blank to the next cell,
+                    //in order to make this character twice as 
+                    // big and aligns the next succeeding characters on
+                    // this row
+                    row.push(format!("\0"));
+
                 }
                 // if zero width char, append it to the previous string
                 else if let Some(0) = ch.width(){
@@ -500,7 +505,12 @@ impl Grid {
                 do_ln = true;
             }
             for cell in row{
-                line.push_str(cell);
+                if cell == "\0"{
+                    ;//easy make over the full-width hack of the string
+                }
+                else{
+                    line.push_str(cell);
+                }
             }
             buff.push_str(&line);
         }
@@ -903,6 +913,14 @@ uvwxyz1234
            1\
 ";
         assert_eq!(expected, &*g.to_string());
+    }
+
+    #[test]
+    fn test_slash0_space(){
+        let txt = "件hello统";
+        let g = Grid::from_str(txt, &Settings::compact());
+        let s = g.to_string();
+        assert_eq!(txt, s);
     }
 
 }

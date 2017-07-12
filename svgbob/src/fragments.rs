@@ -25,6 +25,14 @@ impl Block{
         ];
     }
 
+    fn elements(){
+        [
+        ('+', vec![line(K,O),C,W)]),
+        ('*', vec![solid_circle(M,tw2)],
+        ('-', vec![line(K,O)]
+        ]
+    }
+
     /// +.,oO*~`'()[]
     fn dynamic_list() Vec<(char, Vec<Block>) {
         vec![
@@ -37,7 +45,9 @@ impl Block{
         ('`', vec![A,C,E,F,J,K,O,P,T,U,Y]),
         ('\'', vec![A,C,E,F,J,K,O,P,T,U,Y]),
         ('(', vec![C,W,E,Y]),
-        (')', vec![A,U,C,W])
+        (')', vec![A,U,C,W]),
+        ('x', vec![A,Y,E,U])
+        ('X', vec![A,Y,E,U])
         ]
     }
 
