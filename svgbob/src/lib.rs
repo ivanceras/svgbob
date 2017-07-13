@@ -658,8 +658,9 @@ impl Grid {
 
 
     /// vector of each elements arranged in rows x columns
-    fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>> {
+    fn get_all_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
+        let mut all_consumed_loc: Vec<Loc> = vec![];
         let mut y = 0;
         for line in &self.index{
             let mut x = 0;
@@ -667,14 +668,15 @@ impl Grid {
             for _ in line {
                 let loc = Loc::new(x,y);
                 let focus_char = self.get_focuschar(&loc);
-                let cell_elements = focus_char.get_elements();
+                let (cell_elements,consumed_loc) = focus_char.get_elements();
+                all_consumed_loc.extend(consumed_loc);
                 row.push(cell_elements);
                 x += 1;
             }
             rows.push(row);
             y += 1;
         }
-        rows
+        (rows, all_consumed_loc)
     }
 
     /// each component has its relative location retain
@@ -682,10 +684,10 @@ impl Grid {
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
-        let elements = self.get_all_elements();
+        let (elements,consumed_loc) = self.get_all_elements();
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
-            let optimizer = Optimizer::new(elements);
+            let optimizer = Optimizer::new(elements, consumed_loc);
             let optimized_elements = optimizer.optimize(&self.settings);
             optimized_elements
         } else {

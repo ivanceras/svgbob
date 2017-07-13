@@ -7,11 +7,19 @@ use super::Settings;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
+    consumed_loc: Vec<Loc>
 }
 
 impl Optimizer {
-    pub fn new(elements: Vec<Vec<Vec<Element>>>) -> Optimizer {
-        Optimizer { elements: elements }
+    pub fn new(elements: Vec<Vec<Vec<Element>>>, consumed_loc: Vec<Loc>) -> Optimizer {
+        Optimizer { 
+            elements: elements,
+            consumed_loc: consumed_loc
+        }
+    }
+
+    fn in_consumed_loc(&self, loc: &Loc) -> bool {
+        self.consumed_loc.contains(loc)
     }
 
     fn get(&self, loc: &Loc) -> Option<&Vec<Element>> {
@@ -100,10 +108,7 @@ impl Optimizer {
             for cell in line{
                 let loc = &Loc::new(x,y);
                 for elm in cell{
-                    if self.is_edible(loc){
-                        ;
-                    }
-                    else{
+                    if !self.is_edible(loc) && !self.in_consumed_loc(loc){
                         let traced = self.trace_elements(elm, loc);
                         optimized.push(traced);
                     }

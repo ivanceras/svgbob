@@ -512,7 +512,8 @@ impl <'g>FocusChar<'g>{
 ///      .'
 ///    .'
 ///   
-    pub fn get_elements(&self) -> Vec<Element>{
+///   returns the drawing elements, and the neighboring consumed elements
+    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
         let loc = &self.loc;
         let top = self.top();
         let bottom = self.bottom();
@@ -520,7 +521,7 @@ impl <'g>FocusChar<'g>{
         let right = self.right();
         // skip blanks and spaces
         if self.is_blank() || self.is(' '){
-            return vec![];
+            return (vec![],vec![]);
         }
         
         let top_left = self.top_left();
@@ -573,6 +574,7 @@ impl <'g>FocusChar<'g>{
         let th4 = self.th4();
 
         let mut elm = vec![];
+        let mut consumed:Vec<Loc> = vec![];//consumed loc
         /////////////////////////////
         //
         //    .    ,     
@@ -798,6 +800,103 @@ impl <'g>FocusChar<'g>{
                 && !left.can_connect(&Right){
                 elm.push(line(m,w))
             }
+        }
+        ////////////////////////////////
+        //  Big Arc
+        //
+        //////////////////////////////////
+        if self.any(".,"){
+
+            //        _         _ 
+            //      ,'        .'  
+            //     /         /    
+            //    |         |     
+            if right.is('\'') && top_right_right.is('_')
+                && bottom_left.is('/') && bottom_left.bottom_left().is('|'){
+                    elm.extend(vec![arc(&top_right_right.u(), 
+                                        &bottom_left.bottom_left().c(),
+                                        tw4 * 5.0),
+                                 line(&bottom_left.bottom_left().c(), 
+                                      &bottom_left.bottom_left().w())
+                              ]);
+                    
+                    consumed.extend(vec![
+                                    right.loc(), 
+                                    bottom_left.loc(),
+                                    bottom_left.bottom_left().loc()
+                        ]);
+             }
+             //     _
+             //      `.
+             //        \
+             //         |
+             if left.is('`') && top_left_left.is('_')
+                 && bottom_right.is('\\') && bottom_right.bottom_right().is('|'){
+                 elm.extend(vec![
+                         arc(&bottom_right.bottom_right().c(),
+                             &top_left_left.y(),
+                             tw4 * 5.0),
+                         line(&bottom_right.bottom_right().c(),
+                              &bottom_right.bottom_right().w())
+                     ]); 
+                 consumed.extend(vec![
+                        left.loc(),
+                        bottom_right.loc(),
+                        bottom_right.bottom_right().loc()
+                 ]);
+             }
+
+                
+             
+        }
+
+        ////////////////////////////////
+        // Bigarc bottom
+        //
+        //   |
+        //    \
+        //     `._
+        //
+        ///////////////////////////////
+        if self.any("`'"){
+            if right.is('.') && right_right.is('_')
+                && top_left.is('\\') && top_left.top_left().is('|'){
+                elm.extend(vec![
+                    arc(&top_left.top_left().w(),
+                        &right_right.u(),
+                        tw4 * 5.0),
+                    line(&top_left.top_left().w(),
+                         &top_left.top_left().c())
+                ]);
+
+                consumed.extend(vec![
+                      right.loc(),
+                      top_left.loc(),
+                      top_left.top_left().loc()
+                ]);
+            }
+        }
+        /////////////////////////////////
+        //
+        //            |         |
+        //           /         /
+        //        _.'       _,'
+        //
+        ////////////////////////////////
+        if self.is('\'') && left.any(".,") && left_left.is('_')
+            && top_right.is('/') && top_right.top_right().is('|'){
+            elm.extend(vec![
+                    arc(&left_left.y(),
+                        &top_right.top_right().w(),
+                        tw4 * 5.0),
+                    line(&top_right.top_right().w(),
+                         &top_right.top_right().c())
+                ]);
+            consumed.extend(vec![
+                left.loc(),
+                top_right.loc(),
+                top_right.top_right().loc()
+            ]);
         }
         //////////////////////////////
         //
@@ -2435,7 +2534,7 @@ impl <'g>FocusChar<'g>{
             let quoted = ::escape_char(&self.text());
             elm.push(text(loc,quoted));
         }
-        elm
+        (elm, consumed)
     }
 
 
@@ -2445,6 +2544,10 @@ impl <'g>FocusChar<'g>{
 
     fn loc_y(&self) -> f32 {
         self.loc.y as f32
+    }
+
+    fn loc(&self) -> Loc {
+        self.loc.clone()
     }
     
 
