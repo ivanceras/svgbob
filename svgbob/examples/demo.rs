@@ -1386,9 +1386,9 @@ test测试--> 测试test
   ,' -> create Ascii art                  `.
  /  -> draw sketches for e-mails            \
 |  -> comment source code of programs        |
-| -> diagrams for visually handicaped people (
+| -> diagrams for visually handicaped people |
 | -> more dialogs                             >
-|                                            (
+|                                            |
  \  -> ...                                  /
   `._______  ____   ____   ___  __________,'
           /,'    | /    \ |   `.\
@@ -1520,11 +1520,12 @@ test测试--> 测试test
 
 o͡͡͡╮( ʘ̆ ۝ ʘ̆ )╭o͡
 
-
+  .   .
 ७(,⊙–⊙,)७
-
+  `   '
+   . .
 o͡͡͡╮(•ʖ̯•)╭o͡͡͡
-
+   ` '
 (°□°)
 
 ¯\_( ツ)_/¯ 
