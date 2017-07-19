@@ -444,6 +444,10 @@ impl <'g>FocusChar<'g>{
         self.in_any(vec!['\0', ' '])
     }
 
+    pub fn is_null(&self) -> bool {
+        self.is('\0')
+    }
+
     fn is_slant_left(&self) -> bool {
         self.is('\\')
     }
@@ -519,10 +523,6 @@ impl <'g>FocusChar<'g>{
         let bottom = self.bottom();
         let left = self.left();
         let right = self.right();
-        // skip blanks and spaces
-        if self.is_blank() || self.is(' '){
-            return (vec![],vec![]);
-        }
         
         let top_left = self.top_left();
         let top_right = self.top_right();
@@ -574,6 +574,13 @@ impl <'g>FocusChar<'g>{
         let th4 = self.th4();
 
         let mut elm = vec![];
+
+        // Issue: if not returned early for the non-spaced
+        // whitespaced character, CJK, fullwidth chars will be going bonkers
+        if self.is_null(){
+            return (vec![],vec![]);
+        }
+
         let mut consumed:Vec<Loc> = vec![];//consumed loc
         /////////////////////////////
         //
@@ -898,6 +905,41 @@ impl <'g>FocusChar<'g>{
                 top_right.top_right().loc()
             ]);
         }
+        //////////////////////////////
+        //
+        //  Eat all the chars here
+        //  and make a circle on the middle loc
+        //    .-.    .-.
+        //   (   )  (   )
+        //    `-'    '-'
+        //
+        //////////////////////////////
+        if left_left.is('(')
+            && right_right.is(')')
+            && top.is('-')
+            && bottom.is('-')
+            && top_left.is('.')
+            && top_right.is('.')
+            && bottom_left.any("`'")
+            && bottom_right.is('\''){
+            elm.push(open_circle(m, th4));
+            consumed.extend(vec![
+                left_left.loc(),
+                right_right.loc(),
+                top.loc(),
+                bottom.loc(),
+                top_left.loc(),
+                top_right.loc(),
+                bottom_left.loc(),
+                bottom_right.loc(),
+            ]);
+
+            if !self.is_blank(){
+                let quoted = ::escape_char(&self.text());
+                elm.push(text(loc,quoted));
+            }
+        }
+
         //////////////////////////////
         //
         //     '
