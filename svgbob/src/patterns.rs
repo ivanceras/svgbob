@@ -566,11 +566,14 @@ impl <'g>FocusChar<'g>{
         let x = &self.x();
         let y = &self.y();
 
+        let tw1 = self.tw1();
         let tw2 = self.tw2();
         let tw3 = self.tw3();
         let tw4 = self.tw4();
 
+        let th1 = self.th1();
         let th2 = self.th2();
+        let th3 = self.th3();
         let th4 = self.th4();
 
         let mut elm = vec![];
@@ -1237,66 +1240,120 @@ impl <'g>FocusChar<'g>{
 
         ///////////////////////////////
         //    
-        //     oO
+        //     o
+        // small-o circle
         //
         ///////////////////////////////
-        if self.is_open_round_marker(){
+        if self.is('o'){
             let mut connects = false;
             //    |   |   +  ┌
-            //    o   O   O  |
+            //    o   o   o  |
             if top.can_static_connect(&Bottom){
-                elm.push(line(m,c));
+                elm.push(line(h,c));
                 connects = true;
             }
-            //    o   O   O  |
+            //    o   o   o  |
             //    |   |   +  ┘
             if bottom.can_static_connect(&Top){
-                elm.push(line(m,w));
+                elm.push(line(r,w));
                 connects = true;
             }
-            //     o-  O- o+  o┘
+            //     o-  o- o+  o┘
             if right.can_static_connect(&Left){
-               elm.push(line(m,o));
+                //elm.push(line(n,o));
                 connects = true;
             }
             //    -o 
             if left.can_static_connect(&Right){
-                elm.push(line(m,k));
+                //elm.push(line(l,k));
                 connects = true;
             }
             //   \   
             //    o   
             if top_left.can_static_connect(&BottomRight){
-                elm.push(line(a,m));
+                elm.push(line(a,g));
                 connects = true;
             }
             //     /  
             //    o  
             if top_right.can_static_connect(&BottomLeft){
-                elm.push(line(e,m));
+                elm.push(line(i,e));
                 connects = true;
             }
             //     o  
             //    /   
             if bottom_left.can_static_connect(&TopRight){
-                elm.push(line(m,u));
+                elm.push(line(q,u));
                 connects = true;
             }
             //     o  
             //      \  
             if bottom_right.can_static_connect(&TopLeft){
-                elm.push(line(m,y));
+                elm.push(line(s,y));
                 connects = true;
             }
             if connects{
-                // small circle
-                if self.is('o'){
                     elm.push(open_circle(m,tw2));
-                }
-                // big circle
-                else if self.is('O'){
-                    elm.push(open_circle(m,tw3));
-                }
+            }
+        }
+        ///////////////////////////////
+        //
+        //    O
+        // big-O circle
+        // 
+        /////////////////////////////////
+        if self.is('O'){
+            let mut connects = false;
+            //    |   |   +  ┌
+            //    O   O   O  |
+            if top.can_static_connect(&Bottom){
+                elm.push(line(c, &c.add_y(tw1)));
+                connects = true;
+            }
+            //    O   O   O  |
+            //    |   |   +  ┘
+            if bottom.can_static_connect(&Top){
+                elm.push(line(w, &w.add_y(-tw1)));
+                connects = true;
+            }
+            //     O-  O- O+  O┘
+            if right.can_static_connect(&Left){
+                elm.push(line(&right.l(), &right.o()));
+                consumed.push(right.loc());
+                connects = true;
+            }
+            //    -O 
+            if left.can_static_connect(&Right){
+                elm.push(line(&left.n(), &left.k()));
+                consumed.push(left.loc());
+                connects = true;
+            }
+            //   \   
+            //    O   
+            if top_left.can_static_connect(&BottomRight){
+                elm.push(line(a, &a.add(tw1/2.0,tw1)));
+                connects = true;
+            }
+            //     /  
+            //    O  
+            if top_right.can_static_connect(&BottomLeft){
+                elm.push(line(e, &e.add(-tw1/2.0,tw1)));
+                connects = true;
+            }
+            //     O  
+            //    /   
+            if bottom_left.can_static_connect(&TopRight){
+                elm.push(line(u, &u.add(tw1/2.0, -tw1)));
+                connects = true;
+            }
+            //     O  
+            //      \  
+            if bottom_right.can_static_connect(&TopLeft){
+                elm.push(line(y, &y.add(-tw1/2.0, -tw1)));
+                connects = true;
+            }
+            if connects{
+               elm.push(open_circle(m,tw3));
             }
         }
         ///////////////////////////////
@@ -2634,6 +2691,10 @@ impl <'g>FocusChar<'g>{
         self.grid.settings.text_height
     }
 
+    fn tw1(&self) -> f32 {
+        self.text_width() * 1.0/4.0
+    }
+
     fn tw2(&self) -> f32 {
         self.text_width() * 1.0/2.0
     }
@@ -2646,9 +2707,16 @@ impl <'g>FocusChar<'g>{
         self.text_width() * 1.0
     }
 
+    fn th1(&self) -> f32 {
+        self.text_height() * 1.0/4.0
+    }
 
     fn th2(&self) -> f32 {
         self.text_height() * 1.0/2.0
+    }
+
+    fn th3(&self) -> f32 {
+        self.text_height() * 3.0/4.0
     }
 
 

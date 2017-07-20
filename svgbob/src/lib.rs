@@ -185,6 +185,16 @@ impl Point {
     fn new(x: f32, y: f32) -> Point {
         Point { x: x, y: y }
     }
+
+    fn add(&self, x: f32, y:f32) -> Point{
+        Point { x: self.x + x, y: self.y + y}
+    }
+    fn add_x(&self, x: f32) -> Point{
+        Point { x: self.x + x, y: self.y }
+    }
+    fn add_y(&self, y: f32) -> Point{
+        Point { x: self.x, y: self.y + y }
+    }
 }
 
 #[derive(Debug)]
@@ -765,13 +775,12 @@ fn get_styles() -> Style {
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
-      fill:white;
     }
     circle.solid {
       fill:black;
     }
     circle.open {
-      fill:white;
+      fill:transparent;
     }
     tspan.head{
         fill: none;
