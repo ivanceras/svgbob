@@ -529,8 +529,6 @@ impl <'g>FocusChar<'g>{
         let bottom_left = self.bottom_left();
         let bottom_right = self.bottom_right();
 
-        let left_left = self.get(&loc.left().left());
-        let right_right = self.get(&loc.right().right());
         let top_right_right = self.get(&loc.top().right().right());
         let top_left_left = self.get(&loc.top().left().left());
         let bottom_left_left = self.get(&loc.bottom().left().left());
@@ -869,11 +867,11 @@ impl <'g>FocusChar<'g>{
         //
         ///////////////////////////////
         if self.any("`'"){
-            if right.is('.') && right_right.is('_')
+            if right.is('.') && self.in_right(2).is('_')
                 && top_left.is('\\') && top_left.top_left().is('|'){
                 elm.extend(vec![
                     arc(&top_left.top_left().w(),
-                        &right_right.u(),
+                        &self.in_right(2).u(),
                         tw4 * 5.0),
                     line(&top_left.top_left().w(),
                          &top_left.top_left().c())
@@ -893,10 +891,10 @@ impl <'g>FocusChar<'g>{
         //        _.'       _,'
         //
         ////////////////////////////////
-        if self.is('\'') && left.any(".,") && left_left.is('_')
+        if self.is('\'') && left.any(".,") && self.in_left(2).is('_')
             && top_right.is('/') && top_right.top_right().is('|'){
             elm.extend(vec![
-                    arc(&left_left.y(),
+                    arc(&self.in_left(2).y(),
                         &top_right.top_right().w(),
                         tw4 * 5.0),
                     line(&top_right.top_right().w(),
@@ -910,6 +908,7 @@ impl <'g>FocusChar<'g>{
         }
         //////////////////////////////
         //
+        //  Circle1
         //  Eat all the chars here
         //  and make a circle on the middle loc
         //    .-.    .-.
@@ -917,8 +916,8 @@ impl <'g>FocusChar<'g>{
         //    `-'    '-'
         //
         //////////////////////////////
-        if left_left.is('(')
-            && right_right.is(')')
+        if self.in_left(2).is('(')
+            && self.in_right(2).is(')')
             && top.is('-')
             && bottom.is('-')
             && top_left.is('.')
@@ -927,8 +926,8 @@ impl <'g>FocusChar<'g>{
             && bottom_right.is('\''){
             elm.push(open_circle(m, th4));
             consumed.extend(vec![
-                left_left.loc(),
-                right_right.loc(),
+                self.in_left(2).loc(),
+                self.in_right(2).loc(),
                 top.loc(),
                 bottom.loc(),
                 top_left.loc(),
@@ -936,13 +935,164 @@ impl <'g>FocusChar<'g>{
                 bottom_left.loc(),
                 bottom_right.loc(),
             ]);
-
-            if !self.is_blank(){
-                let quoted = ::escape_char(&self.text());
-                elm.push(text(loc,quoted));
+        }
+        //////////////////////////////
+        //  Circle 2
+        //
+        //     .--.
+        //    ( *  )
+        //     `--'
+        //////////////////////////////
+        if self.in_left(2).is('(')
+            && self.in_right(2).right().is(')')
+            && top.is('-')
+            && top_left.is('.')
+            && top_right.is('-')
+            && top_right_right.is('.')
+            && bottom_left.any("`'")
+            && bottom.is('-')
+            && bottom_right.is('-')
+            && bottom_right.right().is('\''){
+            elm.push(open_circle(o, th4+tw2));
+            consumed.extend(vec![
+                self.in_left(2).loc(),
+                self.in_right(2).right().loc(),
+                top.loc(),
+                bottom.loc(),
+                top_left.loc(),
+                top_right.loc(),
+                top_right.right().loc(),
+                bottom_left.loc(),
+                bottom_right.loc(),
+                bottom_right.right().loc(),
+            ]);
+        }
+        /////////////////////////////
+        //  top left arc of circle3
+        //     _.-
+        //   .'  |
+        //  (----+
+        //
+        /////////////////////////////
+        {   // if 4 of them match then consume all, and make a full circle
+            let mut quadrants = vec![];//temp storage for the arcs, replace with circle when all quadrants matched
+            let mut top_left_arc_matched = false;
+            let mut top_right_arc_matched = false;
+            let mut bottom_left_arc_matched = false;
+            let mut bottom_right_arc_matched = false;
+            if self.in_left(5).is('(')
+                && self.in_left(4).top().is('.')
+                && self.in_left(3).top().is('\'')
+                && self.in_left(2).in_top(2).is('_')
+                && self.left().in_top(2).is('.')
+                && self.in_top(2).is('-') 
+            {
+                quadrants.push(arc(&self.in_top(2).c(),
+                            &self.in_left(5).m(),
+                             tw4 * 5.0 ));
+                top_left_arc_matched = true;
+                consumed.extend(vec![
+                    self.in_left(5).loc(),
+                    self.in_left(4).top().loc(),
+                    self.in_left(3).top().loc(),
+                    self.in_left(2).in_top(2).loc(),
+                    self.left().in_top(2).loc(),
+                    self.in_top(2).loc()
+                ]);
+            }
+            ///////////////////////////////
+            // top right arc of the circle3
+            //  -._
+            //  |  `.
+            //  +----)
+            //////////////////////////////
+            if self.in_right(5).is(')')
+                && self.in_right(4).top().is('.')
+                && self.in_right(3).top().any("`'")
+                && self.in_right(2).in_top(2).is('_')
+                && self.right().in_top(2).is('.')
+                && self.in_top(2).is('-'){
+                quadrants.push(
+                    arc(&self.in_right(5).m(),
+                        &self.in_top(2).c(),
+                        tw4 * 5.0)
+                );
+                top_right_arc_matched = true;
+                consumed.extend(vec![
+                    self.in_right(5).loc(),
+                    self.in_right(4).top().loc(),
+                    self.in_right(3).top().loc(),
+                    self.in_right(2).in_top(2).loc(),
+                    self.right().in_top(2).loc(),
+                    self.in_top(2).loc()
+                ]);
+            }
+            ////////////////////////////////
+            //  bottom_left arc of the circle3 
+            //   
+            //  (----+
+            //   `._ |
+            //      `-
+            ////////////////////////////////
+            if self.in_left(5).is('(')
+                && self.in_left(4).bottom().any("`'")
+                && self.in_left(3).bottom().is('.')
+                && self.in_left(2).bottom().is('_')
+                && self.left().in_bottom(2).any("`'")
+                && self.in_bottom(2).is('-'){
+                quadrants.push(
+                    arc(&self.in_left(5).m(),
+                        &self.in_bottom(2).w(),
+                        tw4 * 5.0)
+                );
+                bottom_left_arc_matched = true;
+                consumed.extend(vec![
+                    self.in_left(5).loc(),
+                    self.in_left(4).bottom().loc(),
+                    self.in_left(3).bottom().loc(),
+                    self.in_left(2).bottom().loc(),
+                    self.left().in_bottom(2).loc(),
+                    self.in_bottom(2).loc()
+                ]);
+            }
+            ///////////////////////////////////
+            //  bottom_right arc of the circle3
+            //    +----)
+            //    | _,'
+            //    -'
+            //
+            ////////////////////////////////////
+            if self.in_right(5).is(')')
+                && self.in_right(4).bottom().is('\'')
+                && self.in_right(3).bottom().is(',')
+                && self.in_right(2).bottom().is('_')
+                && self.right().in_bottom(2).is('\'')
+                && self.in_bottom(2).is('-'){
+                quadrants.push(
+                    arc(&self.in_bottom(2).w(),
+                        &self.in_right(5).m(),
+                        tw4 * 5.0)
+                );
+                bottom_right_arc_matched = true;
+                consumed.extend(vec![
+                    self.in_right(5).loc(),
+                    self.in_right(4).bottom().loc(),
+                    self.in_right(3).bottom().loc(),
+                    self.in_right(2).bottom().loc(),
+                    self.right().in_bottom(2).loc(),
+                    self.in_bottom(2).loc(),
+                ]);
+            }
+            if top_left_arc_matched
+                && top_right_arc_matched
+                && bottom_left_arc_matched
+                && bottom_right_arc_matched{
+                elm.push(open_circle(&self.m(),tw4 * 5.0));
+            }
+            else{
+                elm.extend(quadrants);
             }
         }
-
         //////////////////////////////
         //
         //     '
@@ -2388,11 +2538,11 @@ impl <'g>FocusChar<'g>{
                 elm.push(line(p,t));
             }
             if left.is('.')
-                && left_left.is('.'){
+                && self.in_left(2).is('.'){
                 elm.push(line(p,r));
             }
             if right.is('.')
-                && right_right.is('.'){
+                && self.in_right(2).is('.'){
                 elm.push(line(r,t));
             }
         }
@@ -2661,6 +2811,36 @@ impl <'g>FocusChar<'g>{
 
     pub fn left(&self) -> Self {
        self.get(&self.loc.left())
+    }
+
+    pub fn in_left(&self, n: usize) -> Self {
+        let mut fc = self.left();
+        for i in 0..n-1{
+            fc = fc.left();
+        }
+        fc
+    }
+    pub fn in_right(&self, n: usize) -> Self {
+        let mut fc = self.right();
+        for i in 0..n-1{
+            fc = fc.right();
+        }
+        fc
+    }
+
+    pub fn in_top(&self, n: usize) -> Self {
+        let mut fc = self.top();
+        for i in 0..n-1{
+            fc = fc.top();
+        }
+        fc
+    }
+    pub fn in_bottom(&self, n: usize) -> Self {
+        let mut fc = self.bottom();
+        for i in 0..n-1{
+            fc = fc.bottom();
+        }
+        fc
     }
 
     pub fn right(&self) -> Self {
