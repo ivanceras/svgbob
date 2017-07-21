@@ -33,9 +33,9 @@
 #![feature(test)]
 extern crate svg;
 extern crate unicode_width;
-#[cfg(test)]
-#[macro_use] 
-extern crate pretty_assertions;
+//#[cfg(test)]
+//#[macro_use] 
+//extern crate pretty_assertions;
 
 
 
@@ -713,6 +713,28 @@ impl Grid {
             nodes.push(element);
         }
         nodes
+    }
+
+    pub fn get_svg_nodes_only(&self) -> String {
+        let nodes = self.get_svg_nodes();
+        let mut svg = String::new();
+        for node in nodes {
+            match node {
+                SvgElement::Circle(circle) => {
+                    svg.push_str(&circle.to_string());
+                }
+                SvgElement::Line(line) => {
+                    svg.push_str(&line.to_string());
+                }
+                SvgElement::Path(path) => {
+                    svg.push_str(&path.to_string());
+                }
+                SvgElement::Text(text) => {
+                    svg.push_str(&text.to_string());
+                }
+            }
+        }
+        svg
     }
 
 

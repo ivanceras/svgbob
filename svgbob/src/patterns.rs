@@ -298,7 +298,7 @@ impl <'g>FocusChar<'g>{
 
 
     fn is_thin_horizontal(&self) -> bool {
-        self.in_any(vec!['-','-','─'])
+        self.in_any(vec!['─'])
     }
 
     fn is_thick_horizontal(&self) -> bool {
@@ -1109,21 +1109,6 @@ impl <'g>FocusChar<'g>{
                 ]);
             }
         }
-        ///////////////////////////
-        //
-        //    `
-        //
-        ////////////////////////////
-        if self.is('`'){
-            // `>
-            //  don't do self when not used as counter clock wise arrow
-            //
-            //  NOT:  (
-            //         `>
-            if right.is('>') && !top_left.is('('){
-                elm.push(arrow_line(&left.c(),t));
-            }
-        }
         //////////////////////////////////
         //
         //       dynamic: `   '   
@@ -1750,8 +1735,9 @@ impl <'g>FocusChar<'g>{
                 elm.push(arrow_line(k,n));
             }
             // `>
-            if left.is('`'){
-                elm.push(blank_text(loc));
+            if left.is('`') && !self.in_left(2).top().is('('){
+                elm.push(arrow_line(&self.in_left(2).c(),&left.t()));
+                consumed.push(left.loc());
             }
             let mut deformed = false;
             //    \
@@ -1999,6 +1985,11 @@ impl <'g>FocusChar<'g>{
                 elm.push(line(c,w));
             }
         }
+        ///////////////////////
+        // horizontal dash
+        //    -
+        //
+        ////////////////////////
         if self.is_horizontal(){
             let mut deformed = false;
             let mut interacted = false;
