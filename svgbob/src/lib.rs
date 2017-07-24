@@ -33,9 +33,9 @@
 #![feature(test)]
 extern crate svg;
 extern crate unicode_width;
-//#[cfg(test)]
-//#[macro_use] 
-//extern crate pretty_assertions;
+#[cfg(test)]
+#[macro_use] 
+extern crate pretty_assertions;
 
 
 
@@ -60,6 +60,9 @@ use patterns::FocusChar;
 
 mod optimizer;
 mod patterns;
+
+mod fragments;
+mod properties;
 
 
 /// generate an SVG from the ascii text input
@@ -153,6 +156,19 @@ enum SvgElement {
     Line(SvgLine),
     Path(SvgPath),
     Text(SvgText),
+}
+
+impl std::fmt::Debug for SvgElement{
+
+    fn fmt(&self, fmt: &mut std::fmt::Formatter)->Result<(),std::fmt::Error>{
+        match *self{
+            SvgElement::Circle(ref c) => writeln!(fmt, "{}",c.to_string()),
+            SvgElement::Line(ref l) => writeln!(fmt, "{}",l.to_string()),
+            SvgElement::Path(ref p) => writeln!(fmt, "{}", p.to_string()),
+            SvgElement::Text(ref t) => writeln!(fmt, "{}",t.to_string()),
+        }
+    }
+
 }
 
 
@@ -285,32 +301,47 @@ pub enum Element {
     Path(Point, Point, String, Stroke),
 }
 
+
+pub fn line(a:&Point, b:&Point) -> Element {
+    Element::Line(a.clone(), b.clone(), Solid, Nothing)
+}
+
+pub fn solid_circle(c: &Point, r: f32) -> Element {
+    Element::Circle(c.clone(), r, "solid".to_string())
+}
+
+
+pub fn arrow_arc(a: &Point, b: &Point, r: f32) -> Element{
+   Element::Arc(a.clone(), b.clone(), r, false, Solid, Arrow)
+}
+
+pub fn arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
+    Element::Arc(a.clone(), b.clone(), r.clone(), true, Solid, Arrow)
+}
+
+
+pub fn arc(a: &Point, b: &Point, r: f32) -> Element{
+    Element::Arc(a.clone(), b.clone(), r, false, Solid, Nothing)
+}
+
+
+pub fn open_circle(c:&Point, r:f32) -> Element {
+    Element::Circle(c.clone(),r.clone(), "open".to_string())
+}
+
+pub fn arrow_line(s: &Point, e: &Point) -> Element {
+    Element::Line(s.clone(), e.clone(), Solid, Arrow)
+}
+
+pub fn text(loc: &Loc, txt:&str) -> Element {
+    Element::Text(loc.clone(), escape(txt))
+}
+
+pub fn blank_text(loc: &Loc) -> Element {
+    text(loc," ".into())
+}
+
 impl Element {
-    fn solid_circle(c: &Point, r: f32) -> Element{
-        Element::Circle(c.clone(), r, "solid".into())
-    }
-    fn open_circle(c: &Point, r: f32) -> Element{
-        Element::Circle(c.clone(), r, "open".into())
-    }
-    fn solid_line(s: &Point, e: &Point) -> Element {
-        Element::line(s, e, Solid, Nothing)
-    }
-
-    fn arrow_line(s: &Point, e: &Point) -> Element {
-        Element::line(s,e,Solid,Arrow)
-    }
-
-    fn line(s: &Point, e: &Point, stroke: Stroke, feature: Feature) -> Element {
-        Element::Line(s.clone(), e.clone(), stroke, feature)
-    }
-    fn arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
-        Element::Arc(s.clone(), e.clone(), radius, sweep, Solid, Nothing)
-    }
-
-    fn arrow_arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
-        Element::Arc(s.clone(), e.clone(), radius, sweep, Solid, Arrow)
-    }
-
     // if this element can reduce the other, return the new reduced element
     // for line it has to be collinear and in can connect start->end->start
     // for text, the other text should apear on the right side of this text
@@ -668,6 +699,7 @@ impl Grid {
 
 
     /// vector of each elements arranged in rows x columns
+    /// returns all the elements and the consumed location
     fn get_all_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         let mut all_consumed_loc: Vec<Loc> = vec![];
@@ -829,7 +861,7 @@ fn arrow_marker() -> Marker {
 
 }
 
-fn escape_char(ch: &str) -> String {
+fn escape(ch: &str) -> String {
     let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;")];
     let quote_match: Option<&(&str, &str)> = escs.iter()
         .find(|pair| {
@@ -853,6 +885,7 @@ mod test_lib{
     use super::Grid;
     use super::Settings;
     use super::Loc;
+
 
     #[test]
     fn test_grid(){

@@ -2,95 +2,286 @@ use Element;
 use Point;
 use Loc;
 use Grid;
+use Settings;
 
-use self::Direction::{
+use fragments::Block;
+use fragments::Block::{
+    A,B,C,D,E,
+    F,G,H,I,J,
+    K,L,M,N,O,
+    P,Q,R,S,T,
+    U,V,W,X,Y
+};
+
+use fragments::{
+    line_to,
+    line_from,
+    middle_line,
+    center_line,
+};
+use fragments::Fragment;
+use fragments::Fragment::{
+    Line,
+    ArrowLine,
+    StartArrowLine,
+    Arc,
+};
+
+use fragments::Direction;
+use fragments::Direction::{
     Top,Bottom,
     Left,Right,
     TopLeft,TopRight,
     BottomLeft,BottomRight
 };
-use self::Behavior::{Static,Dynamic};
+use properties::Behavior::{Static,Dynamic};
+use properties::Signal::{Weak,Medium,Strong};
+use properties::Properties;
+use ::{
+    line, solid_circle,
+    arrow_arc, arrow_sweep_arc,
+    arc, open_circle, arrow_line,
+    text, blank_text
+};
 
 
 
-fn line(a:&Point, b:&Point) -> Element {
-    Element::solid_line(a,b)
+struct LocBlock{
+    loc: Loc, 
+    block: Block,
+    settings: Settings
 }
 
-fn arrow_line(a: &Point, b: &Point) -> Element {
-    Element::arrow_line(a,b)
-}
+impl LocBlock{
 
-fn arrow_arc(a: &Point, b: &Point, r: f32) -> Element{
-    Element::arrow_arc(a, b, r, false)
-}
+    fn text_width(&self) -> f32 {
+        self.settings.text_width
+    }
 
-fn arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
-    Element::arrow_arc(a, b, r, true)
-}
+    fn text_height(&self) -> f32 {
+        self.settings.text_height
+    }
+
+    fn loc_x(&self) -> f32 {
+        self.loc.x as f32
+    }
+
+    fn loc_y(&self) -> f32 {
+        self.loc.y as f32
+    }
+
+    fn loc(&self) -> Loc {
+        self.loc.clone()
+    }
+
+    fn tw1(&self) -> f32 {
+        self.text_width() * 1.0/4.0
+    }
+
+    fn tw2(&self) -> f32 {
+        self.text_width() * 1.0/2.0
+    }
+
+    fn tw3(&self) -> f32 {
+        self.text_width() * 3.0/4.0
+    }
+
+    fn tw4(&self) -> f32 {
+        self.text_width() * 1.0
+    }
+
+    fn th1(&self) -> f32 {
+        self.text_height() * 1.0/4.0
+    }
+
+    fn th2(&self) -> f32 {
+        self.text_height() * 1.0/2.0
+    }
+
+    fn th3(&self) -> f32 {
+        self.text_height() * 3.0/4.0
+    }
 
 
-fn arc(a: &Point, b: &Point, r: f32) -> Element{
-    Element::arc(a, b, r, false)
-}
+    fn th4(&self) -> f32 {
+        self.text_height() * 1.0
+    }
 
+    /// x coordinate on increment of 1/4 of text width
+    fn x0(&self) -> f32 {
+        self.loc_x() * self.text_width()
+    }
 
-fn open_circle(c:&Point, r:f32) -> Element {
-    Element::open_circle(c, r)
-}
+    fn x1(&self) -> f32 {
+        (self.loc_x() + 1.0/4.0) * self.text_width()
+    }
 
-fn solid_circle(c: &Point, r: f32) -> Element {
-    Element::solid_circle(c, r)
-}
+    fn x2(&self) -> f32 {
+        (self.loc_x() + 1.0/2.0) * self.text_width()
+    }
 
+    fn x3(&self) -> f32 {
+        (self.loc_x() + 3.0/4.0) * self.text_width()
+    }
 
-fn text(loc: &Loc, txt:String) -> Element {
-    Element::Text(loc.clone(), txt)
-}
+    fn x4(&self) -> f32 {
+        (self.loc_x() + 1.0) * self.text_width()
+    }
 
-fn blank_text(loc: &Loc) -> Element {
-    text(loc," ".into())
-}
+    /// y coordinate on increment of 1/4 of text_height
+    fn y0(&self) -> f32 {
+        self.loc_y() * self.text_height()
+    }
 
+    fn y1(&self) -> f32 {
+        (self.loc_y() + 1.0/4.0) * self.text_height()
+    }
 
-/// whether or not characters react to neighoring character
-#[derive(PartialEq)]
-enum Behavior{
-    Static,  //stable
-    Dynamic  //reactive
-}
+    fn y2(&self) -> f32 {
+        (self.loc_y() + 1.0/2.0) * self.text_height()
+    }
 
+    fn y3(&self) -> f32 {
+        (self.loc_y() + 3.0/4.0) * self.text_height()
+    }
 
+    fn y4(&self) -> f32 {
+        (self.loc_y() + 1.0) * self.text_height()
+    }
 
-/// 8 directions which a character can connect to
-///   \|/
-///   -+-
-///   /|\
-#[derive(PartialEq)]
-enum Direction{
-    Top,
-    Bottom,
-    Left,
-    Right,
-    TopLeft,
-    TopRight,
-    BottomLeft,
-    BottomRight
-}
+    /// 1st row a,b,c,d,e
+    fn a(&self) -> Point{
+         Point::new( self.x0(), self.y0() )
+    }
 
-impl Direction{
+    fn b(&self) -> Point{
+        Point::new( self.x1(), self.y0() )
+    }
     
-    fn all() -> Vec<Self> {
-        vec![
-            Top,
-            Bottom,
-            Left,
-            Right,
-            TopLeft,
-            TopRight,
-            BottomLeft,
-            BottomRight
-        ]
+    fn c(&self) -> Point {
+        Point::new( self.x2(), self.y0() )
+    }
+    
+    fn d(&self) -> Point{
+        Point::new( self.x3(), self.y0() )
+    }
+
+    fn e(&self) -> Point{
+        Point::new( self.x4(), self.y0() )
+    }
+
+    /// 2nd row f,g,h,i,j
+    fn f(&self) -> Point{
+        Point::new( self.x0(), self.y1() )
+    }
+
+    fn g(&self) -> Point{
+        Point::new( self.x1(), self.y1() )
+    }
+
+    fn h(&self) -> Point{
+        Point::new( self.x2(), self.y1() )
+    }
+
+    fn i(&self) -> Point {
+        Point::new( self.x3(), self.y1() )
+    }
+
+    fn j(&self) -> Point {
+        Point::new( self.x4(), self.y1() )
+    }
+
+    /// 3rd row k,l,m,n,o
+    fn k(&self) -> Point {
+        Point::new( self.x0(), self.y2() )
+    }
+
+    fn l(&self) -> Point {
+        Point::new( self.x1(), self.y2() )
+    }
+
+    fn m(&self) -> Point {
+        Point::new( self.x2(), self.y2() )
+    }
+
+    fn n(&self) -> Point {
+        Point::new( self.x3(), self.y2() )
+    }
+
+    fn o(&self) -> Point {
+        Point::new( self.x4(), self.y2() )
+    }
+
+    /// 4th row p,q,r,s,t
+    fn p(&self) -> Point {
+        Point::new( self.x0(), self.y3() )
+    }
+
+    fn q(&self) -> Point {
+        Point::new( self.x1(), self.y3() )
+    }
+
+    fn r(&self) -> Point {
+        Point::new( self.x2(), self.y3() )
+    }
+
+    fn s(&self) -> Point {
+        Point::new( self.x3(), self.y3() )
+    }
+
+    fn t(&self) -> Point {
+        Point::new( self.x4(), self.y3() )
+    }
+
+    /// 5th row u,v,w,x,y
+    fn u(&self) -> Point {
+        Point::new( self.x0(), self.y4() )
+    }
+
+    fn v(&self) -> Point {
+        Point::new( self.x1(), self.y4() )
+    }
+
+    fn w(&self) -> Point {
+        Point::new( self.x2(), self.y4() )
+    }
+
+    fn x(&self) -> Point {
+        Point::new( self.x3(), self.y4() )
+    }
+
+    fn y(&self) -> Point {
+        Point::new( self.x4(), self.y4() )
+    }
+    
+    pub fn to_point(&self) -> Point {
+        match self.block{
+            A => self.a(),
+            B => self.b(),
+            C => self.c(),
+            D => self.d(),
+            E => self.e(),
+            F => self.f(),
+            G => self.g(),
+            H => self.h(),
+            I => self.i(),
+            J => self.j(),
+            K => self.k(),
+            L => self.l(),
+            M => self.m(),
+            N => self.n(),
+            O => self.o(),
+            P => self.p(),
+            Q => self.q(),
+            R => self.r(),
+            S => self.s(),
+            T => self.t(),
+            U => self.u(),
+            V => self.v(),
+            W => self.w(),
+            X => self.x(),
+            Y => self.y()
+        }
     }
 }
 
@@ -118,6 +309,7 @@ impl <'g>FocusChar<'g>{
             grid: grid
         }
     }
+
 
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
@@ -148,153 +340,7 @@ impl <'g>FocusChar<'g>{
         chars.contains(&self.ch)
     }
 
-    /// enumerate the direction self character can connect to
-    fn can_connect_to_direction(&self) -> (Behavior, Vec<Direction>) {
-        if self.is('+'){
-            (Static, vec![Top,Bottom, Left, Right])
-        }
-        else if self.any("xX"){
-            (Dynamic, vec![TopLeft, TopRight, BottomLeft, BottomRight])
-        }
-        //   \|/
-        //   -*-
-        //   /|\
-        else if self.any(".*oO"){
-            (Dynamic, Direction::all())
-        }
-        //       ,-     ,      -,  
-        //       |     /       /   
-        else if self.is(','){
-            (Dynamic, vec![Left,Right,BottomLeft,BottomRight])
-        }
-        //   |      \
-        //   `-      `
-        else if self.is('`'){
-            (Dynamic, vec![Top,Right,TopRight])
-        }
-        //   |      |   \       /
-        //   '-    -'    '-   -'
-        else if self.is('\''){
-            (Dynamic, vec![Top,Left, Right, TopLeft, TopRight])
-        }
-        else if self.in_any(vec!['-','─','━']){
-            (Static, vec![Left,Right])
-        }
-        else if self.any("|│┃"){
-            (Static, vec![Top,Bottom])
-        }
-        else if self.any("\\"){
-            (Static, vec![TopLeft, BottomRight])
-        }
-        else if self.any("/"){
-            (Static, vec![TopRight, BottomLeft])
-        }
-        else if self.any("╭┌┍┎┏"){
-            (Static, vec![Bottom,Right])
-        }
-        else if self.any("╮┐┑┒┓"){
-            (Static, vec![Bottom,Left])
-        }
-        else if self.any("╰┗└┕┖"){
-            (Static, vec![Top,Right])
-        }
-        else if self.any("╯┘┙┚┛"){
-            (Static, vec![Top,Left])
-        }
-        else if self.any("┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋"){
-            (Static, vec![Top,Bottom,Left,Right])
-        }
-        else if self.any("┬┭┮┯┰┱┲┳"){
-            (Static, vec![Bottom, Left, Right])
-        }
-        else if self.any("┴┵┶┷┸┹┺┻"){
-            (Static, vec![Top, Left, Right])
-        }
-        else if self.any("├┝┞┟┠┡┢┣"){
-            (Static, vec![Top,Bottom,Right])
-        }
-        else if self.any("┤┥┦┧┨┩┪┫"){
-            (Static, vec![Top,Bottom,Left])
-        }
-        else if self.any("╒"){
-            (Static, vec![Bottom])
-        }
-        else if self.any("╓╙╟"){
-            (Static, vec![Right])
-        }
-        else if self.any("╡╪╞"){
-            (Static, vec![Top,Bottom])
-        }
-        else if self.any("╕╤"){
-            (Static, vec![Bottom])
-        }
-        else if self.any("╥╫"){
-            (Static, vec![Left, Right])
-        }
-        else if self.any("╖╜╢"){
-            (Static, vec![Left])
-        }
-        else if self.any("╛╘"){
-            (Static, vec![Top])
-        }
-        //    ^     ^    ^
-        //    |    /      \
-        else if self.any("^"){
-            (Dynamic, vec![Bottom, BottomLeft, BottomRight])
-        }
-        //    |  |    \    /
-        //    v  V     V  V
-        else if self.any("vV"){
-            (Dynamic, vec![Top, TopLeft, TopRight])
-        }
-        //   <-  ~-  '-
-        else if self.any("<~'"){
-            (Dynamic, vec![Left])
-        }
-        //   ->   -~  -'
-        else if self.any("'~>"){
-            (Dynamic, vec![Right])
-        }
-        //    /
-        //   (
-        //    \
-        else if self.is('('){
-            (Dynamic, vec![TopRight, BottomRight])
-        }
-        //  \
-        //   )
-        //  /
-        else if self.is(')'){
-            (Dynamic, vec![TopLeft, BottomLeft])
-        }
-        else{
-            (Dynamic, vec![])
-        }
-    }
 
-    fn can_connect_to_with_behavior(&self, behavior: Behavior ) -> Vec<Direction>{
-        let (beh, dirs) = self.can_connect_to_direction();
-        if beh == behavior{
-            dirs
-        }
-        else{
-            vec![]
-        }
-    }
-
-    /// self character is dynamic and can connect to
-    /// self enumerated direction
-    fn can_dynamic_connect(&self, dir: &Direction) -> bool{
-        self.can_connect_to_with_behavior(Dynamic)
-            .contains(dir)
-    }
-
-    
-
-    fn can_static_connect(&self, dir: &Direction) -> bool {
-        self.can_connect_to_with_behavior(Static)
-            .contains(dir)
-    }
 
 
     fn is_thin_horizontal(&self) -> bool {
@@ -471,16 +517,332 @@ impl <'g>FocusChar<'g>{
 
     ///////////////////////////////////
     //
-    //  Static + Dynamic connect
+    //  can strongly or mediumly connect
     //
     ///////////////////////////////////
     
-    fn can_connect(&self, dir: &Direction) -> bool {
-        self.can_static_connect(dir)
-        || self.can_dynamic_connect(dir)
+    fn can_pass_medium_connect(&self, dir: &Direction) -> bool {
+        self.ch.can_strongly_connect(dir)
+        || self.ch.can_medium_connect(dir)
     }
 
 
+    fn can_pass_weakly_connect(&self, dir: &Direction) -> bool {
+        self.can_strongly_connect(dir)
+        || self.can_medium_connect(dir)
+        || self.can_weakly_connect(dir)
+    }
+    fn can_strongly_connect(&self, dir: &Direction) -> bool {
+        self.ch.can_strongly_connect(dir)
+    }
+
+    fn can_medium_connect(&self, dir: &Direction) -> bool {
+        self.ch.can_medium_connect(dir)
+    }
+
+    fn can_weakly_connect(&self, dir: &Direction) -> bool {
+        self.ch.can_weakly_connect(dir)
+    }
+
+    fn get_default_element(&self, dir: &Direction) -> Element {
+        let frag = self.ch.get_frag_to(dir);
+        assert!(frag.is_some(), "There should be 1 frag");
+        self.to_element(frag.unwrap())
+    }
+
+    fn loc_block(&self, block: Block) -> LocBlock{
+        LocBlock{
+            loc: self.loc.clone(),
+            block: block,
+            settings: self.get_settings(),
+        }
+    }
+
+    fn point(&self, block: Block) -> Point {
+        let lb = self.loc_block(block);
+        lb.to_point()
+    }
+
+    fn to_element(&self, frag: Fragment) -> Element {
+        match frag{
+            Fragment::Line(p1, p2) => {
+                line(&self.point(p1),
+                    &self.point(p2),
+                )
+            },
+            Fragment::ArrowLine(p1, p2) => {
+                arrow_line(&self.point(p1),
+                    &self.point(p2)
+                )
+            },
+
+            Fragment::StartArrowLine(p1, p2) => {
+                arrow_line(&self.point(p1),
+                    &self.point(p2)
+                )
+            }
+            Fragment::Arc(p1, p2, m) => {
+                arc(&self.point(p1),
+                    &self.point(p2),
+                    m as f32 * self.loc_block(A).tw1()
+                )
+            }
+        }
+    }
+
+    pub fn get_elements(&self) ->  (Vec<Element>, Vec<Loc>){
+        let a = &self.point(A);
+        let b = &self.point(B);
+        let c = &self.point(C);
+        let d = &self.point(D);
+        let e = &self.point(E);
+
+        let f = &self.point(F);
+        let g = &self.point(G);
+        let h = &self.point(H);
+        let i = &self.point(I);
+        let j = &self.point(J);
+
+        let k = &self.point(K);
+        let l = &self.point(L);
+        let m = &self.point(M);
+        let n = &self.point(N);
+        let o = &self.point(O);
+
+        let p = &self.point(P);
+        let q = &self.point(Q);
+        let r = &self.point(R);
+        let s = &self.point(S);
+        let t = &self.point(T);
+
+        let u = &self.point(U);
+        let v = &self.point(V);
+        let w = &self.point(W);
+        let x = &self.point(X);
+        let y = &self.point(Y);
+        let lb = &self.loc_block(A);
+        let tw2 = lb.tw2();
+
+        let mut elm = vec![];
+        let mut consumed = vec![];
+        let mut overriden = false;//manually enumerated use-case
+
+        if self.any(".,"){
+            //   .-    ,-
+            //  /     /
+            if self.right().can_strongly_connect(&Left)
+                && self.bottom().left().can_strongly_connect(&TopRight){
+                elm.push(self.to_element(Arc(O,Q,4)));
+                elm.push(self.to_element(Line(Q,U)));
+                overriden = true;
+            }
+            //   -.   -,
+            //     \    \
+            else if self.left().can_strongly_connect(&Right)
+                && self.bottom().right().can_strongly_connect(&TopLeft){
+                elm.push(self.to_element(Arc(S,K,4)));
+                elm.push(self.to_element(Line(S,Y)));
+                overriden = true;
+            }
+        }
+        if self.any("`'"){
+            //    /   /
+            //  -'  -`
+            if self.left().can_strongly_connect(&Right)
+                && self.top().right().can_strongly_connect(&BottomLeft){
+                elm.push(self.to_element(Arc(K,I,4)));
+                elm.push(self.to_element(Line(I,E)));
+                overriden = true;
+            }
+            //   \    \
+            //    `-   '-
+            else if self.right().can_strongly_connect(&Left)
+                && self.top().left().can_strongly_connect(&BottomRight){
+                elm.push(self.to_element(Arc(G,O,4)));
+                elm.push(self.to_element(Line(A,G)));
+                overriden = true;
+            }
+        }
+        
+        if !overriden{
+            let mut in_weak_strong = false;
+            /////////////////////////////////
+            //
+            //  Weak/Medium/Strong + Strong
+            //
+            //////////////////////////////////
+            if self.can_pass_medium_connect(&Left)
+                && self.left().can_strongly_connect(&Right){
+                elm.push(self.get_default_element(&Left));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&Right)
+                && self.right().can_strongly_connect(&Left){
+                elm.push(self.get_default_element(&Right));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&Top)
+                && self.top().can_strongly_connect(&Bottom){
+                elm.push(self.get_default_element(&Top));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&Bottom)
+                && self.bottom().can_strongly_connect(&Top){
+                elm.push(self.get_default_element(&Bottom));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&TopRight)
+                && self.top_right().can_strongly_connect(&BottomLeft){
+                elm.push(self.get_default_element(&TopRight));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&TopLeft)
+                && self.top_left().can_strongly_connect(&BottomRight){
+                elm.push(self.get_default_element(&TopLeft));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&BottomLeft)
+                && self.bottom_left().can_strongly_connect(&TopRight){
+                elm.push(self.get_default_element(&BottomLeft));
+                in_weak_strong = true;
+            }
+            if self.can_pass_medium_connect(&BottomRight)
+                && self.bottom_right().can_strongly_connect(&TopLeft){
+                elm.push(self.get_default_element(&BottomRight));
+                in_weak_strong = true;
+            }
+            //  
+            // __   \_   \/
+            if self.can_pass_medium_connect(&BottomLeft)
+                && self.left().can_pass_weakly_connect(&BottomRight){
+                elm.push(self.get_default_element(&BottomLeft));
+                in_weak_strong = true;
+            }
+            //
+            //  __  _/  \/
+            if self.can_pass_medium_connect(&BottomRight)
+                && self.right().can_pass_weakly_connect(&BottomLeft){
+                elm.push(self.get_default_element(&BottomRight));
+                in_weak_strong = true;
+            }
+            //  /
+            //  \
+            if self.can_pass_medium_connect(&TopLeft)
+                && self.top().can_strongly_connect(&BottomLeft){
+                elm.push(self.get_default_element(&TopLeft));
+                in_weak_strong = true;
+            }
+            //  /
+            //  \
+            if self.can_pass_medium_connect(&BottomLeft)
+                && self.bottom().can_strongly_connect(&TopLeft){
+                elm.push(self.get_default_element(&BottomLeft));
+                in_weak_strong = true;
+            }
+            //  \
+            //  /
+            if self.can_pass_medium_connect(&TopRight)
+                && self.top().can_strongly_connect(&BottomRight){
+                elm.push(self.get_default_element(&TopRight));
+                in_weak_strong = true;
+            }
+            //  \
+            //  /
+            if self.can_pass_medium_connect(&BottomRight)
+                && self.bottom().can_strongly_connect(&TopRight){
+                elm.push(self.get_default_element(&BottomRight));
+                in_weak_strong = true;
+            }
+            ////////////////////////////////////////////
+            //
+            // Medium + Medium
+            //
+            /////////////////////////////////////////////
+            if self.can_medium_connect(&Left)
+                && self.left().can_medium_connect(&Right){
+                elm.push(self.get_default_element(&Left));
+            }
+            if self.can_medium_connect(&Right)
+                && self.right().can_medium_connect(&Left){
+                elm.push(self.get_default_element(&Right));
+            }
+            if self.can_medium_connect(&Top)
+                && self.top().can_medium_connect(&Bottom){
+                elm.push(self.get_default_element(&Top));
+            }
+            if self.can_medium_connect(&Bottom)
+                && self.bottom().can_medium_connect(&Top){
+                elm.push(self.get_default_element(&Bottom));
+            }
+            if self.can_medium_connect(&TopRight)
+                && self.top_right().can_medium_connect(&BottomLeft){
+                elm.push(self.get_default_element(&TopRight));
+            }
+            if self.can_medium_connect(&TopLeft)
+                && self.top_left().can_medium_connect(&BottomRight){
+                elm.push(self.get_default_element(&TopLeft));
+            }
+            if self.can_medium_connect(&BottomLeft)
+                && self.bottom_left().can_medium_connect(&TopRight){
+                elm.push(self.get_default_element(&BottomLeft));
+            }
+            if self.can_medium_connect(&BottomRight)
+                && self.bottom_right().can_medium_connect(&TopLeft){
+                elm.push(self.get_default_element(&BottomRight));
+            }
+            /////////////////////////////////
+            //
+            //  Strong + Weak/Medium/Strong
+            //
+            //////////////////////////////////
+            if !in_weak_strong{
+                if self.can_strongly_connect(&Left)
+                    && self.left().can_pass_medium_connect(&Right){
+                    elm.push(self.get_default_element(&Left));
+                }
+                if self.can_strongly_connect(&Right)
+                    && self.right().can_pass_medium_connect(&Left){
+                    elm.push(self.get_default_element(&Right));
+                }
+                if self.can_strongly_connect(&Top)
+                    && self.top().can_pass_medium_connect(&Bottom){
+                    elm.push(self.get_default_element(&Top));
+                }
+                if self.can_strongly_connect(&Bottom)
+                    && self.bottom().can_pass_medium_connect(&Top){
+                    elm.push(self.get_default_element(&Bottom));
+                }
+                if self.can_strongly_connect(&TopRight)
+                    && self.top_right().can_pass_medium_connect(&BottomLeft){
+                    elm.push(self.get_default_element(&TopRight));
+                }
+                if self.can_strongly_connect(&TopLeft)
+                    && self.top_left().can_pass_medium_connect(&BottomRight){
+                    elm.push(self.get_default_element(&TopLeft));
+                }
+                if self.can_strongly_connect(&BottomLeft)
+                    && self.bottom_left().can_pass_medium_connect(&TopRight){
+                    elm.push(self.get_default_element(&BottomLeft));
+                }
+                if self.can_strongly_connect(&BottomRight)
+                    && self.bottom_right().can_pass_medium_connect(&TopLeft){
+                    elm.push(self.get_default_element(&BottomRight));
+                }
+            }
+            if elm.is_empty(){
+                if !self.is_blank(){
+                    elm.push(text(&self.loc, &self.text()))
+                }
+            }
+        }
+        (elm, consumed)
+    }
+
+    fn get_settings(&self) -> Settings {
+        self.grid.settings.clone()
+    }
+
+/*
 /// abcde
 /// fghij
 /// klmno
@@ -517,7 +879,7 @@ impl <'g>FocusChar<'g>{
 ///    .'
 ///   
 ///   returns the drawing elements, and the neighboring consumed elements
-    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
+    pub fn get_elements2(&self) -> (Vec<Element>, Vec<Loc>){
         let loc = &self.loc;
         let top = self.top();
         let bottom = self.bottom();
@@ -592,7 +954,7 @@ impl <'g>FocusChar<'g>{
             let mut deformed = false;
             //    .    ,  .   .
             //    |    |  +   '
-            if bottom.can_static_connect(&Top)
+            if bottom.can_pass_medium_connect(&Top)
                 || bottom.any("+'"){
                 elm.push(line(r,w));
             }
@@ -602,10 +964,10 @@ impl <'g>FocusChar<'g>{
                 elm.extend(vec![arc(o,u,th4)]);
                 deformed = true;
             }
-            if right.can_static_connect(&Left){
+            if right.can_pass_medium_connect(&Left){
                 //  .-     ,-   
                 //   \      \    
-                if bottom_right.can_static_connect(&TopLeft){
+                if bottom_right.can_pass_medium_connect(&TopLeft){
                     elm.extend(vec![arc(o,s,tw2), line(s,y)]);    
                     deformed = true;
                 }
@@ -615,16 +977,16 @@ impl <'g>FocusChar<'g>{
                     elm.push(line(o,m));
                     deformed = true;
                 }
-                if bottom_left.can_static_connect(&TopRight) || bottom_left.is('('){
+                if bottom_left.can_pass_medium_connect(&TopRight) || bottom_left.is('('){
                     //      /     /   
                     //     .-    ,-    
                     //    /     /
-                    if top_right.can_static_connect(&BottomLeft){
+                    if top_right.can_pass_medium_connect(&BottomLeft){
                         elm.push(line(q,e));
                     }
                     //    .-    ,-    .+
                     //   /     /     /  
-                    if bottom_left.can_static_connect(&TopRight){
+                    if bottom_left.can_pass_medium_connect(&TopRight){
                         elm.extend(vec![arc(o,q,tw4), line(q,u)]);
                     }
                     deformed = true;
@@ -643,8 +1005,8 @@ impl <'g>FocusChar<'g>{
         //
         //////////////////////////////////
         if self.is(',') 
-            && left.can_static_connect(&Right)
-            && bottom_left.can_static_connect(&TopRight){
+            && left.can_pass_medium_connect(&Right)
+            && bottom_left.can_pass_medium_connect(&TopRight){
             elm.extend(vec![line(u,q), arc(q,k,tw2)]);
         }
         ///////////////////////////////////
@@ -710,13 +1072,13 @@ impl <'g>FocusChar<'g>{
             }
             //    .    .   .
             //    |    +   '
-            if bottom.can_static_connect(&Top){
+            if bottom.can_pass_medium_connect(&Top){
                 elm.push(line(r,w));
             }
-            if left.can_static_connect(&Right){
+            if left.can_pass_medium_connect(&Right){
                 //    -.    +.
                 //    /     /
-                if bottom_left.can_static_connect(&TopRight){
+                if bottom_left.can_pass_medium_connect(&TopRight){
                     elm.extend(vec![line(u,q), arc(q,k,tw2)]);
                     deformed = true;
                 }
@@ -728,14 +1090,14 @@ impl <'g>FocusChar<'g>{
                     ]);
                     deformed = true;
                 }
-                if bottom_right.can_static_connect(&TopLeft){
+                if bottom_right.can_pass_medium_connect(&TopLeft){
                     //  -.    +.
                     //    \     \
                     elm.extend(vec![arc(s,k,tw4), line(s,y)]);
                     //   \
                     //   -. 
                     //     \
-                    if top_left.can_static_connect(&BottomRight){
+                    if top_left.can_pass_medium_connect(&BottomRight){
                         elm.push(line(a,y));
                     }
                     deformed = true;
@@ -754,43 +1116,43 @@ impl <'g>FocusChar<'g>{
         if self.is('.'){ 
             //     .
             //    / \
-            if bottom_left.can_static_connect(&TopRight) && bottom_right.can_static_connect(&TopLeft){
+            if bottom_left.can_pass_medium_connect(&TopRight) && bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.extend(vec![line(y,s), arc(s,q,tw2), line(q,u)]);
             }
             //    \
             //     .
             //    /
-            if top_left.can_static_connect(&BottomRight) && bottom_left.can_static_connect(&TopRight){
+            if top_left.can_pass_medium_connect(&BottomRight) && bottom_left.can_pass_medium_connect(&TopRight){
                 elm.extend(vec![line(u,q),arc(q,g,th2),line(g,a)]);
             }
             //      /
             //     .
             //      \
-            if top_right.can_static_connect(&BottomLeft) && bottom_right.can_static_connect(&TopLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft) && bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.extend(vec![line(e,i), arc(i,s,th2), line(s,y)]);
             }
             //     \
             //      .
             //      |
-            if top_left.can_static_connect(&BottomRight) && bottom.is_vertical(){
+            if top_left.can_pass_medium_connect(&BottomRight) && bottom.is_vertical(){
                 elm.extend(vec![line(w,r),arc(r,g,th4),line(g,a)]);
             }
             //      |
             //      .
             //     /
-            if top.is_vertical() && bottom_left.can_static_connect(&TopRight){
+            if top.is_vertical() && bottom_left.can_pass_medium_connect(&TopRight){
                 elm.extend(vec![line(u,q),arc(q,h,th4),line(h,c)]);
             }
             //     /
             //    .
             //    |
-            if top_right.can_static_connect(&BottomLeft) && bottom.is_vertical(){
+            if top_right.can_pass_medium_connect(&BottomLeft) && bottom.is_vertical(){
                 elm.extend(vec![line(e,i),arc(i,r,th4),line(r,w)]);
             }
             //    |
             //    .
             //     \
-            if top.is_vertical() && bottom_right.can_static_connect(&TopLeft){
+            if top.is_vertical() && bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.extend(vec![line(c,h), arc(h,s,th4), line(s,y)]);
             }
             //  ._
@@ -803,9 +1165,9 @@ impl <'g>FocusChar<'g>{
             }
             //  .
             //  |
-            if bottom.can_static_connect(&Top)
-                && !right.can_connect(&Left)
-                && !left.can_connect(&Right){
+            if bottom.can_pass_medium_connect(&Top)
+                && !right.can_pass_medium_connect(&Left)
+                && !left.can_pass_medium_connect(&Right){
                 elm.push(line(m,w))
             }
         }
@@ -1101,8 +1463,8 @@ impl <'g>FocusChar<'g>{
         if self.is('\''){
             //  \ /
             //   '
-            if top_left.can_static_connect(&BottomRight) 
-                && top_right.can_static_connect(&BottomLeft){
+            if top_left.can_pass_medium_connect(&BottomRight) 
+                && top_right.can_pass_medium_connect(&BottomLeft){
                 elm.extend(vec![
                     line(a,m),
                     line(m,e)
@@ -1132,18 +1494,18 @@ impl <'g>FocusChar<'g>{
             if top.is_vertical() || top.is('.'){
                 elm.push(line(c,h));
             }
-            if right.can_static_connect(&Left){
+            if right.can_pass_medium_connect(&Left){
                 //    /   /   
                 //   '-   `-  
-                if top_right.can_static_connect(&BottomLeft){
+                if top_right.can_pass_medium_connect(&BottomLeft){
                     elm.extend(vec![line(e,i), arc(i,o,tw2)]);
                     deformed = true;
                 }
-                if top_left.can_static_connect(&BottomRight){
+                if top_left.can_pass_medium_connect(&BottomRight){
                     //   \
                     //    '-
                     //     \
-                    if bottom_right.can_static_connect(&TopLeft){
+                    if bottom_right.can_pass_medium_connect(&TopLeft){
                         elm.push(line(g,y));
                     }
                     //  \      \
@@ -1181,18 +1543,18 @@ impl <'g>FocusChar<'g>{
             if top.is_vertical() || top.is('+') || top.is('.'){
                 elm.push(line(h,c));
             }
-            if left.can_static_connect(&Right){
+            if left.can_pass_medium_connect(&Right){
                 //      \
                 //      -'
-                if top_left.can_static_connect(&BottomRight){
+                if top_left.can_pass_medium_connect(&BottomRight){
                     elm.extend(vec![arc(k,g,tw2), line(g,a)]);
                     deformed = true;
                 }
-                if top_right.can_static_connect(&BottomLeft){
+                if top_right.can_pass_medium_connect(&BottomLeft){
                     //       /
                     //     -'
                     //     /
-                    if bottom_left.can_static_connect(&TopRight){
+                    if bottom_left.can_pass_medium_connect(&TopRight){
                         elm.push(line(i,u));
                     }
                     //       /
@@ -1251,42 +1613,40 @@ impl <'g>FocusChar<'g>{
         if self.is_center_intersection(){
             //   |   .
             //   +   +
-            if top.can_connect(&Bottom){
+            if top.can_pass_medium_connect(&Bottom){
                 elm.push(line(c,m));
             }
             //  +
             //  |
-            if bottom.can_connect(&Top){
+            if bottom.can_pass_medium_connect(&Top){
                 elm.push(line(m,w));
             }
             // -+
-            if left.can_connect(&Right) 
-                || left.can_dynamic_connect(&Right){
+            if left.can_pass_medium_connect(&Right) {
                 elm.push(line(m,k));
             }
             //  +-
-            if right.can_connect(&Left) 
-                || right.can_dynamic_connect(&Left){
+            if right.can_pass_medium_connect(&Left) {
                 elm.push(line(m,o));
             }
             //  \
             //   +
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                 elm.push(line(m,a));
             }
             //    /
             //   +
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.push(line(m,e));
             }
             //   +
             //  /
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(line(m,u));
             }
             //   +
             //    \
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(line(m,y));
             }
         }
@@ -1302,22 +1662,22 @@ impl <'g>FocusChar<'g>{
         if self.any("xX"){
             //    \
             //     x
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                elm.push(line(a,m)); 
             }
             //    /
             //   x
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                elm.push(line(m,e)); 
             }
             //    x
             //   /
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(line(m,u))
             }
             //   x
             //    \
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(line(m,y));
             }
         }
@@ -1383,47 +1743,47 @@ impl <'g>FocusChar<'g>{
             let mut connects = false;
             //    |   |   +  ┌
             //    o   o   o  |
-            if top.can_static_connect(&Bottom){
+            if top.can_pass_medium_connect(&Bottom){
                 elm.push(line(h,c));
                 connects = true;
             }
             //    o   o   o  |
             //    |   |   +  ┘
-            if bottom.can_static_connect(&Top){
+            if bottom.can_pass_medium_connect(&Top){
                 elm.push(line(r,w));
                 connects = true;
             }
             //     o-  o- o+  o┘
-            if right.can_static_connect(&Left){
+            if right.can_pass_medium_connect(&Left){
                 //elm.push(line(n,o));
                 connects = true;
             }
             //    -o 
-            if left.can_static_connect(&Right){
+            if left.can_pass_medium_connect(&Right){
                 //elm.push(line(l,k));
                 connects = true;
             }
             //   \   
             //    o   
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                 elm.push(line(a,g));
                 connects = true;
             }
             //     /  
             //    o  
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.push(line(i,e));
                 connects = true;
             }
             //     o  
             //    /   
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(line(q,u));
                 connects = true;
             }
             //     o  
             //      \  
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(line(s,y));
                 connects = true;
             }
@@ -1441,49 +1801,49 @@ impl <'g>FocusChar<'g>{
             let mut connects = false;
             //    |   |   +  ┌
             //    O   O   O  |
-            if top.can_static_connect(&Bottom){
+            if top.can_pass_medium_connect(&Bottom){
                 elm.push(line(c, &c.add_y(tw1)));
                 connects = true;
             }
             //    O   O   O  |
             //    |   |   +  ┘
-            if bottom.can_static_connect(&Top){
+            if bottom.can_pass_medium_connect(&Top){
                 elm.push(line(w, &w.add_y(-tw1)));
                 connects = true;
             }
             //     O-  O- O+  O┘
-            if right.can_static_connect(&Left){
+            if right.can_pass_medium_connect(&Left){
                 elm.push(line(&right.l(), &right.o()));
                 consumed.push(right.loc());
                 connects = true;
             }
             //    -O 
-            if left.can_static_connect(&Right){
+            if left.can_pass_medium_connect(&Right){
                 elm.push(line(&left.n(), &left.k()));
                 consumed.push(left.loc());
                 connects = true;
             }
             //   \   
             //    O   
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                 elm.push(line(a, &a.add(tw1/2.0,tw1)));
                 connects = true;
             }
             //     /  
             //    O  
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.push(line(e, &e.add(-tw1/2.0,tw1)));
                 connects = true;
             }
             //     O  
             //    /   
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(line(u, &u.add(tw1/2.0, -tw1)));
                 connects = true;
             }
             //     O  
             //      \  
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(line(y, &y.add(-tw1/2.0, -tw1)));
                 connects = true;
             }
@@ -1500,47 +1860,47 @@ impl <'g>FocusChar<'g>{
             let mut connects = false;
             //    |   +  ┌
             //    *   *  *
-            if top.can_static_connect(&Bottom){
+            if top.can_pass_medium_connect(&Bottom){
                 elm.push(line(m,c));
                 connects = true;
             }
             //    *   *  *
             //    |   +  ┘
-            if bottom.can_static_connect(&Top){
+            if bottom.can_pass_medium_connect(&Top){
                 elm.push(line(m,w));
                 connects = true;
             }
             //     *-  *+  *┘
-            if right.can_static_connect(&Left){
+            if right.can_pass_medium_connect(&Left){
                elm.push(line(m,o));
                 connects = true;
             }
             //    -* 
-            if left.can_static_connect(&Right){
+            if left.can_pass_medium_connect(&Right){
                 elm.push(line(m,k));
                 connects = true;
             }
             //   \   
             //    *   
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                 elm.push(line(a,m));
                 connects = true;
             }
             //     /  
             //    *  
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.push(line(e,m));
                 connects = true;
             }
             //     *  
             //    /   
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(line(m,u));
                 connects = true;
             }
             //     *  
             //      \  
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(line(m,y));
                 connects = true;
             }
@@ -1561,12 +1921,12 @@ impl <'g>FocusChar<'g>{
             }
             //   ^
             //  /
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(arrow_line(u,m));
             }
             //   ^
             //    \
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(arrow_line(y,m));
             }
         }
@@ -1578,17 +1938,17 @@ impl <'g>FocusChar<'g>{
             }
             //    \ /
             //     v
-            else if top_left.can_static_connect(&BottomRight) && top_right.can_static_connect(&BottomLeft){
+            else if top_left.can_pass_medium_connect(&BottomRight) && top_right.can_pass_medium_connect(&BottomLeft){
                 elm.extend(vec![line(a,m),line(m,e)]);
             }
             //   \    \
             //    v    V
-            else if top_left.can_static_connect(&BottomRight){
+            else if top_left.can_pass_medium_connect(&BottomRight){
                 elm.push(arrow_line(a,m));
             }
             //     /   /
             //    v   V
-            else if top_right.can_static_connect(&BottomLeft){
+            else if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.push(arrow_line(e,m));
             }
         }
@@ -1691,8 +2051,8 @@ impl <'g>FocusChar<'g>{
             //  /
             // <
             //  \
-            if top_right.can_static_connect(&BottomLeft) 
-                && bottom_right.can_static_connect(&TopLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft) 
+                && bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.extend(vec![
                     line(e,m),
                     line(m,y)
@@ -1743,7 +2103,7 @@ impl <'g>FocusChar<'g>{
             //    \
             //     >
             //    /
-            if top_left.can_static_connect(&BottomRight) && bottom_left.can_static_connect(&TopRight){
+            if top_left.can_pass_medium_connect(&BottomRight) && bottom_left.can_pass_medium_connect(&TopRight){
                 elm.extend(vec![line(a,m),line(m,u),line(m,o)]);
                 deformed = true;
             }
@@ -1767,14 +2127,14 @@ impl <'g>FocusChar<'g>{
             }
             //  >-
             //  not a priority alg, if the > is deformed, don't execute self
-            if !deformed && right.can_static_connect(&Left){
+            if !deformed && right.can_pass_medium_connect(&Left){
                 elm.push(arrow_line(n,o));
             }
         }
         if self.is('('){
             //    /      (
             //   (        \
-            if top_right.can_static_connect(&BottomLeft) || bottom_right.can_static_connect(&TopLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft) || bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.push(arc(e,y,th4));
             }
             //   .  , _   (   (   (_
@@ -1826,7 +2186,7 @@ impl <'g>FocusChar<'g>{
         if self.is(')'){ 
             //   \        )
             //    )      / 
-            if top_left.can_static_connect(&BottomRight) || bottom_left.can_static_connect(&TopRight){
+            if top_left.can_pass_medium_connect(&BottomRight) || bottom_left.can_pass_medium_connect(&TopRight){
                 elm.push(arc(u,a,th4));
             }
             //   .  _    )  _)
@@ -1945,13 +2305,13 @@ impl <'g>FocusChar<'g>{
             }
             //     \
             //      |
-            if top_left.can_static_connect(&BottomRight){
+            if top_left.can_pass_medium_connect(&BottomRight){
                 elm.extend(vec![line(a,m),line(m,w)]);
                 trimmed = true;
             }
             //       /
             //      |
-            if top_right.can_static_connect(&BottomLeft){
+            if top_right.can_pass_medium_connect(&BottomLeft){
                 elm.extend(vec![line(e,m),line(m,w)]);
                 trimmed = true;
                 //    |/
@@ -1962,13 +2322,13 @@ impl <'g>FocusChar<'g>{
             }
             //       |
             //      /
-            if bottom_left.can_static_connect(&TopRight){
+            if bottom_left.can_pass_medium_connect(&TopRight){
                 elm.extend(vec![line(u,m),line(c,m)]);
                 trimmed = true;
             }
             //     |
             //      \
-            if bottom_right.can_static_connect(&TopLeft){
+            if bottom_right.can_pass_medium_connect(&TopLeft){
                 elm.extend(vec![line(m,y),line(c,m)]);
                 trimmed = true;
             }
@@ -2003,13 +2363,13 @@ impl <'g>FocusChar<'g>{
                 interacted = true;
             }
             //  --   +-
-            if left.can_connect(&Right){
+            if left.can_pass_weakly_connect(&Right){
                 elm.push(line(m,k));
                 deformed = false;
                 interacted = true;
             }
             // --    -+
-            if right.can_connect(&Left){
+            if right.can_pass_weakly_connect(&Left){
                 elm.push(line(m,o));
                 deformed = false;
                 interacted = true;
@@ -2289,12 +2649,12 @@ impl <'g>FocusChar<'g>{
             //     \      /   |     
             //      \     \    \     \   
             //       \                |  
-            if top.can_static_connect(&BottomLeft)
-                || top_left.can_connect(&Bottom)
-                || top_left.can_connect(&BottomRight)
+            if top.can_pass_weakly_connect(&BottomLeft)
+                || top_left.can_pass_weakly_connect(&Bottom)
+                || top_left.can_pass_weakly_connect(&BottomRight)
 
-                || bottom_right.can_connect(&Top)
-                || bottom_right.can_connect(&TopLeft)
+                || bottom_right.can_pass_weakly_connect(&Top)
+                || bottom_right.can_pass_weakly_connect(&TopLeft)
                 {
                 interacted = true;
             }
@@ -2373,13 +2733,12 @@ impl <'g>FocusChar<'g>{
             //     /                  |    _
             //    /     /    /       /    /
             //   /      \   |
-            if top_left.can_connect(&BottomRight)
-                || top_right.can_connect(&Bottom)
-                || top_right.can_connect(&BottomLeft)
+            if top_left.can_pass_weakly_connect(&BottomRight)
+                || top_right.can_pass_weakly_connect(&Bottom)
+                || top_right.can_pass_weakly_connect(&BottomLeft)
 
-                || bottom_left.can_static_connect(&Top)
-                || bottom_left.can_connect(&TopRight)
-                || bottom_right.can_connect(&Top)
+                || bottom_left.can_pass_weakly_connect(&TopRight)
+                || bottom_right.can_pass_weakly_connect(&Top)
                 {
                 interacted = true;
             }
@@ -2770,25 +3129,15 @@ impl <'g>FocusChar<'g>{
 
 
         // if no element is formulated, then treat it as literal string
-        if elm.len() < 1 {
+        if elm.len() < 1 && !self.is_blank(){
             let quoted = ::escape_char(&self.text());
             elm.push(text(loc,quoted));
         }
         (elm, consumed)
     }
+    */
 
 
-    fn loc_x(&self) -> f32 {
-        self.loc.x as f32
-    }
-
-    fn loc_y(&self) -> f32 {
-        self.loc.y as f32
-    }
-
-    fn loc(&self) -> Loc {
-        self.loc.clone()
-    }
     
 
 
@@ -2854,193 +3203,6 @@ impl <'g>FocusChar<'g>{
        self.get(&self.loc.bottom_right())
     }
 
-    fn text_width(&self) -> f32 {
-        self.grid.settings.text_width
-    }
-
-    fn text_height(&self) -> f32 {
-        self.grid.settings.text_height
-    }
-
-    fn tw1(&self) -> f32 {
-        self.text_width() * 1.0/4.0
-    }
-
-    fn tw2(&self) -> f32 {
-        self.text_width() * 1.0/2.0
-    }
-
-    fn tw3(&self) -> f32 {
-        self.text_width() * 3.0/4.0
-    }
-
-    fn tw4(&self) -> f32 {
-        self.text_width() * 1.0
-    }
-
-    fn th1(&self) -> f32 {
-        self.text_height() * 1.0/4.0
-    }
-
-    fn th2(&self) -> f32 {
-        self.text_height() * 1.0/2.0
-    }
-
-    fn th3(&self) -> f32 {
-        self.text_height() * 3.0/4.0
-    }
-
-
-    fn th4(&self) -> f32 {
-        self.text_height() * 1.0
-    }
-
-    /// x coordinate on increment of 1/4 of text width
-    fn x0(&self) -> f32 {
-        self.loc_x() * self.text_width()
-    }
-
-    fn x1(&self) -> f32 {
-        (self.loc_x() + 1.0/4.0) * self.text_width()
-    }
-
-    fn x2(&self) -> f32 {
-        (self.loc_x() + 1.0/2.0) * self.text_width()
-    }
-
-    fn x3(&self) -> f32 {
-        (self.loc_x() + 3.0/4.0) * self.text_width()
-    }
-
-    fn x4(&self) -> f32 {
-        (self.loc_x() + 1.0) * self.text_width()
-    }
-
-    /// y coordinate on increment of 1/4 of text_height
-    fn y0(&self) -> f32 {
-        self.loc_y() * self.text_height()
-    }
-
-    fn y1(&self) -> f32 {
-        (self.loc_y() + 1.0/4.0) * self.text_height()
-    }
-
-    fn y2(&self) -> f32 {
-        (self.loc_y() + 1.0/2.0) * self.text_height()
-    }
-
-    fn y3(&self) -> f32 {
-        (self.loc_y() + 3.0/4.0) * self.text_height()
-    }
-
-    fn y4(&self) -> f32 {
-        (self.loc_y() + 1.0) * self.text_height()
-    }
-
-    /// 1st row a,b,c,d,e
-    fn a(&self) -> Point{
-         Point::new( self.x0(), self.y0() )
-    }
-
-    fn b(&self) -> Point{
-        Point::new( self.x1(), self.y0() )
-    }
-    
-    fn c(&self) -> Point {
-        Point::new( self.x2(), self.y0() )
-    }
-    
-    fn d(&self) -> Point{
-        Point::new( self.x3(), self.y0() )
-    }
-
-    fn e(&self) -> Point{
-        Point::new( self.x4(), self.y0() )
-    }
-
-    /// 2nd row f,g,h,i,j
-    fn f(&self) -> Point{
-        Point::new( self.x0(), self.y1() )
-    }
-
-    fn g(&self) -> Point{
-        Point::new( self.x1(), self.y1() )
-    }
-
-    fn h(&self) -> Point{
-        Point::new( self.x2(), self.y1() )
-    }
-
-    fn i(&self) -> Point {
-        Point::new( self.x3(), self.y1() )
-    }
-
-    fn j(&self) -> Point {
-        Point::new( self.x4(), self.y1() )
-    }
-
-    /// 3rd row k,l,m,n,o
-    fn k(&self) -> Point {
-        Point::new( self.x0(), self.y2() )
-    }
-
-    fn l(&self) -> Point {
-        Point::new( self.x1(), self.y2() )
-    }
-
-    fn m(&self) -> Point {
-        Point::new( self.x2(), self.y2() )
-    }
-
-    fn n(&self) -> Point {
-        Point::new( self.x3(), self.y2() )
-    }
-
-    fn o(&self) -> Point {
-        Point::new( self.x4(), self.y2() )
-    }
-
-    /// 4th row p,q,r,s,t
-    fn p(&self) -> Point {
-        Point::new( self.x0(), self.y3() )
-    }
-
-    fn q(&self) -> Point {
-        Point::new( self.x1(), self.y3() )
-    }
-
-    fn r(&self) -> Point {
-        Point::new( self.x2(), self.y3() )
-    }
-
-    fn s(&self) -> Point {
-        Point::new( self.x3(), self.y3() )
-    }
-
-    fn t(&self) -> Point {
-        Point::new( self.x4(), self.y3() )
-    }
-
-    /// 5th row u,v,w,x,y
-    fn u(&self) -> Point {
-        Point::new( self.x0(), self.y4() )
-    }
-
-    fn v(&self) -> Point {
-        Point::new( self.x1(), self.y4() )
-    }
-
-    fn w(&self) -> Point {
-        Point::new( self.x2(), self.y4() )
-    }
-
-    fn x(&self) -> Point {
-        Point::new( self.x3(), self.y4() )
-    }
-
-    fn y(&self) -> Point {
-        Point::new( self.x4(), self.y4() )
-    }
 
 
 }
