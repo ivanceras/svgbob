@@ -3,6 +3,9 @@ use Point;
 use Loc;
 use Grid;
 use Settings;
+use properties::{Behavior, Signal};
+use properties::Condition;
+use box_drawing;
 
 use fragments::Block;
 use fragments::Block::{
@@ -13,12 +16,6 @@ use fragments::Block::{
     U,V,W,X,Y
 };
 
-use fragments::{
-    line_to,
-    line_from,
-    middle_line,
-    center_line,
-};
 use fragments::Fragment;
 use fragments::Fragment::{
     Line,
@@ -35,7 +32,7 @@ use fragments::Direction::{
     BottomLeft,BottomRight
 };
 use properties::Behavior::{Static,Dynamic};
-use properties::Signal::{Weak,Medium,Strong};
+use properties::Signal::{Silent, Weak,Medium,Strong};
 use properties::Properties;
 use ::{
     line, solid_circle,
@@ -340,178 +337,47 @@ impl <'g>FocusChar<'g>{
         chars.contains(&self.ch)
     }
 
-
-
-
-    fn is_thin_horizontal(&self) -> bool {
-        self.in_any(vec!['─'])
+    fn is_used_as_text(&self) -> bool {
+        if self.can_strongly_connect_left_or_right(){
+            false
+        }
+        else if self.is_surrounded_oO(){
+            false
+        }
+        else if self.is_text_surrounded(){
+            true
+        }
+        else{
+            false
+        }
     }
 
-    fn is_thick_horizontal(&self) -> bool {
-        self.is('━')
+    fn is_text_surrounded(&self) -> bool {
+        self.left().ch.is_alphanumeric()
+        || self.right().ch.is_alphanumeric()
+        
     }
 
-
-    fn is_horizontal(&self) -> bool {
-        self.is_dynamic_horizontal()
-        || self.is_static_horizontal()
+    fn is_surrounded_oO(&self) -> bool {
+        self.left().any("oO")
+        || self.right().any("oO")
     }
 
-    fn is_dynamic_horizontal(&self) -> bool {
-        self.is('-')
-    }
-
-    fn is_static_horizontal(&self) -> bool {
-        self.is_thin_horizontal() 
-        || self.is_thick_horizontal()
-    }
-
-    fn is_thin_vertical(&self) -> bool {
-        self.is('│')
-    }
-    fn is_thick_vertical(&self) -> bool {
-        self.is('┃')
-    }
-
-    fn is_vertical(&self) -> bool {
-        self.is('|') 
-        || self.is_thin_vertical() 
-        || self.is_thick_vertical()
+    fn can_strongly_connect_left_or_right(&self) -> bool {
+        self.left().can_strongly_connect(&O)
+        || self.right().can_strongly_connect(&K)
+        || self.top().can_strongly_connect(&W)
+        || self.bottom().can_strongly_connect(&C)
     }
 
 
-    ///   .-   ,-
-    ///   |    |
-    fn is_dynamic_rounded_top_left(&self) -> bool {
-        self.any(".,")
-    }
-
-    ///  ╭-
-    ///  |
-    fn is_static_rounded_top_left(&self) -> bool {
-        self.is('╭')
-    }
-
-    ///   -.
-    ///    |
-    fn is_dynamic_rounded_top_right(&self) -> bool {
-        self.is('.')
-    }
-    ///   -╮
-    ///    |
-    fn is_static_rounded_top_right(&self) -> bool {
-        self.is('╮')
-    }
-
-    /// |      |   
-    /// '-     `-   
-    fn is_dynamic_rounded_bottom_left(&self) -> bool {
-        self.any("'`")
-    }
-
-    ///   |
-    ///   ╰-
-    fn is_static_rounded_bottom_left(&self) -> bool {
-        self.is('╰')
-    }
-
-    ///     |    |
-    ///    -'   -╯
-    fn is_rounded_bottom_right(&self) -> bool {
-        self.is_dynamic_rounded_bottom_right()
-        || self.is_static_rounded_bottom_right()
-    }
-
-    ///     |
-    ///    -'
-    fn is_dynamic_rounded_bottom_right(&self) -> bool {
-        self.is('\'')
-    }
-    ///    |
-    ///   -╯
-    fn is_static_rounded_bottom_right(&self) -> bool {
-        self.is('╯')
-    }
-
-
-    ///  ┌-  ┍-  ┎-  ┏-
-    ///  |   |   |   |
-    fn is_static_corner_top_left(&self) -> bool {
-        self.any("┌┍┎┏")
-    }
-    /// -+  -┐  -┑  -┒  -┓ 
-    ///  |   |   |   |   |
-    fn is_static_corner_top_right(&self) -> bool {
-        self.any("┐┑┒┓")
-    }
-
-
-
-    ///   |   |   |   |
-    ///   ┗-  └-  ┕-  ┖-
-    fn is_static_corner_bottom_left(&self) -> bool {
-        self.any("┗└┕┖")
-    }
-
-    ///    |   |  |  |
-    ///   -┘  -┙ -┚ -┛
-    fn is_static_corner_bottom_right(&self) -> bool {
-        self.any("┘┙┚┛")
-    }
-
-    ///   +  ┼  ┽   ┾   ┿  ╀   ╁   ╂   ╃   ╄   ╅   ╆   ╇   ╈   ╉   ╊   ╋
-    fn is_center_intersection(&self) -> bool {
-        self.any("+┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋")
-    }
-    
-    ///  ┬   ┭   ┮   ┯   ┰   ┱   ┲   ┳
-    fn is_static_bottom_intersection(&self) -> bool {
-        self.any("┬┭┮┯┰┱┲┳")
-    }
-
-
-    ///  ┴   ┵   ┶   ┷   ┸   ┹   ┺   ┻
-    fn is_static_top_intersection(&self) -> bool {
-        self.any("┴┵┶┷┸┹┺┻")
-    }
-
-
-    /// ├   ┝   ┞   ┟  ┠   ┡   ┢   ┣
-    fn is_static_right_intersection(&self) -> bool {
-        self.any("├┝┞┟┠┡┢┣")
-    }
-
-    ///  ┤   ┥   ┦   ┧   ┨   ┩   ┪   ┫ 
-    fn is_static_left_intersection(&self) -> bool {
-        self.any("┤┥┦┧┨┩┪┫")
-    }
-
-    pub fn is_blank(&self) -> bool {
-        self.in_any(vec!['\0', ' '])
-    }
 
     pub fn is_null(&self) -> bool {
         self.is('\0')
     }
 
-    fn is_slant_left(&self) -> bool {
-        self.is('\\')
-    }
-
-    fn is_slant_right(&self) -> bool {
-        self.is('/')
-    }
-
-    fn is_low_horizontal(&self) -> bool {
-        self.is('_')
-    }
-
-    fn is_open_round_marker(&self) -> bool {
-        self.any("oO")
-    }
-
-    fn is_solid_round_marker(&self) -> bool {
-        self.is('*')
+    pub fn is_blank(&self) -> bool {
+        self.is_null() || self.is(' ')
     }
 
 
@@ -521,33 +387,46 @@ impl <'g>FocusChar<'g>{
     //
     ///////////////////////////////////
     
-    fn can_pass_medium_connect(&self, dir: &Direction) -> bool {
-        self.ch.can_strongly_connect(dir)
-        || self.ch.can_medium_connect(dir)
+    fn can_pass_medium_connect(&self, block: &Block) -> bool {
+        self.can_strongly_connect(block)
+        || self.can_medium_connect(block)
     }
 
 
-    fn can_pass_weakly_connect(&self, dir: &Direction) -> bool {
-        self.can_strongly_connect(dir)
-        || self.can_medium_connect(dir)
-        || self.can_weakly_connect(dir)
-    }
-    fn can_strongly_connect(&self, dir: &Direction) -> bool {
-        self.ch.can_strongly_connect(dir)
+    fn can_pass_weakly_connect(&self, block: &Block) -> bool {
+        self.can_strongly_connect(block)
+        || self.can_medium_connect(block)
+        || self.can_weakly_connect(block)
     }
 
-    fn can_medium_connect(&self, dir: &Direction) -> bool {
-        self.ch.can_medium_connect(dir)
+    fn can_pass_silently_connect(&self, block: &Block) -> bool {
+        self.can_strongly_connect(block)
+        || self.can_medium_connect(block)
+        || self.can_weakly_connect(block)
+        || self.can_silently_connect(block)
     }
 
-    fn can_weakly_connect(&self, dir: &Direction) -> bool {
-        self.ch.can_weakly_connect(dir)
+    fn can_strongly_connect(&self, block: &Block) -> bool {
+        self.ch.can_connect(&Strong, block)
     }
 
-    fn get_default_element(&self, dir: &Direction) -> Element {
-        let frag = self.ch.get_frag_to(dir);
-        assert!(frag.is_some(), "There should be 1 frag");
-        self.to_element(frag.unwrap())
+    fn can_medium_connect(&self, block: &Block) -> bool {
+        self.ch.can_connect(&Medium, block)
+    }
+
+    fn can_weakly_connect(&self, block: &Block) -> bool {
+        self.ch.can_connect(&Weak, block)
+    }
+
+    fn can_silently_connect(&self, block: &Block) -> bool {
+        self.ch.can_connect(&Silent, block)
+    }
+
+    fn get_default_element(&self, block: &Block) -> Vec<Element> {
+        let frag = self.ch.get_frag_to(block);
+        frag.into_iter().map(|f|{
+            self.to_element(f)
+        }).collect()
     }
 
     fn loc_block(&self, block: Block) -> LocBlock{
@@ -564,6 +443,7 @@ impl <'g>FocusChar<'g>{
     }
 
     fn to_element(&self, frag: Fragment) -> Element {
+        let tw1 = self.loc_block(A).tw1();
         match frag{
             Fragment::Line(p1, p2) => {
                 line(&self.point(p1),
@@ -580,260 +460,169 @@ impl <'g>FocusChar<'g>{
                 arrow_line(&self.point(p1),
                     &self.point(p2)
                 )
-            }
+            },
+
             Fragment::Arc(p1, p2, m) => {
                 arc(&self.point(p1),
                     &self.point(p2),
-                    m as f32 * self.loc_block(A).tw1()
+                    m as f32 *  tw1
                 )
+            },
+            
+            Fragment::OpenCircle(c, m) => {
+                open_circle(&self.point(c), m as f32 * tw1)
+            },
+
+            Fragment::SolidCircle(c, m) => {
+                solid_circle(&self.point(c), m as f32 * tw1)
             }
         }
     }
 
-    pub fn get_elements(&self) ->  (Vec<Element>, Vec<Loc>){
-        let a = &self.point(A);
-        let b = &self.point(B);
-        let c = &self.point(C);
-        let d = &self.point(D);
-        let e = &self.point(E);
 
-        let f = &self.point(F);
-        let g = &self.point(G);
-        let h = &self.point(H);
-        let i = &self.point(I);
-        let j = &self.point(J);
+    fn from_dir(&self, dir: &Direction) -> FocusChar<'g>{
+        match *dir{
+           TopLeft => self.top().left(),
+           Top => self.top(),
+           TopRight => self.top().right(),
+           Left => self.left(),
+           Right => self.right(),
+           BottomLeft => self.bottom().left(),
+           Bottom => self.bottom(),
+           BottomRight => self.bottom().right(),
+           _ => panic!("unexpected dir: {:?}", dir),
+        }
+    }
 
-        let k = &self.point(K);
-        let l = &self.point(L);
-        let m = &self.point(M);
-        let n = &self.point(N);
-        let o = &self.point(O);
 
-        let p = &self.point(P);
-        let q = &self.point(Q);
-        let r = &self.point(R);
-        let s = &self.point(S);
-        let t = &self.point(T);
+    fn can_loc_pass_connect(&self,
+        loc: &Direction, block: &Block, signal: &Signal) -> bool {
+        let fc = self.from_dir(loc);
+        match *signal{
+            Strong => fc.can_strongly_connect(block),
+            Medium => fc.can_pass_medium_connect(block),
+            Weak => fc.can_pass_weakly_connect(block),
+            Silent => fc.can_pass_silently_connect(block),
+        }
+    }
 
-        let u = &self.point(U);
-        let v = &self.point(V);
-        let w = &self.point(W);
-        let x = &self.point(X);
-        let y = &self.point(Y);
-        let lb = &self.loc_block(A);
-        let tw2 = lb.tw2();
-
+    /// Get all the points of the block
+    /// For each point, check the neighbors that it can
+    /// connect and the corresponding neighbor block
+    /// and see if that neighbor can connect to that block
+    /// and how strong
+    ///
+    ///  Medium + Medium connects
+    ///  Medium + Strong connects
+    ///  Strong + Medium connects
+    ///  Strong + Strong connects
+    ///
+    ///            ┌─┬─┬─┬─┬─┐
+    ///            │A│B│C│D│E│
+    ///            ├─┼─┼─┼─┼─┤
+    ///            │F│G│H│I│J│
+    ///            ├─┼─┼─┼─┼─┤
+    ///            │K│L│M│N│O│
+    ///            ├─┼─┼─┼─┼─┤
+    ///            │P│Q│R│S│T│
+    ///            ├─┼─┼─┼─┼─┤
+    ///            │U│V│W│X│Y│
+    ///            └─┴─┴─┴─┴─┘
+    ///
+    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
         let mut elm = vec![];
         let mut consumed = vec![];
-        let mut overriden = false;//manually enumerated use-case
+        let mut matched = false;
+        let mut matched_intended = false;
+        let properties: Vec<(Block, Signal, Vec<Fragment>)> 
+            = self.ch.get_properties();
 
-        if self.any(".,"){
-            //   .-    ,-
-            //  /     /
-            if self.right().can_strongly_connect(&Left)
-                && self.bottom().left().can_strongly_connect(&TopRight){
-                elm.push(self.to_element(Arc(O,Q,4)));
-                elm.push(self.to_element(Line(Q,U)));
-                overriden = true;
-            }
-            //   -.   -,
-            //     \    \
-            else if self.left().can_strongly_connect(&Right)
-                && self.bottom().right().can_strongly_connect(&TopLeft){
-                elm.push(self.to_element(Arc(S,K,4)));
-                elm.push(self.to_element(Line(S,Y)));
-                overriden = true;
-            }
+        ///////////////////////
+        //
+        // Box drawing
+        //
+        //////////////////////////
+        let (connects,box_frag) = box_drawing::box_drawing(&self.ch);
+        if !box_frag.is_empty(){
+            let static_elm:Vec<Element> = box_frag.into_iter()
+                .map(|f|{self.to_element(f)})
+                .collect();
+            elm.extend(static_elm);
+            matched = true;
         }
-        if self.any("`'"){
-            //    /   /
-            //  -'  -`
-            if self.left().can_strongly_connect(&Right)
-                && self.top().right().can_strongly_connect(&BottomLeft){
-                elm.push(self.to_element(Arc(K,I,4)));
-                elm.push(self.to_element(Line(I,E)));
-                overriden = true;
-            }
-            //   \    \
-            //    `-   '-
-            else if self.right().can_strongly_connect(&Left)
-                && self.top().left().can_strongly_connect(&BottomRight){
-                elm.push(self.to_element(Arc(G,O,4)));
-                elm.push(self.to_element(Line(A,G)));
-                overriden = true;
+
+        ////////////////////////////
+        //
+        // Intended behaviors
+        //
+        ////////////////////////////////
+        {
+            let intended_behavior: Vec<(Vec<Condition>,Vec<Fragment>)>
+                = self.ch.get_intended_behavior();
+            for (conditions, intended_frags) in intended_behavior{
+                let mut meet = 0;
+                for ref cond in &conditions{
+                    let loc: &Direction = &cond.loc;
+                    let &(ref block, ref signal) = &cond.connects_to;
+                    if self.can_loc_pass_connect(&loc, &block, &signal){
+                        meet += 1;
+                    }
+                }
+                // if all conditions are meet push the intended fragments to elm
+                if conditions.len() == meet {
+                    for ifrag in intended_frags{
+                        elm.push(self.to_element(ifrag));
+                        matched_intended = true;
+                    }
+                }
             }
         }
         
-        if !overriden{
-            let mut in_weak_strong = false;
-            /////////////////////////////////
-            //
-            //  Weak/Medium/Strong + Strong
-            //
-            //////////////////////////////////
-            if self.can_pass_medium_connect(&Left)
-                && self.left().can_strongly_connect(&Right){
-                elm.push(self.get_default_element(&Left));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&Right)
-                && self.right().can_strongly_connect(&Left){
-                elm.push(self.get_default_element(&Right));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&Top)
-                && self.top().can_strongly_connect(&Bottom){
-                elm.push(self.get_default_element(&Top));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&Bottom)
-                && self.bottom().can_strongly_connect(&Top){
-                elm.push(self.get_default_element(&Bottom));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&TopRight)
-                && self.top_right().can_strongly_connect(&BottomLeft){
-                elm.push(self.get_default_element(&TopRight));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&TopLeft)
-                && self.top_left().can_strongly_connect(&BottomRight){
-                elm.push(self.get_default_element(&TopLeft));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&BottomLeft)
-                && self.bottom_left().can_strongly_connect(&TopRight){
-                elm.push(self.get_default_element(&BottomLeft));
-                in_weak_strong = true;
-            }
-            if self.can_pass_medium_connect(&BottomRight)
-                && self.bottom_right().can_strongly_connect(&TopLeft){
-                elm.push(self.get_default_element(&BottomRight));
-                in_weak_strong = true;
-            }
-            //  
-            // __   \_   \/
-            if self.can_pass_medium_connect(&BottomLeft)
-                && self.left().can_pass_weakly_connect(&BottomRight){
-                elm.push(self.get_default_element(&BottomLeft));
-                in_weak_strong = true;
-            }
-            //
-            //  __  _/  \/
-            if self.can_pass_medium_connect(&BottomRight)
-                && self.right().can_pass_weakly_connect(&BottomLeft){
-                elm.push(self.get_default_element(&BottomRight));
-                in_weak_strong = true;
-            }
-            //  /
-            //  \
-            if self.can_pass_medium_connect(&TopLeft)
-                && self.top().can_strongly_connect(&BottomLeft){
-                elm.push(self.get_default_element(&TopLeft));
-                in_weak_strong = true;
-            }
-            //  /
-            //  \
-            if self.can_pass_medium_connect(&BottomLeft)
-                && self.bottom().can_strongly_connect(&TopLeft){
-                elm.push(self.get_default_element(&BottomLeft));
-                in_weak_strong = true;
-            }
-            //  \
-            //  /
-            if self.can_pass_medium_connect(&TopRight)
-                && self.top().can_strongly_connect(&BottomRight){
-                elm.push(self.get_default_element(&TopRight));
-                in_weak_strong = true;
-            }
-            //  \
-            //  /
-            if self.can_pass_medium_connect(&BottomRight)
-                && self.bottom().can_strongly_connect(&TopRight){
-                elm.push(self.get_default_element(&BottomRight));
-                in_weak_strong = true;
-            }
-            ////////////////////////////////////////////
-            //
-            // Medium + Medium
-            //
-            /////////////////////////////////////////////
-            if self.can_medium_connect(&Left)
-                && self.left().can_medium_connect(&Right){
-                elm.push(self.get_default_element(&Left));
-            }
-            if self.can_medium_connect(&Right)
-                && self.right().can_medium_connect(&Left){
-                elm.push(self.get_default_element(&Right));
-            }
-            if self.can_medium_connect(&Top)
-                && self.top().can_medium_connect(&Bottom){
-                elm.push(self.get_default_element(&Top));
-            }
-            if self.can_medium_connect(&Bottom)
-                && self.bottom().can_medium_connect(&Top){
-                elm.push(self.get_default_element(&Bottom));
-            }
-            if self.can_medium_connect(&TopRight)
-                && self.top_right().can_medium_connect(&BottomLeft){
-                elm.push(self.get_default_element(&TopRight));
-            }
-            if self.can_medium_connect(&TopLeft)
-                && self.top_left().can_medium_connect(&BottomRight){
-                elm.push(self.get_default_element(&TopLeft));
-            }
-            if self.can_medium_connect(&BottomLeft)
-                && self.bottom_left().can_medium_connect(&TopRight){
-                elm.push(self.get_default_element(&BottomLeft));
-            }
-            if self.can_medium_connect(&BottomRight)
-                && self.bottom_right().can_medium_connect(&TopLeft){
-                elm.push(self.get_default_element(&BottomRight));
-            }
-            /////////////////////////////////
-            //
-            //  Strong + Weak/Medium/Strong
-            //
-            //////////////////////////////////
-            if !in_weak_strong{
-                if self.can_strongly_connect(&Left)
-                    && self.left().can_pass_medium_connect(&Right){
-                    elm.push(self.get_default_element(&Left));
-                }
-                if self.can_strongly_connect(&Right)
-                    && self.right().can_pass_medium_connect(&Left){
-                    elm.push(self.get_default_element(&Right));
-                }
-                if self.can_strongly_connect(&Top)
-                    && self.top().can_pass_medium_connect(&Bottom){
-                    elm.push(self.get_default_element(&Top));
-                }
-                if self.can_strongly_connect(&Bottom)
-                    && self.bottom().can_pass_medium_connect(&Top){
-                    elm.push(self.get_default_element(&Bottom));
-                }
-                if self.can_strongly_connect(&TopRight)
-                    && self.top_right().can_pass_medium_connect(&BottomLeft){
-                    elm.push(self.get_default_element(&TopRight));
-                }
-                if self.can_strongly_connect(&TopLeft)
-                    && self.top_left().can_pass_medium_connect(&BottomRight){
-                    elm.push(self.get_default_element(&TopLeft));
-                }
-                if self.can_strongly_connect(&BottomLeft)
-                    && self.bottom_left().can_pass_medium_connect(&TopRight){
-                    elm.push(self.get_default_element(&BottomLeft));
-                }
-                if self.can_strongly_connect(&BottomRight)
-                    && self.bottom_right().can_pass_medium_connect(&TopLeft){
-                    elm.push(self.get_default_element(&BottomRight));
+        ///////////////////////////////////
+        //
+        //  Default elements
+        //
+        ///////////////////////////////////
+        if !matched_intended && !self.is_used_as_text() {
+            for (block, signal, frag) in properties{
+                let connects_to:Vec<(Direction, Block)> = block.connects_to();
+                // block 2 is the other block name of the 
+                // character block relative to dir2
+                for (dir2, block2) in connects_to{
+                    // check to see the focus char at dir location
+                    // and see if it can connect the bl
+                    // and how strong is the signal
+                    let fc = self.from_dir(&dir2);
+                    if self.can_pass_medium_connect(&block)
+                        && fc.can_pass_medium_connect(&block2){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    else if self.can_pass_medium_connect(&block)
+                        && fc.can_strongly_connect(&block2){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    else if self.can_strongly_connect(&block)
+                        && fc.can_pass_weakly_connect(&block2){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    else if self.can_strongly_connect(&block)
+                        && fc.can_silently_connect(&block2){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
                 }
             }
-            if elm.is_empty(){
-                if !self.is_blank(){
-                    elm.push(text(&self.loc, &self.text()))
-                }
-            }
+        }
+        //////////////////////////////
+        //
+        //  Text when no matched
+        //
+        //////////////////////////////
+        if !matched && !matched_intended && !self.is_blank(){
+            elm.push(text(&self.loc, &self.text()));
         }
         (elm, consumed)
     }

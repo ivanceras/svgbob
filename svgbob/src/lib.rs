@@ -63,6 +63,7 @@ mod patterns;
 
 mod fragments;
 mod properties;
+mod box_drawing;
 
 
 /// generate an SVG from the ascii text input
