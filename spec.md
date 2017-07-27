@@ -55,7 +55,7 @@ Default values:
 
 |text  | svg                                   |rendered      
 |------|---------------------------------------|--------------
-|`-`   |`<line x1="0" y1="8" x2="8" y2="8"/>`  |<svg width="16" height="8"><line x1="0" y1="8" x2="8" y2="8"/></svg>
+|`-`   |`<line x1="0" y1="8" x2="8" y2="8"/>`  |<svg width="16" height="16"><line x1="0" y1="8" x2="8" y2="8"/></svg>
 |`--`  |`<line x1="0" y1="8" x2="16" y2="8"/>` |<svg width="16" height="16"><line x1="0" y1="8" x2="16" y2="8"/></svg>
 |`----`|`<line x1="0" y1="8" x2="32" y2="8"/>` |<svg width="32" height="16"><line x1="0" y1="8" x2="32" y2="8"/></svg>
 
