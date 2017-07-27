@@ -17,7 +17,7 @@ If you like this project please consider supporting me on [patreon](https://www.
 [Docs](https://docs.rs/svgbob)
 
 
-#Using in command line
+# Using in command line
 
 `cargo install svgbob_cli`
 
