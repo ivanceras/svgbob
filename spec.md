@@ -1,5 +1,6 @@
 ## Svgbob specification 
 
+[Rendered](https://ivanceras.github.io/spongedown-editor/?file=https://raw.githubusercontent.com/ivanceras/svgbobrus/master/spec.md)
 
 Svgbob is a diagramming model which uses common typing characters to approximate the shape
 
