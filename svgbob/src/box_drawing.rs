@@ -53,27 +53,56 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
          vec![Line(C,W)]
         )
     }
-    else if ch.any("╭┌┍┎┏"){
+    else if ch.is('╭'){
+        (vec![O,W],
+         vec![
+            Arc(O,R,2),
+            Line(R,W)
+            ]
+        )
+    }
+    else if ch.any("┌┍┎┏"){
         (vec![W,O],
          vec![
             Line(M,W),
             Line(M,O)
         ])
     }
-    else if ch.any("╮┐┑┒┓"){
+    else if ch.is('╮'){
+        (vec![K,W],
+         vec![
+            Line(W,R),
+            Arc(R,K,2)
+         ])
+    }
+    else if ch.any("┐┑┒┓"){
         (vec![W,K],
          vec![
              Line(M,W),
              Line(M,K)
         ])
     }
-    else if ch.any("╰┗└┕┖"){
+    else if ch.is('╰'){
+        (vec![C,O],
+         vec![Line(C,H),
+            Arc(H,O,2)
+            ]
+        )
+    }
+    else if ch.any("┗└┕┖"){
         (vec![C,O],
          vec![Line(M,C),
             Line(M,O)
         ])
     }
-    else if ch.any("╯┘┙┚┛"){
+    else if ch.is('╯'){
+        (vec![C,K],
+         vec![Line(C,H),
+            Arc(K,H,2)
+            ]
+        )
+    }
+    else if ch.any("┘┙┚┛"){
         (vec![C,K],
          vec![Line(M,C),
             Line(M,K)
@@ -128,7 +157,38 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
          vec![Line(K,O),
             Line(K,O),
             Line(P,T),
-            Line(P,T),
+        ])
+    }
+    else if ch.is('╔'){
+        (vec![O,V,T,X],
+         vec![Line(O,L),
+            Line(L,V),
+            Line(T,S),
+            Line(S,X)
+        ])
+    }
+    else if ch.is('╗'){
+        (vec![K,X,P,V],
+         vec![Line(K,N),
+            Line(N,X),
+            Line(P,Q),
+            Line(Q,V)
+        ])
+    }
+    else if ch.is('╚'){
+        (vec![B,T,D,O],
+         vec![Line(B,Q),
+            Line(Q,T),
+            Line(D,N),
+            Line(N,O)
+        ])
+    }
+    else if ch.is('╝'){
+        (vec![P,K,B,D],
+         vec![Line(P,S),
+            Line(S,D),
+            Line(K,L),
+            Line(L,B)
         ])
     }
     else if ch.is('╒'){
@@ -146,6 +206,53 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
               Line(L,V),
               Line(N,X)
         ])
+    }
+    else if ch.is('╬'){
+        (vec![B,D,V,X,K,P,O,T],
+         vec![
+            Line(B,L), Line(L,K),
+            Line(P,Q), Line(Q,V),
+            Line(D,N), Line(N,O),
+            Line(T,S), Line(S,X)
+         ])
+    }
+    else if ch.is('╦'){
+        (vec![K,O,P,V,T,X],
+         vec![
+            Line(K,O),
+            Line(P,Q),
+            Line(Q,V),
+            Line(T,S),
+            Line(S,X)
+        ])
+    }
+    else if ch.is('╩'){
+        (vec![P,T,K,B,D,O],
+         vec![
+            Line(P,T),
+            Line(K,L),
+            Line(L,B),
+            Line(D,N),
+            Line(N,O)
+        ])
+    }
+    else if ch.is('╠'){
+        (vec![B,V,D,O,T,X],
+         vec![
+            Line(B,V),
+            Line(D,N),
+            Line(N,O),
+            Line(T,S),
+            Line(S,X)
+         ])
+    }
+    else if ch.is('╣'){
+        (vec![D,X,B,K,P,V],
+         vec![
+            Line(D,X),
+            Line(B,L), Line(L,K),
+            Line(P,Q), Line(Q,V)
+         ])
     }
     /*
     else if ch.any("╙╟"){

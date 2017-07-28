@@ -338,13 +338,14 @@ impl <'g>FocusChar<'g>{
     }
 
     fn is_used_as_text(&self) -> bool {
-        if self.can_strongly_connect_left_or_right(){
+        /*
+        if self.can_strongly_connect_primary4(){
             false
         }
-        else if self.is_surrounded_oO(){
+        else if self.can_connect_secondary4(){
             false
         }
-        else if self.is_text_surrounded(){
+        else*/ if self.is_text_surrounded(){
             true
         }
         else{
@@ -358,16 +359,16 @@ impl <'g>FocusChar<'g>{
         
     }
 
-    fn is_surrounded_oO(&self) -> bool {
-        self.left().any("oO")
-        || self.right().any("oO")
-    }
-
-    fn can_strongly_connect_left_or_right(&self) -> bool {
+    fn can_strongly_connect_primary4(&self) -> bool {
         self.left().can_strongly_connect(&O)
         || self.right().can_strongly_connect(&K)
         || self.top().can_strongly_connect(&W)
         || self.bottom().can_strongly_connect(&C)
+    }
+
+    fn can_connect_secondary4(&self) -> bool {
+        self.can_strongly_connect(&E)
+        && self.top().right().can_pass_silently_connect(&U)
     }
 
 
@@ -530,6 +531,8 @@ impl <'g>FocusChar<'g>{
     ///            └─┴─┴─┴─┴─┘
     ///
     pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
+        let enable_intended_behaviors = true;
+        let enable_box_drawing = true;
         let mut elm = vec![];
         let mut consumed = vec![];
         let mut matched = false;
@@ -542,13 +545,15 @@ impl <'g>FocusChar<'g>{
         // Box drawing
         //
         //////////////////////////
-        let (connects,box_frag) = box_drawing::box_drawing(&self.ch);
-        if !box_frag.is_empty(){
-            let static_elm:Vec<Element> = box_frag.into_iter()
-                .map(|f|{self.to_element(f)})
-                .collect();
-            elm.extend(static_elm);
-            matched = true;
+        if enable_box_drawing{
+            let (connects,box_frag) = box_drawing::box_drawing(&self.ch);
+            if !box_frag.is_empty(){
+                let static_elm:Vec<Element> = box_frag.into_iter()
+                    .map(|f|{self.to_element(f)})
+                    .collect();
+                elm.extend(static_elm);
+                matched = true;
+            }
         }
 
         ////////////////////////////
@@ -556,7 +561,7 @@ impl <'g>FocusChar<'g>{
         // Intended behaviors
         //
         ////////////////////////////////
-        {
+        if enable_intended_behaviors{
             let intended_behavior: Vec<(Vec<Condition>,Vec<Fragment>)>
                 = self.ch.get_intended_behavior();
             for (conditions, intended_frags) in intended_behavior{
@@ -583,7 +588,7 @@ impl <'g>FocusChar<'g>{
         //  Default elements
         //
         ///////////////////////////////////
-        if !matched_intended && !self.is_used_as_text() {
+        if !matched_intended {
             for (block, signal, frag) in properties{
                 let connects_to:Vec<(Direction, Block)> = block.connects_to();
                 // block 2 is the other block name of the 
@@ -593,23 +598,50 @@ impl <'g>FocusChar<'g>{
                     // and see if it can connect the bl
                     // and how strong is the signal
                     let fc = self.from_dir(&dir2);
-                    if self.can_pass_medium_connect(&block)
-                        && fc.can_pass_medium_connect(&block2){
-                        elm.extend(self.get_default_element(&block));
-                        matched = true;
-                    }
-                    else if self.can_pass_medium_connect(&block)
+
+                    // strong + strong
+                    if self.can_strongly_connect(&block)
                         && fc.can_strongly_connect(&block2){
                         elm.extend(self.get_default_element(&block));
                         matched = true;
                     }
-                    else if self.can_strongly_connect(&block)
-                        && fc.can_pass_weakly_connect(&block2){
+                    /*
+                    // medium + medium
+                    else if self.can_pass_medium_connect(&block)
+                        && fc.can_pass_medium_connect(&block2)
+                        && !self.is_used_as_text()
+                        && !fc.is_used_as_text(){
                         elm.extend(self.get_default_element(&block));
                         matched = true;
                     }
+                    */
+                    // medium + strong
+                    else if self.can_pass_medium_connect(&block)
+                        && fc.can_strongly_connect(&block2)
+                        && !self.is_used_as_text() {
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    // strong + weak
                     else if self.can_strongly_connect(&block)
-                        && fc.can_silently_connect(&block2){
+                        && fc.can_pass_weakly_connect(&block2)
+                        && !fc.is_used_as_text(){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    // strong + silent
+                    else if self.can_strongly_connect(&block)
+                        && fc.can_silently_connect(&block2)
+                        && !fc.is_used_as_text(){
+                        elm.extend(self.get_default_element(&block));
+                        matched = true;
+                    }
+                    // strong and alone and not used as text
+                    // apply only to |_-/ and \, since + will 
+                    // make undesired crosses everywhere
+                    else if self.can_strongly_connect(&block)
+                        && self.any("/\\_-|")
+                        && !self.is_used_as_text(){
                         elm.extend(self.get_default_element(&block));
                         matched = true;
                     }

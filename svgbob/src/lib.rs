@@ -80,18 +80,6 @@ pub fn to_svg(input: &str) -> SVG {
     Grid::from_str(&input, &Settings::default()).get_svg()
 }
 
-pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
-    let settings = Settings::with_size(text_width, text_height);
-    Grid::from_str(&input, &settings).get_svg()
-}
-
-pub fn to_svg_with_size_nooptimization(input: &str, text_width: f32, text_height: f32) -> SVG {
-    let mut settings = Settings::no_optimization();
-    settings.text_width = text_width;
-    settings.text_height = text_height;
-    Grid::from_str(&input, &settings).get_svg()
-}
-
 
 ///  optimization options:
 ///  1. None -> Fastest, but not correct looking (paths and text are not reduced)
@@ -107,17 +95,17 @@ pub struct Settings {
     /// if optmization is enabled,
     /// true means all reduceable paths will be in 1 path definition
     compact_path: bool,
+    /// the svg class of the generated svg
+    pub class: Option<String>,
+    /// the id of the generated svg 
+    pub id: Option<String>,
 }
 
 impl Settings {
 
-    pub fn with_size(text_width: f32, text_height: f32) -> Self{
-         Settings{
-            text_width: text_width,
-            text_height: text_height,
-            optimize: true,
-            compact_path: true,
-         }
+    pub fn set_size(&mut self, text_width: f32, text_height: f32){
+        self.text_width = text_width;
+        self.text_height = text_height;
     }
     pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
@@ -139,6 +127,24 @@ impl Settings {
         settings.compact_path = true;
         settings
     }
+
+    fn set_id(&mut self, id: String){
+        self.id = Some(id);
+    }
+
+    fn set_class(&mut self, class: String){
+        self.class = Some(class);
+    }
+
+    fn set_selector(&mut self, id: Option<String>, class: Option<String>){
+        if let Some(id) = id{
+            self.set_id(id);
+        }
+        if let Some(class) = class{
+            self.set_class(class);
+        }
+    }
+
 }
 
 impl Default for Settings {
@@ -148,6 +154,8 @@ impl Default for Settings {
             text_height: 16.0,
             optimize: true,
             compact_path: true,
+            class: Some("bob".to_string()),
+            id: None
         }
     }
 }
@@ -776,13 +784,18 @@ impl Grid {
         let nodes = self.get_svg_nodes();
         let width = self.settings.text_width * self.columns()  as f32;
         let height = self.settings.text_height * self.rows() as f32;
-        let mut svg = SVG::new()
-            .set("font-size", 14)
-            .set("font-family",
-                "arial"
-                )
-            .set("width", width)
-            .set("height", height);
+        let mut svg = SVG::new();
+
+        if let Some(ref id) = self.settings.id{
+            svg.assign("id", id.to_owned());
+        }
+        if let Some(ref class) = self.settings.class{
+            svg.assign("class", class.to_owned());
+        }
+        svg.assign("font-size", 14);
+        svg.assign("font-family", "arial");
+        svg.assign("width", width);
+        svg.assign("height", height);
 
         svg.append(get_defs());
         svg.append(get_styles());

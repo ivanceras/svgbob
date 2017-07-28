@@ -68,8 +68,19 @@ pub enum Behavior{
     Dynamic  //reactive
 }
 
+pub struct Characteristic{
+    //if condition is met, the block becomes a strong signal
+    intensifier: Vec<(Condition, Block)>,
+    // these are the default behavior of the fragment
+    properties: Vec<(Block, Signal, Vec<Fragment>)>,
+    // after modification, if all the blocks are strong
+    // then use these fragments instead
+    intended_behavior: (Vec<Block>, Vec<Fragment>)
+}
+
 pub trait Properties{
 
+    fn get_signal_modifier(&self) -> Vec<(Condition, (Block, Signal))>;
     /// the default behavior of the character
     /// and the default fragment when it connect to 
     /// its block
@@ -84,6 +95,8 @@ pub trait Properties{
     fn any(&self, s: &str) -> bool;
 
     fn in_any(&self, ch: Vec<char>) -> bool;
+
+    fn can_connect_static(&self, block: &Block) -> bool;
 
     fn can_connect(&self, signal: &Signal, block: &Block) -> bool;
 
@@ -156,6 +169,7 @@ impl Properties for char{
                 //    .-   .-
                 //    |    '
                 //
+                // (vec![(W,Strong),(O,Strong)],vec![Arc(O,R,2),Line(R,W)])
                 (vec![
                     Condition{
                         loc: Right,
@@ -296,6 +310,113 @@ impl Properties for char{
                     Line(U,Q)
                 ]),
 
+                //     /
+                //    .
+                //   /
+                (vec![
+                    Condition{
+                        loc: TopRight,
+                        connects_to: (U, Strong)
+                    },
+                    Condition{
+                        loc: BottomLeft,
+                        connects_to: (E, Strong)
+                    }
+                ],
+                vec![
+                    Line(E,U)
+                ]),
+
+                //    | 
+                //    .
+                //    |
+                (vec![
+                    Condition{
+                        loc: Top,
+                        connects_to: (W, Strong)
+                    },
+                    Condition{
+                        loc: Bottom,
+                        connects_to: (C, Strong)
+                    }
+                ],
+                vec![
+                    Line(C,W)
+                ]),
+                //   \ 
+                //    .
+                //    |
+                (vec![
+                    Condition{
+                        loc: TopLeft,
+                        connects_to: (Y, Strong)
+                    },
+                    Condition{
+                        loc: Bottom,
+                        connects_to: (C, Strong)
+                    }
+                ],
+                vec![
+                    Line(A,G),
+                    Arc(R,G,8),
+                    Line(R,W)
+                ]),
+
+                //     /
+                //    .
+                //    | 
+                (vec![
+                    Condition{
+                        loc: TopRight,
+                        connects_to: (U, Strong)
+                    },
+                    Condition{
+                        loc: Bottom,
+                        connects_to: (C, Strong)
+                    }
+                ],
+                vec![
+                    Arc(I,R,8),
+                    Line(E,I),
+                    Line(R,W)
+                ]),
+
+                //    | 
+                //    .
+                //   /
+                (vec![
+                    Condition{
+                        loc: Top,
+                        connects_to: (W, Strong)
+                    },
+                    Condition{
+                        loc: BottomLeft,
+                        connects_to: (E, Strong)
+                    }
+                ],
+                vec![
+                    Line(C,H),
+                    Arc(Q,H,8),
+                    Line(Q,U),
+                ]),
+                //    | 
+                //    .
+                //     \
+                (vec![
+                    Condition{
+                        loc: Top,
+                        connects_to: (W, Strong)
+                    },
+                    Condition{
+                        loc: BottomRight,
+                        connects_to: (A, Strong)
+                    }
+                ],
+                vec![
+                    Line(C,H),
+                    Arc(H,S,8),
+                    Line(S,Y)
+                ]),
             ]
         }
         else if self.any("'`"){
@@ -340,11 +461,11 @@ impl Properties for char{
                 (vec![
                     Condition{
                         loc: Right,
-                        connects_to: (K,Strong)
+                        connects_to: (K, Strong)
                     },
                     Condition{
                         loc: TopLeft,
-                        connects_to: (A, Strong)
+                        connects_to: (Y, Strong)
                     }
                 ],
                 vec![
@@ -407,14 +528,10 @@ impl Properties for char{
         }
         else if self.is('|'){
             vec![
-                //   \ /
+                //     /
                 //    |
                 //
                 (vec![
-                    Condition{
-                        loc: TopLeft,
-                        connects_to: (Y, Strong)
-                    },
                     Condition{
                         loc: TopRight,
                         connects_to: (U, Strong)
@@ -422,17 +539,25 @@ impl Properties for char{
                 ],
                 vec![
                     Line(W,M),
-                    Line(A,M),
                     Line(M,E)
                 ]),
-                //    | 
-                //   / \
+                //   \  
+                //    |
                 //
                 (vec![
                     Condition{
-                        loc: BottomLeft,
-                        connects_to: (E, Strong)
-                    },
+                        loc: TopLeft,
+                        connects_to: (Y, Strong)
+                    }
+                ],
+                vec![
+                    Line(W,M),
+                    Line(A,M),
+                ]),
+                //    | 
+                //     \
+                //
+                (vec![
                     Condition{
                         loc: BottomRight,
                         connects_to: (A, Strong)
@@ -440,13 +565,59 @@ impl Properties for char{
                 ],
                 vec![
                     Line(C,M),
-                    Line(M,U),
                     Line(M,Y)
+                ]),
+                //    | 
+                //   /  
+                //
+                (vec![
+                    Condition{
+                        loc: BottomLeft,
+                        connects_to: (E, Strong)
+                    },
+                ],
+                vec![
+                    Line(C,M),
+                    Line(M,U),
                 ]),
             ]
         }
         else{
             vec![(vec![], vec![])]
+        }
+    }
+
+    /// signal modifier, if conditions are met, then the signal is modified
+    /// to this new signal, this will be the newly used signal
+    fn get_signal_modifier(&self) -> Vec<(Condition, (Block, Signal))>{
+        if self.is('+'){
+            vec![
+                (Condition{
+                    loc: TopLeft,
+                    connects_to: (Y, Strong)
+                },
+                (A, Strong)
+                )
+            ]
+        }
+        else if self.is('_'){
+            vec![
+                (Condition{
+                    loc: Left,
+                    connects_to: (Y, Strong)
+                },
+                (U,Strong)
+                ),
+                (Condition{
+                    loc: Right,
+                    connects_to: (U, Strong)
+                },
+                (Y,Strong)
+                )
+            ]
+        }
+        else{
+            vec![]
         }
     }
 
@@ -465,10 +636,10 @@ impl Properties for char{
                 (K, Strong, vec![Line(M,K)]),
                 (O, Strong, vec![Line(M,O)]),
                 (W, Strong, vec![Line(M,W)]),
-                (A, Silent, vec![Line(M,A)]),
-                (E, Silent, vec![Line(M,E)]),
-                (U, Silent, vec![Line(M,U)]),
-                (Y, Silent, vec![Line(M,Y)])
+                (A, Medium, vec![Line(M,A)]),
+                (E, Medium, vec![Line(M,E)]),
+                (U, Medium, vec![Line(M,U)]),
+                (Y, Medium, vec![Line(M,Y)])
             ]
         }
         else if self.any("xX"){
@@ -488,10 +659,10 @@ impl Properties for char{
                 (W, Medium, vec![Line(M,W), SolidCircle(M,2)]),
                 (K, Medium, vec![Line(M,K), SolidCircle(M,2)]),
                 (O, Medium, vec![Line(M,O), SolidCircle(M,2)]),
-                (A, Silent, vec![Line(M,A), SolidCircle(M,2)]),
-                (E, Silent, vec![Line(M,E), SolidCircle(M,2)]),
-                (U, Silent, vec![Line(M,U), SolidCircle(M,2)]),
-                (Y, Silent, vec![Line(M,Y), SolidCircle(M,2)]),
+                (A, Medium, vec![Line(M,A), SolidCircle(M,2)]),
+                (E, Medium, vec![Line(M,E), SolidCircle(M,2)]),
+                (U, Medium, vec![Line(M,U), SolidCircle(M,2)]),
+                (Y, Medium, vec![Line(M,Y), SolidCircle(M,2)]),
             ]
         }
         //   \|/  
@@ -507,10 +678,10 @@ impl Properties for char{
                 (W, Medium, vec![Line(R,W), OpenCircle(M,2)]),
                 (K, Medium, vec![OpenCircle(M,2)]),
                 (O, Medium, vec![OpenCircle(M,2)]),
-                (A, Silent, vec![Line(M,A), OpenCircle(M,2)]),
-                (E, Silent, vec![Line(M,E), OpenCircle(M,2)]),
-                (U, Silent, vec![Line(M,U), OpenCircle(M,2)]),
-                (Y, Silent, vec![Line(M,Y), OpenCircle(M,2)]),
+                (A, Medium, vec![Line(G,A), OpenCircle(M,2)]),
+                (E, Medium, vec![Line(I,E), OpenCircle(M,2)]),
+                (U, Medium, vec![Line(Q,U), OpenCircle(M,2)]),
+                (Y, Medium, vec![Line(S,Y), OpenCircle(M,2)]),
             ]
         }
         else if self.is('O'){
@@ -519,10 +690,10 @@ impl Properties for char{
                 (W, Medium, vec![OpenCircle(M,3)]),
                 (K, Medium, vec![OpenCircle(M,3)]),
                 (O, Medium, vec![OpenCircle(M,3)]),
-                (A, Silent, vec![OpenCircle(M,3)]),
-                (E, Silent, vec![OpenCircle(M,3)]),
-                (U, Silent, vec![OpenCircle(M,3)]),
-                (Y, Silent, vec![OpenCircle(M,3)]),
+                (A, Medium, vec![Line(A,G),OpenCircle(M,3)]),
+                (E, Medium, vec![OpenCircle(M,3)]),
+                (U, Medium, vec![OpenCircle(M,3)]),
+                (Y, Medium, vec![OpenCircle(M,3)]),
             ]
         }
         //                                              \ \    / /
@@ -533,10 +704,10 @@ impl Properties for char{
                 (O, Weak, vec![Arc(O,R,2)]),
                 (K, Weak, vec![Arc(R,K,2)]),
                 (W, Medium, vec![Line(R,W)]),
-                (U, Silent,vec![Line(Q,U)]),
-                (Y, Silent, vec![Line(S,Y)]),
-                (A, Silent, vec![Line(M,A)]),
-                (E, Silent, vec![Line(M,E)]),
+                (U, Weak,vec![Line(Q,U)]),
+                (Y, Weak, vec![Line(S,Y)]),
+                (A, Weak, vec![Line(M,A)]),
+                (E, Weak, vec![Line(M,E)]),
                 (F, Weak, vec![Line(M,F)]),
                 (J, Weak, vec![Line(M,J)]),
                 /*
@@ -558,6 +729,8 @@ impl Properties for char{
                 (vec![O,U], Strong, vec![Arc(O,Q,4),Line(Q,U)])
                 )
                 */
+                // If U and O are both strong, then have the nice curve and line
+                //(vec![(U,Strong), (O,Strong)], vec![Arc(O,Q,4), Line(Q,U)])
             ]
         }
         //   |  |    \ \   / /    |  |   /  /
@@ -588,7 +761,11 @@ impl Properties for char{
         else if self.is('|'){
             vec![
                 (C, Strong, vec![Line(C,W)]),
-                (W, Strong, vec![Line(C,W)])
+                (W, Strong, vec![Line(C,W)]),
+                (U, Silent, vec![]),
+                (Y, Silent, vec![]),
+                (A, Silent, vec![]),
+                (E, Silent, vec![])
             ]
         }
         else if self.is('\\'){
@@ -648,8 +825,8 @@ impl Properties for char{
         //    \         |
         else if self.is('('){
             vec![
-                (E, Weak, vec![Arc(E,Y,8)]),
-                (Y, Weak, vec![Arc(E,Y,8)]),
+                (E, Strong, vec![Arc(E,Y,8)]),
+                (Y, Strong, vec![Arc(E,Y,8)]),
                 (K, Weak, vec![Arc(C,W,4)]),
                 (O, Weak, vec![Arc(C,W,4)]),
                 (C, Weak, vec![Arc(C,W,4)]),
@@ -662,8 +839,8 @@ impl Properties for char{
         //  /           |     |  situation, however this can connect both
         else if self.is(')'){
             vec![
-                (A, Weak, vec![Arc(U,A,8)]),
-                (U, Weak, vec![Arc(U,A,8)]),
+                (A, Strong, vec![Arc(U,A,8)]),
+                (U, Strong, vec![Arc(U,A,8)]),
                 (K, Weak, vec![Arc(W,C,4)]),
                 (O, Weak, vec![Arc(W,C,4)]),
                 (C, Weak, vec![Arc(W,C,4)]),
@@ -676,8 +853,18 @@ impl Properties for char{
     }
 
 
+    fn can_connect_static(&self, block: &Block) -> bool {
+        let (blocks, frags) = box_drawing::box_drawing(&self);
+        if blocks.contains(block){
+            return true;
+        }
+        false
+    }
 
     fn can_connect(&self, signal: &Signal, block: &Block) -> bool {
+        if self.can_connect_static(block){
+            return true;
+        }
         let properties = self.get_properties();
         for (conn_block, sig, frag) in properties{
             if sig == *signal && *block == conn_block{

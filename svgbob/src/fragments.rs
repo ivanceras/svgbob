@@ -112,3 +112,52 @@ pub enum Direction{
     BottomRight,
 }
 
+/// a location in the grid
+/// relative to the focused char
+/// go to direction and how many steps to get there
+struct Location{
+   go: Vec<(Direction,usize)> 
+}
+
+impl Location{
+    fn go(direction: Direction) -> Self{
+        Self::step(direction, 1)
+    }
+
+    fn step(direction: Direction, step: usize) -> Self {
+        Location{
+            go: vec![(direction, step)]
+        }
+    }
+}
+
+/// An exact point in the grid
+/// relative to the focused char
+struct PointBlock{
+    location: Option<Location>,
+    block: Block,
+    adjust: f32,
+}
+
+impl PointBlock{
+    fn block(block: Block) -> Self {
+        PointBlock{
+            location: None,
+            block: block,
+            adjust: 0.0,
+        }
+    }
+
+    fn go(direction: Direction, step: usize, block: Block) -> Self {
+        PointBlock{
+            location: Some(Location::step(direction, step)),
+            block: block,
+            adjust: 0.0,
+        }
+    }
+
+    fn adjust(&mut self, adjust: f32){
+        self.adjust += adjust;
+    }
+}
+
