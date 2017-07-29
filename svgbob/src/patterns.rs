@@ -4,10 +4,10 @@ use Loc;
 use Grid;
 use Settings;
 use properties::{Behavior, Signal};
-use properties::Condition;
+use properties::{Condition, Characteristic};
 use box_drawing;
 
-use fragments::Block;
+use fragments::{Block,Location};
 use fragments::Block::{
     A,B,C,D,E,
     F,G,H,I,J,
@@ -22,6 +22,7 @@ use fragments::Fragment::{
     ArrowLine,
     StartArrowLine,
     Arc,
+    Text,
 };
 
 use fragments::Direction;
@@ -40,6 +41,8 @@ use ::{
     arc, open_circle, arrow_line,
     text, blank_text
 };
+
+use properties::Can::{self,ConnectTo,Is,Any};
 
 
 
@@ -423,12 +426,14 @@ impl <'g>FocusChar<'g>{
         self.ch.can_connect(&Silent, block)
     }
 
+    /*
     fn get_default_element(&self, block: &Block) -> Vec<Element> {
         let frag = self.ch.get_frag_to(block);
         frag.into_iter().map(|f|{
             self.to_element(f)
         }).collect()
     }
+    */
 
     fn loc_block(&self, block: Block) -> LocBlock{
         LocBlock{
@@ -477,6 +482,9 @@ impl <'g>FocusChar<'g>{
             Fragment::SolidCircle(c, m) => {
                 solid_circle(&self.point(c), m as f32 * tw1)
             }
+            Fragment::Text(s) => {
+                text(&self.loc, &s)
+            }
         }
     }
 
@@ -496,17 +504,127 @@ impl <'g>FocusChar<'g>{
     }
 
 
-    fn can_loc_pass_connect(&self,
-        loc: &Direction, block: &Block, signal: &Signal) -> bool {
-        let fc = self.from_dir(loc);
+    fn can_block_pass_connect(&self,
+        block: &Block, signal: &Signal) -> bool {
         match *signal{
-            Strong => fc.can_strongly_connect(block),
-            Medium => fc.can_pass_medium_connect(block),
-            Weak => fc.can_pass_weakly_connect(block),
-            Silent => fc.can_pass_silently_connect(block),
+            Strong => self.can_strongly_connect(block),
+            Medium => self.can_pass_medium_connect(block),
+            Weak => self.can_pass_weakly_connect(block),
+            Silent => self.can_pass_silently_connect(block),
         }
     }
 
+    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
+        let (fragments,location) = self.get_fragments(); 
+        let elements: Vec<Element> = fragments.into_iter()
+            .map(|frag| self.to_element(frag) )
+            .collect();
+        (elements, vec![])
+    }
+
+    /// check to see if this specified block for this focused
+    /// char is intensified to be strong
+    fn is_intensified(&self, arg_block: &Block) -> bool {
+        let character:Option<Characteristic> = self.ch.get_characteristic(); 
+        if let Some(character) = character{
+            for &(ref block, ref cond) in &character.intensify{
+                if block == arg_block{
+                    match cond.can{
+                        ConnectTo(ref cond_block, ref signal) => {
+                            let fc = self.from_dir(&cond.loc);
+                            if fc.can_block_pass_connect(&cond_block, signal){
+                                return true; 
+                            }
+                        },
+                        Is(char) => {
+                            let fc = self.from_dir(&cond.loc);
+                            if fc.is(char){
+                                return true;
+                            }
+                        },
+                        Any(s) => {
+                            let fc = self.from_dir(&cond.loc);
+                            if fc.any(s){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        false
+    }
+
+    fn is_strong_block(&self, block: &Block) -> bool {
+        let character:Option<Characteristic> = self.ch.get_characteristic(); 
+        if let Some(character) = character{
+            if character.is_strong_block(block){
+                return true;
+            }
+            else if self.is_intensified(block){
+                return true;
+            }
+        }
+        false
+    }
+    fn get_block_signal(&self, block: &Block) -> Option<Signal> {
+        let character:Option<Characteristic> = self.ch.get_characteristic(); 
+        if let Some(character) = character{
+            character.get_block_signal(block)
+        }else{
+            None
+        }
+    }
+    fn get_strong_signals(&self) -> Vec<Block> {
+        let character:Option<Characteristic> = self.ch.get_characteristic(); 
+        if let Some(character) = character{
+            character.get_strong_signals()
+        }else{
+            vec![]
+        }
+    }
+
+    fn get_fragments(&self) -> (Vec<Fragment>, Vec<Location>){
+        let character:Option<Characteristic> = self.ch.get_characteristic(); 
+        let mut elm: Vec<Fragment> = vec![];
+        if let Some(character) = character{
+            let mut matched_intended = false;
+            // intended behaviors when signals are strong
+            // after applying the intensifiers
+            for &(ref blocks, ref fragments) in &character.intended_behavior{
+                let meet = blocks.iter()
+                    .all(|ref b| self.is_strong_block(&b));
+                if meet{
+                    elm.extend(fragments.clone());
+                    matched_intended = true;
+                }
+            }
+            // default behaviors
+            // add only when signal is strong
+            // or the signal has been intensified to strong
+            let mut matched = false;
+            if !matched_intended{
+                for &(ref block, ref signal, ref fragments) in &character.properties{
+                    if self.is_strong_block(&block){
+                        elm.extend(fragments.clone());
+                        matched = true;
+                    }
+                }
+            }
+            if !matched && !matched_intended && !self.is_blank(){
+                elm.push(Text(self.text()));
+            }
+            (elm, vec![])
+        }
+        else{
+            if !self.is_blank(){// This is to disconnect words
+                elm.push(Text(self.text()));
+            }
+            (elm, vec![])
+        }
+    }
+
+/*
     /// Get all the points of the block
     /// For each point, check the neighbors that it can
     /// connect and the corresponding neighbor block
@@ -530,7 +648,7 @@ impl <'g>FocusChar<'g>{
     ///            │U│V│W│X│Y│
     ///            └─┴─┴─┴─┴─┘
     ///
-    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
+    pub fn get_elements4(&self) -> (Vec<Element>, Vec<Loc>){
         let enable_intended_behaviors = true;
         let enable_box_drawing = true;
         let mut elm = vec![];
@@ -658,6 +776,7 @@ impl <'g>FocusChar<'g>{
         }
         (elm, consumed)
     }
+    */
 
     fn get_settings(&self) -> Settings {
         self.grid.settings.clone()
@@ -3035,15 +3154,66 @@ use super::super::Settings;
 use super::Grid;
 use super::FocusChar;
 use super::super::Loc;
+use fragments::Block::{
+        A,B,C,D,E,
+        F,G,H,I,J,
+        K,L,M,N,O,
+        P,Q,R,S,T,
+        U,V,W,X,Y
+    };
+use properties::Signal::{
+        Weak,
+        Medium,
+        Strong
+    };
 
     #[test]
     fn test_adjascent(){
-
-
             let g = Grid::from_str("a统öo͡͡͡", &Settings::compact());
             let fc = FocusChar::new(&Loc::new(1,0), &g);
             println!("{:?}", fc);
             assert!(fc.left().is('a'));
             assert!(fc.right().right().is('ö'));
+    }
+
+    #[test]
+    fn test100(){
+        //  ._
+        let g = Grid::from_str(".-", &Settings::separate_lines());
+        let fc = FocusChar::new(&Loc::new(0,0), &g);
+        let (frags, consumed) = fc.get_fragments();
+        println!("frags: {:?}", frags);
+        assert!(fc.is_intensified(&O));
+        assert!(fc.is_strong_block(&O));
+    }
+
+    #[test]
+    fn test1(){
+        //  ._
+        let g = Grid::from_str("._", &Settings::separate_lines());
+        let fc = FocusChar::new(&Loc::new(0,0), &g);
+        let (frags, consumed) = fc.get_fragments();
+        println!("frags: {:?}", frags);
+        println!("block signal Y: {:?}",fc.get_block_signal(&Y));
+        println!("strong signals: {:?}", fc.get_strong_signals());
+        assert_eq!(Some(Weak), fc.get_block_signal(&Y));
+        assert!(fc.is_intensified(&U));
+        assert!(fc.is_intensified(&Y));
+    }
+    #[test]
+    fn test2(){
+        //  ._
+        let g = Grid::from_str("._", &Settings::separate_lines());
+        let fc = FocusChar::new(&Loc::new(1,0), &g);
+        let (frags, consumed) = fc.get_fragments();
+        println!("frags: {:?}", frags);
+        println!("block signal Y: {:?}",fc.get_block_signal(&Y));
+        println!("strong signals: {:?}", fc.get_strong_signals());
+        assert_eq!(Some(Strong), fc.get_block_signal(&Y));
+        assert_eq!(Some(Strong), fc.get_block_signal(&U));
+        assert!(!fc.is_intensified(&Y));
+        assert!(!fc.is_intensified(&U));
+        assert!(fc.is_strong_block(&Y));
+        assert!(fc.is_strong_block(&U));
     }
 }

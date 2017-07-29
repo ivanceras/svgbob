@@ -83,6 +83,7 @@ pub enum Fragment{
     Arc(Block, Block, i32),//i32 is the multiplier to 1/4 of textwidth
     OpenCircle(Block, i32),
     SolidCircle(Block, i32),
+    Text(String),
 }
 
 
@@ -115,19 +116,23 @@ pub enum Direction{
 /// a location in the grid
 /// relative to the focused char
 /// go to direction and how many steps to get there
-struct Location{
-   go: Vec<(Direction,usize)> 
-}
+pub struct Location(Vec<(Direction,usize)>);
 
 impl Location{
     fn go(direction: Direction) -> Self{
-        Self::step(direction, 1)
+        Self::jump(direction, 1)
     }
 
-    fn step(direction: Direction, step: usize) -> Self {
-        Location{
-            go: vec![(direction, step)]
-        }
+    fn jump(direction: Direction, step: usize) -> Self {
+        Location(vec![(direction, step)])
+    }
+
+    fn go_to(&mut self, direction: Direction) {
+        self.jump_to(direction, 1);
+    }
+
+    fn jump_to(&mut self, direction: Direction, step: usize){
+        self.0.push((direction, step));
     }
 }
 
@@ -150,7 +155,7 @@ impl PointBlock{
 
     fn go(direction: Direction, step: usize, block: Block) -> Self {
         PointBlock{
-            location: Some(Location::step(direction, step)),
+            location: Some(Location::jump(direction, step)),
             block: block,
             adjust: 0.0,
         }

@@ -876,7 +876,7 @@ fn arrow_marker() -> Marker {
 }
 
 fn escape(ch: &str) -> String {
-    let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;")];
+    let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;"), ("\0","")];
     let quote_match: Option<&(&str, &str)> = escs.iter()
         .find(|pair| {
             let &(e, _) = *pair;
