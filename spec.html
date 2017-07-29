@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}
+
+svg line,
+svg path,
+svg circle {
+  stroke: #000;
+}
+svg circle {
+  fill: #000;
+} 
+
+  </style>
+</head>
+<body>
+<h2 id="svgbob-specification">Svgbob specification</h2>
+<p>Svgbob is a diagramming model which uses common typing characters to approximate the shape</p>
+<table>
+<thead>
+<tr class="header">
+<th>characters</th>
+<th>names</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-</code></td>
+<td>dash, hypen, minus</td>
+<td>for horizontal lines</td>
+</tr>
+<tr class="even">
+<td><code>_</code></td>
+<td>underscore</td>
+<td>for horizontal lines</td>
+</tr>
+<tr class="odd">
+<td><code>\|</code></td>
+<td>pipe, or</td>
+<td>for vertical lines</td>
+</tr>
+<tr class="even">
+<td><code>/</code></td>
+<td>forward slash</td>
+<td>for lines slanted to the right</td>
+</tr>
+<tr class="odd">
+<td><code>\\</code></td>
+<td>backslash</td>
+<td>for lines slanted to the left</td>
+</tr>
+<tr class="even">
+<td><code>+</code></td>
+<td>plus, add, cross</td>
+<td>for sharp intersection</td>
+</tr>
+<tr class="odd">
+<td><code>.</code></td>
+<td>dot, period</td>
+<td>for rounded corner intersection</td>
+</tr>
+<tr class="even">
+<td><code>,</code></td>
+<td>comma</td>
+<td>for rounded corner intersection</td>
+</tr>
+<tr class="odd">
+<td><code>'</code></td>
+<td>single quote</td>
+<td>for rounded corner intersection</td>
+</tr>
+<tr class="even">
+<td><code>`</code></td>
+<td>backtick</td>
+<td>for rounded corner intersection</td>
+</tr>
+<tr class="odd">
+<td><code>(</code></td>
+<td>open parenthesis</td>
+<td>rounded side of an arc</td>
+</tr>
+<tr class="even">
+<td><code>)</code></td>
+<td>close parenthesis</td>
+<td>rounded side of an arc</td>
+</tr>
+<tr class="odd">
+<td><code>[</code></td>
+<td>open braces</td>
+<td>rectangular corner</td>
+</tr>
+<tr class="even">
+<td><code>]</code></td>
+<td>close braces</td>
+<td>rectangular corner</td>
+</tr>
+<tr class="odd">
+<td><code>*</code></td>
+<td>asterisk</td>
+<td>for emphasized intersection</td>
+</tr>
+<tr class="even">
+<td><code>o</code></td>
+<td>lowercase letter <code>o</code></td>
+<td>for intersection</td>
+</tr>
+<tr class="odd">
+<td><code>O</code></td>
+<td>uppercase letter <code>O</code></td>
+<td>for intersection</td>
+</tr>
+<tr class="even">
+<td><code>^</code></td>
+<td>caret</td>
+<td>for arrow up</td>
+</tr>
+<tr class="odd">
+<td><code>v</code></td>
+<td>lowercase letter <code>v</code></td>
+<td>for arrow down</td>
+</tr>
+<tr class="even">
+<td><code>V</code></td>
+<td>lowercase letter <code>V</code></td>
+<td>for arrow down</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;</code></td>
+<td>lesser than</td>
+<td>for arrow left</td>
+</tr>
+<tr class="even">
+<td><code>&gt;</code></td>
+<td>greater than</td>
+<td>for arrow right</td>
+</tr>
+<tr class="odd">
+<td><code>=</code></td>
+<td>equal sign</td>
+<td>for double horizontal line</td>
+</tr>
+<tr class="even">
+<td><code>x</code></td>
+<td>lowercase letter <code>x</code></td>
+<td>for intersection</td>
+</tr>
+<tr class="odd">
+<td><code>X</code></td>
+<td>uppercase letter <code>X</code></td>
+<td>for intersection</td>
+</tr>
+</tbody>
+</table>
+<h2 id="principle">Principle</h2>
+<p>The rendered shape should closely resembles to that of the ascii drawing / formation.</p>
+<h2 id="non-goals">Non-goals</h2>
+<p>The goal is NOT to be able to make graphs and diagrams with less effort.</p>
+<h2 id="default-sizes">Default sizes</h2>
+<p>Text height is 2 times the text width, both should be a multiple of 4.</p>
+<p>Default values: - text width = 8px; - text height = 16px;</p>
+<table style="width:26%;">
+<colgroup>
+<col width="26%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>## Horizontal line <code>-</code> - if next to an alphanumeric character it will be rendered as text. - if next to another drawing character, it will be rendered as a line. - if alone it will be rendered as a line.</td>
+</tr>
+<tr class="even">
+<td><strong>Example 1:</strong></td>
+</tr>
+<tr class="odd">
+<td>|text | svg |rendered |------|---------------------------------------|-------------- |<code>-</code> |<code>&lt;line x1=&quot;0&quot; y1=&quot;8&quot; x2=&quot;8&quot; y2=&quot;8&quot;/&gt;</code> |<svg width="16" height="8"><line x1="0" y1="8" x2="8" y2="8"/></svg> |<code>--</code> |<code>&lt;line x1=&quot;0&quot; y1=&quot;8&quot; x2=&quot;16&quot; y2=&quot;8&quot;/&gt;</code> |<svg width="16" height="16"><line x1="0" y1="8" x2="16" y2="8"/></svg> |<code>----</code>|<code>&lt;line x1=&quot;0&quot; y1=&quot;8&quot; x2=&quot;32&quot; y2=&quot;8&quot;/&gt;</code> |<svg width="32" height="16"><line x1="0" y1="8" x2="32" y2="8"/></svg></td>
+</tr>
+<tr class="even">
+<td><strong>Example 3:</strong> Next to an alphanumeric character</td>
+</tr>
+<tr class="odd">
+<td>|text |svg |rendered |------|------------------------------|------- |<code>1-</code> |<code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;1-&lt;/text&gt;</code>|<svg width="32" height="16"><text x="2" y="12">1-</text></svg> |<code>-a</code> |<code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;-a&lt;/text&gt;</code>|<svg width="32" height="16"><text x="2" y="12">-a</text></svg></td>
+</tr>
+<tr class="even">
+<td><strong>Example 4:</strong> Used together with text</td>
+</tr>
+<tr class="odd">
+<td>|text |svg |rendered |-----------|-------------------------------------|---------- |<code>opt-in</code> |<code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;opt-in&lt;/text&gt;</code> |<svg width="48" height="16"><text x="2" y="12">opt-in</text></svg> |<code>chat-room</code>|<code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;chat-room&lt;/text&gt;</code>|<svg width="144" height="16"><text x="2" y="12">chat-room</text></svg></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vertical-line">Vertical line <code>|</code></h2>
+<ul>
+<li>if next to an alphanumeric character it will be rendered as text.</li>
+<li>if next to another drawing character it will be rendered as vertical line.</li>
+<li>if alone it will be rendered as vertical line</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>|
+|</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>\|</code><br><code>\|</code></td>
+<td><code>&lt;line x1=&quot;4&quot; y1=&quot;0&quot; x2=&quot;4&quot; y2=&quot;32&quot;&gt;&lt;/line&gt;</code></td>
+<td><svg width="8" height="32"><line x1="4" y1="0" x2="4" y2="32"></line></svg></td>
+</tr>
+</tbody>
+</table>
+<pre><code>use as or expression
+Example 2: 
+    a||b   &lt;text&gt;a||b&lt;/text&gt;</code></pre>
+<hr />
+<h2 id="forward-slash">Forward slash <code>/</code></h2>
+<ul>
+<li>if next to an alphanumeric character it will be rendered as text.</li>
+<li>if at least one if its 8 neighbors: (top,bottom,left,right, topleft, topright, bottomleft, bottomright) is a drawing character then it will be rendered as a slanted line to the right</li>
+<li>if used as text but next to a drawing element at the same time, rendering to drawing element takes precedence.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code> /
+/</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> <code>/</code><br><code>/</code></td>
+<td><code>&lt;line x1=&quot;0&quot; y1=&quot;16&quot; x2=&quot;16&quot; y2=&quot;32&quot;&gt;&lt;/line&gt;</code></td>
+<td><svg width="16" height="32"><line x1="0" y1="32" x2="16" y2="0"></line></svg></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 2:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>folder/</code></td>
+<td><code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;folder/&lt;/text&gt;</code></td>
+<td><svg width="56" height="16"><text x="2" y="12">folder/</text></svg></td>
+</tr>
+<tr class="even">
+<td><code>/usr/bin</code></td>
+<td><code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;/usr/bin&lt;/text&gt;</code></td>
+<td><svg width="72" height="16"><text x="2" y="12">/usr/bin</text></svg></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 3:</strong> Aligned next to a drawing element</p>
+<table style="width:33%;">
+<colgroup>
+<col width="8%" />
+<col width="8%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>folder/</code><br>  <code>/usr/bin</code></td>
+<td><code>&lt;line x1=&quot;40&quot; y1=&quot;32&quot; x2=&quot;56&quot; y2=&quot;0&quot;/&gt;</code><br><code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;folder&lt;/text&gt;</code><br><code>&lt;text x=&quot;10&quot; y=&quot;28&quot;&gt;/usr&lt;/text&gt;</code><br><code>&lt;text x=&quot;58&quot; y=&quot;28&quot;&gt;bin&lt;/text&gt;</code></td>
+<td><svg width="100" height="32"><line x1="40" y1="32" x2="56" y2="0"/><text x="2" y="12">folder</text><text x="10" y="28">/usr</text><text x="58" y="28">bin</text></svg></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="backward-slash">Backward slash <code>\</code></h2>
+<ul>
+<li>if next to an alphanumeric character, then it will be rendered as text</li>
+<li>if connects to a drawing element, then it will be rendered as a slanted line to the left</li>
+<li>if alone then it will be rendered as slanted line to the left</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code> \
+  \</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>\\</code><br> <code>\\</code></td>
+<td><code>&lt;line x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;16&quot; y2=&quot;32&quot;/&gt;</code></td>
+<td><svg width="16" height="32"><line x1="0" y1="0" x2="16" y2="32"/></svg></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 2:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>C:\\users</code></td>
+<td><code>&lt;text x=&quot;2&quot; y=&quot;12&quot;&gt;C:\\users&lt;/text&gt;</code></td>
+<td><svg width="72" height="16"><text x="2" y="12">C:\users</text></svg></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cross">Cross <code>+</code></h2>
+<ul>
+<li>If the left side is horizontal, then this will become a horizontal line connecting midway to the left</li>
+<li>If the right side is horizontal, then this will come a horizontal line connecting midway to the right</li>
+<li>If top of this character is a vertical line, then this will become a vertical line connecting midway to the the top</li>
+<li>If bottom of this is a vertical line, then this will become a vertical line connecting miday to bottom</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>svg</th>
+<th>rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-+</code></td>
+<td><code>&lt;line x1=&quot;0&quot; y1=&quot;4&quot; x2=&quot;12&quot; y2=&quot;4&quot;/&gt;</code></td>
+<td><svg width="32" height="8"><line x1="0" y1="4" x2="12" y2="4"/></svg></td>
+</tr>
+<tr class="even">
+<td><code>+-</code></td>
+<td><code>&lt;line x1=&quot;4&quot; y1=&quot;4&quot; x2=&quot;16&quot; y2=&quot;4&quot;/&gt;</code></td>
+<td><svg width="32" height="8"><line x1="4" y1="4" x2="16" y2="4"/></svg></td>
+</tr>
+<tr class="odd">
+<td><code>\|</code><br><code>+</code></td>
+<td><code>&lt;line x1=&quot;4&quot; y1=&quot;0&quot; x2=&quot;4&quot; y2=&quot;24&quot;/&gt;</code></td>
+<td><svg width="8" height="32"><line x1="4" y1="0" x2="4" y2="24"/></svg></td>
+</tr>
+<tr class="even">
+<td><code>+</code><br><code>\|</code></td>
+<td><code>&lt;line x1=&quot;4&quot; y1=&quot;8&quot; x2=&quot;4&quot; y2=&quot;32&quot;/&gt;</code></td>
+<td><svg width="8" height="32"><line x1="4" y1="8" x2="4" y2="32"/></svg></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -6,9 +6,57 @@
 
 SvgBobRus is an ascii to svg converter.
 
+There is a Work-in-Progress spec [here](https://github.com/ivanceras/svgbobrus/blob/master/spec.md)
+Contribution to the spec is welcomed.
+
+I've spent a huge time on developing the spec and implementation on my free-time.
+If you like this project please consider supporting me on [patreon](https://www.patreon.com/ivanceras)
+
 [Demo](http://ivanceras.github.io/svgbob-editor/)
 
 [Docs](https://docs.rs/svgbob)
+
+
+# Using in command line
+
+`cargo install svgbob_cli`
+
+`svgbob` normally operates on stdin and stdout:
+```console
+$ svgbob < examples/long.bob > long.svg
+```
+produces an SVG in `long.svg` similar to the one produced by the old `main` binary. `svgbob` also allows passing arguments instead:
+```console
+$ svgbob examples/long.bob -o long.svg
+```
+And you can mix and match:
+```console
+$ svgbob -o long.svg < examples/long.bob
+$ svgbob examples/long.bob > long.svg
+```
+
+This is also documented in the output of `svgbob --help`:
+```console
+$ svgbob --help
+svgbob 0.1.2
+SvgBobRus is an ascii to svg converter
+
+USAGE:
+    svgbob [OPTIONS] [input]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -o, --output <output>    where to write svg output [default: STDOUT]
+
+ARGS:
+    <input>    svgbob text file to parse [default: STDIN]
+```
+
+
+
 
 <img src="https://ivanceras.github.io/svgbobrus/svgbob/examples/demo.svg"/>
 
@@ -836,47 +884,3 @@ resist
 
 
 ```
-
-#Using in command line
-
-`cargo install svgbob_cli`
-
-`svgbob` normally operates on stdin and stdout:
-```console
-$ svgbob < examples/long.bob > long.svg
-```
-produces an SVG in `long.svg` similar to the one produced by the old `main` binary. `svgbob` also allows passing arguments instead:
-```console
-$ svgbob examples/long.bob -o long.svg
-```
-And you can mix and match:
-```console
-$ svgbob -o long.svg < examples/long.bob
-$ svgbob examples/long.bob > long.svg
-```
-
-This is also documented in the output of `svgbob --help`:
-```console
-$ svgbob --help
-svgbob 0.1.2
-SvgBobRus is an ascii to svg converter
-
-USAGE:
-    svgbob [OPTIONS] [input]
-
-FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-
-OPTIONS:
-    -o, --output <output>    where to write svg output [default: STDOUT]
-
-ARGS:
-    <input>    svgbob text file to parse [default: STDIN]
-```
-
-
-
-Originally written in elm from the original [project](https://github.com/ivanceras/svgbob)
-
-[Demo site](https://ivanceras.github.io/svgbobrus/)
