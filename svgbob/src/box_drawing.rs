@@ -11,13 +11,13 @@ use fragments::Block::{
 };
 
 use fragments::Fragment;
-use fragments::Fragment::{
-    Line,
-    ArrowLine,
-    StartArrowLine,
-    Arc,
-    OpenCircle,
-    SolidCircle,
+use fragments::{
+    line,
+    arrow_line,
+    start_arrow_line,
+    arc,
+    open_circle,
+    solid_circle,
 };
 
 use Element;
@@ -34,9 +34,35 @@ use properties::Behavior::{Static,Dynamic};
 use properties::Signal;
 use properties::Signal::{Silent,Weak,Medium,Strong};
 use properties::Properties;
+use properties::PointBlock;
 
 
 pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
+    let a = &PointBlock::block(A);
+    let b = &PointBlock::block(B);
+    let c = &PointBlock::block(C);
+    let d = &PointBlock::block(D);
+    let e = &PointBlock::block(E);
+    let f = &PointBlock::block(F);
+    let g = &PointBlock::block(G);
+    let h = &PointBlock::block(H);
+    let i = &PointBlock::block(I);
+    let j = &PointBlock::block(J);
+    let k = &PointBlock::block(K);
+    let l = &PointBlock::block(L);
+    let m = &PointBlock::block(M);
+    let n = &PointBlock::block(N);
+    let o = &PointBlock::block(O);
+    let p = &PointBlock::block(P);
+    let q = &PointBlock::block(Q);
+    let r = &PointBlock::block(R);
+    let s = &PointBlock::block(S);
+    let t = &PointBlock::block(T);
+    let u = &PointBlock::block(U);
+    let v = &PointBlock::block(V);
+    let w = &PointBlock::block(W);
+    let x = &PointBlock::block(X);
+    let y = &PointBlock::block(Y);
     //////////////////////////////
     //
     //  Static are all Strong signal
@@ -45,246 +71,246 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
     ////////////////////////////////
     if ch.in_any(vec!['─','━']){
         (vec![K,O],
-         vec![Line(K,O)]
+         vec![line(k,o)]
         )
     }
     else if ch.any("│┃"){
         (vec![C,W],
-         vec![Line(C,W)]
+         vec![line(c,w)]
         )
     }
     else if ch.is('╭'){
         (vec![O,W],
          vec![
-            Arc(O,R,2),
-            Line(R,W)
+            arc(o,r,2),
+            line(r,w)
             ]
         )
     }
     else if ch.any("┌┍┎┏"){
         (vec![W,O],
          vec![
-            Line(M,W),
-            Line(M,O)
+            line(m,w),
+            line(m,o)
         ])
     }
     else if ch.is('╮'){
         (vec![K,W],
          vec![
-            Line(W,R),
-            Arc(R,K,2)
+            line(w,r),
+            arc(r,k,2)
          ])
     }
     else if ch.any("┐┑┒┓"){
         (vec![W,K],
          vec![
-             Line(M,W),
-             Line(M,K)
+             line(m,w),
+             line(m,k)
         ])
     }
     else if ch.is('╰'){
         (vec![C,O],
-         vec![Line(C,H),
-            Arc(H,O,2)
+         vec![line(c,h),
+            arc(h,o,2)
             ]
         )
     }
     else if ch.any("┗└┕┖"){
         (vec![C,O],
-         vec![Line(M,C),
-            Line(M,O)
+         vec![line(m,c),
+            line(m,o)
         ])
     }
     else if ch.is('╯'){
         (vec![C,K],
-         vec![Line(C,H),
-            Arc(K,H,2)
+         vec![line(c,h),
+            arc(k,h,2)
             ]
         )
     }
     else if ch.any("┘┙┚┛"){
         (vec![C,K],
-         vec![Line(M,C),
-            Line(M,K)
+         vec![line(m,c),
+            line(m,k)
         ])
     }
     else if ch.any("┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋"){
         (vec![C,W,K,O],
-         vec![Line(M,C),
-            Line(M,W),
-            Line(M,K),
-            Line(M,O),
+         vec![line(m,c),
+            line(m,w),
+            line(m,k),
+            line(m,o),
         ])
     }
     else if ch.any("┬┭┮┯┰┱┲┳"){
         (vec![W,K,O],
-         vec![Line(M,W),
-            Line(M,K),
-            Line(M,O)
+         vec![line(m,w),
+            line(m,k),
+            line(m,o)
         ])
     }
     else if ch.any("┴┵┶┷┸┹┺┻"){
         (vec![C,K,O],
-         vec![Line(M,C),
-            Line(M,K),
-            Line(M,O)
+         vec![line(m,c),
+            line(m,k),
+            line(m,o)
         ])
     }
     else if ch.any("├┝┞┟┠┡┢┣"){
         (vec![C,W,O],
-         vec![Line(M,C),
-            Line(M,W),
-            Line(M,O)
+         vec![line(m,c),
+            line(m,w),
+            line(m,o)
         ])
     }
     else if ch.any("┤┥┦┧┨┩┪┫"){
         (vec![C,W,K],
-         vec![Line(M,C),
-            Line(M,W),
-            Line(M,K)
+         vec![line(m,c),
+            line(m,w),
+            line(m,k)
         ])
     }
     else if ch.is('║'){
         (vec![B,V,D,X],
-         vec![Line(B,V),
-            Line(V,B),
-            Line(D,X),
-            Line(X,D),
+         vec![line(b,v),
+            line(v,b),
+            line(d,x),
+            line(x,d),
         ])
     }
     else if ch.is('═'){
         (vec![K,O,P,T],
-         vec![Line(K,O),
-            Line(K,O),
-            Line(P,T),
+         vec![line(k,o),
+            line(k,o),
+            line(p,t),
         ])
     }
     else if ch.is('╔'){
         (vec![O,V,T,X],
-         vec![Line(O,L),
-            Line(L,V),
-            Line(T,S),
-            Line(S,X)
+         vec![line(o,l),
+            line(l,v),
+            line(t,s),
+            line(s,x)
         ])
     }
     else if ch.is('╗'){
         (vec![K,X,P,V],
-         vec![Line(K,N),
-            Line(N,X),
-            Line(P,Q),
-            Line(Q,V)
+         vec![line(k,n),
+            line(n,x),
+            line(p,q),
+            line(q,v)
         ])
     }
     else if ch.is('╚'){
         (vec![B,T,D,O],
-         vec![Line(B,Q),
-            Line(Q,T),
-            Line(D,N),
-            Line(N,O)
+         vec![line(b,q),
+            line(q,t),
+            line(d,n),
+            line(n,o)
         ])
     }
     else if ch.is('╝'){
         (vec![P,K,B,D],
-         vec![Line(P,S),
-            Line(S,D),
-            Line(K,L),
-            Line(L,B)
+         vec![line(p,s),
+            line(s,d),
+            line(k,l),
+            line(l,b)
         ])
     }
     else if ch.is('╒'){
         (vec![W,O,T],
          vec![
-            Line(M,W),
-            Line(M,O),
-            Line(R,T),
+            line(m,w),
+            line(m,o),
+            line(r,t),
         ])
     }
     else if ch.is('╓'){
         (vec![O,V,X],
           vec![
-              Line(L,O),
-              Line(L,V),
-              Line(N,X)
+              line(l,o),
+              line(l,v),
+              line(n,x)
         ])
     }
     else if ch.is('╬'){
         (vec![B,D,V,X,K,P,O,T],
          vec![
-            Line(B,L), Line(L,K),
-            Line(P,Q), Line(Q,V),
-            Line(D,N), Line(N,O),
-            Line(T,S), Line(S,X)
+            line(b,l), line(l,k),
+            line(p,q), line(q,v),
+            line(d,n), line(n,o),
+            line(t,s), line(s,x)
          ])
     }
     else if ch.is('╦'){
         (vec![K,O,P,V,T,X],
          vec![
-            Line(K,O),
-            Line(P,Q),
-            Line(Q,V),
-            Line(T,S),
-            Line(S,X)
+            line(k,o),
+            line(p,q),
+            line(q,v),
+            line(t,s),
+            line(s,x)
         ])
     }
     else if ch.is('╩'){
         (vec![P,T,K,B,D,O],
          vec![
-            Line(P,T),
-            Line(K,L),
-            Line(L,B),
-            Line(D,N),
-            Line(N,O)
+            line(p,t),
+            line(k,l),
+            line(l,b),
+            line(d,n),
+            line(n,o)
         ])
     }
     else if ch.is('╠'){
         (vec![B,V,D,O,T,X],
          vec![
-            Line(B,V),
-            Line(D,N),
-            Line(N,O),
-            Line(T,S),
-            Line(S,X)
+            line(b,v),
+            line(d,n),
+            line(n,o),
+            line(t,s),
+            line(s,x)
          ])
     }
     else if ch.is('╣'){
         (vec![D,X,B,K,P,V],
          vec![
-            Line(D,X),
-            Line(B,L), Line(L,K),
-            Line(P,Q), Line(Q,V)
+            line(d,x),
+            line(b,l), line(l,k),
+            line(p,q), line(q,v)
          ])
     }
     /*
     else if ch.any("╙╟"){
          vec![
-            (O, Strong, vec![Line(M,O)])
+            (o, Strong, vec![line(m,o)])
         ])
     }
     else if ch.any("╡╪╞"){
          vec![
-            (C, Strong, vec![Line(M,C)]),
-            (W, Strong, vec![Line(M,W)])
+            (c, Strong, vec![line(m,c)]),
+            (w, Strong, vec![line(m,w)])
         ])
     }
     else if ch.any("╕╤"){
         vec![
-            (W, Strong, vec![Line(M,W)])
+            (w, Strong, vec![line(m,w)])
         ])
     }
     else if ch.any("╥╫"){
         vec![
-            (K, Strong, vec![Line(M,K)]),
-            (O, Strong, vec![Line(M,O)])
+            (k, Strong, vec![line(m,k)]),
+            (o, Strong, vec![line(m,o)])
         ])
     }
     else if ch.any("╖╜╢"){
         vec![
-            (K, Strong, vec![Line(M,K)])
+            (k, Strong, vec![line(m,k)])
         ])
     }
     else if ch.any("╛╘"){
         vec![
-            (C, Strong, vec![Line(M,C)])
+            (c, Strong, vec![line(m,c)])
         ])
     }
     */

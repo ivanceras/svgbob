@@ -1,10 +1,10 @@
 use self::Block::{ A,B,C,D,E, F,G,H,I,J, K,L,M,N,O, P,Q,R,S,T, U,V,W,X,Y };
 
-use self::Fragment::{ Line, ArrowLine, StartArrowLine, Arc };
+use self::Fragment::{ Line, ArrowLine, StartArrowLine, Arc, OpenCircle, SolidCircle, Text };
 use self::Direction::{ Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight, };
 
 use Element;
-use line;
+use properties::PointBlock;
 
 /// exact location of point
 /// relative to the Character Block
@@ -12,6 +12,7 @@ use line;
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
+#[derive(Copy)]
 pub enum Block{
     A,B,C,D,E,
     F,G,H,I,J,
@@ -22,7 +23,7 @@ pub enum Block{
 
 impl Block{
 
-    pub fn connects_to(&self) -> Vec<(Direction, Block)> {
+    fn connects_to(&self) -> Vec<(Direction, Block)> {
         match *self{
             A => vec![
                 (Top,U),
@@ -77,14 +78,37 @@ impl Block{
 #[derive(Debug)]
 #[derive(Clone)]
 pub enum Fragment{
-    Line(Block, Block),
-    ArrowLine(Block, Block),
-    StartArrowLine(Block, Block), // the arrow is at the start marker
-    Arc(Block, Block, i32),//i32 is the multiplier to 1/4 of textwidth
-    OpenCircle(Block, i32),
-    SolidCircle(Block, i32),
+    Line(PointBlock, PointBlock),
+    ArrowLine(PointBlock, PointBlock),
+    StartArrowLine(PointBlock, PointBlock), // the arrow is at the start marker
+    Arc(PointBlock, PointBlock, i32),//i32 is the multiplier to 1/4 of textwidth
+    OpenCircle(PointBlock, i32),
+    SolidCircle(PointBlock, i32),
     Text(String),
 }
+
+pub fn line(p1: &PointBlock, p2: &PointBlock) -> Fragment{
+    Line(p1.clone(), p2.clone())
+}
+pub fn arrow_line(p1: &PointBlock, p2: &PointBlock) -> Fragment{
+    ArrowLine(p1.clone(), p2.clone())
+}
+pub fn start_arrow_line(p1: &PointBlock, p2: &PointBlock) -> Fragment {
+    StartArrowLine(p1.clone(), p2.clone())
+}
+pub fn arc(s: &PointBlock, e: &PointBlock, r: i32) -> Fragment{
+    Arc(s.clone(), e.clone(), r)
+}
+pub fn open_circle(c: &PointBlock, r: i32) -> Fragment {
+    OpenCircle(c.clone(), r)
+}
+pub fn solid_circle(c: &PointBlock, r: i32) -> Fragment {
+    SolidCircle(c.clone(), r)
+}
+pub fn text(s:String) -> Fragment {
+    Text(s)
+}
+
 
 
 
@@ -96,9 +120,6 @@ pub enum Fragment{
 ///   \|/
 ///   -+-
 ///   /|\
-/// Block is when the connection is in a certain specific point
-/// in the character block that is not part of the 
-/// 8 regular connection point
 #[derive(PartialEq)]
 #[derive(Debug)]
 #[derive(Clone)]
@@ -113,56 +134,4 @@ pub enum Direction{
     BottomRight,
 }
 
-/// a location in the grid
-/// relative to the focused char
-/// go to direction and how many steps to get there
-pub struct Location(Vec<(Direction,usize)>);
-
-impl Location{
-    fn go(direction: Direction) -> Self{
-        Self::jump(direction, 1)
-    }
-
-    fn jump(direction: Direction, step: usize) -> Self {
-        Location(vec![(direction, step)])
-    }
-
-    fn go_to(&mut self, direction: Direction) {
-        self.jump_to(direction, 1);
-    }
-
-    fn jump_to(&mut self, direction: Direction, step: usize){
-        self.0.push((direction, step));
-    }
-}
-
-/// An exact point in the grid
-/// relative to the focused char
-struct PointBlock{
-    location: Option<Location>,
-    block: Block,
-    adjust: f32,
-}
-
-impl PointBlock{
-    fn block(block: Block) -> Self {
-        PointBlock{
-            location: None,
-            block: block,
-            adjust: 0.0,
-        }
-    }
-
-    fn go(direction: Direction, step: usize, block: Block) -> Self {
-        PointBlock{
-            location: Some(Location::jump(direction, step)),
-            block: block,
-            adjust: 0.0,
-        }
-    }
-
-    fn adjust(&mut self, adjust: f32){
-        self.adjust += adjust;
-    }
-}
 

@@ -57,6 +57,12 @@ use self::Stroke::Dashed;
 use unicode_width::UnicodeWidthStr;
 use unicode_width::UnicodeWidthChar;
 use patterns::FocusChar;
+use properties::Location;
+use fragments::Direction::{
+    TopLeft, Top, TopRight,
+    Left, Right,
+    BottomLeft, Bottom, BottomRight
+};
 
 mod optimizer;
 mod patterns;
@@ -210,15 +216,9 @@ impl Point {
     fn new(x: f32, y: f32) -> Point {
         Point { x: x, y: y }
     }
-
-    fn add(&self, x: f32, y:f32) -> Point{
-        Point { x: self.x + x, y: self.y + y}
-    }
-    fn add_x(&self, x: f32) -> Point{
-        Point { x: self.x + x, y: self.y }
-    }
-    fn add_y(&self, y: f32) -> Point{
-        Point { x: self.x, y: self.y + y }
+    fn adjust(&mut self, x: f32, y: f32){
+        self.x += x;
+        self.y += y;
     }
 }
 
@@ -233,6 +233,42 @@ pub struct Loc {
 impl Loc {
     pub fn new(x: i32, y: i32) -> Loc {
         Loc { x: x, y: y }
+    }
+
+    pub fn from_location(&self, location: &Location) -> Loc {
+        let mut loc = self.clone();
+        for &(ref direction, step) in &location.0{
+            for _ in 0..step{
+                match *direction{
+                    TopLeft => {
+                        loc = loc.top().left();
+                    },
+                    Top => {
+                        loc = loc.top();
+                    },
+                    TopRight => {
+                        loc = loc.top().right();
+                    },
+                    Left => {
+                        loc = loc.left();
+                    },
+                    Right => {
+                        loc = loc.right();
+                    },
+                    BottomLeft => {
+                        loc = loc.bottom().left();
+                    },
+                    Bottom => {
+                        loc = loc.bottom();
+                    },
+                    BottomRight => {
+                        loc  = loc.bottom().right();
+                    },
+                    _ => panic!("unexpected location: {:?}", location),
+                };
+            }
+        }
+        loc
     }
 
     pub fn top(&self) -> Loc {
