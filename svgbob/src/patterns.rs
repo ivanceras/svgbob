@@ -3,9 +3,8 @@ use Point;
 use Loc;
 use Grid;
 use Settings;
-use properties::{Behavior, Signal};
-use properties::{Condition, Characteristic};
-use box_drawing;
+use properties::{Signal};
+use properties::Characteristic;
 
 use properties::Location;
 use fragments::{Block};
@@ -19,24 +18,12 @@ use fragments::Block::{
 use properties::PointBlock;
 
 use fragments::Fragment;
-use fragments::Fragment::{
-    Line,
-    ArrowLine,
-    StartArrowLine,
-    Arc,
-    Text,
-};
+use fragments::Fragment::Text;
 
-use fragments::Direction;
-use fragments::Direction::{
-    Top,Bottom,
-    Left,Right,
-    TopLeft,TopRight,
-    BottomLeft,BottomRight
-};
-use properties::Behavior::{Static,Dynamic};
-use properties::Signal::{Silent, Weak,Medium,Strong};
+use properties::Signal::{Weak,Medium,Strong};
 use properties::Properties;
+use properties::Can;
+
 use ::{
     line, solid_circle,
     arrow_arc, arrow_sweep_arc,
@@ -44,7 +31,7 @@ use ::{
     text, blank_text
 };
 
-use properties::Can::{self,ConnectTo,Is,Any};
+use properties::Can::{ConnectTo,Is,Any,IsStrongAll,CanBeStrongAll};
 
 
 
@@ -54,6 +41,7 @@ struct LocBlock{
 }
 
 impl LocBlock{
+
 
     fn text_width(&self) -> f32 {
         self.settings.text_width
@@ -71,42 +59,20 @@ impl LocBlock{
         self.loc.y as f32
     }
 
-    fn loc(&self) -> Loc {
-        self.loc.clone()
-    }
-
-    fn tw1(&self) -> f32 {
+    /// 1 unit in x dimension is 1/4 of the textwidth
+    /// used in calculating the radius, adjustments
+    /// in the Fragment PointBlock
+    fn unit_x(&self) -> f32 {
         self.text_width() * 1.0/4.0
     }
 
-    fn tw2(&self) -> f32 {
-        self.text_width() * 1.0/2.0
-    }
 
-    fn tw3(&self) -> f32 {
-        self.text_width() * 3.0/4.0
-    }
-
-    fn tw4(&self) -> f32 {
-        self.text_width() * 1.0
-    }
-
-    fn th1(&self) -> f32 {
+    /// 1 unit along y dimension is 1/4 of the textwidth
+    #[allow(unused)]
+    fn unit_y(&self) -> f32 {
         self.text_height() * 1.0/4.0
     }
 
-    fn th2(&self) -> f32 {
-        self.text_height() * 1.0/2.0
-    }
-
-    fn th3(&self) -> f32 {
-        self.text_height() * 3.0/4.0
-    }
-
-
-    fn th4(&self) -> f32 {
-        self.text_height() * 1.0
-    }
 
     /// x coordinate on increment of 1/4 of text width
     fn x0(&self) -> f32 {
@@ -256,34 +222,44 @@ impl LocBlock{
     }
     
     pub fn to_point(&self, pb: &PointBlock) -> Point {
-        let mut p = match pb.block{
-            A => self.a(),
-            B => self.b(),
-            C => self.c(),
-            D => self.d(),
-            E => self.e(),
-            F => self.f(),
-            G => self.g(),
-            H => self.h(),
-            I => self.i(),
-            J => self.j(),
-            K => self.k(),
-            L => self.l(),
-            M => self.m(),
-            N => self.n(),
-            O => self.o(),
-            P => self.p(),
-            Q => self.q(),
-            R => self.r(),
-            S => self.s(),
-            T => self.t(),
-            U => self.u(),
-            V => self.v(),
-            W => self.w(),
-            X => self.x(),
-            Y => self.y()
+        // move loc to the additional location relative to itself
+        let loc = if let Some(ref pbloc) = pb.location{
+            self.loc.from_location(&pbloc)
+        }else{
+            self.loc.clone()
         };
-        let unit = self.tw1();
+        let lb = LocBlock{
+            loc: loc,
+            settings: self.settings.clone()
+        };
+        let mut p = match pb.block{
+            A => lb.a(),
+            B => lb.b(),
+            C => lb.c(),
+            D => lb.d(),
+            E => lb.e(),
+            F => lb.f(),
+            G => lb.g(),
+            H => lb.h(),
+            I => lb.i(),
+            J => lb.j(),
+            K => lb.k(),
+            L => lb.l(),
+            M => lb.m(),
+            N => lb.n(),
+            O => lb.o(),
+            P => lb.p(),
+            Q => lb.q(),
+            R => lb.r(),
+            S => lb.s(),
+            T => lb.t(),
+            U => lb.u(),
+            V => lb.v(),
+            W => lb.w(),
+            X => lb.x(),
+            Y => lb.y()
+        };
+        let unit = self.unit_x();
         p.adjust(pb.adjust.0 * unit, pb.adjust.1 * unit);
         p
     }
@@ -389,13 +365,6 @@ impl <'g>FocusChar<'g>{
         || self.can_weakly_connect(block)
     }
 
-    fn can_pass_silently_connect(&self, block: &Block) -> bool {
-        self.can_strongly_connect(block)
-        || self.can_medium_connect(block)
-        || self.can_weakly_connect(block)
-        || self.can_silently_connect(block)
-    }
-
     fn can_strongly_connect(&self, block: &Block) -> bool {
         self.ch.can_connect(&Strong, block)
     }
@@ -408,12 +377,9 @@ impl <'g>FocusChar<'g>{
         self.ch.can_connect(&Weak, block)
     }
 
-    fn can_silently_connect(&self, block: &Block) -> bool {
-        self.ch.can_connect(&Silent, block)
-    }
 
     fn point(&self, pb: &PointBlock) -> Point {
-       self.loc_block().to_point(pb) 
+        self.loc_block().to_point(pb) 
     }
 
     fn loc_block(&self) -> LocBlock{
@@ -424,7 +390,7 @@ impl <'g>FocusChar<'g>{
     }
 
     fn to_element(&self, frag: Fragment) -> Element {
-        let tw1 = self.loc_block().tw1();
+        let unit_x = self.loc_block().unit_x();
         match frag{
             Fragment::Line(p1, p2) => {
                 line(&self.point(&p1),
@@ -446,16 +412,16 @@ impl <'g>FocusChar<'g>{
             Fragment::Arc(p1, p2, m) => {
                 arc(&self.point(&p1),
                     &self.point(&p2),
-                    m as f32 *  tw1
+                    m as f32 *  unit_x
                 )
             },
             
             Fragment::OpenCircle(c, m) => {
-                open_circle(&self.point(&c), m as f32 * tw1)
+                open_circle(&self.point(&c), m as f32 * unit_x)
             },
 
             Fragment::SolidCircle(c, m) => {
-                solid_circle(&self.point(&c), m as f32 * tw1)
+                solid_circle(&self.point(&c), m as f32 * unit_x)
             }
             Fragment::Text(s) => {
                 text(&self.loc, &s)
@@ -479,7 +445,6 @@ impl <'g>FocusChar<'g>{
             Strong => self.can_strongly_connect(block),
             Medium => self.can_pass_medium_connect(block),
             Weak => self.can_pass_weakly_connect(block),
-            Silent => self.can_pass_silently_connect(block),
         }
     }
 
@@ -491,38 +456,44 @@ impl <'g>FocusChar<'g>{
         (elements, vec![])
     }
 
+    fn is_satisfied(&self, can: &Can) -> bool {
+        match *can{
+            ConnectTo(ref cond_block, ref signal) => {
+                self.can_block_pass_connect(&cond_block, signal)
+            },
+            Is(char) => {
+                self.is(char)
+            },
+            Any(s) => {
+                self.any(s)
+            },
+            IsStrongAll(ref blocks) => {
+                blocks.iter().all(|b|
+                    self.is_strong_block(&b))
+            },
+            CanBeStrongAll(ref blocks) => {
+                //TODO: prone to infinit recursion
+                // example: left checking right, and right checking left
+                blocks.iter().all(|b|
+                    self.can_be_strong_block(&b))
+            }
+        }
+    }
+
     /// check to see if this specified block for this focused
     /// char is intensified to be strong
     fn is_intensified(&self, arg_block: &Block) -> bool {
         let character:Option<Characteristic> = self.ch.get_characteristic(); 
         if let Some(character) = character{
-            //println!("intensify : {:#?}", character.intensify);
-            for &(ref block, ref cond) in &character.intensify{
-                if block == arg_block{
-                    match cond.can{
-                        ConnectTo(ref cond_block, ref signal) => {
-                            let fc = self.from_location(&cond.loc);
-                            if fc.can_block_pass_connect(&cond_block, signal){
-                                return true; 
-                            }
-                        },
-                        Is(char) => {
-                            let fc = self.from_location(&cond.loc);
-                            if fc.is(char){
-                                return true;
-                            }
-                        },
-                        Any(s) => {
-                            let fc = self.from_location(&cond.loc);
-                            if fc.any(s){
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
+            character.intensify.iter()
+                .any(|&(ref block, ref cond)|{
+                   let fc = self.from_location(&cond.loc);
+                   block == arg_block && fc.is_satisfied(&cond.can)
+                })
         }
-        false
+        else{
+            false
+        }
     }
 
     fn can_be_strong_block(&self, block: &Block) -> bool {
@@ -545,23 +516,6 @@ impl <'g>FocusChar<'g>{
             }
         }
         false
-    }
-
-    fn get_block_signal(&self, block: &Block) -> Option<Signal> {
-        let character:Option<Characteristic> = self.ch.get_characteristic(); 
-        if let Some(character) = character{
-            character.get_block_signal(block)
-        }else{
-            None
-        }
-    }
-    fn get_strong_signals(&self) -> Vec<Block> {
-        let character:Option<Characteristic> = self.ch.get_characteristic(); 
-        if let Some(character) = character{
-            character.get_strong_signals()
-        }else{
-            vec![]
-        }
     }
 
     fn get_fragments(&self) -> (Vec<Fragment>, Vec<Location>){

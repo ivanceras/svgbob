@@ -1,7 +1,4 @@
-use self::Block::{ A,B,C,D,E, F,G,H,I,J, K,L,M,N,O, P,Q,R,S,T, U,V,W,X,Y };
-
 use self::Fragment::{ Line, ArrowLine, StartArrowLine, Arc, OpenCircle, SolidCircle, Text };
-use self::Direction::{ Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight, };
 
 use Element;
 use properties::PointBlock;
@@ -21,6 +18,7 @@ pub enum Block{
     U,V,W,X,Y
 }
 
+/*
 impl Block{
 
     fn connects_to(&self) -> Vec<(Direction, Block)> {
@@ -70,6 +68,7 @@ impl Block{
     }
 
 }
+*/
 
 
 /// These are non-final drawing elements

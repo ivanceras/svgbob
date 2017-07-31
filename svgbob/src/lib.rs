@@ -142,7 +142,7 @@ impl Settings {
         self.class = Some(class);
     }
 
-    fn set_selector(&mut self, id: Option<String>, class: Option<String>){
+    pub fn set_selector(&mut self, id: Option<String>, class: Option<String>){
         if let Some(id) = id{
             self.set_id(id);
         }
@@ -264,7 +264,6 @@ impl Loc {
                     BottomRight => {
                         loc  = loc.bottom().right();
                     },
-                    _ => panic!("unexpected location: {:?}", location),
                 };
             }
         }
