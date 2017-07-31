@@ -78,96 +78,96 @@ impl Location{
         Self::jump(direction, 1)
     }
 
-    fn jump(direction: Direction, step: usize) -> Self {
+    pub fn jump(direction: Direction, step: usize) -> Self {
         Location(vec![(direction, step)])
     }
 
-    fn go_to(&mut self, direction: Direction) {
+    pub fn go_to(&mut self, direction: Direction) {
         self.jump_to(direction, 1);
     }
 
-    fn jump_to(&mut self, direction: Direction, step: usize){
+    pub fn jump_to(&mut self, direction: Direction, step: usize){
         self.0.push((direction, step));
     }
 
-    fn a(&self)-> PointBlock {
+    pub fn a(&self)-> PointBlock {
         self.block(A)
     }
 
-    fn b(&self)-> PointBlock {
+    pub fn b(&self)-> PointBlock {
         self.block(B)
     }
-    fn c(&self)-> PointBlock {
+    pub fn c(&self)-> PointBlock {
         self.block(C)
     }
-    fn d(&self)-> PointBlock {
+    pub fn d(&self)-> PointBlock {
         self.block(D)
     }
-    fn e(&self)-> PointBlock {
+    pub fn e(&self)-> PointBlock {
         self.block(E)
     }
-    fn f(&self)-> PointBlock {
+    pub fn f(&self)-> PointBlock {
         self.block(F)
     }
-    fn g(&self)-> PointBlock {
+    pub fn g(&self)-> PointBlock {
         self.block(G)
     }
-    fn h(&self)-> PointBlock {
+    pub fn h(&self)-> PointBlock {
         self.block(H)
     }
-    fn i(&self)-> PointBlock {
+    pub fn i(&self)-> PointBlock {
         self.block(I)
     }
-    fn j(&self)-> PointBlock {
+    pub fn j(&self)-> PointBlock {
         self.block(J)
     }
-    fn k(&self)-> PointBlock {
+    pub fn k(&self)-> PointBlock {
         self.block(K)
     }
-    fn l(&self)-> PointBlock {
+    pub fn l(&self)-> PointBlock {
         self.block(L)
     }
-    fn m(&self)-> PointBlock {
+    pub fn m(&self)-> PointBlock {
         self.block(M)
     }
-    fn n(&self)-> PointBlock {
+    pub fn n(&self)-> PointBlock {
         self.block(N)
     }
-    fn o(&self)-> PointBlock {
+    pub fn o(&self)-> PointBlock {
         self.block(O)
     }
-    fn p(&self)-> PointBlock {
+    pub fn p(&self)-> PointBlock {
         self.block(P)
     }
-    fn q(&self)-> PointBlock {
+    pub fn q(&self)-> PointBlock {
         self.block(Q)
     }
-    fn r(&self)-> PointBlock {
+    pub fn r(&self)-> PointBlock {
         self.block(R)
     }
-    fn s(&self)-> PointBlock {
+    pub fn s(&self)-> PointBlock {
         self.block(S)
     }
-    fn t(&self)-> PointBlock {
+    pub fn t(&self)-> PointBlock {
         self.block(T)
     }
-    fn u(&self)-> PointBlock {
+    pub fn u(&self)-> PointBlock {
         self.block(U)
     }
-    fn v(&self)-> PointBlock {
+    pub fn v(&self)-> PointBlock {
         self.block(V)
     }
-    fn w(&self)-> PointBlock {
+    pub fn w(&self)-> PointBlock {
         self.block(W)
     }
-    fn x(&self)-> PointBlock {
+    pub fn x(&self)-> PointBlock {
         self.block(X)
     }
-    fn y(&self)-> PointBlock {
+    pub fn y(&self)-> PointBlock {
         self.block(Y)
     }
 
-    fn block(&self, block: Block) -> PointBlock {
+    pub fn block(&self, block: Block) -> PointBlock {
         PointBlock{
             location: Some(self.clone()),
             block: block,
@@ -213,12 +213,6 @@ impl PointBlock{
 }
 
 
-
-struct IntendedBehavior<'c>{
-    can: Condition<'c>,
-    fragments: Vec<Fragment>,
-    consume: Vec<Location>
-}
 
 #[derive(Debug)]
 pub struct Characteristic<'c>{
@@ -371,17 +365,6 @@ impl Properties for char{
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
-        /*
-        Template:
-
-            Some(Characteristic{
-                intensify: vec![
-                        ],
-                intended_behavior:vec![],
-                properties: vec![
-                    ]
-            })
-         */
         if self.is('|'){
             Some(Characteristic{
                 intensify: vec![
@@ -673,6 +656,7 @@ impl Properties for char{
                         loc: top(),
                         can: Is('|')
                     }),
+                    /*
                     //  .'    .`
                     (J, Condition{
                         loc: right(),
@@ -695,6 +679,7 @@ impl Properties for char{
                         loc: bottom_right(),
                         can: Any("`'")
                     }),
+                    */
                     ],
                 intended_behavior: vec![
                         //     .-
@@ -740,6 +725,7 @@ impl Properties for char{
                         //      .
                         //     / \
                         (vec![U,Y], vec![line(m,u), line(m,y)]),
+                        /*
                         //  .'
                         (vec![J], vec![line(m, j)]),
                         //  '.
@@ -750,6 +736,7 @@ impl Properties for char{
                         //   .
                         //    '
                         (vec![T], vec![line(m, t), line(t, &right().w())]),
+                        */
                         ],
                 properties: vec![
                     (O, Weak, vec![arc(o,r,2)]),
@@ -801,6 +788,7 @@ impl Properties for char{
                         loc: top(),
                         can: ConnectTo(W,Medium)
                     }),
+                    /*
                     //  '.   ',
                     (J, Condition{
                         loc: right(),
@@ -811,6 +799,7 @@ impl Properties for char{
                         loc: left(),
                         can: Any(".,")
                     }),
+                    */
                     ],
                 intended_behavior:vec![
                         //    \
@@ -828,10 +817,12 @@ impl Properties for char{
                         //     \ /
                         //      '
                         (vec![A,E], vec![line(a,m), line(m,e)]),
+                        /*
                         //  '.
                         (vec![J], vec![line(c, j)]),
                         //   .'
                         (vec![F], vec![line(c,f)]),
+                        */
                         
                         ],
                 properties: vec![
@@ -1220,41 +1211,6 @@ impl Properties for char{
                     ]
             })
         }
-        /*
-        // HACK: remove this after transitioning to 
-        //  Location, and PointBlock
-        else if self.any(" ,.`'"){
-            Some(Characteristic{
-                intensify: vec![
-                    //      .                  .'
-                    //     '   when used in   '     
-                    (T, Condition{
-                        loc: right(),
-                        can: Any(".,")
-                    }),
-                    (W, Condition{
-                        loc: bottom(),
-                        can: Any("`'")
-                    }),
-                    //   .▒   used in  .▒
-                    //    '             '.
-                    // if the side is at the right side of the line in
-                    // a string, mostly there is no space to the right
-                    (P, Condition{
-                        loc: left(),
-                        can: Any(".,")
-                    }),
-                        ],
-                intended_behavior:vec![
-                    (vec![T,W], vec![line(t, w)]),
-                    (vec![P,W], vec![line(p, w)]),
-                ],
-                properties: vec![
-                    ]
-            })
-
-        }
-        */
         else{
             let (blocks, fragments) = box_drawing::box_drawing(&self);
             let mut properties = vec![];
@@ -1269,6 +1225,7 @@ impl Properties for char{
             })
         }
     }
+
 
 
     fn can_connect(&self, arg_signal: &Signal, block: &Block) -> bool {

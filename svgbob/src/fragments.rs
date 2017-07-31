@@ -18,58 +18,6 @@ pub enum Block{
     U,V,W,X,Y
 }
 
-/*
-impl Block{
-
-    fn connects_to(&self) -> Vec<(Direction, Block)> {
-        match *self{
-            A => vec![
-                (Top,U),
-                (Left,E),
-                (TopLeft,Y)
-                ],
-            B => vec![(Top,V)],
-            C => vec![(Top,W)],
-            D => vec![(Top,X)],
-            E => vec![
-                (Top,Y),
-                (Right,A),
-                (TopRight,U)
-            ],
-            F => vec![(Left,J)],
-            G => vec![],
-            H => vec![],
-            I => vec![],
-            J => vec![(Right,F)],
-            K => vec![(Left,O)],
-            L => vec![],
-            M => vec![],
-            N => vec![],
-            O => vec![(Right,K)],
-            P => vec![(Left,T)],
-            Q => vec![],
-            R => vec![],
-            S => vec![],
-            T => vec![(Right,P)],
-            U => vec![
-                (Left,Y),
-                (Bottom,A),
-                (BottomLeft,E)
-                ],
-            V => vec![(Bottom,B)],
-            W => vec![(Bottom,C)],
-            X => vec![(Bottom,D)],
-            Y => vec![
-                (Right,U),
-                (Bottom,E),
-                (BottomRight,A)
-                ],
-        }
-    }
-
-}
-*/
-
 
 /// These are non-final drawing elements
 /// Lines most likely fall on the collinear line

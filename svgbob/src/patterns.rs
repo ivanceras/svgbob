@@ -309,17 +309,14 @@ impl <'g>FocusChar<'g>{
 
     /// if the character matches given argument
     pub fn is(&self, ch: char) -> bool {
-        self.ch == ch
+        self.ch.is(ch)
     }
 
     /// if character is any character in the string
-    fn any(&self, ch: &str) -> bool {
-        ch.contains(self.ch)
+    fn any(&self, s: &str) -> bool {
+        self.ch.any(s)
     }
 
-    fn in_any(&self, chars: Vec<char>) -> bool {
-        chars.contains(&self.ch)
-    }
 
     fn used_as_text(&self) -> bool {
         if self.is_text_surrounded(){
@@ -449,11 +446,14 @@ impl <'g>FocusChar<'g>{
     }
 
     pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>){
-        let (fragments,location) = self.get_fragments(); 
+        let (fragments, consumed_location) = self.get_fragments(); 
         let elements: Vec<Element> = fragments.into_iter()
             .map(|frag| self.to_element(frag) )
             .collect();
-        (elements, vec![])
+        let consumed_loc: Vec<Loc> = consumed_location.into_iter()
+            .map(|location| self.loc.from_location(&location))
+            .collect();
+        (elements, consumed_loc)
     }
 
     fn is_satisfied(&self, can: &Can) -> bool {
@@ -518,26 +518,129 @@ impl <'g>FocusChar<'g>{
         false
     }
 
+    ///
+    /// Enhancement use case where it is hard to incorporate into the default characteristic
+    /// examples: 
+    ///      +    \           _   _ 
+    ///       `>   `>        |_   _|
+    ///                     
+    ///    .-.               
+    ///   (   )
+    ///    `-'
+    ///
+    /// without checking the characteristic, this will enchance the character
+    /// based on the surrounding neighbors
+    /// returns the fragments, consumed location
+    fn enhance(&self) -> (Vec<Fragment>, Vec<Location>) {
+        use fragments::Direction::*;
+        use fragments;
+        let a = &PointBlock::block(A);
+        let b = &PointBlock::block(B);
+        let c = &PointBlock::block(C);
+        let d = &PointBlock::block(D);
+        let e = &PointBlock::block(E);
+        let f = &PointBlock::block(F);
+        let g = &PointBlock::block(G);
+        let h = &PointBlock::block(H);
+        let i = &PointBlock::block(I);
+        let j = &PointBlock::block(J);
+        let k = &PointBlock::block(K);
+        let l = &PointBlock::block(L);
+        let m = &PointBlock::block(M);
+        let n = &PointBlock::block(N);
+        let o = &PointBlock::block(O);
+        let p = &PointBlock::block(P);
+        let q = &PointBlock::block(Q);
+        let r = &PointBlock::block(R);
+        let s = &PointBlock::block(S);
+        let t = &PointBlock::block(T);
+        let u = &PointBlock::block(U);
+        let v = &PointBlock::block(V);
+        let w = &PointBlock::block(W);
+        let x = &PointBlock::block(X);
+        let y = &PointBlock::block(Y);
+        
+        let top = || Location::go(Top);
+        let bottom = || Location::go(Bottom);
+        let left = || Location::go(Left);
+        let right = || Location::go(Right);
+        let top_left = || Location::go(TopLeft);
+        let top_right = || Location::go(TopRight);
+        let bottom_left = || Location::go(BottomLeft);
+        let bottom_right = || Location::go(BottomRight);
+
+        let mut elm = vec![];
+        let mut consumed = vec![];
+        if self.any("`'"){
+            //  +     +
+            //   `>    '>
+            if self.top_left().is('+') 
+                && self.right().is('>'){
+                elm.push(fragments::arrow_line(&top_left().m(), o));
+                consumed.push(right());
+            } 
+            //     .  
+            //    '   
+            if self.top_right().any(".,"){
+                elm.push(fragments::line(c, &top_right().m()));
+                consumed.push(top_right());
+            }
+            //   .  
+            //    ' 
+            if self.top_left().any(".,"){
+                elm.push(fragments::line(c, &top_left().m()));
+                consumed.push(top_left());
+            }
+            //   .'
+            if self.left().any(".,"){
+                elm.push(fragments::line(c, &left().m()));
+                consumed.push(left());
+            }
+            //   '.
+            if self.right().any(".,"){
+                elm.push(fragments::line(c, &right().m()));
+                consumed.push(right());
+            }
+        }
+        (elm, consumed)
+    }
+
     fn get_fragments(&self) -> (Vec<Fragment>, Vec<Location>){
         let character:Option<Characteristic> = self.ch.get_characteristic(); 
         let mut elm: Vec<Fragment> = vec![];
+        let mut consumed: Vec<Location> = vec![];
         if let Some(character) = character{
             let mut matched_intended = false;
+            let mut matched_enhance = false;
+
+            // enhancements
+            let (enhanced, enhance_consumed) = self.enhance();
+            if !enhanced.is_empty(){
+                elm.extend(enhanced);
+                consumed.extend(enhance_consumed);
+                matched_enhance = true;
+            }
+
             // intended behaviors when signals are strong
             // after applying the intensifiers
-            for &(ref blocks, ref fragments) in &character.intended_behavior{
-                let meet = blocks.iter()
-                    .all(|ref b| self.can_be_strong_block(&b));
-                if meet{
-                    elm.extend(fragments.clone());
-                    matched_intended = true;
+            // do only when enhancements is not matched
+            if !matched_enhance{
+                for &(ref blocks, ref fragments) in &character.intended_behavior{
+                    let meet = blocks.iter()
+                        .all(|ref b| self.can_be_strong_block(&b));
+                    if meet{
+                        elm.extend(fragments.clone());
+                        matched_intended = true;
+                    }
                 }
             }
+
             // default behaviors
             // add only when signal is strong
             // or the signal has been intensified to strong
+            // do only when enhancement nor intended did not match
             let mut matched = false;
-            if !matched_intended{
+            if !matched_enhance && !matched_intended {
                 for &(ref block, ref signal, ref fragments) in &character.properties{
                     // draw when a strong block and not used as text
                     if self.is_strong_block(&block)/* && !self.used_as_text()*/{
@@ -551,16 +654,16 @@ impl <'g>FocusChar<'g>{
                     }
                 }
             }
-            if !matched && !matched_intended && !self.is_blank(){
+            if !matched && !matched_intended && !matched_enhance && !self.is_blank(){
                 elm.push(Text(self.text()));
             }
-            (elm, vec![])
+            (elm, consumed)
         }
         else{
             if !self.is_blank(){// This is to disconnect words
                 elm.push(Text(self.text()));
             }
-            (elm, vec![])
+            (elm, consumed)
         }
     }
 
