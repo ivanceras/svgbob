@@ -5,6 +5,7 @@ use Grid;
 use Settings;
 use properties::{Signal};
 use properties::Characteristic;
+use enhance_circles::Round;
 
 use properties::Location;
 use fragments::{Block};
@@ -23,6 +24,7 @@ use fragments::Fragment::Text;
 use properties::Signal::{Weak,Medium,Strong};
 use properties::Properties;
 use properties::Can;
+use enhance::Enhance;
 
 use ::{
     line, solid_circle,
@@ -313,7 +315,7 @@ impl <'g>FocusChar<'g>{
     }
 
     /// if character is any character in the string
-    fn any(&self, s: &str) -> bool {
+    pub fn any(&self, s: &str) -> bool {
         self.ch.any(s)
     }
 
@@ -518,92 +520,7 @@ impl <'g>FocusChar<'g>{
         false
     }
 
-    ///
-    /// Enhancement use case where it is hard to incorporate into the default characteristic
-    /// examples: 
-    ///      +    \           _   _ 
-    ///       `>   `>        |_   _|
-    ///                     
-    ///    .-.               
-    ///   (   )
-    ///    `-'
-    ///
-    /// without checking the characteristic, this will enchance the character
-    /// based on the surrounding neighbors
-    /// returns the fragments, consumed location
-    fn enhance(&self) -> (Vec<Fragment>, Vec<Location>) {
-        use fragments::Direction::*;
-        use fragments;
-        let a = &PointBlock::block(A);
-        let b = &PointBlock::block(B);
-        let c = &PointBlock::block(C);
-        let d = &PointBlock::block(D);
-        let e = &PointBlock::block(E);
-        let f = &PointBlock::block(F);
-        let g = &PointBlock::block(G);
-        let h = &PointBlock::block(H);
-        let i = &PointBlock::block(I);
-        let j = &PointBlock::block(J);
-        let k = &PointBlock::block(K);
-        let l = &PointBlock::block(L);
-        let m = &PointBlock::block(M);
-        let n = &PointBlock::block(N);
-        let o = &PointBlock::block(O);
-        let p = &PointBlock::block(P);
-        let q = &PointBlock::block(Q);
-        let r = &PointBlock::block(R);
-        let s = &PointBlock::block(S);
-        let t = &PointBlock::block(T);
-        let u = &PointBlock::block(U);
-        let v = &PointBlock::block(V);
-        let w = &PointBlock::block(W);
-        let x = &PointBlock::block(X);
-        let y = &PointBlock::block(Y);
-        
-        let top = || Location::go(Top);
-        let bottom = || Location::go(Bottom);
-        let left = || Location::go(Left);
-        let right = || Location::go(Right);
-        let top_left = || Location::go(TopLeft);
-        let top_right = || Location::go(TopRight);
-        let bottom_left = || Location::go(BottomLeft);
-        let bottom_right = || Location::go(BottomRight);
 
-        let mut elm = vec![];
-        let mut consumed = vec![];
-        if self.any("`'"){
-            //  +     +
-            //   `>    '>
-            if self.top_left().is('+') 
-                && self.right().is('>'){
-                elm.push(fragments::arrow_line(&top_left().m(), o));
-                consumed.push(right());
-            } 
-            //     .  
-            //    '   
-            if self.top_right().any(".,"){
-                elm.push(fragments::line(c, &top_right().m()));
-                consumed.push(top_right());
-            }
-            //   .  
-            //    ' 
-            if self.top_left().any(".,"){
-                elm.push(fragments::line(c, &top_left().m()));
-                consumed.push(top_left());
-            }
-            //   .'
-            if self.left().any(".,"){
-                elm.push(fragments::line(c, &left().m()));
-                consumed.push(left());
-            }
-            //   '.
-            if self.right().any(".,"){
-                elm.push(fragments::line(c, &right().m()));
-                consumed.push(right());
-            }
-        }
-        (elm, consumed)
-    }
 
     fn get_fragments(&self) -> (Vec<Fragment>, Vec<Location>){
         let character:Option<Characteristic> = self.ch.get_characteristic(); 
@@ -612,25 +529,52 @@ impl <'g>FocusChar<'g>{
         if let Some(character) = character{
             let mut matched_intended = false;
             let mut matched_enhance = false;
+            let mut matched_circles = false;
+            
+            let enable_round_circles = true;
+            let enable_enhancements = true;
+            let enable_intended_behavior = true;
+            let enable_default_properties = true;
 
+
+            if enable_round_circles{
+                let (circles, circles_consumed, along_arc) = self.round();
+                if !circles.is_empty(){
+                    elm.extend(circles);
+                    consumed.extend(circles_consumed);
+                    // if circle is matched, and element is along the arc
+                    // skip processing of other,
+                    // otherwise, even if circle is matched and the element is NOT along arc
+                    // do process other enhancement, behaviors
+                    matched_circles = along_arc;
+                }
+            }
             // enhancements
-            let (enhanced, enhance_consumed) = self.enhance();
-            if !enhanced.is_empty(){
-                elm.extend(enhanced);
-                consumed.extend(enhance_consumed);
-                matched_enhance = true;
+            if enable_enhancements{
+                if !matched_circles{
+                    let (enhanced, enhance_consumed) = self.enhance();
+                    if !enhanced.is_empty(){
+                        elm.extend(enhanced);
+                        consumed.extend(enhance_consumed);
+                        matched_enhance = true;
+                    }
+                }
             }
 
             // intended behaviors when signals are strong
             // after applying the intensifiers
             // do only when enhancements is not matched
-            if !matched_enhance{
-                for &(ref blocks, ref fragments) in &character.intended_behavior{
-                    let meet = blocks.iter()
-                        .all(|ref b| self.can_be_strong_block(&b));
-                    if meet{
-                        elm.extend(fragments.clone());
-                        matched_intended = true;
+            if enable_intended_behavior{
+                if !matched_enhance 
+                    && !matched_circles
+                    {
+                    for &(ref blocks, ref fragments) in &character.intended_behavior{
+                        let meet = blocks.iter()
+                            .all(|ref b| self.can_be_strong_block(&b));
+                        if meet{
+                            elm.extend(fragments.clone());
+                            matched_intended = true;
+                        }
                     }
                 }
             }
@@ -640,21 +584,29 @@ impl <'g>FocusChar<'g>{
             // or the signal has been intensified to strong
             // do only when enhancement nor intended did not match
             let mut matched = false;
-            if !matched_enhance && !matched_intended {
-                for &(ref block, ref signal, ref fragments) in &character.properties{
-                    // draw when a strong block and not used as text
-                    if self.is_strong_block(&block)/* && !self.used_as_text()*/{
-                        elm.extend(fragments.clone());
-                        matched = true;
-                    }
-                    // draw when used as text but intensified 
-                    else if self.is_intensified(&block){
-                        elm.extend(fragments.clone());
-                        matched = true;
+            if enable_default_properties{
+                if !matched_enhance 
+                    && !matched_circles
+                    && !matched_intended {
+                    for &(ref block, ref signal, ref fragments) in &character.properties{
+                        // draw when a strong block and not used as text
+                        if self.is_strong_block(&block)/* && !self.used_as_text()*/{
+                            elm.extend(fragments.clone());
+                            matched = true;
+                        }
+                        // draw when used as text but intensified 
+                        else if self.is_intensified(&block){
+                            elm.extend(fragments.clone());
+                            matched = true;
+                        }
                     }
                 }
             }
-            if !matched && !matched_intended && !matched_enhance && !self.is_blank(){
+            if  !matched 
+                && !matched_intended 
+                && !matched_enhance
+                && !matched_circles
+                && !self.is_blank(){
                 elm.push(Text(self.text()));
             }
             (elm, consumed)

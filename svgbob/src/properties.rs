@@ -90,6 +90,38 @@ impl Location{
         self.0.push((direction, step));
     }
 
+    fn go_jump(&self, direction: Direction, step: usize) -> Self {
+        let mut loc = self.clone();
+        loc.jump_to(direction, step);
+        loc
+    }
+
+    pub fn go_top(&self, step: usize) -> Self {
+        self.go_jump(Top, step)
+    }
+    pub fn go_left(&self, step: usize) -> Self {
+        self.go_jump(Left, step)
+    }
+    pub fn go_bottom(&self, step: usize) -> Self {
+        self.go_jump(Bottom, step)
+    }
+    pub fn go_right(&self, step: usize) -> Self {
+        self.go_jump(Right, step)
+    }
+
+    pub fn top(&self) -> Self {
+        self.go_top(1)
+    }
+    pub fn bottom(&self) -> Self {
+        self.go_bottom(1)
+    }
+    pub fn left(&self) -> Self {
+        self.go_left(1)
+    }
+    pub fn right(&self) -> Self {
+        self.go_right(1)
+    }
+
     pub fn a(&self)-> PointBlock {
         self.block(A)
     }
@@ -656,30 +688,6 @@ impl Properties for char{
                         loc: top(),
                         can: Is('|')
                     }),
-                    /*
-                    //  .'    .`
-                    (J, Condition{
-                        loc: right(),
-                        can: Any("`'")
-                    }),
-                    //  '.    `.
-                    (F, Condition{
-                        loc: left(),
-                        can: Any("`'")
-                    }),
-                    //    .
-                    //   '
-                    (P, Condition{
-                        loc: bottom_left(),
-                        can: Any("`'")
-                    }),
-                    //    .
-                    //     '
-                    (T, Condition{
-                        loc: bottom_right(),
-                        can: Any("`'")
-                    }),
-                    */
                     ],
                 intended_behavior: vec![
                         //     .-
@@ -706,6 +714,14 @@ impl Properties for char{
                         //     .
                         //     |
                         (vec![A,W], vec![line(a,g), arc(r,g,8),line(r,w)]),
+                        //    \
+                        //     .
+                        //    / 
+                        (vec![A,U], vec![line(a,g), arc(q,g,8),line(q,u)]),
+                        //      / 
+                        //     .
+                        //      \
+                        (vec![E,Y], vec![line(e,i), arc(i,s,8),line(s,y)]),
                         //     |
                         //     .
                         //     |
@@ -725,18 +741,6 @@ impl Properties for char{
                         //      .
                         //     / \
                         (vec![U,Y], vec![line(m,u), line(m,y)]),
-                        /*
-                        //  .'
-                        (vec![J], vec![line(m, j)]),
-                        //  '.
-                        (vec![F], vec![line(m, f)]),
-                        //   .
-                        //  '
-                        (vec![P], vec![line(m, p), line(p, &left().w())]),
-                        //   .
-                        //    '
-                        (vec![T], vec![line(m, t), line(t, &right().w())]),
-                        */
                         ],
                 properties: vec![
                     (O, Weak, vec![arc(o,r,2)]),
@@ -788,18 +792,6 @@ impl Properties for char{
                         loc: top(),
                         can: ConnectTo(W,Medium)
                     }),
-                    /*
-                    //  '.   ',
-                    (J, Condition{
-                        loc: right(),
-                        can: Any(".,")
-                    }),
-                    //  .'   .' 
-                    (F, Condition{
-                        loc: left(),
-                        can: Any(".,")
-                    }),
-                    */
                     ],
                 intended_behavior:vec![
                         //    \
@@ -817,13 +809,6 @@ impl Properties for char{
                         //     \ /
                         //      '
                         (vec![A,E], vec![line(a,m), line(m,e)]),
-                        /*
-                        //  '.
-                        (vec![J], vec![line(c, j)]),
-                        //   .'
-                        (vec![F], vec![line(c,f)]),
-                        */
-                        
                         ],
                 properties: vec![
                         (C, Medium, vec![line(h,c)]),
@@ -1209,6 +1194,28 @@ impl Properties for char{
                     (C, Weak, vec![arc(w,c,4)]),
                     (W, Weak, vec![arc(w,c,4)])
                     ]
+            })
+        }
+        else if self.is('['){
+            Some(Characteristic{
+                intensify: vec![
+                ],
+                intended_behavior: vec![],
+                properties: vec![
+                    (E, Strong, vec![line(e,c), line(c,w), line(w,y)]),
+                    (Y, Strong, vec![line(e,c), line(c,w), line(w,y)]),
+                ]
+            })
+        }
+        else if self.is(']'){
+            Some(Characteristic{
+                intensify: vec![
+                ],
+                intended_behavior: vec![],
+                properties: vec![
+                    (A, Strong, vec![line(a,c), line(c,w), line(w,u)]),
+                    (U, Strong, vec![line(a,c), line(c,w), line(w,u)]),
+                ]
             })
         }
         else{

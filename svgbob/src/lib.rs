@@ -70,6 +70,8 @@ mod patterns;
 mod fragments;
 mod properties;
 mod box_drawing;
+mod enhance;
+mod enhance_circles;
 
 
 /// generate an SVG from the ascii text input
