@@ -64,6 +64,8 @@ use fragments::Direction::{
     BottomLeft, Bottom, BottomRight
 };
 
+use ::ArcFlag::{Major, Minor};
+
 mod optimizer;
 mod patterns;
 
@@ -339,10 +341,18 @@ impl Loc {
 #[derive(Debug)]
 #[derive(Clone)]
 #[derive(PartialEq)]
+pub enum ArcFlag{
+    Major,
+    Minor,
+}
+
+#[derive(Debug)]
+#[derive(Clone)]
+#[derive(PartialEq)]
 pub enum Element {
     Circle(Point, f32, String),
     Line(Point, Point, Stroke, Feature),
-    Arc(Point, Point, f32, bool, Stroke, Feature),
+    Arc(Point, Point, f32, ArcFlag, bool, Stroke, Feature),
     Text(Loc, String),
     Path(Point, Point, String, Stroke),
 }
@@ -358,16 +368,20 @@ pub fn solid_circle(c: &Point, r: f32) -> Element {
 
 
 pub fn arrow_arc(a: &Point, b: &Point, r: f32) -> Element{
-   Element::Arc(a.clone(), b.clone(), r, false, Solid, Arrow)
+   Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Arrow)
 }
 
 pub fn arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
-    Element::Arc(a.clone(), b.clone(), r.clone(), true, Solid, Arrow)
+    Element::Arc(a.clone(), b.clone(), r.clone(), Minor, true, Solid, Arrow)
 }
 
 
 pub fn arc(a: &Point, b: &Point, r: f32) -> Element{
-    Element::Arc(a.clone(), b.clone(), r, false, Solid, Nothing)
+    Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Nothing)
+}
+
+pub fn arc_major(a: &Point, b: &Point, r: f32) -> Element{
+    Element::Arc(a.clone(), b.clone(), r, Major, false, Solid, Nothing)
 }
 
 
@@ -471,13 +485,15 @@ impl Element {
 
                 SvgElement::Line(svg_line)
             }
-            Element::Arc(ref s, ref e, radius, sweep, _, ref feature) => {
+            Element::Arc(ref s, ref e, radius, ref arc_flag, sweep, _, ref feature) => {
                 let sweept = if sweep { "1" } else { "0" };
-                let d = format!("M {} {} A {} {} 0 0 {} {} {}",
+                let arc_flag = match *arc_flag { Major => "1", Minor => "0" };
+                let d = format!("M {} {} A {} {} 0 {} {} {} {}",
                                 s.x,
                                 s.y,
                                 radius,
                                 radius,
+                                arc_flag,
                                 sweept,
                                 e.x,
                                 e.y);

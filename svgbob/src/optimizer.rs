@@ -4,6 +4,7 @@ use super::Stroke;
 use super::Feature;
 use super::Point;
 use super::Settings;
+use ::ArcFlag;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
@@ -157,7 +158,7 @@ impl Optimizer {
                         }
                     }
                 }
-                Element::Arc(_, _, _, _, ref stroke, ref feature) => {
+                Element::Arc(_, _, _, _,_, ref stroke, ref feature) => {
                     match *feature {
                         Feature::Arrow => {
                             arrows.push(elm.clone());
@@ -213,7 +214,7 @@ fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
                 }
                 last_loc = Some(e.clone());
             }
-            Element::Arc(s, e, r, sw, _, _) => {
+            Element::Arc(s, e, r, large, sw, _, _) => {
                 if start.is_none() {
                     start = Some(s.clone());
                 }
@@ -222,14 +223,16 @@ fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
                     None => false,
                 };
                 let sweep = if sw { 1 } else { 0 };
+                let large = match large{ ArcFlag::Major => 1, ArcFlag::Minor=> 0 };
                 if match_last_loc {
                     paths.push_str(&format!(" A {} {} 0 0 {} {} {}", r, r, sweep, e.x, e.y));
                 } else {
-                    paths.push_str(&format!(" M {} {} A {} {} 0 0 {} {} {}",
+                    paths.push_str(&format!(" M {} {} A {} {} 0 {} {} {} {}",
                                             s.x,
                                             s.y,
                                             r,
                                             r,
+                                            large,
                                             sweep,
                                             e.x,
                                             e.y));

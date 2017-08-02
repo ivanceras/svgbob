@@ -90,24 +90,66 @@ impl <'g>Enhance for FocusChar<'g>{
 
         let mut elm = vec![];
         let mut consumed = vec![];
-        if self.any("`'"){
+        if self.is('|'){
+            //    |    |
+            //    <    >
+            if self.bottom().any("></\\"){
+                elm.push(line(c, &bottom().m()));
+            }
+            //    <    >
+            //    |    |
+            if self.top().any("></\\"){
+                elm.push(line(w, &top().m()));
+            }
+        }
+        else if self.is('/'){
+            //      >
+            //     /
+            if self.top_right().is('>'){
+                elm.push(line(u, &top_right().m()));
+            }
+            //    /
+            //   <
+            if self.bottom_left().is('<'){
+                elm.push(line(e, &bottom_left().m()));
+            }
+        }
+        else if self.is('\\'){
+            //      \
+            //       >
+            if self.bottom_right().is('>'){
+                elm.push(line(a, &bottom_right().m()));
+            }
+            //    <
+            //     \
+            if self.top_left().is('<'){
+                elm.push(line(y, &top_left().m()));
+            }
+        }
+        else if self.any("`'"){
             // for circuitries
-            //  +     +
-            //   `>    '>
-            if self.top_left().is('+') 
+            //  +     +    \
+            //   `>    '>   `>
+            if self.top_left().any("+\\") 
                 && self.right().is('>'){
                 elm.push(fragments::arrow_line(
-                    &top_left().m(), o));
+                    &top_left().m(), &right().f()));
                 consumed.push(right());
+                if self.top_left().is('\\'){
+                    consumed.push(top_left());
+                }
             } 
             // for circuitries
-            //     +
-            //   <'
-            if self.top_right().is('+')
+            //     +    /
+            //   <'   <'
+            if self.top_right().any("+/")
                 && self.left().is('<'){
                 elm.push(fragments::arrow_line(
-                    &top_right().m(), k));
+                    &top_right().m(), &left().j()));
                 consumed.push(left());
+                if self.top_right().is('/'){
+                    consumed.push(top_right());
+                }
             }
             //     .  
             //    '   
@@ -131,6 +173,32 @@ impl <'g>Enhance for FocusChar<'g>{
                 elm.push(fragments::line(c, &right().m()));
                 consumed.push(right());
             }
+        }
+        else if self.any(".,"){
+            // for circuitries
+            //   <.    <,
+            //     +     \
+            if self.bottom_right().any("+\\")
+                && self.left().is('<'){
+                elm.push(fragments::arrow_line(
+                    &bottom_right().m(), &left().t()));
+                consumed.push(left());
+                if self.bottom_right().is('\\'){
+                    consumed.push(bottom_right());
+                }
+            }
+            // for circuitries
+            //   .>    ,>   ,>
+            //  +     +    /
+            if self.bottom_left().any("+/") 
+                && self.right().is('>'){
+                elm.push(fragments::arrow_line(
+                    &bottom_left().m(), &right().p()));
+                consumed.push(right());
+                if self.bottom_left().is('/'){
+                    consumed.push(bottom_left());
+                }
+            } 
         }
         else if self.is('_'){
             //   _|
@@ -156,19 +224,19 @@ impl <'g>Enhance for FocusChar<'g>{
                 if self.left().is('/'){
                     elm.push(fragments::line(y, &left().u()));
                 }
-                //     _\
                 if self.right().is('\\'){
+                    //     _\
                     elm.push(fragments::line(u, &right().y()));
                 }
             }
         }
         else if self.is('-'){
             //   -|   -/   -\   x-  X-
-            if self.right().any("|/\\xX"){
+            if self.right().any("|/\\xX<"){
                elm.push(fragments::line(k, &right().m())); 
             }
             //  |-   /-    /-   x-  X-
-            if self.left().any("|/\\xX"){
+            if self.left().any("|/\\xX>"){
                 elm.push(fragments::line(o, &left().m()));
             }
             //  -O  the O has radius of 3 units, so this line
@@ -180,6 +248,59 @@ impl <'g>Enhance for FocusChar<'g>{
             if self.left().is('O'){
                 elm.push(fragments::line(o,l));
             }
+            // circuit jump
+            //    |
+            //  _.-._
+            //    |
+            if self.top().can_strongly_connect(&W)
+                && self.bottom().can_strongly_connect(&C)
+                && self.left().is('.')
+                && self.in_left(2).is('_')
+                && self.right().is('.')
+                && self.in_right(2).is('_'){
+
+                elm.extend(vec![
+                    line(&left().u(), &left().w()),
+                    arc(&right().w(), &left().w(),5),
+                    line(&right().w(),&right().y()),
+                    line(c,w),
+                ]);
+                consumed.extend(vec![
+                    left(), right()
+                ]);
+            }
+        }
+        // circuitries jump
+        //    |
+        //   -(-
+        //    |
+        //
+        else if self.is('(')
+            && self.top().can_strongly_connect(&W)
+            && self.bottom().can_strongly_connect(&C)
+            && self.left().can_strongly_connect(&O)
+            && self.right().can_strongly_connect(&K){
+
+            elm.extend(vec![
+                arc(c, w, 5),
+                line(k,o),
+            ]);
+        }
+        // circuitries jump
+        //    |
+        //   -)-
+        //    |
+        //
+        else if self.is(')')
+            && self.top().can_strongly_connect(&W)
+            && self.bottom().can_strongly_connect(&C)
+            && self.left().can_strongly_connect(&O)
+            && self.right().can_strongly_connect(&K){
+
+            elm.extend(vec![
+                arc(w, c, 5),
+                line(k,o),
+            ]);
         }
         (elm, consumed)
     }

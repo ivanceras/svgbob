@@ -58,10 +58,20 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
          vec![line(k,o)]
         )
     }
-    else if ch.any("│┃"){
+    else if ch.is('¯'){ // overscore?
+        (vec![A,E],
+         vec![line(a,e)]
+         )
+    }
+    else if ch.is('│'){
         (vec![C,W],
          vec![line(c,w)]
         )
+    }
+    else if ch.is('┃'){
+        (vec![E,Y],
+         vec![line(e,y)]
+         )
     }
     else if ch.is('╭'){
         (vec![O,W],

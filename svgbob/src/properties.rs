@@ -456,6 +456,19 @@ impl Properties for char{
                     ]
             })
         }
+        else if self.is('='){
+            Some(Characteristic{
+                intensify: vec![
+                        ],
+                intended_behavior:vec![],
+                properties: vec![
+                    (K, Strong, vec![line(k,o)]),
+                    (O, Strong, vec![line(k,o)]),
+                    (F, Strong, vec![line(f,j)]),
+                    (J, Strong, vec![line(f,j)]),
+                    ]
+            })
+        }
         else if self.is('_'){
             Some(Characteristic{
                 intensify: vec![

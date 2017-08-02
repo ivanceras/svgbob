@@ -29,7 +29,7 @@ use enhance::Enhance;
 use ::{
     line, solid_circle,
     arrow_arc, arrow_sweep_arc,
-    arc, open_circle, arrow_line,
+    arc, arc_major, open_circle, arrow_line,
     text, blank_text
 };
 
@@ -364,7 +364,7 @@ impl <'g>FocusChar<'g>{
         || self.can_weakly_connect(block)
     }
 
-    fn can_strongly_connect(&self, block: &Block) -> bool {
+    pub fn can_strongly_connect(&self, block: &Block) -> bool {
         self.ch.can_connect(&Strong, block)
     }
 
@@ -410,6 +410,13 @@ impl <'g>FocusChar<'g>{
 
             Fragment::Arc(p1, p2, m) => {
                 arc(&self.point(&p1),
+                    &self.point(&p2),
+                    m as f32 *  unit_x
+                )
+            },
+
+            Fragment::ArcMajor(p1, p2, m) => {
+                arc_major(&self.point(&p1),
                     &self.point(&p2),
                     m as f32 *  unit_x
                 )
