@@ -132,7 +132,10 @@ impl <'g>Round for FocusChar<'g>{
         
 
         // circle 1
-        {
+        //  .-.
+        // ( + )
+        //  `-'
+        if !matched_circle{
             let mut quadrants = vec![];
             let mut matched_quadrant2 = false;
             let mut matched_quadrant1 = false;
@@ -231,7 +234,10 @@ impl <'g>Round for FocusChar<'g>{
         
 
         // circle 2
-        {
+        //  .--.
+        // ( +  )
+        //  `--'
+        if !matched_circle {
             let mut quadrants = vec![];
             let mut matched_quadrant1 = false;
             let mut matched_quadrant2 = false;
@@ -334,7 +340,111 @@ impl <'g>Round for FocusChar<'g>{
                 ]);
             }
         }
+        ////////////////////////
+        //
+        //        _   
+        //      .' '. 
+        //     (  3  )
+        //      `._.' 
+        //
+        /////////////////////////
+        if !matched_circle {
+            let mut quadrants = vec![];
+            let mut matched_quadrant1 = false;
+            let mut matched_quadrant2 = false;
+            let mut matched_quadrant3 = false;
+            let mut matched_quadrant4 = false;
+            //     _
+            //   .'|
+            //  (--+
+            if self.in_top(2).is('_')
+                && self.top().left().is('\'')
+                && self.top().in_left(2).any(".,")
+                && self.in_left(3).is('('){
+                
+                quadrants.push(
+                    arc(&go_top(2).u(), &go_left(3).k(), 12),
+                );
 
+                consumed.extend(vec![
+                    top().left(),
+                    top().go_left(2),
+                    go_left(3),
+                ]);
+                matched_quadrant2 = true;
+            }
+            //    _
+            //    |'.
+            //    +--)
+            if self.in_top(2).is('_')
+                && self.top().right().is('\'')
+                && self.top().in_right(2).any(".,")
+                && self.in_right(3).is(')') {
+
+                quadrants.push(
+                    arc(&go_right(3).o(),
+                        &go_top(2).y(), 12),
+                );
+
+                consumed.extend(vec![
+                    top().right(),
+                    top().go_right(2),
+                    go_right(3),
+                ]);
+                matched_quadrant1 = true;
+            }
+            // (--+
+            //  `._
+            //
+            if self.in_left(3).is('(')
+                && self.bottom().in_left(2).any("`'")
+                && self.bottom().left().any(".,")
+                && self.bottom().is('_'){
+
+                quadrants.push(
+                    arc(&go_left(3).k(),
+                        &bottom().u(), 12)
+                );
+                consumed.extend(vec![
+                    go_left(3),
+                    bottom().go_left(2),
+                    bottom().left(),
+                ]);
+                matched_quadrant3 = true;
+             }
+            //  +--)
+            //  _.'
+            if self.in_right(3).is(')')
+                && self.bottom().in_left(2).any("`'")
+                && self.bottom().left().any(".,"){
+                quadrants.push(
+                    arc(&bottom().y(), 
+                        &go_right(3).o(), 12)
+                );
+                consumed.extend(vec![
+                    go_right(3),
+                    bottom().go_right(2),
+                    bottom().right()
+                ]);
+                matched_quadrant4 = true;
+            }
+            if matched_quadrant1
+                && matched_quadrant2
+                && matched_quadrant3
+                && matched_quadrant4{
+                elm.push(
+                    open_circle(m, 12)
+                );
+                consumed.extend(vec![
+                    go_top(2),
+                    bottom()
+                ]);
+                matched_circle = true;
+            }
+            else{
+                elm.extend(quadrants);
+            }
+        }
 
         /////////////////////////////
         //  top left arc of circle 4
@@ -343,7 +453,7 @@ impl <'g>Round for FocusChar<'g>{
         //  (----+
         //
         /////////////////////////////
-        {   // if 4 of them match then consume all, and make a full circle
+        if !matched_circle {   // if 4 of them match then consume all, and make a full circle
             let mut quadrants = vec![];//temp storage for the arcs, replace with circle when all quadrants matched
             let mut matched_quadrant2 = false;
             let mut matched_quadrant1 = false;
@@ -478,7 +588,7 @@ impl <'g>Round for FocusChar<'g>{
         //  Circle 6
         //
         //////////////////////////////////
-        {
+        if !matched_circle{
 
             let mut quadrants = vec![];//temp storage for the arcs, replace with circle when all quadrants matched
             let mut matched_quadrant2 = false;
@@ -595,57 +705,6 @@ impl <'g>Round for FocusChar<'g>{
             elm.extend(quadrants);
         }
         
-
-        /*
-        // if true
-        //    .     .
-        //   (  and  ) will be drawn from the top to bottom with 1 arc
-        //    `     '
-        // else the default behavior is used which is drawing with combination 
-        // of rounded corner and lines connecting the arc at `(` or `)`
-        if !matched_arc
-            && !matched_circle{
-
-            if self.is('('){
-                if enable_round_pill{
-                    //   .
-                    //  (
-                    //   `
-                    if self.top_right().any(".,")
-                        && self.bottom_right().any("`'"){
-                        elm.extend(
-                            vec![
-                                arc(&top_right().o(), &bottom_right().o(), 10),
-                            ]);
-                        consumed.extend(vec![
-                            top_right(), 
-                            bottom_right()
-                        ]);
-                        along_arc = true;
-                    }
-                }
-            }
-            if self.is(')'){
-                if enable_round_pill{
-                    //   .
-                    //    )
-                    //   '
-                    if self.top_left().any(".,")
-                        && self.bottom_left().any("`'"){
-                        elm.extend(
-                            vec![
-                                arc(&bottom_left().k(), &top_left().k(), 10),
-                            ]);
-                        consumed.extend(vec![
-                            top_left(), 
-                            bottom_left()
-                        ]);
-                        along_arc = true;
-                    }
-                }
-            }
-        }
-        */
         (elm, consumed, along_arc)
     }
 }

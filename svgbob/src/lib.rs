@@ -30,12 +30,22 @@
 //! 
 //! 
 //#![deny(warnings)]
+#![feature(inclusive_range_syntax)]
 #![feature(test)]
 extern crate svg;
 extern crate unicode_width;
 #[cfg(test)]
 #[macro_use] 
 extern crate pretty_assertions;
+extern crate pom;
+
+use pom::TextInput;
+use pom::{Parser, DataInput};
+use pom::parser::*;
+use pom::Input;
+
+use std::str::FromStr;
+use std::collections::HashMap;
 
 
 
@@ -546,10 +556,36 @@ fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
 
 
 
+fn exclude_escaped_text(line: &str) -> (String, Vec<(usize, String)>) {
+    let mut input = TextInput::new(line);
+    let parsed = line_parse().parse(&mut input);
+    let mut buffer = String::new();
+    let mut text_elm: Vec<(usize, String)> = vec![];
+    if let Ok(parsed) = parsed{
+        let mut index = 0;
+        if !parsed.is_empty(){
+            for (start, end) in parsed{
+                let escaped = &line[start+1..end];
+                let recons =  &line[index..start];
+                text_elm.push((start, escaped.to_string()));
+                buffer.push_str(recons);
+                buffer.push_str(&" ".repeat(end+1 - start));
+                index = end + 1;
+            }
+        }
+        else{
+            buffer.push_str(line);
+        }
+    }
+    (buffer, text_elm)
+}
+
+
 #[derive(Debug)]
 pub struct Grid {
     settings: Settings,
-    index: Vec<Vec<String>>
+    index: Vec<Vec<String>>,
+    text_elm: Vec<(usize, usize, String)>
 }
 impl Grid {
     /// instantiate a grid from input ascii text
@@ -560,8 +596,13 @@ impl Grid {
     pub fn from_str(s: &str, settings: &Settings) -> Grid {
         let lines: Vec<&str> = s.lines().collect();
         let mut rows: Vec<Vec<String>> = Vec::with_capacity(lines.len());
-        for line in lines{
+        let mut text_elm: Vec<(usize, usize, String)> = vec![];
+        for (y, line) in lines.iter().enumerate(){
+            let (line, escaped_texts):(String, Vec<(usize, String)>) = exclude_escaped_text(line);
             let mut row: Vec<String> = Vec::with_capacity(line.chars().count());
+            for (x, escaped) in escaped_texts{
+                text_elm.push((x, y, escaped));
+            }
             for ch in line.chars(){
                 if let Some(1) = ch.width(){
                     row.push(format!("{}",ch));
@@ -592,6 +633,7 @@ impl Grid {
         Grid {
             settings: settings.clone(),
             index: rows,
+            text_elm: text_elm,
         }
     }
 
@@ -783,12 +825,23 @@ impl Grid {
         (rows, all_consumed_loc)
     }
 
+    fn get_escaped_text_elements(&self) -> Vec<Element> {
+        self.text_elm.iter()
+            .map(|&(x,y,ref text)|
+                Element::Text(Loc::new(x as i32,y as i32), text.to_owned())
+                )
+            .collect()
+    }
+
+
     /// each component has its relative location retain
     /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
-        let (elements,consumed_loc) = self.get_all_elements();
+        let (mut elements,consumed_loc) = self.get_all_elements();
+        let text_elm = self.get_escaped_text_elements();
+        elements.push(vec![text_elm]);
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements, consumed_loc);
@@ -946,6 +999,52 @@ fn escape(ch: &str) -> String {
     quoted
 
 }
+
+
+#[test]
+fn test_escaped_string(){
+
+    let mut input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+    let mut raw3 = TextInput::new(input3);
+    let output3 = line_parse().parse(&mut raw3);
+    println!("output3: {:?}", output3);
+    assert_eq!(Ok(vec![(4, 12), (20, 27), (49, 54)]), output3);
+    let mut matches = vec![];
+    let mut recons = String::new();
+    let mut text_elm: Vec<(usize, String)> = vec![];
+    let mut index = 0;
+    if let Ok(output) = output3{
+        for (start, end) in output{
+            println!("matches: {}", &input3[start...end]);
+            matches.push(input3[start...end].to_string());
+            let slice = &input3[index..start];
+            recons.push_str(slice);
+            recons.push_str(&" ".repeat(end+1-start));
+            text_elm.push((start, input3[start+1..end].to_string()));
+            index = end+1;
+        }
+    }
+    println!("input3: {}", input3);
+    println!("recons: {}", recons);
+    println!("escaped: {:?}", text_elm);
+    assert_eq!(vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#], matches);
+    assert_eq!(input3.len(), recons.len());
+    panic!();
+}
+
+
+
+fn escape_string() -> pom::parser::Parser<'static, char, (usize, usize) > {
+	let escape_sequence = sym('\\') * sym('"');
+	let char_string = (none_of("\\\"") | escape_sequence).repeat(1..);
+	let escaped_string_end = sym('"') * char_string.repeat(0..).pos() - sym('"');
+    none_of("\"").repeat(0..).pos() + escaped_string_end - none_of("\"").repeat(0..).discard()
+}
+
+fn line_parse() -> pom::parser::Parser<'static, char, Vec<(usize, usize)>>{
+    escape_string().repeat(0..)
+}
+
 
 #[cfg(test)]
 mod test_lib{

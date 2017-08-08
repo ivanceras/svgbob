@@ -778,9 +778,6 @@ use properties::Signal::{
         println!("focus char: {:#?}", fc);
         let (frags, consumed) = fc.get_fragments();
         println!("frags: {:?}", frags);
-        println!("block signal Y: {:?}",fc.get_block_signal(&Y));
-        println!("strong signals: {:?}", fc.get_strong_signals());
-        assert_eq!(Some(Weak), fc.get_block_signal(&Y));
         assert!(!fc.is_intensified(&U));
         assert!(fc.is_intensified(&Y));
     }
@@ -792,10 +789,6 @@ use properties::Signal::{
         println!("focus char: {:#?}", fc);
         let (frags, consumed) = fc.get_fragments();
         println!("frags: {:?}", frags);
-        println!("block signal Y: {:?}",fc.get_block_signal(&Y));
-        println!("strong signals: {:?}", fc.get_strong_signals());
-        assert_eq!(Some(Strong), fc.get_block_signal(&Y));
-        assert_eq!(Some(Strong), fc.get_block_signal(&U));
         assert!(!fc.is_intensified(&Y));
         assert!(!fc.is_intensified(&U));
         assert!(fc.can_be_strong_block(&Y));
