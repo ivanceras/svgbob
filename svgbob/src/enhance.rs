@@ -302,6 +302,25 @@ impl <'g>Enhance for FocusChar<'g>{
                 line(k,o),
             ]);
         }
+        //     |
+        //    -~-
+        //     |
+        else if self.is('~')
+            && self.top().can_strongly_connect(&W)
+            && self.bottom().can_strongly_connect(&C)
+            && self.left().can_strongly_connect(&O)
+            && self.right().can_strongly_connect(&K){
+                elm.extend(vec![
+                    line(&left().k(), &left().m()),
+                    arc(&right().m(), &left().m(),5),
+                    line(&right().o(), &right().m()),
+                    line(c, &bottom().w()),
+                ]);
+                consumed.extend(vec![
+                    left(),
+                    right(),
+                ]);
+            }
         (elm, consumed)
     }
 }
