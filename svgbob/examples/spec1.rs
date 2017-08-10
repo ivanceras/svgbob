@@ -1,3 +1,4 @@
+
 extern crate svgbob;
 extern crate svg;
 
@@ -6,11 +7,13 @@ use svgbob::Settings;
 
 
 fn main() {
-    let file = "examples/demo.svg";
-    let arg = include_str!("demo.bob");
-    let g = Grid::from_str(arg, &Settings::compact());
+    let file = "examples/spec1.svg";
+    let g = Grid::from_str(get_arg(), &Settings::no_optimization());
     let svg = g.get_svg();
     svg::save(file, &svg).unwrap();
     println!("Saved to {}",file);
 }
 
+fn get_arg() -> &'static str{
+r#"-+-"#
+}

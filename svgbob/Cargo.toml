@@ -11,9 +11,10 @@ license = "Apache-2.0"
 [dependencies]
 svg = "0.5"
 unicode-width = "0.1"
+pom = "1.0.1"
 
 
 [lib]
 [dev-dependencies]
-#handlebars = "0.21"
-#pretty_assertions = "0.2"
+handlebars = "0.21"
+pretty_assertions = "0.2"

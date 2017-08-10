@@ -30,12 +30,22 @@
 //! 
 //! 
 //#![deny(warnings)]
+#![feature(inclusive_range_syntax)]
 #![feature(test)]
 extern crate svg;
 extern crate unicode_width;
-//#[cfg(test)]
-//#[macro_use] 
-//extern crate pretty_assertions;
+#[cfg(test)]
+#[macro_use] 
+extern crate pretty_assertions;
+extern crate pom;
+
+use pom::TextInput;
+use pom::{Parser, DataInput};
+use pom::parser::*;
+use pom::Input;
+
+use std::str::FromStr;
+use std::collections::HashMap;
 
 
 
@@ -57,9 +67,23 @@ use self::Stroke::Dashed;
 use unicode_width::UnicodeWidthStr;
 use unicode_width::UnicodeWidthChar;
 use patterns::FocusChar;
+use properties::Location;
+use fragments::Direction::{
+    TopLeft, Top, TopRight,
+    Left, Right,
+    BottomLeft, Bottom, BottomRight
+};
+
+use ::ArcFlag::{Major, Minor};
 
 mod optimizer;
 mod patterns;
+
+mod fragments;
+mod properties;
+mod box_drawing;
+mod enhance;
+mod enhance_circles;
 
 
 /// generate an SVG from the ascii text input
@@ -74,18 +98,6 @@ mod patterns;
 /// commercial version enhances memes automatically
 pub fn to_svg(input: &str) -> SVG {
     Grid::from_str(&input, &Settings::default()).get_svg()
-}
-
-pub fn to_svg_with_size(input: &str, text_width: f32, text_height: f32) -> SVG {
-    let settings = Settings::with_size(text_width, text_height);
-    Grid::from_str(&input, &settings).get_svg()
-}
-
-pub fn to_svg_with_size_nooptimization(input: &str, text_width: f32, text_height: f32) -> SVG {
-    let mut settings = Settings::no_optimization();
-    settings.text_width = text_width;
-    settings.text_height = text_height;
-    Grid::from_str(&input, &settings).get_svg()
 }
 
 
@@ -103,17 +115,17 @@ pub struct Settings {
     /// if optmization is enabled,
     /// true means all reduceable paths will be in 1 path definition
     compact_path: bool,
+    /// the svg class of the generated svg
+    pub class: Option<String>,
+    /// the id of the generated svg 
+    pub id: Option<String>,
 }
 
 impl Settings {
 
-    pub fn with_size(text_width: f32, text_height: f32) -> Self{
-         Settings{
-            text_width: text_width,
-            text_height: text_height,
-            optimize: true,
-            compact_path: true,
-         }
+    pub fn set_size(&mut self, text_width: f32, text_height: f32){
+        self.text_width = text_width;
+        self.text_height = text_height;
     }
     pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
@@ -135,6 +147,24 @@ impl Settings {
         settings.compact_path = true;
         settings
     }
+
+    fn set_id(&mut self, id: String){
+        self.id = Some(id);
+    }
+
+    fn set_class(&mut self, class: String){
+        self.class = Some(class);
+    }
+
+    pub fn set_selector(&mut self, id: Option<String>, class: Option<String>){
+        if let Some(id) = id{
+            self.set_id(id);
+        }
+        if let Some(class) = class{
+            self.set_class(class);
+        }
+    }
+
 }
 
 impl Default for Settings {
@@ -144,6 +174,8 @@ impl Default for Settings {
             text_height: 16.0,
             optimize: true,
             compact_path: true,
+            class: Some("bob".to_string()),
+            id: None
         }
     }
 }
@@ -153,6 +185,19 @@ enum SvgElement {
     Line(SvgLine),
     Path(SvgPath),
     Text(SvgText),
+}
+
+impl std::fmt::Debug for SvgElement{
+
+    fn fmt(&self, fmt: &mut std::fmt::Formatter)->Result<(),std::fmt::Error>{
+        match *self{
+            SvgElement::Circle(ref c) => writeln!(fmt, "{}",c.to_string()),
+            SvgElement::Line(ref l) => writeln!(fmt, "{}",l.to_string()),
+            SvgElement::Path(ref p) => writeln!(fmt, "{}", p.to_string()),
+            SvgElement::Text(ref t) => writeln!(fmt, "{}",t.to_string()),
+        }
+    }
+
 }
 
 
@@ -185,15 +230,9 @@ impl Point {
     fn new(x: f32, y: f32) -> Point {
         Point { x: x, y: y }
     }
-
-    fn add(&self, x: f32, y:f32) -> Point{
-        Point { x: self.x + x, y: self.y + y}
-    }
-    fn add_x(&self, x: f32) -> Point{
-        Point { x: self.x + x, y: self.y }
-    }
-    fn add_y(&self, y: f32) -> Point{
-        Point { x: self.x, y: self.y + y }
+    fn adjust(&mut self, x: f32, y: f32){
+        self.x += x;
+        self.y += y;
     }
 }
 
@@ -208,6 +247,41 @@ pub struct Loc {
 impl Loc {
     pub fn new(x: i32, y: i32) -> Loc {
         Loc { x: x, y: y }
+    }
+
+    pub fn from_location(&self, location: &Location) -> Loc {
+        let mut loc = self.clone();
+        for &(ref direction, step) in &location.0{
+            for _ in 0..step{
+                match *direction{
+                    TopLeft => {
+                        loc = loc.top().left();
+                    },
+                    Top => {
+                        loc = loc.top();
+                    },
+                    TopRight => {
+                        loc = loc.top().right();
+                    },
+                    Left => {
+                        loc = loc.left();
+                    },
+                    Right => {
+                        loc = loc.right();
+                    },
+                    BottomLeft => {
+                        loc = loc.bottom().left();
+                    },
+                    Bottom => {
+                        loc = loc.bottom();
+                    },
+                    BottomRight => {
+                        loc  = loc.bottom().right();
+                    },
+                };
+            }
+        }
+        loc
     }
 
     pub fn top(&self) -> Loc {
@@ -277,40 +351,67 @@ impl Loc {
 #[derive(Debug)]
 #[derive(Clone)]
 #[derive(PartialEq)]
+pub enum ArcFlag{
+    Major,
+    Minor,
+}
+
+#[derive(Debug)]
+#[derive(Clone)]
+#[derive(PartialEq)]
 pub enum Element {
     Circle(Point, f32, String),
     Line(Point, Point, Stroke, Feature),
-    Arc(Point, Point, f32, bool, Stroke, Feature),
+    Arc(Point, Point, f32, ArcFlag, bool, Stroke, Feature),
     Text(Loc, String),
     Path(Point, Point, String, Stroke),
 }
 
+
+pub fn line(a:&Point, b:&Point) -> Element {
+    Element::Line(a.clone(), b.clone(), Solid, Nothing)
+}
+
+pub fn solid_circle(c: &Point, r: f32) -> Element {
+    Element::Circle(c.clone(), r, "solid".to_string())
+}
+
+
+pub fn arrow_arc(a: &Point, b: &Point, r: f32) -> Element{
+   Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Arrow)
+}
+
+pub fn arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
+    Element::Arc(a.clone(), b.clone(), r.clone(), Minor, true, Solid, Arrow)
+}
+
+
+pub fn arc(a: &Point, b: &Point, r: f32) -> Element{
+    Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Nothing)
+}
+
+pub fn arc_major(a: &Point, b: &Point, r: f32) -> Element{
+    Element::Arc(a.clone(), b.clone(), r, Major, false, Solid, Nothing)
+}
+
+
+pub fn open_circle(c:&Point, r:f32) -> Element {
+    Element::Circle(c.clone(),r.clone(), "open".to_string())
+}
+
+pub fn arrow_line(s: &Point, e: &Point) -> Element {
+    Element::Line(s.clone(), e.clone(), Solid, Arrow)
+}
+
+pub fn text(loc: &Loc, txt:&str) -> Element {
+    Element::Text(loc.clone(), escape(txt))
+}
+
+pub fn blank_text(loc: &Loc) -> Element {
+    text(loc," ".into())
+}
+
 impl Element {
-    fn solid_circle(c: &Point, r: f32) -> Element{
-        Element::Circle(c.clone(), r, "solid".into())
-    }
-    fn open_circle(c: &Point, r: f32) -> Element{
-        Element::Circle(c.clone(), r, "open".into())
-    }
-    fn solid_line(s: &Point, e: &Point) -> Element {
-        Element::line(s, e, Solid, Nothing)
-    }
-
-    fn arrow_line(s: &Point, e: &Point) -> Element {
-        Element::line(s,e,Solid,Arrow)
-    }
-
-    fn line(s: &Point, e: &Point, stroke: Stroke, feature: Feature) -> Element {
-        Element::Line(s.clone(), e.clone(), stroke, feature)
-    }
-    fn arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
-        Element::Arc(s.clone(), e.clone(), radius, sweep, Solid, Nothing)
-    }
-
-    fn arrow_arc(s: &Point, e: &Point, radius: f32, sweep: bool) -> Element {
-        Element::Arc(s.clone(), e.clone(), radius, sweep, Solid, Arrow)
-    }
-
     // if this element can reduce the other, return the new reduced element
     // for line it has to be collinear and in can connect start->end->start
     // for text, the other text should apear on the right side of this text
@@ -394,13 +495,15 @@ impl Element {
 
                 SvgElement::Line(svg_line)
             }
-            Element::Arc(ref s, ref e, radius, sweep, _, ref feature) => {
+            Element::Arc(ref s, ref e, radius, ref arc_flag, sweep, _, ref feature) => {
                 let sweept = if sweep { "1" } else { "0" };
-                let d = format!("M {} {} A {} {} 0 0 {} {} {}",
+                let arc_flag = match *arc_flag { Major => "1", Minor => "0" };
+                let d = format!("M {} {} A {} {} 0 {} {} {} {}",
                                 s.x,
                                 s.y,
                                 radius,
                                 radius,
+                                arc_flag,
                                 sweept,
                                 e.x,
                                 e.y);
@@ -453,10 +556,36 @@ fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
 
 
 
+fn exclude_escaped_text(line: &str) -> (String, Vec<(usize, String)>) {
+    let mut input = TextInput::new(line);
+    let parsed = line_parse().parse(&mut input);
+    let mut buffer = String::new();
+    let mut text_elm: Vec<(usize, String)> = vec![];
+    if let Ok(parsed) = parsed{
+        let mut index = 0;
+        if !parsed.is_empty(){
+            for (start, end) in parsed{
+                let escaped = &line[start+1..end];
+                let recons =  &line[index..start];
+                text_elm.push((start, escaped.to_string()));
+                buffer.push_str(recons);
+                buffer.push_str(&" ".repeat(end+1 - start));
+                index = end + 1;
+            }
+        }
+        else{
+            buffer.push_str(line);
+        }
+    }
+    (buffer, text_elm)
+}
+
+
 #[derive(Debug)]
 pub struct Grid {
     settings: Settings,
-    index: Vec<Vec<String>>
+    index: Vec<Vec<String>>,
+    text_elm: Vec<(usize, usize, String)>
 }
 impl Grid {
     /// instantiate a grid from input ascii text
@@ -467,8 +596,13 @@ impl Grid {
     pub fn from_str(s: &str, settings: &Settings) -> Grid {
         let lines: Vec<&str> = s.lines().collect();
         let mut rows: Vec<Vec<String>> = Vec::with_capacity(lines.len());
-        for line in lines{
+        let mut text_elm: Vec<(usize, usize, String)> = vec![];
+        for (y, line) in lines.iter().enumerate(){
+            let (line, escaped_texts):(String, Vec<(usize, String)>) = exclude_escaped_text(line);
             let mut row: Vec<String> = Vec::with_capacity(line.chars().count());
+            for (x, escaped) in escaped_texts{
+                text_elm.push((x, y, escaped));
+            }
             for ch in line.chars(){
                 if let Some(1) = ch.width(){
                     row.push(format!("{}",ch));
@@ -499,6 +633,7 @@ impl Grid {
         Grid {
             settings: settings.clone(),
             index: rows,
+            text_elm: text_elm,
         }
     }
 
@@ -668,6 +803,7 @@ impl Grid {
 
 
     /// vector of each elements arranged in rows x columns
+    /// returns all the elements and the consumed location
     fn get_all_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         let mut all_consumed_loc: Vec<Loc> = vec![];
@@ -689,12 +825,23 @@ impl Grid {
         (rows, all_consumed_loc)
     }
 
+    fn get_escaped_text_elements(&self) -> Vec<Element> {
+        self.text_elm.iter()
+            .map(|&(x,y,ref text)|
+                Element::Text(Loc::new(x as i32,y as i32), text.to_owned())
+                )
+            .collect()
+    }
+
+
     /// each component has its relative location retain
     /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
         let start = std::time::SystemTime::now();
-        let (elements,consumed_loc) = self.get_all_elements();
+        let (mut elements,consumed_loc) = self.get_all_elements();
+        let text_elm = self.get_escaped_text_elements();
+        elements.push(vec![text_elm]);
         let input = if self.settings.optimize {
             let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements, consumed_loc);
@@ -743,13 +890,18 @@ impl Grid {
         let nodes = self.get_svg_nodes();
         let width = self.settings.text_width * self.columns()  as f32;
         let height = self.settings.text_height * self.rows() as f32;
-        let mut svg = SVG::new()
-            .set("font-size", 14)
-            .set("font-family",
-                "arial"
-                )
-            .set("width", width)
-            .set("height", height);
+        let mut svg = SVG::new();
+
+        if let Some(ref id) = self.settings.id{
+            svg.assign("id", id.to_owned());
+        }
+        if let Some(ref class) = self.settings.class{
+            svg.assign("class", class.to_owned());
+        }
+        svg.assign("font-size", 14);
+        svg.assign("font-family", "arial");
+        svg.assign("width", width);
+        svg.assign("height", height);
 
         svg.append(get_defs());
         svg.append(get_styles());
@@ -829,8 +981,8 @@ fn arrow_marker() -> Marker {
 
 }
 
-fn escape_char(ch: &str) -> String {
-    let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;")];
+fn escape(ch: &str) -> String {
+    let escs = [("\"", "&quot;"), ("'", "&apos;"), ("<", "&lt;"), (">", "&gt;"), ("&", "&amp;"), ("\0","")];
     let quote_match: Option<&(&str, &str)> = escs.iter()
         .find(|pair| {
             let &(e, _) = *pair;
@@ -848,11 +1000,58 @@ fn escape_char(ch: &str) -> String {
 
 }
 
+
+#[test]
+fn test_escaped_string(){
+
+    let mut input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+    let mut raw3 = TextInput::new(input3);
+    let output3 = line_parse().parse(&mut raw3);
+    println!("output3: {:?}", output3);
+    assert_eq!(Ok(vec![(4, 12), (20, 27), (49, 54)]), output3);
+    let mut matches = vec![];
+    let mut recons = String::new();
+    let mut text_elm: Vec<(usize, String)> = vec![];
+    let mut index = 0;
+    if let Ok(output) = output3{
+        for (start, end) in output{
+            println!("matches: {}", &input3[start...end]);
+            matches.push(input3[start...end].to_string());
+            let slice = &input3[index..start];
+            recons.push_str(slice);
+            recons.push_str(&" ".repeat(end+1-start));
+            text_elm.push((start, input3[start+1..end].to_string()));
+            index = end+1;
+        }
+    }
+    println!("input3: {}", input3);
+    println!("recons: {}", recons);
+    println!("escaped: {:?}", text_elm);
+    assert_eq!(vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#], matches);
+    assert_eq!(input3.len(), recons.len());
+    panic!();
+}
+
+
+
+fn escape_string() -> pom::parser::Parser<'static, char, (usize, usize) > {
+	let escape_sequence = sym('\\') * sym('"');
+	let char_string = (none_of("\\\"") | escape_sequence).repeat(1..);
+	let escaped_string_end = sym('"') * char_string.repeat(0..).pos() - sym('"');
+    none_of("\"").repeat(0..).pos() + escaped_string_end - none_of("\"").repeat(0..).discard()
+}
+
+fn line_parse() -> pom::parser::Parser<'static, char, Vec<(usize, usize)>>{
+    escape_string().repeat(0..)
+}
+
+
 #[cfg(test)]
 mod test_lib{
     use super::Grid;
     use super::Settings;
     use super::Loc;
+
 
     #[test]
     fn test_grid(){
