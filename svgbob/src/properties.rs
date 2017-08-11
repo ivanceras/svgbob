@@ -1231,18 +1231,24 @@ impl Properties for char{
                 ]
             })
         }
+        // if nothing matches, try checking in box drawing
         else{
             let (blocks, fragments) = box_drawing::box_drawing(&self);
             let mut properties = vec![];
             for b in blocks{
                 properties.push((b, Strong, fragments.clone()));
             }
-            Some(Characteristic{
-                intensify: vec![
-                        ],
-                intended_behavior:vec![],
-                properties: properties, 
-            })
+            if !properties.is_empty(){
+                Some(Characteristic{
+                    intensify: vec![
+                            ],
+                    intended_behavior:vec![],
+                    properties: properties, 
+                })
+            }
+            else{
+                None
+            }
         }
     }
 
@@ -1261,3 +1267,4 @@ impl Properties for char{
     }
 
 }
+

@@ -68,3 +68,4 @@ fn test_dot_dash(){
     let expected = r#"<line x1="0" x2="24" y1="8" y2="8"/>"#;
     assert_eq!(result, expected);
 }
+

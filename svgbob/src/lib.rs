@@ -54,6 +54,7 @@ use svg::node::element::Circle as SvgCircle;
 use svg::node::element::Path as SvgPath;
 use svg::node::element::Line as SvgLine;
 use svg::node::element::Text as SvgText;
+use svg::node::element::Rectangle as SvgRect;
 use svg::node::element::Style;
 use svg::node::element::SVG;
 use svg::node::element::Definitions;
@@ -905,6 +906,19 @@ impl Grid {
 
         svg.append(get_defs());
         svg.append(get_styles());
+        let rect = SvgRect::new()
+            .set("x",0)
+            .set("y",0)
+            .set("fill","#fff")
+            .set("width", width)
+            .set("height", height);
+
+        //TODO: move these somewhere in settings
+        let enable_rect_background = false;
+
+        if enable_rect_background{
+            svg.append(rect);
+        }
 
         for node in nodes {
             match node {
@@ -1029,7 +1043,6 @@ fn test_escaped_string(){
     println!("escaped: {:?}", text_elm);
     assert_eq!(vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#], matches);
     assert_eq!(input3.len(), recons.len());
-    panic!();
 }
 
 

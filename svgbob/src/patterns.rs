@@ -319,9 +319,29 @@ impl <'g>FocusChar<'g>{
         self.ch.any(s)
     }
 
+    /// check to see if any of the 8 neighbor is a drawing character
+    /// but not checking whether can connect to this, since it is
+    /// more expensive
+    fn any_neighbor_is_drawing_character(&self) -> bool {
+        if self.top().ch.get_characteristic().is_some()
+            || self.bottom().ch.get_characteristic().is_some()
+            || self.left().ch.get_characteristic().is_some()
+            || self.right().ch.get_characteristic().is_some()
+            || self.top_left().ch.get_characteristic().is_some()
+            || self.top_right().ch.get_characteristic().is_some()
+            || self.bottom_left().ch.get_characteristic().is_some()
+            || self.bottom_right().ch.get_characteristic().is_some(){
+            true
+        }
+        else{
+            false
+        }
+    }
+
 
     fn used_as_text(&self) -> bool {
-        if self.is_text_surrounded(){
+        if self.is_text_surrounded()
+            && !self.any_neighbor_is_drawing_character(){
             true
         }
         else{
@@ -596,13 +616,13 @@ impl <'g>FocusChar<'g>{
                     && !matched_circles
                     && !matched_intended {
                     for &(ref block, ref signal, ref fragments) in &character.properties{
-                        // draw when a strong block and not used as text
-                        if self.is_strong_block(&block)/* && !self.used_as_text()*/{
+                        // draw when used as text but intensified 
+                        if self.is_intensified(&block){
                             elm.extend(fragments.clone());
                             matched = true;
                         }
-                        // draw when used as text but intensified 
-                        else if self.is_intensified(&block){
+                        // draw when a strong block and not used as text
+                        else if self.is_strong_block(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched = true;
                         }
@@ -793,5 +813,31 @@ use properties::Signal::{
         assert!(!fc.is_intensified(&U));
         assert!(fc.can_be_strong_block(&Y));
         assert!(fc.can_be_strong_block(&U));
+    }
+
+    #[test]
+    fn test_no_character(){
+        use ::{Grid,Settings,FocusChar,Loc};
+        use properties::Properties;
+
+        let g = Grid::from_str(".l", &Settings::separate_lines());
+        let fc = FocusChar::new(&Loc::new(1,0), &g);
+        println!("focus char: {:#?}", fc);
+        let character = fc.ch.get_characteristic();
+        println!("character: {:#?}", character);
+        assert!(character.is_none());
+    }
+
+    #[test]
+    fn test_has_character(){
+        use ::{Grid,Settings,FocusChar,Loc};
+        use properties::Properties;
+
+        let g = Grid::from_str(".╦", &Settings::separate_lines());
+        let fc = FocusChar::new(&Loc::new(1,0), &g);
+        println!("focus char: {:#?}", fc);
+        let character = fc.ch.get_characteristic();
+        println!("character: {:#?}", character);
+        assert!(character.is_some());
     }
 }
