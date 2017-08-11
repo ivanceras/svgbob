@@ -32,6 +32,11 @@ neither this |
 
 
 These will have "escaped" strings that are no "visible here"
+
+Escaping these drawing characters "`[(/<^.|+v*>\)]'"
+Escaping these drawing characters "`[(/<^.|+v*>\)]'"
+
+No quotes inside quotes "this \" unqouted"
     
   -==-
   -==-
