@@ -796,6 +796,12 @@ impl Grid {
         text
     }
 
+
+   pub fn get_all_text(&self) -> Vec<Vec<Option<&String>>>{
+       let loc1 = Loc::new(0,0);
+       let loc2 = Loc::new((self.columns() - 1) as i32, (self.rows() - 1) as i32);
+       self.get_text_in_range(&loc1, &loc2)
+   }
     
     /// get the focus char at this location
     pub fn get_focuschar(&self, loc: &Loc) -> FocusChar {
@@ -885,12 +891,17 @@ impl Grid {
         svg
     }
 
+    pub fn get_size(&self) -> (f32, f32) {
+        let width = self.settings.text_width * self.columns()  as f32;
+        let height = self.settings.text_height * self.rows() as f32;
+        (width, height)
+    }
+
 
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self) -> SVG {
         let nodes = self.get_svg_nodes();
-        let width = self.settings.text_width * self.columns()  as f32;
-        let height = self.settings.text_height * self.rows() as f32;
+        let (width, height) = self.get_size();
         let mut svg = SVG::new();
 
         if let Some(ref id) = self.settings.id{
