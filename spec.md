@@ -163,3 +163,12 @@ Default values:
 |`\|`<br>`+`   |`<line x1="4" y1="0" x2="4" y2="24"/>`|<svg width="8" height="32"><line x1="4" y1="0" x2="4" y2="24"/></svg>
 |`+`<br>`\|`   |`<line x1="4" y1="8" x2="4" y2="32"/>`|<svg width="8" height="32"><line x1="4" y1="8" x2="4" y2="32"/></svg>
 
+## Dot and Comma (.,)
+- Primary purpose is to make rounded corners, top_left rounded corner and top_right rounded corner
+
+** Example 1:**
+
+|text | svg | rendered
+|-----|-----|---------
+|`.-`<br>`\|``|
+
