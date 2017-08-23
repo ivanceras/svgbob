@@ -553,29 +553,38 @@ impl <'g>FocusChar<'g>{
         let character:Option<Characteristic> = self.ch.get_characteristic(); 
         let mut elm: Vec<Fragment> = vec![];
         let mut consumed: Vec<Location> = vec![];
-        if let Some(character) = character{
-            let mut matched_intended = false;
-            let mut matched_enhance = false;
-            let mut matched_circles = false;
-            
-            let enable_round_circles = true;
-            let enable_enhancements = true;
-            let enable_intended_behavior = true;
-            let enable_default_properties = true;
 
+        let mut matched_intended = false;
+        let mut matched_enhance = false;
+        let mut matched_circles = false;
+        
+        let enable_round_circles = true;
+        let enable_enhancements = true;
+        let enable_intended_behavior = true;
+        let enable_default_properties = true;
 
-            if enable_round_circles{
-                let (circles, circles_consumed, along_arc) = self.round();
-                if !circles.is_empty(){
-                    elm.extend(circles);
-                    consumed.extend(circles_consumed);
-                    // if circle is matched, and element is along the arc
-                    // skip processing of other,
-                    // otherwise, even if circle is matched and the element is NOT along arc
-                    // do process other enhancement, behaviors
-                    matched_circles = along_arc;
-                }
+        // spaces has no character
+        // that's why enhance circle didn't work out well
+        // Issue#1 circle: The circle is matched by testing from the center
+        // however, each elements along the circle would also be
+        // threated as some other characters that has some other behaviors
+        // causing multiple artifacts as a result of multiple usage of the elements
+        // emitting fragments and merge all together when the circle is also matched.
+        // To solve the issue, checking of circle should be done first
+        // and then the consumed elements are skipped and checked
+        if enable_round_circles{
+            let (circles, circles_consumed, along_arc) = self.round();
+            if !circles.is_empty(){
+                elm.extend(circles);
+                consumed.extend(circles_consumed);
+                // if circle is matched, and element is along the arc
+                // skip processing of other,
+                // otherwise, even if circle is matched and the element is NOT along arc
+                // do process other enhancement, behaviors
+                matched_circles = along_arc;
             }
+        }
+        if let Some(character) = character{
             // enhancements
             if enable_enhancements{
                 if !matched_circles{
