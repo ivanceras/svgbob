@@ -120,7 +120,6 @@ impl <'g>Round for FocusChar<'g>{
             && self.right().is(')')
             && self.top().is('_'){
 
-            println!("matched circle 0");
             elm.push(open_circle(m, 4));
             consumed.extend(vec![
                 top(), left(), right(),
@@ -158,7 +157,6 @@ impl <'g>Round for FocusChar<'g>{
                 ]);
                 matched_arc = true;
                 matched_quadrant2 = true;
-                println!("circle1 matched quadrant2");
             }
             //  -.
             //  + )
@@ -174,7 +172,6 @@ impl <'g>Round for FocusChar<'g>{
                 ]);
                 matched_arc = true;
                 matched_quadrant1 = true;
-                println!("circle1 matched quadrant1");
             }
 
             //  ( +
@@ -192,7 +189,6 @@ impl <'g>Round for FocusChar<'g>{
                 ]);
                 matched_arc = true;
                 matched_quadrant3= true;
-                println!("circle1 matched quadrant3");
             }
 
             //  + )
@@ -209,7 +205,6 @@ impl <'g>Round for FocusChar<'g>{
                 ]);
                 matched_arc = true;
                 matched_quadrant4= true;
-                println!("circle1 matched quadrant4");
             }
             
 
@@ -221,7 +216,6 @@ impl <'g>Round for FocusChar<'g>{
                 && matched_quadrant2
                 && matched_quadrant3
                 && matched_quadrant4{
-                println!("matched circle1");
                 elm.push(open_circle(m, 8));
                 consumed.extend(vec![
                     top(),
@@ -330,7 +324,6 @@ impl <'g>Round for FocusChar<'g>{
                 && matched_quadrant2
                 && matched_quadrant3
                 && matched_quadrant4{
-                    println!("matched circle2");
                 elm.push(open_circle(o, 10));
                 matched_circle = true;
                 along_arc = false;
@@ -453,7 +446,6 @@ impl <'g>Round for FocusChar<'g>{
                     bottom()
                 ]);
                 matched_circle = true;
-                println!("matched circle3");
             }
             else{
                 elm.extend(quadrants);
