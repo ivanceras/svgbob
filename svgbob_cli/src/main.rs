@@ -21,7 +21,8 @@ fn main() {
     let args = App::new("svgbob")
         .version(crate_version!())
         .about("SvgBobRus is an ascii to svg converter")
-        .arg(Arg::with_name("input").index(1).help("svgbob text file to parse [default: STDIN]"))
+        .arg(Arg::with_name("inline").short("s").help("parse an inline string"))
+        .arg(Arg::with_name("input").index(1).help("svgbob text file or inline string to parse [default: STDIN]"))
         .arg(Arg::with_name("output")
             .short("o")
             .long("output")
@@ -51,26 +52,31 @@ fn main() {
     }
 
     let mut bob = String::new();
-    if let Some(file) = args.value_of("input") {
-        match File::open(file) {
-            Ok(mut f) => {
-                f.read_to_string(&mut bob).unwrap();
-            }
-            Err(e) => {
-                use std::io::Write;
-                use std::process::exit;
 
-                writeln!(&mut std::io::stderr(),
-                         "Failed to open input file {}: {}",
-                         file,
-                         e)
-                    .unwrap();
-                exit(1);
-            }
-        }
+    if args.is_present("inline") {
+        bob = args.value_of("input").unwrap().replace("\\n","\n").to_string();
     } else {
-        use std::io;
-        io::stdin().read_to_string(&mut bob).unwrap();
+        if let Some(file) = args.value_of("input") {
+            match File::open(file) {
+                Ok(mut f) => {
+                    f.read_to_string(&mut bob).unwrap();
+                }
+                Err(e) => {
+                    use std::io::Write;
+                    use std::process::exit;
+
+                    writeln!(&mut std::io::stderr(),
+                            "Failed to open input file {}: {}",
+                            file,
+                            e)
+                        .unwrap();
+                    exit(1);
+                }
+            }
+        } else {
+            use std::io;
+            io::stdin().read_to_string(&mut bob).unwrap();
+        }
     }
 
     let g = Grid::from_str(&*bob, &Settings::compact());
