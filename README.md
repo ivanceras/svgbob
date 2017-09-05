@@ -35,24 +35,38 @@ $ svgbob -o long.svg < examples/long.bob
 $ svgbob examples/long.bob > long.svg
 ```
 
+You can pipe string from the output of other program:
+```console
+echo -e "+--+\n| |\n+--+" | svgbob
+```
+You can also pass an inline string:
+```console
+svgbob -s -- "+--+\n| |\n+--+"
+```
+
 This is also documented in the output of `svgbob --help`:
 ```console
 $ svgbob --help
-svgbob 0.1.2
+svgbob 0.2.1
 SvgBobRus is an ascii to svg converter
 
 USAGE:
-    svgbob [OPTIONS] [input]
+    svgbob [FLAGS] [OPTIONS] [input] [SUBCOMMAND]
 
 FLAGS:
     -h, --help       Prints help information
+    -s               parse an inline string
     -V, --version    Prints version information
 
 OPTIONS:
     -o, --output <output>    where to write svg output [default: STDOUT]
 
 ARGS:
-    <input>    svgbob text file to parse [default: STDIN]
+    <input>    svgbob text file or inline string to parse [default: STDIN]
+
+SUBCOMMANDS:
+    build    Batch convert files to svg.
+    help     Prints this message or the help of the given subcommand(s)
 ```
 
 
