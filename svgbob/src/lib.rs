@@ -1067,8 +1067,8 @@ fn test_escaped_string(){
     let mut index = 0;
     if let Ok(output) = output3{
         for (start, end) in output{
-            println!("matches: {}", &input3[start...end]);
-            matches.push(input3[start...end].to_string());
+            println!("matches: {}", &input3[start..=end]);
+            matches.push(input3[start..=end].to_string());
             let slice = &input3[index..start];
             recons.push_str(slice);
             recons.push_str(&" ".repeat(end+1-start));
@@ -1098,8 +1098,8 @@ fn test_escaped_multiline_string(){
     let mut index = 0;
     if let Ok(output) = output3{
         for (start, end) in output{
-            println!("matches: {}", &input3[start...end]);
-            matches.push(input3[start...end].to_string());
+            println!("matches: {}", &input3[start..=end]);
+            matches.push(input3[start..=end].to_string());
             let slice = &input3[index..start];
             recons.push_str(slice);
             recons.push_str(&" ".repeat(end+1-start));

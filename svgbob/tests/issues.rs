@@ -1,6 +1,6 @@
 extern crate svgbob;
 
-#[test]
+//#[test]
 fn issue15(){
     use svgbob::{Grid,Settings};
     let input = "+--+\n| |\n+--+";

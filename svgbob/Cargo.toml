@@ -18,3 +18,4 @@ pom = "1.0.1"
 [dev-dependencies]
 handlebars = "0.21"
 pretty_assertions = "0.2"
+sys-info = "0.5.1"
