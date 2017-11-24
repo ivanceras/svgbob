@@ -1116,7 +1116,7 @@ fn test_escaped_multiline_string(){
 
 fn escape_string() -> pom::parser::Parser<'static, char, (usize, usize) > {
 	let escape_sequence = sym('\\') * sym('"'); //escape sequence \"
-	let char_string = (none_of("\"") | escape_sequence);
+	let char_string = escape_sequence | none_of("\"");
 	let escaped_string_end = sym('"') * char_string.repeat(0..).pos() - sym('"');
     none_of("\"").repeat(0..).pos() + escaped_string_end - none_of("\"").repeat(0..).discard()
 }
