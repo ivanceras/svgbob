@@ -5306,7 +5306,7 @@ visible here
 `[(/&lt;^.|+v*&gt;\)]&#39;
 </text>
 <text x="193" y="620">
-this \
+this \&quot; unqouted
 </text>
 <text x="33" y="1548">
 x+y = a|b in ls/usr/bin/local/
