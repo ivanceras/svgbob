@@ -573,6 +573,7 @@ fn exclude_escaped_text(line: &str) -> (String, Vec<(usize, String)>) {
                 buffer.push_str(&" ".repeat(end+1 - start));
                 index = end + 1;
             }
+            buffer.push_str(&line[index..line.len()]);
         }
         else{
             buffer.push_str(line);
