@@ -1,6 +1,6 @@
 [package]
 name = "svgbob"
-version = "0.2.1"
+version = "0.2.3"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbobrus"
@@ -18,3 +18,4 @@ pom = "1.0.1"
 [dev-dependencies]
 handlebars = "0.21"
 pretty_assertions = "0.2"
+sys-info = "0.5.1"

@@ -1,23 +1,13 @@
-#![feature(test)]
-extern crate test;
-
+#![feature(libc)]
+extern crate sys_info;
 extern crate svgbob;
-use test::Bencher;
+extern crate libc;
+extern {fn je_stats_print (write_cb: extern fn (*const libc::c_void, *const libc::c_char), cbopaque: *const libc::c_void, opts: *const libc::c_char);}
+extern fn write_cb (_: *const libc::c_void, message: *const libc::c_char) {
+    print! ("{}", String::from_utf8_lossy (unsafe {std::ffi::CStr::from_ptr (message as *const i8) .to_bytes()}));}
 
-#[cfg(test)]
-mod tests {
-    #![feature(test)]
-    extern crate test;
-    extern crate sys_info;
-    use super::*;
-
-    #[bench]
-    fn how_fast(b: &mut Bencher) {
-        b.iter(|| svgbob::to_svg(get_arg()));
-    }
-}
-
-fn get_arg() -> &'static str{
+#[test]
+fn show_mem_consumption(){
 
 let arg = r#"
 +------+   +-----+   +-----+   +-----+
@@ -118,5 +108,9 @@ let arg = r#"
        More::Stuff  V 
 "#;
 
-arg
+    println!("before: {:?}", sys_info::mem_info().unwrap());
+    unsafe{je_stats_print(write_cb, std::ptr::null(), std::ptr::null())};
+    self::svgbob::to_svg(arg);
+    println!("after: {:?}", sys_info::mem_info().unwrap());
+    unsafe{je_stats_print(write_cb, std::ptr::null(), std::ptr::null())};
 }
