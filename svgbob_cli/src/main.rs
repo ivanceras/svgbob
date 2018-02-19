@@ -28,6 +28,14 @@ fn main() {
             .long("output")
             .takes_value(true)
             .help("where to write svg output [default: STDOUT]"))
+        .arg(Arg::with_name("font-family")
+             .long("font-family")
+             .takes_value(true)
+             .help("text will be rendered with this font"))
+        .arg(Arg::with_name("font-size")
+             .long("font-size")
+             .takes_value(true)
+             .help("text will be rendered with this font size"))
         .subcommand(SubCommand::with_name("build")
             .about("Batch convert files to svg.")
             .version("0.0.1")
@@ -79,7 +87,31 @@ fn main() {
         }
     }
 
-    let g = Grid::from_str(&*bob, &Settings::compact());
+    let mut settings = Settings::compact();
+
+    if let Some(font_family) = args.value_of("font-family") {
+        settings.font_family = font_family.to_string();
+    }
+
+    if let Some(font_size) = args.value_of("font-size") {
+        match font_size.parse() {
+            Ok(fs) => {
+                settings.font_size = fs;
+            }
+            Err(e) => {
+                use std::io::Write;
+                use std::process::exit;
+
+                writeln!(&mut std::io::stderr(),
+                         "Wrong font size: {}",
+                         e)
+                    .unwrap();
+                exit(1);
+            }
+        }
+    }
+
+    let g = Grid::from_str(&*bob, &settings);
     let svg = g.get_svg();
 
     if let Some(file) = args.value_of("output") {
