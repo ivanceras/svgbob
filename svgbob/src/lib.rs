@@ -120,6 +120,10 @@ pub struct Settings {
     pub class: Option<String>,
     /// the id of the generated svg 
     pub id: Option<String>,
+    /// the font family used for text (default: arial)
+    pub font_family: String,
+    /// the font size used for text (default: 14)
+    pub font_size: usize,
 }
 
 impl Settings {
@@ -165,7 +169,6 @@ impl Settings {
             self.set_class(class);
         }
     }
-
 }
 
 impl Default for Settings {
@@ -176,7 +179,9 @@ impl Default for Settings {
             optimize: true,
             compact_path: true,
             class: Some("bob".to_string()),
-            id: None
+            id: None,
+            font_family: "arial".to_string(),
+            font_size: 14,
         }
     }
 }
@@ -911,8 +916,8 @@ impl Grid {
         if let Some(ref class) = self.settings.class{
             svg.assign("class", class.to_owned());
         }
-        svg.assign("font-size", 14);
-        svg.assign("font-family", "arial");
+        svg.assign("font-size", self.settings.font_size);
+        svg.assign("font-family", self.settings.font_family.to_owned());
         svg.assign("width", width);
         svg.assign("height", height);
 
