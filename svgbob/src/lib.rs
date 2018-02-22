@@ -123,7 +123,9 @@ pub struct Settings {
     /// the font family used for text (default: arial)
     pub font_family: String,
     /// the font size used for text (default: 14)
-    pub font_size: usize,
+    pub font_size: f32,
+    /// stroke width for all lines (default: 2.0)
+    pub stroke_width: f32,
 }
 
 impl Settings {
@@ -132,6 +134,14 @@ impl Settings {
         self.text_width = text_width;
         self.text_height = text_height;
     }
+
+    pub fn scale(&mut self, scale: f32) {
+        self.text_width = self.text_width * scale;
+        self.text_height = self.text_height * scale;
+        self.font_size = self.font_size * scale;
+        self.stroke_width = self.stroke_width * scale;
+    }
+
     pub fn no_optimization() -> Settings {
         let mut settings = Settings::default();
         settings.optimize = false;
@@ -181,7 +191,8 @@ impl Default for Settings {
             class: Some("bob".to_string()),
             id: None,
             font_family: "arial".to_string(),
-            font_size: 14,
+            font_size: 14.0,
+            stroke_width: 2.0,
         }
     }
 }
@@ -922,7 +933,7 @@ impl Grid {
         svg.assign("height", height);
 
         svg.append(get_defs());
-        svg.append(get_styles());
+        svg.append(get_styles(&self.settings));
         let rect = SvgRect::new()
             .set("x",0)
             .set("y",0)
@@ -963,35 +974,35 @@ fn get_defs() -> Definitions {
     defs
 }
 
-fn get_styles() -> Style {
-    let style = r#"
-    line, path {
+fn get_styles(settings: &Settings) -> Style {
+    let style = format!(r#"
+    line, path {{
       stroke: black;
-      stroke-width: 2;
+      stroke-width: {};
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
-    }
-    circle {
+    }}
+    circle {{
       stroke: black;
-      stroke-width: 2;
+      stroke-width: {};
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
-    }
-    circle.solid {
+    }}
+    circle.solid {{
       fill:black;
-    }
-    circle.open {
+    }}
+    circle.open {{
       fill:transparent;
-    }
-    tspan.head{
+    }}
+    tspan.head{{
         fill: none;
         stroke: none;
-    }
-    "#;
+    }}
+    "#, settings.stroke_width, settings.stroke_width);
     Style::new(style)
 }
 

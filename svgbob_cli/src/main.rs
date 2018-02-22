@@ -31,11 +31,19 @@ fn main() {
         .arg(Arg::with_name("font-family")
              .long("font-family")
              .takes_value(true)
-             .help("text will be rendered with this font"))
+             .help("text will be rendered with this font (default: 'arial')"))
         .arg(Arg::with_name("font-size")
              .long("font-size")
              .takes_value(true)
-             .help("text will be rendered with this font size"))
+             .help("text will be rendered with this font size (default: 14)"))
+        .arg(Arg::with_name("stroke-width")
+             .long("stroke-width")
+             .takes_value(true)
+             .help("stroke width for all lines (default: 2)"))
+        .arg(Arg::with_name("scale")
+             .long("scale")
+             .takes_value(true)
+             .help("scale the entire svg (dimensions, font size, stroke width) by this factor (default: 1)"))
         .subcommand(SubCommand::with_name("build")
             .about("Batch convert files to svg.")
             .version("0.0.1")
@@ -104,6 +112,42 @@ fn main() {
 
                 writeln!(&mut std::io::stderr(),
                          "Wrong font size: {}",
+                         e)
+                    .unwrap();
+                exit(1);
+            }
+        }
+    }
+
+    if let Some(stroke_width) = args.value_of("stroke-width") {
+        match stroke_width.parse() {
+            Ok(sw) => {
+                settings.stroke_width = sw;
+            }
+            Err(e) => {
+                use std::io::Write;
+                use std::process::exit;
+
+                writeln!(&mut std::io::stderr(),
+                         "Wrong stroke width: {}",
+                         e)
+                    .unwrap();
+                exit(1);
+            }
+        }
+    }
+
+    if let Some(scale) = args.value_of("scale") {
+        match scale.parse() {
+            Ok(s) => {
+                settings.scale(s);
+            }
+            Err(e) => {
+                use std::io::Write;
+                use std::process::exit;
+
+                writeln!(&mut std::io::stderr(),
+                         "Wrong scale: {}",
                          e)
                     .unwrap();
                 exit(1);
