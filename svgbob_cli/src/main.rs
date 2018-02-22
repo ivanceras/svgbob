@@ -14,6 +14,7 @@ use std::path::{Path, PathBuf};
 use std::error::Error;
 use std::io::Read;
 use std::process::exit;
+use std::str::FromStr;
 
 fn main() {
     use clap::{Arg, App, SubCommand};
@@ -101,58 +102,16 @@ fn main() {
         settings.font_family = font_family.to_string();
     }
 
-    if let Some(font_size) = args.value_of("font-size") {
-        match font_size.parse() {
-            Ok(fs) => {
-                settings.font_size = fs;
-            }
-            Err(e) => {
-                use std::io::Write;
-                use std::process::exit;
-
-                writeln!(&mut std::io::stderr(),
-                         "Wrong font size: {}",
-                         e)
-                    .unwrap();
-                exit(1);
-            }
-        }
+    if let Some(font_size) = parse_value_of(&args, "font-size") {
+        settings.font_size = font_size;
     }
 
-    if let Some(stroke_width) = args.value_of("stroke-width") {
-        match stroke_width.parse() {
-            Ok(sw) => {
-                settings.stroke_width = sw;
-            }
-            Err(e) => {
-                use std::io::Write;
-                use std::process::exit;
-
-                writeln!(&mut std::io::stderr(),
-                         "Wrong stroke width: {}",
-                         e)
-                    .unwrap();
-                exit(1);
-            }
-        }
+    if let Some(stroke_width) = parse_value_of(&args, "stroke-width") {
+        settings.stroke_width = stroke_width;
     }
 
-    if let Some(scale) = args.value_of("scale") {
-        match scale.parse() {
-            Ok(s) => {
-                settings.scale(s);
-            }
-            Err(e) => {
-                use std::io::Write;
-                use std::process::exit;
-
-                writeln!(&mut std::io::stderr(),
-                         "Wrong scale: {}",
-                         e)
-                    .unwrap();
-                exit(1);
-            }
-        }
+    if let Some(scale) = parse_value_of(&args, "scale") {
+        settings.scale(scale);
     }
 
     let g = Grid::from_str(&*bob, &settings);
@@ -173,6 +132,23 @@ fn main() {
     } else {
         println!("{}", svg);
     }
+}
+
+fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T> where <T as std::str::FromStr>::Err: std::fmt::Display {
+    return args.value_of(arg_name).and_then(|arg| match arg.parse::<T>() {
+        Ok(a) => Some(a),
+        Err(e) => {
+            use std::io::Write;
+            use std::process::exit;
+
+            writeln!(&mut std::io::stderr(),
+                        "Illegal value for argument {}: {}",
+                        arg_name,
+                        e)
+                .unwrap();
+            exit(1);
+        }
+    });
 }
 
 // Batch convert files to svg
