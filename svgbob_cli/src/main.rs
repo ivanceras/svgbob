@@ -14,6 +14,7 @@ use std::path::{Path, PathBuf};
 use std::error::Error;
 use std::io::Read;
 use std::process::exit;
+use std::str::FromStr;
 
 fn main() {
     use clap::{Arg, App, SubCommand};
@@ -28,6 +29,22 @@ fn main() {
             .long("output")
             .takes_value(true)
             .help("where to write svg output [default: STDOUT]"))
+        .arg(Arg::with_name("font-family")
+             .long("font-family")
+             .takes_value(true)
+             .help("text will be rendered with this font (default: 'arial')"))
+        .arg(Arg::with_name("font-size")
+             .long("font-size")
+             .takes_value(true)
+             .help("text will be rendered with this font size (default: 14)"))
+        .arg(Arg::with_name("stroke-width")
+             .long("stroke-width")
+             .takes_value(true)
+             .help("stroke width for all lines (default: 2)"))
+        .arg(Arg::with_name("scale")
+             .long("scale")
+             .takes_value(true)
+             .help("scale the entire svg (dimensions, font size, stroke width) by this factor (default: 1)"))
         .subcommand(SubCommand::with_name("build")
             .about("Batch convert files to svg.")
             .version("0.0.1")
@@ -79,7 +96,25 @@ fn main() {
         }
     }
 
-    let g = Grid::from_str(&*bob, &Settings::compact());
+    let mut settings = Settings::compact();
+
+    if let Some(font_family) = args.value_of("font-family") {
+        settings.font_family = font_family.to_string();
+    }
+
+    if let Some(font_size) = parse_value_of(&args, "font-size") {
+        settings.font_size = font_size;
+    }
+
+    if let Some(stroke_width) = parse_value_of(&args, "stroke-width") {
+        settings.stroke_width = stroke_width;
+    }
+
+    if let Some(scale) = parse_value_of(&args, "scale") {
+        settings.scale(scale);
+    }
+
+    let g = Grid::from_str(&*bob, &settings);
     let svg = g.get_svg();
 
     if let Some(file) = args.value_of("output") {
@@ -97,6 +132,23 @@ fn main() {
     } else {
         println!("{}", svg);
     }
+}
+
+fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T> where <T as std::str::FromStr>::Err: std::fmt::Display {
+    return args.value_of(arg_name).and_then(|arg| match arg.parse::<T>() {
+        Ok(a) => Some(a),
+        Err(e) => {
+            use std::io::Write;
+            use std::process::exit;
+
+            writeln!(&mut std::io::stderr(),
+                        "Illegal value for argument {}: {}",
+                        arg_name,
+                        e)
+                .unwrap();
+            exit(1);
+        }
+    });
 }
 
 // Batch convert files to svg
