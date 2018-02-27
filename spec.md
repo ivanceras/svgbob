@@ -25,7 +25,7 @@ Svgbob is a diagramming model which uses common typing characters to approximate
 |   `O`    | uppercase letter `O` | for intersection
 |   `^`    | caret                | for arrow up
 |   `v`    | lowercase letter `v` | for arrow down
-|   `V`    | lowercase letter `V` | for arrow down
+|   `V`    | uppercase letter `V` | for arrow down
 |   `<`    | lesser than          | for arrow left
 |   `>`    | greater than         | for arrow right
 |   `=`    | equal sign           | for double horizontal line
