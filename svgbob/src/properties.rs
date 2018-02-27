@@ -350,17 +350,17 @@ impl Properties for char{
     /// get the characteristic of a character
     /// it's behavior and the intended behavior
     ///
-    ///     ┌─┬─┬─┬─┬─┐
-    ///     │a│b│c│d│e│
-    ///     ├─┼─┼─┼─┼─┤
-    ///     │f│g│h│i│j│
-    ///     ├─┼─┼─┼─┼─┤
-    ///     │k│l│m│n│o│
-    ///     ├─┼─┼─┼─┼─┤
-    ///     │p│q│r│s│t│
-    ///     ├─┼─┼─┼─┼─┤
-    ///     │u│v│w│x│y│
-    ///     └─┴─┴─┴─┴─┘
+    ///    ┌─┬─┬─┬─┬─┐
+    ///    │a│b│c│d│e│
+    ///    ├─┼─┼─┼─┼─┤
+    ///    │f│g│h│i│j│
+    ///    ├─┼─┼─┼─┼─┤
+    ///    │k│l│m│n│o│
+    ///    ├─┼─┼─┼─┼─┤
+    ///    │p│q│r│s│t│
+    ///    ├─┼─┼─┼─┼─┤
+    ///    │u│v│w│x│y│
+    ///    └─┴─┴─┴─┴─┘
     ///
     fn get_characteristic(&self) -> Option<Characteristic>{
         let a = &PointBlock::block(A);

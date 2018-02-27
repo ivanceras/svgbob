@@ -277,6 +277,9 @@ these
 <text x="249" y="268">
 characters
 </text>
+<text x="377" y="284">
+.
+</text>
 <text x="1" y="316">
 What
 </text>
@@ -1744,6 +1747,9 @@ use
 <text x="505" y="4140">
 combination
 </text>
+<text x="481" y="4156">
+,
+</text>
 <text x="49" y="4172">
 :set
 </text>
@@ -1767,6 +1773,9 @@ cursor
 </text>
 <text x="425" y="4172">
 everywhere,
+</text>
+<text x="505" y="4188">
+.
 </text>
 <text x="49" y="4204">
 For
