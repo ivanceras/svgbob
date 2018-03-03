@@ -7,8 +7,8 @@ use test::Bencher;
 #[cfg(test)]
 mod tests {
     #![feature(test)]
-    extern crate test;
     extern crate sys_info;
+    extern crate test;
     use super::*;
 
     #[bench]
@@ -17,9 +17,8 @@ mod tests {
     }
 }
 
-fn get_arg() -> &'static str{
-
-let arg = r#"
+fn get_arg() -> &'static str {
+    let arg = r#"
 +------+   +-----+   +-----+   +-----+
 |      |   |     |   |     |   |     |
 | Foo  +-->| Bar +---+ Baz |<--+ Moo |
@@ -118,5 +117,5 @@ let arg = r#"
        More::Stuff  V 
 "#;
 
-arg
+    arg
 }

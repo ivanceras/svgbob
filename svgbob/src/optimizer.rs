@@ -4,18 +4,18 @@ use super::Stroke;
 use super::Feature;
 use super::Point;
 use super::Settings;
-use ::ArcFlag;
+use ArcFlag;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
-    consumed_loc: Vec<Loc>
+    consumed_loc: Vec<Loc>,
 }
 
 impl Optimizer {
     pub fn new(elements: Vec<Vec<Vec<Element>>>, consumed_loc: Vec<Loc>) -> Optimizer {
-        Optimizer { 
+        Optimizer {
             elements: elements,
-            consumed_loc: consumed_loc
+            consumed_loc: consumed_loc,
         }
     }
 
@@ -24,9 +24,9 @@ impl Optimizer {
     }
 
     fn get(&self, loc: &Loc) -> Option<&Vec<Element>> {
-        match self.elements.get(loc.y as usize){
+        match self.elements.get(loc.y as usize) {
             Some(row) => row.get(loc.x as usize),
-            None => None
+            None => None,
         }
     }
 
@@ -48,10 +48,10 @@ impl Optimizer {
     // if the path on this location can be eated
     // from the left, from the top
     fn is_edible(&self, loc: &Loc) -> bool {
-        self.can_loc_reduce(&loc.top(), loc) || self.can_loc_reduce(&loc.left(), loc) ||
-        self.can_loc_reduce(&loc.top_left(), loc) ||
-        self.can_loc_reduce(&loc.bottom_left(), loc) ||
-        self.can_loc_reduce(&loc.left().left(), loc) //full width character CJK can reduce 2 cells apart
+        self.can_loc_reduce(&loc.top(), loc) || self.can_loc_reduce(&loc.left(), loc)
+            || self.can_loc_reduce(&loc.top_left(), loc)
+            || self.can_loc_reduce(&loc.bottom_left(), loc)
+            || self.can_loc_reduce(&loc.left().left(), loc) //full width character CJK can reduce 2 cells apart
     }
     // determine if element in location1
     // can reduce the element in location2
@@ -85,8 +85,10 @@ impl Optimizer {
                                     }
                                     None => {
                                         //full width character CJK can reduce 2 cells apart
-                                        match self.reduce(element, &loc.right().right()){
-                                            Some(reduced) => self.trace_elements(&reduced, &loc.right().right()),
+                                        match self.reduce(element, &loc.right().right()) {
+                                            Some(reduced) => {
+                                                self.trace_elements(&reduced, &loc.right().right())
+                                            }
                                             None => element.clone(),
                                         }
                                     }
@@ -103,11 +105,11 @@ impl Optimizer {
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
         let mut optimized = vec![];
-        for (y,line) in self.elements.iter().enumerate() {
-            for (x,cell) in line.iter().enumerate(){
-                let loc = &Loc::new(x as i32,y as i32);
-                for elm in cell{
-                    if !self.is_edible(loc) && !self.in_consumed_loc(loc){
+        for (y, line) in self.elements.iter().enumerate() {
+            for (x, cell) in line.iter().enumerate() {
+                let loc = &Loc::new(x as i32, y as i32);
+                for elm in cell {
+                    if !self.is_edible(loc) && !self.in_consumed_loc(loc) {
                         let traced = self.trace_elements(elm, loc);
                         optimized.push(traced);
                     }
@@ -131,49 +133,41 @@ impl Optimizer {
         let mut circles = vec![];
         for elm in elements {
             match elm {
-                Element::Circle(_,_,_) => {
+                Element::Circle(_, _, _) => {
                     circles.push(elm.clone());
+                }
+                Element::Line(_, _, ref stroke, ref feature) => match *feature {
+                    Feature::Arrow => {
+                        arrows.push(elm.clone());
+                    }
+                    Feature::Circle => {
+                        arrows.push(elm.clone());
+                    }
+                    Feature::Nothing => match *stroke {
+                        Stroke::Solid => {
+                            solid_paths.push(elm.clone());
+                        }
+                        Stroke::Dashed => {
+                            dashed_paths.push(elm.clone());
+                        }
+                    },
                 },
-                Element::Line(_, _, ref stroke, ref feature) => {
-                    match *feature {
-                        Feature::Arrow => {
-                            arrows.push(elm.clone());
-                        },
-                        Feature::Circle =>{
-                            arrows.push(elm.clone());
-                        },
-                        Feature::Nothing => {
-                            match *stroke {
-                                Stroke::Solid => {
-                                    solid_paths.push(elm.clone());
-                                }
-                                Stroke::Dashed => {
-                                    dashed_paths.push(elm.clone());
-                                }
-                            }
-                        }
+                Element::Arc(_, _, _, _, _, ref stroke, ref feature) => match *feature {
+                    Feature::Arrow => {
+                        arrows.push(elm.clone());
                     }
-                }
-                Element::Arc(_, _, _, _,_, ref stroke, ref feature) => {
-                    match *feature {
-                        Feature::Arrow => {
-                            arrows.push(elm.clone());
-                        },
-                        Feature::Circle =>{
-                            arrows.push(elm.clone());
-                        },
-                        Feature::Nothing => {
-                            match *stroke {
-                                Stroke::Solid => {
-                                    solid_paths.push(elm.clone());
-                                }
-                                Stroke::Dashed => {
-                                    dashed_paths.push(elm.clone());
-                                }
-                            }
-                        }
+                    Feature::Circle => {
+                        arrows.push(elm.clone());
                     }
-                }
+                    Feature::Nothing => match *stroke {
+                        Stroke::Solid => {
+                            solid_paths.push(elm.clone());
+                        }
+                        Stroke::Dashed => {
+                            dashed_paths.push(elm.clone());
+                        }
+                    },
+                },
                 Element::Text(_, _) => text.push(elm.clone()),
                 Element::Path(_, _, _, _) => {
                     merged.push(elm.clone());
@@ -220,19 +214,17 @@ fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
                     None => false,
                 };
                 let sweep = if sw { 1 } else { 0 };
-                let large = match large{ ArcFlag::Major => 1, ArcFlag::Minor=> 0 };
+                let large = match large {
+                    ArcFlag::Major => 1,
+                    ArcFlag::Minor => 0,
+                };
                 if match_last_loc {
                     paths.push_str(&format!(" A {} {} 0 0 {} {} {}", r, r, sweep, e.x, e.y));
                 } else {
-                    paths.push_str(&format!(" M {} {} A {} {} 0 {} {} {} {}",
-                                            s.x,
-                                            s.y,
-                                            r,
-                                            r,
-                                            large,
-                                            sweep,
-                                            e.x,
-                                            e.y));
+                    paths.push_str(&format!(
+                        " M {} {} A {} {} 0 {} {} {} {}",
+                        s.x, s.y, r, r, large, sweep, e.x, e.y
+                    ));
                 }
                 last_loc = Some(e.clone());
             }

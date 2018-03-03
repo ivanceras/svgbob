@@ -1,10 +1,10 @@
 extern crate svgbob;
 
-fn main(){
+fn main() {
     let input = r#"
     .-------------------------------------.
     | Hello here and there and everywhere |
     '-------------------------------------'
     "#;
-    println!("svg: {}",svgbob::to_svg(input));
+    println!("svg: {}", svgbob::to_svg(input));
 }

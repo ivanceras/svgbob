@@ -2,8 +2,8 @@
 #[macro_use]
 extern crate clap;
 
-extern crate svgbob;
 extern crate svg;
+extern crate svgbob;
 
 use svgbob::Grid;
 use svgbob::Settings;
@@ -17,7 +17,7 @@ use std::process::exit;
 use std::str::FromStr;
 
 fn main() {
-    use clap::{Arg, App, SubCommand};
+    use clap::{App, Arg, SubCommand};
 
     let args = App::new("svgbob")
         .version(crate_version!())
@@ -71,7 +71,10 @@ fn main() {
     let mut bob = String::new();
 
     if args.is_present("inline") {
-        bob = args.value_of("input").unwrap().replace("\\n","\n").to_string();
+        bob = args.value_of("input")
+            .unwrap()
+            .replace("\\n", "\n")
+            .to_string();
     } else {
         if let Some(file) = args.value_of("input") {
             match File::open(file) {
@@ -82,11 +85,12 @@ fn main() {
                     use std::io::Write;
                     use std::process::exit;
 
-                    writeln!(&mut std::io::stderr(),
-                            "Failed to open input file {}: {}",
-                            file,
-                            e)
-                        .unwrap();
+                    writeln!(
+                        &mut std::io::stderr(),
+                        "Failed to open input file {}: {}",
+                        file,
+                        e
+                    ).unwrap();
                     exit(1);
                 }
             }
@@ -122,11 +126,12 @@ fn main() {
             use std::io::Write;
             use std::process::exit;
 
-            writeln!(&mut std::io::stderr(),
-                     "Failed to write to output file {}: {}",
-                     file,
-                     e)
-                .unwrap();
+            writeln!(
+                &mut std::io::stderr(),
+                "Failed to write to output file {}: {}",
+                file,
+                e
+            ).unwrap();
             exit(2);
         }
     } else {
@@ -134,31 +139,39 @@ fn main() {
     }
 }
 
-fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T> where <T as std::str::FromStr>::Err: std::fmt::Display {
-    return args.value_of(arg_name).and_then(|arg| match arg.parse::<T>() {
-        Ok(a) => Some(a),
-        Err(e) => {
-            use std::io::Write;
-            use std::process::exit;
+fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T>
+where
+    <T as std::str::FromStr>::Err: std::fmt::Display,
+{
+    return args.value_of(arg_name)
+        .and_then(|arg| match arg.parse::<T>() {
+            Ok(a) => Some(a),
+            Err(e) => {
+                use std::io::Write;
+                use std::process::exit;
 
-            writeln!(&mut std::io::stderr(),
-                        "Illegal value for argument {}: {}",
-                        arg_name,
-                        e)
-                .unwrap();
-            exit(1);
-        }
-    });
+                writeln!(
+                    &mut std::io::stderr(),
+                    "Illegal value for argument {}: {}",
+                    arg_name,
+                    e
+                ).unwrap();
+                exit(1);
+            }
+        });
 }
 
 // Batch convert files to svg
 // use svgbob build -i inputdir/*.bob -o outdir/
 fn build(args: &ArgMatches) -> Result<(), Box<Error>> {
-
     let files_pattern = args.value_of("input").unwrap_or("*.bob");
     let outdir = args.value_of("outdir").unwrap_or("");
     let input_path = Path::new(files_pattern);
-    let ext = input_path.extension().unwrap_or(&"bob".as_ref()).to_str().unwrap();
+    let ext = input_path
+        .extension()
+        .unwrap_or(&"bob".as_ref())
+        .to_str()
+        .unwrap();
 
     let input_dir = if input_path.is_dir() {
         input_path.clone()
@@ -167,8 +180,10 @@ fn build(args: &ArgMatches) -> Result<(), Box<Error>> {
     };
 
     if !input_dir.is_dir() {
-        return Err(Box::from(format!("[Error]: No such dir name is {} !",
-                                     input_dir.to_string_lossy())));
+        return Err(Box::from(format!(
+            "[Error]: No such dir name is {} !",
+            input_dir.to_string_lossy()
+        )));
     }
 
     let mut out_path = PathBuf::new();
@@ -186,7 +201,11 @@ fn build(args: &ArgMatches) -> Result<(), Box<Error>> {
     for path in paths {
         let tmp_path = path.unwrap().path();
         if tmp_path.is_file() {
-            let tmp_ext = tmp_path.extension().unwrap_or(&"".as_ref()).to_str().unwrap();
+            let tmp_ext = tmp_path
+                .extension()
+                .unwrap_or(&"".as_ref())
+                .to_str()
+                .unwrap();
             if tmp_ext == ext {
                 let name = tmp_path.file_stem().unwrap().to_str().unwrap();
                 let mut tmp = out_path.clone();
@@ -209,7 +228,7 @@ fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<Error>> {
     let mut bob = String::new();
     let mut f = try!(File::open(&input));
     f.read_to_string(&mut bob).unwrap();
-    let g = Grid::from_str(&*bob,&Settings::compact());
+    let g = Grid::from_str(&*bob, &Settings::compact());
     let svg = g.get_svg();
     try!(svg::save(&output, &svg));
     Ok(())

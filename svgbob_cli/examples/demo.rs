@@ -1,21 +1,19 @@
-extern crate svgbob;
 extern crate svg;
+extern crate svgbob;
 
 use svgbob::Grid;
 use svgbob::Settings;
 
-
 fn main() {
     let file = "examples/demo.svg";
-    let g = Grid::from_str(get_arg(),&Settings::compact());
+    let g = Grid::from_str(get_arg(), &Settings::compact());
     let svg = g.get_svg();
     svg::save(file, &svg).unwrap();
-    println!("Saved to {}",file);
+    println!("Saved to {}", file);
 }
 
-fn get_arg() -> &'static str{
-
-let arg = r#"
+fn get_arg() -> &'static str {
+    let arg = r#"
 
 
 +------+   +-----+   +-----+   +-----+
@@ -127,5 +125,5 @@ let arg = r#"
 
 "#;
 
-arg
+    arg
 }

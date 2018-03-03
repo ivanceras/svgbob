@@ -1,15 +1,26 @@
 #![feature(libc)]
-extern crate sys_info;
-extern crate svgbob;
 extern crate libc;
-extern {fn je_stats_print (write_cb: extern fn (*const libc::c_void, *const libc::c_char), cbopaque: *const libc::c_void, opts: *const libc::c_char);}
-extern fn write_cb (_: *const libc::c_void, message: *const libc::c_char) {
-    print! ("{}", String::from_utf8_lossy (unsafe {std::ffi::CStr::from_ptr (message as *const i8) .to_bytes()}));}
+extern crate svgbob;
+extern crate sys_info;
+extern "C" {
+    fn je_stats_print(
+        write_cb: extern "C" fn(*const libc::c_void, *const libc::c_char),
+        cbopaque: *const libc::c_void,
+        opts: *const libc::c_char,
+    );
+}
+extern "C" fn write_cb(_: *const libc::c_void, message: *const libc::c_char) {
+    print!(
+        "{}",
+        String::from_utf8_lossy(unsafe {
+            std::ffi::CStr::from_ptr(message as *const i8).to_bytes()
+        })
+    );
+}
 
 #[test]
-fn show_mem_consumption(){
-
-let arg = r#"
+fn show_mem_consumption() {
+    let arg = r#"
 +------+   +-----+   +-----+   +-----+
 |      |   |     |   |     |   |     |
 | Foo  +-->| Bar +---+ Baz |<--+ Moo |
@@ -109,8 +120,8 @@ let arg = r#"
 "#;
 
     println!("before: {:?}", sys_info::mem_info().unwrap());
-    unsafe{je_stats_print(write_cb, std::ptr::null(), std::ptr::null())};
+    unsafe { je_stats_print(write_cb, std::ptr::null(), std::ptr::null()) };
     self::svgbob::to_svg(arg);
     println!("after: {:?}", sys_info::mem_info().unwrap());
-    unsafe{je_stats_print(write_cb, std::ptr::null(), std::ptr::null())};
+    unsafe { je_stats_print(write_cb, std::ptr::null(), std::ptr::null()) };
 }
