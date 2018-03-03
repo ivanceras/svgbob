@@ -46,8 +46,8 @@ svgbob -s -- "+--+\n| |\n+--+"
 
 This is also documented in the output of `svgbob --help`:
 ```console
-$ svgbob --help
-svgbob 0.2.1
+
+svgbob 0.2.5
 SvgBobRus is an ascii to svg converter
 
 USAGE:
@@ -59,7 +59,12 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -o, --output <output>    where to write svg output [default: STDOUT]
+        --font-family <font-family>      text will be rendered with this font (default: 'arial')
+        --font-size <font-size>          text will be rendered with this font size (default: 14)
+    -o, --output <output>                where to write svg output [default: STDOUT]
+        --scale <scale>                  scale the entire svg (dimensions, font size, stroke width) by this factor
+                                         (default: 1)
+        --stroke-width <stroke-width>    stroke width for all lines (default: 2)
 
 ARGS:
     <input>    svgbob text file or inline string to parse [default: STDIN]
@@ -67,6 +72,7 @@ ARGS:
 SUBCOMMANDS:
     build    Batch convert files to svg.
     help     Prints this message or the help of the given subcommand(s)
+
 ```
 
 
