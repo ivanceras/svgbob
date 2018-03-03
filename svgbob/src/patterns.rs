@@ -602,7 +602,6 @@ impl <'g>FocusChar<'g>{
             // default behaviors
             // add only when signal is strong
             // or the signal has been intensified to strong
-            // do only when enhancement nor intended did not match
             let mut matched = false;
             if enable_default_properties{
                 if !matched_enhance 

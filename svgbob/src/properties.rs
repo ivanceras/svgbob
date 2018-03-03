@@ -376,6 +376,12 @@ impl Properties for char{
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
+
+        /////////////////////////////////
+        //
+        // | vertical line, or, pipe
+        //
+        /////////////////////////////////
         if self.is('|'){
             Some(Characteristic{
                 intensify: vec![
@@ -424,6 +430,11 @@ impl Properties for char{
                     ]
             })
         }
+        //////////////////////////////
+        //
+        // - dash, horizontal line, minus sign
+        //
+        /////////////////////////////
         else if self.is('-'){
             Some(Characteristic{
                 intensify: vec![
@@ -435,6 +446,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////////
+        //
+        // = equal sign
+        //
+        ///////////////////////////////
         else if self.is('='){
             Some(Characteristic{
                 intensify: vec![
@@ -448,6 +464,11 @@ impl Properties for char{
                     ]
             })
         }
+        /////////////////////////////////
+        //
+        // _ underscore
+        //
+        ////////////////////////////////
         else if self.is('_'){
             Some(Characteristic{
                 intensify: vec![
@@ -460,6 +481,11 @@ impl Properties for char{
                     ]
             })
         }
+        /////////////////////////////
+        //
+        // / forward slash
+        //
+        ////////////////////////////
         else if self.is('/'){
             Some(Characteristic{
                 intensify: vec![
@@ -490,6 +516,11 @@ impl Properties for char{
                     ]
             })
         }
+        ////////////////////////////////
+        //
+        // \ backslash
+        //
+        ////////////////////////////////
         else if self.is('\\'){
             Some(Characteristic{
                 intensify: vec![
@@ -521,6 +552,11 @@ impl Properties for char{
                     ]
             })
         }
+        /////////////////////////////////
+        //
+        // + plus sign, cross
+        //
+        /////////////////////////////////
         else if self.is('+'){
             Some(Characteristic{
                 intensify: vec![
@@ -584,6 +620,11 @@ impl Properties for char{
                     ]
             })
         }
+        ////////////////////////////
+        //
+        // letter x X
+        //
+        ////////////////////////////
         else if self.any("xX"){
             Some(Characteristic{
                 intensify: vec![
@@ -621,6 +662,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////
+        //
+        // ., dot and comma
+        //
+        ///////////////////////////
         else if self.any(".,"){
             Some(Characteristic{
                 intensify: vec![
@@ -747,6 +793,11 @@ impl Properties for char{
                 ]
             })
         }
+        ///////////////////////////
+        //
+        // `' single quote and backquote
+        //
+        //////////////////////////
         else if self.any("`'"){
             Some(Characteristic{
                 intensify: vec![
@@ -813,6 +864,11 @@ impl Properties for char{
                     ]
             })
         }
+        //////////////////////
+        //
+        // * asterisk
+        //
+        //////////////////////
         else if self.is('*'){
             Some(Characteristic{
                 intensify: vec![
@@ -876,6 +932,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////
+        //
+        // small letter o
+        //
+        ////////////////////////// 
         else if self.is('o'){
             Some(Characteristic{
                 intensify: vec![
@@ -939,6 +1000,11 @@ impl Properties for char{
                     ]
             })
         }
+        /////////////////////////////
+        //
+        // big letter O
+        //
+        ////////////////////////////
         else if self.is('O'){
             Some(Characteristic{
                 intensify: vec![
@@ -1004,6 +1070,11 @@ impl Properties for char{
                     ]
             })
         }
+        ////////////////////////////////
+        //
+        // < less than sign
+        //
+        ///////////////////////////////
         else if self.is('<'){
             Some(Characteristic{
                 intensify: vec![
@@ -1034,6 +1105,11 @@ impl Properties for char{
                     ]
             })
         }
+        ////////////////////////////
+        //
+        // > greather than sign
+        //
+        ////////////////////////////
         else if self.is('>'){
             Some(Characteristic{
                 intensify: vec![
@@ -1064,6 +1140,11 @@ impl Properties for char{
                     ]
             })
         }
+        ////////////////////////
+        //
+        // ^ carret
+        //
+        ///////////////////////
         else if self.is('^'){
             Some(Characteristic{
                 intensify: vec![
@@ -1124,6 +1205,11 @@ impl Properties for char{
                     ]
             })
         }
+        //////////////////////////
+        //
+        // letter v V
+        //
+        //////////////////////////
         else if self.any("vV"){
             Some(Characteristic{
                 intensify: vec![
@@ -1158,6 +1244,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////
+        //
+        // ( open parenthesis
+        //
+        //////////////////////////
         else if self.is('('){
             Some(Characteristic{
                 intensify: vec![
@@ -1173,6 +1264,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////////
+        //
+        // close parenthesis
+        //
+        ///////////////////////////////
         else if self.is(')'){
             Some(Characteristic{
                 intensify: vec![
@@ -1188,6 +1284,11 @@ impl Properties for char{
                     ]
             })
         }
+        ///////////////////////////////
+        //
+        // [ open square bracket
+        //
+        ///////////////////////////////
         else if self.is('['){
             Some(Characteristic{
                 intensify: vec![
@@ -1199,6 +1300,11 @@ impl Properties for char{
                 ]
             })
         }
+        /////////////////////////////
+        //
+        // ] close square bracket
+        //
+        ////////////////////////////
         else if self.is(']'){
             Some(Characteristic{
                 intensify: vec![

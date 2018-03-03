@@ -103,20 +103,16 @@ impl Optimizer {
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
         let mut optimized = vec![];
-        let mut y = 0;
-        for line in &self.elements {
-            let mut x = 0;
-            for cell in line{
-                let loc = &Loc::new(x,y);
+        for (y,line) in self.elements.iter().enumerate() {
+            for (x,cell) in line.iter().enumerate(){
+                let loc = &Loc::new(x as i32,y as i32);
                 for elm in cell{
                     if !self.is_edible(loc) && !self.in_consumed_loc(loc){
                         let traced = self.trace_elements(elm, loc);
                         optimized.push(traced);
                     }
                 }
-                x += 1;
             }
-            y += 1;
         }
         if settings.compact_path {
             self.merge_paths(optimized)
