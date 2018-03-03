@@ -1,4 +1,3 @@
-use fragments::Block;
 use fragments::Block::{
     A,B,C,D,E,
     F,G,H,I,J,
@@ -9,17 +8,12 @@ use fragments::Block::{
 use properties::Location;
 use properties::PointBlock;
 use patterns::FocusChar;
-use fragments::Direction;
 
 use fragments::Fragment;
 use fragments::{
     line,
-    arrow_line,
-    start_arrow_line,
     arc,
-    arc_major,
     open_circle,
-    solid_circle,
 };
 
 use fragments::Direction::{
@@ -51,31 +45,31 @@ impl <'g>Round for FocusChar<'g>{
     /// 
     /// Arc and circles will be treated differently
     fn round(&self) -> (Vec<Fragment>, Vec<Location>, bool) {
-        let a = &PointBlock::block(A);
-        let b = &PointBlock::block(B);
-        let c = &PointBlock::block(C);
-        let d = &PointBlock::block(D);
-        let e = &PointBlock::block(E);
-        let f = &PointBlock::block(F);
-        let g = &PointBlock::block(G);
-        let h = &PointBlock::block(H);
-        let i = &PointBlock::block(I);
-        let j = &PointBlock::block(J);
-        let k = &PointBlock::block(K);
-        let l = &PointBlock::block(L);
+        let _a = &PointBlock::block(A);
+        let _b = &PointBlock::block(B);
+        let _c = &PointBlock::block(C);
+        let _d = &PointBlock::block(D);
+        let _e = &PointBlock::block(E);
+        let _f = &PointBlock::block(F);
+        let _g = &PointBlock::block(G);
+        let _h = &PointBlock::block(H);
+        let _i = &PointBlock::block(I);
+        let _j = &PointBlock::block(J);
+        let _k = &PointBlock::block(K);
+        let _l = &PointBlock::block(L);
         let m = &PointBlock::block(M);
-        let n = &PointBlock::block(N);
+        let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        let p = &PointBlock::block(P);
-        let q = &PointBlock::block(Q);
-        let r = &PointBlock::block(R);
-        let s = &PointBlock::block(S);
-        let t = &PointBlock::block(T);
-        let u = &PointBlock::block(U);
-        let v = &PointBlock::block(V);
-        let w = &PointBlock::block(W);
-        let x = &PointBlock::block(X);
-        let y = &PointBlock::block(Y);
+        let _p = &PointBlock::block(P);
+        let _q = &PointBlock::block(Q);
+        let _r = &PointBlock::block(R);
+        let _s = &PointBlock::block(S);
+        let _t = &PointBlock::block(T);
+        let _u = &PointBlock::block(U);
+        let _v = &PointBlock::block(V);
+        let _w = &PointBlock::block(W);
+        let _x = &PointBlock::block(X);
+        let _y = &PointBlock::block(Y);
         
         let top = || Location::go(Top);
         let bottom = || Location::go(Bottom);
@@ -91,10 +85,10 @@ impl <'g>Round for FocusChar<'g>{
         let go_bottom = |step| Location::jump(Bottom,step);
         let go_left = |step| Location::jump(Left,step);
         let go_right = |step| Location::jump(Right,step);
-        let go_top_left = |step| Location::jump(TopLeft,step);
-        let go_top_right = |step| Location::jump(TopRight,step);
-        let go_bottom_left = |step| Location::jump(BottomLeft,step);
-        let go_bottom_right = |step| Location::jump(BottomRight,step);
+        let _go_top_left = |step| Location::jump(TopLeft,step);
+        let _go_top_right = |step| Location::jump(TopRight,step);
+        let _go_bottom_left = |step| Location::jump(BottomLeft,step);
+        let _go_bottom_right = |step| Location::jump(BottomRight,step);
 
         let mut elm = vec![];
         let mut consumed = vec![];
@@ -106,9 +100,8 @@ impl <'g>Round for FocusChar<'g>{
         // intended behaviors would have to take effect
         let mut along_arc = false;
 
-        let mut matched_arc = false;
         let mut matched_circle = false;
-        let enable_round_pill = true;
+        let _enable_round_pill = true;
 
 
         
@@ -141,7 +134,7 @@ impl <'g>Round for FocusChar<'g>{
             let mut matched_quadrant1 = false;
             let mut matched_quadrant3 = false;
             let mut matched_quadrant4 = false;
-            let mut matched_circle1 = false;
+            let mut _matched_circle1 = false;
             //   .-
             //  ( +
             if self.top().is('-')
@@ -155,7 +148,6 @@ impl <'g>Round for FocusChar<'g>{
                     top_left(),
                     go_left(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant2 = true;
             }
             //  -.
@@ -170,7 +162,6 @@ impl <'g>Round for FocusChar<'g>{
                     top_right(),
                     go_right(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant1 = true;
             }
 
@@ -187,7 +178,6 @@ impl <'g>Round for FocusChar<'g>{
                     bottom_left(),
                     go_left(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant3= true;
             }
 
@@ -203,7 +193,6 @@ impl <'g>Round for FocusChar<'g>{
                     bottom_right(),
                     go_right(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant4= true;
             }
             
@@ -260,7 +249,6 @@ impl <'g>Round for FocusChar<'g>{
                     top_left(),
                     go_left(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant2 = true;
             }
 
@@ -277,7 +265,6 @@ impl <'g>Round for FocusChar<'g>{
                     bottom_left(),
                     go_left(2),
                 ]);
-                matched_arc = true;
                 matched_quadrant3= true;
             }
 
@@ -294,7 +281,6 @@ impl <'g>Round for FocusChar<'g>{
                     top().go_right(2),
                     go_right(3),
                 ]);
-                matched_arc = true;
                 matched_quadrant1 = true;
             }
 
@@ -312,7 +298,6 @@ impl <'g>Round for FocusChar<'g>{
                     bottom().go_right(2),
                     go_right(3),
                 ]);
-                matched_arc = true;
                 matched_quadrant4= true;
             }
 
@@ -484,7 +469,6 @@ impl <'g>Round for FocusChar<'g>{
                     left().go_top(2),
                     go_top(2)
                 ]);
-                matched_arc = true;
                 along_arc = false;
             }
             ///////////////////////////////
@@ -513,7 +497,6 @@ impl <'g>Round for FocusChar<'g>{
                     right().go_top(2),
                     go_top(2)
                 ]);
-                matched_arc = true;
                 along_arc = false;
             }
             ////////////////////////////////
@@ -543,7 +526,6 @@ impl <'g>Round for FocusChar<'g>{
                    left().go_bottom(2),
                    go_bottom(2)
                 ]);
-                matched_arc = true;
                 along_arc = false;
             }
             ///////////////////////////////////
@@ -573,7 +555,6 @@ impl <'g>Round for FocusChar<'g>{
                     right().go_bottom(2),
                     go_bottom(2),
                 ]);
-                matched_arc = true;
                 along_arc = false;
             }
             if matched_quadrant2
@@ -623,7 +604,6 @@ impl <'g>Round for FocusChar<'g>{
                                     top().go_left(3),
                                     go_left(4),
                         ]);
-                    matched_arc = true;
                     along_arc = false;
                     matched_quadrant2 = true;
              }
@@ -649,7 +629,6 @@ impl <'g>Round for FocusChar<'g>{
                         top().go_right(3),
                         go_right(4)
                  ]);
-                 matched_arc = true;
                  along_arc = false;
                  matched_quadrant1 = true;
              }
@@ -678,7 +657,6 @@ impl <'g>Round for FocusChar<'g>{
                       go_bottom(2).go_left(2),
                       go_bottom(2).go_left(1),
                 ]);
-                matched_arc = true;
                 along_arc = false;
                 matched_quadrant3 = true;
             }
@@ -704,11 +682,21 @@ impl <'g>Round for FocusChar<'g>{
                    go_bottom(2).go_right(2),
                    go_bottom(2).right(),
                 ]);
-                matched_arc = true;
                 along_arc = false;
                 matched_quadrant4 = true;
             }
-            elm.extend(quadrants);
+            if matched_quadrant2
+                && matched_quadrant1
+                && matched_quadrant3
+                && matched_quadrant4{
+                elm.push(open_circle(m, 24));
+                matched_circle = true;
+                println!("matched circle: {}", matched_circle);
+                along_arc = false;
+            }
+            else{
+                elm.extend(quadrants);
+            }
         }
         
         (elm, consumed, along_arc)

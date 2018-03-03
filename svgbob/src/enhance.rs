@@ -1,4 +1,3 @@
-use fragments::Block;
 use fragments::Block::{
     A,B,C,D,E,
     F,G,H,I,J,
@@ -9,24 +8,13 @@ use fragments::Block::{
 use properties::Location;
 use properties::PointBlock;
 use patterns::FocusChar;
-use fragments::Direction;
 
 use fragments::Fragment;
 use fragments::{
     line,
-    arrow_line,
-    start_arrow_line,
     arc,
-    open_circle,
-    solid_circle,
 };
 
-use fragments::Direction::{
-    Top,Bottom,
-    Left,Right,
-    TopLeft,TopRight,
-    BottomLeft,BottomRight
-};
 
 pub trait Enhance{
     
@@ -52,29 +40,29 @@ impl <'g>Enhance for FocusChar<'g>{
         use fragments::Direction::*;
         use fragments;
         let a = &PointBlock::block(A);
-        let b = &PointBlock::block(B);
+        let _b = &PointBlock::block(B);
         let c = &PointBlock::block(C);
-        let d = &PointBlock::block(D);
+        let _d = &PointBlock::block(D);
         let e = &PointBlock::block(E);
-        let f = &PointBlock::block(F);
-        let g = &PointBlock::block(G);
-        let h = &PointBlock::block(H);
-        let i = &PointBlock::block(I);
-        let j = &PointBlock::block(J);
+        let _f = &PointBlock::block(F);
+        let _g = &PointBlock::block(G);
+        let _h = &PointBlock::block(H);
+        let _i = &PointBlock::block(I);
+        let _j = &PointBlock::block(J);
         let k = &PointBlock::block(K);
         let l = &PointBlock::block(L);
-        let m = &PointBlock::block(M);
+        let _m = &PointBlock::block(M);
         let n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        let p = &PointBlock::block(P);
-        let q = &PointBlock::block(Q);
-        let r = &PointBlock::block(R);
-        let s = &PointBlock::block(S);
-        let t = &PointBlock::block(T);
+        let _p = &PointBlock::block(P);
+        let _q = &PointBlock::block(Q);
+        let _r = &PointBlock::block(R);
+        let _s = &PointBlock::block(S);
+        let _t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
-        let v = &PointBlock::block(V);
+        let _v = &PointBlock::block(V);
         let w = &PointBlock::block(W);
-        let x = &PointBlock::block(X);
+        let _x = &PointBlock::block(X);
         let y = &PointBlock::block(Y);
         
         let top = || Location::go(Top);

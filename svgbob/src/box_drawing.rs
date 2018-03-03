@@ -10,11 +10,7 @@ use fragments::Block::{
 use fragments::Fragment;
 use fragments::{
     line,
-    arrow_line,
-    start_arrow_line,
     arc,
-    open_circle,
-    solid_circle,
 };
 
 use properties::Properties;
@@ -27,11 +23,11 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
     let c = &PointBlock::block(C);
     let d = &PointBlock::block(D);
     let e = &PointBlock::block(E);
-    let f = &PointBlock::block(F);
-    let g = &PointBlock::block(G);
+    let _f = &PointBlock::block(F);
+    let _g = &PointBlock::block(G);
     let h = &PointBlock::block(H);
-    let i = &PointBlock::block(I);
-    let j = &PointBlock::block(J);
+    let _i = &PointBlock::block(I);
+    let _j = &PointBlock::block(J);
     let k = &PointBlock::block(K);
     let l = &PointBlock::block(L);
     let m = &PointBlock::block(M);

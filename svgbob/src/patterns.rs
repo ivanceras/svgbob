@@ -28,12 +28,11 @@ use enhance::Enhance;
 
 use ::{
     line, solid_circle,
-    arrow_arc, arrow_sweep_arc,
-    arc, arc_major, open_circle, arrow_line,
-    text, blank_text
+    arc, open_circle, arrow_line,
+    text
 };
 
-use properties::Can::{ConnectTo,Is,Any,IsStrongAll,CanBeStrongAll};
+use properties::Can::{ConnectTo,Is,IsStrongAll};
 
 
 
@@ -280,7 +279,7 @@ impl <'g>FocusChar<'g>{
 
     pub fn new(loc: &Loc, grid: &'g Grid) -> Self {
         let s:Option<&String> = grid.get(loc);
-        /// if there is a text in this location, take the first char as the focus char
+        // if there is a text in this location, take the first char as the focus char
         let ch = match s{
             Some(s) => {s.chars().nth(0).unwrap_or('\0')}
             None => {'\0'}
@@ -435,12 +434,6 @@ impl <'g>FocusChar<'g>{
                 )
             },
 
-            Fragment::ArcMajor(p1, p2, m) => {
-                arc_major(&self.point(&p1),
-                    &self.point(&p2),
-                    m as f32 *  unit_x
-                )
-            },
             
             Fragment::OpenCircle(c, m) => {
                 open_circle(&self.point(&c), m as f32 * unit_x)
@@ -493,19 +486,10 @@ impl <'g>FocusChar<'g>{
             Is(char) => {
                 self.is(char)
             },
-            Any(s) => {
-                self.any(s)
-            },
             IsStrongAll(ref blocks) => {
                 blocks.iter().all(|b|
                     self.is_strong_block(&b))
             },
-            CanBeStrongAll(ref blocks) => {
-                //TODO: prone to infinit recursion
-                // example: left checking right, and right checking left
-                blocks.iter().all(|b|
-                    self.can_be_strong_block(&b))
-            }
         }
     }
 
@@ -624,7 +608,7 @@ impl <'g>FocusChar<'g>{
                 if !matched_enhance 
                     && !matched_circles
                     && !matched_intended {
-                    for &(ref block, ref signal, ref fragments) in &character.properties{
+                    for &(ref block, ref _signal, ref fragments) in &character.properties{
                         // draw when used as text but intensified 
                         if self.is_intensified(&block){
                             elm.extend(fragments.clone());
@@ -674,14 +658,14 @@ impl <'g>FocusChar<'g>{
 
     pub fn in_left(&self, n: usize) -> Self {
         let mut fc = self.left();
-        for i in 0..n-1{
+        for _i in 0..n-1{
             fc = fc.left();
         }
         fc
     }
     pub fn in_right(&self, n: usize) -> Self {
         let mut fc = self.right();
-        for i in 0..n-1{
+        for _i in 0..n-1{
             fc = fc.right();
         }
         fc
@@ -689,14 +673,14 @@ impl <'g>FocusChar<'g>{
 
     pub fn in_top(&self, n: usize) -> Self {
         let mut fc = self.top();
-        for i in 0..n-1{
+        for _i in 0..n-1{
             fc = fc.top();
         }
         fc
     }
     pub fn in_bottom(&self, n: usize) -> Self {
         let mut fc = self.bottom();
-        for i in 0..n-1{
+        for _i in 0..n-1{
             fc = fc.bottom();
         }
         fc

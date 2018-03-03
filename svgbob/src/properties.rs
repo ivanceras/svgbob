@@ -19,7 +19,6 @@ use fragments::{
     solid_circle,
 };
 
-use Element;
 
 
 use fragments::Direction::{
@@ -34,9 +33,7 @@ use box_drawing;
 use self::Can::{
     ConnectTo,
     Is,
-    Any,
     IsStrongAll,
-    CanBeStrongAll
 };
 
 
@@ -247,32 +244,19 @@ impl PointBlock{
 
 
 #[derive(Debug)]
-pub struct Characteristic<'c>{
+pub struct Characteristic{
     /// these are the default behavior of the fragment
     pub properties: Vec<(Block, Signal, Vec<Fragment>)>,
     /// if condition is met, the block becomes a strong signal
-    pub intensify: Vec<(Block, Condition<'c>)>,
+    pub intensify: Vec<(Block, Condition)>,
     /// after checking intensifier, if the connection signal to these blocks 
     /// are strong
     /// then use these fragments instead
     pub intended_behavior: Vec<(Vec<Block>, Vec<Fragment>)>
 }
 
-impl <'c>Characteristic<'c> {
+impl Characteristic {
 
-    ///
-    /// get the natural strong signals of this
-    /// character
-    ///
-    pub fn get_strong_signals(&self) -> Vec<Block> {
-        let mut strong_signals = vec![];
-        for &(ref block, ref signal, _) in &self.properties{
-            if *signal == Strong{
-                strong_signals.push(block.clone());
-            }
-        }
-        strong_signals
-    }
 
     pub fn is_strong_block(&self, arg_block: &Block) -> bool {
         self.properties.iter()
@@ -310,26 +294,21 @@ pub trait Properties{
 }
 
 #[derive(Debug)]
-pub enum Can<'c>{
+pub enum Can{
     /// test if this character connection to specified block
     /// pass the minimum signal
    ConnectTo(Block, Signal),
    /// test if the character is the same as the specified
    Is(char),
-   /// test if this character in any of the specified
-   Any(&'c str),
    /// test if all of the specified blocks are strong in its properties
    IsStrongAll(Vec<Block>),
-   /// test if all of the specified blocks can be strong either via its default
-   /// properties or intensified base on the surrounding characters
-   CanBeStrongAll(Vec<Block>),
 }
 
 /// Behavioral condition
 #[derive(Debug)]
-pub struct Condition<'c>{
+pub struct Condition{
     pub loc: Location,
-    pub can: Can<'c>, 
+    pub can: Can, 
 }
 
 impl Properties for char{
@@ -364,9 +343,9 @@ impl Properties for char{
     ///
     fn get_characteristic(&self) -> Option<Characteristic>{
         let a = &PointBlock::block(A);
-        let b = &PointBlock::block(B);
+        let _b = &PointBlock::block(B);
         let c = &PointBlock::block(C);
-        let d = &PointBlock::block(D);
+        let _d = &PointBlock::block(D);
         let e = &PointBlock::block(E);
         let f = &PointBlock::block(F);
         let g = &PointBlock::block(G);
@@ -374,19 +353,19 @@ impl Properties for char{
         let i = &PointBlock::block(I);
         let j = &PointBlock::block(J);
         let k = &PointBlock::block(K);
-        let l = &PointBlock::block(L);
+        let _l = &PointBlock::block(L);
         let m = &PointBlock::block(M);
-        let n = &PointBlock::block(N);
+        let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        let p = &PointBlock::block(P);
+        let _p = &PointBlock::block(P);
         let q = &PointBlock::block(Q);
         let r = &PointBlock::block(R);
         let s = &PointBlock::block(S);
-        let t = &PointBlock::block(T);
+        let _t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
-        let v = &PointBlock::block(V);
+        let _v = &PointBlock::block(V);
         let w = &PointBlock::block(W);
-        let x = &PointBlock::block(X);
+        let _x = &PointBlock::block(X);
         let y = &PointBlock::block(Y);
         
         let top = || Location::go(Top);

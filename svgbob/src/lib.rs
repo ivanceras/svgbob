@@ -29,9 +29,7 @@
 //! </svg>
 //! 
 //! 
-//#![deny(warnings)]
-#![feature(inclusive_range_syntax)]
-#![feature(test)]
+#![deny(warnings)]
 extern crate svg;
 extern crate unicode_width;
 #[cfg(test)]
@@ -40,13 +38,7 @@ extern crate pretty_assertions;
 extern crate pom;
 
 use pom::TextInput;
-use pom::{Parser, DataInput};
 use pom::parser::*;
-use pom::Input;
-
-use std::str::FromStr;
-use std::collections::HashMap;
-
 
 
 use svg::Node;
@@ -862,12 +854,10 @@ impl Grid {
     /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
-        let start = std::time::SystemTime::now();
         let (mut elements,consumed_loc) = self.get_all_elements();
         let text_elm = self.get_escaped_text_elements();
         elements.push(vec![text_elm]);
         let input = if self.settings.optimize {
-            let now = std::time::SystemTime::now();
             let optimizer = Optimizer::new(elements, consumed_loc);
             let optimized_elements = optimizer.optimize(&self.settings);
             optimized_elements
@@ -1084,8 +1074,8 @@ fn test_escaped_string(){
     let mut index = 0;
     if let Ok(output) = output3{
         for (start, end) in output{
-            println!("matches: {}", &input3[start..=end]);
-            matches.push(input3[start..=end].to_string());
+            println!("matches: {}", &input3[start..end+1]);
+            matches.push(input3[start..end+1].to_string());
             let slice = &input3[index..start];
             recons.push_str(slice);
             recons.push_str(&" ".repeat(end+1-start));
@@ -1115,8 +1105,8 @@ fn test_escaped_multiline_string(){
     let mut index = 0;
     if let Ok(output) = output3{
         for (start, end) in output{
-            println!("matches: {}", &input3[start..=end]);
-            matches.push(input3[start..=end].to_string());
+            println!("matches: {}", &input3[start..end+1]);
+            matches.push(input3[start..end+1].to_string());
             let slice = &input3[index..start];
             recons.push_str(slice);
             recons.push_str(&" ".repeat(end+1-start));
