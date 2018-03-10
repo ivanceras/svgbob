@@ -1007,7 +1007,7 @@ fn svg_escape(arg: &str) -> String {
 
 #[test]
 fn test_escaped_string() {
-    let mut input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+    let input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
     let mut raw3 = TextInput::new(input3);
     let output3 = line_parse().parse(&mut raw3);
     println!("output3: {:?}", output3);
@@ -1036,7 +1036,7 @@ fn test_escaped_string() {
 
 #[test]
 fn test_escaped_multiline_string() {
-    let mut input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
+    let input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
     let mut raw3 = TextInput::new(input3);
     let output3 = line_parse().parse(&mut raw3);
     println!("output3: {:?}", output3);
@@ -1214,134 +1214,4 @@ uvwxyz1234
         assert_eq!(txt, s);
     }
 
-}
-
-#[cfg(test)]
-mod benchmark {
-    extern crate test;
-    use self::test::Bencher;
-
-    #[bench]
-    fn convert(b: &mut Bencher) {
-        b.iter(|| super::to_svg(&get_str()))
-    }
-
-    fn get_str() -> String {
-        r#"
-Svgbob is a diagramming model
-which uses a set of typing characters
-to approximate the desired shape.
-
-       .---.
-      /-o-/--
-   .-/ / /->
-  ( *  \/
-   '-.  \
-      \ /
-       ' 
-It uses a combination of this characters "`[(/<^.|+v*>\)]'"
-
-It can do basic shapes such as:
-                                                    ,
-   +------+   .------.    .------.      /\        ,' `.
-   |      |   |      |   (        )    /  \     .'     `.
-   +------+   '------'    '------'    '----'     `.   ,'
-     _______            ________                   `.'
-    /       \      /\   \       \
-   /         \    /  \   )       )
-   \         /    \  /  /_______/
-    \_______/      \/
-
-    .-----------.       .   <.      .>  .
-   (             )     (      )    (     )
-    '-----+ ,---'       `>   '      `  <'
-          |/
-          
-
-Quick logo scribbles
-        .---.                      _
-       /-o-/--       .--.         | |               .--.       |\       
-    .-/ / /->       /--. \     .--(-|    .----.    //.-.\      | \..-.  
-   ( *  \/         / o  )|     |  | |    |->  |   (+(-*-))      \((   ) 
-    '-.  \        /\ |-//      .  * |    '----'    \\'-'/        \ '+'  
-       \ /        \ '+'/        \__/                '--'          '-'   
-        '          '--'            
-
-Even unicode box drawing characters are supported
-            ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
-            ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡
-            └─┴┘  ╚═╩╝  ╙─╨╜  ╘═╧╛
-
-Mindmaps
-
-                                        .-->  Alpha
-                                       /
-                                      .---->  Initial Release
-      Planning  -------.             /         \      
-                        \           /           '---> Patch 1
-  Initial research       \         /             \
-            \             \       /               '-->  Patch 2
-             \             \     /
-              \             \   .----------->   Beta
-               \             \ /
-                \          .---.
-                 '------  (     )
-                           `---'
-                           /  \ \ \
-                          /    \ \ \  
-                      .--'      \ \ \
-                     /           \ \ '---  Push backs
-                    .             \ \      \
-                   /|              \ \      '----> Setbacks
-         Team   __/ .               \ \
-                   /|                \ '-----> Reception
-       Workload __/ .                 \
-                   /|                  \
-       Holiday  __/ .                   '--- Career change
-                   / 
-                  V  
-            Bugs
-
-
-It can do complex stuff such as circuit diagrams
-
-
- +10-15V           ___0,047R       
-  *------o------o-|___|-o--o---------o----o-------o
-         |      |       |  |         |    |       |
-        ---     |       | .-.        |    |       |
-  470uF ###     |       | | | 2k2    |    |       |
-         | +    |       | | |        |    |      .-.
-  *------o      '--.    | '-'       .+.   |      '-'
-         |         |6   |7 |8    1k | |   |       |
-        GND      .------------.     | |   |       |
-                 |            |     '+'   |       |
-                 |            |1     |  |/  BC    |
-                 |            |------o--|   547   |
-                 |            |      |  |`>       |
-                 |            |     ,+.   |       |
-                 |            | 220R| |   o----||-+  IRF9Z34
-                 |            |     | |   |    |+->
-                 |  MC34063   |     `+'   |    ||-+
-                 |            |      |    |       |  BYV29     -12V6
-                 |            |      '----'       o--|<-o----o--X OUT
-                 |            |2                  |     |    |
-                 |            |--|                C|    |    |
-                 |            | GND         30uH  C|    |   --- 470
-                 |            |3      1nF         C|    |   ###  uF
-                 |            |-------||--.       |     |    | +
-                 '------------'           |      GND    |   GND
-                      5|   4|             |             |
-                       |    '-------------o-------------o
-                       |                           ___  |
-                       '------/\/\/------------o--|___|-'
-                                               |       1k0
-                                              .-.
-                                              | | 5k6 + 3k3
-                                              | | in Serie
-                                              '-'
-                                               |
-                                              GND
-"#.to_string()
-    }
 }
