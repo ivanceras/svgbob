@@ -1,24 +1,24 @@
-use Element;
-use Point;
-use Loc;
-use Grid;
-use Settings;
-use properties::Signal;
-use properties::Characteristic;
 use enhance_circles::Round;
+use properties::Characteristic;
+use properties::Signal;
+use Element;
+use Grid;
+use Loc;
+use Point;
+use Settings;
 
-use properties::Location;
 use fragments::Block;
 use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use properties::Location;
 use properties::PointBlock;
 
 use fragments::Fragment;
 use fragments::Fragment::Text;
 
-use properties::Signal::{Medium, Strong, Weak};
-use properties::Properties;
-use properties::Can;
 use enhance::Enhance;
+use properties::Can;
+use properties::Properties;
+use properties::Signal::{Medium, Strong, Weak};
 
 use {arc, arrow_line, line, open_circle, solid_circle, text};
 
@@ -297,28 +297,19 @@ impl<'g> FocusChar<'g> {
         self.ch.any(s)
     }
 
-    /// check to see if any of the 8 neighbor is a drawing character
-    /// but not checking whether can connect to this, since it is
-    /// more expensive
-    fn any_neighbor_is_drawing_character(&self) -> bool {
-        if self.top().ch.get_characteristic().is_some()
-            || self.bottom().ch.get_characteristic().is_some()
-            || self.left().ch.get_characteristic().is_some()
-            || self.right().ch.get_characteristic().is_some()
-            || self.top_left().ch.get_characteristic().is_some()
-            || self.top_right().ch.get_characteristic().is_some()
-            || self.bottom_left().ch.get_characteristic().is_some()
-            || self.bottom_right().ch.get_characteristic().is_some()
-        {
-            true
-        } else {
-            false
-        }
-    }
-
     fn used_as_text(&self) -> bool {
-        if self.is_text_surrounded() && !self.any_neighbor_is_drawing_character() {
-            true
+        if self.is_text_surrounded() {
+            // not if it can strongly connect to 4 directions
+            if self.can_strongly_connect(&Block::O) || self.can_strongly_connect(&Block::K)
+                || self.can_strongly_connect(&Block::C)
+                || self.can_strongly_connect(&Block::W)
+                || self.can_strongly_connect(&Block::U)
+                || self.can_strongly_connect(&Block::Y)
+            {
+                false
+            } else {
+                true
+            }
         } else {
             false
         }
@@ -489,7 +480,7 @@ impl<'g> FocusChar<'g> {
         // and then the consumed elements are skipped and checked
         if enable_round_circles {
             let (circles, circles_consumed, along_arc) = self.round();
-            if !circles.is_empty() {
+            if !circles.is_empty() && !self.used_as_text() {
                 elm.extend(circles);
                 consumed.extend(circles_consumed);
                 // if circle is matched, and element is along the arc
@@ -504,7 +495,7 @@ impl<'g> FocusChar<'g> {
             if enable_enhancements {
                 if !matched_circles {
                     let (enhanced, enhance_consumed) = self.enhance();
-                    if !enhanced.is_empty() {
+                    if !enhanced.is_empty() && !self.used_as_text() {
                         elm.extend(enhanced);
                         consumed.extend(enhance_consumed);
                         matched_enhance = true;
@@ -519,7 +510,7 @@ impl<'g> FocusChar<'g> {
                 if !matched_enhance && !matched_circles {
                     for &(ref blocks, ref fragments) in &character.intended_behavior {
                         let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
-                        if meet {
+                        if meet && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched_intended = true;
                         }
@@ -535,7 +526,7 @@ impl<'g> FocusChar<'g> {
                 if !matched_enhance && !matched_circles && !matched_intended {
                     for &(ref block, ref _signal, ref fragments) in &character.properties {
                         // draw when used as text but intensified
-                        if self.is_intensified(&block) {
+                        if self.is_intensified(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched = true;
                         }
@@ -631,12 +622,12 @@ impl<'g> FocusChar<'g> {
 
 #[cfg(test)]
 mod test {
-    use super::super::Settings;
-    use super::Grid;
-    use super::FocusChar;
     use super::super::Loc;
-    use properties::Location;
+    use super::super::Settings;
+    use super::FocusChar;
+    use super::Grid;
     use fragments::Direction::*;
+    use properties::Location;
 
     use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
                            Y};
@@ -719,8 +710,8 @@ mod test {
 
     #[test]
     fn test_no_character() {
-        use {FocusChar, Grid, Loc, Settings};
         use properties::Properties;
+        use {FocusChar, Grid, Loc, Settings};
 
         let g = Grid::from_str(".l", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(1, 0), &g);
@@ -732,8 +723,8 @@ mod test {
 
     #[test]
     fn test_has_character() {
-        use {FocusChar, Grid, Loc, Settings};
         use properties::Properties;
+        use {FocusChar, Grid, Loc, Settings};
 
         let g = Grid::from_str(".╦", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(1, 0), &g);

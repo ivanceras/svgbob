@@ -6,9 +6,9 @@ use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, 
 use fragments::Fragment;
 use fragments::{arc, arrow_line, line, open_circle, solid_circle, start_arrow_line};
 
-use fragments::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
+use fragments::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 
 use self::Can::{ConnectTo, Is, IsStrongAll};
 
@@ -649,6 +649,42 @@ impl Properties for char {
                             can: ConnectTo(A, Strong),
                         },
                     ),
+                    //    .
+                    //     X
+                    (
+                        A,
+                        Condition {
+                            loc: top_left(),
+                            can: ConnectTo(Y, Weak),
+                        },
+                    ),
+                    //      .
+                    //     X
+                    (
+                        E,
+                        Condition {
+                            loc: top_right(),
+                            can: ConnectTo(U, Weak),
+                        },
+                    ),
+                    //      X
+                    //       `
+                    (
+                        Y,
+                        Condition {
+                            loc: bottom_right(),
+                            can: ConnectTo(A, Weak),
+                        },
+                    ),
+                    //      X
+                    //     '
+                    (
+                        U,
+                        Condition {
+                            loc: bottom_left(),
+                            can: ConnectTo(E, Weak),
+                        },
+                    ),
                 ],
                 intended_behavior: vec![],
                 properties: vec![
@@ -751,6 +787,24 @@ impl Properties for char {
                         Condition {
                             loc: top(),
                             can: Is('|'),
+                        },
+                    ),
+                    //   .    only X
+                    //    X
+                    (
+                        Y,
+                        Condition {
+                            loc: bottom_right(),
+                            can: Is('X'),
+                        },
+                    ),
+                    //     .  only X
+                    //    X
+                    (
+                        U,
+                        Condition {
+                            loc: bottom_left(),
+                            can: Is('X'),
                         },
                     ),
                 ],
@@ -878,6 +932,24 @@ impl Properties for char {
                         Condition {
                             loc: top(),
                             can: ConnectTo(W, Medium),
+                        },
+                    ),
+                    //        X
+                    //       '
+                    (
+                        E,
+                        Condition {
+                            loc: top_right(),
+                            can: Is('X'),
+                        },
+                    ),
+                    //      X
+                    //       '
+                    (
+                        A,
+                        Condition {
+                            loc: top_left(),
+                            can: Is('X'),
                         },
                     ),
                 ],
