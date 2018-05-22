@@ -1,0 +1,42 @@
+<svg class="bob" font-family="arial" font-size="14" height="192" width="232" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="triangle" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="15" refY="10" viewBox="0 0 50 20">
+<path d="M 0 0 L 30 10 L 0 20 z"/>
+</marker>
+</defs>
+<style>
+
+    line, path {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+    }
+    circle {
+      stroke: black;
+      stroke-width: 2;
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
+    }
+    circle.solid {
+      fill:black;
+    }
+    circle.open {
+      fill:transparent;
+    }
+    tspan.head{
+        fill: none;
+        stroke: none;
+    }
+    
+</style>
+<path d=" M 0 24 L 8 24 M 0 24 L 8 24 L 16 24 M 8 24 L 16 24 L 24 24 M 16 24 L 24 24 L 32 24 M 24 24 L 32 24 L 40 24 M 32 24 L 40 24 L 48 24 M 40 24 L 48 24 L 56 24 M 48 24 L 56 24 L 64 24 M 56 24 L 64 24 L 72 24 M 64 24 L 72 24 L 80 24 M 72 24 L 80 24 L 88 24 M 80 24 L 88 24 L 96 24 M 88 24 L 96 24 M 102 28 A 8 8 0 0 0 96 24 M 102 28 L 104 32 M 112 48 L 104 32 L 112 48 M 128 40 A 8 8 0 0 0 122 44 L 120 48 M 128 40 L 136 40 M 128 40 L 136 40 L 144 40 M 136 40 L 144 40 L 152 40 M 144 40 L 152 40 L 160 40 M 152 40 L 160 40 L 168 40 M 160 40 L 168 40 L 176 40 M 168 40 L 176 40 L 184 40 M 176 40 L 184 40 L 192 40 M 184 40 L 192 40 L 200 40 M 192 40 L 200 40 L 208 40 M 200 40 L 208 40 L 216 40 M 208 40 L 216 40 L 224 40 M 216 40 L 224 40 L 232 40 M 224 40 L 232 40 M 116 56 L 112 48 M 116 56 L 120 48 M 116 56 L 112 64 M 116 56 L 120 64 M 104 80 L 112 64 L 104 80 M 120 64 L 122 68 A 8 8 0 0 0 128 72 L 136 72 M 128 72 L 136 72 L 144 72 M 136 72 L 144 72 L 152 72 M 144 72 L 152 72 L 160 72 M 152 72 L 160 72 L 168 72 M 160 72 L 168 72 L 176 72 M 168 72 L 176 72 L 184 72 M 176 72 L 184 72 L 192 72 M 184 72 L 192 72 L 200 72 M 192 72 L 200 72 L 208 72 M 200 72 L 208 72 L 216 72 M 208 72 L 216 72 M 0 88 L 8 88 M 0 88 L 8 88 L 16 88 M 8 88 L 16 88 L 24 88 M 16 88 L 24 88 L 32 88 M 24 88 L 32 88 L 40 88 M 32 88 L 40 88 L 48 88 M 40 88 L 48 88 L 56 88 M 48 88 L 56 88 L 64 88 M 56 88 L 64 88 L 72 88 M 64 88 L 72 88 L 80 88 M 72 88 L 80 88 L 88 88 M 80 88 L 88 88 L 96 88 M 88 88 L 96 88 A 8 8 0 0 0 102 84 L 104 80 M 16 120 L 24 120 M 16 120 L 24 120 L 32 120 M 24 120 L 32 120 M 38 124 A 8 8 0 0 0 32 120 M 38 124 L 40 128 M 56 120 A 8 8 0 0 0 50 124 L 48 128 M 56 120 L 64 120 M 56 120 L 64 120 L 72 120 M 64 120 L 72 120 L 80 120 M 72 120 L 80 120 M 44 136 L 40 128 M 44 136 L 48 128 M 44 136 L 40 144 M 44 136 L 48 144 M 16 152 L 24 152 M 16 152 L 24 152 L 32 152 M 24 152 L 32 152 A 8 8 0 0 0 38 148 L 40 144 M 48 144 L 50 148 A 8 8 0 0 0 56 152 L 64 152 M 56 152 L 64 152 L 72 152 M 64 152 L 72 152" fill="none"/>
+<path d="" fill="none" stroke-dasharray="3 3"/>
+<line marker-end="url(#triangle)" x1="216" x2="228" y1="72" y2="72"/>
+<line marker-end="url(#triangle)" x1="216" x2="228" y1="72" y2="72"/>
+<line marker-end="url(#triangle)" x1="224" x2="228" y1="72" y2="72"/>
+</svg>
