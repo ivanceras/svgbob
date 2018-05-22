@@ -629,9 +629,10 @@ mod test {
     use fragments::Direction::*;
     use properties::Location;
 
-    use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
-                           Y};
-    use properties::Signal::{Medium, Strong, Weak};
+    //use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
+    // Y};
+    use fragments::Block::{O, U, Y};
+    //use properties::Signal::{Medium, Strong, Weak};
 
     #[test]
     fn test_adjascent() {
@@ -647,7 +648,7 @@ mod test {
         //  ._
         let g = Grid::from_str(".-", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(0, 0), &g);
-        let (frags, consumed) = fc.get_fragments();
+        let (frags, _consumed) = fc.get_fragments();
         println!("frags: {:?}", frags);
         assert!(fc.is_intensified(&O));
         assert!(fc.can_be_strong_block(&O));
@@ -658,8 +659,8 @@ mod test {
         //  ._
         let g = Grid::from_str(".-", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(0, 0), &g);
-        let (frags, consumed) = fc.get_fragments();
-        let loc = &Location::go(Right);
+        let (_frags, _consumed) = fc.get_fragments();
+        let _loc = &Location::go(Right);
         let go_right = fc.from_location(&Location::go(Right));
         let right = fc.right();
         let right2 = fc.in_right(2);
@@ -689,7 +690,7 @@ mod test {
         let g = Grid::from_str("._", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(0, 0), &g);
         println!("focus char: {:#?}", fc);
-        let (frags, consumed) = fc.get_fragments();
+        let (frags, _consumed) = fc.get_fragments();
         println!("frags: {:?}", frags);
         assert!(!fc.is_intensified(&U));
         assert!(fc.is_intensified(&Y));
@@ -700,7 +701,7 @@ mod test {
         let g = Grid::from_str("._", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(1, 0), &g);
         println!("focus char: {:#?}", fc);
-        let (frags, consumed) = fc.get_fragments();
+        let (frags, _consumed) = fc.get_fragments();
         println!("frags: {:?}", frags);
         assert!(!fc.is_intensified(&Y));
         assert!(!fc.is_intensified(&U));

@@ -1,7 +1,7 @@
 use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use patterns::FocusChar;
 use properties::Location;
 use properties::PointBlock;
-use patterns::FocusChar;
 
 use fragments::Fragment;
 use fragments::{arc, line};
@@ -25,8 +25,8 @@ impl<'g> Enhance for FocusChar<'g> {
     /// based on the surrounding neighbors
     /// returns the fragments, consumed location
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>) {
-        use fragments::Direction::*;
         use fragments;
+        use fragments::Direction::*;
         let a = &PointBlock::block(A);
         let _b = &PointBlock::block(B);
         let c = &PointBlock::block(C);

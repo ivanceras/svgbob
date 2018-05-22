@@ -10,7 +10,6 @@ keywords = ["ascii", "svg", "convert", "bob"]
 license = "Apache-2.0"
 
 [dependencies]
-#svgbob = {path = "../svgbob"}
 svgbob = "0.2"
 clap = "2.16"
 svg = "0.5"
@@ -21,3 +20,7 @@ path = "src/main.rs"
 
 [dev-dependencies]
 handlebars = "0.21"
+
+
+[replace]
+"svgbob:0.2.7" = { path = "../svgbob" }

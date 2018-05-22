@@ -37,41 +37,41 @@ extern crate pretty_assertions;
 extern crate svg;
 extern crate unicode_width;
 
-use pom::TextInput;
 use pom::parser::*;
+use pom::TextInput;
 
-use svg::Node;
-use svg::node::element::Circle as SvgCircle;
-use svg::node::element::Path as SvgPath;
-use svg::node::element::Line as SvgLine;
-use svg::node::element::Text as SvgText;
-use svg::node::element::Rectangle as SvgRect;
-use svg::node::element::Style;
-use svg::node::element::SVG;
-use svg::node::element::Definitions;
-use svg::node::element::Marker;
-use optimizer::Optimizer;
 use self::Feature::Arrow;
 use self::Feature::Circle;
 use self::Feature::Nothing;
-use self::Stroke::Solid;
 use self::Stroke::Dashed;
-use unicode_width::UnicodeWidthStr;
-use unicode_width::UnicodeWidthChar;
+use self::Stroke::Solid;
+use fragments::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
+use optimizer::Optimizer;
 use patterns::FocusChar;
 use properties::Location;
-use fragments::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
+use svg::node::element::Circle as SvgCircle;
+use svg::node::element::Definitions;
+use svg::node::element::Line as SvgLine;
+use svg::node::element::Marker;
+use svg::node::element::Path as SvgPath;
+use svg::node::element::Rectangle as SvgRect;
+use svg::node::element::Style;
+use svg::node::element::Text as SvgText;
+use svg::node::element::SVG;
+use svg::Node;
+use unicode_width::UnicodeWidthChar;
+use unicode_width::UnicodeWidthStr;
 
 use ArcFlag::{Major, Minor};
 
 mod optimizer;
 mod patterns;
 
-mod fragments;
-mod properties;
 mod box_drawing;
 mod enhance;
 mod enhance_circles;
+mod fragments;
+mod properties;
 
 /// generate an SVG from the ascii text input
 ///
@@ -1007,7 +1007,7 @@ fn svg_escape(arg: &str) -> String {
 
 #[test]
 fn test_escaped_string() {
-    let mut input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+    let input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
     let mut raw3 = TextInput::new(input3);
     let output3 = line_parse().parse(&mut raw3);
     println!("output3: {:?}", output3);
@@ -1036,7 +1036,7 @@ fn test_escaped_string() {
 
 #[test]
 fn test_escaped_multiline_string() {
-    let mut input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
+    let input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
     let mut raw3 = TextInput::new(input3);
     let output3 = line_parse().parse(&mut raw3);
     println!("output3: {:?}", output3);
@@ -1080,8 +1080,8 @@ fn line_parse() -> pom::parser::Parser<'static, char, Vec<(usize, usize)>> {
 #[cfg(test)]
 mod test_lib {
     use super::Grid;
-    use super::Settings;
     use super::Loc;
+    use super::Settings;
 
     #[test]
     fn test_grid() {
@@ -1089,15 +1089,13 @@ mod test_lib {
         println!("{:?}", g.index);
         assert_eq!(
             g.index,
-            vec![
-                vec![
-                    "a".to_string(),
-                    "统".to_string(),
-                    "\u{0}".to_string(),
-                    "ö".to_string(),
-                    "o͡͡͡".to_string(),
-                ],
-            ]
+            vec![vec![
+                "a".to_string(),
+                "统".to_string(),
+                "\u{0}".to_string(),
+                "ö".to_string(),
+                "o͡͡͡".to_string(),
+            ]]
         );
     }
 
@@ -1214,134 +1212,4 @@ uvwxyz1234
         assert_eq!(txt, s);
     }
 
-}
-
-#[cfg(test)]
-mod benchmark {
-    extern crate test;
-    use self::test::Bencher;
-
-    #[bench]
-    fn convert(b: &mut Bencher) {
-        b.iter(|| super::to_svg(&get_str()))
-    }
-
-    fn get_str() -> String {
-        r#"
-Svgbob is a diagramming model
-which uses a set of typing characters
-to approximate the desired shape.
-
-       .---.
-      /-o-/--
-   .-/ / /->
-  ( *  \/
-   '-.  \
-      \ /
-       ' 
-It uses a combination of this characters "`[(/<^.|+v*>\)]'"
-
-It can do basic shapes such as:
-                                                    ,
-   +------+   .------.    .------.      /\        ,' `.
-   |      |   |      |   (        )    /  \     .'     `.
-   +------+   '------'    '------'    '----'     `.   ,'
-     _______            ________                   `.'
-    /       \      /\   \       \
-   /         \    /  \   )       )
-   \         /    \  /  /_______/
-    \_______/      \/
-
-    .-----------.       .   <.      .>  .
-   (             )     (      )    (     )
-    '-----+ ,---'       `>   '      `  <'
-          |/
-          
-
-Quick logo scribbles
-        .---.                      _
-       /-o-/--       .--.         | |               .--.       |\       
-    .-/ / /->       /--. \     .--(-|    .----.    //.-.\      | \..-.  
-   ( *  \/         / o  )|     |  | |    |->  |   (+(-*-))      \((   ) 
-    '-.  \        /\ |-//      .  * |    '----'    \\'-'/        \ '+'  
-       \ /        \ '+'/        \__/                '--'          '-'   
-        '          '--'            
-
-Even unicode box drawing characters are supported
-            ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
-            ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡
-            └─┴┘  ╚═╩╝  ╙─╨╜  ╘═╧╛
-
-Mindmaps
-
-                                        .-->  Alpha
-                                       /
-                                      .---->  Initial Release
-      Planning  -------.             /         \      
-                        \           /           '---> Patch 1
-  Initial research       \         /             \
-            \             \       /               '-->  Patch 2
-             \             \     /
-              \             \   .----------->   Beta
-               \             \ /
-                \          .---.
-                 '------  (     )
-                           `---'
-                           /  \ \ \
-                          /    \ \ \  
-                      .--'      \ \ \
-                     /           \ \ '---  Push backs
-                    .             \ \      \
-                   /|              \ \      '----> Setbacks
-         Team   __/ .               \ \
-                   /|                \ '-----> Reception
-       Workload __/ .                 \
-                   /|                  \
-       Holiday  __/ .                   '--- Career change
-                   / 
-                  V  
-            Bugs
-
-
-It can do complex stuff such as circuit diagrams
-
-
- +10-15V           ___0,047R       
-  *------o------o-|___|-o--o---------o----o-------o
-         |      |       |  |         |    |       |
-        ---     |       | .-.        |    |       |
-  470uF ###     |       | | | 2k2    |    |       |
-         | +    |       | | |        |    |      .-.
-  *------o      '--.    | '-'       .+.   |      '-'
-         |         |6   |7 |8    1k | |   |       |
-        GND      .------------.     | |   |       |
-                 |            |     '+'   |       |
-                 |            |1     |  |/  BC    |
-                 |            |------o--|   547   |
-                 |            |      |  |`>       |
-                 |            |     ,+.   |       |
-                 |            | 220R| |   o----||-+  IRF9Z34
-                 |            |     | |   |    |+->
-                 |  MC34063   |     `+'   |    ||-+
-                 |            |      |    |       |  BYV29     -12V6
-                 |            |      '----'       o--|<-o----o--X OUT
-                 |            |2                  |     |    |
-                 |            |--|                C|    |    |
-                 |            | GND         30uH  C|    |   --- 470
-                 |            |3      1nF         C|    |   ###  uF
-                 |            |-------||--.       |     |    | +
-                 '------------'           |      GND    |   GND
-                      5|   4|             |             |
-                       |    '-------------o-------------o
-                       |                           ___  |
-                       '------/\/\/------------o--|___|-'
-                                               |       1k0
-                                              .-.
-                                              | | 5k6 + 3k3
-                                              | | in Serie
-                                              '-'
-                                               |
-                                              GND
-"#.to_string()
-    }
 }

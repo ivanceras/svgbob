@@ -4,8 +4,8 @@ use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, 
 use fragments::Fragment;
 use fragments::{arc, line};
 
-use properties::Properties;
 use properties::PointBlock;
+use properties::Properties;
 
 pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
     let a = &PointBlock::block(A);

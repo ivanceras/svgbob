@@ -1,9 +1,9 @@
-use super::Loc;
 use super::Element;
-use super::Stroke;
 use super::Feature;
+use super::Loc;
 use super::Point;
 use super::Settings;
+use super::Stroke;
 use ArcFlag;
 
 pub struct Optimizer {
