@@ -629,10 +629,7 @@ mod test {
     use fragments::Direction::*;
     use properties::Location;
 
-    //use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
-    // Y};
     use fragments::Block::{O, U, Y};
-    //use properties::Signal::{Medium, Strong, Weak};
 
     #[test]
     fn test_adjascent() {
@@ -660,7 +657,6 @@ mod test {
         let g = Grid::from_str(".-", &Settings::separate_lines());
         let fc = FocusChar::new(&Loc::new(0, 0), &g);
         let (_frags, _consumed) = fc.get_fragments();
-        let _loc = &Location::go(Right);
         let go_right = fc.from_location(&Location::go(Right));
         let right = fc.right();
         let right2 = fc.in_right(2);
