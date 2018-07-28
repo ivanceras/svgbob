@@ -1,4 +1,3 @@
-use enhance_circles::Round;
 use properties::Characteristic;
 use properties::Signal;
 use Element;
@@ -15,7 +14,6 @@ use properties::PointBlock;
 use fragments::Fragment;
 use fragments::Fragment::Text;
 
-use enhance::Enhance;
 use properties::Can;
 use properties::Properties;
 use properties::Signal::{Medium, Strong, Weak};
@@ -400,7 +398,7 @@ impl<'g> FocusChar<'g> {
 
     pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>) {
         let (fragments, consumed_location) = self.get_fragments();
-        let elements: Vec<Element> = fragments
+        let mut elements: Vec<Element> = fragments
             .into_iter()
             .map(|frag| self.to_element(frag))
             .collect();
@@ -408,6 +406,8 @@ impl<'g> FocusChar<'g> {
             .into_iter()
             .map(|location| self.loc.from_location(&location))
             .collect();
+        elements.sort();
+        elements.dedup();
         (elements, consumed_loc)
     }
 

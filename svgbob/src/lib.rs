@@ -68,8 +68,6 @@ mod optimizer;
 mod patterns;
 
 mod box_drawing;
-mod enhance;
-mod enhance_circles;
 mod fragments;
 mod properties;
 
@@ -216,6 +214,8 @@ pub enum Feature {
     Arrow,  //end
     Circle, //start
 }
+
+
 
 #[derive(Debug, PartialOrd, PartialEq, Clone)]
 pub struct Point {
@@ -376,6 +376,17 @@ pub enum Element {
     Path(Point, Point, String, Stroke),
 }
 
+impl Ord for Element{
+    fn cmp(&self, other: &Self) -> Ordering{
+        if let Some(order) = self.partial_cmp(&other){
+            return order
+        }
+        Ordering::Less
+    }
+}
+impl Eq for Element{
+}
+
 pub fn line(a: &Point, b: &Point) -> Element {
     Element::Line(a.clone(), b.clone(), Solid, vec![])
 }
@@ -429,16 +440,17 @@ impl Element {
                         if collinear(s, e, s2) 
                             && collinear(s, e, e2) 
                             && stroke == stroke2{
+
                             //    line1      line2
                             //   s-----e   s2-----e2
                             //   s----------------e2
                             if e == s2 {
                                 // -----
                                 // o----
-                                let cond1 = feature.is_empty() || feature.contains(&Circle);
+                                let cond1 = feature.is_empty() || (feature.contains(&Circle) && feature.len() == 1);
                                 // ------
                                 // ------>
-                                let cond2 = feature2.is_empty() || feature2.contains(&Arrow) ;
+                                let cond2 = feature2.is_empty() || (feature2.contains(&Arrow) && feature2.len() ==1);
                                 if cond1 && cond2{
                                     return Some(Element::Line(
                                                 s.clone(),
@@ -451,10 +463,10 @@ impl Element {
                             //    line1     line2
                             //  s------e   e2-------s2
                             //  s-------------------s2
-                            if e == e2{
+                            else if e == e2{
                                 //  -------  --------
                                 //  o------  ---------
-                                if (feature.is_empty() || feature.contains(&Circle) )
+                                if (feature.is_empty() || (feature.contains(&Circle) && feature.len() == 1))
                                     && feature2.is_empty(){
                                     return Some(Element::Line(
                                             s.clone(),
@@ -467,11 +479,11 @@ impl Element {
                             //    line1    line2
                             //  e------s   s2------e2
                             //  s------------------e2
-                            if s == s2{
+                            else if s == s2{
                                 // -------   -------
                                 // -------  ------->
                                 if feature.is_empty()
-                                    && (feature2.is_empty() || feature2.contains(&Arrow)){
+                                    && (feature2.is_empty() || (feature2.contains(&Arrow) && feature2.len() ==1 )){
                                         return Some(Element::Line(
                                                 e.clone(),
                                                 e2.clone(),
@@ -484,13 +496,13 @@ impl Element {
                             //  e------s    e2------s2
                             //  e---------------------s2
                             //
-                            if s == e2{
+                            else if s == e2{
                                 //   -----   -----
                                 //   -----   ----o
                                 //   <----   -----
                                 //   <----   ----o
-                                let cond1 = feature.is_empty() || feature.contains(&Arrow);
-                                let cond2 = feature2.is_empty() || feature2.contains(&Circle); 
+                                let cond1 = feature.is_empty() || (feature.contains(&Arrow) && feature.len() == 1);
+                                let cond2 = feature2.is_empty() || (feature2.contains(&Circle) && feature2.len() == 1); 
                                 if cond1 && cond2{
                                     return Some(Element::Line(
                                             s2.clone(),
@@ -614,6 +626,11 @@ impl Element {
 fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
+
+fn distance(a: &Point, b: &Point) -> f32{
+    ((b.x - a.x ).powi(2) + (b.y - a.y).powi(2)).sqrt()
+}
+
 
 fn exclude_escaped_text(line: &str) -> (String, Vec<(usize, String)>) {
     let mut input = TextInput::new(line);
@@ -894,7 +911,7 @@ impl Grid {
         elements.push(vec![text_elm]);
         let input = if self.settings.optimize {
             let mut optimizer = Optimizer::new(elements, consumed_loc);
-            let optimized_elements = optimizer.optimize(&self.settings);
+            let mut optimized_elements = optimizer.optimize(&self.settings);
             optimized_elements
         } else {
             // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>

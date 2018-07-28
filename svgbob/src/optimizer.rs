@@ -40,6 +40,8 @@ impl Optimizer {
                     if let Some(reduced) = elm1.reduce(&elm2){
                         let mut new_reduced = vec![];
                         new_reduced.push(reduced);
+                        new_reduced.sort();
+                        new_reduced.dedup();
                         return Some((new_reduced, i));
                     }
                 }
@@ -54,6 +56,7 @@ impl Optimizer {
         let bottom = loc.bottom();
         let bottom_right = loc.bottom_right();
         let bottom_left = loc.bottom_left();
+        let top_right = loc.top_right();
         if let Some((all_reduced, elm_index)) = self.reduce(element, &right){
             let mut all_consumed:Vec<(Loc, usize)> = vec![];
             let mut only_reduced = vec![];
@@ -122,6 +125,8 @@ impl Optimizer {
                 }
             }
         }
+        optimized.sort();
+        optimized.dedup();
         if settings.compact_path {
             self.merge_paths(optimized)
         } else {
