@@ -155,6 +155,9 @@ impl Optimizer {
                             Feature::Arrow => {
                                 arrows.push(elm.clone());
                             }
+                            Feature::ArrowStart => {
+                                arrows.push(elm.clone());
+                            }
                             // circle at the end rather than arrow
                             Feature::Circle => {
                                 arrows.push(elm.clone());
@@ -174,6 +177,9 @@ impl Optimizer {
                     for feature in features{
                         match *feature {
                             Feature::Arrow => {
+                                arrows.push(elm.clone());
+                            }
+                            Feature::ArrowStart => {
                                 arrows.push(elm.clone());
                             }
                             Feature::Circle => {

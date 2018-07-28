@@ -40,7 +40,7 @@ extern crate unicode_width;
 use pom::parser::*;
 use pom::TextInput;
 
-use self::Feature::Arrow;
+use self::Feature::{Arrow,ArrowStart};
 use self::Feature::Circle;
 use self::Stroke::Dashed;
 use self::Stroke::Solid;
@@ -211,6 +211,7 @@ pub enum Stroke {
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Feature {
+    ArrowStart, // start arrow
     Arrow,  //end
     Circle, //start
 }
@@ -419,6 +420,10 @@ pub fn arrow_line(s: &Point, e: &Point) -> Element {
     Element::Line(s.clone(), e.clone(), Solid, vec![Arrow])
 }
 
+pub fn start_arrow_line(s: &Point, e: &Point) -> Element {
+    Element::Line(s.clone(), e.clone(), Solid, vec![ArrowStart, Arrow])
+}
+
 pub fn text(loc: &Loc, txt: &str) -> Element {
     Element::Text(loc.clone(), svg_escape(txt))
 }
@@ -561,6 +566,9 @@ impl Element {
                         Arrow => {
                             svg_line.assign("marker-end", "url(#triangle)");
                         }
+                        ArrowStart => {
+                            svg_line.assign("marker-start", "url(#triangle)");
+                        }
                         Circle => {
                             svg_line.assign("marker-start", "url(#circle)");
                         }
@@ -591,6 +599,9 @@ impl Element {
                     match *feature {
                         Arrow => {
                             svg_arc.assign("marker-end", "url(#triangle)");
+                        }
+                        ArrowStart => {
+                            svg_arc.assign("marker-start", "url(#triangle)");
                         }
                         Circle => {
                             svg_arc.assign("marker-start", "url(#circle)");

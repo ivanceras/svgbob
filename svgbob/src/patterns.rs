@@ -18,7 +18,7 @@ use properties::Can;
 use properties::Properties;
 use properties::Signal::{Medium, Strong, Weak};
 
-use {arc, arrow_line, line, open_circle, solid_circle, text};
+use {arc, arrow_line, start_arrow_line, line, open_circle, solid_circle, text};
 
 use properties::Can::{ConnectTo, Is, IsStrongAll};
 
@@ -369,7 +369,7 @@ impl<'g> FocusChar<'g> {
             Fragment::Line(p1, p2) => line(&self.point(&p1), &self.point(&p2)),
             Fragment::ArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
 
-            Fragment::StartArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
+            Fragment::StartArrowLine(p1, p2) => start_arrow_line(&self.point(&p1), &self.point(&p2)),
 
             Fragment::Arc(p1, p2, m) => arc(&self.point(&p1), &self.point(&p2), m as f32 * unit_x),
 
@@ -485,14 +485,14 @@ impl<'g> FocusChar<'g> {
             let mut matched = false;
             if enable_default_properties {
                 if !matched_intended {
-                    for &(ref block, ref _signal, ref fragments) in &character.properties {
-                        // draw when used as text but intensified
-                        if self.is_intensified(&block) && !self.used_as_text() {
+                    for &(ref block, ref signal, ref fragments) in &character.properties {
+                        // draw when a strong block and not used as text
+                        if self.is_strong_block(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched = true;
                         }
-                        // draw when a strong block and not used as text
-                        else if self.is_strong_block(&block) && !self.used_as_text() {
+                        // draw when used as text but intensified
+                        else if self.is_intensified(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched = true;
                         }

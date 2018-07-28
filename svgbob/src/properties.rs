@@ -228,6 +228,8 @@ impl PointBlock {
 #[derive(Debug)]
 pub struct Characteristic {
     /// these are the default behavior of the fragment
+    /// describe the signal strength: Signal of connection from certain blocks: Block
+    /// if connecting from this block: Block the line is descibed by the fragments: Vec<Fragments>
     pub properties: Vec<(Block, Signal, Vec<Fragment>)>,
     /// if condition is met, the block becomes a strong signal
     pub intensify: Vec<(Block, Condition)>,
@@ -419,9 +421,9 @@ impl Properties for char {
         /////////////////////////////
         else if self.is('-') {
             Some(Characteristic {
+                properties: vec![(K, Strong, vec![line(k, o)]), (O, Strong, vec![line(k, o)])],
                 intensify: vec![],
                 intended_behavior: vec![],
-                properties: vec![(K, Strong, vec![line(k, o)]), (O, Strong, vec![line(k, o)])],
             })
         }
         ///////////////////////////////
@@ -431,14 +433,14 @@ impl Properties for char {
         ///////////////////////////////
         else if self.is('=') {
             Some(Characteristic {
-                intensify: vec![],
-                intended_behavior: vec![],
                 properties: vec![
                     (K, Strong, vec![line(k, o)]),
                     (O, Strong, vec![line(k, o)]),
                     (F, Strong, vec![line(f, j)]),
                     (J, Strong, vec![line(f, j)]),
                 ],
+                intensify: vec![],
+                intended_behavior: vec![],
             })
         }
         /////////////////////////////////
@@ -448,9 +450,9 @@ impl Properties for char {
         ////////////////////////////////
         else if self.is('_') {
             Some(Characteristic {
+                properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
                 intensify: vec![],
                 intended_behavior: vec![],
-                properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
             })
         }
         /////////////////////////////
@@ -460,6 +462,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.is('/') {
             Some(Characteristic {
+                properties: vec![(E, Strong, vec![line(u, e)]), (U, Strong, vec![line(u, e)])],
                 intensify: vec![
                     //   |
                     //   /
@@ -488,7 +491,6 @@ impl Properties for char {
                     //  |
                     (vec![W], vec![line(m, w), line(m, e)]),
                 ],
-                properties: vec![(E, Strong, vec![line(u, e)]), (U, Strong, vec![line(e, u)])],
             })
         }
         ////////////////////////////////
@@ -498,6 +500,7 @@ impl Properties for char {
         ////////////////////////////////
         else if self.is('\\') {
             Some(Characteristic {
+                properties: vec![(A, Strong, vec![line(a, y)]), (Y, Strong, vec![line(a, y)])],
                 intensify: vec![
                     //    \
                     //    |
@@ -526,7 +529,6 @@ impl Properties for char {
                     //   \
                     (vec![C], vec![line(y, m), line(m, c)]),
                 ],
-                properties: vec![(A, Strong, vec![line(y, a)]), (Y, Strong, vec![line(a, y)])],
             })
         }
         /////////////////////////////////
@@ -536,6 +538,19 @@ impl Properties for char {
         /////////////////////////////////
         else if self.is('+') {
             Some(Characteristic {
+                properties: vec![
+                    // emits medium signal if Block C is strong, if connecting from C, then the line will be M to C
+                    (C, Medium, vec![line(m, c)]),
+                    (K, Medium, vec![line(m, k)]),
+                    (O, Medium, vec![line(m, o)]),
+                    (W, Medium, vec![line(m, w)]),
+                    // emits a weak signal if Block A is strong, if connecting from A line will be
+                    // M to A
+                    (A, Weak, vec![line(m, a)]),
+                    (E, Weak, vec![line(m, e)]),
+                    (U, Weak, vec![line(m, u)]),
+                    (Y, Weak, vec![line(m, y)]),
+                ],
                 intensify: vec![
                     //   |     .
                     //   +     +
@@ -609,16 +624,6 @@ impl Properties for char {
                     ),
                 ],
                 intended_behavior: vec![],
-                properties: vec![
-                    (C, Medium, vec![line(m, c)]),
-                    (K, Medium, vec![line(m, k)]),
-                    (O, Medium, vec![line(m, o)]),
-                    (W, Medium, vec![line(m, w)]),
-                    (A, Weak, vec![line(m, a)]),
-                    (E, Weak, vec![line(m, e)]),
-                    (U, Weak, vec![line(m, u)]),
-                    (Y, Weak, vec![line(m, y)]),
-                ],
             })
         }
         ////////////////////////////
@@ -1293,7 +1298,7 @@ impl Properties for char {
         }
         ////////////////////////////////
         //
-        // < less than sign
+        // < less than sign, arrow left
         //
         ///////////////////////////////
         else if self.is('<') {
@@ -1325,6 +1330,14 @@ impl Properties for char {
                             can: ConnectTo(A, Strong),
                         },
                     ),
+                    //   -<
+                    (
+                        K,
+                        Condition {
+                            loc: left(),
+                            can: ConnectTo(O, Strong),
+                        }
+                    )
                 ],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1337,7 +1350,7 @@ impl Properties for char {
         }
         ////////////////////////////
         //
-        // > greather than sign
+        // > greater than sign, arrow right
         //
         ////////////////////////////
         else if self.is('>') {
@@ -1369,8 +1382,16 @@ impl Properties for char {
                             can: ConnectTo(E, Strong),
                         },
                     ),
+                    //  >-
+                    ( O,
+                      Condition {
+                          loc: right(),
+                          can: ConnectTo(K, Strong),
+                        }
+                    ),
                 ],
-                intended_behavior: vec![],
+                intended_behavior: vec![
+                ],
                 properties: vec![
                     (K, Medium, vec![arrow_line(k, m)]),
                     (O, Weak, vec![start_arrow_line(k, m)]),
@@ -1386,6 +1407,13 @@ impl Properties for char {
         ///////////////////////
         else if self.is('^') {
             Some(Characteristic {
+                properties: vec![
+                    (W, Medium, vec![arrow_line(w, h)]),
+                    (U, Medium, vec![arrow_line(u, i)]),
+                    (Y, Medium, vec![arrow_line(y, g)]),
+                    (K, Weak, vec![arrow_line(k, i)]),
+                    (O, Weak, vec![arrow_line(o, g)]),
+                ],
                 intensify: vec![
                     //    ^
                     //    |
@@ -1456,13 +1484,6 @@ impl Properties for char {
                     //     / \
                     (vec![U, Y], vec![line(u, m), line(m, y)]),
                 ],
-                properties: vec![
-                    (W, Medium, vec![arrow_line(w, h)]),
-                    (U, Medium, vec![arrow_line(u, i)]),
-                    (Y, Medium, vec![arrow_line(y, g)]),
-                    (K, Weak, vec![arrow_line(k, i)]),
-                    (O, Weak, vec![arrow_line(o, g)]),
-                ],
             })
         }
         //////////////////////////
@@ -1472,6 +1493,11 @@ impl Properties for char {
         //////////////////////////
         else if self.any("vV") {
             Some(Characteristic {
+                properties: vec![
+                    (C, Medium, vec![arrow_line(c, r)]),
+                    (A, Medium, vec![arrow_line(a, s)]),
+                    (E, Medium, vec![arrow_line(e, q)]),
+                ],
                 intensify: vec![
                     //    |    .
                     //    v    v
@@ -1505,11 +1531,6 @@ impl Properties for char {
                     //    \ /
                     //     v
                     (vec![A, E], vec![line(a, m), line(m, e)]),
-                ],
-                properties: vec![
-                    (C, Medium, vec![arrow_line(c, r)]),
-                    (A, Medium, vec![arrow_line(a, s)]),
-                    (E, Medium, vec![arrow_line(e, q)]),
                 ],
             })
         }
