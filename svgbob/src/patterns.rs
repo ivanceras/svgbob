@@ -245,7 +245,7 @@ impl LocBlock {
             Y => lb.y(),
         };
         let unit = self.unit_x();
-        p.adjust(pb.adjust.0 * unit, pb.adjust.1 * unit);
+        p.adjust(pb.adjust_x * unit, pb.adjust_y * unit);
         p
     }
 }
@@ -461,59 +461,20 @@ impl<'g> FocusChar<'g> {
         let mut consumed: Vec<Location> = vec![];
 
         let mut matched_intended = false;
-        let mut matched_enhance = false;
-        let mut matched_circles = false;
 
-        let enable_round_circles = true;
-        let enable_enhancements = true;
         let enable_intended_behavior = true;
         let enable_default_properties = true;
 
-        // spaces has no character
-        // that's why enhance circle didn't work out well
-        // Issue#1 circle: The circle is matched by testing from the center
-        // however, each elements along the circle would also be
-        // threated as some other characters that has some other behaviors
-        // causing multiple artifacts as a result of multiple usage of the elements
-        // emitting fragments and merge all together when the circle is also matched.
-        // To solve the issue, checking of circle should be done first
-        // and then the consumed elements are skipped and checked
-        if enable_round_circles {
-            let (circles, circles_consumed, along_arc) = self.round();
-            if !circles.is_empty() && !self.used_as_text() {
-                elm.extend(circles);
-                consumed.extend(circles_consumed);
-                // if circle is matched, and element is along the arc
-                // skip processing of other,
-                // otherwise, even if circle is matched and the element is NOT along arc
-                // do process other enhancement, behaviors
-                matched_circles = along_arc;
-            }
-        }
         if let Some(character) = character {
-            // enhancements
-            if enable_enhancements {
-                if !matched_circles {
-                    let (enhanced, enhance_consumed) = self.enhance();
-                    if !enhanced.is_empty() && !self.used_as_text() {
-                        elm.extend(enhanced);
-                        consumed.extend(enhance_consumed);
-                        matched_enhance = true;
-                    }
-                }
-            }
-
             // intended behaviors when signals are strong
             // after applying the intensifiers
             // do only when enhancements is not matched
             if enable_intended_behavior {
-                if !matched_enhance && !matched_circles {
-                    for &(ref blocks, ref fragments) in &character.intended_behavior {
-                        let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
-                        if meet && !self.used_as_text() {
-                            elm.extend(fragments.clone());
-                            matched_intended = true;
-                        }
+                for &(ref blocks, ref fragments) in &character.intended_behavior {
+                    let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
+                    if meet && !self.used_as_text() {
+                        elm.extend(fragments.clone());
+                        matched_intended = true;
                     }
                 }
             }
@@ -523,7 +484,7 @@ impl<'g> FocusChar<'g> {
             // or the signal has been intensified to strong
             let mut matched = false;
             if enable_default_properties {
-                if !matched_enhance && !matched_circles && !matched_intended {
+                if !matched_intended {
                     for &(ref block, ref _signal, ref fragments) in &character.properties {
                         // draw when used as text but intensified
                         if self.is_intensified(&block) && !self.used_as_text() {
@@ -538,19 +499,22 @@ impl<'g> FocusChar<'g> {
                     }
                 }
             }
-            if !matched && !matched_intended && !matched_enhance && !matched_circles
+            if !matched && !matched_intended 
                 && !self.is_blank()
             {
                 elm.push(Text(self.text()));
             }
-            (elm, consumed)
         } else {
             if !self.is_blank() {
                 // This is to disconnect words
                 elm.push(Text(self.text()));
             }
-            (elm, consumed)
         }
+        elm.sort();
+        elm.dedup();
+        consumed.sort();
+        consumed.dedup();
+        (elm, consumed)
     }
 
     fn get_settings(&self) -> Settings {

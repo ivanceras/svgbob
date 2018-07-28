@@ -8,6 +8,7 @@ use ArcFlag;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
+    /// TODO: consumed location should also include the consumed element index of that location.
     consumed_loc: Vec<Loc>,
 }
 
@@ -19,9 +20,6 @@ impl Optimizer {
         }
     }
 
-    fn in_consumed_loc(&self, loc: &Loc) -> bool {
-        self.consumed_loc.contains(loc)
-    }
 
     fn get(&self, loc: &Loc) -> Option<&Vec<Element>> {
         match self.elements.get(loc.y as usize) {
@@ -30,88 +28,96 @@ impl Optimizer {
         }
     }
 
-    // return the first element only
-    // there is only one element in the component
-    fn first_element_only(&self, loc: &Loc) -> Option<&Element> {
-        match self.get(loc) {
-            Some(elements) => {
-                if elements.len() == 1 {
-                    elements.get(0)
-                } else {
-                    None
-                }
-            }
-            None => None,
-        }
-    }
 
-    // if the path on this location can be eated
-    // from the left, from the top
-    fn is_edible(&self, loc: &Loc) -> bool {
-        self.can_loc_reduce(&loc.top(), loc) || self.can_loc_reduce(&loc.left(), loc)
-            || self.can_loc_reduce(&loc.top_left(), loc)
-            || self.can_loc_reduce(&loc.bottom_left(), loc)
-            || self.can_loc_reduce(&loc.left().left(), loc) //full width character CJK can reduce 2 cells apart
-    }
-    // determine if element in location1
-    // can reduce the element in location2
-    fn can_loc_reduce(&self, loc1: &Loc, loc2: &Loc) -> bool {
-        match self.first_element_only(loc1) {
-            Some(elm1) => self.reduce(elm1, loc2).is_some(),
-            None => false,
-        }
-    }
 
-    fn reduce(&self, elm1: &Element, loc2: &Loc) -> Option<Element> {
-        let elm2 = self.first_element_only(loc2);
-        match elm2 {
-            Some(elm2) => elm1.reduce(elm2),
-            None => None,
-        }
-    }
-    fn trace_elements(&self, element: &Element, loc: &Loc) -> Element {
-        match self.reduce(element, &loc.right()) {
-            Some(reduced) => self.trace_elements(&reduced, &loc.right()),
-            None => {
-                match self.reduce(element, &loc.bottom()) {
-                    Some(reduced) => self.trace_elements(&reduced, &loc.bottom()),
-                    None => {
-                        match self.reduce(element, &loc.bottom_right()) {
-                            Some(reduced) => self.trace_elements(&reduced, &loc.bottom_right()),
-                            None => {
-                                match self.reduce(element, &loc.top_right()) {
-                                    Some(reduced) => {
-                                        self.trace_elements(&reduced, &loc.top_right())
-                                    }
-                                    None => {
-                                        //full width character CJK can reduce 2 cells apart
-                                        match self.reduce(element, &loc.right().right()) {
-                                            Some(reduced) => {
-                                                self.trace_elements(&reduced, &loc.right().right())
-                                            }
-                                            None => element.clone(),
-                                        }
-                                    }
-                                }
-                            }
-                        }
+    // return the reduced element and the index of the matching element on this location
+    fn reduce(&self, elm1: &Element, loc2: &Loc) -> Option<(Vec<Element>, usize)> {
+        // try all the elments of this location
+        if let Some(elements2) = self.get(loc2){
+            if elements2.len() > 0 {
+                for (i,elm2) in elements2.iter().enumerate(){
+                    // use the element that can be reduced with
+                    if let Some(reduced) = elm1.reduce(&elm2){
+                        let mut new_reduced = vec![];
+                        new_reduced.push(reduced);
+                        return Some((new_reduced, i));
                     }
                 }
             }
+        }
+        None
+        
+    }
+    fn trace_elements(&self, element: &Element, loc: &Loc) -> (Vec<Element>, Vec<(Loc, usize)>) {
+        //trace to the right first
+        let right = loc.right();
+        let bottom = loc.bottom();
+        let bottom_right = loc.bottom_right();
+        let bottom_left = loc.bottom_left();
+        if let Some((all_reduced, elm_index)) = self.reduce(element, &right){
+            let mut all_consumed:Vec<(Loc, usize)> = vec![];
+            let mut only_reduced = vec![];
+            for reduced_elm in all_reduced{
+                let (reduced, consumed) = self.trace_elements(&reduced_elm, &right);
+                all_consumed.push((right.clone(), elm_index));
+                all_consumed.extend(consumed);
+                only_reduced = reduced;
+            }
+            (only_reduced, all_consumed)
+        }
+        else if let Some((all_reduced, elm_index)) = self.reduce(element, &bottom){
+            let mut all_consumed = vec![];
+            let mut only_reduced = vec![];
+            for reduced_elm in all_reduced{
+                let (reduced, consumed) = self.trace_elements(&reduced_elm, &bottom);
+                all_consumed.push((bottom.clone(), elm_index));
+                all_consumed.extend(consumed);
+                only_reduced = reduced;
+            }
+            (only_reduced, all_consumed)
+        }
+        else if let Some((all_reduced, elm_index)) = self.reduce(element, &bottom_right){
+            let mut all_consumed = vec![];
+            let mut only_reduced = vec![];
+            for reduced_elm in all_reduced{
+                let (reduced, consumed) = self.trace_elements(&reduced_elm, &bottom_right);
+                all_consumed.push((bottom_right.clone(), elm_index));
+                all_consumed.extend(consumed);
+                only_reduced = reduced;
+            }
+            (only_reduced, all_consumed)
+        }
+        else if let Some((all_reduced, elm_index)) = self.reduce(element, &bottom_left){
+            let mut all_consumed = vec![];
+            let mut only_reduced = vec![];
+            for reduced_elm in all_reduced{
+                let (reduced, consumed) = self.trace_elements(&reduced_elm, &bottom_left);
+                all_consumed.push((bottom_left.clone(),elm_index));
+                all_consumed.extend(consumed);
+                only_reduced = reduced;
+            }
+            (only_reduced, all_consumed)
+        }
+        else{
+            (vec![element.to_owned()], vec![])
         }
     }
 
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
+        let completely_consumed_locs:Vec<Loc> = self.consumed_loc.clone();
+        let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                for elm in cell {
-                    if !self.is_edible(loc) && !self.in_consumed_loc(loc) {
-                        let traced = self.trace_elements(elm, loc);
-                        optimized.push(traced);
+                for (elm_index, elm) in cell.iter().enumerate() {
+                    if !completely_consumed_locs.contains(loc) 
+                        && !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
+                            let (traced, consumed) = self.trace_elements(elm, loc);
+                            optimized.extend(traced);
+                            tracing_consumed_locs.extend(consumed);
                     }
                 }
             }
@@ -126,8 +132,10 @@ impl Optimizer {
     // the text in separated
     fn merge_paths(&self, elements: Vec<Element>) -> Vec<Element> {
         let mut merged = vec![];
-        let mut solid_paths = vec![];
-        let mut dashed_paths = vec![];
+        let mut solid_lines = vec![];
+        let mut dashed_lines = vec![];
+        let mut solid_arcs = vec![];
+        let mut dashed_arcs = vec![];
         let mut arrows = vec![];
         let mut text = vec![];
         let mut circles = vec![];
@@ -136,37 +144,47 @@ impl Optimizer {
                 Element::Circle(_, _, _) => {
                     circles.push(elm.clone());
                 }
-                Element::Line(_, _, ref stroke, ref feature) => match *feature {
-                    Feature::Arrow => {
-                        arrows.push(elm.clone());
+                Element::Line(_, _, ref stroke, ref features) => {
+                    for feature in features{
+                        match *feature {
+                            Feature::Arrow => {
+                                arrows.push(elm.clone());
+                            }
+                            // circle at the end rather than arrow
+                            Feature::Circle => {
+                                arrows.push(elm.clone());
+                            }
+                        }
                     }
-                    Feature::Circle => {
-                        arrows.push(elm.clone());
-                    }
-                    Feature::Nothing => match *stroke {
+                    match *stroke {
                         Stroke::Solid => {
-                            solid_paths.push(elm.clone());
+                            solid_lines.push(elm.clone());
                         }
                         Stroke::Dashed => {
-                            dashed_paths.push(elm.clone());
+                            dashed_lines.push(elm.clone());
                         }
-                    },
+                    }
                 },
-                Element::Arc(_, _, _, _, _, ref stroke, ref feature) => match *feature {
-                    Feature::Arrow => {
-                        arrows.push(elm.clone());
+                Element::Arc(_, _, _, _, _, ref stroke, ref features) => {
+                    for feature in features{
+                        match *feature {
+                            Feature::Arrow => {
+                                arrows.push(elm.clone());
+                            }
+                            Feature::Circle => {
+                                arrows.push(elm.clone());
+                            }
+                        }
                     }
-                    Feature::Circle => {
-                        arrows.push(elm.clone());
-                    }
-                    Feature::Nothing => match *stroke {
+
+                    match *stroke {
                         Stroke::Solid => {
-                            solid_paths.push(elm.clone());
+                            solid_arcs.push(elm.clone());
                         }
                         Stroke::Dashed => {
-                            dashed_paths.push(elm.clone());
+                            dashed_arcs.push(elm.clone());
                         }
-                    },
+                    }
                 },
                 Element::Text(_, _) => text.push(elm.clone()),
                 Element::Path(_, _, _, _) => {
@@ -174,8 +192,12 @@ impl Optimizer {
                 }
             }
         }
-        merged.push(unify(solid_paths, Stroke::Solid));
-        merged.push(unify(dashed_paths, Stroke::Dashed));
+        //merged.push(unify(solid_paths, Stroke::Solid));
+        //merged.push(unify(dashed_paths, Stroke::Dashed));
+        merged.extend(solid_lines);
+        merged.extend(dashed_lines);
+        merged.extend(solid_arcs);
+        merged.extend(dashed_arcs);
         merged.extend(arrows);
         merged.extend(text);
         merged.extend(circles);
@@ -184,7 +206,7 @@ impl Optimizer {
 }
 
 /// cramp all paths that can be connected here
-fn unify(elements: Vec<Element>, stroke: Stroke) -> Element {
+fn _unify(elements: Vec<Element>, stroke: Stroke) -> Element {
     let mut paths = String::new();
     let mut last_loc = None;
     let mut start = None;

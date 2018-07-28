@@ -1,11 +1,12 @@
 use self::Fragment::{Arc, ArrowLine, Line, OpenCircle, SolidCircle, StartArrowLine};
 
 use properties::PointBlock;
+use std::cmp::Ordering;
 
 /// exact location of point
 /// relative to the Character Block
 /// The block is divided in to 5x5 small blocks
-#[derive(PartialEq, Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialOrd, PartialEq, Ord, Eq)]
 pub enum Block {
     A,
     B,
@@ -37,7 +38,8 @@ pub enum Block {
 /// These are non-final drawing elements
 /// Lines most likely fall on the collinear line
 /// arc most likely be changed
-#[derive(Debug, Clone)]
+
+#[derive(Debug, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub enum Fragment {
     Line(PointBlock, PointBlock),
     ArrowLine(PointBlock, PointBlock),
@@ -71,7 +73,8 @@ pub fn solid_circle(c: &PointBlock, r: i32) -> Fragment {
 ///   \|/
 ///   -+-
 ///   /|\
-#[derive(PartialEq, Debug, Clone)]
+
+#[derive(Debug, Clone, PartialOrd, PartialEq, Ord, Eq)]
 pub enum Direction {
     Top,
     Bottom,
