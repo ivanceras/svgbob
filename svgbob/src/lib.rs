@@ -110,6 +110,10 @@ pub struct Settings {
     pub font_size: f32,
     /// stroke width for all lines (default: 2.0)
     pub stroke_width: f32,
+    /// stroke color, default black
+    pub stroke_color: String,
+    /// background color: default white
+    pub background_color: String
 }
 
 impl Settings {
@@ -176,6 +180,8 @@ impl Default for Settings {
             font_family: "arial".to_string(),
             font_size: 14.0,
             stroke_width: 2.0,
+            stroke_color: "black".into(),
+            background_color: "white".into(),
         }
     }
 }
@@ -866,21 +872,18 @@ impl Grid {
         svg.assign("width", width);
         svg.assign("height", height);
 
+
         svg.append(get_defs());
         svg.append(get_styles(&self.settings));
+
+
         let rect = SvgRect::new()
             .set("x", 0)
             .set("y", 0)
-            .set("fill", "#fff")
+            .set("fill", self.settings.background_color.to_string())
             .set("width", width)
             .set("height", height);
-
-        //TODO: move these somewhere in settings
-        let enable_rect_background = false;
-
-        if enable_rect_background {
-            svg.append(rect);
-        }
+        svg.append(rect);
 
         for node in nodes {
             match node {
@@ -912,8 +915,8 @@ fn get_styles(settings: &Settings) -> Style {
     let style = format!(
         r#"
     line, path {{
-      stroke: black;
-      stroke-width: {};
+      stroke: {stroke_color};
+      stroke-width: {stroke_width};
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
@@ -921,24 +924,26 @@ fn get_styles(settings: &Settings) -> Style {
     }}
     circle {{
       stroke: black;
-      stroke-width: {};
+      stroke-width: {stroke_width};
       stroke-opacity: 1;
       fill-opacity: 1;
       stroke-linecap: round;
       stroke-linejoin: miter;
     }}
     circle.solid {{
-      fill:black;
+      fill:{stroke_color};
     }}
     circle.open {{
-      fill:transparent;
+      fill:{background_color};
     }}
     tspan.head{{
         fill: none;
         stroke: none;
     }}
     "#,
-        settings.stroke_width, settings.stroke_width
+        stroke_width = settings.stroke_width, 
+        stroke_color = &settings.stroke_color, 
+        background_color = &settings.background_color
     );
     Style::new(style)
 }
