@@ -265,10 +265,10 @@ impl Properties for char {
         else if self.is('=') {
             Some(Characteristic {
                 properties: vec![
-                    (K, Strong, vec![line(k, o)]),
-                    (O, Strong, vec![line(k, o)]),
-                    (F, Strong, vec![line(f, j)]),
-                    (J, Strong, vec![line(f, j)]),
+                    (K, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
+                    (O, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
+                    (F, Strong, vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))]),
+                    (J, Strong, vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))]),
                 ],
                 intensify: vec![],
                 intended_behavior: vec![],
@@ -282,7 +282,6 @@ impl Properties for char {
         else if self.is('_') {
             Some(Characteristic {
                 properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
-                // override the default behavior
                 intensify: vec![
                 ],
                 intended_behavior: vec![
