@@ -1,10 +1,8 @@
 use element::Element;
 use element::Feature;
 use loc::Loc;
-use point::Point;
 use settings::Settings;
 use element::Stroke;
-use element::ArcFlag;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
@@ -56,7 +54,6 @@ impl Optimizer {
         let bottom = loc.bottom();
         let bottom_right = loc.bottom_right();
         let bottom_left = loc.bottom_left();
-        let top_right = loc.top_right();
         if let Some((all_reduced, elm_index)) = self.reduce(element, &right){
             let mut all_consumed:Vec<(Loc, usize)> = vec![];
             let mut only_reduced = vec![];
@@ -198,13 +195,8 @@ impl Optimizer {
                     }
                 },
                 Element::Text(_, _) => text.push(elm.clone()),
-                Element::Path(_, _, _, _) => {
-                    merged.push(elm.clone());
-                }
             }
         }
-        //merged.push(unify(solid_paths, Stroke::Solid));
-        //merged.push(unify(dashed_paths, Stroke::Dashed));
         merged.extend(solid_lines);
         merged.extend(dashed_lines);
         merged.extend(solid_arcs);
@@ -216,61 +208,3 @@ impl Optimizer {
     }
 }
 
-/// cramp all paths that can be connected here
-fn _unify(elements: Vec<Element>, stroke: Stroke) -> Element {
-    let mut paths = String::new();
-    let mut last_loc = None;
-    let mut start = None;
-    for elm in elements {
-        match elm {
-            Element::Line(s, e, _, _) => {
-                if start.is_none() {
-                    start = Some(s.clone());
-                }
-                let match_last_loc = match last_loc {
-                    Some(last_loc) => s == last_loc,
-                    None => false,
-                };
-                if match_last_loc {
-                    paths.push_str(&format!(" L {} {}", e.x, e.y));
-                } else {
-                    paths.push_str(&format!(" M {} {} L {} {}", s.x, s.y, e.x, e.y));
-                }
-                last_loc = Some(e.clone());
-            }
-            Element::Arc(s, e, r, large, sw, _, _) => {
-                if start.is_none() {
-                    start = Some(s.clone());
-                }
-                let match_last_loc = match last_loc {
-                    Some(last_loc) => s == last_loc,
-                    None => false,
-                };
-                let sweep = if sw { 1 } else { 0 };
-                let large = match large {
-                    ArcFlag::Major => 1,
-                    ArcFlag::Minor => 0,
-                };
-                if match_last_loc {
-                    paths.push_str(&format!(" A {} {} 0 0 {} {} {}", r, r, sweep, e.x, e.y));
-                } else {
-                    paths.push_str(&format!(
-                        " M {} {} A {} {} 0 {} {} {} {}",
-                        s.x, s.y, r, r, large, sweep, e.x, e.y
-                    ));
-                }
-                last_loc = Some(e.clone());
-            }
-            _ => panic!("only lines are arc can be unified"),
-        }
-    }
-    let el_start = match start {
-        Some(start) => start.clone(),
-        None => Point::new(0.0, 0.0),
-    };
-    let el_end = match last_loc {
-        Some(last_loc) => last_loc.clone(),
-        None => Point::new(0.0, 0.0),
-    };
-    Element::Path(el_start, el_end, paths, stroke)
-}

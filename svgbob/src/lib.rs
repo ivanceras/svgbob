@@ -29,7 +29,7 @@
 //! </svg>
 //!
 //!
-//#![deny(warnings)]
+#![deny(warnings)]
 #![feature(extern_prelude)]
 extern crate pom;
 #[cfg(test)]
@@ -38,8 +38,8 @@ extern crate pretty_assertions;
 extern crate svg;
 extern crate unicode_width;
 
-use grid::Grid;
-use settings::Settings;
+pub use grid::Grid;
+pub use settings::Settings;
 use svg::node::element::SVG;
 
 mod optimizer;

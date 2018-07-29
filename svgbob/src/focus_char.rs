@@ -254,7 +254,7 @@ impl<'g> FocusChar<'g> {
             let mut matched = false;
             if enable_default_properties {
                 if !matched_intended {
-                    for &(ref block, ref signal, ref fragments) in &character.properties {
+                    for &(ref block, ref _signal, ref fragments) in &character.properties {
                         // draw when a strong block and not used as text
                         if self.is_strong_block(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());

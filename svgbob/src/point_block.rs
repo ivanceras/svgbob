@@ -1,7 +1,6 @@
 use location::{Location,Direction};
 use block::Block;
 use std::cmp::Ordering;
-use loc::Loc;
 
 /// An exact point in the grid
 /// relative to the focused char

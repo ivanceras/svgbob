@@ -1,27 +1,10 @@
 
-use properties::Characteristic;
-use properties::Signal;
-use element::Element;
-use grid::Grid;
 use loc::Loc;
 use point::Point;
 use settings::Settings;
-
-use block::Block;
 use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
-use location::Location;
 use point_block::PointBlock;
 
-use fragments::Fragment;
-use fragments::Fragment::Text;
-
-use properties::Can;
-use properties::Properties;
-use properties::Signal::{Medium, Strong, Weak};
-
-use element::{arc, arrow_line, start_arrow_line, line, open_circle, solid_circle, text};
-
-use properties::Can::{ConnectTo, Is, IsStrongAll};
 
 pub struct LocBlock {
     pub loc: Loc,

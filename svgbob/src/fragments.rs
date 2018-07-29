@@ -1,7 +1,6 @@
 use self::Fragment::{Arc, ArrowLine, Line, OpenCircle, SolidCircle, StartArrowLine};
 
 use point_block::PointBlock;
-use std::cmp::Ordering;
 
 
 /// These are non-final drawing elements

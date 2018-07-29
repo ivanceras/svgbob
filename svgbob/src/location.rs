@@ -1,4 +1,4 @@
-use self::Direction::{Top,Bottom,Left,Right,TopLeft,TopRight,BottomLeft,BottomRight};
+use self::Direction::{Top,Bottom,Left,Right};
 use point_block::PointBlock;
 use block::{Block::{self,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}};
 /// a location in the grid
@@ -33,11 +33,8 @@ impl Location {
         Location(vec![(direction, step)])
     }
 
-    pub fn go_to(&mut self, direction: Direction) {
-        self.jump_to(direction, 1);
-    }
 
-    pub fn jump_to(&mut self, direction: Direction, step: usize) {
+    fn jump_to(&mut self, direction: Direction, step: usize) {
         self.0.push((direction, step));
     }
 
@@ -47,16 +44,16 @@ impl Location {
         loc
     }
 
-    pub fn go_top(&self, step: usize) -> Self {
+    fn go_top(&self, step: usize) -> Self {
         self.go_jump(Top, step)
     }
-    pub fn go_left(&self, step: usize) -> Self {
+    fn go_left(&self, step: usize) -> Self {
         self.go_jump(Left, step)
     }
-    pub fn go_bottom(&self, step: usize) -> Self {
+    fn go_bottom(&self, step: usize) -> Self {
         self.go_jump(Bottom, step)
     }
-    pub fn go_right(&self, step: usize) -> Self {
+    fn go_right(&self, step: usize) -> Self {
         self.go_jump(Right, step)
     }
 

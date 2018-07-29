@@ -1,4 +1,4 @@
-use location::{Direction,Location};
+use location::{Location};
 
 use block::Block;
 use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
@@ -12,7 +12,6 @@ use box_drawing;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 
 use self::Can::{ConnectTo, Is, IsStrongAll};
-use std::cmp::{Ordering,Ord};
 
 /// the strength of signal
 /// whether or not connects to the direction
@@ -225,6 +224,8 @@ impl Properties for char {
                     //     \
                     //      |
                     (vec![A], vec![line(w, m), line(m, a)]),
+                    //    |-
+                    (vec![O], vec![line(o, m)]),
                 ],
             })
         }

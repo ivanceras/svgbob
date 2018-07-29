@@ -5,14 +5,11 @@ use svg_element::SvgElement;
 use svg::node::element::SVG;
 use svg::Node;
 use svg::node::element::{
-    Circle as SvgCircle,
     Definitions,
-    Line as SvgLine,
     Marker,
     Path as SvgPath,
     Rectangle as SvgRect,
     Style,
-    Text as SvgText,
 };
 use element::Element;
 use pom::TextInput;
@@ -74,30 +71,6 @@ impl Grid {
         }
     }
 
-    /// reassemble the Grid content into a string
-    /// trimming unneeded whitespace to the right for every line
-    pub fn to_string(&self) -> String {
-        let mut buff = String::new();
-        let mut do_ln = false;
-        for row in self.index.iter() {
-            let mut line = String::new();
-            if do_ln {
-                //first line don't do \n
-                buff.push('\n');
-            } else {
-                do_ln = true;
-            }
-            for cell in row {
-                if cell == "\0" {
-; //easy make over the full-width hack of the string
-                } else {
-                    line.push_str(cell);
-                }
-            }
-            buff.push_str(&line);
-        }
-        buff
-    }
 
     pub fn rows(&self) -> usize {
         self.index.len()
@@ -120,116 +93,7 @@ impl Grid {
         }
     }
 
-    /// put a text into this location
-    /// prepare the grid for this location first
-    pub fn put(&mut self, loc: &Loc, s: &str) {
-        let new_loc = self.accomodate(loc);
-        if let Some(row) = self.index.get_mut(new_loc.y as usize) {
-            if let Some(cell) = row.get_mut(new_loc.x as usize) {
-                *cell = s.to_owned();
-            } else {
-                panic!("no cell on this {}", new_loc.x);
-            }
-        } else {
-            panic!("no row on this {}", new_loc.y);
-        }
-    }
 
-    /// insert a new line to at this point
-    pub fn insert_line(&mut self, line: usize) {
-        self.accomodate(&Loc::new(0, line as i32));
-        self.index.insert(line, vec![]);
-    }
-
-    /// join this line to the previous line
-    pub fn join_line(&mut self, line: usize) {
-        let mut row = self.index.remove(line);
-        self.index
-            .get_mut(line - 1)
-            .map(|prev| prev.append(&mut row));
-    }
-
-    /// get the line len at this index
-    pub fn get_line_len(&self, line: usize) -> Option<usize> {
-        self.index.get(line).map(|r| r.len())
-    }
-
-    /// prepare the grid to accomodate this loc
-    /// if loc.y < 0 => insert abs(loc.y) rows at element 0 to self.index
-    /// if loc.y > row.y => append (loc.y-row.y) rows to the self.x
-    /// if loc.x < 0 => insert abs(loc.x) columns at element 0, to all rows
-    /// if loc.x > row.x => append (loc.x-row.x) elements to the row
-    /// returns the corrected location, -1,-1 will be on 0,0
-    pub fn accomodate(&mut self, loc: &Loc) -> Loc {
-        let mut new_loc = loc.clone();
-        if loc.y < 0 {
-            let lack_row = (0 - loc.y) as usize; // 0 - -5 = 5
-            for _ in 0..lack_row {
-                self.index.insert(0, vec![]);
-            }
-            new_loc.y = 0;
-        }
-        if loc.x < 0 {
-            let lack_cell = (0 - loc.x) as usize;
-            let add_cells: String = " ".repeat(lack_cell);
-            // insert add_cells to all rows at 0
-            for row in self.index.iter_mut() {
-                row.insert(0, add_cells.clone());
-            }
-            new_loc.x = 0;
-        }
-
-        // check again using the new location adjusted
-        // for missing cells
-        if new_loc.y >= self.index.len() as i32 {
-            let lack_row = new_loc.y - self.index.len() as i32 + 1;
-            let mut add_rows: Vec<Vec<String>> = Vec::with_capacity(lack_row as usize);
-            for _ in 0..lack_row {
-                add_rows.push(vec![]);
-            }
-            self.index.append(&mut add_rows);
-        }
-        // IMPORTANT NOTE:
-        // using new_loc as adjusted when -negative
-        // is important since the priliminary rows inserted
-        // are just empty rows
-        if let Some(row) = self.index.get_mut(new_loc.y as usize) {
-            if new_loc.x >= row.len() as i32 {
-                let lack_cell = new_loc.x - row.len() as i32 + 1;
-                let mut add_cells: Vec<String> = Vec::with_capacity(lack_cell as usize);
-                for _ in 0..lack_cell {
-                    add_cells.push(" ".to_string()); // use space for empty cells
-                }
-                (&mut *row).append(&mut add_cells);
-            }
-        }
-        new_loc
-    }
-
-    /// Vector arranged in row x col
-    pub fn get_text_in_range(&self, loc1: &Loc, loc2: &Loc) -> Vec<Vec<Option<&String>>> {
-        let x1 = std::cmp::min(loc1.x, loc2.x);
-        let y1 = std::cmp::min(loc1.y, loc2.y);
-        let x2 = std::cmp::max(loc2.x, loc1.x);
-        let y2 = std::cmp::max(loc2.y, loc1.y);
-        let mut text = Vec::with_capacity((y2 - y1 + 1) as usize);
-        for j in y1..y2 + 1 {
-            let mut row = Vec::with_capacity((x2 - x1 + 1) as usize);
-            for i in x1..x2 + 1 {
-                let loc = Loc::new(i, j);
-                let cell = self.get(&loc);
-                row.push(cell);
-            }
-            text.push(row);
-        }
-        text
-    }
-
-    pub fn get_all_text(&self) -> Vec<Vec<Option<&String>>> {
-        let loc1 = Loc::new(0, 0);
-        let loc2 = Loc::new((self.columns() - 1) as i32, (self.rows() - 1) as i32);
-        self.get_text_in_range(&loc1, &loc2)
-    }
 
     /// get the focus char at this location
     pub fn get_focuschar(&self, loc: &Loc) -> FocusChar {

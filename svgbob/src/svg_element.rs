@@ -1,13 +1,8 @@
 use std;
 use svg::node::element::Circle as SvgCircle;
-use svg::node::element::Definitions;
 use svg::node::element::Line as SvgLine;
-use svg::node::element::Marker;
 use svg::node::element::Path as SvgPath;
-use svg::node::element::Rectangle as SvgRect;
-use svg::node::element::Style;
 use svg::node::element::Text as SvgText;
-use svg::node::element::SVG;
 
 pub enum SvgElement {
     Circle(SvgCircle),

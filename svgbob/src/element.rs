@@ -3,12 +3,8 @@ use svg_element::SvgElement;
 use svg::Node;
 use svg::node::element::{
     Circle as SvgCircle,
-    Definitions,
     Line as SvgLine,
-    Marker,
     Path as SvgPath,
-    Rectangle as SvgRect,
-    Style,
     Text as SvgText,
 };
 use grid::svg_escape;
@@ -30,7 +26,6 @@ pub enum Element {
     Line(Point, Point, Stroke, Vec<Feature>),
     Arc(Point, Point, f32, ArcFlag, bool, Stroke, Vec<Feature>),
     Text(Loc, String),
-    Path(Point, Point, String, Stroke),
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
@@ -74,11 +69,11 @@ pub fn solid_circle(c: &Point, r: f32) -> Element {
     Element::Circle(c.clone(), r, "solid".to_string())
 }
 
-pub fn arrow_arc(a: &Point, b: &Point, r: f32) -> Element {
+pub fn _arrow_arc(a: &Point, b: &Point, r: f32) -> Element {
     Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, vec![Arrow])
 }
 
-pub fn arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
+pub fn _arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
     Element::Arc(a.clone(), b.clone(), r.clone(), Minor, true, Solid, vec![Arrow])
 }
 
@@ -86,7 +81,7 @@ pub fn arc(a: &Point, b: &Point, r: f32) -> Element {
     Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, vec![])
 }
 
-pub fn arc_major(a: &Point, b: &Point, r: f32) -> Element {
+pub fn _arc_major(a: &Point, b: &Point, r: f32) -> Element {
     Element::Arc(a.clone(), b.clone(), r, Major, false, Solid, vec![])
 }
 
@@ -106,9 +101,6 @@ pub fn text(loc: &Loc, txt: &str) -> Element {
     Element::Text(loc.clone(), svg_escape(txt))
 }
 
-pub fn blank_text(loc: &Loc) -> Element {
-    text(loc, " ".into())
-}
 
 impl Element {
     // if this element can reduce the other, return the new reduced element
@@ -295,17 +287,6 @@ impl Element {
                 let text_node = svg::node::Text::new(string.to_string());
                 svg_text.append(text_node);
                 SvgElement::Text(svg_text)
-            }
-            Element::Path(_, _, ref d, ref stroke) => {
-                let mut path = SvgPath::new().set("d", d.to_owned()).set("fill", "none");
-
-                match *stroke {
-                    Solid => (),
-                    Dashed => {
-                        path.assign("stroke-dasharray", (3, 3));
-                    }
-                };
-                SvgElement::Path(path)
             }
         }
     }
