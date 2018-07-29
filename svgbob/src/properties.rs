@@ -210,6 +210,20 @@ impl Properties for char {
                             can: IsStrongAll(vec![A, Y]),
                         },
                     ),
+                    //  |-
+                    ( O,
+                      Condition{
+                          loc: right(),
+                          can: IsStrongAll(vec![K,O])
+                      }
+                    ),
+                    //  -|
+                    ( K,
+                      Condition{
+                          loc: left(),
+                          can: IsStrongAll(vec![K,O])
+                        }
+                    ),
                 ],
                 intended_behavior: vec![
                     //    |
@@ -225,7 +239,9 @@ impl Properties for char {
                     //      |
                     (vec![A], vec![line(w, m), line(m, a)]),
                     //    |-
-                    (vec![O], vec![line(o, m)]),
+                    (vec![O], vec![line(o, m), line(c,w)]),
+                    //   -|
+                    (vec![K], vec![line(m, k), line(c,w)]),
                 ],
             })
         }
@@ -266,8 +282,11 @@ impl Properties for char {
         else if self.is('_') {
             Some(Characteristic {
                 properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
-                intensify: vec![],
-                intended_behavior: vec![],
+                // override the default behavior
+                intensify: vec![
+                ],
+                intended_behavior: vec![
+                ],
             })
         }
         /////////////////////////////
@@ -297,6 +316,30 @@ impl Properties for char {
                             can: ConnectTo(C, Strong),
                         },
                     ),
+                    //    /-
+                    (
+                        O,
+                        Condition{
+                            loc: right(),
+                            can: IsStrongAll(vec![K, O]),
+                        },
+                    ),
+                    //   -/
+                    (
+                        K,
+                        Condition{
+                            loc: left(),
+                            can: IsStrongAll(vec![K, O]),
+                        },
+                    ),
+                    //   /_
+                    (
+                        Y,
+                        Condition{
+                            loc: right(),
+                            can: IsStrongAll(vec![U,Y])
+                        }
+                    ),
                 ],
                 intended_behavior: vec![
                     //   |
@@ -305,6 +348,12 @@ impl Properties for char {
                     //  /
                     //  |
                     (vec![W], vec![line(m, w), line(m, e)]),
+                    //   /-
+                    (vec![O], vec![line(o, m), line(u, e)]),
+                    //  -/
+                    (vec![K], vec![line(k, m), line(u, e)]),
+                    //   /_
+                    (vec![Y], vec![line(u, y), line(u, e)]),
                 ],
             })
         }
@@ -335,6 +384,30 @@ impl Properties for char {
                             can: ConnectTo(W, Strong),
                         },
                     ),
+                    //  -\
+                    (
+                        K,
+                        Condition {
+                            loc: left(),
+                            can: IsStrongAll(vec![K,O])
+                        }
+                    ),
+                    //   \-
+                    (
+                        O,
+                        Condition{
+                            loc: right(),
+                            can: IsStrongAll(vec![K,O])
+                        }
+                    ),
+                    //  _\
+                    (
+                        U,
+                        Condition{
+                            loc: left(),
+                            can: IsStrongAll(vec![U,Y])
+                        }
+                    ),
                 ],
                 intended_behavior: vec![
                     //    \
@@ -343,6 +416,12 @@ impl Properties for char {
                     //   |
                     //   \
                     (vec![C], vec![line(y, m), line(m, c)]),
+                    //  -\ 
+                    (vec![K], vec![line(a, y), line(k, m)]),
+                    //   \-
+                    (vec![O], vec![line(a, y), line(m, o)]),
+                    //   _\
+                    (vec![U], vec![line(u, y), line(a, y)]),
                 ],
             })
         }

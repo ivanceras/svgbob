@@ -260,7 +260,7 @@ impl<'g> FocusChar<'g> {
                             elm.extend(fragments.clone());
                             matched = true;
                         }
-                        // draw when used as text but intensified
+                        // intensified the block
                         else if self.is_intensified(&block) && !self.used_as_text() {
                             elm.extend(fragments.clone());
                             matched = true;
@@ -269,8 +269,7 @@ impl<'g> FocusChar<'g> {
                 }
             }
             if !matched && !matched_intended 
-                && !self.is_blank()
-            {
+                && !self.is_blank() {
                 elm.push(Text(self.text()));
             }
         } else {
