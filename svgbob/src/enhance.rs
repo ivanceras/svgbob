@@ -203,6 +203,7 @@ impl<'g> Enhance for FocusChar<'g> {
         {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
         }
+        /*
         // for horizontal dash line
         //   - -
         else if self.is('-') {
@@ -213,6 +214,7 @@ impl<'g> Enhance for FocusChar<'g> {
                 elm.push(dashed_line(o, &left().left().k()));
             }
         }
+        */
 
         (elm, consumed)
     }

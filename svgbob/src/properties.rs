@@ -257,6 +257,18 @@ impl Properties for char {
                 intended_behavior: vec![],
             })
         }
+        /////////////////////////////
+        //
+        //  ~ tilde will be hidden lines
+        //
+        //////////////////////////////
+        else if self.is('~'){
+            Some(Characteristic {
+                properties: vec![(K, Strong, vec![dashed_line(k, o)]), (O, Strong, vec![dashed_line(k, o)])],
+                intensify: vec![],
+                intended_behavior: vec![],
+            })
+        }
         ///////////////////////////////
         //
         // = equal sign
@@ -1495,7 +1507,27 @@ impl Properties for char {
                 ],
             })
         }
+        //////////////////////////////
+        //
+        // : colon for vertical hidden line
+        //
+        //////////////////////////////
         else if self.is(':'){
+            Some(Characteristic{
+                intensify: vec![],
+                intended_behavior: vec![],
+                properties: vec![
+                    (C, Strong, vec![dashed_line(c,w)]),
+                    (W, Strong, vec![dashed_line(c,w)]),
+                ],
+            })
+        }
+        //////////////////////////////
+        //
+        // ! exclamation can also be for vertical hidden line
+        //
+        //////////////////////////////
+        else if self.is('!'){
             Some(Characteristic{
                 intensify: vec![],
                 intended_behavior: vec![],
