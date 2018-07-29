@@ -16,6 +16,7 @@ use fragments::Fragment::Text;
 use element::{line,dashed_line,arrow_line,start_arrow_line,arc,open_circle,solid_circle,text};
 use location::Location;
 use settings::Settings;
+use enhance::Enhance;
 
 #[derive(Debug, Clone)]
 pub struct FocusChar<'g> {
@@ -64,26 +65,49 @@ impl<'g> FocusChar<'g> {
         self.ch.any(s)
     }
 
+    /// check if the the surrounding character can connect to this character
+    fn used_as_drawing(&self)-> bool {
+        //  --
+        (self.can_strongly_connect(&Block::O) && self.right().can_pass_medium_connect(&Block::K))
+        || (self.can_strongly_connect(&Block::K) && self.left().can_pass_medium_connect(&Block::O))
+        //   |
+        //   |
+        || (self.can_strongly_connect(&Block::C) && self.top().can_pass_medium_connect(&Block::W))
+        || (self.can_strongly_connect(&Block::W) && self.bottom().can_pass_medium_connect(&Block::C))
+        //   \
+        //    \
+        || (self.can_strongly_connect(&Block::A) && self.top_left().can_pass_medium_connect(&Block::Y))
+        || (self.can_strongly_connect(&Block::Y) && self.bottom_right().can_pass_medium_connect(&Block::A))
+        //    /
+        //   /
+        || (self.can_strongly_connect(&Block::E) && self.top_right().can_pass_medium_connect(&Block::U))
+        || (self.can_strongly_connect(&Block::U) && self.bottom_left().can_pass_medium_connect(&Block::E))
+        //  __
+        || (self.can_strongly_connect(&Block::U) && self.top_right().can_pass_medium_connect(&Block::Y))
+        || (self.can_strongly_connect(&Block::Y) && self.bottom_left().can_pass_medium_connect(&Block::U))
+    }
+
     fn used_as_text(&self) -> bool {
-        if self.is_text_surrounded() {
-            // not if it can strongly connect to 4 directions
-            if self.can_strongly_connect(&Block::O) || self.can_strongly_connect(&Block::K)
-                || self.can_strongly_connect(&Block::C)
-                || self.can_strongly_connect(&Block::W)
-                || self.can_strongly_connect(&Block::U)
-                || self.can_strongly_connect(&Block::Y)
-            {
-                false
-            } else {
-                true
-            }
-        } else {
+        if self.used_as_drawing(){
             false
+        }
+        else{
+            self.is_text_surrounded()
         }
     }
 
+    fn is_text_char(&self)->bool{
+        if self.ch.any("oO"){// exclude letter oO and _underscore in the alphanumeric 
+            return false;
+        }
+        else {
+            self.ch.is_alphanumeric()
+        }
+    }
+
+
     fn is_text_surrounded(&self) -> bool {
-        self.left().ch.is_alphanumeric() || self.right().ch.is_alphanumeric()
+        self.left().is_text_char() || self.right().is_text_char()
     }
 
     pub fn is_null(&self) -> bool {
@@ -231,15 +255,21 @@ impl<'g> FocusChar<'g> {
         let mut consumed: Vec<Location> = vec![];
 
         let mut matched_intended = false;
+        let mut matched_enhance = false;
 
-        let enable_intended_behavior = true;
-        let enable_default_properties = true;
 
         if let Some(character) = character {
+
+            let (enhanced, enhance_consumed) = self.enhance();
+            if !enhanced.is_empty() && !self.used_as_text() {
+                elm.extend(enhanced);
+                consumed.extend(enhance_consumed);
+                matched_enhance = true;
+            }
             // intended behaviors when signals are strong
             // after applying the intensifiers
             // do only when enhancements is not matched
-            if enable_intended_behavior {
+            if !matched_enhance {
                 for &(ref blocks, ref fragments) in &character.intended_behavior {
                     let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
                     if meet && !self.used_as_text() {
@@ -253,23 +283,21 @@ impl<'g> FocusChar<'g> {
             // add only when signal is strong
             // or the signal has been intensified to strong
             let mut matched = false;
-            if enable_default_properties {
-                if !matched_intended {
-                    for &(ref block, ref _signal, ref fragments) in &character.properties {
-                        // draw when a strong block and not used as text
-                        if self.is_strong_block(&block) && !self.used_as_text() {
-                            elm.extend(fragments.clone());
-                            matched = true;
-                        }
-                        // intensified the block
-                        else if self.is_intensified(&block) && !self.used_as_text() {
-                            elm.extend(fragments.clone());
-                            matched = true;
-                        }
+            if !matched_enhance && !matched_intended {
+                for &(ref block, ref _signal, ref fragments) in &character.properties {
+                    // draw when a strong block and not used as text
+                    if self.is_strong_block(&block) && !self.used_as_text() {
+                        elm.extend(fragments.clone());
+                        matched = true;
+                    }
+                    // intensified the block
+                    else if self.is_intensified(&block) && !self.used_as_text() {
+                        elm.extend(fragments.clone());
+                        matched = true;
                     }
                 }
             }
-            if !matched && !matched_intended 
+            if !matched && !matched_intended && !matched_enhance
                 && !self.is_blank() {
                 elm.push(Text(self.text()));
             }

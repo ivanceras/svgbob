@@ -29,7 +29,7 @@
 //! </svg>
 //!
 //!
-#![deny(warnings)]
+//#![deny(warnings)]
 #![feature(extern_prelude)]
 extern crate pom;
 #[cfg(test)]
@@ -57,6 +57,7 @@ mod point_block;
 mod block;
 mod focus_char;
 mod loc_block;
+mod enhance;
 
 /// generate an SVG from the ascii text input
 ///
