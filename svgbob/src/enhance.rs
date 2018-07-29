@@ -144,6 +144,41 @@ impl<'g> Enhance for FocusChar<'g> {
                 }
             }
         }
+        // transistor complimentary enhancement
+        else if self.is('|') {
+            //    |    |
+            //    <    >
+            if self.bottom().any("><") {
+                elm.push(line(c, &bottom().m()));
+            }
+            //    <    >
+            //    |    |
+            if self.top().any("><") {
+                elm.push(line(w, &top().m()));
+            }
+        } else if self.is('/') {
+            //      >
+            //     /
+            if self.top_right().is('>') {
+                elm.push(line(u, &top_right().m()));
+            }
+            //    /
+            //   <
+            if self.bottom_left().is('<') {
+                elm.push(line(e, &bottom_left().m()));
+            }
+        } else if self.is('\\') {
+            //      \
+            //       >
+            if self.bottom_right().is('>') {
+                elm.push(line(a, &bottom_right().m()));
+            }
+            //    <
+            //     \
+            if self.top_left().is('<') {
+                elm.push(line(y, &top_left().m()));
+            }
+        }
         // circuitries jump
         //    |
         //   -(-
@@ -173,11 +208,9 @@ impl<'g> Enhance for FocusChar<'g> {
         else if self.is('-') {
             if self.right().is(' ') && self.in_right(2).is('-'){
                 elm.push(dashed_line(k, &right().right().o()));
-                //consumed.push(right().right());
             }
             if self.left().is(' ') && self.in_left(2).is('-'){
                 elm.push(dashed_line(o, &left().left().k()));
-                //consumed.push(left().left());
             }
         }
 
