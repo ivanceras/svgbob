@@ -65,6 +65,10 @@ pub fn line(a: &Point, b: &Point) -> Element {
     Element::Line(a.clone(), b.clone(), Solid, vec![])
 }
 
+pub fn dashed_line(a: &Point, b: &Point) -> Element {
+    Element::Line(a.clone(), b.clone(), Dashed, vec![])
+}
+
 pub fn solid_circle(c: &Point, r: f32) -> Element {
     Element::Circle(c.clone(), r, "solid".to_string())
 }
@@ -247,8 +251,8 @@ impl Element {
                 match *stroke {
                     Solid => (),
                     Dashed => {
-                        svg_line.assign("stroke-dasharray", (3, 3));
                         svg_line.assign("fill", "none");
+                        svg_line.assign("class","dashed");
                     }
                 };
 

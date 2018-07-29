@@ -250,6 +250,9 @@ fn get_styles(settings: &Settings) -> Style {
       stroke-linecap: round;
       stroke-linejoin: miter;
     }}
+    line.dashed {{
+        stroke-dasharray: 5;
+    }}
     circle {{
       stroke: black;
       stroke-width: {stroke_width};

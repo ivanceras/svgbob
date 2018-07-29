@@ -5,7 +5,7 @@ use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, open_circle, solid_circle, start_arrow_line};
+use fragments::{arc, arrow_line, line, open_circle, solid_circle, start_arrow_line, dashed_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
@@ -1492,6 +1492,16 @@ impl Properties for char {
                 properties: vec![
                     (A, Strong, vec![line(a, c), line(c, w), line(w, u)]),
                     (U, Strong, vec![line(a, c), line(c, w), line(w, u)]),
+                ],
+            })
+        }
+        else if self.is(':'){
+            Some(Characteristic{
+                intensify: vec![],
+                intended_behavior: vec![],
+                properties: vec![
+                    (C, Strong, vec![dashed_line(c,w)]),
+                    (W, Strong, vec![dashed_line(c,w)]),
                 ],
             })
         }
