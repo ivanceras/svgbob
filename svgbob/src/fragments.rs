@@ -1,39 +1,8 @@
 use self::Fragment::{Arc, ArrowLine, Line, OpenCircle, SolidCircle, StartArrowLine};
 
-use properties::PointBlock;
+use point_block::PointBlock;
 use std::cmp::Ordering;
 
-/// exact location of point
-/// relative to the Character Block
-/// The block is divided in to 5x5 small blocks
-#[derive(Debug, Clone, Copy, PartialOrd, PartialEq, Ord, Eq)]
-pub enum Block {
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
-    I,
-    J,
-    K,
-    L,
-    M,
-    N,
-    O,
-    P,
-    Q,
-    R,
-    S,
-    T,
-    U,
-    V,
-    W,
-    X,
-    Y,
-}
 
 /// These are non-final drawing elements
 /// Lines most likely fall on the collinear line
@@ -69,19 +38,3 @@ pub fn solid_circle(c: &PointBlock, r: i32) -> Fragment {
     SolidCircle(c.clone(), r)
 }
 
-/// 8 directions which a character can connect to
-///   \|/
-///   -+-
-///   /|\
-
-#[derive(Debug, Clone, PartialOrd, PartialEq, Ord, Eq)]
-pub enum Direction {
-    Top,
-    Bottom,
-    Left,
-    Right,
-    TopLeft,
-    TopRight,
-    BottomLeft,
-    BottomRight,
-}

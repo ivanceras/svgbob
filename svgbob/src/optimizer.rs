@@ -1,10 +1,10 @@
-use super::Element;
-use super::Feature;
-use super::Loc;
-use super::Point;
-use super::Settings;
-use super::Stroke;
-use ArcFlag;
+use element::Element;
+use element::Feature;
+use loc::Loc;
+use point::Point;
+use settings::Settings;
+use element::Stroke;
+use element::ArcFlag;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,

@@ -1,10 +1,10 @@
-use fragments::Block;
-use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use block::Block;
+use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 
 use fragments::Fragment;
 use fragments::{arc, line};
 
-use properties::PointBlock;
+use point_block::PointBlock;
 use properties::Properties;
 
 pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {

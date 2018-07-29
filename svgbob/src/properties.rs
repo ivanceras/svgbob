@@ -1,14 +1,15 @@
-use fragments::Direction;
+use location::{Direction,Location};
 
-use fragments::Block;
-use fragments::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use block::Block;
+use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use point_block::PointBlock;
 
 use fragments::Fragment;
 use fragments::{arc, arrow_line, line, open_circle, solid_circle, start_arrow_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
-use fragments::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
+use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 
 use self::Can::{ConnectTo, Is, IsStrongAll};
 use std::cmp::{Ordering,Ord};
@@ -37,193 +38,6 @@ pub enum Signal {
     Strong,
 }
 
-/// a location in the grid
-/// relative to the focused char
-/// go to direction and how many steps to get there
-#[derive(Debug, Clone, PartialOrd, PartialEq, Ord, Eq)]
-pub struct Location(pub Vec<(Direction, usize)>);
-
-impl Location {
-    pub fn go(direction: Direction) -> Self {
-        Self::jump(direction, 1)
-    }
-
-    pub fn jump(direction: Direction, step: usize) -> Self {
-        Location(vec![(direction, step)])
-    }
-
-    pub fn go_to(&mut self, direction: Direction) {
-        self.jump_to(direction, 1);
-    }
-
-    pub fn jump_to(&mut self, direction: Direction, step: usize) {
-        self.0.push((direction, step));
-    }
-
-    fn go_jump(&self, direction: Direction, step: usize) -> Self {
-        let mut loc = self.clone();
-        loc.jump_to(direction, step);
-        loc
-    }
-
-    pub fn go_top(&self, step: usize) -> Self {
-        self.go_jump(Top, step)
-    }
-    pub fn go_left(&self, step: usize) -> Self {
-        self.go_jump(Left, step)
-    }
-    pub fn go_bottom(&self, step: usize) -> Self {
-        self.go_jump(Bottom, step)
-    }
-    pub fn go_right(&self, step: usize) -> Self {
-        self.go_jump(Right, step)
-    }
-
-    pub fn top(&self) -> Self {
-        self.go_top(1)
-    }
-    pub fn bottom(&self) -> Self {
-        self.go_bottom(1)
-    }
-    pub fn left(&self) -> Self {
-        self.go_left(1)
-    }
-    pub fn right(&self) -> Self {
-        self.go_right(1)
-    }
-
-    pub fn a(&self) -> PointBlock {
-        self.block(A)
-    }
-
-    pub fn b(&self) -> PointBlock {
-        self.block(B)
-    }
-    pub fn c(&self) -> PointBlock {
-        self.block(C)
-    }
-    pub fn d(&self) -> PointBlock {
-        self.block(D)
-    }
-    pub fn e(&self) -> PointBlock {
-        self.block(E)
-    }
-    pub fn f(&self) -> PointBlock {
-        self.block(F)
-    }
-    pub fn g(&self) -> PointBlock {
-        self.block(G)
-    }
-    pub fn h(&self) -> PointBlock {
-        self.block(H)
-    }
-    pub fn i(&self) -> PointBlock {
-        self.block(I)
-    }
-    pub fn j(&self) -> PointBlock {
-        self.block(J)
-    }
-    pub fn k(&self) -> PointBlock {
-        self.block(K)
-    }
-    pub fn l(&self) -> PointBlock {
-        self.block(L)
-    }
-    pub fn m(&self) -> PointBlock {
-        self.block(M)
-    }
-    pub fn n(&self) -> PointBlock {
-        self.block(N)
-    }
-    pub fn o(&self) -> PointBlock {
-        self.block(O)
-    }
-    pub fn p(&self) -> PointBlock {
-        self.block(P)
-    }
-    pub fn q(&self) -> PointBlock {
-        self.block(Q)
-    }
-    pub fn r(&self) -> PointBlock {
-        self.block(R)
-    }
-    pub fn s(&self) -> PointBlock {
-        self.block(S)
-    }
-    pub fn t(&self) -> PointBlock {
-        self.block(T)
-    }
-    pub fn u(&self) -> PointBlock {
-        self.block(U)
-    }
-    pub fn v(&self) -> PointBlock {
-        self.block(V)
-    }
-    pub fn w(&self) -> PointBlock {
-        self.block(W)
-    }
-    pub fn x(&self) -> PointBlock {
-        self.block(X)
-    }
-    pub fn y(&self) -> PointBlock {
-        self.block(Y)
-    }
-
-    pub fn block(&self, block: Block) -> PointBlock {
-        PointBlock {
-            location: Some(self.clone()),
-            block: block,
-            adjust_x: 0.0,
-            adjust_y: 0.0
-        }
-    }
-}
-
-/// An exact point in the grid
-/// relative to the focused char
-#[derive(Debug, Clone, PartialOrd, PartialEq)]
-pub struct PointBlock {
-    pub location: Option<Location>,
-    pub block: Block,
-    pub adjust_x: f32,
-    pub adjust_y: f32,
-}
-
-impl Ord for PointBlock{
-    fn cmp(&self, other: &PointBlock) -> Ordering{
-        self.location.cmp(&other.location)
-    }
-}
-
-impl Eq for PointBlock{
-}
-
-impl PointBlock {
-    pub fn block(block: Block) -> Self {
-        PointBlock {
-            location: None,
-            block: block,
-            adjust_x: 0.0,
-            adjust_y: 0.0,
-        }
-    }
-
-    pub fn go(direction: Direction, step: usize, block: Block) -> Self {
-        PointBlock {
-            location: Some(Location::jump(direction, step)),
-            block: block,
-            adjust_x: 0.0,
-            adjust_y: 0.0,
-        }
-    }
-
-    pub fn adjust(&self, x: f32, y: f32) -> Self {
-        let mut pb = self.clone();
-        pb.adjust_x = pb.adjust_x + x;
-        pb.adjust_y = pb.adjust_y + y;
-        pb
-    }
-}
 
 #[derive(Debug)]
 pub struct Characteristic {
