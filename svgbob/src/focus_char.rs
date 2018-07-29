@@ -97,7 +97,7 @@ impl<'g> FocusChar<'g> {
     }
 
     fn is_text_char(&self)->bool{
-        if self.ch.any("oO"){// exclude letter oO and _underscore in the alphanumeric 
+        if self.ch.any("oO_"){// exclude letter oO and _underscore in the alphanumeric 
             return false;
         }
         else {

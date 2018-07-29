@@ -111,6 +111,10 @@ impl Element {
     // for line it has to be collinear and in can connect start->end->start
     // for text, the other text should apear on the right side of this text
     pub fn reduce(&self, other: &Element) -> Option<Element> {
+        // if same then return one
+        if self == other{
+            return Some(other.clone())
+        }
         match *self {
             Element::Line(ref s, ref e, ref stroke, ref feature) => {
                 match *other {
@@ -119,11 +123,15 @@ impl Element {
                         if collinear(s, e, s2) 
                             && collinear(s, e, e2) 
                             && stroke == stroke2{
+                            // same length line
+                            if s == s2 && e == e2 && feature == feature2{
+                                return Some(other.clone())
+                            }
 
                             //    line1      line2
                             //   s-----e   s2-----e2
                             //   s----------------e2
-                            if e == s2 {
+                            else if e == s2 {
                                 // -----
                                 // o----
                                 let cond1 = feature.is_empty() || (feature.contains(&Circle) && feature.len() == 1);

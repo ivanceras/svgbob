@@ -6,7 +6,6 @@ use element::Stroke;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
-    /// TODO: consumed location should also include the consumed element index of that location.
     consumed_loc: Vec<Loc>,
 }
 
