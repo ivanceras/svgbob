@@ -47,6 +47,9 @@ impl Optimizer {
         None
         
     }
+    /// trace the and try to reduce this element against the elements
+    /// at this location(loc),
+    /// returns the reduced element, the location and index of the consumed element
     fn trace_elements(&self, element: &Element, loc: &Loc) -> (Vec<Element>, Vec<(Loc, usize)>) {
         //trace to the right first
         let right = loc.right();
@@ -105,22 +108,25 @@ impl Optimizer {
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
-        let completely_consumed_locs:Vec<Loc> = self.consumed_loc.clone();
+        let mut completely_consumed_locs:Vec<Loc> = self.consumed_loc.clone();
         let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                for (elm_index, elm) in cell.iter().enumerate() {
-                    if !completely_consumed_locs.contains(loc) 
-                        && !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
+                if !completely_consumed_locs.contains(loc) {
+                    for (elm_index, elm) in cell.iter().enumerate() {
+                        if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
                             let (traced, consumed) = self.trace_elements(elm, loc);
                             optimized.extend(traced);
                             tracing_consumed_locs.extend(consumed);
+                        }
                     }
                 }
             }
         }
+        //let excess = self.get_excess_elements(&completely_consumed_locs, &tracing_consumed_locs);
+        //optimized.extend(excess);
         optimized.sort();
         optimized.dedup();
         if settings.compact_path {
@@ -128,6 +134,26 @@ impl Optimizer {
         } else {
             optimized
         }
+    }
+
+    fn get_excess_elements(&self, complete_consumed: &Vec<Loc>, decimated: &Vec<(Loc,usize)>) -> Vec<Element> {
+        let mut excess = vec![];
+        for (y, line) in self.elements.iter().enumerate(){
+            for (x, cell) in line.iter().enumerate(){
+                let loc = &Loc::new(x as i32, y as i32);
+                if !complete_consumed.contains(loc){
+                    for (elm_index, elm) in cell.iter().enumerate(){
+                        if !decimated.contains(&(loc.clone(), elm_index)){
+                            // this one is consumed
+                        }
+                        else{
+                            excess.push(elm.clone());
+                        }
+                    }
+                }
+            }
+        }
+        excess
     }
     // take all paths and non-arrow line in 1 path
     // the text in separated

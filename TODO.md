@@ -11,3 +11,4 @@
       }
       - useful for detecting broken lines such as - - - and replace it with ~~~~~. This way
         it will be easier to process by the fragment emitter
+-[ ] Group traced elements together, then reduce as needed
