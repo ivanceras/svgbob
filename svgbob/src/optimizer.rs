@@ -163,7 +163,6 @@ impl Optimizer {
         let mut dashed_lines = vec![];
         let mut solid_arcs = vec![];
         let mut dashed_arcs = vec![];
-        let mut arrows = vec![];
         let mut text = vec![];
         let mut circles = vec![];
         for elm in elements {
@@ -172,20 +171,6 @@ impl Optimizer {
                     circles.push(elm.clone());
                 }
                 Element::Line(_, _, ref stroke, ref features) => {
-                    for feature in features{
-                        match *feature {
-                            Feature::Arrow => {
-                                arrows.push(elm.clone());
-                            }
-                            Feature::ArrowStart => {
-                                arrows.push(elm.clone());
-                            }
-                            // circle at the end rather than arrow
-                            Feature::Circle => {
-                                arrows.push(elm.clone());
-                            }
-                        }
-                    }
                     match *stroke {
                         Stroke::Solid => {
                             solid_lines.push(elm.clone());
@@ -196,19 +181,6 @@ impl Optimizer {
                     }
                 },
                 Element::Arc(_, _, _, _, _, ref stroke, ref features) => {
-                    for feature in features{
-                        match *feature {
-                            Feature::Arrow => {
-                                arrows.push(elm.clone());
-                            }
-                            Feature::ArrowStart => {
-                                arrows.push(elm.clone());
-                            }
-                            Feature::Circle => {
-                                arrows.push(elm.clone());
-                            }
-                        }
-                    }
 
                     match *stroke {
                         Stroke::Solid => {
@@ -226,7 +198,6 @@ impl Optimizer {
         merged.extend(dashed_lines);
         merged.extend(solid_arcs);
         merged.extend(dashed_arcs);
-        merged.extend(arrows);
         merged.extend(text);
         merged.extend(circles);
         merged
