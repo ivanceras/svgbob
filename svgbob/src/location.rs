@@ -29,6 +29,12 @@ impl Location {
         Self::jump(direction, 1)
     }
 
+    // this location
+    // TODO: hacky fix these
+    pub fn this()-> Self{
+        Self::jump(Right, 0)
+    }
+
     pub fn jump(direction: Direction, step: usize) -> Self {
         Location(vec![(direction, step)])
     }
