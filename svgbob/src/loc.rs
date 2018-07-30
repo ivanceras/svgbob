@@ -70,6 +70,12 @@ impl Loc {
             y: self.y,
         }
     }
+    pub fn in_left(&self, step: i32) -> Loc{
+        Loc{
+            x: self.x - step,
+            y: self.y
+        }
+    }
     pub fn bottom(&self) -> Loc {
         Loc {
             x: self.x,
@@ -80,6 +86,13 @@ impl Loc {
         Loc {
             x: self.x + 1,
             y: self.y,
+        }
+    }
+
+    pub fn in_right(&self, step: i32) -> Loc {
+        Loc{
+            x: self.x + step,
+            y: self.y
         }
     }
 

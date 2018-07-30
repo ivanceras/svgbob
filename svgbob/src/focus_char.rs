@@ -27,6 +27,7 @@ pub struct FocusChar<'g> {
 
 impl<'g> FocusChar<'g> {
     pub fn new(loc: &Loc, grid: &'g Grid) -> Self {
+        //  make a new focus char from the grid at this location
         let s: Option<&String> = grid.get(loc);
         // if there is a text in this location, take the first char as the focus char
         let ch = match s {
@@ -40,6 +41,7 @@ impl<'g> FocusChar<'g> {
             grid: grid,
         }
     }
+
 
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
@@ -56,8 +58,8 @@ impl<'g> FocusChar<'g> {
     }
 
     /// if the character matches given argument
-    pub fn is(&self, ch: char) -> bool {
-        self.ch.is(ch)
+    pub fn is(&self, arg: char) -> bool {
+        self.ch.is(arg)
     }
 
     /// if character is any character in the string

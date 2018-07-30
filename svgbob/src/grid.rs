@@ -20,7 +20,11 @@ use unicode_width::UnicodeWidthChar;
 #[derive(Debug)]
 pub struct Grid {
     pub settings: Settings,
+    /// cell value is in string instead of char to accomodate multiple width characters
+    /// each line is Vec<String>
     index: Vec<Vec<String>>,
+    /// This are text elements that are escaped and are not processed for diagram
+    /// matching
     text_elm: Vec<(usize, usize, String)>,
 }
 impl Grid {
@@ -64,11 +68,13 @@ impl Grid {
             }
             rows.push(row);
         }
-        Grid {
+        let g = Grid {
             settings: settings.clone(),
             index: rows,
             text_elm: text_elm,
-        }
+        };
+        // do the pre processing here
+        g.pre_process()
     }
 
 
@@ -94,6 +100,12 @@ impl Grid {
     }
 
 
+    fn text(&self, loc: &Loc) -> &str {
+        match self.get(loc) {
+            Some(ref s) => s,
+            None => ""
+        }
+    }
 
     /// get the focus char at this location
     pub fn get_focuschar(&self, loc: &Loc) -> FocusChar {
@@ -231,6 +243,65 @@ impl Grid {
         }
         svg
     }
+    /// traverse each element of the grid and swap characters as needed
+    fn pre_process(&self) -> Self {
+        let mut new_index: Vec<Vec<String>> = vec![];
+        for (y,line) in self.index.iter().enumerate(){
+            let mut row: Vec<String> = vec![];
+            for (x,cell) in line.iter().enumerate(){
+                let loc = &Loc::new(x as i32, y as i32);
+                let swap = self.swap_char(loc);
+                row.push(swap.to_string());
+            }
+            new_index.push(row);
+        }
+        Grid{
+            settings: self.settings.clone(),
+            index: new_index,
+            text_elm: self.text_elm.clone()
+        }
+    }
+
+    /// swap characters  - - - with ~~~~~
+    fn swap_char(&self, loc: &Loc) -> &str {
+        let cell = self.text(loc);
+
+        let left = self.text(&loc.left());
+        let left2 = self.text(&loc.in_left(2));
+        let left3 = self.text(&loc.in_left(3));
+        let left4 = self.text(&loc.in_left(4));
+        let right = self.text(&loc.right());
+        let right2 = self.text(&loc.in_right(2));
+        let right3 = self.text(&loc.in_right(3));
+        let right4 = self.text(&loc.in_right(4));
+        // [- - -]
+        //  ^
+        // if `-` and right is ` ` and right(2) is `-` right(3) is ` ` and right(4) is `-`
+        if (cell == "-" && right == " " && right2 == "-" && right3 == " " && right4 == "-")
+        // [- - -]
+        //   ^
+        // if ` `  and left  is `-` and right is `-` and right(2) is ` ` and right(3) is `-`
+        || (cell == " " && left == "-" && right == "-" && right2 == " " && right3 == "-")
+        // [- - -]
+        //    ^
+        // if `-` , and left  is ` ` and right is ` ` and left(2) is `-`  and right(2) is `-` 
+        || (cell == "-" && left == " " && right == " " && left2 == "-" && right2 == "-")
+        // [- - -]
+        //     ^
+        //  if ` `, and left is `-` and right is `-` and left(2) is ` ` and left(3) is `-`  
+        || (cell == " " && left == "-" && right == "-" && left2 == " " && left3 == "-")
+        // [- - -]
+        //      ^
+        //  if `-`, and left  is ` ` and left(2) is `-` and left(3) is ` ` and left(4) is `-`  
+        || (cell == "-" && left == " " && left2 == "-" && left3 == " " && left4 == "-")
+        {
+            "~"
+        }
+        else{
+           cell
+        }
+    }
+
 }
 
 fn get_defs() -> Definitions {
