@@ -645,7 +645,7 @@ impl Properties for char {
         }
         ///////////////////////////
         //
-        // ., dot and comma
+        // ., dot or period and comma
         //
         ///////////////////////////
         else if self.any(".,") {

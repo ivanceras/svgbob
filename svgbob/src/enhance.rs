@@ -82,27 +82,27 @@ impl<'g> Enhance for FocusChar<'g> {
                     consumed.push(top_right());
                 }
             }
-            // For diamon rectanle
+            // For diamond rectangle
             //     .
             //    '
             if self.top_right().any(".,") {
-                elm.push(line(c, &top_right().m()));
+                elm.push(dashed_line(c, &top_right().m()));
                 consumed.push(top_right());
             }
             //   .
             //    '
             if self.top_left().any(".,") {
-                elm.push(line(c, &top_left().m()));
+                elm.push(dashed_line(c, &top_left().m()));
                 consumed.push(top_left());
             }
             //   .'
             if self.left().any(".,") {
-                elm.push(line(c, &left().m()));
+                elm.push(dashed_line(c, &left().m()));
                 consumed.push(left());
             }
             //   '.
             if self.right().any(".,") {
-                elm.push(line(c, &right().m()));
+                elm.push(dashed_line(c, &right().m()));
                 consumed.push(right());
             }
         } else if self.any(".,") {
