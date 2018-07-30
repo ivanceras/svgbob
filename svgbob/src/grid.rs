@@ -10,6 +10,7 @@ use svg::node::element::{
     Path as SvgPath,
     Rectangle as SvgRect,
     Style,
+    Circle as SvgCircle,
 };
 use element::Element;
 use pom::TextInput;
@@ -307,6 +308,8 @@ impl Grid {
 fn get_defs() -> Definitions {
     let mut defs = Definitions::new();
     defs.append(arrow_marker());
+    defs.append(circle_marker());
+    defs.append(open_circle_marker());
     defs
 }
 
@@ -356,7 +359,6 @@ fn arrow_marker() -> Marker {
         .set("viewBox", "0 0 50 20")
         .set("refX", 15)
         .set("refY", 10)
-        .set("markerUnits", "strokeWidth")
         .set("markerWidth", 10)
         .set("markerHeight", 10)
         .set("orient", "auto");
@@ -366,6 +368,45 @@ fn arrow_marker() -> Marker {
     marker
 }
 
+
+///   <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5"
+///        markerWidth="5" markerHeight="5">
+///      <circle cx="5" cy="5" r="5" fill="red" />
+///    </marker>
+fn circle_marker() -> Marker {
+    let mut marker = Marker::new()
+        .set("id", "circle")
+        .set("viewBox", "0 0 20 20")
+        .set("refX", 10)
+        .set("refY", 10)
+        .set("markerWidth", 5)
+        .set("markerHeight", 5);
+
+    let mut circle = SvgCircle::new()
+        .set("cx",10)
+        .set("cy",10)
+        .set("r",8)
+        .set("fill","red");
+    marker.append(circle);
+    marker
+}
+fn open_circle_marker() -> Marker {
+    let mut marker = Marker::new()
+        .set("id", "open_circle")
+        .set("viewBox", "0 0 20 20")
+        .set("refX", 10)
+        .set("refY", 10)
+        .set("markerWidth", 5)
+        .set("markerHeight", 5);
+
+    let mut circle = SvgCircle::new()
+        .set("cx",10)
+        .set("cy",10)
+        .set("r",8)
+        .set("fill","green");
+    marker.append(circle);
+    marker
+}
 //copied from https://github.com/rust-lang/rust/blob/master/src/librustdoc/html/escape.rs
 //just adding for \0
 pub fn svg_escape(arg: &str) -> String {

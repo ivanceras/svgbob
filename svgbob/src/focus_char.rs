@@ -13,7 +13,7 @@ use point::Point;
 use loc_block::LocBlock;
 use element::Element;
 use fragments::Fragment::Text;
-use element::{line,dashed_line,arrow_line,start_arrow_line,arc,open_circle,solid_circle,text};
+use element::{line,dashed_line,circle_start_line, circle_open_line,arrow_line,start_arrow_line,arc,open_circle,solid_circle,text};
 use location::Location;
 use settings::Settings;
 use enhance::Enhance;
@@ -172,6 +172,8 @@ impl<'g> FocusChar<'g> {
         let unit_x = self.loc_block().unit_x();
         match frag {
             Fragment::Line(p1, p2) => line(&self.point(&p1), &self.point(&p2)),
+            Fragment::CircleStartLine(p1, p2) => circle_start_line(&self.point(&p1), &self.point(&p2)),
+            Fragment::CircleOpenLine(p1, p2) => circle_open_line(&self.point(&p1), &self.point(&p2)),
             Fragment::DashedLine(p1, p2) => dashed_line(&self.point(&p1), &self.point(&p2)),
             Fragment::ArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
 

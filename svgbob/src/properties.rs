@@ -5,7 +5,7 @@ use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, open_circle, solid_circle, start_arrow_line, dashed_line};
+use fragments::{arc, arrow_line, line, circle_start_line, circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
@@ -933,7 +933,7 @@ impl Properties for char {
         }
         //////////////////////
         //
-        // * asterisk
+        // * asterisk or star
         //
         //////////////////////
         else if self.is('*') {
@@ -1013,14 +1013,14 @@ impl Properties for char {
                 ],
                 intended_behavior: vec![],
                 properties: vec![
-                    (C, Medium, vec![line(m, c), solid_circle(m, 2)]),
-                    (W, Medium, vec![line(m, w), solid_circle(m, 2)]),
-                    (K, Medium, vec![line(m, k), solid_circle(m, 2)]),
-                    (O, Medium, vec![line(m, o), solid_circle(m, 2)]),
-                    (A, Medium, vec![line(m, a), solid_circle(m, 2)]),
-                    (E, Medium, vec![line(m, e), solid_circle(m, 2)]),
-                    (U, Medium, vec![line(m, u), solid_circle(m, 2)]),
-                    (Y, Medium, vec![line(m, y), solid_circle(m, 2)]),
+                    (C, Medium, vec![circle_start_line(m, c)]),
+                    (W, Medium, vec![circle_start_line(m, w)]),
+                    (K, Medium, vec![circle_start_line(m, k)]),
+                    (O, Medium, vec![circle_start_line(m, o)]),
+                    (A, Medium, vec![circle_start_line(m, a)]),
+                    (E, Medium, vec![circle_start_line(m, e)]),
+                    (U, Medium, vec![circle_start_line(m, u)]),
+                    (Y, Medium, vec![circle_start_line(m, y)]),
                 ],
             })
         }
@@ -1106,14 +1106,14 @@ impl Properties for char {
                 ],
                 intended_behavior: vec![],
                 properties: vec![
-                    (C, Medium, vec![line(h, c), open_circle(m, 2)]),
-                    (W, Medium, vec![line(r, w), open_circle(m, 2)]),
-                    (K, Medium, vec![open_circle(m, 2)]),
-                    (O, Medium, vec![open_circle(m, 2)]),
-                    (A, Medium, vec![line(g, a), open_circle(m, 2)]),
-                    (E, Medium, vec![line(i, e), open_circle(m, 2)]),
-                    (U, Medium, vec![line(q, u), open_circle(m, 2)]),
-                    (Y, Medium, vec![line(s, y), open_circle(m, 2)]),
+                    (C, Medium, vec![circle_open_line(m, c)]),
+                    (W, Medium, vec![circle_open_line(m, w)]),
+                    (K, Medium, vec![circle_open_line(m, k)]),
+                    (O, Medium, vec![circle_open_line(m, o)]),
+                    (A, Medium, vec![circle_open_line(m, a)]),
+                    (E, Medium, vec![circle_open_line(m, e)]),
+                    (U, Medium, vec![circle_open_line(m, u)]),
+                    (Y, Medium, vec![circle_open_line(m, y)]),
                 ],
             })
         }
