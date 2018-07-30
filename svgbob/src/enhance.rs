@@ -66,7 +66,7 @@ impl<'g> Enhance for FocusChar<'g> {
             //  +     +    \
             //   `>    '>   `>
             if self.top_left().any("+\\") && self.right().is('>') {
-                elm.push(fragments::arrow_line(&top_left().m(), &right().f()));
+                elm.push(arrow_line(&top_left().m(), &right().f()));
                 consumed.push(right());
                 if self.top_left().is('\\') {
                     consumed.push(top_left());
@@ -76,7 +76,7 @@ impl<'g> Enhance for FocusChar<'g> {
             //     +    /
             //   <'   <'
             if self.top_right().any("+/") && self.left().is('<') {
-                elm.push(fragments::arrow_line(&top_right().m(), &left().j()));
+                elm.push(arrow_line(&top_right().m(), &left().j()));
                 consumed.push(left());
                 if self.top_right().is('/') {
                     consumed.push(top_right());
@@ -86,23 +86,23 @@ impl<'g> Enhance for FocusChar<'g> {
             //     .
             //    '
             if self.top_right().any(".,") {
-                elm.push(fragments::line(c, &top_right().m()));
+                elm.push(line(c, &top_right().m()));
                 consumed.push(top_right());
             }
             //   .
             //    '
             if self.top_left().any(".,") {
-                elm.push(fragments::line(c, &top_left().m()));
+                elm.push(line(c, &top_left().m()));
                 consumed.push(top_left());
             }
             //   .'
             if self.left().any(".,") {
-                elm.push(fragments::line(c, &left().m()));
+                elm.push(line(c, &left().m()));
                 consumed.push(left());
             }
             //   '.
             if self.right().any(".,") {
-                elm.push(fragments::line(c, &right().m()));
+                elm.push(line(c, &right().m()));
                 consumed.push(right());
             }
         } else if self.any(".,") {
@@ -110,7 +110,7 @@ impl<'g> Enhance for FocusChar<'g> {
             //   <.    <,
             //     +     \
             if self.bottom_right().any("+\\") && self.left().is('<') {
-                elm.push(fragments::arrow_line(&bottom_right().m(), &left().t()));
+                elm.push(arrow_line(&bottom_right().m(), &left().t()));
                 consumed.push(left());
                 if self.bottom_right().is('\\') {
                     consumed.push(bottom_right());
@@ -120,7 +120,7 @@ impl<'g> Enhance for FocusChar<'g> {
             //   .>    ,>   ,>
             //  +     +    /
             if self.bottom_left().any("+/") && self.right().is('>') {
-                elm.push(fragments::arrow_line(&bottom_left().m(), &right().p()));
+                elm.push(arrow_line(&bottom_left().m(), &right().p()));
                 consumed.push(right());
                 if self.bottom_left().is('/') {
                     consumed.push(bottom_left());
