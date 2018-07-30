@@ -40,6 +40,7 @@ impl<'g> Enhance for FocusChar<'g> {
         let _x = &PointBlock::block(X);
         let y = &PointBlock::block(Y);
 
+        let this = || Location::this();
         let top = || Location::go(Top);
         let bottom = || Location::go(Bottom);
         let left = || Location::go(Left);
@@ -58,24 +59,6 @@ impl<'g> Enhance for FocusChar<'g> {
             //    |_
             if self.left().any("|]") {
                 elm.push(line(y, &left().w()));
-            }
-            //    _
-            //   |
-            if self.bottom_left().any("|]") {
-                elm.push(line(y, &left().w()));
-            }
-            //    _
-            //     |
-            if self.bottom_right().any("|[") {
-                elm.push(line(u, &right().w()));
-            }
-            //    /_
-            if self.left().is('/') {
-                elm.push(line(y, &left().u()));
-            }
-            if self.right().is('\\') {
-                //     _\
-                elm.push(line(u, &right().y()));
             }
         }
         else if self.any("`'") {
@@ -156,6 +139,16 @@ impl<'g> Enhance for FocusChar<'g> {
             if self.top().any("><") {
                 elm.push(line(w, &top().m()));
             }
+            //    _
+            //   |
+            if self.top_right().is('_') {
+                elm.extend(vec![line(c,w),line(c, e)]);
+            }
+            //    _
+            //     |
+            if self.top_left().is('_') {
+                elm.extend(vec![line(c,w),line(a,c)]);
+            }
         } else if self.is('/') {
             //      >
             //     /
@@ -190,6 +183,7 @@ impl<'g> Enhance for FocusChar<'g> {
             && self.right().can_strongly_connect(&K)
         {
             elm.extend(vec![arc(c, w, 5), line(k, o)]);
+            //consumed.push(this());
         }
         // circuitries jump
         //    |
@@ -202,19 +196,8 @@ impl<'g> Enhance for FocusChar<'g> {
             && self.right().can_strongly_connect(&K)
         {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
+            //consumed.push(this());
         }
-        /*
-        // for horizontal dash line
-        //   - -
-        else if self.is('-') {
-            if self.right().is(' ') && self.in_right(2).is('-'){
-                elm.push(dashed_line(k, &right().right().o()));
-            }
-            if self.left().is(' ') && self.in_left(2).is('-'){
-                elm.push(dashed_line(o, &left().left().k()));
-            }
-        }
-        */
 
         (elm, consumed)
     }

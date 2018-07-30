@@ -20,7 +20,7 @@ use enhance::Enhance;
 
 #[derive(Debug, Clone)]
 pub struct FocusChar<'g> {
-    loc: Loc,
+    pub loc: Loc,
     ch: char,
     grid: &'g Grid,
 }
@@ -65,28 +65,38 @@ impl<'g> FocusChar<'g> {
         self.ch.any(s)
     }
 
-    /// check if the the surrounding character can connect to this character
+    /// if it's properties is static such as unicode box drawing
+    /// they are automatically used as drawing element
+    /// otherwise, check if the the surrounding character can connect to this character
     fn used_as_drawing(&self)-> bool {
-        //  --
-        (self.can_strongly_connect(&Block::O) && self.right().can_pass_medium_connect(&Block::K))
-        || (self.can_strongly_connect(&Block::K) && self.left().can_pass_medium_connect(&Block::O))
-        //   |
-        //   |
-        || (self.can_strongly_connect(&Block::C) && self.top().can_pass_medium_connect(&Block::W))
-        || (self.can_strongly_connect(&Block::W) && self.bottom().can_pass_medium_connect(&Block::C))
-        //   \
-        //    \
-        || (self.can_strongly_connect(&Block::A) && self.top_left().can_pass_medium_connect(&Block::Y))
-        || (self.can_strongly_connect(&Block::Y) && self.bottom_right().can_pass_medium_connect(&Block::A))
-        //    /
-        //   /
-        || (self.can_strongly_connect(&Block::E) && self.top_right().can_pass_medium_connect(&Block::U))
-        || (self.can_strongly_connect(&Block::U) && self.bottom_left().can_pass_medium_connect(&Block::E))
-        //  __
-        || (self.can_strongly_connect(&Block::U) && self.top_right().can_pass_medium_connect(&Block::Y))
-        || (self.can_strongly_connect(&Block::Y) && self.bottom_left().can_pass_medium_connect(&Block::U))
+        // all box uncide drawing are static
+        if self.ch.is_static() {
+            true
+        }
+        else{
+            //  --
+            (self.can_strongly_connect(&Block::O) && self.right().can_pass_medium_connect(&Block::K))
+            || (self.can_strongly_connect(&Block::K) && self.left().can_pass_medium_connect(&Block::O))
+            //   |
+            //   |
+            || (self.can_strongly_connect(&Block::C) && self.top().can_pass_medium_connect(&Block::W))
+            || (self.can_strongly_connect(&Block::W) && self.bottom().can_pass_medium_connect(&Block::C))
+            //   \
+            //    \
+            || (self.can_strongly_connect(&Block::A) && self.top_left().can_pass_medium_connect(&Block::Y))
+            || (self.can_strongly_connect(&Block::Y) && self.bottom_right().can_pass_medium_connect(&Block::A))
+            //    /
+            //   /
+            || (self.can_strongly_connect(&Block::E) && self.top_right().can_pass_medium_connect(&Block::U))
+            || (self.can_strongly_connect(&Block::U) && self.bottom_left().can_pass_medium_connect(&Block::E))
+            //  __
+            || (self.can_strongly_connect(&Block::U) && self.left().can_pass_medium_connect(&Block::Y))
+            || (self.can_strongly_connect(&Block::Y) && self.right().can_pass_medium_connect(&Block::U))
+        }
     }
 
+    /// determine if the character at this location
+    /// is used as text or not
     fn used_as_text(&self) -> bool {
         if self.used_as_drawing(){
             false
@@ -263,12 +273,15 @@ impl<'g> FocusChar<'g> {
             let (enhanced, enhance_consumed) = self.enhance();
             if !enhanced.is_empty() && !self.used_as_text() {
                 elm.extend(enhanced);
+                let has_consumed = enhance_consumed.len() > 0;
                 consumed.extend(enhance_consumed);
                 matched_enhance = true;
             }
             // intended behaviors when signals are strong
             // after applying the intensifiers
             // do only when enhancements is not matched
+            // TODO: if nothing is consumed in the enhance
+            // allow the rest to do the matching
             if !matched_enhance {
                 for &(ref blocks, ref fragments) in &character.intended_behavior {
                     let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));

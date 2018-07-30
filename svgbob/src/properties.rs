@@ -50,6 +50,9 @@ pub struct Characteristic {
     /// are strong
     /// then use these fragments instead
     pub intended_behavior: Vec<(Vec<Block>, Vec<Fragment>)>,
+    /// typing characters are dynamic
+    /// while box uncide drawing are static
+    pub is_static: bool,
 }
 
 impl Characteristic {
@@ -75,6 +78,8 @@ pub trait Properties {
     fn get_characteristic(&self) -> Option<Characteristic>;
 
     fn is(&self, ch: char) -> bool;
+
+    fn is_static(&self) -> bool;
 
     fn any(&self, s: &str) -> bool;
 
@@ -104,6 +109,14 @@ pub struct Condition {
 impl Properties for char {
     fn is(&self, ch: char) -> bool {
         *self == ch
+    }
+    fn is_static(&self) -> bool {
+        if let Some(characteristic) = self.get_characteristic(){
+            characteristic.is_static
+        }
+        else{
+            false
+        }
     }
 
     fn any(&self, s: &str) -> bool {
@@ -172,6 +185,7 @@ impl Properties for char {
         /////////////////////////////////
         if self.is('|') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(C, Strong, vec![line(c, w)]), (W, Strong, vec![line(c, w)])],
                 intensify: vec![
                     //    |
@@ -252,6 +266,7 @@ impl Properties for char {
         /////////////////////////////
         else if self.is('-') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(K, Strong, vec![line(k, o)]), (O, Strong, vec![line(k, o)])],
                 intensify: vec![],
                 intended_behavior: vec![],
@@ -264,6 +279,7 @@ impl Properties for char {
         //////////////////////////////
         else if self.is('~'){
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(K, Strong, vec![dashed_line(k, o)]), (O, Strong, vec![dashed_line(k, o)])],
                 intensify: vec![],
                 intended_behavior: vec![],
@@ -276,6 +292,7 @@ impl Properties for char {
         ///////////////////////////////
         else if self.is('=') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![
                     (K, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
                     (O, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
@@ -293,6 +310,7 @@ impl Properties for char {
         ////////////////////////////////
         else if self.is('_') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
                 intensify: vec![
                 ],
@@ -307,6 +325,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.is('/') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(E, Strong, vec![line(u, e)]), (U, Strong, vec![line(u, e)])],
                 intensify: vec![
                     //   |
@@ -375,6 +394,7 @@ impl Properties for char {
         ////////////////////////////////
         else if self.is('\\') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![(A, Strong, vec![line(a, y)]), (Y, Strong, vec![line(a, y)])],
                 intensify: vec![
                     //    \
@@ -443,6 +463,7 @@ impl Properties for char {
         /////////////////////////////////
         else if self.is('+') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![
                     // emits medium signal if Block C is strong, if connecting from C, then the line will be M to C
                     (C, Medium, vec![line(m, c)]),
@@ -538,6 +559,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.any("xX") {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //    \
                     //     x
@@ -628,6 +650,7 @@ impl Properties for char {
         ///////////////////////////
         else if self.any(".,") {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //  -.  +.
                     (
@@ -807,6 +830,7 @@ impl Properties for char {
         //////////////////////////
         else if self.any("`'") {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //  -'   +'
                     (
@@ -914,6 +938,7 @@ impl Properties for char {
         //////////////////////
         else if self.is('*') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //    |
                     //    *
@@ -1006,6 +1031,7 @@ impl Properties for char {
         //////////////////////////
         else if self.is('o') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //    |
                     //    o
@@ -1098,6 +1124,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.is('O') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //    |
                     //    O
@@ -1208,6 +1235,7 @@ impl Properties for char {
         ///////////////////////////////
         else if self.is('<') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     // <-   <+   <'  <.
                     (
@@ -1260,6 +1288,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.is('>') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![
                     //  ->  +>  .>  '>
                     (
@@ -1312,6 +1341,7 @@ impl Properties for char {
         ///////////////////////
         else if self.is('^') {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![
                     (W, Medium, vec![arrow_line(w, h)]),
                     (U, Medium, vec![arrow_line(u, i)]),
@@ -1398,6 +1428,7 @@ impl Properties for char {
         //////////////////////////
         else if self.any("vV") {
             Some(Characteristic {
+                is_static: false,
                 properties: vec![
                     (C, Medium, vec![arrow_line(c, r)]),
                     (A, Medium, vec![arrow_line(a, s)]),
@@ -1446,6 +1477,7 @@ impl Properties for char {
         //////////////////////////
         else if self.is('(') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1465,6 +1497,7 @@ impl Properties for char {
         ///////////////////////////////
         else if self.is(')') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1484,6 +1517,7 @@ impl Properties for char {
         ///////////////////////////////
         else if self.is('[') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1499,6 +1533,7 @@ impl Properties for char {
         ////////////////////////////
         else if self.is(']') {
             Some(Characteristic {
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1514,6 +1549,7 @@ impl Properties for char {
         //////////////////////////////
         else if self.is(':'){
             Some(Characteristic{
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1529,6 +1565,7 @@ impl Properties for char {
         //////////////////////////////
         else if self.is('!'){
             Some(Characteristic{
+                is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1546,6 +1583,7 @@ impl Properties for char {
             }
             if !properties.is_empty() {
                 Some(Characteristic {
+                    is_static: true, // all of box drawing are static
                     intensify: vec![],
                     intended_behavior: vec![],
                     properties: properties,
