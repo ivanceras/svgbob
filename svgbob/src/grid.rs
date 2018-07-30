@@ -310,6 +310,7 @@ fn get_defs() -> Definitions {
     defs.append(arrow_marker());
     defs.append(circle_marker());
     defs.append(open_circle_marker());
+    defs.append(big_open_circle_marker());
     defs
 }
 
@@ -327,7 +328,8 @@ fn get_styles(settings: &Settings) -> Style {
     line.dashed {{
         stroke-dasharray: 5;
     }}
-    circle {{
+    circle.solid {{
+      fill:{stroke_color};
       stroke: black;
       stroke-width: {stroke_width};
       stroke-opacity: 1;
@@ -335,11 +337,14 @@ fn get_styles(settings: &Settings) -> Style {
       stroke-linecap: round;
       stroke-linejoin: miter;
     }}
-    circle.solid {{
-      fill:{stroke_color};
-    }}
     circle.open {{
       fill:{background_color};
+      stroke: black;
+      stroke-width: {stroke_width};
+      stroke-opacity: 1;
+      fill-opacity: 1;
+      stroke-linecap: round;
+      stroke-linejoin: miter;
     }}
     tspan.head{{
         fill: none;
@@ -386,7 +391,7 @@ fn circle_marker() -> Marker {
         .set("cx",10)
         .set("cy",10)
         .set("r",8)
-        .set("fill","red");
+        .set("fill","black");
     marker.append(circle);
     marker
 }
@@ -396,14 +401,35 @@ fn open_circle_marker() -> Marker {
         .set("viewBox", "0 0 20 20")
         .set("refX", 10)
         .set("refY", 10)
-        .set("markerWidth", 5)
-        .set("markerHeight", 5);
+        .set("markerWidth", 10)
+        .set("markerHeight", 10);
 
     let mut circle = SvgCircle::new()
         .set("cx",10)
         .set("cy",10)
-        .set("r",8)
-        .set("fill","green");
+        .set("r",4)
+        .set("stroke","black")
+        .set("stroke-width",2)
+        .set("fill","white");
+    marker.append(circle);
+    marker
+}
+fn big_open_circle_marker() -> Marker {
+    let mut marker = Marker::new()
+        .set("id", "big_open_circle")
+        .set("viewBox", "0 0 40 40")
+        .set("refX", 20)
+        .set("refY", 20)
+        .set("markerWidth", 20)
+        .set("markerHeight", 20);
+
+    let mut circle = SvgCircle::new()
+        .set("cx",20)
+        .set("cy",20)
+        .set("r",6)
+        .set("stroke","black")
+        .set("stroke-width",2)
+        .set("fill","white");
     marker.append(circle);
     marker
 }

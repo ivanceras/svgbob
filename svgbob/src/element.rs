@@ -16,7 +16,7 @@ use loc::Loc;
 use element::{
     Stroke::{Solid,Dashed},
     ArcFlag::{Minor,Major},
-    Feature::{Arrow,ArrowStart,Circle,OpenCircle},
+    Feature::{Arrow,ArrowStart,Circle,OpenCircle,BigOpenCircle},
 };
 use unicode_width::UnicodeWidthStr;
 
@@ -41,6 +41,7 @@ pub enum Feature {
     Arrow,  //end
     Circle, //start
     OpenCircle, //start
+    BigOpenCircle, //start
 }
 
 
@@ -76,6 +77,10 @@ pub fn circle_start_line(a: &Point, b: &Point) -> Element {
 
 pub fn circle_open_line(a: &Point, b: &Point) -> Element {
     Element::Line(a.clone(), b.clone(), Solid, vec![OpenCircle])
+}
+
+pub fn big_circle_open_line(a: &Point, b: &Point) -> Element {
+    Element::Line(a.clone(), b.clone(), Solid, vec![BigOpenCircle])
 }
 
 pub fn solid_circle(c: &Point, r: f32) -> Element {
@@ -266,6 +271,9 @@ impl Element {
                         OpenCircle => {
                             svg_line.assign("marker-start", "url(#open_circle)");
                         }
+                        BigOpenCircle => {
+                            svg_line.assign("marker-start", "url(#big_open_circle)");
+                        }
                     };
                 }
                 match *stroke {
@@ -302,6 +310,9 @@ impl Element {
                         }
                         OpenCircle => {
                             svg_arc.assign("marker-start", "url(#open_circle)");
+                        }
+                        BigOpenCircle => {
+                            svg_arc.assign("marker-start", "url(#big_open_circle)");
                         }
                     };
                 }

@@ -1,4 +1,4 @@
-use self::Fragment::{Arc, ArrowLine, Line, DashedLine, CircleStartLine, CircleOpenLine, OpenCircle, SolidCircle, StartArrowLine};
+use self::Fragment::{Arc, ArrowLine, Line, DashedLine, CircleStartLine, CircleOpenLine, BigCircleOpenLine, OpenCircle, SolidCircle, StartArrowLine};
 
 use point_block::PointBlock;
 
@@ -12,6 +12,7 @@ pub enum Fragment {
     Line(PointBlock, PointBlock),
     CircleStartLine(PointBlock, PointBlock),
     CircleOpenLine(PointBlock, PointBlock),
+    BigCircleOpenLine(PointBlock, PointBlock),
     DashedLine(PointBlock, PointBlock),
     ArrowLine(PointBlock, PointBlock),
     StartArrowLine(PointBlock, PointBlock), // the arrow is at the start marker
@@ -29,6 +30,9 @@ pub fn circle_start_line(p1: &PointBlock, p2: &PointBlock) -> Fragment {
 }
 pub fn circle_open_line(p1: &PointBlock, p2: &PointBlock) -> Fragment {
     CircleOpenLine(p1.clone(), p2.clone())
+}
+pub fn big_circle_open_line(p1: &PointBlock, p2: &PointBlock) -> Fragment {
+    BigCircleOpenLine(p1.clone(), p2.clone())
 }
 pub fn dashed_line(p1: &PointBlock, p2: &PointBlock) -> Fragment {
     DashedLine(p1.clone(), p2.clone())

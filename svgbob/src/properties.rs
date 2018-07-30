@@ -5,7 +5,7 @@ use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, circle_start_line, circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
+use fragments::{arc, arrow_line, line, circle_start_line, circle_open_line, big_circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
@@ -1199,32 +1199,14 @@ impl Properties for char {
                 ],
                 intended_behavior: vec![],
                 properties: vec![
-                    (C, Medium, vec![open_circle(m, 3)]),
-                    (W, Medium, vec![open_circle(m, 3)]),
-                    //TODO: properties should be able to consume
-                    // some elements
-                    (K, Medium, vec![open_circle(m, 3)]),
-                    (O, Medium, vec![open_circle(m, 3)]),
-                    (
-                        A,
-                        Medium,
-                        vec![line(a, &a.adjust(0.5, 1.0)), open_circle(m, 3)],
-                    ),
-                    (
-                        E,
-                        Medium,
-                        vec![line(e, &e.adjust(-0.5, 1.0)), open_circle(m, 3)],
-                    ),
-                    (
-                        U,
-                        Medium,
-                        vec![line(u, &u.adjust(0.5, -1.0)), open_circle(m, 3)],
-                    ),
-                    (
-                        Y,
-                        Medium,
-                        vec![line(y, &y.adjust(-0.5, -1.0)), open_circle(m, 3)],
-                    ),
+                    (C, Medium, vec![big_circle_open_line(m, c)]),
+                    (W, Medium, vec![big_circle_open_line(m, w)]),
+                    (K, Medium, vec![big_circle_open_line(m, k)]),
+                    (O, Medium, vec![big_circle_open_line(m, o)]),
+                    (A, Medium, vec![big_circle_open_line(m, a)]),
+                    (E, Medium, vec![big_circle_open_line(m, e)]),
+                    (U, Medium, vec![big_circle_open_line(m, u)]),
+                    (Y, Medium, vec![big_circle_open_line(m, y)]),
                 ],
             })
         }
