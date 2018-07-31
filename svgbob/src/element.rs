@@ -16,15 +16,17 @@ use loc::Loc;
 use element::{
     Stroke::{Solid,Dashed},
     ArcFlag::{Minor,Major},
-    Feature::{Arrow,ArrowStart,Circle,OpenCircle,BigOpenCircle},
+    Feature::{Arrow,ArrowStart,Circle,Square,OpenCircle,BigOpenCircle,Nothing},
 };
 use unicode_width::UnicodeWidthStr;
+
+
 
 #[derive(Debug, Clone, PartialEq, PartialOrd )]
 pub enum Element {
     Circle(Point, f32, String),
-    Line(Point, Point, Stroke, Vec<Feature>),
-    Arc(Point, Point, f32, ArcFlag, bool, Stroke, Vec<Feature>),
+    Line(Point, Point, Stroke, Feature, Feature),
+    Arc(Point, Point, f32, ArcFlag, bool, Stroke, Feature, Feature),
     Text(Loc, String),
 }
 
@@ -34,14 +36,16 @@ pub enum Stroke {
     Dashed,
 }
 
-
+//TODO: rename to marker
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Feature {
     ArrowStart, // start arrow
     Arrow,  //end
     Circle, //start
+    Square, //start
     OpenCircle, //start
     BigOpenCircle, //start
+    Nothing,
 }
 
 
@@ -64,55 +68,47 @@ impl Eq for Element{
 }
 
 pub fn line(a: &Point, b: &Point) -> Element {
-    Element::Line(a.clone(), b.clone(), Solid, vec![])
+    Element::Line(a.clone(), b.clone(), Solid, Nothing, Nothing)
 }
 
 pub fn dashed_line(a: &Point, b: &Point) -> Element {
-    Element::Line(a.clone(), b.clone(), Dashed, vec![])
+    Element::Line(a.clone(), b.clone(), Dashed, Nothing, Nothing)
 }
 
 pub fn circle_start_line(a: &Point, b: &Point) -> Element {
-    Element::Line(a.clone(), b.clone(), Solid, vec![Circle])
+    Element::Line(a.clone(), b.clone(), Solid, Circle, Nothing)
+}
+pub fn square_start_line(a: &Point, b: &Point) -> Element {
+    Element::Line(a.clone(), b.clone(), Solid, Square, Nothing)
 }
 
 pub fn circle_open_line(a: &Point, b: &Point) -> Element {
-    Element::Line(a.clone(), b.clone(), Solid, vec![OpenCircle])
+    Element::Line(a.clone(), b.clone(), Solid, OpenCircle, Nothing)
 }
 
 pub fn big_circle_open_line(a: &Point, b: &Point) -> Element {
-    Element::Line(a.clone(), b.clone(), Solid, vec![BigOpenCircle])
+    Element::Line(a.clone(), b.clone(), Solid, BigOpenCircle, Nothing)
 }
 
 pub fn solid_circle(c: &Point, r: f32) -> Element {
     Element::Circle(c.clone(), r, "solid".to_string())
 }
 
-pub fn _arrow_arc(a: &Point, b: &Point, r: f32) -> Element {
-    Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, vec![Arrow])
-}
-
-pub fn _arrow_sweep_arc(a: &Point, b: &Point, r: f32) -> Element {
-    Element::Arc(a.clone(), b.clone(), r.clone(), Minor, true, Solid, vec![Arrow])
-}
-
 pub fn arc(a: &Point, b: &Point, r: f32) -> Element {
-    Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, vec![])
+    Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Nothing, Nothing)
 }
 
-pub fn _arc_major(a: &Point, b: &Point, r: f32) -> Element {
-    Element::Arc(a.clone(), b.clone(), r, Major, false, Solid, vec![])
-}
 
 pub fn open_circle(c: &Point, r: f32) -> Element {
     Element::Circle(c.clone(), r.clone(), "open".to_string())
 }
 
 pub fn arrow_line(s: &Point, e: &Point) -> Element {
-    Element::Line(s.clone(), e.clone(), Solid, vec![Arrow])
+    Element::Line(s.clone(), e.clone(), Solid, Nothing, Arrow)
 }
 
 pub fn start_arrow_line(s: &Point, e: &Point) -> Element {
-    Element::Line(s.clone(), e.clone(), Solid, vec![ArrowStart, Arrow,Circle])
+    Element::Line(s.clone(), e.clone(), Solid, ArrowStart, Nothing)
 }
 
 pub fn text(loc: &Loc, txt: &str) -> Element {
@@ -130,15 +126,15 @@ impl Element {
             return Some(other.clone())
         }
         match *self {
-            Element::Line(ref s, ref e, ref stroke, ref feature) => {
+            Element::Line(ref s, ref e, ref stroke, ref start_feature, ref end_feature) => {
                 match *other {
-                    Element::Line(ref s2, ref e2, ref stroke2, ref feature2) => {
+                    Element::Line(ref s2, ref e2, ref stroke2, ref start_feature2, ref end_feature2) => {
                         // note: dual 3 point check for trully collinear lines
                         if collinear(s, e, s2) 
                             && collinear(s, e, e2) 
                             && stroke == stroke2{
                             // same length line
-                            if s == s2 && e == e2 && feature == feature2{
+                            if s == s2 && e == e2 && start_feature == start_feature2 && end_feature == end_feature2 {
                                 return Some(other.clone())
                             }
 
@@ -148,16 +144,15 @@ impl Element {
                             else if e == s2 {
                                 // -----
                                 // o----
-                                let cond1 = feature.is_empty() || (feature.contains(&Circle) && feature.len() == 1);
                                 // ------
                                 // ------>
-                                let cond2 = feature2.is_empty() || (feature2.contains(&Arrow) && feature2.len() ==1);
-                                if cond1 && cond2{
+                                if *end_feature == Nothing && *start_feature2 == Nothing{
                                     return Some(Element::Line(
                                                 s.clone(),
                                                 e2.clone(),
                                                 stroke.clone(),
-                                                feature2.clone()
+                                                start_feature.clone(),
+                                                end_feature2.clone()
                                                 ));
                                 }
                             }
@@ -167,13 +162,13 @@ impl Element {
                             else if e == e2{
                                 //  -------  --------
                                 //  o------  ---------
-                                if (feature.is_empty() || (feature.contains(&Circle) && feature.len() == 1))
-                                    && feature2.is_empty(){
+                                if *end_feature == Nothing && *end_feature2 == Nothing{
                                     return Some(Element::Line(
                                             s.clone(),
                                             s2.clone(),
                                             stroke.clone(),
-                                            feature2.clone()
+                                            start_feature.clone(),
+                                            start_feature2.clone(),
                                             ));
                                 }
                             }
@@ -183,15 +178,16 @@ impl Element {
                             else if s == s2{
                                 // -------   -------
                                 // -------  ------->
-                                if feature.is_empty()
-                                    && (feature2.is_empty() || (feature2.contains(&Arrow) && feature2.len() ==1 )){
-                                        return Some(Element::Line(
-                                                e.clone(),
-                                                e2.clone(),
-                                                stroke.clone(),
-                                                feature2.clone()
-                                                ));
-                                    }
+                                // except for line 1 has arrow at the end
+                                if *start_feature == Nothing && *start_feature2 == Nothing && *end_feature != Arrow {
+                                    return Some(Element::Line(
+                                            e.clone(),
+                                            e2.clone(),
+                                            stroke.clone(),
+                                            end_feature.clone(),
+                                            end_feature2.clone(),
+                                            ));
+                               }
                             }
                             //      line1    line2
                             //  e------s    e2------s2
@@ -202,16 +198,15 @@ impl Element {
                                 //   -----   ----o
                                 //   <----   -----
                                 //   <----   ----o
-                                let cond1 = feature.is_empty() || (feature.contains(&Arrow) && feature.len() == 1);
-                                let cond2 = feature2.is_empty() || (feature2.contains(&Circle) && feature2.len() == 1); 
-                                if cond1 && cond2{
+                                if *start_feature == Nothing && *end_feature2 == Nothing{
                                     return Some(Element::Line(
                                             s2.clone(),
                                             e.clone(),
                                             stroke.clone(),
-                                            feature.clone(),
+                                            start_feature2.clone(),
+                                            end_feature.clone(),
                                             ));
-                                    }
+                                }
                             }
                         }
                         return None;
@@ -251,30 +246,53 @@ impl Element {
 
                 SvgElement::Circle(svg_circle)
             }
-            Element::Line(ref s, ref e, ref stroke, ref features) => {
+            Element::Line(ref s, ref e, ref stroke, ref start_feature, ref end_feature) => {
                 let mut svg_line = SvgLine::new()
                     .set("x1", s.x)
                     .set("y1", s.y)
                     .set("x2", e.x)
                     .set("y2", e.y);
-                for feature in features{
-                    match *feature {
-                        Arrow => {
-                            svg_line.assign("marker-end", "url(#triangle)");
-                        }
-                        ArrowStart => {
-                            svg_line.assign("marker-start", "url(#triangle)");
-                        }
-                        Circle => {
-                            svg_line.assign("marker-start", "url(#circle)");
-                        }
-                        OpenCircle => {
-                            svg_line.assign("marker-start", "url(#open_circle)");
-                        }
-                        BigOpenCircle => {
-                            svg_line.assign("marker-start", "url(#big_open_circle)");
-                        }
-                    };
+                match *start_feature {
+                    Nothing => (),
+                    Arrow => {
+                        svg_line.assign("marker-start", "url(#triangle)");
+                    }
+                    ArrowStart => {
+                        svg_line.assign("marker-start", "url(#triangle)");
+                    }
+                    Circle => {
+                        svg_line.assign("marker-start", "url(#circle)");
+                    }
+                    Square => {
+                        svg_line.assign("marker-start", "url(#square)");
+                    }
+                    OpenCircle => {
+                        svg_line.assign("marker-start", "url(#open_circle)");
+                    }
+                    BigOpenCircle => {
+                        svg_line.assign("marker-start", "url(#big_open_circle)");
+                    }
+                }
+                match *end_feature {
+                    Nothing => (),
+                    Arrow => {
+                        svg_line.assign("marker-end", "url(#triangle)");
+                    }
+                    ArrowStart => {
+                        svg_line.assign("marker-end", "url(#triangle)");
+                    }
+                    Circle => {
+                        svg_line.assign("marker-end", "url(#circle)");
+                    }
+                    Square => {
+                        svg_line.assign("marker-end", "url(#square)");
+                    }
+                    OpenCircle => {
+                        svg_line.assign("marker-end", "url(#open_circle)");
+                    }
+                    BigOpenCircle => {
+                        svg_line.assign("marker-end", "url(#big_open_circle)");
+                    }
                 }
                 match *stroke {
                     Solid => (),
@@ -283,10 +301,9 @@ impl Element {
                         svg_line.assign("class","dashed");
                     }
                 };
-
                 SvgElement::Line(svg_line)
             }
-            Element::Arc(ref s, ref e, radius, ref arc_flag, sweep, _, ref features) => {
+            Element::Arc(ref s, ref e, radius, ref arc_flag, sweep, _, ref start_feature, ref end_feature) => {
                 let sweept = if sweep { "1" } else { "0" };
                 let arc_flag = match *arc_flag {
                     Major => "1",
@@ -297,24 +314,47 @@ impl Element {
                     s.x, s.y, radius, radius, arc_flag, sweept, e.x, e.y
                 );
                 let mut svg_arc = SvgPath::new().set("d", d).set("fill", "none");
-                for feature in features{
-                    match *feature {
-                        Arrow => {
-                            svg_arc.assign("marker-end", "url(#triangle)");
-                        }
-                        ArrowStart => {
-                            svg_arc.assign("marker-start", "url(#triangle)");
-                        }
-                        Circle => {
-                            svg_arc.assign("marker-start", "url(#circle)");
-                        }
-                        OpenCircle => {
-                            svg_arc.assign("marker-start", "url(#open_circle)");
-                        }
-                        BigOpenCircle => {
-                            svg_arc.assign("marker-start", "url(#big_open_circle)");
-                        }
-                    };
+                match *start_feature {
+                    Nothing => {}
+                    Arrow => {
+                        svg_arc.assign("marker-start", "url(#triangle)");
+                    }
+                    ArrowStart => {
+                        svg_arc.assign("marker-start", "url(#triangle)");
+                    }
+                    Circle => {
+                        svg_arc.assign("marker-start", "url(#circle)");
+                    }
+                    Square => {
+                        svg_arc.assign("marker-start", "url(#square)");
+                    }
+                    OpenCircle => {
+                        svg_arc.assign("marker-start", "url(#open_circle)");
+                    }
+                    BigOpenCircle => {
+                        svg_arc.assign("marker-start", "url(#big_open_circle)");
+                    }
+                }
+                match *end_feature {
+                    Nothing => {}
+                    Arrow => {
+                        svg_arc.assign("marker-end", "url(#triangle)");
+                    }
+                    ArrowStart => {
+                        svg_arc.assign("marker-end", "url(#triangle)");
+                    }
+                    Circle => {
+                        svg_arc.assign("marker-end", "url(#circle)");
+                    }
+                    Square => {
+                        svg_arc.assign("marker-end", "url(#square)");
+                    }
+                    OpenCircle => {
+                        svg_arc.assign("marker-end", "url(#open_circle)");
+                    }
+                    BigOpenCircle => {
+                        svg_arc.assign("marker-end", "url(#big_open_circle)");
+                    }
                 }
                 SvgElement::Path(svg_arc)
             }

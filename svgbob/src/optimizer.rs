@@ -161,7 +161,7 @@ impl Optimizer {
         let mut merged = vec![];
         let mut solid_lines = vec![];
         let mut dashed_lines = vec![];
-        let mut featured_solid_lines = vec![];
+        let mut featured_circle_solid_lines = vec![];
         let mut solid_arcs = vec![];
         let mut dashed_arcs = vec![];
         let mut text = vec![];
@@ -171,10 +171,10 @@ impl Optimizer {
                 Element::Circle(_, _, _) => {
                     circles.push(elm.clone());
                 }
-                Element::Line(_, _, ref stroke, ref features) => {
-                    if features.contains(&OpenCircle)
-                        || features.contains(&BigOpenCircle){
-                            featured_solid_lines.push(elm.clone())
+                Element::Line(_, _, ref stroke, ref start_feature, ref end_feature) => {
+                    if *start_feature == OpenCircle || *end_feature == OpenCircle
+                        || *start_feature == BigOpenCircle || *end_feature == BigOpenCircle{
+                            featured_circle_solid_lines.push(elm.clone())
                         }
                     else{
                         match *stroke {
@@ -187,7 +187,7 @@ impl Optimizer {
                         }
                     }
                 },
-                Element::Arc(_, _, _, _, _, ref stroke, ref features) => {
+                Element::Arc(_, _, _, _, _, ref stroke, _, _) => {
 
                     match *stroke {
                         Stroke::Solid => {
@@ -208,7 +208,7 @@ impl Optimizer {
         merged.extend(text);
         merged.extend(circles);
         /// put last to be infront of everything
-        merged.extend(featured_solid_lines);
+        merged.extend(featured_circle_solid_lines);
         merged
     }
 }

@@ -5,7 +5,7 @@ use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, circle_start_line, circle_open_line, big_circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
+use fragments::{arc, arrow_line, line, circle_start_line, square_start_line, circle_open_line, big_circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
@@ -1207,6 +1207,99 @@ impl Properties for char {
                     (E, Medium, vec![big_circle_open_line(m, e)]),
                     (U, Medium, vec![big_circle_open_line(m, u)]),
                     (Y, Medium, vec![big_circle_open_line(m, y)]),
+                ],
+            })
+        }
+        /////////////////////////////
+        //
+        // # pound sign, sharp, hashtag
+        //
+        ////////////////////////////
+        else if self.is('#') {
+            Some(Characteristic {
+                is_static: false,
+                intensify: vec![
+                    //    |
+                    //    #
+                    (
+                        C,
+                        Condition {
+                            loc: top(),
+                            can: ConnectTo(W, Strong),
+                        },
+                    ),
+                    //    #
+                    //    |
+                    (
+                        W,
+                        Condition {
+                            loc: bottom(),
+                            can: ConnectTo(C, Strong),
+                        },
+                    ),
+                    //   -#
+                    (
+                        K,
+                        Condition {
+                            loc: left(),
+                            can: ConnectTo(O, Weak),
+                        },
+                    ),
+                    //    #-
+                    (
+                        O,
+                        Condition {
+                            loc: right(),
+                            can: ConnectTo(K, Weak),
+                        },
+                    ),
+                    //    \    but not  _
+                    //     #             #
+                    (
+                        A,
+                        Condition {
+                            loc: top_left(),
+                            can: IsStrongAll(vec![A, Y]),
+                        },
+                    ),
+                    //     /   but not    _
+                    //    #              #
+                    (
+                        E,
+                        Condition {
+                            loc: top_right(),
+                            can: IsStrongAll(vec![E, U]),
+                        },
+                    ),
+                    //      #
+                    //     /
+                    (
+                        U,
+                        Condition {
+                            loc: bottom_left(),
+                            can: ConnectTo(E, Strong),
+                        },
+                    ),
+                    //     #
+                    //      \
+                    (
+                        Y,
+                        Condition {
+                            loc: bottom_right(),
+                            can: ConnectTo(A, Strong),
+                        },
+                    ),
+                ],
+                intended_behavior: vec![],
+                properties: vec![
+                    (C, Medium, vec![square_start_line(m, c)]),
+                    (W, Medium, vec![square_start_line(m, w)]),
+                    (K, Medium, vec![square_start_line(m, k)]),
+                    (O, Medium, vec![square_start_line(m, o)]),
+                    (A, Medium, vec![square_start_line(m, a)]),
+                    (E, Medium, vec![square_start_line(m, e)]),
+                    (U, Medium, vec![square_start_line(m, u)]),
+                    (Y, Medium, vec![square_start_line(m, y)]),
                 ],
             })
         }

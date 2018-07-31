@@ -309,6 +309,7 @@ fn get_defs() -> Definitions {
     let mut defs = Definitions::new();
     defs.append(arrow_marker());
     defs.append(circle_marker());
+    defs.append(square_marker());
     defs.append(open_circle_marker());
     defs.append(big_open_circle_marker());
     defs
@@ -395,6 +396,26 @@ fn circle_marker() -> Marker {
     marker.append(circle);
     marker
 }
+
+fn square_marker() -> Marker {
+    let mut marker = Marker::new()
+        .set("id", "square")
+        .set("viewBox", "0 0 20 20")
+        .set("refX", 10)
+        .set("refY", 10)
+        .set("markerWidth", 5)
+        .set("markerHeight", 5);
+
+    let mut square = SvgRect::new()
+        .set("x",0)
+        .set("y",0)
+        .set("width",20)
+        .set("height",20)
+        .set("fill","black");
+    marker.append(square);
+    marker
+}
+
 fn open_circle_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "open_circle")
