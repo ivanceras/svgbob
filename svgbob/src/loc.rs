@@ -3,6 +3,7 @@ use location::Location;
 use location::Direction::{Top,Bottom,Left,Right,TopLeft,TopRight,BottomLeft,BottomRight};
 
 /// Location of Block relative to the Grid
+/// This the equivalent to the cell cation in the grid
 #[derive(Debug, Clone, PartialEq, PartialOrd, Eq)]
 pub struct Loc {
     pub x: i32,

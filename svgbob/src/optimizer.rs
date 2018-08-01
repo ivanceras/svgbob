@@ -6,14 +6,12 @@ use element::Stroke;
 
 pub struct Optimizer {
     elements: Vec<Vec<Vec<Element>>>,
-    consumed_loc: Vec<Loc>,
 }
 
 impl Optimizer {
-    pub fn new(elements: Vec<Vec<Vec<Element>>>, consumed_loc: Vec<Loc>) -> Optimizer {
+    pub fn new(elements: Vec<Vec<Vec<Element>>>) -> Optimizer {
         Optimizer {
             elements: elements,
-            consumed_loc: consumed_loc,
         }
     }
 
@@ -108,25 +106,20 @@ impl Optimizer {
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
-        let mut completely_consumed_locs:Vec<Loc> = self.consumed_loc.clone();
         let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                if !completely_consumed_locs.contains(loc) {
-                    for (elm_index, elm) in cell.iter().enumerate() {
-                        if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
-                            let (traced, consumed) = self.trace_elements(elm, loc);
-                            optimized.extend(traced);
-                            tracing_consumed_locs.extend(consumed);
-                        }
+                for (elm_index, elm) in cell.iter().enumerate() {
+                    if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
+                        let (traced, consumed) = self.trace_elements(elm, loc);
+                        optimized.extend(traced);
+                        tracing_consumed_locs.extend(consumed);
                     }
                 }
             }
         }
-        //let excess = self.get_excess_elements(&completely_consumed_locs, &tracing_consumed_locs);
-        //optimized.extend(excess);
         optimized.sort();
         optimized.dedup();
         if settings.compact_path {

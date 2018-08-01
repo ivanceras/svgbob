@@ -206,8 +206,9 @@ impl<'g> FocusChar<'g> {
         }
     }
 
-    pub fn get_elements(&self) -> (Vec<Element>, Vec<Loc>) {
-        let (fragments, consumed_location) = self.get_fragments();
+    /// return the ehance elements and the consumed locations
+    pub fn get_enhance_elements(&self) -> (Vec<Element>, Vec<Loc>) {
+        let (fragments, consumed_location) = self.get_enhance_fragments();
         let mut elements: Vec<Element> = fragments
             .into_iter()
             .map(|frag| self.to_element(frag))
@@ -219,6 +220,18 @@ impl<'g> FocusChar<'g> {
         elements.sort();
         elements.dedup();
         (elements, consumed_loc)
+    }
+
+    /// returns the defaults elements
+    pub fn get_elements(&self) -> Vec<Element> {
+        let fragments = self.get_fragments();
+        let mut elements: Vec<Element> = fragments
+            .into_iter()
+            .map(|frag| self.to_element(frag))
+            .collect();
+        elements.sort();
+        elements.dedup();
+        (elements)
     }
 
     fn is_satisfied(&self, can: &Can) -> bool {
@@ -265,7 +278,7 @@ impl<'g> FocusChar<'g> {
         false
     }
 
-    fn get_fragments(&self) -> (Vec<Fragment>, Vec<Location>) {
+    fn get_enhance_fragments(&self) -> (Vec<Fragment>, Vec<Location>) {
         let character: Option<Characteristic> = self.ch.get_characteristic();
         let mut elm: Vec<Fragment> = vec![];
         let mut consumed: Vec<Location> = vec![];
@@ -275,7 +288,6 @@ impl<'g> FocusChar<'g> {
 
 
         if let Some(character) = character {
-
             let (enhanced, enhance_consumed) = self.enhance();
             if !enhanced.is_empty() && !self.used_as_text() {
                 elm.extend(enhanced);
@@ -283,18 +295,29 @@ impl<'g> FocusChar<'g> {
                 consumed.extend(enhance_consumed);
                 matched_enhance = true;
             }
-            // intended behaviors when signals are strong
-            // after applying the intensifiers
-            // do only when enhancements is not matched
-            // TODO: if nothing is consumed in the enhance
-            // allow the rest to do the matching
-            if !matched_enhance {
-                for &(ref blocks, ref fragments) in &character.intended_behavior {
-                    let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
-                    if meet && !self.used_as_text() {
-                        elm.extend(fragments.clone());
-                        matched_intended = true;
-                    }
+        }
+        elm.sort();
+        elm.dedup();
+        consumed.sort();
+        consumed.dedup();
+        (elm, consumed)
+    }
+
+    /// get the fragements generated at this focus character and the
+    /// consumed locations
+    fn get_fragments(&self) -> Vec<Fragment>{
+        let character: Option<Characteristic> = self.ch.get_characteristic();
+        let mut elm: Vec<Fragment> = vec![];
+
+        let mut matched_intended = false;
+
+
+        if let Some(character) = character {
+            for &(ref blocks, ref fragments) in &character.intended_behavior {
+                let meet = blocks.iter().all(|ref b| self.can_be_strong_block(&b));
+                if meet && !self.used_as_text() {
+                    elm.extend(fragments.clone());
+                    matched_intended = true;
                 }
             }
 
@@ -302,7 +325,7 @@ impl<'g> FocusChar<'g> {
             // add only when signal is strong
             // or the signal has been intensified to strong
             let mut matched = false;
-            if !matched_enhance && !matched_intended {
+            if !matched_intended {
                 for &(ref block, ref _signal, ref fragments) in &character.properties {
                     // draw when a strong block and not used as text
                     if self.is_strong_block(&block) && !self.used_as_text() {
@@ -316,8 +339,7 @@ impl<'g> FocusChar<'g> {
                     }
                 }
             }
-            if !matched && !matched_intended && !matched_enhance
-                && !self.is_blank() {
+            if !matched && !matched_intended && !self.is_blank() {
                 elm.push(Text(self.text()));
             }
         } else {
@@ -328,9 +350,7 @@ impl<'g> FocusChar<'g> {
         }
         elm.sort();
         elm.dedup();
-        consumed.sort();
-        consumed.dedup();
-        (elm, consumed)
+        elm
     }
 
     fn get_settings(&self) -> Settings {

@@ -113,27 +113,42 @@ impl Grid {
         FocusChar::new(&loc, self)
     }
 
-    /// vector of each elements arranged in rows x columns
-    /// returns all the elements and the consumed location
-    fn get_all_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
+    fn get_enhance_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         let mut all_consumed_loc: Vec<Loc> = vec![];
-        let mut y = 0;
-        for line in &self.index {
-            let mut x = 0;
+        for (y,line) in self.index.iter().enumerate() {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
-            for _ in line {
-                let loc = Loc::new(x, y);
+            for (x,_cell) in line.iter().enumerate() {
+                let loc = Loc::new(x as i32, y as i32);
                 let focus_char = self.get_focuschar(&loc);
-                let (cell_elements, consumed_loc) = focus_char.get_elements();
+                let (cell_elements, consumed_loc) = focus_char.get_enhance_elements();
                 all_consumed_loc.extend(consumed_loc);
                 row.push(cell_elements);
-                x += 1;
             }
             rows.push(row);
-            y += 1;
         }
         (rows, all_consumed_loc)
+    }
+
+    /// vector of each elements arranged in rows x columns
+    /// returns all the elements and the consumed location
+    fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>>{
+        let (enhanced_rows, enhance_consumed_locs) = self.get_enhance_elements();
+        let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
+        rows.extend(enhanced_rows);
+        for (y, line) in self.index.iter().enumerate() {
+            let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
+            for (x, _cell) in line.iter().enumerate() {
+                let loc = Loc::new(x as i32, y as i32);
+                if !enhance_consumed_locs.contains(&loc) {
+                    let focus_char = self.get_focuschar(&loc);
+                    let cell_elements = focus_char.get_elements();
+                    row.push(cell_elements);
+                }
+            }
+            rows.push(row);
+        }
+        rows
     }
 
     fn get_escaped_text_elements(&self) -> Vec<Element> {
@@ -147,11 +162,11 @@ impl Grid {
     /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<SvgElement> {
         let mut nodes = vec![];
-        let (mut elements, consumed_loc) = self.get_all_elements();
+        let mut elements= self.get_all_elements();
         let text_elm = self.get_escaped_text_elements();
         elements.push(vec![text_elm]);
         let input = if self.settings.optimize {
-            let mut optimizer = Optimizer::new(elements, consumed_loc);
+            let mut optimizer = Optimizer::new(elements);
             let mut optimized_elements = optimizer.optimize(&self.settings);
             optimized_elements
         } else {

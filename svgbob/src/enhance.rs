@@ -88,22 +88,26 @@ impl<'g> Enhance for FocusChar<'g> {
             if self.top_right().any(".,") {
                 elm.push(dashed_line(c, &top_right().m()));
                 consumed.push(top_right());
+                consumed.push(this());
             }
             //   .
             //    '
             if self.top_left().any(".,") {
                 elm.push(dashed_line(c, &top_left().m()));
                 consumed.push(top_left());
+                consumed.push(this());
             }
             //   .'
             if self.left().any(".,") {
                 elm.push(dashed_line(c, &left().m()));
                 consumed.push(left());
+                consumed.push(this());
             }
             //   '.
             if self.right().any(".,") {
                 elm.push(dashed_line(c, &right().m()));
                 consumed.push(right());
+                consumed.push(this());
             }
         } else if self.any(".,") {
             // for circuitries
@@ -114,6 +118,7 @@ impl<'g> Enhance for FocusChar<'g> {
                 consumed.push(left());
                 if self.bottom_right().is('\\') {
                     consumed.push(bottom_right());
+                    consumed.push(this());
                 }
             }
             // for circuitries
@@ -124,6 +129,7 @@ impl<'g> Enhance for FocusChar<'g> {
                 consumed.push(right());
                 if self.bottom_left().is('/') {
                     consumed.push(bottom_left());
+                    consumed.push(this());
                 }
             }
         }
@@ -133,43 +139,51 @@ impl<'g> Enhance for FocusChar<'g> {
             //    <    >
             if self.bottom().any("><") {
                 elm.push(line(c, &bottom().m()));
+                consumed.push(this());
             }
             //    <    >
             //    |    |
             if self.top().any("><") {
                 elm.push(line(w, &top().m()));
+                consumed.push(this());
             }
             //    _
             //   |
             if self.top_right().is('_') {
                 elm.extend(vec![line(c,w),line(c, e)]);
+                consumed.push(this());
             }
             //    _
             //     |
             if self.top_left().is('_') {
                 elm.extend(vec![line(c,w),line(a,c)]);
+                consumed.push(this());
             }
         } else if self.is('/') {
             //      >
             //     /
             if self.top_right().is('>') {
                 elm.push(line(u, &top_right().m()));
+                consumed.push(this());
             }
             //    /
             //   <
             if self.bottom_left().is('<') {
                 elm.push(line(e, &bottom_left().m()));
+                consumed.push(this());
             }
         } else if self.is('\\') {
             //      \
             //       >
             if self.bottom_right().is('>') {
                 elm.push(line(a, &bottom_right().m()));
+                consumed.push(this());
             }
             //    <
             //     \
             if self.top_left().is('<') {
                 elm.push(line(y, &top_left().m()));
+                consumed.push(this());
             }
         }
         // circuitries jump
@@ -183,7 +197,7 @@ impl<'g> Enhance for FocusChar<'g> {
             && self.right().can_strongly_connect(&K)
         {
             elm.extend(vec![arc(c, w, 5), line(k, o)]);
-            //consumed.push(this());
+            consumed.push(this());
         }
         // circuitries jump
         //    |
@@ -196,7 +210,7 @@ impl<'g> Enhance for FocusChar<'g> {
             && self.right().can_strongly_connect(&K)
         {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
-            //consumed.push(this());
+            consumed.push(this());
         }
 
         (elm, consumed)
