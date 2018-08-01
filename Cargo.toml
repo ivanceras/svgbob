@@ -1,0 +1,2 @@
+[workspace]
+members = ["svgbob", "svgbob_cli"]
