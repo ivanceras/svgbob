@@ -279,23 +279,11 @@ impl<'g> FocusChar<'g> {
     }
 
     fn get_enhance_fragments(&self) -> (Vec<Fragment>, Vec<Location>) {
-        let character: Option<Characteristic> = self.ch.get_characteristic();
         let mut elm: Vec<Fragment> = vec![];
         let mut consumed: Vec<Location> = vec![];
-
-        let mut matched_intended = false;
-        let mut matched_enhance = false;
-
-
-        if let Some(character) = character {
-            let (enhanced, enhance_consumed) = self.enhance();
-            if !enhanced.is_empty() && !self.used_as_text() {
-                elm.extend(enhanced);
-                let has_consumed = enhance_consumed.len() > 0;
-                consumed.extend(enhance_consumed);
-                matched_enhance = true;
-            }
-        }
+        let (enhanced, enhance_consumed) = self.enhance();
+        elm.extend(enhanced);
+        consumed.extend(enhance_consumed);
         elm.sort();
         elm.dedup();
         consumed.sort();
@@ -369,34 +357,18 @@ impl<'g> FocusChar<'g> {
         self.get(&self.loc.left())
     }
 
-    pub fn in_left(&self, n: usize) -> Self {
-        let mut fc = self.left();
-        for _i in 0..n - 1 {
-            fc = fc.left();
-        }
-        fc
+    pub fn in_left(&self, n: i32) -> Self {
+        self.get(&self.loc.in_left(n))
     }
-    pub fn in_right(&self, n: usize) -> Self {
-        let mut fc = self.right();
-        for _i in 0..n - 1 {
-            fc = fc.right();
-        }
-        fc
+    pub fn in_right(&self, n: i32) -> Self {
+        self.get(&self.loc.in_right(n))
     }
 
-    pub fn in_top(&self, n: usize) -> Self {
-        let mut fc = self.top();
-        for _i in 0..n - 1 {
-            fc = fc.top();
-        }
-        fc
+    pub fn in_top(&self, n: i32) -> Self {
+        self.get(&self.loc.in_top(n))
     }
-    pub fn in_bottom(&self, n: usize) -> Self {
-        let mut fc = self.bottom();
-        for _i in 0..n - 1 {
-            fc = fc.bottom();
-        }
-        fc
+    pub fn in_bottom(&self, n: i32) -> Self {
+        self.get(&self.loc.in_bottom(n))
     }
 
     pub fn right(&self) -> Self {

@@ -4,7 +4,7 @@ use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 use point_block::PointBlock;
-use fragments::{self, line, arc, arrow_line, dashed_line};
+use fragments::{self, line, arc, open_circle, arrow_line, dashed_line};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -26,7 +26,7 @@ impl<'g> Enhance for FocusChar<'g> {
         let _j = &PointBlock::block(J);
         let k = &PointBlock::block(K);
         let l = &PointBlock::block(L);
-        let _m = &PointBlock::block(M);
+        let m = &PointBlock::block(M);
         let n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
         let _p = &PointBlock::block(P);
@@ -49,6 +49,8 @@ impl<'g> Enhance for FocusChar<'g> {
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
+        let left2 = || Location::jump(Left,2);
+        let right2 = || Location::jump(Right,2);
 
         // _ underscore
         if self.is('_') {
@@ -61,7 +63,7 @@ impl<'g> Enhance for FocusChar<'g> {
                 elm.push(line(y, &left().w()));
             }
         }
-        else if self.any("`'") {
+        if self.any("`'") {
             // for circuitries
             //  +     +    \
             //   `>    '>   `>
@@ -109,7 +111,8 @@ impl<'g> Enhance for FocusChar<'g> {
                 consumed.push(right());
                 consumed.push(this());
             }
-        } else if self.any(".,") {
+        }
+        if self.any(".,") {
             // for circuitries
             //   <.    <,
             //     +     \
@@ -134,7 +137,7 @@ impl<'g> Enhance for FocusChar<'g> {
             }
         }
         // transistor complimentary enhancement
-        else if self.is('|') {
+        if self.is('|') {
             //    |    |
             //    <    >
             if self.bottom().any("><") {
@@ -159,7 +162,8 @@ impl<'g> Enhance for FocusChar<'g> {
                 elm.extend(vec![line(c,w),line(a,c)]);
                 consumed.push(this());
             }
-        } else if self.is('/') {
+        } 
+        if self.is('/') {
             //      >
             //     /
             if self.top_right().is('>') {
@@ -172,7 +176,8 @@ impl<'g> Enhance for FocusChar<'g> {
                 elm.push(line(e, &bottom_left().m()));
                 consumed.push(this());
             }
-        } else if self.is('\\') {
+        } 
+        if self.is('\\') {
             //      \
             //       >
             if self.bottom_right().is('>') {
@@ -191,7 +196,7 @@ impl<'g> Enhance for FocusChar<'g> {
         //   -(-
         //    |
         //
-        else if self.is('(') && self.top().can_strongly_connect(&W)
+       if self.is('(') && self.top().can_strongly_connect(&W)
             && self.bottom().can_strongly_connect(&C)
             && self.left().can_strongly_connect(&O)
             && self.right().can_strongly_connect(&K)
@@ -204,7 +209,7 @@ impl<'g> Enhance for FocusChar<'g> {
         //   -)-
         //    |
         //
-        else if self.is(')') && self.top().can_strongly_connect(&W)
+        if self.is(')') && self.top().can_strongly_connect(&W)
             && self.bottom().can_strongly_connect(&C)
             && self.left().can_strongly_connect(&O)
             && self.right().can_strongly_connect(&K)
@@ -212,6 +217,57 @@ impl<'g> Enhance for FocusChar<'g> {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
             consumed.push(this());
         }
+        //  circle1
+        //   _
+        //  (_)
+        //
+        if self.is('_') 
+            && self.left().is('(') && self.right().is(')')
+            && self.top().is('_'){
+            elm.push(open_circle(m, 4));
+            consumed.extend(vec![this(), left(), right(),top()]);
+        }
+
+        // circle2
+        //       .-.
+        //      ( + )
+        //       '-'
+        if self.in_left(2).is('(')
+            && self.in_right(2).is(')')
+            && self.top().is('-')
+            && self.bottom().is('-')
+            && self.bottom_left().any("`'")
+            && self.bottom_right().is('\'')
+            && self.top_left().any(".,")
+            && self.top_right().is('.'){
+                println!("circle2 matched");
+
+            elm.push(open_circle(m,6));
+            consumed.extend(vec![left2(), right2(), top(), bottom(),
+                bottom_left(), bottom_right(), top_left(), top_right()]);
+        }
+        //      .--.
+        //     ( +  )
+        //      `--'
+        //
+        //        _
+        //      .' '.
+        //     (  3  )
+        //      `._.'
+        //        ___
+        //      ,'   `.
+        //     /       \
+        //    |         |
+        //     \       /
+        //      `.___,'
+        //
+        //        ______
+        //      ,'      `.
+        //     /          \
+        //    |            |
+        //    |            |
+        //     \          /
+        //      `.______,'
 
         (elm, consumed)
     }

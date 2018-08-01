@@ -4,6 +4,7 @@ use location::Direction::{Top,Bottom,Left,Right,TopLeft,TopRight,BottomLeft,Bott
 
 /// Location of Block relative to the Grid
 /// This the equivalent to the cell cation in the grid
+/// 0,0 is the top left most
 #[derive(Debug, Clone, PartialEq, PartialOrd, Eq)]
 pub struct Loc {
     pub x: i32,
@@ -65,6 +66,13 @@ impl Loc {
             y: self.y - 1,
         }
     }
+    pub fn in_top(&self, n: i32) -> Loc {
+        Loc {
+            x: self.x,
+            y: self.y - n,
+        }
+    }
+
     pub fn left(&self) -> Loc {
         Loc {
             x: self.x - 1,
@@ -81,6 +89,12 @@ impl Loc {
         Loc {
             x: self.x,
             y: self.y + 1,
+        }
+    }
+    pub fn in_bottom(&self, n: i32) -> Loc {
+        Loc {
+            x: self.x,
+            y: self.y + n,
         }
     }
     pub fn right(&self) -> Loc {
