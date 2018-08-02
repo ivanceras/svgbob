@@ -380,7 +380,7 @@ fn get_styles(settings: &Settings) -> Style {
       stroke-linejoin: miter;
     }}
     circle.open {{
-      fill:{background_color};
+      fill:none;
       stroke: black;
       stroke-width: {stroke_width};
       stroke-opacity: 1;
@@ -395,7 +395,6 @@ fn get_styles(settings: &Settings) -> Style {
     "#,
         stroke_width = settings.stroke_width, 
         stroke_color = &settings.stroke_color, 
-        background_color = &settings.background_color
     );
     Style::new(style)
 }
