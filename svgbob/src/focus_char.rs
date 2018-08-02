@@ -245,7 +245,7 @@ impl<'g> FocusChar<'g> {
         (elements)
     }
 
-    fn is_satisfied(&self, can: &Can) -> bool {
+    pub fn is_satisfied(&self, can: &Can) -> bool {
         match *can {
             ConnectTo(ref cond_block, ref signal) => {
                 self.can_block_pass_connect(&cond_block, signal)
