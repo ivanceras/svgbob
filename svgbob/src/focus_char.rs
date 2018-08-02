@@ -245,7 +245,7 @@ impl<'g> FocusChar<'g> {
         (elements)
     }
 
-    pub fn is_satisfied(&self, can: &Can) -> bool {
+    fn is_satisfied(&self, can: &Can) -> bool {
         match *can {
             ConnectTo(ref cond_block, ref signal) => {
                 self.can_block_pass_connect(&cond_block, signal)
@@ -269,6 +269,8 @@ impl<'g> FocusChar<'g> {
         }
     }
 
+    /// check if this block can be a strong block
+    /// when applying the intesifier
     fn can_be_strong_block(&self, block: &Block) -> bool {
         if self.is_strong_block(block) {
             true
@@ -277,6 +279,12 @@ impl<'g> FocusChar<'g> {
         } else {
             false
         }
+    }
+
+    /// check if each blocks in the vectors can be strong when
+    /// applying the intesifiers
+    pub fn can_be_strong_all_blocks(&self, blocks: Vec<Block>) -> bool{
+        blocks.iter().all(|b| self.can_be_strong_block(b))
     }
 
     fn is_strong_block(&self, block: &Block) -> bool {

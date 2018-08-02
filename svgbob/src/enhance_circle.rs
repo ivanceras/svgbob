@@ -100,8 +100,8 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         //       '-'
         if self.in_left(2).is('(')
             && self.in_right(2).is(')')
-            && self.top().is_satisfied(&IsStrongAll(vec![K,O]))
-            && self.bottom().is_satisfied(&IsStrongAll(vec![K,O]))
+            && self.top().can_be_strong_all_blocks(vec![K,O])
+            && self.bottom().can_be_strong_all_blocks(vec![K,O])
             && self.bottom_left().any("`'")
             && self.bottom_right().is('\'')
             && self.top_left().any(".,")
@@ -117,14 +117,14 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         if self.in_left(2).is('(')
             && self.in_right(3).is(')')
             && self.top_left().any(".,")
-            && self.top().is_satisfied(&IsStrongAll(vec![K,O]))
-            && self.top_right().is('-')
-            && self.top_right().right().is_satisfied(&IsStrongAll(vec![K,O]))
+            && self.top().can_be_strong_all_blocks(vec![K,O])
+            && self.top_right().can_be_strong_all_blocks(vec![K,O])
+            && self.top().in_right(2).is('.')
             && self.bottom_left().any("`'")
-            && self.bottom().is_satisfied(&IsStrongAll(vec![K,O]))
-            && self.bottom_right().is_satisfied(&IsStrongAll(vec![K,O]))
-            && self.bottom_right().right().is('\''){
-            elm.push(open_circle(&this().o(),10));
+            && self.bottom().can_be_strong_all_blocks(vec![K,O])
+            && self.bottom_right().can_be_strong_all_blocks(vec![K,O])
+            && self.bottom().in_right(2).is('\''){
+            elm.push(open_circle(o,10));
             consumed.extend(vec![left2(), right3(), top_left(), top(), top_right(),
                 top_right2(), bottom_left(), bottom(), bottom_right(), bottom_right2(),
             ]);

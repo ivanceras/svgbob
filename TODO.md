@@ -8,5 +8,5 @@
         it will be easier to process by the fragment emitter
 - [ ] Group traced elements together, then reduce as needed
 - [x] Add `#` as square start marker for lines
-- [ ] Support for geometric shapes https://en.wikipedia.org/wiki/Geometric_Shapes
-- [ ] Add enhance circle, detect circles then enhance it.
+- [x] Support for geometric shapes https://en.wikipedia.org/wiki/Geometric_Shapes
+- [x] Add enhance circle, detect circles then enhance it.
