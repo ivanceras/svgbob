@@ -6,6 +6,7 @@ use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, Top
 use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 use point_block::PointBlock;
 use fragments::{self, line, arc, open_circle, arrow_line, dashed_line};
+use properties::Can::{ConnectTo,Is,IsStrongAll};
 
 pub trait EnhanceCircle {
     fn enhance_circle(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -99,8 +100,8 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         //       '-'
         if self.in_left(2).is('(')
             && self.in_right(2).is(')')
-            && self.top().is('-')
-            && self.bottom().is('-')
+            && self.top().is_satisfied(&IsStrongAll(vec![K,O]))
+            && self.bottom().is_satisfied(&IsStrongAll(vec![K,O]))
             && self.bottom_left().any("`'")
             && self.bottom_right().is('\'')
             && self.top_left().any(".,")
@@ -116,12 +117,12 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         if self.in_left(2).is('(')
             && self.in_right(3).is(')')
             && self.top_left().any(".,")
-            && self.top().is('-')
+            && self.top().is_satisfied(&IsStrongAll(vec![K,O]))
             && self.top_right().is('-')
-            && self.top_right().right().is('.')
+            && self.top_right().right().is_satisfied(&IsStrongAll(vec![K,O]))
             && self.bottom_left().any("`'")
-            && self.bottom().is('-')
-            && self.bottom_right().is('-')
+            && self.bottom().is_satisfied(&IsStrongAll(vec![K,O]))
+            && self.bottom_right().is_satisfied(&IsStrongAll(vec![K,O]))
             && self.bottom_right().right().is('\''){
             elm.push(open_circle(&this().o(),10));
             consumed.extend(vec![left2(), right3(), top_left(), top(), top_right(),
