@@ -2,9 +2,9 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use block::Block::{A, C, E, K, O, U, W, Y};
 use point_block::PointBlock;
-use fragments::{self, line, arc, open_circle, arrow_line, dashed_line};
+use fragments::{line, arc, arrow_line, dashed_line};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -16,29 +16,29 @@ impl<'g> Enhance for FocusChar<'g> {
         let mut elm = vec![];
         let mut consumed = vec![];
         let a = &PointBlock::block(A);
-        let _b = &PointBlock::block(B);
+        //let _b = &PointBlock::block(B);
         let c = &PointBlock::block(C);
-        let _d = &PointBlock::block(D);
+        //let _d = &PointBlock::block(D);
         let e = &PointBlock::block(E);
-        let _f = &PointBlock::block(F);
-        let _g = &PointBlock::block(G);
-        let _h = &PointBlock::block(H);
-        let _i = &PointBlock::block(I);
-        let _j = &PointBlock::block(J);
+        //let _f = &PointBlock::block(F);
+        //let _g = &PointBlock::block(G);
+        //let _h = &PointBlock::block(H);
+        //let _i = &PointBlock::block(I);
+        //let _j = &PointBlock::block(J);
         let k = &PointBlock::block(K);
-        let l = &PointBlock::block(L);
-        let m = &PointBlock::block(M);
-        let n = &PointBlock::block(N);
+        //let _l = &PointBlock::block(L);
+        //let _m = &PointBlock::block(M);
+        //let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        let _p = &PointBlock::block(P);
-        let _q = &PointBlock::block(Q);
-        let _r = &PointBlock::block(R);
-        let _s = &PointBlock::block(S);
-        let _t = &PointBlock::block(T);
+        //let _p = &PointBlock::block(P);
+        //let _q = &PointBlock::block(Q);
+        //let _r = &PointBlock::block(R);
+        //let _s = &PointBlock::block(S);
+        //let _t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
-        let _v = &PointBlock::block(V);
+        //let _v = &PointBlock::block(V);
         let w = &PointBlock::block(W);
-        let _x = &PointBlock::block(X);
+        //let _x = &PointBlock::block(X);
         let y = &PointBlock::block(Y);
 
         let this = || Location::this();
@@ -51,14 +51,6 @@ impl<'g> Enhance for FocusChar<'g> {
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
 
-        let top2 = || Location::jump(Top,2);
-        let bottom2 = || Location::jump(Bottom,2);
-        let left2 = || Location::jump(Left,2);
-        let right2 = || Location::jump(Right,2);
-        let top_right2 = || top().go_right(2);
-        let top_left2 = || top().go_left(2);
-        let bottom_right2 = || bottom().go_right(2);
-        let bottom_left2 = || bottom().go_left(2);
 
         // _ underscore
         if self.is('_') {

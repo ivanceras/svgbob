@@ -13,7 +13,7 @@ use point::Point;
 use loc_block::LocBlock;
 use element::Element;
 use fragments::Fragment::Text;
-use element::{line,dashed_line,circle_start_line, square_start_line, circle_open_line,big_circle_open_line, arrow_line,start_arrow_line,arc,open_circle,solid_circle,text};
+use element::{line,dashed_line,circle_start_line, square_start_line, circle_open_line,big_circle_open_line, arrow_line,start_arrow_line,arc,open_circle,text};
 use location::Location;
 use settings::Settings;
 use enhance::Enhance;
@@ -179,14 +179,9 @@ impl<'g> FocusChar<'g> {
             Fragment::BigCircleOpenLine(p1, p2) => big_circle_open_line(&self.point(&p1), &self.point(&p2)),
             Fragment::DashedLine(p1, p2) => dashed_line(&self.point(&p1), &self.point(&p2)),
             Fragment::ArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
-
             Fragment::StartArrowLine(p1, p2) => start_arrow_line(&self.point(&p1), &self.point(&p2)),
-
             Fragment::Arc(p1, p2, m) => arc(&self.point(&p1), &self.point(&p2), m as f32 * unit_x),
-
             Fragment::OpenCircle(c, m) => open_circle(&self.point(&c), m as f32 * unit_x),
-
-            Fragment::SolidCircle(c, m) => solid_circle(&self.point(&c), m as f32 * unit_x),
             Fragment::Text(s) => text(&self.loc, &s),
         }
     }
@@ -210,7 +205,7 @@ impl<'g> FocusChar<'g> {
     /// return the ehance circle elements and the consumed locations
     pub fn get_enhance_circle_elements(&self) -> (Vec<Element>, Vec<Loc>) {
         let (fragments, consumed_location) = self.get_enhance_circle_fragments();
-        let mut elements: Vec<Element> = fragments
+        let elements: Vec<Element> = fragments
             .into_iter()
             .map(|frag| self.to_element(frag))
             .collect();
@@ -224,7 +219,7 @@ impl<'g> FocusChar<'g> {
     /// return the ehance elements and the consumed locations
     pub fn get_enhance_elements(&self) -> (Vec<Element>, Vec<Loc>) {
         let (fragments, consumed_location) = self.get_enhance_fragments();
-        let mut elements: Vec<Element> = fragments
+        let elements: Vec<Element> = fragments
             .into_iter()
             .map(|frag| self.to_element(frag))
             .collect();
@@ -238,7 +233,7 @@ impl<'g> FocusChar<'g> {
     /// returns the defaults elements
     pub fn get_elements(&self) -> Vec<Element> {
         let fragments = self.get_fragments();
-        let mut elements: Vec<Element> = fragments
+        let elements: Vec<Element> = fragments
             .into_iter()
             .map(|frag| self.to_element(frag))
             .collect();

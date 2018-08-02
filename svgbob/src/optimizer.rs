@@ -1,5 +1,5 @@
 use element::Element;
-use element::Feature::{self, OpenCircle, BigOpenCircle};
+use element::Feature::{OpenCircle, BigOpenCircle};
 use loc::Loc;
 use settings::Settings;
 use element::Stroke;
@@ -129,25 +129,6 @@ impl Optimizer {
         }
     }
 
-    fn get_excess_elements(&self, complete_consumed: &Vec<Loc>, decimated: &Vec<(Loc,usize)>) -> Vec<Element> {
-        let mut excess = vec![];
-        for (y, line) in self.elements.iter().enumerate(){
-            for (x, cell) in line.iter().enumerate(){
-                let loc = &Loc::new(x as i32, y as i32);
-                if !complete_consumed.contains(loc){
-                    for (elm_index, elm) in cell.iter().enumerate(){
-                        if !decimated.contains(&(loc.clone(), elm_index)){
-                            // this one is consumed
-                        }
-                        else{
-                            excess.push(elm.clone());
-                        }
-                    }
-                }
-            }
-        }
-        excess
-    }
     // take all paths and non-arrow line in 1 path
     // the text in separated
     fn merge_paths(&self, elements: Vec<Element>) -> Vec<Element> {
@@ -200,7 +181,7 @@ impl Optimizer {
         merged.extend(dashed_arcs);
         merged.extend(text);
         merged.extend(circles);
-        /// put last to be infront of everything
+        // put last to be infront of everything
         merged.extend(featured_circle_solid_lines);
         merged
     }

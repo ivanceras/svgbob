@@ -90,9 +90,6 @@ pub fn big_circle_open_line(a: &Point, b: &Point) -> Element {
     Element::Line(a.clone(), b.clone(), Solid, BigOpenCircle, Nothing)
 }
 
-pub fn solid_circle(c: &Point, r: f32) -> Element {
-    Element::Circle(c.clone(), r, "solid".to_string())
-}
 
 pub fn arc(a: &Point, b: &Point, r: f32) -> Element {
     Element::Arc(a.clone(), b.clone(), r, Minor, false, Solid, Nothing, Nothing)

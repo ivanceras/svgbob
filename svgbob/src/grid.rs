@@ -290,7 +290,7 @@ impl Grid {
         let mut new_index: Vec<Vec<String>> = vec![];
         for (y,line) in self.index.iter().enumerate(){
             let mut row: Vec<String> = vec![];
-            for (x,cell) in line.iter().enumerate(){
+            for (x,_) in line.iter().enumerate(){
                 let loc = &Loc::new(x as i32, y as i32);
                 let swap = self.swap_char(loc);
                 row.push(swap.to_string());
@@ -428,7 +428,7 @@ fn circle_marker() -> Marker {
         .set("markerWidth", 5)
         .set("markerHeight", 5);
 
-    let mut circle = SvgCircle::new()
+    let circle = SvgCircle::new()
         .set("cx",10)
         .set("cy",10)
         .set("r",8)
@@ -446,7 +446,7 @@ fn square_marker() -> Marker {
         .set("markerWidth", 5)
         .set("markerHeight", 5);
 
-    let mut square = SvgRect::new()
+    let square = SvgRect::new()
         .set("x",0)
         .set("y",0)
         .set("width",20)
@@ -465,7 +465,7 @@ fn open_circle_marker() -> Marker {
         .set("markerWidth", 10)
         .set("markerHeight", 10);
 
-    let mut circle = SvgCircle::new()
+    let circle = SvgCircle::new()
         .set("cx",10)
         .set("cy",10)
         .set("r",4)
@@ -484,7 +484,7 @@ fn big_open_circle_marker() -> Marker {
         .set("markerWidth", 20)
         .set("markerHeight", 20);
 
-    let mut circle = SvgCircle::new()
+    let circle = SvgCircle::new()
         .set("cx",20)
         .set("cy",20)
         .set("r",6)

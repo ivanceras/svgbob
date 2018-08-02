@@ -5,7 +5,7 @@ use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, circle_start_line, square_start_line, circle_open_line, big_circle_open_line, open_circle, solid_circle, start_arrow_line, dashed_line};
+use fragments::{arc, arrow_line, line, circle_start_line, square_start_line, circle_open_line, big_circle_open_line, start_arrow_line, dashed_line};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;

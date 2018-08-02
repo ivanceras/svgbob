@@ -3,10 +3,9 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
+use block::Block::{K, M, O};
 use point_block::PointBlock;
-use fragments::{self, line, arc, open_circle, arrow_line, dashed_line};
-use properties::Can::{ConnectTo,Is,IsStrongAll};
+use fragments::open_circle;
 
 pub trait EnhanceCircle {
     fn enhance_circle(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -17,31 +16,32 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
     fn enhance_circle(&self) -> (Vec<Fragment>, Vec<Location>) {
         let mut elm = vec![];
         let mut consumed = vec![];
-        let a = &PointBlock::block(A);
-        let _b = &PointBlock::block(B);
-        let c = &PointBlock::block(C);
-        let _d = &PointBlock::block(D);
-        let e = &PointBlock::block(E);
-        let _f = &PointBlock::block(F);
-        let _g = &PointBlock::block(G);
-        let _h = &PointBlock::block(H);
-        let _i = &PointBlock::block(I);
-        let _j = &PointBlock::block(J);
-        let k = &PointBlock::block(K);
-        let l = &PointBlock::block(L);
+
+        //let _a = &PointBlock::block(A);
+        //let _b = &PointBlock::block(B);
+        //let c = &PointBlock::block(C);
+        //let _d = &PointBlock::block(D);
+        //let e = &PointBlock::block(E);
+        //let _f = &PointBlock::block(F);
+        //let _g = &PointBlock::block(G);
+        //let _h = &PointBlock::block(H);
+        //let _i = &PointBlock::block(I);
+        //let _j = &PointBlock::block(J);
+        //let k = &PointBlock::block(K);
+        //let _l = &PointBlock::block(L);
         let m = &PointBlock::block(M);
-        let n = &PointBlock::block(N);
+        //let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        let _p = &PointBlock::block(P);
-        let _q = &PointBlock::block(Q);
-        let _r = &PointBlock::block(R);
-        let _s = &PointBlock::block(S);
-        let _t = &PointBlock::block(T);
-        let u = &PointBlock::block(U);
-        let _v = &PointBlock::block(V);
-        let w = &PointBlock::block(W);
-        let _x = &PointBlock::block(X);
-        let y = &PointBlock::block(Y);
+        //let _p = &PointBlock::block(P);
+        //let _q = &PointBlock::block(Q);
+        //let _r = &PointBlock::block(R);
+        //let _s = &PointBlock::block(S);
+        //let _t = &PointBlock::block(T);
+        //let u = &PointBlock::block(U);
+        //let _v = &PointBlock::block(V);
+        //let w = &PointBlock::block(W);
+        //let _x = &PointBlock::block(X);
+        //let y = &PointBlock::block(Y);
 
         let this = || Location::this();
         let top = || Location::go(Top);
@@ -54,7 +54,7 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom_right = || Location::go(BottomRight);
 
         let top2 = || Location::jump(Top,2);
-        let bottom2 = || Location::jump(Bottom,2);
+        //let bottom2 = || Location::jump(Bottom,2);
         let left2 = || Location::jump(Left,2);
         let right2 = || Location::jump(Right,2);
         let top_right2 = || top().go_right(2);
@@ -62,14 +62,14 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom_right2 = || bottom().go_right(2);
         let bottom_left2 = || bottom().go_left(2);
 
-        let top3 = || Location::jump(Top,3);
-        let bottom3 = || Location::jump(Bottom,3);
+        //let top3 = || Location::jump(Top,3);
+        //let bottom3 = || Location::jump(Bottom,3);
         let left3 = || Location::jump(Left,3);
         let right3 = || Location::jump(Right,3);
-        let top_right3 = || top().go_right(3);
-        let top_left3 = || top().go_left(3);
-        let bottom_right3 = || bottom().go_right(3);
-        let bottom_left3 = || bottom().go_left(3);
+        //let top_right3 = || top().go_right(3);
+        //let top_left3 = || top().go_left(3);
+        //let bottom_right3 = || bottom().go_right(3);
+        //let bottom_left3 = || bottom().go_left(3);
 
         //  circle 4
         //   _
