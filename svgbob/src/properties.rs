@@ -1308,7 +1308,7 @@ impl Properties for char {
         // < less than sign, arrow left
         //
         ///////////////////////////////
-        else if self.is('<') {
+        else if self.any("<◀◄") {
             Some(Characteristic {
                 is_static: false,
                 intensify: vec![
@@ -1361,7 +1361,7 @@ impl Properties for char {
         // > greater than sign, arrow right
         //
         ////////////////////////////
-        else if self.is('>') {
+        else if self.any(">▶►") {
             Some(Characteristic {
                 is_static: false,
                 intensify: vec![
@@ -1414,7 +1414,7 @@ impl Properties for char {
         // ^ carret
         //
         ///////////////////////
-        else if self.is('^') {
+        else if self.any("^▲▴") {
             Some(Characteristic {
                 is_static: false,
                 properties: vec![
@@ -1501,7 +1501,7 @@ impl Properties for char {
         // letter v V
         //
         //////////////////////////
-        else if self.any("vV") {
+        else if self.any("vV▼▾") {
             Some(Characteristic {
                 is_static: false,
                 properties: vec![
@@ -1544,6 +1544,113 @@ impl Properties for char {
                     (vec![A, E], vec![line(a, m), line(m, e)]),
                 ],
             })
+        }
+        //  ◤
+        else if self.is('◤'){
+            Some(Characteristic {
+                is_static: false,
+                properties: vec![
+                    (Y, Medium, vec![arrow_line(y, g)]),
+                ],
+                intensify: vec![
+                    //     ◤
+                    //      \
+                    (
+                        Y,
+                        Condition {
+                            loc: bottom_right(),
+                            can: ConnectTo(A, Strong),
+                        },
+                    ),
+                ],
+                intended_behavior: vec![
+                    //      ◤
+                    //       \
+                    (vec![Y], vec![arrow_line(y, a)]),
+                ],
+            })
+        }
+        // ◥ 
+        else if self.is('◥') {
+            Some(Characteristic {
+                is_static: false,
+                properties: vec![
+                    (U, Medium, vec![arrow_line(u, i)]),
+                ],
+                intensify: vec![
+                    //      ◥ 
+                    //     /
+                    (
+                        U,
+                        Condition {
+                            loc: bottom_left(),
+                            can: ConnectTo(E, Strong),
+                        },
+                    ),
+                ],
+                intended_behavior: vec![
+                    //      ◥ 
+                    //     / 
+                    (vec![U], vec![arrow_line(u,e)]),
+                ],
+            })
+        }
+        // Specific arrow heads
+        //  ◢
+        else if self.is('◢'){
+            Some(Characteristic {
+                is_static: false,
+                properties: vec![
+                    (A, Medium, vec![arrow_line(a, s)]),
+                ],
+                intended_behavior: vec![
+                    //    \
+                    //     ◢
+                    (vec![A], vec![arrow_line(a,s)]),
+                ],
+                intensify: vec![
+
+                    //    \
+                    //     ◢
+                    (
+                        A,
+                        Condition {
+                            loc: top_left(),
+                            can: ConnectTo(Y, Strong),
+                        },
+                    ),
+                ]
+
+            })
+        }
+        //   /
+        //  ◣
+        else if self.is('◣'){
+            Some(Characteristic {
+                is_static: false,
+                properties: vec![
+                    (E, Medium, vec![arrow_line(e, q)]),
+                ],
+                intensify: vec![
+
+                    //     /
+                    //    ◣
+                    (
+                        E,
+                        Condition {
+                            loc: top_right(),
+                            can: ConnectTo(U, Strong),
+                        },
+                    ),
+                ],
+
+                intended_behavior: vec![
+                    //      /
+                    //     ◣
+                    (vec![E], vec![line(m, e)]),
+                ],
+            })
+
         }
         ///////////////////////////
         //
