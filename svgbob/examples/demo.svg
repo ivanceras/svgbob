@@ -74,14 +74,10 @@
 <line marker-end="url(#triangle)" x1="8" x2="20" y1="3752" y2="3752"/>
 <line x1="8" x2="10" y1="3856" y2="3860"/>
 <line x1="10" x2="8" y1="3836" y2="3840"/>
-<line x1="16" x2="18" y1="768" y2="772"/>
 <line x1="16" x2="256" y1="3832" y2="3832"/>
 <line x1="16" x2="256" y1="3864" y2="3864"/>
-<line x1="18" x2="16" y1="748" y2="752"/>
 <line x1="18" x2="6" y1="3484" y2="3508"/>
 <line x1="24" x2="26" y1="208" y2="212"/>
-<line x1="24" x2="40" y1="744" y2="744"/>
-<line x1="24" x2="40" y1="776" y2="776"/>
 <line x1="24" x2="128" y1="3480" y2="3480"/>
 <line x1="26" x2="24" y1="188" y2="192"/>
 <line x1="32" x2="44" y1="184" y2="184"/>
@@ -95,8 +91,6 @@
 <line x1="40" x2="52" y1="1160" y2="1160"/>
 <line x1="40" x2="48" y1="1192" y2="1192"/>
 <line x1="46" x2="60" y1="220" y2="248"/>
-<line x1="46" x2="48" y1="748" y2="752"/>
-<line x1="46" x2="48" y1="772" y2="768"/>
 <line x1="52" x2="52" y1="1560" y2="1624"/>
 <line marker-end="url(#circle)" x1="52" x2="260" y1="1560" y2="1560"/>
 <line marker-end="url(#circle)" x1="52" x2="212" y1="1576" y2="1576"/>
@@ -107,9 +101,7 @@
 <line x1="56" x2="72" y1="192" y2="224"/>
 <line x1="56" x2="72" y1="464" y2="432"/>
 <line x1="56" x2="72" y1="464" y2="496"/>
-<line x1="56" x2="58" y1="640" y2="644"/>
 <line marker-end="url(#circle)" x1="58" x2="36" y1="156" y2="200"/>
-<line x1="58" x2="56" y1="620" y2="624"/>
 <line x1="60" x2="72" y1="248" y2="224"/>
 <line x1="60" x2="60" y1="376" y2="408"/>
 <line x1="60" x2="116" y1="376" y2="376"/>
@@ -117,10 +109,6 @@
 <line x1="64" x2="88" y1="152" y2="152"/>
 <line x1="64" x2="90" y1="208" y2="156"/>
 <line x1="64" x2="66" y1="544" y2="548"/>
-<line x1="64" x2="72" y1="616" y2="616"/>
-<line x1="64" x2="72" y1="648" y2="648"/>
-<line x1="64" x2="72" y1="816" y2="816"/>
-<line x1="64" x2="72" y1="864" y2="864"/>
 <line x1="64" x2="80" y1="1168" y2="1200"/>
 <line x1="66" x2="64" y1="524" y2="528"/>
 <line marker-end="url(#circle)" x1="66" x2="44" y1="1132" y2="1176"/>
@@ -135,8 +123,6 @@
 <line x1="72" x2="98" y1="1184" y2="1132"/>
 <line marker-end="url(#triangle)" x1="76" x2="92" y1="184" y2="184"/>
 <line x1="76" x2="76" y1="1900" y2="1952"/>
-<line x1="78" x2="80" y1="620" y2="624"/>
-<line x1="78" x2="80" y1="644" y2="640"/>
 <line marker-end="url(#triangle)" x1="80" x2="100" y1="1896" y2="1896"/>
 <line x1="80" x2="136" y1="1952" y2="1952"/>
 <line x1="80" x2="88" y1="2224" y2="2208"/>
@@ -314,7 +300,7 @@
 <line x1="198" x2="204" y1="1148" y2="1160"/>
 <line x1="198" x2="198" y1="1272" y2="1304"/>
 <line x1="198" x2="218" y1="1288" y2="1288"/>
-<line x1="200" x2="198" y1="2624" y2="2628"/>
+<line marker-end="url(#triangle)" x1="200" x2="170" y1="2624" y2="2684"/>
 <line x1="200" x2="212" y1="2912" y2="2912"/>
 <line x1="204" x2="204" y1="380" y2="404"/>
 <line x1="204" x2="204" y1="1160" y2="1176"/>
@@ -324,7 +310,7 @@
 <line x1="208" x2="212" y1="2896" y2="2896"/>
 <line x1="210" x2="210" y1="1272" y2="1304"/>
 <line x1="210" x2="208" y1="2172" y2="2176"/>
-<line marker-end="url(#triangle)" x1="210" x2="170" y1="2604" y2="2684"/>
+<line x1="210" x2="198" y1="2604" y2="2628"/>
 <line marker-start="url(#circle)" x1="212" x2="212" y1="1576" y2="1624"/>
 <line marker-end="url(#circle)" marker-start="url(#circle)" x1="212" x2="236" y1="1576" y2="1576"/>
 <line x1="212" x2="236" y1="1624" y2="1624"/>
@@ -689,12 +675,8 @@
 <line class="dashed" fill="none" x1="36" x2="36" y1="4048" y2="4080"/>
 <line class="dashed" fill="none" x1="36" x2="36" y1="4112" y2="4144"/>
 <line class="dashed" fill="none" x1="36" x2="36" y1="4176" y2="4208"/>
-<line class="dashed" fill="none" x1="52" x2="60" y1="848" y2="856"/>
-<line class="dashed" fill="none" x1="60" x2="52" y1="816" y2="824"/>
 <line class="dashed" fill="none" x1="60" x2="68" y1="880" y2="888"/>
 <line class="dashed" fill="none" x1="68" x2="60" y1="944" y2="952"/>
-<line class="dashed" fill="none" x1="76" x2="84" y1="816" y2="824"/>
-<line class="dashed" fill="none" x1="84" x2="76" y1="848" y2="856"/>
 <line class="dashed" fill="none" x1="84" x2="92" y1="992" y2="1000"/>
 <line class="dashed" fill="none" x1="92" x2="84" y1="1072" y2="1080"/>
 <line class="dashed" fill="none" x1="92" x2="92" y1="2208" y2="2224"/>
@@ -722,36 +704,22 @@
 <path d="M 6 3508 A 4 4 0 0 0 8 3512" fill="none"/>
 <path d="M 8 3840 A 16 16 0 0 0 8 3856" fill="none"/>
 <path d="M 10 3860 A 8 8 0 0 0 16 3864" fill="none"/>
-<path d="M 16 752 A 16 16 0 0 0 16 768" fill="none"/>
 <path d="M 16 3832 A 8 8 0 0 0 10 3836" fill="none"/>
-<path d="M 18 772 A 8 8 0 0 0 24 776" fill="none"/>
 <path d="M 24 192 A 16 16 0 0 0 24 208" fill="none"/>
-<path d="M 24 744 A 8 8 0 0 0 18 748" fill="none"/>
 <path d="M 24 3480 A 8 8 0 0 0 18 3484" fill="none"/>
 <path d="M 26 212 A 8 8 0 0 0 32 216" fill="none"/>
 <path d="M 32 184 A 8 8 0 0 0 26 188" fill="none"/>
 <path d="M 32 1168 A 16 16 0 0 0 32 1184" fill="none"/>
 <path d="M 34 1188 A 8 8 0 0 0 40 1192" fill="none"/>
-<path d="M 40 776 A 8 8 0 0 0 46 772" fill="none"/>
 <path d="M 40 1160 A 8 8 0 0 0 34 1164" fill="none"/>
 <path d="M 46 220 A 8 8 0 0 0 40 216" fill="none"/>
-<path d="M 46 748 A 8 8 0 0 0 40 744" fill="none"/>
-<path d="M 48 768 A 16 16 0 0 0 48 752" fill="none"/>
-<path d="M 48 832 A 16 16 0 0 0 48 848" fill="none"/>
 <path d="M 54 1196 A 8 8 0 0 0 48 1192" fill="none"/>
-<path d="M 56 624 A 16 16 0 0 0 56 640" fill="none"/>
-<path d="M 58 644 A 8 8 0 0 0 64 648" fill="none"/>
 <path d="M 64 152 A 8 8 0 0 0 58 156" fill="none"/>
 <path d="M 64 528 A 16 16 0 0 0 64 544" fill="none"/>
-<path d="M 64 616 A 8 8 0 0 0 58 620" fill="none"/>
 <path d="M 66 548 A 8 8 0 0 0 72 552" fill="none"/>
 <path d="M 72 520 A 8 8 0 0 0 66 524" fill="none"/>
-<path d="M 72 648 A 8 8 0 0 0 78 644" fill="none"/>
 <path d="M 72 1128 A 8 8 0 0 0 66 1132" fill="none"/>
-<path d="M 78 620 A 8 8 0 0 0 72 616" fill="none"/>
-<path d="M 80 640 A 16 16 0 0 0 80 624" fill="none"/>
 <path d="M 80 1896 A 4 4 0 0 0 76 1900" fill="none"/>
-<path d="M 88 848 A 16 16 0 0 0 88 832" fill="none"/>
 <path d="M 90 156 A 4 4 0 0 0 88 152" fill="none"/>
 <path d="M 92 4468 A 4 4 0 0 0 96 4472" fill="none"/>
 <path d="M 96 4440 A 4 4 0 0 0 92 4444" fill="none"/>
@@ -2593,8 +2561,11 @@ MMU
 <text x="593" y="3772">
 characters
 </text>
-<circle class="open" cx="68" cy="696" r="12"/>
-<circle class="open" cx="436" cy="1176" r="12"/>
+<circle class="open" cx="32" cy="760" r="20"/>
+<circle class="open" cx="68" cy="632" r="16"/>
+<circle class="open" cx="68" cy="696" r="16"/>
+<circle class="open" cx="68" cy="840" r="24"/>
+<circle class="open" cx="436" cy="1176" r="16"/>
 <line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="344" y2="344"/>
 <line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1112" y2="1112"/>
 <line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1256" y2="1256"/>
