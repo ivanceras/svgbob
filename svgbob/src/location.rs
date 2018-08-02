@@ -50,16 +50,16 @@ impl Location {
         loc
     }
 
-    fn go_top(&self, step: usize) -> Self {
+    pub fn go_top(&self, step: usize) -> Self {
         self.go_jump(Top, step)
     }
-    fn go_left(&self, step: usize) -> Self {
+    pub fn go_left(&self, step: usize) -> Self {
         self.go_jump(Left, step)
     }
-    fn go_bottom(&self, step: usize) -> Self {
+    pub fn go_bottom(&self, step: usize) -> Self {
         self.go_jump(Bottom, step)
     }
-    fn go_right(&self, step: usize) -> Self {
+    pub fn go_right(&self, step: usize) -> Self {
         self.go_jump(Right, step)
     }
 

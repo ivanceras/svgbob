@@ -17,6 +17,7 @@ use element::{line,dashed_line,circle_start_line, square_start_line, circle_open
 use location::Location;
 use settings::Settings;
 use enhance::Enhance;
+use enhance_circle::EnhanceCircle;
 
 #[derive(Debug, Clone)]
 pub struct FocusChar<'g> {
@@ -206,6 +207,20 @@ impl<'g> FocusChar<'g> {
         }
     }
 
+    /// return the ehance circle elements and the consumed locations
+    pub fn get_enhance_circle_elements(&self) -> (Vec<Element>, Vec<Loc>) {
+        let (fragments, consumed_location) = self.get_enhance_circle_fragments();
+        let mut elements: Vec<Element> = fragments
+            .into_iter()
+            .map(|frag| self.to_element(frag))
+            .collect();
+        let consumed_loc: Vec<Loc> = consumed_location
+            .into_iter()
+            .map(|location| self.loc.from_location(&location))
+            .collect();
+        (elements, consumed_loc)
+    }
+
     /// return the ehance elements and the consumed locations
     pub fn get_enhance_elements(&self) -> (Vec<Element>, Vec<Loc>) {
         let (fragments, consumed_location) = self.get_enhance_fragments();
@@ -217,8 +232,6 @@ impl<'g> FocusChar<'g> {
             .into_iter()
             .map(|location| self.loc.from_location(&location))
             .collect();
-        elements.sort();
-        elements.dedup();
         (elements, consumed_loc)
     }
 
@@ -229,8 +242,6 @@ impl<'g> FocusChar<'g> {
             .into_iter()
             .map(|frag| self.to_element(frag))
             .collect();
-        elements.sort();
-        elements.dedup();
         (elements)
     }
 
@@ -290,6 +301,20 @@ impl<'g> FocusChar<'g> {
         consumed.dedup();
         (elm, consumed)
     }
+
+    fn get_enhance_circle_fragments(&self) -> (Vec<Fragment>, Vec<Location>) {
+        let mut elm: Vec<Fragment> = vec![];
+        let mut consumed: Vec<Location> = vec![];
+        let (enhanced, enhance_consumed) = self.enhance_circle();
+        elm.extend(enhanced);
+        consumed.extend(enhance_consumed);
+        elm.sort();
+        elm.dedup();
+        consumed.sort();
+        consumed.dedup();
+        (elm, consumed)
+    }
+
 
     /// get the fragements generated at this focus character and the
     /// consumed locations

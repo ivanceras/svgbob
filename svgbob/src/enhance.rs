@@ -11,6 +11,7 @@ pub trait Enhance {
 }
 
 impl<'g> Enhance for FocusChar<'g> {
+
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>) {
         let mut elm = vec![];
         let mut consumed = vec![];
@@ -49,8 +50,15 @@ impl<'g> Enhance for FocusChar<'g> {
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
+
+        let top2 = || Location::jump(Top,2);
+        let bottom2 = || Location::jump(Bottom,2);
         let left2 = || Location::jump(Left,2);
         let right2 = || Location::jump(Right,2);
+        let top_right2 = || top().go_right(2);
+        let top_left2 = || top().go_left(2);
+        let bottom_right2 = || bottom().go_right(2);
+        let bottom_left2 = || bottom().go_left(2);
 
         // _ underscore
         if self.is('_') {
@@ -217,57 +225,6 @@ impl<'g> Enhance for FocusChar<'g> {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
             consumed.push(this());
         }
-        //  circle1
-        //   _
-        //  (_)
-        //
-        if self.is('_') 
-            && self.left().is('(') && self.right().is(')')
-            && self.top().is('_'){
-            elm.push(open_circle(m, 4));
-            consumed.extend(vec![this(), left(), right(),top()]);
-        }
-
-        // circle2
-        //       .-.
-        //      ( + )
-        //       '-'
-        if self.in_left(2).is('(')
-            && self.in_right(2).is(')')
-            && self.top().is('-')
-            && self.bottom().is('-')
-            && self.bottom_left().any("`'")
-            && self.bottom_right().is('\'')
-            && self.top_left().any(".,")
-            && self.top_right().is('.'){
-                println!("circle2 matched");
-
-            elm.push(open_circle(m,6));
-            consumed.extend(vec![left2(), right2(), top(), bottom(),
-                bottom_left(), bottom_right(), top_left(), top_right()]);
-        }
-        //      .--.
-        //     ( +  )
-        //      `--'
-        //
-        //        _
-        //      .' '.
-        //     (  3  )
-        //      `._.'
-        //        ___
-        //      ,'   `.
-        //     /       \
-        //    |         |
-        //     \       /
-        //      `.___,'
-        //
-        //        ______
-        //      ,'      `.
-        //     /          \
-        //    |            |
-        //    |            |
-        //     \          /
-        //      `.______,'
 
         (elm, consumed)
     }

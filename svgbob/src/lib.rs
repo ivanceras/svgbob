@@ -57,6 +57,7 @@ mod point_block;
 mod block;
 mod focus_char;
 mod loc_block;
+mod enhance_circle;
 mod enhance;
 
 /// generate an SVG from the ascii text input

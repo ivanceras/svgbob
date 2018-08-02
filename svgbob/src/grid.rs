@@ -113,7 +113,9 @@ impl Grid {
         FocusChar::new(&loc, self)
     }
 
-    fn get_enhance_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
+    /// process the enhancing of circle elements
+    /// this should be called before other elements are extracted from the grid
+    fn get_enhance_circle_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         let mut all_consumed_loc: Vec<Loc> = vec![];
         for (y,line) in self.index.iter().enumerate() {
@@ -121,7 +123,7 @@ impl Grid {
             for (x,_cell) in line.iter().enumerate() {
                 let loc = Loc::new(x as i32, y as i32);
                 let focus_char = self.get_focuschar(&loc);
-                let (cell_elements, consumed_loc) = focus_char.get_enhance_elements();
+                let (cell_elements, consumed_loc) = focus_char.get_enhance_circle_elements();
                 all_consumed_loc.extend(consumed_loc);
                 row.push(cell_elements);
             }
@@ -130,12 +132,36 @@ impl Grid {
         (rows, all_consumed_loc)
     }
 
+    /// process the enhanced circle elements first
+    /// then process the generic enhancements
+    fn get_enhance_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
+        let (enhanced_circle_elm, circle_consumed_loc) = self.get_enhance_circle_elements();
+        let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
+        rows.extend(enhanced_circle_elm);
+        let mut all_consumed_loc: Vec<Loc> = vec![];
+        for (y,line) in self.index.iter().enumerate() {
+            let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
+            for (x,_cell) in line.iter().enumerate() {
+                let loc = Loc::new(x as i32, y as i32);
+                if !circle_consumed_loc.contains(&loc){
+                    let focus_char = self.get_focuschar(&loc);
+                    let (cell_elements, consumed_loc) = focus_char.get_enhance_elements();
+                    all_consumed_loc.extend(consumed_loc);
+                    row.push(cell_elements);
+                }
+            }
+            rows.push(row);
+        }
+        all_consumed_loc.extend(circle_consumed_loc);
+        (rows, all_consumed_loc)
+    }
+
     /// vector of each elements arranged in rows x columns
     /// returns all the elements and the consumed location
     fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>>{
-        let (enhanced_rows, enhance_consumed_locs) = self.get_enhance_elements();
+        let (enhanced_elms, enhance_consumed_locs) = self.get_enhance_elements();
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
-        rows.extend(enhanced_rows);
+        rows.extend(enhanced_elms);
         for (y, line) in self.index.iter().enumerate() {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
             for (x, _cell) in line.iter().enumerate() {
