@@ -19,6 +19,7 @@ use element::{
     Feature::{Arrow,ArrowStart,Circle,Square,OpenCircle,BigOpenCircle,Nothing},
 };
 use unicode_width::UnicodeWidthStr;
+use point;
 
 
 
@@ -28,6 +29,28 @@ pub enum Element {
     Line(Point, Point, Stroke, Feature, Feature),
     Arc(Point, Point, f32, ArcFlag, bool, Stroke, Feature, Feature),
     Text(Loc, String),
+}
+
+impl Element{
+
+    fn longer_line<'a>(&'a self, other: &'a Element) -> &'a Element {
+        match self{
+            Element::Line(s1, e1, _, _, _) => match other{
+                Element::Line(s2, e2, _, _,_) => {
+                    let d1 = point::distance(s1, e1);
+                    let d2 = point::distance(s2, e2);
+                    if d1 > d2 {
+                        self
+                    }
+                    else{
+                        other
+                    }
+                }
+                _ => panic!("only for lines"),
+            }
+            _ => panic!("only for lines"),
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
@@ -135,6 +158,7 @@ impl Element {
                                 return Some(other.clone())
                             }
 
+                            // extend 1 with 2
                             //    line1      line2
                             //   s-----e   s2-----e2
                             //   s----------------e2
@@ -153,6 +177,7 @@ impl Element {
                                                 ));
                                 }
                             }
+                            //  extend 1 with flip 2
                             //    line1     line2
                             //  s------e   e2-------s2
                             //  s-------------------s2
@@ -169,6 +194,7 @@ impl Element {
                                             ));
                                 }
                             }
+                            // flip1 extend 2
                             //    line1    line2
                             //  e------s   s2------e2
                             //  s------------------e2
@@ -185,7 +211,17 @@ impl Element {
                                             end_feature2.clone(),
                                             ));
                                }
+                                // TODO: need fixing
+                                // same starting point, take longer line
+                                // longer line
+                                // s-------e  
+                                // s2-------------->e2
+                                else {
+                                    println!("longer line");
+                                    return Some(self.longer_line(other).clone())
+                                }
                             }
+                            // extend 2 with 1
                             //      line1    line2
                             //  e------s    e2------s2
                             //  e---------------------s2
@@ -205,6 +241,7 @@ impl Element {
                                             ));
                                 }
                             }
+
                         }
                         return None;
                     }
