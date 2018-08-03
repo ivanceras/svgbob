@@ -103,15 +103,58 @@ impl Optimizer {
         }
     }
 
+    fn reduce_all_elements(&self, all_elements: &Vec<Vec<Vec<Element>>>) -> Vec<Vec<Vec<Element>>> {
+        let mut all_reduced:Vec<Vec<Vec<Element>>> = vec![];
+        for row in all_elements{
+            let mut row_reduced:Vec<Vec<Element>> = vec![];
+            for cell in row{
+                let reduced:Vec<Element> = self.reduce_cell_elements(&cell);
+                row_reduced.push(reduced);
+            }
+            all_reduced.push(row_reduced);
+        }
+        all_reduced
+    }
+
+    /// try to reduce the elements at this cell
+    fn reduce_cell_elements(&self, elements: &Vec<Element>)->Vec<Element>{
+        let mut consumed = vec![]; 
+        let mut all_reduced = vec![];
+        for (i, elm) in elements.iter().enumerate(){
+            let mut cell_reduced = vec![];
+            for (j, elm2) in elements.iter().enumerate(){
+                if i != j {
+                    //if !consumed.contains(&i) 
+                    if !consumed.contains(&j){
+                        if let Some(reduced) = elm.reduce(elm2){
+                            cell_reduced.push(reduced);
+                            //consumed.push(i);
+                            consumed.push(j);
+                        }
+                    }
+                }
+            }
+            if cell_reduced.len() > 0 {
+                all_reduced.extend(cell_reduced);
+            }
+            else{
+                all_reduced.push(elm.clone());
+            }
+        }
+        all_reduced
+    }
+
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
     pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
         let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
+
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                for (elm_index, elm) in cell.iter().enumerate() {
+                let reduced = self.reduce_cell_elements(&cell);
+                for (elm_index, elm) in reduced.iter().enumerate() {
                     if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
                         let (traced, consumed) = self.trace_elements(elm, loc);
                         optimized.extend(traced);
@@ -122,16 +165,16 @@ impl Optimizer {
         }
         optimized.sort();
         optimized.dedup();
-        if settings.compact_path {
-            self.merge_paths(optimized)
+        let result = if settings.compact_path {
+            self.arrange_elements(optimized)
         } else {
             optimized
-        }
+        };
+        result
     }
 
-    // take all paths and non-arrow line in 1 path
-    // the text in separated
-    fn merge_paths(&self, elements: Vec<Element>) -> Vec<Element> {
+    /// arrange elements listing in the svg document
+    fn arrange_elements(&self, elements: Vec<Element>) -> Vec<Element> {
         let mut merged = vec![];
         let mut solid_lines = vec![];
         let mut dashed_lines = vec![];

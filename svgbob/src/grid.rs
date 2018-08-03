@@ -177,6 +177,7 @@ impl Grid {
         rows
     }
 
+
     fn get_escaped_text_elements(&self) -> Vec<Element> {
         self.text_elm
             .iter()
