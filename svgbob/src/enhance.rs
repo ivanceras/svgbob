@@ -2,9 +2,9 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, K, O, U, W, Y};
+use block::Block::{A, C, E, J, K, M, O, S, U, W, Y};
 use point_block::PointBlock;
-use fragments::{line, arc, arrow_line, dashed_line};
+use fragments::{line, arc, arrow_line};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -24,16 +24,16 @@ impl<'g> Enhance for FocusChar<'g> {
         //let _g = &PointBlock::block(G);
         //let _h = &PointBlock::block(H);
         //let _i = &PointBlock::block(I);
-        //let _j = &PointBlock::block(J);
+        let j = &PointBlock::block(J);
         let k = &PointBlock::block(K);
         //let _l = &PointBlock::block(L);
-        //let _m = &PointBlock::block(M);
+        let m = &PointBlock::block(M);
         //let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
         //let _p = &PointBlock::block(P);
         //let _q = &PointBlock::block(Q);
         //let _r = &PointBlock::block(R);
-        //let _s = &PointBlock::block(S);
+        let s = &PointBlock::block(S);
         //let _t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
         //let _v = &PointBlock::block(V);
@@ -50,6 +50,8 @@ impl<'g> Enhance for FocusChar<'g> {
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
+
+        let top_left2 = || top().go_left(2);
 
 
         // _ underscore
@@ -69,71 +71,53 @@ impl<'g> Enhance for FocusChar<'g> {
             //   `>    '>   `>
             if self.top_left().any("+\\") && self.right().is('>') {
                 elm.push(arrow_line(&top_left().m(), &right().f()));
-                consumed.push(right());
-                if self.top_left().is('\\') {
-                    consumed.push(top_left());
-                }
+                consumed.extend(vec![this(), right()]);
             }
             // for circuitries
             //     +    /
             //   <'   <'
             if self.top_right().any("+/") && self.left().is('<') {
                 elm.push(arrow_line(&top_right().m(), &left().j()));
-                consumed.push(left());
-                if self.top_right().is('/') {
-                    consumed.push(top_right());
-                }
+                consumed.extend(vec![this(), left()]);
             }
             // For diamond rectangle
             //     .
             //    '
             if self.top_right().any(".,") {
-                elm.push(dashed_line(c, &top_right().m()));
-                consumed.push(top_right());
-                consumed.push(this());
+                elm.push(line(c, &top_right().m()));
+                consumed.extend(vec![this(), top_right()]);
             }
             //   .
             //    '
             if self.top_left().any(".,") {
-                elm.push(dashed_line(c, &top_left().m()));
-                consumed.push(top_left());
-                consumed.push(this());
+                elm.push(line(c, &top_left().m()));
+                consumed.extend(vec![this(), top_left()]);
             }
             //   .'
             if self.left().any(".,") {
-                elm.push(dashed_line(c, &left().m()));
-                consumed.push(left());
-                consumed.push(this());
+                elm.push(line(c, &left().m()));
+                consumed.extend(vec![this(),left()]);
             }
             //   '.
             if self.right().any(".,") {
-                elm.push(dashed_line(c, &right().m()));
-                consumed.push(right());
-                consumed.push(this());
+                elm.push(line(c, &right().m()));
+                consumed.extend(vec![this(),right()]);
             }
         }
         if self.any(".,") {
             // for circuitries
-            //   <.    <,
-            //     +     \
+            //   <.    <,   <.
+            //     +     \    \
             if self.bottom_right().any("+\\") && self.left().is('<') {
                 elm.push(arrow_line(&bottom_right().m(), &left().t()));
-                consumed.push(left());
-                if self.bottom_right().is('\\') {
-                    consumed.push(bottom_right());
-                    consumed.push(this());
-                }
+                consumed.extend(vec![this(),left()]);
             }
             // for circuitries
             //   .>    ,>   ,>
             //  +     +    /
             if self.bottom_left().any("+/") && self.right().is('>') {
                 elm.push(arrow_line(&bottom_left().m(), &right().p()));
-                consumed.push(right());
-                if self.bottom_left().is('/') {
-                    consumed.push(bottom_left());
-                    consumed.push(this());
-                }
+                consumed.extend(vec![this(),right()]);
             }
         }
         // transistor complimentary enhancement
@@ -189,6 +173,15 @@ impl<'g> Enhance for FocusChar<'g> {
             if self.top_left().is('<') {
                 elm.push(line(y, &top_left().m()));
                 consumed.push(this());
+            }
+        }
+
+        if self.any("vV◢"){
+            //     `.
+            //       V
+            if self.top_left().is('.') && self.top().in_left(2).is('`'){
+                elm.push(arrow_line(&top_left2().c(), j));
+                consumed.push(this())
             }
         }
         // circuitries jump

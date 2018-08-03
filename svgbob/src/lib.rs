@@ -29,7 +29,7 @@
 //! </svg>
 //!
 //!
-#![deny(warnings)]
+//#![deny(warnings)]
 #![feature(extern_prelude)]
 extern crate pom;
 #[cfg(test)]
