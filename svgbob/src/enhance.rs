@@ -2,7 +2,7 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, J, K, M, O, S, U, W, Y};
+use block::Block::{A, C, E, F, J, K, M, O, P, S, U, W, Y};
 use point_block::PointBlock;
 use fragments::{line, arc, arrow_line};
 
@@ -20,7 +20,7 @@ impl<'g> Enhance for FocusChar<'g> {
         let c = &PointBlock::block(C);
         //let _d = &PointBlock::block(D);
         let e = &PointBlock::block(E);
-        //let _f = &PointBlock::block(F);
+        let f = &PointBlock::block(F);
         //let _g = &PointBlock::block(G);
         //let _h = &PointBlock::block(H);
         //let _i = &PointBlock::block(I);
@@ -30,7 +30,7 @@ impl<'g> Enhance for FocusChar<'g> {
         let m = &PointBlock::block(M);
         //let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
-        //let _p = &PointBlock::block(P);
+        let p = &PointBlock::block(P);
         //let _q = &PointBlock::block(Q);
         //let _r = &PointBlock::block(R);
         let s = &PointBlock::block(S);
@@ -52,6 +52,9 @@ impl<'g> Enhance for FocusChar<'g> {
         let bottom_right = || Location::go(BottomRight);
 
         let top_left2 = || top().go_left(2);
+        let top_right2 = || top().go_right(2);
+        let bottom_right2 = || bottom().go_right(2); 
+        let bottom_left2 = || bottom().go_left(2); 
 
 
         // _ underscore
@@ -176,12 +179,32 @@ impl<'g> Enhance for FocusChar<'g> {
             }
         }
 
-        if self.any("vV◢"){
+        if self.any("vV"){
             //     `.
             //       V
             if self.top_left().is('.') && self.top().in_left(2).is('`'){
                 elm.push(arrow_line(&top_left2().c(), j));
                 consumed.push(this())
+            }
+            //    .'
+            //   V
+            if self.top_right().is('.') && self.top().in_right(2).is('\''){
+                elm.push(arrow_line(&top_right2().c(), f));
+                consumed.push(this())
+            }
+        }
+        if self.is('^'){
+            //  ^
+            //   `.
+            if self.bottom_right().is('`') && self.bottom().in_right(2).is('.'){
+                elm.push(arrow_line(&bottom_right2().t(), m));
+                consumed.push(this());
+            }
+            //    ^
+            //  .'
+            if self.bottom_left().is('\'') && self.bottom().in_left(2).is('.') {
+                elm.push(arrow_line(&bottom_left2().p(), m));
+                consumed.push(this());
             }
         }
         // circuitries jump

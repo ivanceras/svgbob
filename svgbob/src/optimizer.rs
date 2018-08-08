@@ -153,8 +153,8 @@ impl Optimizer {
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                let reduced = self.reduce_cell_elements(&cell);
-                for (elm_index, elm) in reduced.iter().enumerate() {
+                //let reduced = self.reduce_cell_elements(&cell);
+                for (elm_index, elm) in cell.iter().enumerate() {
                     if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
                         let (traced, consumed) = self.trace_elements(elm, loc);
                         optimized.extend(traced);
