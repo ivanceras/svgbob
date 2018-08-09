@@ -149,7 +149,7 @@ impl Optimizer {
         all_reduced.sort();
         all_reduced.dedup();
         if elements.len() != all_reduced.len(){
-            println!("reduced from {} to {}", elements.len(), all_reduced.len());
+            //println!("reduced from {} to {}", elements.len(), all_reduced.len());
         }
         all_reduced
     }

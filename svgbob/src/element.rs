@@ -217,7 +217,7 @@ impl Element {
                                 // s-------e  
                                 // s2-------------->e2
                                 else {
-                                    println!("longer line");
+                                    //println!("longer line");
                                     return Some(self.longer_line(other).clone())
                                 }
                             }
