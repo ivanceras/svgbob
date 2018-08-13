@@ -32,6 +32,6 @@ pub fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
     a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
 }
 
-pub fn _distance(a: &Point, b: &Point) -> f32{
+pub fn distance(a: &Point, b: &Point) -> f32{
     ((b.x - a.x ).powi(2) + (b.y - a.y).powi(2)).sqrt()
 }
