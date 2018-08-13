@@ -124,11 +124,9 @@ impl Optimizer {
             let mut cell_reduced = vec![];
             for (j, elm2) in elements.iter().enumerate(){
                 if i != j {
-                    //if !consumed.contains(&i) 
                     if !consumed.contains(&j){
                         if let Some(reduced) = elm.reduce(elm2){
                             cell_reduced.push(reduced);
-                            //consumed.push(i);
                             consumed.push(j);
                         }
                     }
@@ -144,9 +142,32 @@ impl Optimizer {
         all_reduced
     }
 
+    /// grouped elements together that shares some end_points
+    fn group_elements<'e>(&self, elements: Vec<Element>) -> Vec<Vec<Element>> {
+        let mut consumed = vec![]; 
+        let mut all_group = vec![];
+        for (i, elm) in elements.iter().enumerate(){
+            if !consumed.contains(&i){
+                let mut cell_group = vec![];
+                cell_group.push(elm.clone());
+                consumed.push(i);
+                for (j, elm2) in elements.iter().enumerate(){
+                    if !consumed.contains(&j){
+                        if cell_group.iter().any(|e|e.shares_endpoints(&elm2)){
+                            cell_group.push(elm2.clone());
+                            consumed.push(j);
+                        }
+                    }
+                }
+                all_group.push(cell_group);
+            }
+        }
+        all_group
+    }
+
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
-    pub fn optimize(&self, settings: &Settings) -> Vec<Element> {
+    pub fn optimize(&self, settings: &Settings) -> Vec<Vec<Element>> {
         let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
 
@@ -165,12 +186,8 @@ impl Optimizer {
         }
         optimized.sort();
         optimized.dedup();
-        let result = if settings.compact_path {
-            self.arrange_elements(optimized)
-        } else {
-            optimized
-        };
-        result
+        let arranged = self.arrange_elements(optimized);
+        self.group_elements(arranged)
     }
 
     /// arrange elements listing in the svg document

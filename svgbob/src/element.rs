@@ -25,7 +25,9 @@ use unicode_width::UnicodeWidthStr;
 #[derive(Debug, Clone, PartialEq, PartialOrd )]
 pub enum Element {
     Circle(Point, f32, String),
+    //   start,  end,  stroke , start_feature, end feature
     Line(Point, Point, Stroke, Feature, Feature),
+    //   start, end, radius,   sweep,   stroke, start_feat, end_feat
     Arc(Point, Point, f32, ArcFlag, bool, Stroke, Feature, Feature),
     Text(Loc, String),
 }
@@ -114,6 +116,34 @@ pub fn text(loc: &Loc, txt: &str) -> Element {
 
 
 impl Element {
+
+    pub fn shares_endpoints(&self, other: &Element) -> bool {
+        match *self{
+            Element::Line(ref s, ref e, _, _,_) => {
+                match *other{
+                    Element::Line(ref s2, ref e2, _, _,_) => {
+                        s == s2 || e == e2 || s == e2 || s2 == e
+                    }
+                    Element::Arc(ref s2, ref e2, _,_,_,_,_,_) => {
+                        s == s2 || e == e2 || s == e2 || s2 == e
+                    }
+                    _ => false
+                }
+            }
+            Element::Arc(ref s, ref e, _,_,_,_,_,_) => {
+                match *other{
+                    Element::Line(ref s2, ref e2, _, _,_) => {
+                        s == s2 || e == e2 || s == e2 || s2 == e
+                    }
+                    Element::Arc(ref s2, ref e2, _,_,_,_,_,_) => {
+                        s == s2 || e == e2 || s == e2 || s2 == e
+                    }
+                    _ => false
+                }
+            }
+            _ => false
+        }
+    }
     // if this element can reduce the other, return the new reduced element
     // for line it has to be collinear and in can connect start->end->start
     // for text, the other text should apear on the right side of this text

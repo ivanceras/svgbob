@@ -11,6 +11,7 @@ use svg::node::element::{
     Rectangle as SvgRect,
     Style,
     Circle as SvgCircle,
+    Group,
 };
 use element::Element;
 use pom::TextInput;
@@ -187,50 +188,24 @@ impl Grid {
 
     /// each component has its relative location retain
     /// use this info for optimizing svg by checking closest neigbor
-    fn get_svg_nodes(&self) -> Vec<SvgElement> {
-        let mut nodes = vec![];
+    fn get_svg_nodes(&self) -> Vec<Vec<SvgElement>> {
+        let mut grouped_nodes = vec![];
         let mut elements= self.get_all_elements();
         let text_elm = self.get_escaped_text_elements();
         elements.push(vec![text_elm]);
-        let input = if self.settings.optimize {
-            let mut optimizer = Optimizer::new(elements);
-            let mut optimized_elements = optimizer.optimize(&self.settings);
-            optimized_elements
-        } else {
-            // flatten Vec<Vec<Vec<Elements>>> to Vec<Element>
-            elements
-                .into_iter()
-                .flat_map(|elm| elm.into_iter().flat_map(|e2| e2))
-                .collect()
-        };
-        for elem in input {
-            let element: SvgElement = elem.to_svg(&self.settings);
-            nodes.push(element);
+        let optimizer = Optimizer::new(elements);
+        let optimized_elements = optimizer.optimize(&self.settings);
+        for group in optimized_elements {
+            let mut svg_group = vec![];
+            for elem in group{
+                let element: SvgElement = elem.to_svg(&self.settings);
+                svg_group.push(element);
+            }
+            grouped_nodes.push(svg_group);
         }
-        nodes
+        grouped_nodes
     }
 
-    pub fn get_svg_nodes_only(&self) -> String {
-        let nodes = self.get_svg_nodes();
-        let mut svg = String::new();
-        for node in nodes {
-            match node {
-                SvgElement::Circle(circle) => {
-                    svg.push_str(&circle.to_string());
-                }
-                SvgElement::Line(line) => {
-                    svg.push_str(&line.to_string());
-                }
-                SvgElement::Path(path) => {
-                    svg.push_str(&path.to_string());
-                }
-                SvgElement::Text(text) => {
-                    svg.push_str(&text.to_string());
-                }
-            }
-        }
-        svg
-    }
 
     pub fn get_size(&self) -> (f32, f32) {
         let width = self.settings.text_width * self.columns() as f32;
@@ -240,7 +215,7 @@ impl Grid {
 
     /// get the generated svg according to the settings specified
     pub fn get_svg(&self) -> SVG {
-        let nodes = self.get_svg_nodes();
+        let group_nodes = self.get_svg_nodes();
         let (width, height) = self.get_size();
         let mut svg = SVG::new();
 
@@ -268,21 +243,25 @@ impl Grid {
             .set("height", height);
         svg.append(rect);
 
-        for node in nodes {
-            match node {
-                SvgElement::Circle(circle) => {
-                    svg.append(circle);
-                }
-                SvgElement::Line(line) => {
-                    svg.append(line);
-                }
-                SvgElement::Path(path) => {
-                    svg.append(path);
-                }
-                SvgElement::Text(text) => {
-                    svg.append(text);
+        for group in group_nodes {
+            let mut svg_group = Group::new();
+            for node in group{
+                match node {
+                    SvgElement::Circle(circle) => {
+                        svg_group.append(circle);
+                    }
+                    SvgElement::Line(line) => {
+                        svg_group.append(line);
+                    }
+                    SvgElement::Path(path) => {
+                        svg_group.append(path);
+                    }
+                    SvgElement::Text(text) => {
+                        svg_group.append(text);
+                    }
                 }
             }
+            svg.append(svg_group);
         }
         svg
     }
