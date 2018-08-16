@@ -11,7 +11,7 @@ impl Ord for Point{
         if let Some(order) = self.partial_cmp(other){
             return order
         }
-        Ordering::Less
+        Ordering::Equal
     }
 }
 impl Eq for Point{
@@ -25,6 +25,16 @@ impl Point {
         self.x += x;
         self.y += y;
     }
+}
+
+pub fn is_on_line(point: &Point, start: &Point, end: &Point) -> bool {
+    ((point.x - start.x) / (end.x - start.x)) == ((point.y - start.y) / (end.y - start.y))
+}
+// Given three colinear points p, q, r, the function checks if
+// point q lies on line segment 'pr'
+pub fn on_segment(q: &Point, p:&Point, r:&Point)-> bool {
+    q.x <= p.x.max(r.x) && q.x >= p.x.min(r.x) &&
+            q.y <= p.y.max(r.y) && q.y >= p.y.min(r.y)
 }
 
 // 3 points are collinear when the area of the triangle connecting them is 0;

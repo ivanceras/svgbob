@@ -196,8 +196,9 @@ impl Optimizer {
         }
         optimized.sort();
         optimized.dedup();
-        let arranged = self.arrange_elements(optimized);
-        self.group_elements(arranged)
+        let grouped = self.group_elements(optimized);
+        //let arranged = self.arrange_elements(grouped);
+        grouped
     }
 
     /// arrange elements listing in the svg document
