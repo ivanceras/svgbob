@@ -1,0 +1,27 @@
+name: svgbob
+version: git
+summary: Svgbob
+description: |
+  Svgbob converts your ascii diagrams to svg
+
+confinement: devmode
+grade: devel
+
+apps:
+  svgbob:
+    command: svgbob
+
+
+parts:
+  svgbob:
+    source: ../svgbob_cli/
+    plugin: rust
+    build-attributes: [no-system-libraries]
+
+    build-packages:
+      - make
+      - pkg-config
+
+    stage-packages:
+      - libc6
+

@@ -21,6 +21,3 @@ path = "src/main.rs"
 [dev-dependencies]
 handlebars = "0.21"
 
-
-[replace]
-"svgbob:0.2.8" = { path = "../svgbob" }

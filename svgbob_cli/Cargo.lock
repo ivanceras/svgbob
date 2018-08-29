@@ -118,17 +118,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "svgbob"
 version = "0.2.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "pom 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "svg 0.5.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
-
-[[package]]
-name = "svgbob"
-version = "0.2.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-replace = "svgbob 0.2.8"
 
 [[package]]
 name = "svgbob_cli"
