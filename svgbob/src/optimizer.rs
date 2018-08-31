@@ -103,54 +103,6 @@ impl Optimizer {
         }
     }
 
-    fn reduce_all_elements(&self, all_elements: &Vec<Vec<Vec<Element>>>) -> Vec<Vec<Vec<Element>>> {
-        let mut all_reduced:Vec<Vec<Vec<Element>>> = vec![];
-        for row in all_elements{
-            let mut row_reduced:Vec<Vec<Element>> = vec![];
-            for cell in row{
-                let reduced:Vec<Element> = self.reduce_cell_elements(&cell);
-                row_reduced.push(reduced);
-            }
-            all_reduced.push(row_reduced);
-        }
-        all_reduced
-    }
-
-    /// try to reduce the elements at this cell
-    fn reduce_cell_elements(&self, elements: &Vec<Element>)->Vec<Element>{
-        let mut consumed = vec![]; 
-        let mut all_reduced = vec![];
-        for (i, elm) in elements.iter().enumerate(){
-            let mut cell_reduced = vec![];
-            for (j, elm2) in elements.iter().enumerate(){
-                if i != j {
-                    if !consumed.contains(&j){
-                        if let Some(reduced) = elm.reduce(elm2){
-                            cell_reduced.push(reduced);
-                            consumed.push(j);
-                        }
-                    }
-                }
-            }
-            if cell_reduced.len() > 0 {
-                all_reduced.extend(cell_reduced);
-            }
-            else{
-                all_reduced.push(elm.clone());
-            }
-        }
-        if consumed.len() > 0 {
-            //println!("original elements: {}", elements.len());
-            //println!("total consumed: {}", consumed.len());
-            //println!("all_reduced: {}", all_reduced.len());
-        }
-        all_reduced.sort();
-        all_reduced.dedup();
-        if elements.len() != all_reduced.len(){
-            //println!("reduced from {} to {}", elements.len(), all_reduced.len());
-        }
-        all_reduced
-    }
 
     /// grouped elements together that shares some end_points
     fn group_elements<'e>(&self, elements: Vec<Element>) -> Vec<Vec<Element>> {
@@ -184,7 +136,6 @@ impl Optimizer {
         for (y, line) in self.elements.iter().enumerate() {
             for (x, cell) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
-                //let reduced = self.reduce_cell_elements(&cell);
                 for (elm_index, elm) in cell.iter().enumerate() {
                     if !tracing_consumed_locs.contains(&(loc.clone(),elm_index)){
                         let (traced, consumed) = self.trace_elements(elm, loc);
@@ -196,8 +147,8 @@ impl Optimizer {
         }
         optimized.sort();
         optimized.dedup();
-        let grouped = self.group_elements(optimized);
-        //let arranged = self.arrange_elements(grouped);
+        let arranged = self.arrange_elements(optimized);
+        let grouped = self.group_elements(arranged);
         grouped
     }
 

@@ -194,7 +194,7 @@ impl Grid {
         let text_elm = self.get_escaped_text_elements();
         elements.push(vec![text_elm]);
         let optimizer = Optimizer::new(elements);
-        let optimized_elements = optimizer.optimize(&self.settings);
+        let optimized_elements:Vec<Vec<Element>> = optimizer.optimize(&self.settings);
         for group in optimized_elements {
             let mut svg_group = vec![];
             for elem in group{

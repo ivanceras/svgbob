@@ -1411,7 +1411,7 @@ impl Properties for char {
         }
         ////////////////////////
         //
-        // ^ carret
+        // ^ carret, arrow up
         //
         ///////////////////////
         else if self.any("^▲▴") {
