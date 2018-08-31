@@ -241,15 +241,6 @@ impl Element {
                                             end_feature2.clone(),
                                             ));
                                }
-                                // TODO: need fixing
-                                // same starting point, take longer line
-                                // longer line
-                                // s-------e  
-                                // s2-------------->e2
-                                else {
-                                    //println!("longer line");
-                                    return Some(self.longer_line(other).clone())
-                                }
                             }
                             // extend 2 with 1
                             //      line1    line2
