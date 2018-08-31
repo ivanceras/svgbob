@@ -50,11 +50,13 @@ impl<'g> Enhance for FocusChar<'g> {
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
+        let top2 = || Location::jump(Top,2);
 
         let top_left2 = || top().go_left(2);
         let top_right2 = || top().go_right(2);
         let bottom_right2 = || bottom().go_right(2); 
         let bottom_left2 = || bottom().go_left(2); 
+        let top2_right = || top2().right();
 
 
         // _ underscore
@@ -70,18 +72,31 @@ impl<'g> Enhance for FocusChar<'g> {
         }
         if self.any("`'") {
             // for circuitries
-            //  +     +    \
-            //   `>    '>   `>
-            if self.top_left().any("+\\") && self.right().is('>') {
+            //  +     + 
+            //   `>    '> 
+            if self.top_left().is('+') && self.right().is('>') {
                 elm.push(arrow_line(&top_left().m(), &right().f()));
                 consumed.extend(vec![this(), right()]);
             }
-            // for circuitries
-            //     +    /
-            //   <'   <'
-            if self.top_right().any("+/") && self.left().is('<') {
+            //      \
+            //       `>
+            if self.top_left().is('\\') && self.right().is('>') {
+                elm.push(arrow_line(&top_left().c(), &right().f()));
+                consumed.extend(vec![this(), right(), top_left()]);
+            }
+            // 
+            //        +
+            //      <'
+            if self.top_right().is('+') && self.left().is('<') {
                 elm.push(arrow_line(&top_right().m(), &left().j()));
                 consumed.extend(vec![this(), left()]);
+            }
+            // 
+            //        /
+            //      <'
+            if self.top_right().is('/') && self.left().is('<') {
+                elm.push(arrow_line(&top_right().c(), &left().j()));
+                consumed.extend(vec![this(), left(),top_right()]);
             }
             // For diamond rectangle
             //     .
@@ -109,18 +124,31 @@ impl<'g> Enhance for FocusChar<'g> {
         }
         if self.any(".,") {
             // for circuitries
-            //   <.    <,   <.
-            //     +     \    \
-            if self.bottom_right().any("+\\") && self.left().is('<') {
+            //   <.  <, 
+            //     +   +
+            if self.bottom_right().is('+') && self.left().is('<') {
                 elm.push(arrow_line(&bottom_right().m(), &left().t()));
                 consumed.extend(vec![this(),left()]);
             }
-            // for circuitries
-            //   .>    ,>   ,>
-            //  +     +    /
-            if self.bottom_left().any("+/") && self.right().is('>') {
+            //       <,   <.
+            //         \    \
+            if self.bottom_right().is('\\') && self.left().is('<') {
+                elm.push(arrow_line(&bottom_right().w(), &left().t()));
+                consumed.extend(vec![this(),left(), bottom_right()]);
+            }
+            // 
+            //   .>    ,> 
+            //  +     +    
+            if self.bottom_left().is('+') && self.right().is('>') {
                 elm.push(arrow_line(&bottom_left().m(), &right().p()));
                 consumed.extend(vec![this(),right()]);
+            }
+            // 
+            //       ,>
+            //      /
+            if self.bottom_left().is('/') && self.right().is('>') {
+                elm.push(arrow_line(&bottom_left().w(), &right().p()));
+                consumed.extend(vec![this(),right(), bottom_left()]);
             }
         }
         // transistor complimentary enhancement
