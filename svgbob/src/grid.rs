@@ -11,6 +11,7 @@ use svg::node::element::{
     Rectangle as SvgRect,
     Style,
     Circle as SvgCircle,
+    Polygon as SvgPolygon,
     Group,
 };
 use element::Element;
@@ -339,7 +340,7 @@ fn get_defs() -> Definitions {
 fn get_styles(settings: &Settings) -> Style {
     let style = format!(
         r#"
-    line, path {{
+    line,path {{
       stroke: {stroke_color};
       stroke-width: {stroke_width};
       stroke-opacity: 1;
@@ -382,14 +383,37 @@ fn get_styles(settings: &Settings) -> Style {
 fn arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "triangle")
-        .set("viewBox", "0 0 50 20")
-        .set("refX", 15)
-        .set("refY", 10)
-        .set("markerWidth", 10)
-        .set("markerHeight", 10)
-        .set("orient", "auto");
+        .set("viewBox", "0 0 8 4")
+        .set("refX", 4)
+        .set("refY", 2)
+        .set("orient", "auto")
+        .set("markerWidth", 8)
+        .set("markerHeight", 8);
 
-    let path = SvgPath::new().set("d", "M 0 0 L 30 10 L 0 20 z");
+    let path = SvgPolygon::new()
+        .set("points", "0,0 0,4 8,2 z")
+        .set("fill", "black");
+
+    marker.append(path);
+    marker
+}
+
+fn clear_arrow_marker() -> Marker {
+    let mut marker = Marker::new()
+        .set("id", "clear_triangle")
+        .set("viewBox", "0 0 20 14")
+        .set("refX", 1)
+        .set("refY", 7)
+        .set("orient", "auto")
+        .set("markerWidth", 10)
+        .set("markerHeight", 10);
+
+    let path = SvgPolygon::new()
+        .set("points", "2,2 2,12 18,7 z")
+        .set("fill", "none")
+        .set("stroke-width", 2)
+        .set("stroke", "black");
+
     marker.append(path);
     marker
 }
@@ -405,6 +429,7 @@ fn circle_marker() -> Marker {
         .set("viewBox", "0 0 20 20")
         .set("refX", 10)
         .set("refY", 10)
+        .set("orient", "auto")
         .set("markerWidth", 5)
         .set("markerHeight", 5);
 
@@ -423,6 +448,7 @@ fn square_marker() -> Marker {
         .set("viewBox", "0 0 20 20")
         .set("refX", 10)
         .set("refY", 10)
+        .set("orient", "auto")
         .set("markerWidth", 5)
         .set("markerHeight", 5);
 
@@ -442,6 +468,7 @@ fn open_circle_marker() -> Marker {
         .set("viewBox", "0 0 20 20")
         .set("refX", 10)
         .set("refY", 10)
+        .set("orient", "auto")
         .set("markerWidth", 10)
         .set("markerHeight", 10);
 
@@ -461,6 +488,7 @@ fn big_open_circle_marker() -> Marker {
         .set("viewBox", "0 0 40 40")
         .set("refX", 20)
         .set("refY", 20)
+        .set("orient", "auto")
         .set("markerWidth", 20)
         .set("markerHeight", 20);
 

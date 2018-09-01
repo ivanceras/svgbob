@@ -2,7 +2,7 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, F, J, K, M, O, P, R, S, T, U, W, Y};
+use block::Block::{A, C, E, F, J, K, M, O, P, Q, R, S, T, U, W, Y};
 use point_block::PointBlock;
 use fragments::{line, arc, arrow_line, open_circle};
 
@@ -31,7 +31,7 @@ impl<'g> Enhance for FocusChar<'g> {
         //let _n = &PointBlock::block(N);
         let o = &PointBlock::block(O);
         let p = &PointBlock::block(P);
-        //let _q = &PointBlock::block(Q);
+        let q = &PointBlock::block(Q);
         let r = &PointBlock::block(R);
         let s = &PointBlock::block(S);
         let t = &PointBlock::block(T);
