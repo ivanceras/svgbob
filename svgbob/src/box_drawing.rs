@@ -33,6 +33,7 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
     let w = &PointBlock::block(W);
     let x = &PointBlock::block(X);
     let y = &PointBlock::block(Y);
+
     //////////////////////////////
     //
     //  Static are all Strong signal
@@ -202,7 +203,24 @@ pub fn box_drawing(ch: &char) -> (Vec<Block>, Vec<Fragment>) {
         )
     } else if ch.is('╨') {
         (vec![K, O, B, D], vec![line(k, o), line(b, l), line(d, n)])
-    } else {
+    } 
+   // ◜
+    else if ch.is('◜'){
+        (vec![E,W], vec![arc(e, m, 4), line(m, w)])
+    }
+    // ◝
+    else if ch.is('◝'){
+        (vec![A,W], vec![arc(m, a, 4), line(m, w)])
+    }
+   // ◟
+    else if ch.is('◟'){
+        (vec![C,Y], vec![arc(m, y, 4), line(c, m)])
+    }
+    // ◞
+    else if ch.is('◞'){
+        (vec![C,U], vec![arc(u, m, 4), line(m, c)])
+    }
+    else {
         (vec![], vec![])
     }
 }

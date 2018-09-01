@@ -2,9 +2,9 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, F, J, K, M, O, P, S, U, W, Y};
+use block::Block::{A, C, E, F, J, K, M, O, P, R, S, T, U, W, Y};
 use point_block::PointBlock;
-use fragments::{line, arc, arrow_line};
+use fragments::{line, arc, arrow_line, open_circle};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -32,9 +32,9 @@ impl<'g> Enhance for FocusChar<'g> {
         let o = &PointBlock::block(O);
         let p = &PointBlock::block(P);
         //let _q = &PointBlock::block(Q);
-        //let _r = &PointBlock::block(R);
+        let r = &PointBlock::block(R);
         let s = &PointBlock::block(S);
-        //let _t = &PointBlock::block(T);
+        let t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
         //let _v = &PointBlock::block(V);
         let w = &PointBlock::block(W);
@@ -57,7 +57,6 @@ impl<'g> Enhance for FocusChar<'g> {
         let bottom_right2 = || bottom().go_right(2); 
         let bottom_left2 = || bottom().go_left(2); 
         let top2_right = || top2().right();
-
 
         // _ underscore
         if self.is('_') {
@@ -261,7 +260,57 @@ impl<'g> Enhance for FocusChar<'g> {
             elm.extend(vec![arc(w, c, 5), line(k, o)]);
             consumed.push(this());
         }
-
+        // railroad diagram
+        // _◞_
+        if self.is('◞') && self.left().is('_') && self.right().is('_'){
+            elm.extend(vec![line(u,y)]);
+        }
+        // railroad diagram
+        // _◟_
+        if self.is('◟') && self.left().is('_') && self.right().is('_'){
+            elm.extend(vec![line(u,y)]);
+        }
+        // railroad diagram
+        //
+        // -╯-  -╰-  -╭-  -╮-
+        //
+        if self.any("╯╮╰╭") && self.left().is('-') && self.right().is('-'){
+            elm.extend(vec![line(k,o)]);
+        }
+        // |    |
+        // ╰    ╯
+        // |    |
+        if self.any("╰╯") && self.top().is('|') && self.bottom().is('|'){
+            elm.extend(vec![line(c,w)]);
+        }
+        // railroad start
+        // O_
+        if self.is('O') && self.right().is('_'){
+            elm.extend(vec![open_circle(m,3), arc(t,&right().y(),4)]);
+            consumed.extend(vec![this(), right()]);
+        }
+        // railroad end
+        // _O
+        if self.is('O') && self.left().is('_'){
+            elm.extend(vec![open_circle(m,3), arc(&left().u(), p,4)]);
+            consumed.extend(vec![this(), left()]);
+        }
+        // railroad start
+        // o_
+        if self.is('o') && self.right().is('_'){
+            elm.extend(vec![open_circle(m,2), 
+                       arc(s,&right().w(),4), 
+                       line(&right().w(), &right().y())]);
+            consumed.extend(vec![this(), right()]);
+        }
+        // railroad end
+        // _o
+        if self.is('o') && self.left().is('_'){
+            elm.extend(vec![open_circle(m,2), 
+                       arc(&left().w(), q, 4), 
+                       line(&left().w(), &left().u())]);
+            consumed.extend(vec![this(), left()]);
+        }
         (elm, consumed)
     }
 }
