@@ -10,7 +10,7 @@ keywords = ["ascii", "svg", "convert", "bob"]
 license = "Apache-2.0"
 
 [dependencies]
-svgbob = "0.2"
+svgbob = "0.3"
 clap = "2.16"
 svg = "0.5"
 
