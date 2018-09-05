@@ -2,7 +2,7 @@ use focus_char::FocusChar;
 use fragments::Fragment;
 use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, F, J, K, M, O, P, Q, R, S, T, U, W, Y};
+use block::Block::{A, C, E, F, J, K, M, O, P, Q, S, T, U, W, Y};
 use point_block::PointBlock;
 use fragments::{line, arc, arrow_line, open_circle};
 
@@ -32,7 +32,7 @@ impl<'g> Enhance for FocusChar<'g> {
         let o = &PointBlock::block(O);
         let p = &PointBlock::block(P);
         let q = &PointBlock::block(Q);
-        let r = &PointBlock::block(R);
+        //let r = &PointBlock::block(R);
         let s = &PointBlock::block(S);
         let t = &PointBlock::block(T);
         let u = &PointBlock::block(U);
@@ -50,13 +50,13 @@ impl<'g> Enhance for FocusChar<'g> {
         let top_right = || Location::go(TopRight);
         let bottom_left = || Location::go(BottomLeft);
         let bottom_right = || Location::go(BottomRight);
-        let top2 = || Location::jump(Top,2);
+        //let top2 = || Location::jump(Top,2);
 
         let top_left2 = || top().go_left(2);
         let top_right2 = || top().go_right(2);
         let bottom_right2 = || bottom().go_right(2); 
         let bottom_left2 = || bottom().go_left(2); 
-        let top2_right = || top2().right();
+        //let top2_right = || top2().right();
 
         // _ underscore
         if self.is('_') {

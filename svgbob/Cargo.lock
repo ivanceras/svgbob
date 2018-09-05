@@ -80,7 +80,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "svgbob"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "pom 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",

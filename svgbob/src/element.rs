@@ -19,7 +19,8 @@ use element::{
     Feature::{Arrow,ArrowStart,Circle,Square,OpenCircle,BigOpenCircle,Nothing},
 };
 use unicode_width::UnicodeWidthStr;
-use point;
+//use point;
+use svg;
 
 
 
@@ -35,6 +36,7 @@ pub enum Element {
 
 impl Element{
 
+    /*
     fn longer_line<'a>(&'a self, other: &'a Element) -> &'a Element {
         match self{
             Element::Line(s1, e1, _, _, _) => match other{
@@ -53,6 +55,7 @@ impl Element{
             _ => panic!("only for lines"),
         }
     }
+    */
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]

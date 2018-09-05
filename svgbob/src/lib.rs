@@ -29,14 +29,10 @@
 //! </svg>
 //!
 //!
-//#![deny(warnings)]
-#![feature(extern_prelude)]
-extern crate pom;
-#[cfg(test)]
-#[macro_use]
-extern crate pretty_assertions;
+#![deny(warnings)]
 extern crate svg;
 extern crate unicode_width;
+extern crate pom;
 
 pub use grid::Grid;
 pub use settings::Settings;
