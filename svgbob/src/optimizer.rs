@@ -129,7 +129,7 @@ impl Optimizer {
 
     // TODO: order the elements in such a way that
     // the start -> end -> start chains nicely
-    pub fn optimize(&self, settings: &Settings) -> Vec<Vec<Element>> {
+    pub fn optimize(&self, _settings: &Settings) -> Vec<Vec<Element>> {
         let mut tracing_consumed_locs: Vec<(Loc,usize)> = vec![];
         let mut optimized = vec![];
 

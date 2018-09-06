@@ -73,7 +73,7 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom2_right2 = || Location::jump(Bottom, 2).go_right(2);
         let bottom2_right3 = || Location::jump(Bottom, 2).go_right(3);
         let bottom2_right4 = || Location::jump(Bottom, 2).go_right(4);
-        let bottom2_right5 = || Location::jump(Bottom, 2).go_right(5);
+        //let bottom2_right5 = || Location::jump(Bottom, 2).go_right(5);
         let bottom2_right6 = || Location::jump(Bottom, 2).go_right(6);
         let left2 = || Location::jump(Left,2);
         let right2 = || Location::jump(Right,2);
@@ -98,16 +98,16 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom3_left2 = || Location::jump(Bottom,3).go_left(2);
         let bottom3_left3 = || Location::jump(Bottom,3).go_left(3);
         let bottom3_left4 = || Location::jump(Bottom,3).go_left(4);
-        let bottom3_left5 = || Location::jump(Bottom,3).go_left(5);
+        //let bottom3_left5 = || Location::jump(Bottom,3).go_left(5);
         let left3 = || Location::jump(Left,3);
         let right3 = || Location::jump(Right,3);
         let top_right3 = || top().go_right(3);
         let top_left3 = || top().go_left(3);
         let bottom_right3 = || bottom().go_right(3);
-        let bottom_left3 = || bottom().go_left(3);
+        //let bottom_left3 = || bottom().go_left(3);
 
-        let top4 = || Location::jump(Top,4);
-        let bottom4 = || Location::jump(Bottom,4);
+        //let top4 = || Location::jump(Top,4);
+        //let bottom4 = || Location::jump(Bottom,4);
         let left4 = || Location::jump(Left,4);
         let right4 = || Location::jump(Right,4);
         let top_right4 = || top().go_right(4);
@@ -115,8 +115,8 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom_right4 = || bottom().go_right(4);
         let bottom_left4 = || bottom().go_left(4);
 
-        let top5 = || Location::jump(Top,5);
-        let bottom5 = || Location::jump(Bottom,5);
+        //let top5 = || Location::jump(Top,5);
+        //let bottom5 = || Location::jump(Bottom,5);
         let left5 = || Location::jump(Left,5);
         let right5 = || Location::jump(Right,5);
         let top_right5 = || top().go_right(5);
@@ -124,23 +124,23 @@ impl<'g> EnhanceCircle for FocusChar<'g> {
         let bottom_right5 = || bottom().go_right(5);
         let bottom_left5 = || bottom().go_left(5);
 
-        let top6 = || Location::jump(Top,6);
-        let bottom6 = || Location::jump(Bottom,6);
+        //let top6 = || Location::jump(Top,6);
+        //let bottom6 = || Location::jump(Bottom,6);
         let left6 = || Location::jump(Left,6);
         let right6 = || Location::jump(Right,6);
         let top_right6 = || top().go_right(6);
-        let top_left6 = || top().go_left(6);
-        let bottom_right6 = || bottom().go_right(6);
+        //let top_left6 = || top().go_left(6);
+        //let bottom_right6 = || bottom().go_right(6);
         let bottom_left6 = || bottom().go_left(6);
 
-        let top7 = || Location::jump(Top,7);
-        let bottom7 = || Location::jump(Bottom,7);
-        let left7 = || Location::jump(Left,7);
+        //let top7 = || Location::jump(Top,7);
+        //let bottom7 = || Location::jump(Bottom,7);
+        //let left7 = || Location::jump(Left,7);
         let right7 = || Location::jump(Right,7);
-        let top_right7 = || top().go_right(7);
-        let top_left7 = || top().go_left(7);
+        //let top_right7 = || top().go_right(7);
+        //let top_left7 = || top().go_left(7);
         let bottom_right7 = || bottom().go_right(7);
-        let bottom_left7 = || bottom().go_left(7);
+        //let bottom_left7 = || bottom().go_left(7);
 
 
         //  circle 4

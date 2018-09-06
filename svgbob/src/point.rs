@@ -26,7 +26,12 @@ impl Point {
         self.y += y;
     }
 }
+// 3 points are collinear when the area of the triangle connecting them is 0;
+pub fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
+    a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
+}
 
+/*
 pub fn is_on_line(point: &Point, start: &Point, end: &Point) -> bool {
     ((point.x - start.x) / (end.x - start.x)) == ((point.y - start.y) / (end.y - start.y))
 }
@@ -37,11 +42,8 @@ pub fn on_segment(q: &Point, p:&Point, r:&Point)-> bool {
             q.y <= p.y.max(r.y) && q.y >= p.y.min(r.y)
 }
 
-// 3 points are collinear when the area of the triangle connecting them is 0;
-pub fn collinear(a: &Point, b: &Point, c: &Point) -> bool {
-    a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y) == 0.0
-}
 
 pub fn distance(a: &Point, b: &Point) -> f32{
     ((b.x - a.x ).powi(2) + (b.y - a.y).powi(2)).sqrt()
 }
+*/

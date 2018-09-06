@@ -7,7 +7,6 @@ use svg::Node;
 use svg::node::element::{
     Definitions,
     Marker,
-    Path as SvgPath,
     Rectangle as SvgRect,
     Style,
     Circle as SvgCircle,
@@ -19,6 +18,7 @@ use pom::TextInput;
 use pom::parser::{sym,none_of};
 use settings::Settings;
 use unicode_width::UnicodeWidthChar;
+use pom;
 
 #[derive(Debug)]
 pub struct Grid {
@@ -398,6 +398,7 @@ fn arrow_marker() -> Marker {
     marker
 }
 
+/*
 fn clear_arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "clear_triangle")
@@ -417,6 +418,7 @@ fn clear_arrow_marker() -> Marker {
     marker.append(path);
     marker
 }
+*/
 
 
 ///   <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5"
