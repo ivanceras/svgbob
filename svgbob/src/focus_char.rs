@@ -13,7 +13,9 @@ use point::Point;
 use loc_block::LocBlock;
 use element::Element;
 use fragments::Fragment::Text;
-use element::{line,dashed_line,circle_start_line, square_start_line, circle_open_line,big_circle_open_line, arrow_line,start_arrow_line,arc,open_circle,text};
+use element::{line,dashed_line,circle_start_line,
+    square_start_line, circle_open_line,big_circle_open_line, 
+    arrow_line,clear_arrow_line, start_arrow_line,arc,open_circle,text};
 use location::Location;
 use settings::Settings;
 use enhance::Enhance;
@@ -179,6 +181,7 @@ impl<'g> FocusChar<'g> {
             Fragment::BigCircleOpenLine(p1, p2) => big_circle_open_line(&self.point(&p1), &self.point(&p2)),
             Fragment::DashedLine(p1, p2) => dashed_line(&self.point(&p1), &self.point(&p2)),
             Fragment::ArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
+            Fragment::ClearArrowLine(p1, p2) => clear_arrow_line(&self.point(&p1), &self.point(&p2)),
             Fragment::StartArrowLine(p1, p2) => start_arrow_line(&self.point(&p1), &self.point(&p2)),
             Fragment::Arc(p1, p2, m) => arc(&self.point(&p1), &self.point(&p2), m as f32 * unit_x),
             Fragment::OpenCircle(c, m) => open_circle(&self.point(&c), m as f32 * unit_x),

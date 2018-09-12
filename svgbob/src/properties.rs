@@ -188,6 +188,7 @@ impl Properties for char {
                 is_static: false,
                 properties: vec![(C, Strong, vec![line(c, w)]), (W, Strong, vec![line(c, w)])],
                 intensify: vec![
+                    /*
                     //    |
                     //     \
                     (
@@ -224,6 +225,7 @@ impl Properties for char {
                             can: IsStrongAll(vec![A, Y]),
                         },
                     ),
+                    */
                     //  |-
                     ( O,
                       Condition{
@@ -240,6 +242,7 @@ impl Properties for char {
                     ),
                 ],
                 intended_behavior: vec![
+                    /*
                     //    |
                     //     \
                     (vec![Y], vec![line(c, m), line(m, y)]),
@@ -252,6 +255,7 @@ impl Properties for char {
                     //     \
                     //      |
                     (vec![A], vec![line(w, m), line(m, a)]),
+                    */
                     //    |-
                     (vec![O], vec![line(o, m), line(c,w)]),
                     //   -|

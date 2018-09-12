@@ -16,7 +16,10 @@ use loc::Loc;
 use element::{
     Stroke::{Solid,Dashed},
     ArcFlag::{Minor,Major},
-    Feature::{Arrow,ArrowStart,Circle,Square,OpenCircle,BigOpenCircle,Nothing},
+    Feature::{Arrow,
+        Circle,ClearArrow,
+        Square,OpenCircle,
+        BigOpenCircle,Nothing},
 };
 use unicode_width::UnicodeWidthStr;
 //use point;
@@ -67,8 +70,8 @@ pub enum Stroke {
 //TODO: rename to marker
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Feature {
-    ArrowStart, // start arrow
     Arrow,  //end
+    ClearArrow,
     Circle, //start
     Square, //start
     OpenCircle, //start
@@ -132,8 +135,12 @@ pub fn arrow_line(s: &Point, e: &Point) -> Element {
     Element::Line(s.clone(), e.clone(), Solid, Nothing, Arrow)
 }
 
+pub fn clear_arrow_line(s: &Point, e: &Point) -> Element {
+    Element::Line(s.clone(), e.clone(), Solid, Nothing, ClearArrow)
+}
+
 pub fn start_arrow_line(s: &Point, e: &Point) -> Element {
-    Element::Line(s.clone(), e.clone(), Solid, ArrowStart, Nothing)
+    Element::Line(s.clone(), e.clone(), Solid, Arrow, Nothing)
 }
 
 pub fn text(loc: &Loc, txt: &str) -> Element {
@@ -315,8 +322,8 @@ impl Element {
                     Arrow => {
                         svg_line.assign("marker-start", "url(#triangle)");
                     }
-                    ArrowStart => {
-                        svg_line.assign("marker-start", "url(#triangle)");
+                    ClearArrow => {
+                        svg_line.assign("marker-start", "url(#clear_triangle)");
                     }
                     Circle => {
                         svg_line.assign("marker-start", "url(#circle)");
@@ -336,8 +343,8 @@ impl Element {
                     Arrow => {
                         svg_line.assign("marker-end", "url(#triangle)");
                     }
-                    ArrowStart => {
-                        svg_line.assign("marker-end", "url(#triangle)");
+                    ClearArrow => {
+                        svg_line.assign("marker-end", "url(#clear_triangle)");
                     }
                     Circle => {
                         svg_line.assign("marker-end", "url(#circle)");
@@ -377,8 +384,8 @@ impl Element {
                     Arrow => {
                         svg_arc.assign("marker-start", "url(#triangle)");
                     }
-                    ArrowStart => {
-                        svg_arc.assign("marker-start", "url(#triangle)");
+                    ClearArrow => {
+                        svg_arc.assign("marker-start", "url(#clear_triangle)");
                     }
                     Circle => {
                         svg_arc.assign("marker-start", "url(#circle)");
@@ -398,8 +405,8 @@ impl Element {
                     Arrow => {
                         svg_arc.assign("marker-end", "url(#triangle)");
                     }
-                    ArrowStart => {
-                        svg_arc.assign("marker-end", "url(#triangle)");
+                    ClearArrow => {
+                        svg_arc.assign("marker-end", "url(#clear_triangle)");
                     }
                     Circle => {
                         svg_arc.assign("marker-end", "url(#circle)");

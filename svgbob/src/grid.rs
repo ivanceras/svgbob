@@ -330,6 +330,7 @@ impl Grid {
 fn get_defs() -> Definitions {
     let mut defs = Definitions::new();
     defs.append(arrow_marker());
+    defs.append(clear_arrow_marker());
     defs.append(circle_marker());
     defs.append(square_marker());
     defs.append(open_circle_marker());
@@ -398,7 +399,6 @@ fn arrow_marker() -> Marker {
     marker
 }
 
-/*
 fn clear_arrow_marker() -> Marker {
     let mut marker = Marker::new()
         .set("id", "clear_triangle")
@@ -418,7 +418,6 @@ fn clear_arrow_marker() -> Marker {
     marker.append(path);
     marker
 }
-*/
 
 
 ///   <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5"

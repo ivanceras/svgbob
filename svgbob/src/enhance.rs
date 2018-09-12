@@ -4,7 +4,7 @@ use location::Location;
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 use block::Block::{A, C, E, F, J, K, M, O, P, Q, S, T, U, W, Y};
 use point_block::PointBlock;
-use fragments::{line, arc, arrow_line, open_circle};
+use fragments::{line, arc, arrow_line, open_circle, clear_arrow_line};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
@@ -67,6 +67,12 @@ impl<'g> Enhance for FocusChar<'g> {
             //    |_
             if self.left().any("|]") {
                 elm.push(line(y, &left().w()));
+            }
+            //   _
+            //   V
+            if self.bottom().any("vV"){
+                elm.push(clear_arrow_line(c, w));
+                consumed.extend(vec![this(), bottom()]);
             }
         }
         if self.any("`'") {
@@ -152,6 +158,36 @@ impl<'g> Enhance for FocusChar<'g> {
         }
         // transistor complimentary enhancement
         if self.is('|') {
+            // as long as the bottom is NOT |
+            if !self.bottom().is('|'){
+                //  |
+                //   \
+                if self.bottom_right().is('\\'){
+                    elm.extend(vec![line(c,m), line(m,y)]);
+                    consumed.extend(vec![this()]);
+                }
+                //   |
+                //  /
+                if self.bottom_left().is('/'){
+                    elm.extend(vec![line(c,m), line(m,u)]);
+                    consumed.extend(vec![this()]);
+                }
+            }
+            // top should not be |
+            if !self.top().is('|'){
+                //    /
+                //   |
+                if self.top_right().is('/'){
+                    elm.extend(vec![line(w, m), line(m,e)]);
+                    consumed.extend(vec![this()]);
+                }
+                //   \
+                //    |
+                if self.top_left().is('\\'){
+                    elm.extend(vec![line(w,m), line(m,a)]);
+                    consumed.extend(vec![this()]);
+                }
+            }
             //    |    |
             //    <    >
             if self.bottom().any("><") {
@@ -175,6 +211,22 @@ impl<'g> Enhance for FocusChar<'g> {
             if self.top_left().is('_') {
                 elm.extend(vec![line(c,w),line(a,c)]);
                 consumed.push(this());
+            }
+            //   |>
+            if self.right().is('>') && self.left().is('-'){
+                elm.push(clear_arrow_line(k,o));
+                consumed.extend(vec![this(), right()]);
+            }
+            //   <|
+            if self.left().is('<') && self.right().is('-'){
+                elm.push(clear_arrow_line(o, k));
+                consumed.extend(vec![this(), left()]);
+            }
+            // A
+            // |
+            if self.top().is('A'){
+                elm.push(clear_arrow_line(w, c));
+                consumed.extend(vec![this(), top()]);
             }
         } 
         if self.is('/') {
