@@ -307,15 +307,15 @@ impl Grid {
         || (cell == " " && left == "-" && right == "-" && right2 == " " && right3 == "-")
         // [- - -]
         //    ^
-        // if `-` , and left  is ` ` and right is ` ` and left(2) is `-`  and right(2) is `-` 
+        // if `-` , and left  is ` ` and right is ` ` and left(2) is `-`  and right(2) is `-`
         || (cell == "-" && left == " " && right == " " && left2 == "-" && right2 == "-")
         // [- - -]
         //     ^
-        //  if ` `, and left is `-` and right is `-` and left(2) is ` ` and left(3) is `-`  
+        //  if ` `, and left is `-` and right is `-` and left(2) is ` ` and left(3) is `-`
         || (cell == " " && left == "-" && right == "-" && left2 == " " && left3 == "-")
         // [- - -]
         //      ^
-        //  if `-`, and left  is ` ` and left(2) is `-` and left(3) is ` ` and left(4) is `-`  
+        //  if `-`, and left  is ` ` and left(2) is `-` and left(3) is ` ` and left(4) is `-`
         || (cell == "-" && left == " " && left2 == "-" && left3 == " " && left4 == "-")
         {
             "~"
@@ -375,8 +375,8 @@ fn get_styles(settings: &Settings) -> Style {
         stroke: none;
     }}
     "#,
-        stroke_width = settings.stroke_width, 
-        stroke_color = &settings.stroke_color, 
+        stroke_width = settings.stroke_width,
+        stroke_color = &settings.stroke_color,
     );
     Style::new(style)
 }
@@ -392,7 +392,7 @@ fn arrow_marker() -> Marker {
         .set("markerHeight", 8);
 
     let path = SvgPolygon::new()
-        .set("points", "0,0 0,4 8,2 z")
+        .set("points", "0,0 0,4 8,2 0,0")
         .set("fill", "black");
 
     marker.append(path);
@@ -410,7 +410,7 @@ fn clear_arrow_marker() -> Marker {
         .set("markerHeight", 10);
 
     let path = SvgPolygon::new()
-        .set("points", "2,2 2,12 18,7 z")
+        .set("points", "2,2 2,12 18,7 2,2")
         .set("fill", "none")
         .set("stroke-width", 2)
         .set("stroke", "black");
