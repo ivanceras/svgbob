@@ -188,44 +188,6 @@ impl Properties for char {
                 is_static: false,
                 properties: vec![(C, Strong, vec![line(c, w)]), (W, Strong, vec![line(c, w)])],
                 intensify: vec![
-                    /*
-                    //    |
-                    //     \
-                    (
-                        Y,
-                        Condition {
-                            loc: bottom_right(),
-                            can: IsStrongAll(vec![A, Y]),
-                        },
-                    ),
-                    //      |
-                    //     /
-                    (
-                        U,
-                        Condition {
-                            loc: bottom_left(),
-                            can: IsStrongAll(vec![U, E]),
-                        },
-                    ),
-                    //     /
-                    //    |
-                    (
-                        E,
-                        Condition {
-                            loc: top_right(),
-                            can: IsStrongAll(vec![U, E]),
-                        },
-                    ),
-                    //     \
-                    //      |
-                    (
-                        A,
-                        Condition {
-                            loc: top_left(),
-                            can: IsStrongAll(vec![A, Y]),
-                        },
-                    ),
-                    */
                     //  |-
                     ( O,
                       Condition{
@@ -242,20 +204,6 @@ impl Properties for char {
                     ),
                 ],
                 intended_behavior: vec![
-                    /*
-                    //    |
-                    //     \
-                    (vec![Y], vec![line(c, m), line(m, y)]),
-                    //      |
-                    //     /
-                    (vec![U], vec![line(c, m), line(m, u)]),
-                    //    /
-                    //   |
-                    (vec![E], vec![line(w, m), line(m, e)]),
-                    //     \
-                    //      |
-                    (vec![A], vec![line(w, m), line(m, a)]),
-                    */
                     //    |-
                     (vec![O], vec![line(o, m), line(c,w)]),
                     //   -|
