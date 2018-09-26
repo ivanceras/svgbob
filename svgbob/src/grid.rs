@@ -379,6 +379,7 @@ fn get_styles(settings: &Settings) -> Style {
         stroke_color = &settings.stroke_color,
     );
     Style::new(style)
+        .set("type", "text/css")
 }
 
 fn arrow_marker() -> Marker {
