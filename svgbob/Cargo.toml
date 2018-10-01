@@ -14,8 +14,3 @@ unicode-width = "0.1"
 pom = "1.0.1"
 
 
-[lib]
-[dev-dependencies]
-handlebars = "0.21"
-pretty_assertions = "0.2"
-sys-info = "0.5.1"
