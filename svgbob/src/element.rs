@@ -343,7 +343,6 @@ impl Element {
                 match *stroke {
                     Solid => (),
                     Dashed => {
-                        svg_line.assign("fill", "none");
                         svg_line.assign("class","dashed");
                     }
                 };

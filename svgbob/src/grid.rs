@@ -341,42 +341,57 @@ fn get_defs() -> Definitions {
 fn get_styles(settings: &Settings) -> Style {
     let style = format!(
         r#"
-    rect.backdrop {{
-        fill: {background_color};
-    }}
-    line,path {{
-      stroke: {stroke_color};
-      stroke-width: {stroke_width};
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }}
-    line.dashed {{
-        stroke-dasharray: 5;
-    }}
-    circle.solid {{
-      fill:{stroke_color};
-      stroke: black;
-      stroke-width: {stroke_width};
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }}
-    circle.open {{
-      fill:none;
-      stroke: black;
-      stroke-width: {stroke_width};
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }}
-    tspan.head{{
-        fill: none;
-        stroke: none;
-    }}
+rect.backdrop {{
+    fill: {background_color};
+}}
+text{{
+    fill: {stroke_color};
+}}
+
+circle {{
+    fill: none;
+    stroke: {stroke_color};
+    stroke-width: {stroke_width};
+}}
+
+line {{
+    stroke: {stroke_color};
+    stroke-width: {stroke_width};
+    stroke-opacity: 1;
+    fill-opacity: 1;
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}}
+
+path {{
+    fill: none;
+    stroke: {stroke_color};
+    stroke-width: {stroke_width};
+    stroke-opacity: 1;
+    fill-opacity: 1;
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}}
+
+line.dashed {{
+    stroke-dasharray: 5;
+}}
+
+.fg_fill {{
+    fill: {stroke_color};
+}}
+
+
+.bg_fill {{
+    fill: {background_color};
+    stroke: {stroke_color};
+    stroke-width: {stroke_width};
+}}
+
+tspan.head{{
+    fill: none;
+    stroke: none;
+}}
     "#,
         stroke_width = settings.stroke_width,
         stroke_color = &settings.stroke_color,
@@ -398,7 +413,7 @@ fn arrow_marker() -> Marker {
 
     let path = SvgPolygon::new()
         .set("points", "0,0 0,4 8,2 0,0")
-        .set("fill", "black");
+        .set("class", "fg_fill");
 
     marker.append(path);
     marker
@@ -416,9 +431,7 @@ fn clear_arrow_marker() -> Marker {
 
     let path = SvgPolygon::new()
         .set("points", "2,2 2,12 18,7 2,2")
-        .set("fill", "none")
-        .set("stroke-width", 2)
-        .set("stroke", "black");
+        .set("class", "bg_fill");
 
     marker.append(path);
     marker
@@ -443,7 +456,7 @@ fn circle_marker() -> Marker {
         .set("cx",10)
         .set("cy",10)
         .set("r",8)
-        .set("fill","black");
+        .set("class", "fg_fill");
     marker.append(circle);
     marker
 }
@@ -463,7 +476,7 @@ fn square_marker() -> Marker {
         .set("y",0)
         .set("width",20)
         .set("height",20)
-        .set("fill","black");
+        .set("class", "fg_fill");
     marker.append(square);
     marker
 }
@@ -482,9 +495,7 @@ fn open_circle_marker() -> Marker {
         .set("cx",10)
         .set("cy",10)
         .set("r",4)
-        .set("stroke","black")
-        .set("stroke-width",2)
-        .set("fill","white");
+        .set("class", "bg_fill");
     marker.append(circle);
     marker
 }
@@ -502,9 +513,7 @@ fn big_open_circle_marker() -> Marker {
         .set("cx",20)
         .set("cy",20)
         .set("r",6)
-        .set("stroke","black")
-        .set("stroke-width",2)
-        .set("fill","white");
+        .set("class", "bg_fill");
     marker.append(circle);
     marker
 }
