@@ -239,7 +239,7 @@ impl Grid {
         let rect = SvgRect::new()
             .set("x", 0)
             .set("y", 0)
-            .set("fill", self.settings.background_color.to_string())
+            .set("class","backdrop")
             .set("width", width)
             .set("height", height);
         svg.append(rect);
@@ -341,6 +341,9 @@ fn get_defs() -> Definitions {
 fn get_styles(settings: &Settings) -> Style {
     let style = format!(
         r#"
+    rect.backdrop {{
+        fill: {background_color};
+    }}
     line,path {{
       stroke: {stroke_color};
       stroke-width: {stroke_width};
@@ -377,6 +380,7 @@ fn get_styles(settings: &Settings) -> Style {
     "#,
         stroke_width = settings.stroke_width,
         stroke_color = &settings.stroke_color,
+        background_color = &settings.background_color,
     );
     Style::new(style)
         .set("type", "text/css")

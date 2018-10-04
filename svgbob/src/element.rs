@@ -79,6 +79,21 @@ pub enum Feature {
     Nothing,
 }
 
+impl Feature {
+
+    fn get_marker(&self) -> Option<&str> {
+        match *self {
+            Nothing =>  None,
+            Arrow => Some("url(#triangle)"),
+            ClearArrow => Some("url(#clear_triangle)"),
+            Circle => Some("url(#circle)"),
+            Square => Some("url(#square)"),
+            OpenCircle => Some("url(#open_circle)"),
+            BigOpenCircle => Some("url(#big_open_circle)"),
+        }
+    }
+}
+
 
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
@@ -299,6 +314,7 @@ impl Element {
         }
     }
 
+
     /// convert drawing element to SVG element
     pub fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
@@ -317,47 +333,12 @@ impl Element {
                     .set("y1", s.y)
                     .set("x2", e.x)
                     .set("y2", e.y);
-                match *start_feature {
-                    Nothing => (),
-                    Arrow => {
-                        svg_line.assign("marker-start", "url(#triangle)");
-                    }
-                    ClearArrow => {
-                        svg_line.assign("marker-start", "url(#clear_triangle)");
-                    }
-                    Circle => {
-                        svg_line.assign("marker-start", "url(#circle)");
-                    }
-                    Square => {
-                        svg_line.assign("marker-start", "url(#square)");
-                    }
-                    OpenCircle => {
-                        svg_line.assign("marker-start", "url(#open_circle)");
-                    }
-                    BigOpenCircle => {
-                        svg_line.assign("marker-start", "url(#big_open_circle)");
-                    }
+                    
+                if let Some(marker) = start_feature.get_marker(){
+                    svg_line.assign("marker-start", marker);
                 }
-                match *end_feature {
-                    Nothing => (),
-                    Arrow => {
-                        svg_line.assign("marker-end", "url(#triangle)");
-                    }
-                    ClearArrow => {
-                        svg_line.assign("marker-end", "url(#clear_triangle)");
-                    }
-                    Circle => {
-                        svg_line.assign("marker-end", "url(#circle)");
-                    }
-                    Square => {
-                        svg_line.assign("marker-end", "url(#square)");
-                    }
-                    OpenCircle => {
-                        svg_line.assign("marker-end", "url(#open_circle)");
-                    }
-                    BigOpenCircle => {
-                        svg_line.assign("marker-end", "url(#big_open_circle)");
-                    }
+                if let Some(marker) = end_feature.get_marker(){
+                    svg_line.assign("marker-end", marker);
                 }
                 match *stroke {
                     Solid => (),
@@ -378,48 +359,13 @@ impl Element {
                     "M {} {} A {} {} 0 {} {} {} {}",
                     s.x, s.y, radius, radius, arc_flag, sweept, e.x, e.y
                 );
-                let mut svg_arc = SvgPath::new().set("d", d).set("fill", "none");
-                match *start_feature {
-                    Nothing => {}
-                    Arrow => {
-                        svg_arc.assign("marker-start", "url(#triangle)");
-                    }
-                    ClearArrow => {
-                        svg_arc.assign("marker-start", "url(#clear_triangle)");
-                    }
-                    Circle => {
-                        svg_arc.assign("marker-start", "url(#circle)");
-                    }
-                    Square => {
-                        svg_arc.assign("marker-start", "url(#square)");
-                    }
-                    OpenCircle => {
-                        svg_arc.assign("marker-start", "url(#open_circle)");
-                    }
-                    BigOpenCircle => {
-                        svg_arc.assign("marker-start", "url(#big_open_circle)");
-                    }
+                let mut svg_arc = SvgPath::new()
+                    .set("d", d);
+                if let Some(marker) = start_feature.get_marker(){
+                    svg_arc.assign("marker-start", marker);
                 }
-                match *end_feature {
-                    Nothing => {}
-                    Arrow => {
-                        svg_arc.assign("marker-end", "url(#triangle)");
-                    }
-                    ClearArrow => {
-                        svg_arc.assign("marker-end", "url(#clear_triangle)");
-                    }
-                    Circle => {
-                        svg_arc.assign("marker-end", "url(#circle)");
-                    }
-                    Square => {
-                        svg_arc.assign("marker-end", "url(#square)");
-                    }
-                    OpenCircle => {
-                        svg_arc.assign("marker-end", "url(#open_circle)");
-                    }
-                    BigOpenCircle => {
-                        svg_arc.assign("marker-end", "url(#big_open_circle)");
-                    }
+                if let Some(marker) = end_feature.get_marker(){
+                    svg_arc.assign("marker-end", marker);
                 }
                 SvgElement::Path(svg_arc)
             }
@@ -434,3 +380,4 @@ impl Element {
         }
     }
 }
+
