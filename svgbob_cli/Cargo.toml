@@ -1,7 +1,7 @@
 
 [package]
 name = "svgbob_cli"
-version = "0.3.2"
+version = "0.4.1"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbobrus"
@@ -10,7 +10,7 @@ keywords = ["ascii", "svg", "convert", "bob"]
 license = "Apache-2.0"
 
 [dependencies]
-svgbob = "0.3.2"
+svgbob = "0.4.1"
 clap = "2.16"
 svg = "0.5"
 
@@ -22,5 +22,5 @@ path = "src/main.rs"
 handlebars = "0.21"
 
 [replace]
-"svgbob:0.3.2" = {path ="../svgbob"}
+"svgbob:0.4.1" = {path ="../svgbob"}
 

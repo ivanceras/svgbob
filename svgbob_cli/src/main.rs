@@ -100,7 +100,7 @@ fn main() {
         }
     }
 
-    let mut settings = Settings::compact();
+    let mut settings = Settings::default();
 
     if let Some(font_family) = args.value_of("font-family") {
         settings.font_family = font_family.to_string();
@@ -228,7 +228,7 @@ fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<Error>> {
     let mut bob = String::new();
     let mut f = try!(File::open(&input));
     f.read_to_string(&mut bob).unwrap();
-    let g = Grid::from_str(&*bob, &Settings::compact());
+    let g = Grid::from_str(&*bob, &Settings::default());
     let svg = g.get_svg();
     try!(svg::save(&output, &svg));
     Ok(())
