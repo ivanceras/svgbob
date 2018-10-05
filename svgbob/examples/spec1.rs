@@ -6,7 +6,7 @@ use svgbob::Settings;
 
 fn main() {
     let file = "examples/spec1.svg";
-    let g = Grid::from_str(get_arg(), &Settings::no_optimization());
+    let g = Grid::from_str(get_arg(), &Settings::default());
     let svg = g.get_svg();
     svg::save(file, &svg).unwrap();
     println!("Saved to {}", file);
