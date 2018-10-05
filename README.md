@@ -1,12 +1,12 @@
-# SvgBobRus
+# Svgbob
 
-<img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge"><a href="https://travis-ci.org/ivanceras/svgbobrus">
-<img src="https://api.travis-ci.org/ivanceras/svgbobrus.svg"/>
+<img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge"><a href="https://travis-ci.org/ivanceras/svgbob">
+<img src="https://api.travis-ci.org/ivanceras/svgbob.svg"/>
 </a>
 
-SvgBobRus is an ascii to svg converter.
+Svgbob is an ascii to svg converter.
 
-There is a Work-in-Progress spec [here](https://github.com/ivanceras/svgbobrus/blob/master/spec.md)
+There is a Work-in-Progress spec [here](https://github.com/ivanceras/svgbob/blob/master/spec.md)
 Contribution to the spec is welcomed.
 
 I've spent a huge time on developing the spec and implementation on my free-time.
@@ -78,7 +78,7 @@ SUBCOMMANDS:
 
 
 
-<img src="https://ivanceras.github.io/svgbobrus/svgbob/examples/demo.svg"/>
+<img src="https://ivanceras.github.io/svgbob/svgbob/examples/demo.svg"/>
 
 The SVG image is generated from the ascii text below.
 
@@ -94,8 +94,8 @@ to approximate the intended shape.
   ( *  \/
    '-.  \
       \ /
-       ' 
-It uses a combination of these characters                   
+       '
+It uses a combination of these characters
 "which are readily available on your keyboards".
 
 What can it do?
@@ -115,7 +115,7 @@ What can it do?
        (             )     (      )    (     )          \  \
         '-----+ ,---'       `>   '      `  <'            \  v
               |/
-          
+
 
  o->  Quick logo scribbles
         .---.                      _
@@ -124,7 +124,7 @@ What can it do?
    ( *  \/         / O  )|     |  |-|    |->| |   (+(-*-))
     '-.  \        /\ |-//      .  * |    '--'-'    \\'-'/
        \ /        \ '+'/        \__/                '--'
-        '          '--'            
+        '          '--'
 
  o->  Even unicode box drawing characters are supported
             ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
@@ -132,10 +132,10 @@ What can it do?
             └─┴┘  ╚═╩╝  ╙─╨╜  ╘═╧╛
 
 
- o->  Sequence Diagrams                                     
-                               
+ o->  Sequence Diagrams
+
                                    .--->  F
-          A       B      C  D     /     
+          A       B      C  D     /
           *-------*-----*---*----*----->  E
                    \            ^ \
                     v          /   '--->  G
@@ -144,53 +144,53 @@ What can it do?
 
  o-> Statistical charts
 
-                                                                          
-    E +-------------------------*--+     E |                         o    
-    D |-------------------*--*--|--*     D |                   o  o  |  o 
-    C |-------------*--*  |  |  |  |     C |             o  o  |  |  |  | 
-    B |-------*--*  |  |  |  |  |  |     B |       o  o  |  |  |  |  |  | 
-    A +-*--*--+--+--+--+--+--+--+--+     A +-o--o--+--+--+--+--+--+--+--+ 
-        5 10 15 20 25 30 35 40 45 50         5 10 15 20 25 30 35 40 45 50 
 
-    
-    
-    
-    
-    
-    
-    
+    E +-------------------------*--+     E |                         o
+    D |-------------------*--*--|--*     D |                   o  o  |  o
+    C |-------------*--*  |  |  |  |     C |             o  o  |  |  |  |
+    B |-------*--*  |  |  |  |  |  |     B |       o  o  |  |  |  |  |  |
+    A +-*--*--+--+--+--+--+--+--+--+     A +-o--o--+--+--+--+--+--+--+--+
+        5 10 15 20 25 30 35 40 45 50         5 10 15 20 25 30 35 40 45 50
+
+
+
+
+
+
+
+
 
 
  o->  Flow charts
-                      .--.            .---.  .---. .---.  .---.    .---.  .---. 
-                      |  |   OS API   '---'  '---' '---'  '---'    '---'  '---' 
-                      v  |              |      |     |      |        |      |   
-             .-. .-. .-. |              v      v     |      v        |      v   
-         .-->'-' '-' '-' |            .------------. | .-----------. |  .-----. 
-         |     \  |  /   |            | Filesystem | | | Scheduler | |  | MMU | 
-         |      v . v    |            '------------' | '-----------' |  '-----' 
-         '_______/ \_____|                   |       |      |        |          
-                 \ /                         v       |      |        v          
-                  |     ____              .----.     |      |    .---------.    
-                  '--> /___/              | IO |<----'      |    | Network |    
-                                          '----'            |    '---------'    
-                                             |              |         |         
-                                             v              v         v         
-                                      .---------------------------------------. 
-                                      |                  HAL                  | 
-                                      '---------------------------------------' 
-   
+                      .--.            .---.  .---. .---.  .---.    .---.  .---.
+                      |  |   OS API   '---'  '---' '---'  '---'    '---'  '---'
+                      v  |              |      |     |      |        |      |
+             .-. .-. .-. |              v      v     |      v        |      v
+         .-->'-' '-' '-' |            .------------. | .-----------. |  .-----.
+         |     \  |  /   |            | Filesystem | | | Scheduler | |  | MMU |
+         |      v . v    |            '------------' | '-----------' |  '-----'
+         '_______/ \_____|                   |       |      |        |
+                 \ /                         v       |      |        v
+                  |     ____              .----.     |      |    .---------.
+                  '--> /___/              | IO |<----'      |    | Network |
+                                          '----'            |    '---------'
+                                             |              |         |
+                                             v              v         v
+                                      .---------------------------------------.
+                                      |                  HAL                  |
+                                      '---------------------------------------'
+
 
  o->  Block diagrams
 
-                          .-,(  ),-.    
-           ___  _      .-(          )-.                                       
-          [___]|=| -->(                )      __________ 
+                          .-,(  ),-.
+           ___  _      .-(          )-.
+          [___]|=| -->(                )      __________
           /::/ |_|     '-(          ).-' --->[_...__...°]
-                          '-.( ).-'                         
-                                  \      ____   __ 
+                          '-.( ).-'
+                                  \      ____   __
                                    '--->|    | |==|
-                                        |____| |  | 
+                                        |____| |  |
                                         /::::/ |__|
 
  o-> Mindmaps
@@ -198,18 +198,18 @@ What can it do?
                                             .-->  Alpha
                                            /
                                           .---->  Initial Release
-          Planning *-------.             /         \      
+          Planning *-------.             /         \
                             \           /           '---> Patch 1
       Initial research       \         /             \
                 *             \       /               '-->  Patch 2
                  \             \     .---------> Beta
-                  \             \   /                              
-                   \             o o                      _______  
+                  \             \   /
+                   \             o o                      _______
                     \          .---. o--.___             /       \
                      '------> (     )       '----*--->  . Release .
                                `---' o                   \_______/
                                o  o o \
-                              /    \ \ \  
+                              /    \ \ \
                           .--'      \ \ \
                          /           \ \ '----+->  Push backs
                         .             \ \      \
@@ -219,16 +219,16 @@ What can it do?
                 Team  / .                 \
                      v /|                  \
              Worklaod / .                   '-->> Career change
-                     V / 
-                 PTO  /  
+                     V /
+                 PTO  /
                      V
-                 Bug 
+                 Bug
 
 
  o->  It can do complex stuff such as circuit diagrams
 
 
-     +10-15V           ___0,047R       
+     +10-15V           ___0,047R
       *------o------o-|___|-o--o---------o----o-------.
              |      |       |  |         |    |       |
             ---     |       | .+.        |    |       |
@@ -284,7 +284,7 @@ What can it do?
       i.e: typing   / will move the cursor north east to continue the line.
  -> The editor also has an xray lens that reveals the underlying characters
     underneath that comprises the graph. Move the mouse around to see the characters
-    that build up which image, while holding the mouse down 
+    that build up which image, while holding the mouse down
     momentarily cancels the xray
 
  .------------------------------.
@@ -294,9 +294,9 @@ What can it do?
 +----------+
 |   FAQ:   |
 +----------+
-   
+
    Q: "Why is there too much spacing on words"
-   A: It is an intended behaviour as all the text are meant 
+   A: It is an intended behaviour as all the text are meant
       for labels. Each words of sentences corresponds to each separate text
       elements in the SVG output in order to maintain
       "a bit of alignment closes to their original location. *[0]"
@@ -306,9 +306,9 @@ What can it do?
       "tedious. Power users of vim or emacs can make diagrams with ease.*[1]"
 
    Q: Your editor sucks!
-   A: That's the beauty of plain text. 
+   A: That's the beauty of plain text.
       Use whatever editor you like.
-   
+
    Q: "How to integrate this in markdown?"
    A: "There is a project called [Spongedown](https://ivanceras.github.io/spongedown)"
       which specifically does that. The svgbob diagramming feature is guarded
@@ -328,7 +328,7 @@ What can it do?
            .------------. | .-----------. |  .-----.   Look at that
            |  文件系统  | | |   调度器  | |  | MMU |   -------------->
            '------------' | '-----------' |  '-----'   monospace eh?
-      
+
       Also using monofont on final output document makes it look like meant
       "something for devs, instead of documents for all."
       For a more heavy usage of text just use markdown format,
@@ -338,9 +338,9 @@ What can it do?
 
 "*[1]  In vim, there is a drawIt plugin which helps you easily draw ascii"
       diagrams. For vim without using any plugins, you can use combination
-      "of BLOCK mode editing(CTRL-v), REPLACE mode(SHIFT-r)", 
+      "of BLOCK mode editing(CTRL-v), REPLACE mode(SHIFT-r)",
       :set virtualedit=all to easily move the cursor everywhere,
-      "cut, copy and paste text in block mode (<C-v> jjll 1vp)". 
+      "cut, copy and paste text in block mode (<C-v> jjll 1vp)".
       For emacs: there is artist mode.
 
 ```
