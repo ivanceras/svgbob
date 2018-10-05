@@ -344,38 +344,6 @@ fn get_styles(settings: &Settings) -> Style {
 rect.backdrop {{
     fill: {background_color};
 }}
-text{{
-    fill: {stroke_color};
-}}
-
-circle {{
-    fill: none;
-    stroke: {stroke_color};
-    stroke-width: {stroke_width};
-}}
-
-line {{
-    stroke: {stroke_color};
-    stroke-width: {stroke_width};
-    stroke-opacity: 1;
-    fill-opacity: 1;
-    stroke-linecap: round;
-    stroke-linejoin: miter;
-}}
-
-path {{
-    fill: none;
-    stroke: {stroke_color};
-    stroke-width: {stroke_width};
-    stroke-opacity: 1;
-    fill-opacity: 1;
-    stroke-linecap: round;
-    stroke-linejoin: miter;
-}}
-
-line.dashed {{
-    stroke-dasharray: 5;
-}}
 
 .fg_fill {{
     fill: {stroke_color};
@@ -384,9 +352,35 @@ line.dashed {{
 
 .bg_fill {{
     fill: {background_color};
+}}
+
+.fg_stroke {{
     stroke: {stroke_color};
     stroke-width: {stroke_width};
 }}
+
+.no_fill {{
+    fill: none;
+}}
+
+.dashed {{
+    stroke-dasharray: 5;
+}}
+
+
+text{{
+    fill: {stroke_color};
+}}
+
+line, path {{
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+    stroke-opacity: 1;
+    fill-opacity: 1;
+}}
+
+
+
 
 tspan.head{{
     fill: none;
@@ -431,7 +425,7 @@ fn clear_arrow_marker() -> Marker {
 
     let path = SvgPolygon::new()
         .set("points", "2,2 2,12 18,7 2,2")
-        .set("class", "bg_fill");
+        .set("class", "bg_fill fg_stroke");
 
     marker.append(path);
     marker
@@ -495,7 +489,7 @@ fn open_circle_marker() -> Marker {
         .set("cx",10)
         .set("cy",10)
         .set("r",4)
-        .set("class", "bg_fill");
+        .set("class", "bg_fill fg_stroke");
     marker.append(circle);
     marker
 }
@@ -513,7 +507,7 @@ fn big_open_circle_marker() -> Marker {
         .set("cx",20)
         .set("cy",20)
         .set("r",6)
-        .set("class", "bg_fill");
+        .set("class", "bg_fill fg_stroke");
     marker.append(circle);
     marker
 }
@@ -587,67 +581,6 @@ fn exclude_escaped_text(line: &str) -> (String, Vec<(usize, String)>) {
     (buffer, text_elm)
 }
 
-#[test]
-fn test_escaped_string() {
-    let input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
-    let mut raw3 = TextInput::new(input3);
-    let output3 = line_parse().parse(&mut raw3);
-    println!("output3: {:?}", output3);
-    //assert_eq!(Ok(vec![(4, 12), (20, 27), (49, 54)]), output3);
-    let mut matches = vec![];
-    let mut recons = String::new();
-    let mut text_elm: Vec<(usize, String)> = vec![];
-    let mut index = 0;
-    if let Ok(output) = output3 {
-        for (start, end) in output {
-            println!("matches: {}", &input3[start..end + 1]);
-            matches.push(input3[start..end + 1].to_string());
-            let slice = &input3[index..start];
-            recons.push_str(slice);
-            recons.push_str(&" ".repeat(end + 1 - start));
-            text_elm.push((start, input3[start + 1..end].to_string()));
-            index = end + 1;
-        }
-    }
-    println!("input3: {}", input3);
-    println!("recons: {}", recons);
-    println!("escaped: {:?}", text_elm);
-    assert_eq!(vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#], matches);
-    assert_eq!(input3.len(), recons.len());
-}
-
-#[test]
-fn test_escaped_multiline_string() {
-    let input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
-    let mut raw3 = TextInput::new(input3);
-    let output3 = line_parse().parse(&mut raw3);
-    println!("output3: {:?}", output3);
-    assert_eq!(Ok(vec![(4, 49)]), output3);
-    let mut matches = vec![];
-    let mut recons = String::new();
-    let mut text_elm: Vec<(usize, String)> = vec![];
-    let mut index = 0;
-    if let Ok(output) = output3 {
-        for (start, end) in output {
-            println!("matches: {}", &input3[start..end + 1]);
-            matches.push(input3[start..end + 1].to_string());
-            let slice = &input3[index..start];
-            recons.push_str(slice);
-            recons.push_str(&" ".repeat(end + 1 - start));
-            text_elm.push((start, input3[start + 1..end].to_string()));
-            index = end + 1;
-        }
-    }
-    println!("input3: {}", input3);
-    println!("recons: {}", recons);
-    println!("escaped: {:?}", text_elm);
-    assert_eq!(
-        vec![r#""qu/i/ck brown fox \njumps over the lazy do|g""#],
-        matches
-    );
-    assert_eq!(input3.len(), recons.len());
-}
-
 fn escape_string() -> pom::parser::Parser<'static, char, (usize, usize)> {
     let escape_sequence = sym('\\') * sym('"'); //escape sequence \"
     let char_string = escape_sequence | none_of("\"");
@@ -657,5 +590,73 @@ fn escape_string() -> pom::parser::Parser<'static, char, (usize, usize)> {
 
 fn line_parse() -> pom::parser::Parser<'static, char, Vec<(usize, usize)>> {
     escape_string().repeat(0..)
+}
+
+#[cfg(test)]
+mod test{
+
+    use super::*;
+
+    #[test]
+    fn test_escaped_string() {
+        let input3 = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+        let mut raw3 = TextInput::new(input3);
+        let output3 = line_parse().parse(&mut raw3);
+        println!("output3: {:?}", output3);
+        //assert_eq!(Ok(vec![(4, 12), (20, 27), (49, 54)]), output3);
+        let mut matches = vec![];
+        let mut recons = String::new();
+        let mut text_elm: Vec<(usize, String)> = vec![];
+        let mut index = 0;
+        if let Ok(output) = output3 {
+            for (start, end) in output {
+                println!("matches: {}", &input3[start..end + 1]);
+                matches.push(input3[start..end + 1].to_string());
+                let slice = &input3[index..start];
+                recons.push_str(slice);
+                recons.push_str(&" ".repeat(end + 1 - start));
+                text_elm.push((start, input3[start + 1..end].to_string()));
+                index = end + 1;
+            }
+        }
+        println!("input3: {}", input3);
+        println!("recons: {}", recons);
+        println!("escaped: {:?}", text_elm);
+        assert_eq!(vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#], matches);
+        assert_eq!(input3.len(), recons.len());
+    }
+
+    #[test]
+    fn test_escaped_multiline_string() {
+        let input3 = r#"The "qu/i/ck brown fox \njumps over the lazy do|g""#;
+        let mut raw3 = TextInput::new(input3);
+        let output3 = line_parse().parse(&mut raw3);
+        println!("output3: {:?}", output3);
+        assert_eq!(Ok(vec![(4, 49)]), output3);
+        let mut matches = vec![];
+        let mut recons = String::new();
+        let mut text_elm: Vec<(usize, String)> = vec![];
+        let mut index = 0;
+        if let Ok(output) = output3 {
+            for (start, end) in output {
+                println!("matches: {}", &input3[start..end + 1]);
+                matches.push(input3[start..end + 1].to_string());
+                let slice = &input3[index..start];
+                recons.push_str(slice);
+                recons.push_str(&" ".repeat(end + 1 - start));
+                text_elm.push((start, input3[start + 1..end].to_string()));
+                index = end + 1;
+            }
+        }
+        println!("input3: {}", input3);
+        println!("recons: {}", recons);
+        println!("escaped: {:?}", text_elm);
+        assert_eq!(
+            vec![r#""qu/i/ck brown fox \njumps over the lazy do|g""#],
+            matches
+        );
+        assert_eq!(input3.len(), recons.len());
+    }
+
 }
 

@@ -29,7 +29,7 @@ use svg;
 
 #[derive(Debug, Clone, PartialEq, PartialOrd )]
 pub enum Element {
-    Circle(Point, f32, String),
+    Circle(Point, f32),
     //   start,  end,  stroke , start_feature, end feature
     Line(Point, Point, Stroke, Feature, Feature),
     //   start, end, radius,   sweep,   stroke, start_feat, end_feat
@@ -37,29 +37,6 @@ pub enum Element {
     Text(Loc, String),
 }
 
-impl Element{
-
-    /*
-    fn longer_line<'a>(&'a self, other: &'a Element) -> &'a Element {
-        match self{
-            Element::Line(s1, e1, _, _, _) => match other{
-                Element::Line(s2, e2, _, _,_) => {
-                    let d1 = point::distance(s1, e1);
-                    let d2 = point::distance(s2, e2);
-                    if d1 > d2 {
-                        self
-                    }
-                    else{
-                        other
-                    }
-                }
-                _ => panic!("only for lines"),
-            }
-            _ => panic!("only for lines"),
-        }
-    }
-    */
-}
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Ord, Eq)]
 pub enum Stroke {
@@ -143,7 +120,7 @@ pub fn arc(a: &Point, b: &Point, r: f32) -> Element {
 
 
 pub fn open_circle(c: &Point, r: f32) -> Element {
-    Element::Circle(c.clone(), r.clone(), "open".to_string())
+    Element::Circle(c.clone(), r.clone())
 }
 
 pub fn arrow_line(s: &Point, e: &Point) -> Element {
@@ -205,8 +182,8 @@ impl Element {
                 match *other {
                     Element::Line(ref s2, ref e2, ref stroke2, ref start_feature2, ref end_feature2) => {
                         // note: dual 3 point check for trully collinear lines
-                        if collinear(s, e, s2) 
-                            && collinear(s, e, e2) 
+                        if collinear(s, e, s2)
+                            && collinear(s, e, e2)
                             && stroke == stroke2{
                             // same length line
                             if s == s2 && e == e2 && start_feature == start_feature2 && end_feature == end_feature2 {
@@ -318,9 +295,9 @@ impl Element {
     /// convert drawing element to SVG element
     pub fn to_svg(&self, settings: &Settings) -> SvgElement {
         match *self {
-            Element::Circle(ref c, r, ref class) => {
+            Element::Circle(ref c, r) => {
                 let svg_circle = SvgCircle::new()
-                    .set("class", class.clone())
+                    .set("class", "fg_stroke no_fill")
                     .set("cx", c.x)
                     .set("cy", c.y)
                     .set("r", r);
@@ -329,11 +306,12 @@ impl Element {
             }
             Element::Line(ref s, ref e, ref stroke, ref start_feature, ref end_feature) => {
                 let mut svg_line = SvgLine::new()
+                    .set("class", "fg_stroke")
                     .set("x1", s.x)
                     .set("y1", s.y)
                     .set("x2", e.x)
                     .set("y2", e.y);
-                    
+
                 if let Some(marker) = start_feature.get_marker(){
                     svg_line.assign("marker-start", marker);
                 }
@@ -343,7 +321,7 @@ impl Element {
                 match *stroke {
                     Solid => (),
                     Dashed => {
-                        svg_line.assign("class","dashed");
+                        svg_line.assign("class","fg_stroke dashed");
                     }
                 };
                 SvgElement::Line(svg_line)
@@ -359,6 +337,7 @@ impl Element {
                     s.x, s.y, radius, radius, arc_flag, sweept, e.x, e.y
                 );
                 let mut svg_arc = SvgPath::new()
+                    .set("class","fg_stroke no_fill")
                     .set("d", d);
                 if let Some(marker) = start_feature.get_marker(){
                     svg_arc.assign("marker-start", marker);
@@ -371,7 +350,10 @@ impl Element {
             Element::Text(ref loc, ref string) => {
                 let sx = loc.x as f32 * settings.text_width + settings.text_width / 8.0;
                 let sy = loc.y as f32 * settings.text_height + settings.text_height * 3.0 / 4.0;
-                let mut svg_text = SvgText::new().set("x", sx).set("y", sy);
+                let mut svg_text = SvgText::new()
+                    .set("class","fg_fill")
+                    .set("x", sx)
+                    .set("y", sy);
                 let text_node = svg::node::Text::new(string.to_string());
                 svg_text.append(text_node);
                 SvgElement::Text(svg_text)

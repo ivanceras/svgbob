@@ -43,7 +43,7 @@ impl Optimizer {
             }
         }
         None
-        
+
     }
     /// trace the and try to reduce this element against the elements
     /// at this location(loc),
@@ -106,7 +106,7 @@ impl Optimizer {
 
     /// grouped elements together that shares some end_points
     fn group_elements<'e>(&self, elements: Vec<Element>) -> Vec<Vec<Element>> {
-        let mut consumed = vec![]; 
+        let mut consumed = vec![];
         let mut all_group = vec![];
         for (i, elm) in elements.iter().enumerate(){
             if !consumed.contains(&i){
@@ -164,7 +164,7 @@ impl Optimizer {
         let mut circles = vec![];
         for elm in elements {
             match elm {
-                Element::Circle(_, _, _) => {
+                Element::Circle(_, _,) => {
                     circles.push(elm.clone());
                 }
                 Element::Line(_, _, ref stroke, ref start_feature, ref end_feature) => {
