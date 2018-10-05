@@ -44,7 +44,7 @@ impl Default for Settings {
             font_family: "arial".to_string(),
             font_size: 14.0,
             stroke_width: 2.0,
-            stroke_color: "currentColor".into(),
+            stroke_color: "black".into(),
             background_color: "white".into(),
         }
     }
