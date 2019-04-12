@@ -1,6 +1,6 @@
-use std::cmp::Ordering;
+use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
 use location::Location;
-use location::Direction::{Top,Bottom,Left,Right,TopLeft,TopRight,BottomLeft,BottomRight};
+use std::cmp::Ordering;
 
 /// Location of Block relative to the Grid
 /// This the equivalent to the cell cation in the grid
@@ -11,10 +11,10 @@ pub struct Loc {
     pub y: i32,
 }
 
-impl Ord for Loc{
-    fn cmp(&self, other:&Loc) -> Ordering{
-        if let Some(order) = self.partial_cmp(other){
-            return order
+impl Ord for Loc {
+    fn cmp(&self, other: &Loc) -> Ordering {
+        if let Some(order) = self.partial_cmp(other) {
+            return order;
         }
         Ordering::Less
     }
@@ -79,10 +79,10 @@ impl Loc {
             y: self.y,
         }
     }
-    pub fn in_left(&self, step: i32) -> Loc{
-        Loc{
+    pub fn in_left(&self, step: i32) -> Loc {
+        Loc {
             x: self.x - step,
-            y: self.y
+            y: self.y,
         }
     }
     pub fn bottom(&self) -> Loc {
@@ -105,9 +105,9 @@ impl Loc {
     }
 
     pub fn in_right(&self, step: i32) -> Loc {
-        Loc{
+        Loc {
             x: self.x + step,
-            y: self.y
+            y: self.y,
         }
     }
 

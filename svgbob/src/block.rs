@@ -1,4 +1,3 @@
-
 /// exact location of point
 /// relative to the Character Block
 /// The block is divided in to 5x5 small blocks

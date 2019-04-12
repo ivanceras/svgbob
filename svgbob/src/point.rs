@@ -1,4 +1,3 @@
-
 use std::cmp::Ordering;
 
 #[derive(Debug, PartialOrd, PartialEq, Clone)]
@@ -6,16 +5,15 @@ pub struct Point {
     pub x: f32,
     pub y: f32,
 }
-impl Ord for Point{
-    fn cmp(&self, other:&Point) -> Ordering{
-        if let Some(order) = self.partial_cmp(other){
-            return order
+impl Ord for Point {
+    fn cmp(&self, other: &Point) -> Ordering {
+        if let Some(order) = self.partial_cmp(other) {
+            return order;
         }
         Ordering::Equal
     }
 }
-impl Eq for Point{
-}
+impl Eq for Point {}
 
 impl Point {
     pub fn new(x: f32, y: f32) -> Point {

@@ -1,4 +1,3 @@
-
 #[derive(Debug, Clone)]
 pub struct Settings {
     pub text_width: f32,
@@ -16,7 +15,7 @@ pub struct Settings {
     /// stroke color, default black
     pub stroke_color: String,
     /// background color: default white
-    pub background_color: String
+    pub background_color: String,
 }
 
 impl Settings {
@@ -31,7 +30,6 @@ impl Settings {
         self.font_size = self.font_size * scale;
         self.stroke_width = self.stroke_width * scale;
     }
-
 }
 
 impl Default for Settings {

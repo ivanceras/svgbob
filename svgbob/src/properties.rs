@@ -1,11 +1,14 @@
-use location::{Location};
+use location::Location;
 
 use block::Block;
 use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 use point_block::PointBlock;
 
 use fragments::Fragment;
-use fragments::{arc, arrow_line, line, circle_start_line, square_start_line, circle_open_line, big_circle_open_line, start_arrow_line, dashed_line};
+use fragments::{
+    arc, arrow_line, big_circle_open_line, circle_open_line, circle_start_line, dashed_line, line,
+    square_start_line, start_arrow_line,
+};
 
 use self::Signal::{Medium, Strong, Weak};
 use box_drawing;
@@ -36,7 +39,6 @@ pub enum Signal {
     /// regardless if it can connect or not
     Strong,
 }
-
 
 #[derive(Debug)]
 pub struct Characteristic {
@@ -111,10 +113,9 @@ impl Properties for char {
         *self == ch
     }
     fn is_static(&self) -> bool {
-        if let Some(characteristic) = self.get_characteristic(){
+        if let Some(characteristic) = self.get_characteristic() {
             characteristic.is_static
-        }
-        else{
+        } else {
             false
         }
     }
@@ -189,25 +190,27 @@ impl Properties for char {
                 properties: vec![(C, Strong, vec![line(c, w)]), (W, Strong, vec![line(c, w)])],
                 intensify: vec![
                     //  |-
-                    ( O,
-                      Condition{
-                          loc: right(),
-                          can: IsStrongAll(vec![K,O])
-                      }
+                    (
+                        O,
+                        Condition {
+                            loc: right(),
+                            can: IsStrongAll(vec![K, O]),
+                        },
                     ),
                     //  -|
-                    ( K,
-                      Condition{
-                          loc: left(),
-                          can: IsStrongAll(vec![K,O])
-                        }
+                    (
+                        K,
+                        Condition {
+                            loc: left(),
+                            can: IsStrongAll(vec![K, O]),
+                        },
                     ),
                 ],
                 intended_behavior: vec![
                     //    |-
-                    (vec![O], vec![line(o, m), line(c,w)]),
+                    (vec![O], vec![line(o, m), line(c, w)]),
                     //   -|
-                    (vec![K], vec![line(m, k), line(c,w)]),
+                    (vec![K], vec![line(m, k), line(c, w)]),
                 ],
             })
         }
@@ -229,10 +232,13 @@ impl Properties for char {
         //  ~ tilde will be hidden lines
         //
         //////////////////////////////
-        else if self.is('~'){
+        else if self.is('~') {
             Some(Characteristic {
                 is_static: false,
-                properties: vec![(K, Strong, vec![dashed_line(k, o)]), (O, Strong, vec![dashed_line(k, o)])],
+                properties: vec![
+                    (K, Strong, vec![dashed_line(k, o)]),
+                    (O, Strong, vec![dashed_line(k, o)]),
+                ],
                 intensify: vec![],
                 intended_behavior: vec![],
             })
@@ -246,10 +252,26 @@ impl Properties for char {
             Some(Characteristic {
                 is_static: false,
                 properties: vec![
-                    (K, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
-                    (O, Strong, vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))]),
-                    (F, Strong, vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))]),
-                    (J, Strong, vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))]),
+                    (
+                        K,
+                        Strong,
+                        vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))],
+                    ),
+                    (
+                        O,
+                        Strong,
+                        vec![line(&k.adjust(0.0, 1.0), &o.adjust(0.0, 1.0))],
+                    ),
+                    (
+                        F,
+                        Strong,
+                        vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))],
+                    ),
+                    (
+                        J,
+                        Strong,
+                        vec![line(&f.adjust(0.0, 1.0), &j.adjust(0.0, 1.0))],
+                    ),
                 ],
                 intensify: vec![],
                 intended_behavior: vec![],
@@ -264,10 +286,8 @@ impl Properties for char {
             Some(Characteristic {
                 is_static: false,
                 properties: vec![(U, Strong, vec![line(u, y)]), (Y, Strong, vec![line(u, y)])],
-                intensify: vec![
-                ],
-                intended_behavior: vec![
-                ],
+                intensify: vec![],
+                intended_behavior: vec![],
             })
         }
         /////////////////////////////
@@ -301,7 +321,7 @@ impl Properties for char {
                     //    /-
                     (
                         O,
-                        Condition{
+                        Condition {
                             loc: right(),
                             can: IsStrongAll(vec![K, O]),
                         },
@@ -309,7 +329,7 @@ impl Properties for char {
                     //   -/
                     (
                         K,
-                        Condition{
+                        Condition {
                             loc: left(),
                             can: IsStrongAll(vec![K, O]),
                         },
@@ -317,10 +337,10 @@ impl Properties for char {
                     //   /_
                     (
                         Y,
-                        Condition{
+                        Condition {
                             loc: right(),
-                            can: IsStrongAll(vec![U,Y])
-                        }
+                            can: IsStrongAll(vec![U, Y]),
+                        },
                     ),
                 ],
                 intended_behavior: vec![
@@ -372,24 +392,24 @@ impl Properties for char {
                         K,
                         Condition {
                             loc: left(),
-                            can: IsStrongAll(vec![K,O])
-                        }
+                            can: IsStrongAll(vec![K, O]),
+                        },
                     ),
                     //   \-
                     (
                         O,
-                        Condition{
+                        Condition {
                             loc: right(),
-                            can: IsStrongAll(vec![K,O])
-                        }
+                            can: IsStrongAll(vec![K, O]),
+                        },
                     ),
                     //  _\
                     (
                         U,
-                        Condition{
+                        Condition {
                             loc: left(),
-                            can: IsStrongAll(vec![U,Y])
-                        }
+                            can: IsStrongAll(vec![U, Y]),
+                        },
                     ),
                 ],
                 intended_behavior: vec![
@@ -399,7 +419,7 @@ impl Properties for char {
                     //   |
                     //   \
                     (vec![C], vec![line(y, m), line(m, c)]),
-                    //  -\ 
+                    //  -\
                     (vec![K], vec![line(a, y), line(k, m)]),
                     //   \-
                     (vec![O], vec![line(a, y), line(m, o)]),
@@ -1296,8 +1316,8 @@ impl Properties for char {
                         Condition {
                             loc: left(),
                             can: ConnectTo(O, Strong),
-                        }
-                    )
+                        },
+                    ),
                 ],
                 intended_behavior: vec![],
                 properties: vec![
@@ -1344,15 +1364,15 @@ impl Properties for char {
                         },
                     ),
                     //  >-
-                    ( O,
-                      Condition {
-                          loc: right(),
-                          can: ConnectTo(K, Strong),
-                        }
+                    (
+                        O,
+                        Condition {
+                            loc: right(),
+                            can: ConnectTo(K, Strong),
+                        },
                     ),
                 ],
-                intended_behavior: vec![
-                ],
+                intended_behavior: vec![],
                 properties: vec![
                     (K, Medium, vec![arrow_line(k, m)]),
                     (O, Weak, vec![start_arrow_line(k, m)]),
@@ -1498,12 +1518,10 @@ impl Properties for char {
             })
         }
         //  ◤
-        else if self.is('◤'){
+        else if self.is('◤') {
             Some(Characteristic {
                 is_static: false,
-                properties: vec![
-                    (Y, Medium, vec![arrow_line(y, g)]),
-                ],
+                properties: vec![(Y, Medium, vec![arrow_line(y, g)])],
                 intensify: vec![
                     //     ◤
                     //      \
@@ -1522,15 +1540,13 @@ impl Properties for char {
                 ],
             })
         }
-        // ◥ 
+        // ◥
         else if self.is('◥') {
             Some(Characteristic {
                 is_static: false,
-                properties: vec![
-                    (U, Medium, vec![arrow_line(u, i)]),
-                ],
+                properties: vec![(U, Medium, vec![arrow_line(u, i)])],
                 intensify: vec![
-                    //      ◥ 
+                    //      ◥
                     //     /
                     (
                         U,
@@ -1541,27 +1557,24 @@ impl Properties for char {
                     ),
                 ],
                 intended_behavior: vec![
-                    //      ◥ 
-                    //     / 
-                    (vec![U], vec![arrow_line(u,e)]),
+                    //      ◥
+                    //     /
+                    (vec![U], vec![arrow_line(u, e)]),
                 ],
             })
         }
         // Specific arrow heads
         //  ◢
-        else if self.is('◢'){
+        else if self.is('◢') {
             Some(Characteristic {
                 is_static: false,
-                properties: vec![
-                    (A, Medium, vec![arrow_line(a, s)]),
-                ],
+                properties: vec![(A, Medium, vec![arrow_line(a, s)])],
                 intended_behavior: vec![
                     //    \
                     //     ◢
-                    (vec![A], vec![arrow_line(a,s)]),
+                    (vec![A], vec![arrow_line(a, s)]),
                 ],
                 intensify: vec![
-
                     //    \
                     //     ◢
                     (
@@ -1571,20 +1584,16 @@ impl Properties for char {
                             can: ConnectTo(Y, Strong),
                         },
                     ),
-                ]
-
+                ],
             })
         }
         //   /
         //  ◣
-        else if self.is('◣'){
+        else if self.is('◣') {
             Some(Characteristic {
                 is_static: false,
-                properties: vec![
-                    (E, Medium, vec![arrow_line(e, q)]),
-                ],
+                properties: vec![(E, Medium, vec![arrow_line(e, q)])],
                 intensify: vec![
-
                     //     /
                     //    ◣
                     (
@@ -1602,7 +1611,6 @@ impl Properties for char {
                     (vec![E], vec![line(m, e)]),
                 ],
             })
-
         }
         ///////////////////////////
         //
@@ -1681,14 +1689,14 @@ impl Properties for char {
         // : colon for vertical hidden line
         //
         //////////////////////////////
-        else if self.is(':'){
-            Some(Characteristic{
+        else if self.is(':') {
+            Some(Characteristic {
                 is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
-                    (C, Strong, vec![dashed_line(c,w)]),
-                    (W, Strong, vec![dashed_line(c,w)]),
+                    (C, Strong, vec![dashed_line(c, w)]),
+                    (W, Strong, vec![dashed_line(c, w)]),
                 ],
             })
         }
@@ -1697,14 +1705,14 @@ impl Properties for char {
         // ! exclamation can also be for vertical hidden line
         //
         //////////////////////////////
-        else if self.is('!'){
-            Some(Characteristic{
+        else if self.is('!') {
+            Some(Characteristic {
                 is_static: false,
                 intensify: vec![],
                 intended_behavior: vec![],
                 properties: vec![
-                    (C, Strong, vec![dashed_line(c,w)]),
-                    (W, Strong, vec![dashed_line(c,w)]),
+                    (C, Strong, vec![dashed_line(c, w)]),
+                    (W, Strong, vec![dashed_line(c, w)]),
                 ],
             })
         }

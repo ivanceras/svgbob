@@ -1,9 +1,9 @@
-use self::Fragment::{Arc, ArrowLine,  ClearArrowLine,
-    Line, DashedLine, CircleStartLine, SquareStartLine, 
-    CircleOpenLine, BigCircleOpenLine, OpenCircle, StartArrowLine};
+use self::Fragment::{
+    Arc, ArrowLine, BigCircleOpenLine, CircleOpenLine, CircleStartLine, ClearArrowLine, DashedLine,
+    Line, OpenCircle, SquareStartLine, StartArrowLine,
+};
 
 use point_block::PointBlock;
-
 
 /// These are non-final drawing elements
 /// Lines most likely fall on the collinear line
@@ -58,4 +58,3 @@ pub fn arc(s: &PointBlock, e: &PointBlock, r: i32) -> Fragment {
 pub fn open_circle(c: &PointBlock, r: i32) -> Fragment {
     OpenCircle(c.clone(), r)
 }
-

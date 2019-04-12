@@ -1,5 +1,5 @@
-use location::{Location,Direction};
 use block::Block;
+use location::{Direction, Location};
 use std::cmp::Ordering;
 
 /// An exact point in the grid
@@ -12,14 +12,13 @@ pub struct PointBlock {
     pub adjust_y: f32,
 }
 
-impl Ord for PointBlock{
-    fn cmp(&self, other: &PointBlock) -> Ordering{
+impl Ord for PointBlock {
+    fn cmp(&self, other: &PointBlock) -> Ordering {
         self.location.cmp(&other.location)
     }
 }
 
-impl Eq for PointBlock{
-}
+impl Eq for PointBlock {}
 
 impl PointBlock {
     pub fn block(block: Block) -> Self {

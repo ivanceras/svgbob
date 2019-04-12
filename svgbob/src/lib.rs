@@ -30,31 +30,31 @@
 //!
 //!
 #![deny(warnings)]
+extern crate pom;
 extern crate svg;
 extern crate unicode_width;
-extern crate pom;
 
 pub use grid::Grid;
 pub use settings::Settings;
 use svg::node::element::SVG;
 
-mod optimizer;
+mod block;
 mod box_drawing;
+mod element;
+mod enhance;
+mod enhance_circle;
+mod focus_char;
 mod fragments;
+mod grid;
+mod loc;
+mod loc_block;
+mod location;
+mod optimizer;
+mod point;
+mod point_block;
 mod properties;
 mod settings;
 mod svg_element;
-mod element;
-mod grid;
-mod point;
-mod location;
-mod loc;
-mod point_block;
-mod block;
-mod focus_char;
-mod loc_block;
-mod enhance_circle;
-mod enhance;
 
 /// generate an SVG from the ascii text input
 ///
@@ -69,14 +69,3 @@ mod enhance;
 pub fn to_svg(input: &str) -> SVG {
     Grid::from_str(&input, &Settings::default()).get_svg()
 }
-
-
-
-
-
-
-
-
-
-
-

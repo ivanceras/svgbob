@@ -1,6 +1,8 @@
-use self::Direction::{Top,Bottom,Left,Right};
+use self::Direction::{Bottom, Left, Right, Top};
+use block::Block::{
+    self, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y,
+};
 use point_block::PointBlock;
-use block::{Block::{self,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}};
 /// a location in the grid
 /// relative to the focused char
 /// go to direction and how many steps to get there
@@ -31,14 +33,13 @@ impl Location {
 
     // this location
     // TODO: hacky fix these
-    pub fn this()-> Self{
+    pub fn this() -> Self {
         Self::jump(Right, 0)
     }
 
     pub fn jump(direction: Direction, step: usize) -> Self {
         Location(vec![(direction, step)])
     }
-
 
     fn jump_to(&mut self, direction: Direction, step: usize) {
         self.0.push((direction, step));
@@ -158,8 +159,7 @@ impl Location {
             location: Some(self.clone()),
             block: block,
             adjust_x: 0.0,
-            adjust_y: 0.0
+            adjust_y: 0.0,
         }
     }
 }
-

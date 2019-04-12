@@ -1,25 +1,25 @@
 use block::Block;
-use fragments::Fragment;
-use loc::Loc;
-use grid::Grid;
-use properties::{
-    Properties,
-    Signal::{self,Weak,Medium,Strong},
-    Can::{self,ConnectTo,Is,IsStrongAll},
-    Characteristic,
-};
-use point_block::PointBlock;
-use point::Point;
-use loc_block::LocBlock;
 use element::Element;
-use fragments::Fragment::Text;
-use element::{line,dashed_line,circle_start_line,
-    square_start_line, circle_open_line,big_circle_open_line, 
-    arrow_line,clear_arrow_line, start_arrow_line,arc,open_circle,text};
-use location::Location;
-use settings::Settings;
+use element::{
+    arc, arrow_line, big_circle_open_line, circle_open_line, circle_start_line, clear_arrow_line,
+    dashed_line, line, open_circle, square_start_line, start_arrow_line, text,
+};
 use enhance::Enhance;
 use enhance_circle::EnhanceCircle;
+use fragments::Fragment;
+use fragments::Fragment::Text;
+use grid::Grid;
+use loc::Loc;
+use loc_block::LocBlock;
+use location::Location;
+use point::Point;
+use point_block::PointBlock;
+use properties::{
+    Can::{self, ConnectTo, Is, IsStrongAll},
+    Characteristic, Properties,
+    Signal::{self, Medium, Strong, Weak},
+};
+use settings::Settings;
 
 #[derive(Debug, Clone)]
 pub struct FocusChar<'g> {
@@ -44,7 +44,6 @@ impl<'g> FocusChar<'g> {
             grid: grid,
         }
     }
-
 
     /// get the text of self char, including complex block
     /// concatenated with multiple strings in utf8 encoding
@@ -73,12 +72,11 @@ impl<'g> FocusChar<'g> {
     /// if it's properties is static such as unicode box drawing
     /// they are automatically used as drawing element
     /// otherwise, check if the the surrounding character can connect to this character
-    fn used_as_drawing(&self)-> bool {
+    fn used_as_drawing(&self) -> bool {
         // all box uncide drawing are static
         if self.ch.is_static() {
             true
-        }
-        else{
+        } else {
             //  --
             (self.can_strongly_connect(&Block::O) && self.right().can_pass_medium_connect(&Block::K))
             || (self.can_strongly_connect(&Block::K) && self.left().can_pass_medium_connect(&Block::O))
@@ -103,23 +101,21 @@ impl<'g> FocusChar<'g> {
     /// determine if the character at this location
     /// is used as text or not
     fn used_as_text(&self) -> bool {
-        if self.used_as_drawing(){
+        if self.used_as_drawing() {
             false
-        }
-        else{
+        } else {
             self.is_text_surrounded()
         }
     }
 
-    fn is_text_char(&self)->bool{
-        if self.ch.any("oO_"){// exclude letter oO and _underscore in the alphanumeric 
+    fn is_text_char(&self) -> bool {
+        if self.ch.any("oO_") {
+            // exclude letter oO and _underscore in the alphanumeric
             return false;
-        }
-        else {
+        } else {
             self.ch.is_alphanumeric()
         }
     }
-
 
     fn is_text_surrounded(&self) -> bool {
         self.left().is_text_char() || self.right().is_text_char()
@@ -144,7 +140,8 @@ impl<'g> FocusChar<'g> {
     }
 
     fn can_pass_weakly_connect(&self, block: &Block) -> bool {
-        self.can_strongly_connect(block) || self.can_medium_connect(block)
+        self.can_strongly_connect(block)
+            || self.can_medium_connect(block)
             || self.can_weakly_connect(block)
     }
 
@@ -175,14 +172,26 @@ impl<'g> FocusChar<'g> {
         let unit_x = self.loc_block().unit_x();
         match frag {
             Fragment::Line(p1, p2) => line(&self.point(&p1), &self.point(&p2)),
-            Fragment::CircleStartLine(p1, p2) => circle_start_line(&self.point(&p1), &self.point(&p2)),
-            Fragment::SquareStartLine(p1, p2) => square_start_line(&self.point(&p1), &self.point(&p2)),
-            Fragment::CircleOpenLine(p1, p2) => circle_open_line(&self.point(&p1), &self.point(&p2)),
-            Fragment::BigCircleOpenLine(p1, p2) => big_circle_open_line(&self.point(&p1), &self.point(&p2)),
+            Fragment::CircleStartLine(p1, p2) => {
+                circle_start_line(&self.point(&p1), &self.point(&p2))
+            }
+            Fragment::SquareStartLine(p1, p2) => {
+                square_start_line(&self.point(&p1), &self.point(&p2))
+            }
+            Fragment::CircleOpenLine(p1, p2) => {
+                circle_open_line(&self.point(&p1), &self.point(&p2))
+            }
+            Fragment::BigCircleOpenLine(p1, p2) => {
+                big_circle_open_line(&self.point(&p1), &self.point(&p2))
+            }
             Fragment::DashedLine(p1, p2) => dashed_line(&self.point(&p1), &self.point(&p2)),
             Fragment::ArrowLine(p1, p2) => arrow_line(&self.point(&p1), &self.point(&p2)),
-            Fragment::ClearArrowLine(p1, p2) => clear_arrow_line(&self.point(&p1), &self.point(&p2)),
-            Fragment::StartArrowLine(p1, p2) => start_arrow_line(&self.point(&p1), &self.point(&p2)),
+            Fragment::ClearArrowLine(p1, p2) => {
+                clear_arrow_line(&self.point(&p1), &self.point(&p2))
+            }
+            Fragment::StartArrowLine(p1, p2) => {
+                start_arrow_line(&self.point(&p1), &self.point(&p2))
+            }
             Fragment::Arc(p1, p2, m) => arc(&self.point(&p1), &self.point(&p2), m as f32 * unit_x),
             Fragment::OpenCircle(c, m) => open_circle(&self.point(&c), m as f32 * unit_x),
             Fragment::Text(s) => text(&self.loc, &s),
@@ -281,7 +290,7 @@ impl<'g> FocusChar<'g> {
 
     /// check if each blocks in the vectors can be strong when
     /// applying the intesifiers
-    pub fn can_be_strong_all_blocks(&self, blocks: Vec<Block>) -> bool{
+    pub fn can_be_strong_all_blocks(&self, blocks: Vec<Block>) -> bool {
         blocks.iter().all(|b| self.can_be_strong_block(b))
     }
 
@@ -321,15 +330,13 @@ impl<'g> FocusChar<'g> {
         (elm, consumed)
     }
 
-
     /// get the fragements generated at this focus character and the
     /// consumed locations
-    fn get_fragments(&self) -> Vec<Fragment>{
+    fn get_fragments(&self) -> Vec<Fragment> {
         let character: Option<Characteristic> = self.ch.get_characteristic();
         let mut elm: Vec<Fragment> = vec![];
 
         let mut matched_intended = false;
-
 
         if let Some(character) = character {
             for &(ref blocks, ref fragments) in &character.intended_behavior {

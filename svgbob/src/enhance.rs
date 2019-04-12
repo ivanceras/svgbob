@@ -1,17 +1,16 @@
+use block::Block::{A, C, E, F, J, K, M, O, P, Q, S, T, U, W, Y};
 use focus_char::FocusChar;
 use fragments::Fragment;
-use location::Location;
+use fragments::{arc, arrow_line, clear_arrow_line, line, open_circle};
 use location::Direction::{Bottom, BottomLeft, BottomRight, Left, Right, Top, TopLeft, TopRight};
-use block::Block::{A, C, E, F, J, K, M, O, P, Q, S, T, U, W, Y};
+use location::Location;
 use point_block::PointBlock;
-use fragments::{line, arc, arrow_line, open_circle, clear_arrow_line};
 
 pub trait Enhance {
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>);
 }
 
 impl<'g> Enhance for FocusChar<'g> {
-
     fn enhance(&self) -> (Vec<Fragment>, Vec<Location>) {
         let mut elm = vec![];
         let mut consumed = vec![];
@@ -71,13 +70,13 @@ impl<'g> Enhance for FocusChar<'g> {
             //   |
             //   _
             //   V
-            if self.bottom().any("vV") && self.top().is('|'){
+            if self.bottom().any("vV") && self.top().is('|') {
                 elm.push(clear_arrow_line(c, w));
                 consumed.extend(vec![this(), bottom()]);
             }
         }
-        if self.is('∀'){
-            if self.top().is('|'){
+        if self.is('∀') {
+            if self.top().is('|') {
                 elm.push(clear_arrow_line(c, w));
                 consumed.extend(vec![this(), top()]);
             }
@@ -108,7 +107,7 @@ impl<'g> Enhance for FocusChar<'g> {
             //      <'
             if self.top_right().is('/') && self.left().is('<') {
                 elm.push(arrow_line(&top_right().c(), &left().j()));
-                consumed.extend(vec![this(), left(),top_right()]);
+                consumed.extend(vec![this(), left(), top_right()]);
             }
             // For diamond rectangle
             //     .
@@ -126,12 +125,12 @@ impl<'g> Enhance for FocusChar<'g> {
             //   .'
             if self.left().any(".,") {
                 elm.push(line(c, &left().m()));
-                consumed.extend(vec![this(),left()]);
+                consumed.extend(vec![this(), left()]);
             }
             //   '.
             if self.right().any(".,") {
                 elm.push(line(c, &right().m()));
-                consumed.extend(vec![this(),right()]);
+                consumed.extend(vec![this(), right()]);
             }
         }
         if self.any(".,") {
@@ -140,58 +139,58 @@ impl<'g> Enhance for FocusChar<'g> {
             //     +   +
             if self.bottom_right().is('+') && self.left().is('<') {
                 elm.push(arrow_line(&bottom_right().m(), &left().t()));
-                consumed.extend(vec![this(),left()]);
+                consumed.extend(vec![this(), left()]);
             }
             //       <,   <.
             //         \    \
             if self.bottom_right().is('\\') && self.left().is('<') {
                 elm.push(arrow_line(&bottom_right().w(), &left().t()));
-                consumed.extend(vec![this(),left(), bottom_right()]);
+                consumed.extend(vec![this(), left(), bottom_right()]);
             }
             //
             //   .>    ,>
             //  +     +
             if self.bottom_left().is('+') && self.right().is('>') {
                 elm.push(arrow_line(&bottom_left().m(), &right().p()));
-                consumed.extend(vec![this(),right()]);
+                consumed.extend(vec![this(), right()]);
             }
             //
             //       ,>
             //      /
             if self.bottom_left().is('/') && self.right().is('>') {
                 elm.push(arrow_line(&bottom_left().w(), &right().p()));
-                consumed.extend(vec![this(),right(), bottom_left()]);
+                consumed.extend(vec![this(), right(), bottom_left()]);
             }
         }
         // transistor complimentary enhancement
         if self.is('|') {
             // as long as the bottom is NOT |
-            if !self.bottom().is('|'){
+            if !self.bottom().is('|') {
                 //  |
                 //   \
-                if self.bottom_right().is('\\'){
-                    elm.extend(vec![line(c,m), line(m,y)]);
+                if self.bottom_right().is('\\') {
+                    elm.extend(vec![line(c, m), line(m, y)]);
                     consumed.extend(vec![this()]);
                 }
                 //   |
                 //  /
-                if self.bottom_left().is('/'){
-                    elm.extend(vec![line(c,m), line(m,u)]);
+                if self.bottom_left().is('/') {
+                    elm.extend(vec![line(c, m), line(m, u)]);
                     consumed.extend(vec![this()]);
                 }
             }
             // top should not be |
-            if !self.top().is('|'){
+            if !self.top().is('|') {
                 //    /
                 //   |
-                if self.top_right().is('/'){
-                    elm.extend(vec![line(w, m), line(m,e)]);
+                if self.top_right().is('/') {
+                    elm.extend(vec![line(w, m), line(m, e)]);
                     consumed.extend(vec![this()]);
                 }
                 //   \
                 //    |
-                if self.top_left().is('\\'){
-                    elm.extend(vec![line(w,m), line(m,a)]);
+                if self.top_left().is('\\') {
+                    elm.extend(vec![line(w, m), line(m, a)]);
                     consumed.extend(vec![this()]);
                 }
             }
@@ -210,28 +209,28 @@ impl<'g> Enhance for FocusChar<'g> {
             //    _
             //   |
             if self.top_right().is('_') {
-                elm.extend(vec![line(c,w),line(c, e)]);
+                elm.extend(vec![line(c, w), line(c, e)]);
                 consumed.push(this());
             }
             //    _
             //     |
             if self.top_left().is('_') {
-                elm.extend(vec![line(c,w),line(a,c)]);
+                elm.extend(vec![line(c, w), line(a, c)]);
                 consumed.push(this());
             }
             //   |>
-            if self.right().is('>') && self.left().is('-'){
-                elm.push(clear_arrow_line(k,o));
+            if self.right().is('>') && self.left().is('-') {
+                elm.push(clear_arrow_line(k, o));
                 consumed.extend(vec![this(), right()]);
             }
             //   <|
-            if self.left().is('<') && self.right().is('-'){
+            if self.left().is('<') && self.right().is('-') {
                 elm.push(clear_arrow_line(o, k));
                 consumed.extend(vec![this(), left()]);
             }
             // A
             // |
-            if self.top().is('A'){
+            if self.top().is('A') {
                 elm.push(clear_arrow_line(w, c));
                 consumed.extend(vec![this(), top()]);
             }
@@ -265,24 +264,24 @@ impl<'g> Enhance for FocusChar<'g> {
             }
         }
 
-        if self.any("vV"){
+        if self.any("vV") {
             //     `.
             //       V
-            if self.top_left().is('.') && self.top().in_left(2).is('`'){
+            if self.top_left().is('.') && self.top().in_left(2).is('`') {
                 elm.push(arrow_line(&top_left2().c(), j));
                 consumed.push(this())
             }
             //    .'
             //   V
-            if self.top_right().is('.') && self.top().in_right(2).is('\''){
+            if self.top_right().is('.') && self.top().in_right(2).is('\'') {
                 elm.push(arrow_line(&top_right2().c(), f));
                 consumed.push(this())
             }
         }
-        if self.is('^'){
+        if self.is('^') {
             //  ^
             //   `.
-            if self.bottom_right().is('`') && self.bottom().in_right(2).is('.'){
+            if self.bottom_right().is('`') && self.bottom().in_right(2).is('.') {
                 elm.push(arrow_line(&bottom_right2().t(), m));
                 consumed.push(this());
             }
@@ -298,7 +297,8 @@ impl<'g> Enhance for FocusChar<'g> {
         //   -(-
         //    |
         //
-       if self.is('(') && self.top().can_strongly_connect(&W)
+        if self.is('(')
+            && self.top().can_strongly_connect(&W)
             && self.bottom().can_strongly_connect(&C)
             && self.left().can_strongly_connect(&O)
             && self.right().can_strongly_connect(&K)
@@ -311,7 +311,8 @@ impl<'g> Enhance for FocusChar<'g> {
         //   -)-
         //    |
         //
-        if self.is(')') && self.top().can_strongly_connect(&W)
+        if self.is(')')
+            && self.top().can_strongly_connect(&W)
             && self.bottom().can_strongly_connect(&C)
             && self.left().can_strongly_connect(&O)
             && self.right().can_strongly_connect(&K)
@@ -321,53 +322,57 @@ impl<'g> Enhance for FocusChar<'g> {
         }
         // railroad diagram
         // _◞_
-        if self.is('◞') && self.left().is('_') && self.right().is('_'){
-            elm.extend(vec![line(u,y)]);
+        if self.is('◞') && self.left().is('_') && self.right().is('_') {
+            elm.extend(vec![line(u, y)]);
         }
         // railroad diagram
         // _◟_
-        if self.is('◟') && self.left().is('_') && self.right().is('_'){
-            elm.extend(vec![line(u,y)]);
+        if self.is('◟') && self.left().is('_') && self.right().is('_') {
+            elm.extend(vec![line(u, y)]);
         }
         // railroad diagram
         //
         // -╯-  -╰-  -╭-  -╮-
         //
-        if self.any("╯╮╰╭") && self.left().is('-') && self.right().is('-'){
-            elm.extend(vec![line(k,o)]);
+        if self.any("╯╮╰╭") && self.left().is('-') && self.right().is('-') {
+            elm.extend(vec![line(k, o)]);
         }
         // |    |
         // ╰    ╯
         // |    |
-        if self.any("╰╯") && self.top().is('|') && self.bottom().is('|'){
-            elm.extend(vec![line(c,w)]);
+        if self.any("╰╯") && self.top().is('|') && self.bottom().is('|') {
+            elm.extend(vec![line(c, w)]);
         }
         // railroad start
         // O_
-        if self.is('O') && self.right().is('_'){
-            elm.extend(vec![open_circle(m,3), arc(t,&right().y(),4)]);
+        if self.is('O') && self.right().is('_') {
+            elm.extend(vec![open_circle(m, 3), arc(t, &right().y(), 4)]);
             consumed.extend(vec![this(), right()]);
         }
         // railroad end
         // _O
-        if self.is('O') && self.left().is('_'){
-            elm.extend(vec![open_circle(m,3), arc(&left().u(), p,4)]);
+        if self.is('O') && self.left().is('_') {
+            elm.extend(vec![open_circle(m, 3), arc(&left().u(), p, 4)]);
             consumed.extend(vec![this(), left()]);
         }
         // railroad start
         // o_
-        if self.is('o') && self.right().is('_'){
-            elm.extend(vec![open_circle(m,2),
-                       arc(s,&right().w(),4),
-                       line(&right().w(), &right().y())]);
+        if self.is('o') && self.right().is('_') {
+            elm.extend(vec![
+                open_circle(m, 2),
+                arc(s, &right().w(), 4),
+                line(&right().w(), &right().y()),
+            ]);
             consumed.extend(vec![this(), right()]);
         }
         // railroad end
         // _o
-        if self.is('o') && self.left().is('_'){
-            elm.extend(vec![open_circle(m,2),
-                       arc(&left().w(), q, 4),
-                       line(&left().w(), &left().u())]);
+        if self.is('o') && self.left().is('_') {
+            elm.extend(vec![
+                open_circle(m, 2),
+                arc(&left().w(), q, 4),
+                line(&left().w(), &left().u()),
+            ]);
             consumed.extend(vec![this(), left()]);
         }
         (elm, consumed)

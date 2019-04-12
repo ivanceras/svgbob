@@ -1,10 +1,8 @@
-
+use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 use loc::Loc;
 use point::Point;
-use settings::Settings;
-use block::Block::{A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y};
 use point_block::PointBlock;
-
+use settings::Settings;
 
 pub struct LocBlock {
     pub loc: Loc,

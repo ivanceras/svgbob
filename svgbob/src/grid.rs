@@ -1,24 +1,19 @@
-use loc::Loc;
-use focus_char::FocusChar;
-use optimizer::Optimizer;
-use svg_element::SvgElement;
-use svg::node::element::SVG;
-use svg::Node;
-use svg::node::element::{
-    Definitions,
-    Marker,
-    Rectangle as SvgRect,
-    Style,
-    Circle as SvgCircle,
-    Polygon as SvgPolygon,
-    Group,
-};
 use element::Element;
-use pom::TextInput;
-use pom::parser::{sym,none_of};
-use settings::Settings;
-use unicode_width::UnicodeWidthChar;
+use focus_char::FocusChar;
+use loc::Loc;
+use optimizer::Optimizer;
 use pom;
+use pom::parser::{none_of, sym};
+use pom::TextInput;
+use settings::Settings;
+use svg::node::element::SVG;
+use svg::node::element::{
+    Circle as SvgCircle, Definitions, Group, Marker, Polygon as SvgPolygon, Rectangle as SvgRect,
+    Style,
+};
+use svg::Node;
+use svg_element::SvgElement;
+use unicode_width::UnicodeWidthChar;
 
 #[derive(Debug)]
 pub struct Grid {
@@ -80,7 +75,6 @@ impl Grid {
         g.pre_process()
     }
 
-
     pub fn rows(&self) -> usize {
         self.index.len()
     }
@@ -102,11 +96,10 @@ impl Grid {
         }
     }
 
-
     fn text(&self, loc: &Loc) -> &str {
         match self.get(loc) {
             Some(ref s) => s,
-            None => ""
+            None => "",
         }
     }
 
@@ -117,12 +110,12 @@ impl Grid {
 
     /// process the enhancing of circle elements
     /// this should be called before other elements are extracted from the grid
-    fn get_enhance_circle_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
+    fn get_enhance_circle_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         let mut all_consumed_loc: Vec<Loc> = vec![];
-        for (y,line) in self.index.iter().enumerate() {
+        for (y, line) in self.index.iter().enumerate() {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
-            for (x,_cell) in line.iter().enumerate() {
+            for (x, _cell) in line.iter().enumerate() {
                 let loc = Loc::new(x as i32, y as i32);
                 let focus_char = self.get_focuschar(&loc);
                 let (cell_elements, consumed_loc) = focus_char.get_enhance_circle_elements();
@@ -136,16 +129,16 @@ impl Grid {
 
     /// process the enhanced circle elements first
     /// then process the generic enhancements
-    fn get_enhance_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>){
+    fn get_enhance_elements(&self) -> (Vec<Vec<Vec<Element>>>, Vec<Loc>) {
         let (enhanced_circle_elm, circle_consumed_loc) = self.get_enhance_circle_elements();
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         rows.extend(enhanced_circle_elm);
         let mut all_consumed_loc: Vec<Loc> = vec![];
-        for (y,line) in self.index.iter().enumerate() {
+        for (y, line) in self.index.iter().enumerate() {
             let mut row: Vec<Vec<Element>> = Vec::with_capacity(line.len());
-            for (x,_cell) in line.iter().enumerate() {
+            for (x, _cell) in line.iter().enumerate() {
                 let loc = Loc::new(x as i32, y as i32);
-                if !circle_consumed_loc.contains(&loc){
+                if !circle_consumed_loc.contains(&loc) {
                     let focus_char = self.get_focuschar(&loc);
                     let (cell_elements, consumed_loc) = focus_char.get_enhance_elements();
                     all_consumed_loc.extend(consumed_loc);
@@ -160,7 +153,7 @@ impl Grid {
 
     /// vector of each elements arranged in rows x columns
     /// returns all the elements and the consumed location
-    fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>>{
+    fn get_all_elements(&self) -> Vec<Vec<Vec<Element>>> {
         let (enhanced_elms, enhance_consumed_locs) = self.get_enhance_elements();
         let mut rows: Vec<Vec<Vec<Element>>> = Vec::with_capacity(self.index.len());
         rows.extend(enhanced_elms);
@@ -179,7 +172,6 @@ impl Grid {
         rows
     }
 
-
     fn get_escaped_text_elements(&self) -> Vec<Element> {
         self.text_elm
             .iter()
@@ -191,14 +183,14 @@ impl Grid {
     /// use this info for optimizing svg by checking closest neigbor
     fn get_svg_nodes(&self) -> Vec<Vec<SvgElement>> {
         let mut grouped_nodes = vec![];
-        let mut elements= self.get_all_elements();
+        let mut elements = self.get_all_elements();
         let text_elm = self.get_escaped_text_elements();
         elements.push(vec![text_elm]);
         let optimizer = Optimizer::new(elements);
-        let optimized_elements:Vec<Vec<Element>> = optimizer.optimize(&self.settings);
+        let optimized_elements: Vec<Vec<Element>> = optimizer.optimize(&self.settings);
         for group in optimized_elements {
             let mut svg_group = vec![];
-            for elem in group{
+            for elem in group {
                 let element: SvgElement = elem.to_svg(&self.settings);
                 svg_group.push(element);
             }
@@ -206,7 +198,6 @@ impl Grid {
         }
         grouped_nodes
     }
-
 
     pub fn get_size(&self) -> (f32, f32) {
         let width = self.settings.text_width * self.columns() as f32;
@@ -231,22 +222,20 @@ impl Grid {
         svg.assign("width", width);
         svg.assign("height", height);
 
-
         svg.append(get_defs());
         svg.append(get_styles(&self.settings));
-
 
         let rect = SvgRect::new()
             .set("x", 0)
             .set("y", 0)
-            .set("class","backdrop")
+            .set("class", "backdrop")
             .set("width", width)
             .set("height", height);
         svg.append(rect);
 
         for group in group_nodes {
             let mut svg_group = Group::new();
-            for node in group{
+            for node in group {
                 match node {
                     SvgElement::Circle(circle) => {
                         svg_group.append(circle);
@@ -269,19 +258,19 @@ impl Grid {
     /// traverse each element of the grid and swap characters as needed
     fn pre_process(&self) -> Self {
         let mut new_index: Vec<Vec<String>> = vec![];
-        for (y,line) in self.index.iter().enumerate(){
+        for (y, line) in self.index.iter().enumerate() {
             let mut row: Vec<String> = vec![];
-            for (x,_) in line.iter().enumerate(){
+            for (x, _) in line.iter().enumerate() {
                 let loc = &Loc::new(x as i32, y as i32);
                 let swap = self.swap_char(loc);
                 row.push(swap.to_string());
             }
             new_index.push(row);
         }
-        Grid{
+        Grid {
             settings: self.settings.clone(),
             index: new_index,
-            text_elm: self.text_elm.clone()
+            text_elm: self.text_elm.clone(),
         }
     }
 
@@ -319,12 +308,10 @@ impl Grid {
         || (cell == "-" && left == " " && left2 == "-" && left3 == " " && left4 == "-")
         {
             "~"
-        }
-        else{
-           cell
+        } else {
+            cell
         }
     }
-
 }
 
 fn get_defs() -> Definitions {
@@ -391,8 +378,7 @@ tspan.head{{
         stroke_color = &settings.stroke_color,
         background_color = &settings.background_color,
     );
-    Style::new(style)
-        .set("type", "text/css")
+    Style::new(style).set("type", "text/css")
 }
 
 fn arrow_marker() -> Marker {
@@ -431,7 +417,6 @@ fn clear_arrow_marker() -> Marker {
     marker
 }
 
-
 ///   <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5"
 ///        markerWidth="5" markerHeight="5">
 ///      <circle cx="5" cy="5" r="5" fill="red" />
@@ -447,9 +432,9 @@ fn circle_marker() -> Marker {
         .set("markerHeight", 5);
 
     let circle = SvgCircle::new()
-        .set("cx",10)
-        .set("cy",10)
-        .set("r",8)
+        .set("cx", 10)
+        .set("cy", 10)
+        .set("r", 8)
         .set("class", "fg_fill");
     marker.append(circle);
     marker
@@ -466,10 +451,10 @@ fn square_marker() -> Marker {
         .set("markerHeight", 5);
 
     let square = SvgRect::new()
-        .set("x",0)
-        .set("y",0)
-        .set("width",20)
-        .set("height",20)
+        .set("x", 0)
+        .set("y", 0)
+        .set("width", 20)
+        .set("height", 20)
         .set("class", "fg_fill");
     marker.append(square);
     marker
@@ -486,9 +471,9 @@ fn open_circle_marker() -> Marker {
         .set("markerHeight", 10);
 
     let circle = SvgCircle::new()
-        .set("cx",10)
-        .set("cy",10)
-        .set("r",4)
+        .set("cx", 10)
+        .set("cy", 10)
+        .set("r", 4)
         .set("class", "bg_fill fg_stroke");
     marker.append(circle);
     marker
@@ -504,9 +489,9 @@ fn big_open_circle_marker() -> Marker {
         .set("markerHeight", 20);
 
     let circle = SvgCircle::new()
-        .set("cx",20)
-        .set("cy",20)
-        .set("r",6)
+        .set("cx", 20)
+        .set("cy", 20)
+        .set("r", 6)
         .set("class", "bg_fill fg_stroke");
     marker.append(circle);
     marker
@@ -593,7 +578,7 @@ fn line_parse() -> pom::parser::Parser<'static, char, Vec<(usize, usize)>> {
 }
 
 #[cfg(test)]
-mod test{
+mod test {
 
     use super::*;
 
@@ -659,4 +644,3 @@ mod test{
     }
 
 }
-
