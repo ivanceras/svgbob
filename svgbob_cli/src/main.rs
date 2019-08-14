@@ -83,7 +83,6 @@ fn main() {
                 }
                 Err(e) => {
                     use std::io::Write;
-                    use std::process::exit;
 
                     writeln!(
                         &mut std::io::stderr(),
@@ -124,7 +123,6 @@ fn main() {
     if let Some(file) = args.value_of("output") {
         if let Err(e) = svg::save(file, &svg) {
             use std::io::Write;
-            use std::process::exit;
 
             writeln!(
                 &mut std::io::stderr(),
@@ -148,7 +146,6 @@ where
             Ok(a) => Some(a),
             Err(e) => {
                 use std::io::Write;
-                use std::process::exit;
 
                 writeln!(
                     &mut std::io::stderr(),
