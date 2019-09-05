@@ -163,7 +163,7 @@ where
 
 // Batch convert files to svg
 // use svgbob build -i inputdir/*.bob -o outdir/
-fn build(args: &ArgMatches) -> Result<(), Box<Error>> {
+fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
     let files_pattern = args.value_of("input").unwrap_or("*.bob");
     let outdir = args.value_of("outdir").unwrap_or("");
     let input_path = Path::new(files_pattern);
@@ -224,7 +224,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<Error>> {
     Ok(())
 }
 
-fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<Error>> {
+fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<dyn Error>> {
     let mut bob = String::new();
     let mut f = try!(File::open(&input));
     f.read_to_string(&mut bob).unwrap();
