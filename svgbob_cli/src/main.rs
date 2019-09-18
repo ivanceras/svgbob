@@ -191,7 +191,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
     }
 
     if !out_path.is_dir() {
-        try!(fs::create_dir_all(out_path.clone()));
+        fs::create_dir_all(out_path.clone())?;
     }
 
     let paths = fs::read_dir(input_dir).unwrap();
@@ -223,10 +223,10 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
 
 fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<dyn Error>> {
     let mut bob = String::new();
-    let mut f = try!(File::open(&input));
+    let mut f = File::open(&input)?;
     f.read_to_string(&mut bob).unwrap();
     let g = Grid::from_str(&*bob, &Settings::default());
     let svg = g.get_svg();
-    try!(svg::save(&output, &svg));
+    svg::save(&output, &svg)?;
     Ok(())
 }
