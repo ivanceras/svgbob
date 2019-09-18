@@ -134,7 +134,7 @@ replace = "svgbob 0.4.1"
 
 [[package]]
 name = "svgbob_cli"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "clap 2.32.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
