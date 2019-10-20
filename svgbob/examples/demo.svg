@@ -1,4561 +1,4601 @@
 <svg class="bob" font-family="arial" font-size="14" height="4736" width="688" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<marker id="triangle" markerHeight="10" markerWidth="10" orient="auto" refX="15" refY="10" viewBox="0 0 50 20">
-<path d="M 0 0 L 30 10 L 0 20 z"/>
+<marker id="triangle" markerHeight="8" markerWidth="8" orient="auto" refX="4" refY="2" viewBox="0 0 8 4">
+<polygon class="fg_fill" points="0,0 0,4 8,2 0,0"/>
 </marker>
-<marker id="circle" markerHeight="5" markerWidth="5" refX="10" refY="10" viewBox="0 0 20 20">
-<circle cx="10" cy="10" fill="black" r="8"/>
+<marker id="clear_triangle" markerHeight="10" markerWidth="10" orient="auto" refX="1" refY="7" viewBox="0 0 20 14">
+<polygon class="bg_fill fg_stroke" points="2,2 2,12 18,7 2,2"/>
 </marker>
-<marker id="square" markerHeight="5" markerWidth="5" refX="10" refY="10" viewBox="0 0 20 20">
-<rect fill="black" height="20" width="20" x="0" y="0"/>
+<marker id="circle" markerHeight="5" markerWidth="5" orient="auto" refX="10" refY="10" viewBox="0 0 20 20">
+<circle class="fg_fill" cx="10" cy="10" r="8"/>
 </marker>
-<marker id="open_circle" markerHeight="10" markerWidth="10" refX="10" refY="10" viewBox="0 0 20 20">
-<circle cx="10" cy="10" fill="white" r="4" stroke="black" stroke-width="2"/>
+<marker id="square" markerHeight="5" markerWidth="5" orient="auto" refX="10" refY="10" viewBox="0 0 20 20">
+<rect class="fg_fill" height="20" width="20" x="0" y="0"/>
 </marker>
-<marker id="big_open_circle" markerHeight="20" markerWidth="20" refX="20" refY="20" viewBox="0 0 40 40">
-<circle cx="20" cy="20" fill="white" r="6" stroke="black" stroke-width="2"/>
+<marker id="open_circle" markerHeight="10" markerWidth="10" orient="auto" refX="10" refY="10" viewBox="0 0 20 20">
+<circle class="bg_fill fg_stroke" cx="10" cy="10" r="4"/>
+</marker>
+<marker id="big_open_circle" markerHeight="20" markerWidth="20" orient="auto" refX="20" refY="20" viewBox="0 0 40 40">
+<circle class="bg_fill fg_stroke" cx="20" cy="20" r="6"/>
 </marker>
 </defs>
-<style>
+<style type="text/css">
 
-    line, path {
-      stroke: black;
-      stroke-width: 2;
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }
-    line.dashed {
-        stroke-dasharray: 5;
-    }
-    circle.solid {
-      fill:black;
-      stroke: black;
-      stroke-width: 2;
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }
-    circle.open {
-      fill:none;
-      stroke: black;
-      stroke-width: 2;
-      stroke-opacity: 1;
-      fill-opacity: 1;
-      stroke-linecap: round;
-      stroke-linejoin: miter;
-    }
-    tspan.head{
-        fill: none;
-        stroke: none;
-    }
+rect.backdrop {
+    fill: white;
+}
+
+.fg_fill {
+    fill: black;
+}
+
+
+.bg_fill {
+    fill: white;
+}
+
+.fg_stroke {
+    stroke: black;
+    stroke-width: 2;
+}
+
+.no_fill {
+    fill: none;
+}
+
+.dashed {
+    stroke-dasharray: 5;
+}
+
+
+text{
+    fill: black;
+}
+
+line, path {
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+    stroke-opacity: 1;
+    fill-opacity: 1;
+}
+
+
+
+
+tspan.head{
+    fill: none;
+    stroke: none;
+}
     
 </style>
-<rect fill="white" height="4736" width="688" x="0" y="0"/>
+<rect class="backdrop" height="4736" width="688" x="0" y="0"/>
 <g>
-<line x1="0" x2="184" y1="3670" y2="3670"/>
+<line class="fg_stroke" x1="0" x2="184" y1="3670" y2="3670"/>
 </g>
 <g>
-<line x1="0" x2="184" y1="3674" y2="3674"/>
+<line class="fg_stroke" x1="0" x2="184" y1="3674" y2="3674"/>
 </g>
 <g>
-<line x1="4" x2="4" y1="912" y2="920"/>
-<line x1="4" x2="16" y1="920" y2="896"/>
-<line x1="4" x2="16" y1="920" y2="944"/>
-<line x1="4" x2="4" y1="928" y2="920"/>
+<line class="fg_stroke" x1="4" x2="4" y1="912" y2="920"/>
+<line class="fg_stroke" x1="4" x2="8" y1="920" y2="912"/>
+<line class="fg_stroke" x1="4" x2="8" y1="920" y2="928"/>
+<line class="fg_stroke" x1="4" x2="4" y1="928" y2="920"/>
+<line class="fg_stroke" x1="8" x2="16" y1="912" y2="896"/>
+<line class="fg_stroke" x1="8" x2="16" y1="928" y2="944"/>
 </g>
 <g>
-<line x1="4" x2="4" y1="3896" y2="3928"/>
-<line x1="4" x2="92" y1="3896" y2="3896"/>
-<line x1="4" x2="92" y1="3928" y2="3928"/>
-<line x1="92" x2="92" y1="3896" y2="3928"/>
+<line class="fg_stroke" x1="4" x2="4" y1="3896" y2="3928"/>
+<line class="fg_stroke" x1="4" x2="92" y1="3896" y2="3896"/>
+<line class="fg_stroke" x1="4" x2="92" y1="3928" y2="3928"/>
+<line class="fg_stroke" x1="92" x2="92" y1="3896" y2="3928"/>
 </g>
 <g>
-<line x1="8" x2="112" y1="3512" y2="3512"/>
-<path d="M 6 3508 A 4 4 0 0 0 8 3512" fill="none"/>
-<path d="M 112 3512 A 8 8 0 0 0 118 3508" fill="none"/>
+<line class="fg_stroke" x1="8" x2="112" y1="3512" y2="3512"/>
+<path class="fg_stroke no_fill" d="M 6 3508 A 4 4 0 0 0 8 3512"/>
+<path class="fg_stroke no_fill" d="M 112 3512 A 8 8 0 0 0 118 3508"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="8" x2="20" y1="3528" y2="3528"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="8" x2="20" y1="3528" y2="3528"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="8" x2="20" y1="3560" y2="3560"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="8" x2="20" y1="3560" y2="3560"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="8" x2="20" y1="3608" y2="3608"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="8" x2="20" y1="3608" y2="3608"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="8" x2="20" y1="3704" y2="3704"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="8" x2="20" y1="3704" y2="3704"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="8" x2="20" y1="3752" y2="3752"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="8" x2="20" y1="3752" y2="3752"/>
 </g>
 <g>
-<line x1="8" x2="10" y1="3856" y2="3860"/>
-<path d="M 8 3840 A 16 16 0 0 0 8 3856" fill="none"/>
-<path d="M 10 3860 A 8 8 0 0 0 16 3864" fill="none"/>
+<line class="fg_stroke" x1="8" x2="10" y1="3856" y2="3860"/>
+<path class="fg_stroke no_fill" d="M 8 3840 A 16 16 0 0 0 8 3856"/>
+<path class="fg_stroke no_fill" d="M 10 3860 A 8 8 0 0 0 16 3864"/>
 </g>
 <g>
-<line x1="10" x2="8" y1="3836" y2="3840"/>
-<path d="M 16 3832 A 8 8 0 0 0 10 3836" fill="none"/>
+<line class="fg_stroke" x1="10" x2="8" y1="3836" y2="3840"/>
+<path class="fg_stroke no_fill" d="M 16 3832 A 8 8 0 0 0 10 3836"/>
 </g>
 <g>
-<line x1="16" x2="256" y1="3832" y2="3832"/>
-<path d="M 262 3836 A 8 8 0 0 0 256 3832" fill="none"/>
+<line class="fg_stroke" x1="16" x2="256" y1="3832" y2="3832"/>
+<path class="fg_stroke no_fill" d="M 262 3836 A 8 8 0 0 0 256 3832"/>
 </g>
 <g>
-<line x1="16" x2="256" y1="3864" y2="3864"/>
-<path d="M 256 3864 A 8 8 0 0 0 262 3860" fill="none"/>
+<line class="fg_stroke" x1="16" x2="256" y1="3864" y2="3864"/>
+<path class="fg_stroke no_fill" d="M 256 3864 A 8 8 0 0 0 262 3860"/>
 </g>
 <g>
-<line x1="18" x2="6" y1="3484" y2="3508"/>
-<path d="M 24 3480 A 8 8 0 0 0 18 3484" fill="none"/>
+<line class="fg_stroke" x1="18" x2="6" y1="3484" y2="3508"/>
+<path class="fg_stroke no_fill" d="M 24 3480 A 8 8 0 0 0 18 3484"/>
 </g>
 <g>
-<line x1="20" x2="28" y1="944" y2="952"/>
+<line class="fg_stroke" x1="20" x2="28" y1="944" y2="952"/>
 </g>
 <g>
-<line x1="24" x2="26" y1="208" y2="212"/>
-<path d="M 24 192 A 16 16 0 0 0 24 208" fill="none"/>
-<path d="M 26 212 A 8 8 0 0 0 32 216" fill="none"/>
+<line class="fg_stroke" x1="24" x2="26" y1="208" y2="212"/>
+<path class="fg_stroke no_fill" d="M 24 192 A 16 16 0 0 0 24 208"/>
+<path class="fg_stroke no_fill" d="M 26 212 A 8 8 0 0 0 32 216"/>
 </g>
 <g>
-<line x1="24" x2="128" y1="3480" y2="3480"/>
-<path d="M 130 3484 A 4 4 0 0 0 128 3480" fill="none"/>
+<line class="fg_stroke" x1="24" x2="128" y1="3480" y2="3480"/>
+<path class="fg_stroke no_fill" d="M 130 3484 A 4 4 0 0 0 128 3480"/>
 </g>
 <g>
-<line x1="26" x2="24" y1="188" y2="192"/>
-<path d="M 32 184 A 8 8 0 0 0 26 188" fill="none"/>
+<line class="fg_stroke" x1="26" x2="24" y1="188" y2="192"/>
+<path class="fg_stroke no_fill" d="M 32 184 A 8 8 0 0 0 26 188"/>
 </g>
 <g>
-<line x1="28" x2="20" y1="880" y2="888"/>
+<line class="fg_stroke" x1="28" x2="20" y1="880" y2="888"/>
 </g>
 <g>
-<line x1="32" x2="44" y1="184" y2="184"/>
+<line class="fg_stroke" x1="32" x2="44" y1="184" y2="184"/>
 </g>
 <g>
-<line x1="32" x2="40" y1="216" y2="216"/>
-<path d="M 46 220 A 8 8 0 0 0 40 216" fill="none"/>
+<line class="fg_stroke" x1="32" x2="40" y1="216" y2="216"/>
+<path class="fg_stroke no_fill" d="M 46 220 A 8 8 0 0 0 40 216"/>
 </g>
 <g>
-<line x1="32" x2="56" y1="880" y2="880"/>
+<line class="fg_stroke" x1="32" x2="56" y1="880" y2="880"/>
 </g>
 <g>
-<line x1="32" x2="56" y1="960" y2="960"/>
+<line class="fg_stroke" x1="32" x2="56" y1="960" y2="960"/>
 </g>
 <g>
-<line x1="32" x2="34" y1="1184" y2="1188"/>
-<path d="M 32 1168 A 16 16 0 0 0 32 1184" fill="none"/>
-<path d="M 34 1188 A 8 8 0 0 0 40 1192" fill="none"/>
+<line class="fg_stroke" x1="32" x2="34" y1="1184" y2="1188"/>
+<path class="fg_stroke no_fill" d="M 32 1168 A 16 16 0 0 0 32 1184"/>
+<path class="fg_stroke no_fill" d="M 34 1188 A 8 8 0 0 0 40 1192"/>
 </g>
 <g>
-<line x1="34" x2="32" y1="1164" y2="1168"/>
-<path d="M 40 1160 A 8 8 0 0 0 34 1164" fill="none"/>
+<line class="fg_stroke" x1="34" x2="32" y1="1164" y2="1168"/>
+<path class="fg_stroke no_fill" d="M 40 1160 A 8 8 0 0 0 34 1164"/>
 </g>
 <g>
-<line x1="40" x2="52" y1="1160" y2="1160"/>
+<line class="fg_stroke" x1="40" x2="52" y1="1160" y2="1160"/>
 </g>
 <g>
-<line x1="40" x2="48" y1="1192" y2="1192"/>
-<path d="M 54 1196 A 8 8 0 0 0 48 1192" fill="none"/>
+<line class="fg_stroke" x1="40" x2="48" y1="1192" y2="1192"/>
+<path class="fg_stroke no_fill" d="M 54 1196 A 8 8 0 0 0 48 1192"/>
 </g>
 <g>
-<line x1="46" x2="60" y1="220" y2="248"/>
-<line x1="60" x2="72" y1="248" y2="224"/>
+<line class="fg_stroke" x1="46" x2="60" y1="220" y2="248"/>
+<line class="fg_stroke" x1="60" x2="72" y1="248" y2="224"/>
 </g>
 <g>
-<line x1="52" x2="52" y1="1560" y2="1624"/>
-<line marker-end="url(#circle)" x1="52" x2="260" y1="1560" y2="1560"/>
-<line marker-end="url(#circle)" x1="52" x2="68" y1="1624" y2="1624"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="68" x2="92" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="92" x2="116" y1="1624" y2="1624"/>
-<line x1="116" x2="116" y1="1624" y2="1616"/>
-<line x1="116" x2="140" y1="1624" y2="1624"/>
-<line x1="140" x2="140" y1="1624" y2="1616"/>
-<line x1="140" x2="164" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="164" x2="164" y1="1592" y2="1624"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="164" x2="188" y1="1592" y2="1592"/>
-<line x1="164" x2="188" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="188" x2="188" y1="1592" y2="1624"/>
-<line x1="188" x2="212" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="212" x2="212" y1="1576" y2="1624"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="212" x2="236" y1="1576" y2="1576"/>
-<line x1="212" x2="236" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="236" x2="236" y1="1576" y2="1624"/>
-<line marker-start="url(#circle)" x1="236" x2="260" y1="1576" y2="1576"/>
-<line x1="236" x2="260" y1="1624" y2="1624"/>
-<line marker-start="url(#circle)" x1="260" x2="260" y1="1560" y2="1624"/>
-<line marker-start="url(#circle)" x1="260" x2="284" y1="1560" y2="1560"/>
-<line marker-end="url(#circle)" x1="260" x2="284" y1="1576" y2="1576"/>
-<line x1="260" x2="284" y1="1624" y2="1624"/>
-<line x1="284" x2="284" y1="1560" y2="1568"/>
-<line marker-start="url(#circle)" x1="284" x2="284" y1="1576" y2="1624"/>
+<line class="fg_stroke" x1="52" x2="52" y1="1560" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="52" x2="260" y1="1560" y2="1560"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="52" x2="68" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="68" x2="92" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="92" x2="116" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="116" x2="116" y1="1624" y2="1616"/>
+<line class="fg_stroke" x1="116" x2="140" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="140" x2="140" y1="1624" y2="1616"/>
+<line class="fg_stroke" x1="140" x2="164" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="164" x2="164" y1="1592" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="164" x2="188" y1="1592" y2="1592"/>
+<line class="fg_stroke" x1="164" x2="188" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="188" x2="188" y1="1592" y2="1624"/>
+<line class="fg_stroke" x1="188" x2="212" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="212" x2="212" y1="1576" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="212" x2="236" y1="1576" y2="1576"/>
+<line class="fg_stroke" x1="212" x2="236" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="236" x2="236" y1="1576" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="236" x2="260" y1="1576" y2="1576"/>
+<line class="fg_stroke" x1="236" x2="260" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="260" x2="260" y1="1560" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="260" x2="284" y1="1560" y2="1560"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="260" x2="284" y1="1576" y2="1576"/>
+<line class="fg_stroke" x1="260" x2="284" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="284" x2="284" y1="1560" y2="1568"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="284" x2="284" y1="1576" y2="1624"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="52" x2="212" y1="1576" y2="1576"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="52" x2="212" y1="1576" y2="1576"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="52" x2="164" y1="1592" y2="1592"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="52" x2="164" y1="1592" y2="1592"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="52" x2="116" y1="1608" y2="1608"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="116" x2="140" y1="1608" y2="1608"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="52" x2="116" y1="1608" y2="1608"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="116" x2="140" y1="1608" y2="1608"/>
 </g>
 <g>
-<line x1="54" x2="68" y1="1196" y2="1224"/>
-<line x1="68" x2="80" y1="1224" y2="1200"/>
+<line class="fg_stroke" x1="54" x2="68" y1="1196" y2="1224"/>
+<line class="fg_stroke" x1="68" x2="80" y1="1224" y2="1200"/>
 </g>
 <g>
-<line x1="56" x2="72" y1="192" y2="224"/>
-<line marker-start="url(#open_circle)" x1="68" x2="56" y1="168" y2="192"/>
-<line marker-start="url(#open_circle)" x1="68" x2="84" y1="168" y2="168"/>
+<line class="fg_stroke" x1="56" x2="72" y1="192" y2="224"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="68" x2="56" y1="168" y2="192"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="68" x2="84" y1="168" y2="168"/>
 </g>
 <g>
-<line x1="56" x2="72" y1="464" y2="432"/>
-<line x1="56" x2="72" y1="464" y2="496"/>
-<line x1="72" x2="128" y1="432" y2="432"/>
-<line x1="72" x2="128" y1="496" y2="496"/>
-<line x1="128" x2="144" y1="432" y2="464"/>
-<line x1="128" x2="144" y1="496" y2="464"/>
+<line class="fg_stroke" x1="56" x2="72" y1="464" y2="432"/>
+<line class="fg_stroke" x1="56" x2="72" y1="464" y2="496"/>
+<line class="fg_stroke" x1="72" x2="128" y1="432" y2="432"/>
+<line class="fg_stroke" x1="72" x2="128" y1="496" y2="496"/>
+<line class="fg_stroke" x1="128" x2="144" y1="432" y2="464"/>
+<line class="fg_stroke" x1="128" x2="144" y1="496" y2="464"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="58" x2="36" y1="156" y2="200"/>
-<path d="M 64 152 A 8 8 0 0 0 58 156" fill="none"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="58" x2="36" y1="156" y2="200"/>
+<path class="fg_stroke no_fill" d="M 64 152 A 8 8 0 0 0 58 156"/>
 </g>
 <g>
-<line x1="60" x2="60" y1="376" y2="408"/>
-<line x1="60" x2="116" y1="376" y2="376"/>
-<line x1="60" x2="116" y1="408" y2="408"/>
-<line x1="116" x2="116" y1="376" y2="408"/>
+<line class="fg_stroke" x1="60" x2="60" y1="376" y2="408"/>
+<line class="fg_stroke" x1="60" x2="116" y1="376" y2="376"/>
+<line class="fg_stroke" x1="60" x2="116" y1="408" y2="408"/>
+<line class="fg_stroke" x1="116" x2="116" y1="376" y2="408"/>
 </g>
 <g>
-<line x1="60" x2="68" y1="880" y2="888"/>
+<line class="fg_stroke" x1="60" x2="68" y1="880" y2="888"/>
 </g>
 <g>
-<line x1="64" x2="88" y1="152" y2="152"/>
-<path d="M 90 156 A 4 4 0 0 0 88 152" fill="none"/>
+<line class="fg_stroke" x1="64" x2="88" y1="152" y2="152"/>
+<path class="fg_stroke no_fill" d="M 90 156 A 4 4 0 0 0 88 152"/>
 </g>
 <g>
-<line x1="64" x2="90" y1="208" y2="156"/>
+<line class="fg_stroke" x1="64" x2="90" y1="208" y2="156"/>
 </g>
 <g>
-<line x1="64" x2="66" y1="544" y2="548"/>
-<path d="M 64 528 A 16 16 0 0 0 64 544" fill="none"/>
-<path d="M 66 548 A 8 8 0 0 0 72 552" fill="none"/>
+<line class="fg_stroke" x1="64" x2="66" y1="544" y2="548"/>
+<path class="fg_stroke no_fill" d="M 64 528 A 16 16 0 0 0 64 544"/>
+<path class="fg_stroke no_fill" d="M 66 548 A 8 8 0 0 0 72 552"/>
 </g>
 <g>
-<line x1="64" x2="80" y1="1168" y2="1200"/>
-<line marker-start="url(#open_circle)" x1="76" x2="64" y1="1144" y2="1168"/>
-<line marker-start="url(#open_circle)" x1="76" x2="92" y1="1144" y2="1144"/>
+<line class="fg_stroke" x1="64" x2="80" y1="1168" y2="1200"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="76" x2="64" y1="1144" y2="1168"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="76" x2="92" y1="1144" y2="1144"/>
 </g>
 <g>
-<line x1="66" x2="64" y1="524" y2="528"/>
-<path d="M 72 520 A 8 8 0 0 0 66 524" fill="none"/>
+<line class="fg_stroke" x1="66" x2="64" y1="524" y2="528"/>
+<path class="fg_stroke no_fill" d="M 72 520 A 8 8 0 0 0 66 524"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="66" x2="44" y1="1132" y2="1176"/>
-<path d="M 72 1128 A 8 8 0 0 0 66 1132" fill="none"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="66" x2="44" y1="1132" y2="1176"/>
+<path class="fg_stroke no_fill" d="M 72 1128 A 8 8 0 0 0 66 1132"/>
 </g>
 <g>
-<line x1="68" x2="60" y1="944" y2="952"/>
+<line class="fg_stroke" x1="68" x2="60" y1="944" y2="952"/>
 </g>
 <g>
-<line x1="72" x2="160" y1="520" y2="520"/>
-<path d="M 166 524 A 8 8 0 0 0 160 520" fill="none"/>
+<line class="fg_stroke" x1="72" x2="160" y1="520" y2="520"/>
+<path class="fg_stroke no_fill" d="M 166 524 A 8 8 0 0 0 160 520"/>
 </g>
 <g>
-<line x1="72" x2="116" y1="552" y2="552"/>
-<line x1="116" x2="116" y1="552" y2="576"/>
+<line class="fg_stroke" x1="72" x2="116" y1="552" y2="552"/>
+<line class="fg_stroke" x1="116" x2="116" y1="552" y2="576"/>
 </g>
 <g>
-<line x1="72" x2="84" y1="896" y2="920"/>
-<line x1="84" x2="84" y1="912" y2="920"/>
-<line x1="84" x2="72" y1="920" y2="944"/>
-<line x1="84" x2="84" y1="928" y2="920"/>
+<line class="fg_stroke" x1="72" x2="80" y1="896" y2="912"/>
+<line class="fg_stroke" x1="84" x2="80" y1="920" y2="912"/>
+<line class="fg_stroke" x1="84" x2="80" y1="920" y2="928"/>
+<line class="fg_stroke" x1="84" x2="84" y1="928" y2="920"/>
 </g>
 <g>
-<line x1="72" x2="96" y1="1128" y2="1128"/>
-<path d="M 98 1132 A 4 4 0 0 0 96 1128" fill="none"/>
+<line class="fg_stroke" x1="72" x2="80" y1="944" y2="928"/>
 </g>
 <g>
-<line x1="72" x2="98" y1="1184" y2="1132"/>
+<line class="fg_stroke" x1="72" x2="96" y1="1128" y2="1128"/>
+<path class="fg_stroke no_fill" d="M 98 1132 A 4 4 0 0 0 96 1128"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="76" x2="92" y1="184" y2="184"/>
+<line class="fg_stroke" x1="72" x2="98" y1="1184" y2="1132"/>
 </g>
 <g>
-<line x1="76" x2="76" y1="1900" y2="1952"/>
-<line x1="88" x2="76" y1="1952" y2="1952"/>
-<path d="M 80 1896 A 4 4 0 0 0 76 1900" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="76" x2="92" y1="184" y2="184"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="80" x2="100" y1="1896" y2="1896"/>
+<line class="fg_stroke" x1="76" x2="76" y1="1900" y2="1952"/>
+<line class="fg_stroke" x1="88" x2="76" y1="1952" y2="1952"/>
+<path class="fg_stroke no_fill" d="M 80 1896 A 4 4 0 0 0 76 1900"/>
 </g>
 <g>
-<line x1="80" x2="136" y1="1952" y2="1952"/>
-<line x1="136" x2="146" y1="1952" y2="1932"/>
-<line x1="136" x2="148" y1="1952" y2="1976"/>
-<line x1="148" x2="136" y1="1928" y2="1952"/>
-<line x1="148" x2="160" y1="1928" y2="1952"/>
-<line x1="148" x2="160" y1="1976" y2="1952"/>
-<line x1="148" x2="148" y1="1988" y2="1976"/>
-<line x1="150" x2="160" y1="1932" y2="1952"/>
-<line x1="160" x2="200" y1="1952" y2="1952"/>
-<path d="M 146 1932 A 16 16 0 0 0 148 1924" fill="none"/>
-<path d="M 148 1924 A 16 16 0 0 0 150 1932" fill="none"/>
-<path d="M 148 1988 A 4 4 0 0 0 152 1992" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="80" x2="100" y1="1896" y2="1896"/>
 </g>
 <g>
-<line x1="80" x2="88" y1="2224" y2="2208"/>
+<line class="fg_stroke" x1="80" x2="136" y1="1952" y2="1952"/>
+<line class="fg_stroke" x1="136" x2="144" y1="1952" y2="1968"/>
+<line class="fg_stroke" x1="136" x2="146" y1="1952" y2="1932"/>
+<line class="fg_stroke" x1="148" x2="136" y1="1928" y2="1952"/>
+<line class="fg_stroke" x1="148" x2="160" y1="1928" y2="1952"/>
+<line class="fg_stroke" x1="148" x2="144" y1="1976" y2="1968"/>
+<line class="fg_stroke" x1="148" x2="152" y1="1976" y2="1968"/>
+<line class="fg_stroke" x1="148" x2="148" y1="1984" y2="1976"/>
+<line class="fg_stroke" x1="148" x2="148" y1="1988" y2="1984"/>
+<line class="fg_stroke" x1="150" x2="160" y1="1932" y2="1952"/>
+<line class="fg_stroke" x1="152" x2="160" y1="1968" y2="1952"/>
+<line class="fg_stroke" x1="160" x2="200" y1="1952" y2="1952"/>
+<path class="fg_stroke no_fill" d="M 146 1932 A 16 16 0 0 0 148 1924"/>
+<path class="fg_stroke no_fill" d="M 148 1924 A 16 16 0 0 0 150 1932"/>
+<path class="fg_stroke no_fill" d="M 148 1988 A 4 4 0 0 0 152 1992"/>
 </g>
 <g>
-<line x1="84" x2="104" y1="168" y2="168"/>
+<line class="fg_stroke" x1="80" x2="88" y1="2224" y2="2208"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="84" x2="100" y1="1160" y2="1160"/>
+<line class="fg_stroke" x1="84" x2="104" y1="168" y2="168"/>
 </g>
 <g>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="84" x2="148" y1="1416" y2="1416"/>
-<line marker-end="url(#triangle)" marker-start="url(#circle)" x1="148" x2="166" y1="1416" y2="1452"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="148" x2="196" y1="1416" y2="1416"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="196" x2="228" y1="1416" y2="1416"/>
-<line marker-end="url(#circle)" marker-start="url(#circle)" x1="228" x2="268" y1="1416" y2="1416"/>
-<line marker-start="url(#circle)" x1="268" x2="282" y1="1416" y2="1444"/>
-<line marker-end="url(#triangle)" marker-start="url(#circle)" x1="268" x2="316" y1="1416" y2="1416"/>
-<line marker-end="url(#circle)" x1="282" x2="268" y1="1388" y2="1416"/>
-<path d="M 282 1444 A 8 8 0 0 0 288 1448" fill="none"/>
-<path d="M 288 1384 A 8 8 0 0 0 282 1388" fill="none"/>
+<line class="fg_stroke" x1="84" x2="84" y1="912" y2="920"/>
 </g>
 <g>
-<line x1="84" x2="84" y1="2192" y2="2208"/>
-<line x1="84" x2="116" y1="2208" y2="2208"/>
-<line x1="88" x2="84" y1="2192" y2="2192"/>
-<line x1="88" x2="116" y1="2192" y2="2192"/>
-<line x1="116" x2="116" y1="2192" y2="2208"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="84" x2="100" y1="1160" y2="1160"/>
 </g>
 <g>
-<line x1="92" x2="112" y1="1144" y2="1144"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="84" x2="148" y1="1416" y2="1416"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#circle)" x1="148" x2="166" y1="1416" y2="1452"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="148" x2="196" y1="1416" y2="1416"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="196" x2="228" y1="1416" y2="1416"/>
+<line class="fg_stroke" marker-end="url(#circle)" marker-start="url(#circle)" x1="228" x2="268" y1="1416" y2="1416"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="268" x2="282" y1="1416" y2="1444"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#circle)" x1="268" x2="316" y1="1416" y2="1416"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="282" x2="268" y1="1388" y2="1416"/>
+<path class="fg_stroke no_fill" d="M 282 1444 A 8 8 0 0 0 288 1448"/>
+<path class="fg_stroke no_fill" d="M 288 1384 A 8 8 0 0 0 282 1388"/>
 </g>
 <g>
-<line x1="92" x2="92" y1="4444" y2="4468"/>
-<path d="M 92 4468 A 4 4 0 0 0 96 4472" fill="none"/>
-<path d="M 96 4440 A 4 4 0 0 0 92 4444" fill="none"/>
+<line class="fg_stroke" x1="84" x2="84" y1="2192" y2="2208"/>
+<line class="fg_stroke" x1="84" x2="116" y1="2208" y2="2208"/>
+<line class="fg_stroke" x1="88" x2="84" y1="2192" y2="2192"/>
+<line class="fg_stroke" x1="88" x2="116" y1="2192" y2="2192"/>
+<line class="fg_stroke" x1="116" x2="116" y1="2192" y2="2208"/>
 </g>
 <g>
-<line x1="96" x2="120" y1="2936" y2="2936"/>
+<line class="fg_stroke" x1="92" x2="112" y1="1144" y2="1144"/>
 </g>
 <g>
-<line x1="96" x2="192" y1="4440" y2="4440"/>
-<path d="M 196 4444 A 4 4 0 0 0 192 4440" fill="none"/>
+<line class="fg_stroke" x1="92" x2="92" y1="4444" y2="4468"/>
+<path class="fg_stroke no_fill" d="M 92 4468 A 4 4 0 0 0 96 4472"/>
+<path class="fg_stroke no_fill" d="M 96 4440 A 4 4 0 0 0 92 4444"/>
 </g>
 <g>
-<line x1="96" x2="192" y1="4472" y2="4472"/>
-<path d="M 192 4472 A 4 4 0 0 0 196 4468" fill="none"/>
+<line class="fg_stroke" x1="96" x2="120" y1="2936" y2="2936"/>
 </g>
 <g>
-<line x1="100" x2="100" y1="1272" y2="1288"/>
-<line x1="100" x2="116" y1="1272" y2="1272"/>
-<line x1="100" x2="100" y1="1288" y2="1304"/>
-<line x1="100" x2="116" y1="1288" y2="1288"/>
-<line x1="100" x2="116" y1="1304" y2="1304"/>
-<line x1="116" x2="116" y1="1272" y2="1288"/>
-<line x1="116" x2="124" y1="1272" y2="1272"/>
-<line x1="116" x2="116" y1="1288" y2="1304"/>
-<line x1="116" x2="124" y1="1288" y2="1288"/>
-<line x1="116" x2="124" y1="1304" y2="1304"/>
-<line x1="124" x2="124" y1="1272" y2="1288"/>
-<line x1="124" x2="124" y1="1288" y2="1304"/>
+<line class="fg_stroke" x1="96" x2="192" y1="4440" y2="4440"/>
+<path class="fg_stroke no_fill" d="M 196 4444 A 4 4 0 0 0 192 4440"/>
 </g>
 <g>
-<line marker-end="url(#square)" marker-start="url(#square)" x1="100" x2="108" y1="2952" y2="2952"/>
-<line marker-end="url(#square)" marker-start="url(#square)" x1="108" x2="116" y1="2952" y2="2952"/>
-<line marker-end="url(#open_circle)" marker-start="url(#square)" x1="108" x2="108" y1="2952" y2="2984"/>
-<line marker-start="url(#open_circle)" x1="108" x2="108" y1="2984" y2="3008"/>
+<line class="fg_stroke" x1="96" x2="192" y1="4472" y2="4472"/>
+<path class="fg_stroke no_fill" d="M 192 4472 A 4 4 0 0 0 196 4468"/>
 </g>
 <g>
-<line x1="104" x2="112" y1="2224" y2="2208"/>
+<line class="fg_stroke" x1="100" x2="100" y1="1272" y2="1288"/>
+<line class="fg_stroke" x1="100" x2="116" y1="1272" y2="1272"/>
+<line class="fg_stroke" x1="100" x2="100" y1="1288" y2="1304"/>
+<line class="fg_stroke" x1="100" x2="116" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="100" x2="116" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="116" x2="116" y1="1272" y2="1288"/>
+<line class="fg_stroke" x1="116" x2="124" y1="1272" y2="1272"/>
+<line class="fg_stroke" x1="116" x2="116" y1="1288" y2="1304"/>
+<line class="fg_stroke" x1="116" x2="124" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="116" x2="124" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="124" x2="124" y1="1272" y2="1288"/>
+<line class="fg_stroke" x1="124" x2="124" y1="1288" y2="1304"/>
 </g>
 <g>
-<line x1="108" x2="108" y1="1884" y2="1892"/>
-<path d="M 108 1892 A 4 4 0 0 0 112 1896" fill="none"/>
-<path d="M 112 1880 A 4 4 0 0 0 108 1884" fill="none"/>
+<line class="fg_stroke" marker-end="url(#square)" marker-start="url(#square)" x1="100" x2="108" y1="2952" y2="2952"/>
+<line class="fg_stroke" marker-end="url(#square)" marker-start="url(#square)" x1="108" x2="116" y1="2952" y2="2952"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#square)" x1="108" x2="108" y1="2952" y2="2984"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="108" x2="108" y1="2984" y2="3008"/>
 </g>
 <g>
-<line x1="112" x2="120" y1="1880" y2="1880"/>
-<path d="M 124 1884 A 4 4 0 0 0 120 1880" fill="none"/>
+<line class="fg_stroke" x1="104" x2="112" y1="2224" y2="2208"/>
 </g>
 <g>
-<line x1="112" x2="120" y1="1896" y2="1896"/>
-<path d="M 120 1896 A 4 4 0 0 0 124 1892" fill="none"/>
+<line class="fg_stroke" x1="108" x2="108" y1="1884" y2="1892"/>
+<path class="fg_stroke no_fill" d="M 108 1892 A 4 4 0 0 0 112 1896"/>
+<path class="fg_stroke no_fill" d="M 112 1880 A 4 4 0 0 0 108 1884"/>
 </g>
 <g>
-<line x1="118" x2="130" y1="3508" y2="3484"/>
+<line class="fg_stroke" x1="112" x2="120" y1="1880" y2="1880"/>
+<path class="fg_stroke no_fill" d="M 124 1884 A 4 4 0 0 0 120 1880"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="120" x2="134" y1="1904" y2="1932"/>
+<line class="fg_stroke" x1="112" x2="120" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 120 1896 A 4 4 0 0 0 124 1892"/>
 </g>
 <g>
-<line x1="124" x2="124" y1="1884" y2="1892"/>
+<line class="fg_stroke" x1="118" x2="130" y1="3508" y2="3484"/>
 </g>
 <g>
-<line x1="124" x2="124" y1="2192" y2="2208"/>
-<line x1="124" x2="128" y1="2192" y2="2192"/>
-<line x1="124" x2="124" y1="2208" y2="2224"/>
-<line x1="128" x2="136" y1="2192" y2="2192"/>
-<line x1="136" x2="140" y1="2192" y2="2192"/>
-<line x1="136" x2="124" y1="2224" y2="2224"/>
-<line x1="140" x2="140" y1="2192" y2="2208"/>
-<line x1="140" x2="140" y1="2208" y2="2224"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="120" x2="134" y1="1904" y2="1932"/>
 </g>
 <g>
-<line x1="128" x2="136" y1="2198" y2="2198"/>
+<line class="fg_stroke" x1="124" x2="124" y1="1884" y2="1892"/>
 </g>
 <g>
-<line x1="128" x2="136" y1="2202" y2="2202"/>
+<line class="fg_stroke" x1="124" x2="124" y1="2192" y2="2208"/>
+<line class="fg_stroke" x1="124" x2="128" y1="2192" y2="2192"/>
+<line class="fg_stroke" x1="124" x2="124" y1="2208" y2="2224"/>
+<line class="fg_stroke" x1="128" x2="136" y1="2192" y2="2192"/>
+<line class="fg_stroke" x1="136" x2="140" y1="2192" y2="2192"/>
+<line class="fg_stroke" x1="136" x2="124" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="140" x2="140" y1="2192" y2="2208"/>
+<line class="fg_stroke" x1="140" x2="140" y1="2208" y2="2224"/>
 </g>
 <g>
-<line x1="128" x2="136" y1="2224" y2="2224"/>
-<line x1="128" x2="140" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="128" x2="136" y1="2198" y2="2198"/>
 </g>
 <g>
-<line x1="130" x2="120" y1="556" y2="576"/>
-<path d="M 136 552 A 8 8 0 0 0 130 556" fill="none"/>
+<line class="fg_stroke" x1="128" x2="136" y1="2202" y2="2202"/>
 </g>
 <g>
-<line marker-start="url(#circle)" x1="132" x2="170" y1="2456" y2="2532"/>
-<path d="M 170 2532 A 8 8 0 0 0 176 2536" fill="none"/>
+<line class="fg_stroke" x1="128" x2="136" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="128" x2="140" y1="2224" y2="2224"/>
 </g>
 <g>
-<line x1="136" x2="160" y1="552" y2="552"/>
-<path d="M 160 552 A 8 8 0 0 0 166 548" fill="none"/>
+<line class="fg_stroke" x1="130" x2="120" y1="556" y2="576"/>
+<path class="fg_stroke no_fill" d="M 136 552 A 8 8 0 0 0 130 556"/>
 </g>
 <g>
-<line x1="140" x2="140" y1="1884" y2="1892"/>
-<path d="M 140 1892 A 4 4 0 0 0 144 1896" fill="none"/>
-<path d="M 144 1880 A 4 4 0 0 0 140 1884" fill="none"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="132" x2="170" y1="2456" y2="2532"/>
+<path class="fg_stroke no_fill" d="M 170 2532 A 8 8 0 0 0 176 2536"/>
 </g>
 <g>
-<line x1="144" x2="154" y1="1200" y2="1220"/>
-<line x1="170" x2="144" y1="1148" y2="1200"/>
-<path d="M 154 1220 A 8 8 0 0 0 160 1224" fill="none"/>
-<path d="M 176 1144 A 8 8 0 0 0 170 1148" fill="none"/>
+<line class="fg_stroke" x1="136" x2="160" y1="552" y2="552"/>
+<path class="fg_stroke no_fill" d="M 160 552 A 8 8 0 0 0 166 548"/>
 </g>
 <g>
-<line x1="144" x2="152" y1="1880" y2="1880"/>
-<path d="M 156 1884 A 4 4 0 0 0 152 1880" fill="none"/>
+<line class="fg_stroke" x1="140" x2="140" y1="1884" y2="1892"/>
+<path class="fg_stroke no_fill" d="M 140 1892 A 4 4 0 0 0 144 1896"/>
+<path class="fg_stroke no_fill" d="M 144 1880 A 4 4 0 0 0 140 1884"/>
 </g>
 <g>
-<line x1="144" x2="152" y1="1896" y2="1896"/>
-<path d="M 152 1896 A 4 4 0 0 0 156 1892" fill="none"/>
+<line class="fg_stroke" x1="144" x2="154" y1="1200" y2="1220"/>
+<line class="fg_stroke" x1="170" x2="144" y1="1148" y2="1200"/>
+<path class="fg_stroke no_fill" d="M 154 1220 A 8 8 0 0 0 160 1224"/>
+<path class="fg_stroke no_fill" d="M 176 1144 A 8 8 0 0 0 170 1148"/>
 </g>
 <g>
-<line x1="146" x2="146" y1="1272" y2="1308"/>
-<line x1="146" x2="174" y1="1272" y2="1272"/>
-<line x1="146" x2="174" y1="1308" y2="1308"/>
-<line x1="174" x2="174" y1="1272" y2="1308"/>
+<line class="fg_stroke" x1="144" x2="152" y1="1880" y2="1880"/>
+<path class="fg_stroke no_fill" d="M 156 1884 A 4 4 0 0 0 152 1880"/>
 </g>
 <g>
-<line x1="148" x2="148" y1="380" y2="404"/>
-<path d="M 148 404 A 4 4 0 0 0 152 408" fill="none"/>
-<path d="M 152 376 A 4 4 0 0 0 148 380" fill="none"/>
+<line class="fg_stroke" x1="144" x2="152" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 152 1896 A 4 4 0 0 0 156 1892"/>
 </g>
 <g>
-<line x1="148" x2="148" y1="1904" y2="1924"/>
-<line x1="148" x2="148" y1="1924" y2="1920"/>
+<line class="fg_stroke" x1="146" x2="146" y1="1272" y2="1308"/>
+<line class="fg_stroke" x1="146" x2="174" y1="1272" y2="1272"/>
+<line class="fg_stroke" x1="146" x2="174" y1="1308" y2="1308"/>
+<line class="fg_stroke" x1="174" x2="174" y1="1272" y2="1308"/>
 </g>
 <g>
-<line x1="150" x2="150" y1="1276" y2="1288"/>
-<line x1="150" x2="162" y1="1276" y2="1276"/>
-<line x1="150" x2="162" y1="1288" y2="1288"/>
-<line x1="162" x2="162" y1="1276" y2="1288"/>
+<line class="fg_stroke" x1="148" x2="148" y1="380" y2="404"/>
+<path class="fg_stroke no_fill" d="M 148 404 A 4 4 0 0 0 152 408"/>
+<path class="fg_stroke no_fill" d="M 152 376 A 4 4 0 0 0 148 380"/>
 </g>
 <g>
-<line x1="150" x2="150" y1="1292" y2="1304"/>
-<line x1="150" x2="162" y1="1292" y2="1292"/>
-<line x1="150" x2="162" y1="1304" y2="1304"/>
-<line x1="162" x2="162" y1="1292" y2="1304"/>
+<line class="fg_stroke" x1="148" x2="148" y1="1904" y2="1924"/>
+<line class="fg_stroke" x1="148" x2="148" y1="1924" y2="1920"/>
 </g>
 <g>
-<line x1="152" x2="200" y1="376" y2="376"/>
-<path d="M 204 380 A 4 4 0 0 0 200 376" fill="none"/>
+<line class="fg_stroke" x1="150" x2="150" y1="1276" y2="1288"/>
+<line class="fg_stroke" x1="150" x2="162" y1="1276" y2="1276"/>
+<line class="fg_stroke" x1="150" x2="162" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="162" x2="162" y1="1276" y2="1288"/>
 </g>
 <g>
-<line x1="152" x2="200" y1="408" y2="408"/>
-<path d="M 200 408 A 4 4 0 0 0 204 404" fill="none"/>
+<line class="fg_stroke" x1="150" x2="150" y1="1292" y2="1304"/>
+<line class="fg_stroke" x1="150" x2="162" y1="1292" y2="1292"/>
+<line class="fg_stroke" x1="150" x2="162" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="162" x2="162" y1="1292" y2="1304"/>
 </g>
 <g>
-<line x1="152" x2="162" y1="1184" y2="1204"/>
-<path d="M 162 1204 A 8 8 0 0 0 168 1208" fill="none"/>
+<line class="fg_stroke" x1="152" x2="200" y1="376" y2="376"/>
+<path class="fg_stroke no_fill" d="M 204 380 A 4 4 0 0 0 200 376"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="152" x2="172" y1="1992" y2="1992"/>
+<line class="fg_stroke" x1="152" x2="200" y1="408" y2="408"/>
+<path class="fg_stroke no_fill" d="M 200 408 A 4 4 0 0 0 204 404"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="152" x2="172" y1="2200" y2="2200"/>
+<line class="fg_stroke" x1="152" x2="162" y1="1184" y2="1204"/>
+<path class="fg_stroke no_fill" d="M 162 1204 A 8 8 0 0 0 168 1208"/>
 </g>
 <g>
-<line x1="156" x2="156" y1="1884" y2="1892"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="152" x2="172" y1="1992" y2="1992"/>
 </g>
 <g>
-<line marker-start="url(#circle)" x1="156" x2="216" y1="2408" y2="2408"/>
-<path d="M 222 2412 A 8 8 0 0 0 216 2408" fill="none"/>
-<line marker-end="url(#open_circle)" x1="222" x2="268" y1="2412" y2="2504"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="152" x2="172" y1="2200" y2="2200"/>
 </g>
 <g>
-<line x1="160" x2="176" y1="1224" y2="1224"/>
-<path d="M 176 1224 A 8 8 0 0 0 182 1220" fill="none"/>
+<line class="fg_stroke" x1="156" x2="156" y1="1884" y2="1892"/>
 </g>
 <g>
-<line x1="160" x2="168" y1="3744" y2="3728"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="156" x2="216" y1="2408" y2="2408"/>
+<path class="fg_stroke no_fill" d="M 222 2412 A 8 8 0 0 0 216 2408"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="222" x2="268" y1="2412" y2="2504"/>
 </g>
 <g>
-<line x1="164" x2="184" y1="1160" y2="1160"/>
-<path d="M 190 1164 A 8 8 0 0 0 184 1160" fill="none"/>
+<line class="fg_stroke" x1="160" x2="176" y1="1224" y2="1224"/>
+<path class="fg_stroke no_fill" d="M 176 1224 A 8 8 0 0 0 182 1220"/>
 </g>
 <g>
-<line x1="166" x2="168" y1="524" y2="528"/>
-<path d="M 168 544 A 16 16 0 0 0 168 528" fill="none"/>
+<line class="fg_stroke" x1="160" x2="168" y1="3744" y2="3728"/>
 </g>
 <g>
-<line x1="166" x2="168" y1="548" y2="544"/>
+<line class="fg_stroke" x1="164" x2="184" y1="1160" y2="1160"/>
+<path class="fg_stroke no_fill" d="M 190 1164 A 8 8 0 0 0 184 1160"/>
 </g>
 <g>
-<line x1="166" x2="166" y1="1276" y2="1288"/>
-<line x1="166" x2="170" y1="1276" y2="1276"/>
-<line x1="166" x2="170" y1="1288" y2="1288"/>
-<line x1="170" x2="170" y1="1276" y2="1288"/>
+<line class="fg_stroke" x1="166" x2="168" y1="524" y2="528"/>
+<path class="fg_stroke no_fill" d="M 168 544 A 16 16 0 0 0 168 528"/>
 </g>
 <g>
-<line x1="166" x2="166" y1="1292" y2="1304"/>
-<line x1="166" x2="170" y1="1292" y2="1292"/>
-<line x1="166" x2="170" y1="1304" y2="1304"/>
-<line x1="170" x2="170" y1="1292" y2="1304"/>
+<line class="fg_stroke" x1="166" x2="168" y1="548" y2="544"/>
 </g>
 <g>
-<line x1="168" x2="184" y1="2984" y2="2984"/>
-<path d="M 164 2980 A 4 4 0 0 0 168 2984" fill="none"/>
-<path d="M 188 2988 A 4 4 0 0 0 184 2984" fill="none"/>
-<line marker-start="url(#open_circle)" x1="164" x2="164" y1="2904" y2="2980"/>
-<line marker-start="url(#open_circle)" x1="164" x2="176" y1="2904" y2="2904"/>
+<line class="fg_stroke" x1="166" x2="166" y1="1276" y2="1288"/>
+<line class="fg_stroke" x1="166" x2="170" y1="1276" y2="1276"/>
+<line class="fg_stroke" x1="166" x2="170" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="170" x2="170" y1="1276" y2="1288"/>
 </g>
 <g>
-<line x1="172" x2="188" y1="1192" y2="1192"/>
+<line class="fg_stroke" x1="166" x2="166" y1="1292" y2="1304"/>
+<line class="fg_stroke" x1="166" x2="170" y1="1292" y2="1292"/>
+<line class="fg_stroke" x1="166" x2="170" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="170" x2="170" y1="1292" y2="1304"/>
 </g>
 <g>
-<line x1="172" x2="168" y1="1208" y2="1208"/>
-<line x1="172" x2="176" y1="1208" y2="1208"/>
-<path d="M 176 1208 A 8 8 0 0 0 182 1204" fill="none"/>
-<line marker-start="url(#big_open_circle)" x1="172" x2="172" y1="1176" y2="1208"/>
+<line class="fg_stroke" x1="168" x2="184" y1="2984" y2="2984"/>
+<path class="fg_stroke no_fill" d="M 164 2980 A 4 4 0 0 0 168 2984"/>
+<path class="fg_stroke no_fill" d="M 188 2988 A 4 4 0 0 0 184 2984"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="164" x2="164" y1="2904" y2="2980"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="164" x2="176" y1="2904" y2="2904"/>
 </g>
 <g>
-<line x1="172" x2="172" y1="1884" y2="1892"/>
-<path d="M 172 1892 A 4 4 0 0 0 176 1896" fill="none"/>
-<path d="M 176 1880 A 4 4 0 0 0 172 1884" fill="none"/>
+<line class="fg_stroke" x1="172" x2="188" y1="1192" y2="1192"/>
 </g>
 <g>
-<line x1="172" x2="172" y1="3020" y2="3268"/>
-<path d="M 172 3268 A 4 4 0 0 0 176 3272" fill="none"/>
-<path d="M 176 3016 A 4 4 0 0 0 172 3020" fill="none"/>
+<line class="fg_stroke" x1="172" x2="168" y1="1208" y2="1208"/>
+<line class="fg_stroke" x1="172" x2="176" y1="1208" y2="1208"/>
+<path class="fg_stroke no_fill" d="M 176 1208 A 8 8 0 0 0 182 1204"/>
+<line class="fg_stroke" marker-start="url(#big_open_circle)" x1="172" x2="172" y1="1176" y2="1208"/>
 </g>
 <g>
-<line x1="176" x2="192" y1="464" y2="432"/>
-<line x1="176" x2="192" y1="464" y2="496"/>
-<line x1="192" x2="208" y1="432" y2="464"/>
-<line x1="192" x2="208" y1="496" y2="464"/>
+<line class="fg_stroke" x1="172" x2="172" y1="1884" y2="1892"/>
+<path class="fg_stroke no_fill" d="M 172 1892 A 4 4 0 0 0 176 1896"/>
+<path class="fg_stroke no_fill" d="M 176 1880 A 4 4 0 0 0 172 1884"/>
 </g>
 <g>
-<line x1="176" x2="192" y1="1144" y2="1144"/>
-<path d="M 198 1148 A 8 8 0 0 0 192 1144" fill="none"/>
+<line class="fg_stroke" x1="172" x2="172" y1="3020" y2="3268"/>
+<path class="fg_stroke no_fill" d="M 172 3268 A 4 4 0 0 0 176 3272"/>
+<path class="fg_stroke no_fill" d="M 176 3016 A 4 4 0 0 0 172 3020"/>
 </g>
 <g>
-<line x1="176" x2="184" y1="1880" y2="1880"/>
-<path d="M 188 1884 A 4 4 0 0 0 184 1880" fill="none"/>
+<line class="fg_stroke" x1="176" x2="192" y1="464" y2="432"/>
+<line class="fg_stroke" x1="176" x2="192" y1="464" y2="496"/>
+<line class="fg_stroke" x1="192" x2="208" y1="432" y2="464"/>
+<line class="fg_stroke" x1="192" x2="208" y1="496" y2="464"/>
 </g>
 <g>
-<line x1="176" x2="184" y1="1896" y2="1896"/>
-<path d="M 184 1896 A 4 4 0 0 0 188 1892" fill="none"/>
+<line class="fg_stroke" x1="176" x2="192" y1="1144" y2="1144"/>
+<path class="fg_stroke no_fill" d="M 198 1148 A 8 8 0 0 0 192 1144"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="176" x2="162" y1="1904" y2="1932"/>
+<line class="fg_stroke" x1="176" x2="184" y1="1880" y2="1880"/>
+<path class="fg_stroke no_fill" d="M 188 1884 A 4 4 0 0 0 184 1880"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="176" x2="228" y1="2536" y2="2536"/>
+<line class="fg_stroke" x1="176" x2="184" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 184 1896 A 4 4 0 0 0 188 1892"/>
 </g>
 <g>
-<line x1="176" x2="188" y1="3016" y2="3016"/>
-<line x1="188" x2="188" y1="2988" y2="3016"/>
-<line x1="188" x2="228" y1="3016" y2="3016"/>
-<line x1="228" x2="228" y1="2912" y2="3016"/>
-<line x1="228" x2="252" y1="3016" y2="3016"/>
-<line x1="252" x2="252" y1="2984" y2="3016"/>
-<line x1="252" x2="256" y1="2984" y2="2984"/>
-<line x1="252" x2="272" y1="3016" y2="3016"/>
-<path d="M 256 2984 A 4 4 0 0 0 260 2980" fill="none"/>
-<path d="M 276 3020 A 4 4 0 0 0 272 3016" fill="none"/>
-<line marker-start="url(#open_circle)" x1="228" x2="228" y1="2904" y2="2912"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="228" x2="252" y1="2904" y2="2904"/>
-<line marker-start="url(#open_circle)" x1="252" x2="252" y1="2904" y2="2912"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="252" x2="332" y1="2904" y2="2904"/>
-<line marker-start="url(#open_circle)" x1="332" x2="332" y1="2904" y2="2912"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="332" x2="372" y1="2904" y2="2904"/>
-<line marker-start="url(#open_circle)" x1="372" x2="372" y1="2904" y2="2912"/>
-<line marker-start="url(#open_circle)" x1="372" x2="432" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="176" x2="162" y1="1904" y2="1932"/>
 </g>
 <g>
-<line x1="176" x2="220" y1="3272" y2="3272"/>
-<line x1="220" x2="220" y1="3272" y2="3332"/>
-<line x1="220" x2="260" y1="3272" y2="3272"/>
-<line x1="260" x2="260" y1="3272" y2="3300"/>
-<line x1="260" x2="272" y1="3272" y2="3272"/>
-<path d="M 220 3332 A 4 4 0 0 0 224 3336" fill="none"/>
-<path d="M 260 3300 A 4 4 0 0 0 264 3304" fill="none"/>
-<path d="M 272 3272 A 4 4 0 0 0 276 3268" fill="none"/>
-<line marker-end="url(#open_circle)" x1="264" x2="372" y1="3304" y2="3304"/>
-<line marker-end="url(#open_circle)" x1="372" x2="372" y1="3260" y2="3304"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="372" x2="484" y1="3304" y2="3304"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="484" x2="484" y1="3176" y2="3304"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="484" x2="524" y1="3176" y2="3176"/>
-<line marker-start="url(#open_circle)" x1="484" x2="484" y1="3304" y2="3328"/>
-<line marker-start="url(#open_circle)" x1="524" x2="524" y1="3176" y2="3216"/>
-<line marker-start="url(#open_circle)" x1="524" x2="544" y1="3176" y2="3176"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="176" x2="228" y1="2536" y2="2536"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="180" x2="180" y1="1836" y2="1868"/>
-<path d="M 184 1832 A 4 4 0 0 0 180 1836" fill="none"/>
+<line class="fg_stroke" x1="176" x2="188" y1="3016" y2="3016"/>
+<line class="fg_stroke" x1="188" x2="188" y1="2988" y2="3016"/>
+<line class="fg_stroke" x1="188" x2="228" y1="3016" y2="3016"/>
+<line class="fg_stroke" x1="228" x2="228" y1="2912" y2="3016"/>
+<line class="fg_stroke" x1="228" x2="252" y1="3016" y2="3016"/>
+<line class="fg_stroke" x1="252" x2="252" y1="2984" y2="3016"/>
+<line class="fg_stroke" x1="252" x2="256" y1="2984" y2="2984"/>
+<line class="fg_stroke" x1="252" x2="272" y1="3016" y2="3016"/>
+<path class="fg_stroke no_fill" d="M 256 2984 A 4 4 0 0 0 260 2980"/>
+<path class="fg_stroke no_fill" d="M 276 3020 A 4 4 0 0 0 272 3016"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="228" x2="228" y1="2904" y2="2912"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="228" x2="252" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="252" x2="252" y1="2904" y2="2912"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="252" x2="332" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="332" x2="332" y1="2904" y2="2912"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="332" x2="372" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="372" x2="372" y1="2904" y2="2912"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="372" x2="432" y1="2904" y2="2904"/>
 </g>
 <g>
-<line x1="180" x2="180" y1="2896" y2="2912"/>
-<line x1="180" x2="184" y1="2896" y2="2896"/>
-<line x1="184" x2="208" y1="2896" y2="2896"/>
-<line x1="192" x2="180" y1="2912" y2="2912"/>
-<line x1="208" x2="212" y1="2896" y2="2896"/>
-<line x1="212" x2="212" y1="2896" y2="2912"/>
+<line class="fg_stroke" x1="176" x2="220" y1="3272" y2="3272"/>
+<line class="fg_stroke" x1="220" x2="220" y1="3272" y2="3332"/>
+<line class="fg_stroke" x1="220" x2="260" y1="3272" y2="3272"/>
+<line class="fg_stroke" x1="260" x2="260" y1="3272" y2="3300"/>
+<line class="fg_stroke" x1="260" x2="272" y1="3272" y2="3272"/>
+<path class="fg_stroke no_fill" d="M 220 3332 A 4 4 0 0 0 224 3336"/>
+<path class="fg_stroke no_fill" d="M 260 3300 A 4 4 0 0 0 264 3304"/>
+<path class="fg_stroke no_fill" d="M 272 3272 A 4 4 0 0 0 276 3268"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="264" x2="372" y1="3304" y2="3304"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="372" x2="372" y1="3260" y2="3304"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="372" x2="484" y1="3304" y2="3304"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="484" x2="484" y1="3176" y2="3304"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="484" x2="524" y1="3176" y2="3176"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="484" x2="484" y1="3304" y2="3328"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="524" x2="524" y1="3176" y2="3216"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="524" x2="544" y1="3176" y2="3176"/>
 </g>
 <g>
-<line x1="182" x2="192" y1="1204" y2="1184"/>
-<path d="M 192 1184 A 16 16 0 0 0 192 1168" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="180" x2="180" y1="1836" y2="1868"/>
+<path class="fg_stroke no_fill" d="M 184 1832 A 4 4 0 0 0 180 1836"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="184" x2="204" y1="1464" y2="1464"/>
+<line class="fg_stroke" x1="180" x2="180" y1="2896" y2="2912"/>
+<line class="fg_stroke" x1="180" x2="184" y1="2896" y2="2896"/>
+<line class="fg_stroke" x1="184" x2="208" y1="2896" y2="2896"/>
+<line class="fg_stroke" x1="192" x2="180" y1="2912" y2="2912"/>
+<line class="fg_stroke" x1="208" x2="212" y1="2896" y2="2896"/>
+<line class="fg_stroke" x1="212" x2="212" y1="2896" y2="2912"/>
 </g>
 <g>
-<line x1="184" x2="200" y1="1832" y2="1832"/>
-<path d="M 204 1836 A 4 4 0 0 0 200 1832" fill="none"/>
+<line class="fg_stroke" x1="182" x2="192" y1="1204" y2="1184"/>
+<path class="fg_stroke no_fill" d="M 192 1184 A 16 16 0 0 0 192 1168"/>
 </g>
 <g>
-<line x1="184" x2="192" y1="2000" y2="1984"/>
-<line x1="184" x2="216" y1="2000" y2="2000"/>
-<line x1="192" x2="224" y1="1984" y2="1984"/>
-<line x1="216" x2="224" y1="2000" y2="1984"/>
+<line class="fg_stroke" x1="182" x2="200" y1="1220" y2="1184"/>
+<line class="fg_stroke" x1="204" x2="200" y1="1176" y2="1184"/>
 </g>
 <g>
-<line x1="184" x2="186" y1="2208" y2="2212"/>
-<path d="M 184 2192 A 16 16 0 0 0 184 2208" fill="none"/>
-<path d="M 186 2212 A 8 8 0 0 0 192 2216" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="184" x2="204" y1="1464" y2="1464"/>
 </g>
 <g>
-<line x1="184" x2="208" y1="2912" y2="2912"/>
+<line class="fg_stroke" x1="184" x2="200" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 204 1836 A 4 4 0 0 0 200 1832"/>
 </g>
 <g>
-<line x1="186" x2="184" y1="2188" y2="2192"/>
-<path d="M 192 2184 A 8 8 0 0 0 186 2188" fill="none"/>
+<line class="fg_stroke" x1="184" x2="192" y1="2000" y2="1984"/>
+<line class="fg_stroke" x1="184" x2="216" y1="2000" y2="2000"/>
+<line class="fg_stroke" x1="192" x2="224" y1="1984" y2="1984"/>
+<line class="fg_stroke" x1="216" x2="224" y1="2000" y2="1984"/>
 </g>
 <g>
-<line x1="188" x2="188" y1="1884" y2="1892"/>
+<line class="fg_stroke" x1="184" x2="186" y1="2208" y2="2212"/>
+<path class="fg_stroke no_fill" d="M 184 2192 A 16 16 0 0 0 184 2208"/>
+<path class="fg_stroke no_fill" d="M 186 2212 A 8 8 0 0 0 192 2216"/>
 </g>
 <g>
-<line x1="190" x2="192" y1="1164" y2="1168"/>
+<line class="fg_stroke" x1="184" x2="208" y1="2912" y2="2912"/>
 </g>
 <g>
-<line x1="192" x2="204" y1="1952" y2="1952"/>
-<line x1="204" x2="204" y1="1836" y2="1952"/>
+<line class="fg_stroke" x1="186" x2="184" y1="2188" y2="2192"/>
+<path class="fg_stroke no_fill" d="M 192 2184 A 8 8 0 0 0 186 2188"/>
 </g>
 <g>
-<line x1="192" x2="200" y1="2184" y2="2184"/>
+<line class="fg_stroke" x1="188" x2="188" y1="1884" y2="1892"/>
 </g>
 <g>
-<line x1="192" x2="200" y1="2216" y2="2216"/>
+<line class="fg_stroke" x1="190" x2="192" y1="1164" y2="1168"/>
 </g>
 <g>
-<line x1="194" x2="194" y1="1272" y2="1304"/>
-<line x1="194" x2="222" y1="1272" y2="1272"/>
-<line x1="194" x2="222" y1="1304" y2="1304"/>
-<line x1="222" x2="222" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="192" x2="204" y1="1952" y2="1952"/>
+<line class="fg_stroke" x1="204" x2="204" y1="1836" y2="1952"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="194" x2="170" y1="2668" y2="2716"/>
-<path d="M 194 2668 A 16 16 0 0 0 196 2660" fill="none"/>
+<line class="fg_stroke" x1="192" x2="200" y1="2184" y2="2184"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="194" x2="170" y1="2700" y2="2748"/>
-<path d="M 194 2700 A 16 16 0 0 0 196 2692" fill="none"/>
+<line class="fg_stroke" x1="192" x2="200" y1="2216" y2="2216"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="194" x2="170" y1="2732" y2="2780"/>
-<path d="M 194 2732 A 16 16 0 0 0 196 2724" fill="none"/>
+<line class="fg_stroke" x1="194" x2="194" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="194" x2="222" y1="1272" y2="1272"/>
+<line class="fg_stroke" x1="194" x2="222" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="222" x2="222" y1="1272" y2="1304"/>
 </g>
 <g>
-<line x1="196" x2="196" y1="2636" y2="2724"/>
-<path d="M 198 2628 A 16 16 0 0 0 196 2636" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="194" x2="170" y1="2668" y2="2716"/>
+<path class="fg_stroke no_fill" d="M 194 2668 A 16 16 0 0 0 196 2660"/>
 </g>
 <g>
-<line x1="196" x2="196" y1="2660" y2="2656"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="194" x2="170" y1="2700" y2="2748"/>
+<path class="fg_stroke no_fill" d="M 194 2700 A 16 16 0 0 0 196 2692"/>
 </g>
 <g>
-<line x1="196" x2="196" y1="2692" y2="2688"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="194" x2="170" y1="2732" y2="2780"/>
+<path class="fg_stroke no_fill" d="M 194 2732 A 16 16 0 0 0 196 2724"/>
 </g>
 <g>
-<line x1="196" x2="196" y1="4444" y2="4468"/>
+<line class="fg_stroke" x1="196" x2="196" y1="2636" y2="2724"/>
+<path class="fg_stroke no_fill" d="M 198 2628 A 16 16 0 0 0 196 2636"/>
 </g>
 <g>
-<line x1="198" x2="204" y1="1148" y2="1160"/>
-<line x1="204" x2="204" y1="1160" y2="1176"/>
-<line x1="204" x2="182" y1="1176" y2="1220"/>
+<line class="fg_stroke" x1="196" x2="196" y1="2660" y2="2656"/>
 </g>
 <g>
-<line x1="198" x2="198" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="196" x2="196" y1="2692" y2="2688"/>
 </g>
 <g>
-<line x1="198" x2="218" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="196" x2="196" y1="4444" y2="4468"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="200" x2="170" y1="2624" y2="2684"/>
+<line class="fg_stroke" x1="198" x2="204" y1="1148" y2="1160"/>
+<line class="fg_stroke" x1="204" x2="204" y1="1160" y2="1168"/>
+<line class="fg_stroke" x1="204" x2="204" y1="1168" y2="1176"/>
 </g>
 <g>
-<line x1="200" x2="212" y1="2912" y2="2912"/>
+<line class="fg_stroke" x1="198" x2="198" y1="1272" y2="1304"/>
 </g>
 <g>
-<line x1="204" x2="204" y1="380" y2="404"/>
+<line class="fg_stroke" x1="198" x2="218" y1="1288" y2="1288"/>
 </g>
 <g>
-<line x1="208" x2="210" y1="2224" y2="2228"/>
-<path d="M 208 2208 A 16 16 0 0 0 208 2224" fill="none"/>
-<path d="M 210 2228 A 8 8 0 0 0 216 2232" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="200" x2="170" y1="2624" y2="2684"/>
 </g>
 <g>
-<line x1="210" x2="210" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="200" x2="212" y1="2912" y2="2912"/>
 </g>
 <g>
-<line x1="210" x2="208" y1="2172" y2="2176"/>
-<path d="M 208 2176 A 16 16 0 0 0 208 2192" fill="none"/>
-<path d="M 216 2168 A 8 8 0 0 0 210 2172" fill="none"/>
+<line class="fg_stroke" x1="204" x2="204" y1="380" y2="404"/>
 </g>
 <g>
-<line x1="210" x2="198" y1="2604" y2="2628"/>
-<path d="M 216 2600 A 8 8 0 0 0 210 2604" fill="none"/>
+<line class="fg_stroke" x1="208" x2="210" y1="2224" y2="2228"/>
+<path class="fg_stroke no_fill" d="M 208 2208 A 16 16 0 0 0 208 2224"/>
+<path class="fg_stroke no_fill" d="M 210 2228 A 8 8 0 0 0 216 2232"/>
 </g>
 <g>
-<line x1="212" x2="212" y1="4432" y2="4480"/>
+<line class="fg_stroke" x1="210" x2="210" y1="1272" y2="1304"/>
 </g>
 <g>
-<line x1="214" x2="214" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="210" x2="208" y1="2172" y2="2176"/>
+<path class="fg_stroke no_fill" d="M 208 2176 A 16 16 0 0 0 208 2192"/>
+<path class="fg_stroke no_fill" d="M 216 2168 A 8 8 0 0 0 210 2172"/>
 </g>
 <g>
-<line x1="216" x2="224" y1="2168" y2="2168"/>
-<path d="M 228 2172 A 4 4 0 0 0 224 2168" fill="none"/>
+<line class="fg_stroke" x1="210" x2="198" y1="2604" y2="2628"/>
+<path class="fg_stroke no_fill" d="M 216 2600 A 8 8 0 0 0 210 2604"/>
 </g>
 <g>
-<line x1="216" x2="224" y1="2232" y2="2232"/>
-<path d="M 228 2236 A 4 4 0 0 0 224 2232" fill="none"/>
+<line class="fg_stroke" x1="212" x2="212" y1="4432" y2="4480"/>
 </g>
 <g>
-<line x1="216" x2="232" y1="2600" y2="2600"/>
-<path d="M 232 2600 A 8 8 0 0 0 238 2596" fill="none"/>
-<line marker-start="url(#open_circle)" x1="252" x2="238" y1="2568" y2="2596"/>
+<line class="fg_stroke" x1="214" x2="214" y1="1272" y2="1304"/>
 </g>
 <g>
-<line x1="218" x2="218" y1="1272" y2="1304"/>
+<line class="fg_stroke" x1="216" x2="224" y1="2168" y2="2168"/>
+<path class="fg_stroke no_fill" d="M 228 2172 A 4 4 0 0 0 224 2168"/>
 </g>
 <g>
-<line x1="224" x2="232" y1="432" y2="448"/>
-<line x1="224" x2="288" y1="432" y2="432"/>
-<line x1="288" x2="296" y1="432" y2="448"/>
-<path d="M 232 464 A 16 16 0 0 0 232 448" fill="none"/>
-<path d="M 296 464 A 16 16 0 0 0 296 448" fill="none"/>
+<line class="fg_stroke" x1="216" x2="224" y1="2232" y2="2232"/>
+<path class="fg_stroke no_fill" d="M 228 2236 A 4 4 0 0 0 224 2232"/>
 </g>
 <g>
-<line x1="224" x2="232" y1="480" y2="464"/>
-<line x1="224" x2="288" y1="480" y2="480"/>
-<line x1="288" x2="296" y1="480" y2="464"/>
+<line class="fg_stroke" x1="216" x2="232" y1="2600" y2="2600"/>
+<path class="fg_stroke no_fill" d="M 232 2600 A 8 8 0 0 0 238 2596"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="252" x2="238" y1="2568" y2="2596"/>
 </g>
 <g>
-<line x1="224" x2="226" y1="544" y2="548"/>
-<path d="M 224 528 A 16 16 0 0 0 224 544" fill="none"/>
-<path d="M 226 548 A 8 8 0 0 0 232 552" fill="none"/>
+<line class="fg_stroke" x1="218" x2="218" y1="1272" y2="1304"/>
 </g>
 <g>
-<line x1="224" x2="276" y1="3336" y2="3336"/>
+<line class="fg_stroke" x1="224" x2="232" y1="432" y2="448"/>
+<line class="fg_stroke" x1="224" x2="288" y1="432" y2="432"/>
+<line class="fg_stroke" x1="288" x2="296" y1="432" y2="448"/>
+<path class="fg_stroke no_fill" d="M 232 464 A 16 16 0 0 0 232 448"/>
+<path class="fg_stroke no_fill" d="M 296 464 A 16 16 0 0 0 296 448"/>
 </g>
 <g>
-<line x1="226" x2="224" y1="524" y2="528"/>
+<line class="fg_stroke" x1="224" x2="232" y1="480" y2="464"/>
+<line class="fg_stroke" x1="224" x2="288" y1="480" y2="480"/>
+<line class="fg_stroke" x1="288" x2="296" y1="480" y2="464"/>
 </g>
 <g>
-<line x1="228" x2="228" y1="4444" y2="4468"/>
-<path d="M 228 4468 A 4 4 0 0 0 232 4472" fill="none"/>
-<path d="M 232 4440 A 4 4 0 0 0 228 4444" fill="none"/>
+<line class="fg_stroke" x1="224" x2="226" y1="544" y2="548"/>
+<path class="fg_stroke no_fill" d="M 224 528 A 16 16 0 0 0 224 544"/>
+<path class="fg_stroke no_fill" d="M 226 548 A 8 8 0 0 0 232 552"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="232" x2="236" y1="552" y2="552"/>
+<line class="fg_stroke" x1="224" x2="276" y1="3336" y2="3336"/>
 </g>
 <g>
-<line x1="232" x2="240" y1="1464" y2="1464"/>
-<path d="M 240 1464 A 8 8 0 0 0 246 1460" fill="none"/>
+<line class="fg_stroke" x1="226" x2="224" y1="524" y2="528"/>
 </g>
 <g>
-<line x1="232" x2="320" y1="4440" y2="4440"/>
-<path d="M 324 4444 A 4 4 0 0 0 320 4440" fill="none"/>
+<line class="fg_stroke" x1="228" x2="228" y1="4444" y2="4468"/>
+<path class="fg_stroke no_fill" d="M 228 4468 A 4 4 0 0 0 232 4472"/>
+<path class="fg_stroke no_fill" d="M 232 4440 A 4 4 0 0 0 228 4444"/>
 </g>
 <g>
-<line x1="232" x2="320" y1="4472" y2="4472"/>
-<path d="M 320 4472 A 4 4 0 0 0 324 4468" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="232" x2="236" y1="552" y2="552"/>
 </g>
 <g>
-<line x1="240" x2="242" y1="400" y2="404"/>
-<path d="M 240 384 A 16 16 0 0 0 240 400" fill="none"/>
-<path d="M 242 404 A 8 8 0 0 0 248 408" fill="none"/>
+<line class="fg_stroke" x1="232" x2="240" y1="1464" y2="1464"/>
+<path class="fg_stroke no_fill" d="M 240 1464 A 8 8 0 0 0 246 1460"/>
 </g>
 <g>
-<line x1="242" x2="240" y1="380" y2="384"/>
-<path d="M 248 376 A 8 8 0 0 0 242 380" fill="none"/>
+<line class="fg_stroke" x1="232" x2="320" y1="4440" y2="4440"/>
+<path class="fg_stroke no_fill" d="M 324 4444 A 4 4 0 0 0 320 4440"/>
 </g>
 <g>
-<line x1="244" x2="244" y1="1272" y2="1308"/>
-<line x1="244" x2="268" y1="1272" y2="1272"/>
-<line x1="244" x2="268" y1="1308" y2="1308"/>
-<line x1="268" x2="268" y1="1272" y2="1308"/>
+<line class="fg_stroke" x1="232" x2="320" y1="4472" y2="4472"/>
+<path class="fg_stroke no_fill" d="M 320 4472 A 4 4 0 0 0 324 4468"/>
 </g>
 <g>
-<line x1="244" x2="268" y1="1276" y2="1276"/>
+<line class="fg_stroke" x1="240" x2="242" y1="400" y2="404"/>
+<path class="fg_stroke no_fill" d="M 240 384 A 16 16 0 0 0 240 400"/>
+<path class="fg_stroke no_fill" d="M 242 404 A 8 8 0 0 0 248 408"/>
 </g>
 <g>
-<line x1="244" x2="268" y1="1288" y2="1288"/>
+<line class="fg_stroke" x1="242" x2="240" y1="380" y2="384"/>
+<path class="fg_stroke no_fill" d="M 248 376 A 8 8 0 0 0 242 380"/>
 </g>
 <g>
-<line x1="244" x2="268" y1="1292" y2="1292"/>
+<line class="fg_stroke" x1="244" x2="244" y1="1272" y2="1308"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1272" y2="1272"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1308" y2="1308"/>
+<line class="fg_stroke" x1="268" x2="268" y1="1272" y2="1308"/>
 </g>
 <g>
-<line x1="244" x2="268" y1="1304" y2="1304"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1276" y2="1276"/>
 </g>
 <g>
-<line x1="244" x2="244" y1="2940" y2="2980"/>
-<path d="M 244 2980 A 4 4 0 0 0 248 2984" fill="none"/>
-<path d="M 248 2936 A 4 4 0 0 0 244 2940" fill="none"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1288" y2="1288"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="246" x2="262" y1="1460" y2="1428"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1292" y2="1292"/>
 </g>
 <g>
-<line x1="248" x2="296" y1="376" y2="376"/>
-<path d="M 302 380 A 8 8 0 0 0 296 376" fill="none"/>
+<line class="fg_stroke" x1="244" x2="268" y1="1304" y2="1304"/>
 </g>
 <g>
-<line x1="248" x2="296" y1="408" y2="408"/>
-<path d="M 296 408 A 8 8 0 0 0 302 404" fill="none"/>
+<line class="fg_stroke" x1="244" x2="244" y1="2940" y2="2980"/>
+<path class="fg_stroke no_fill" d="M 244 2980 A 4 4 0 0 0 248 2984"/>
+<path class="fg_stroke no_fill" d="M 248 2936 A 4 4 0 0 0 244 2940"/>
 </g>
 <g>
-<line x1="248" x2="250" y1="2544" y2="2548"/>
-<path d="M 248 2528 A 16 16 0 0 0 248 2544" fill="none"/>
-<path d="M 250 2548 A 8 8 0 0 0 256 2552" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="246" x2="262" y1="1460" y2="1428"/>
 </g>
 <g>
-<line x1="250" x2="248" y1="2524" y2="2528"/>
-<path d="M 256 2520 A 8 8 0 0 0 250 2524" fill="none"/>
+<line class="fg_stroke" x1="248" x2="296" y1="376" y2="376"/>
+<path class="fg_stroke no_fill" d="M 302 380 A 8 8 0 0 0 296 376"/>
 </g>
 <g>
-<line x1="252" x2="252" y1="1164" y2="1188"/>
-<path d="M 252 1188 A 16 16 0 0 0 254 1196" fill="none"/>
-<path d="M 256 1160 A 4 4 0 0 0 252 1164" fill="none"/>
+<line class="fg_stroke" x1="248" x2="296" y1="408" y2="408"/>
+<path class="fg_stroke no_fill" d="M 296 408 A 8 8 0 0 0 302 404"/>
 </g>
 <g>
-<line x1="252" x2="252" y1="2912" y2="2936"/>
-<line x1="252" x2="248" y1="2936" y2="2936"/>
-<line x1="252" x2="256" y1="2936" y2="2936"/>
-<path d="M 260 2940 A 4 4 0 0 0 256 2936" fill="none"/>
+<line class="fg_stroke" x1="248" x2="250" y1="2544" y2="2548"/>
+<path class="fg_stroke no_fill" d="M 248 2528 A 16 16 0 0 0 248 2544"/>
+<path class="fg_stroke no_fill" d="M 250 2548 A 8 8 0 0 0 256 2552"/>
 </g>
 <g>
-<line x1="252" x2="248" y1="2984" y2="2984"/>
+<line class="fg_stroke" x1="250" x2="248" y1="2524" y2="2528"/>
+<path class="fg_stroke no_fill" d="M 256 2520 A 8 8 0 0 0 250 2524"/>
 </g>
 <g>
-<line x1="254" x2="264" y1="1196" y2="1216"/>
-<line x1="264" x2="280" y1="1216" y2="1216"/>
-<line x1="292" x2="280" y1="1192" y2="1216"/>
+<line class="fg_stroke" x1="252" x2="252" y1="1164" y2="1188"/>
+<path class="fg_stroke no_fill" d="M 252 1188 A 16 16 0 0 0 254 1196"/>
+<path class="fg_stroke no_fill" d="M 256 1160 A 4 4 0 0 0 252 1164"/>
 </g>
 <g>
-<line x1="256" x2="272" y1="1160" y2="1160"/>
-<line x1="272" x2="280" y1="1160" y2="1160"/>
-<line x1="280" x2="292" y1="1160" y2="1160"/>
+<line class="fg_stroke" x1="252" x2="252" y1="2912" y2="2936"/>
+<line class="fg_stroke" x1="252" x2="248" y1="2936" y2="2936"/>
+<line class="fg_stroke" x1="252" x2="256" y1="2936" y2="2936"/>
+<path class="fg_stroke no_fill" d="M 260 2940 A 4 4 0 0 0 256 2936"/>
 </g>
 <g>
-<line x1="256" x2="280" y1="2520" y2="2520"/>
-<path d="M 286 2524 A 8 8 0 0 0 280 2520" fill="none"/>
+<line class="fg_stroke" x1="252" x2="248" y1="2984" y2="2984"/>
 </g>
 <g>
-<line x1="256" x2="280" y1="2552" y2="2552"/>
-<path d="M 280 2552 A 8 8 0 0 0 286 2548" fill="none"/>
+<line class="fg_stroke" x1="254" x2="264" y1="1196" y2="1216"/>
+<line class="fg_stroke" x1="264" x2="280" y1="1216" y2="1216"/>
+<line class="fg_stroke" x1="280" x2="288" y1="1216" y2="1200"/>
+<line class="fg_stroke" x1="292" x2="288" y1="1192" y2="1200"/>
 </g>
 <g>
-<line x1="260" x2="260" y1="1276" y2="1304"/>
+<line class="fg_stroke" x1="256" x2="272" y1="1160" y2="1160"/>
+<line class="fg_stroke" x1="272" x2="280" y1="1160" y2="1160"/>
+<line class="fg_stroke" x1="280" x2="292" y1="1160" y2="1160"/>
 </g>
 <g>
-<line x1="260" x2="260" y1="2940" y2="2980"/>
+<line class="fg_stroke" x1="256" x2="280" y1="2520" y2="2520"/>
+<path class="fg_stroke no_fill" d="M 286 2524 A 8 8 0 0 0 280 2520"/>
 </g>
 <g>
-<line x1="262" x2="264" y1="3836" y2="3840"/>
-<path d="M 264 3856 A 16 16 0 0 0 264 3840" fill="none"/>
+<line class="fg_stroke" x1="256" x2="280" y1="2552" y2="2552"/>
+<path class="fg_stroke no_fill" d="M 280 2552 A 8 8 0 0 0 286 2548"/>
 </g>
 <g>
-<line x1="262" x2="264" y1="3860" y2="3856"/>
+<line class="fg_stroke" x1="260" x2="260" y1="1276" y2="1304"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="264" x2="260" y1="520" y2="520"/>
-<path d="M 270 524 A 8 8 0 0 0 264 520" fill="none"/>
+<line class="fg_stroke" x1="260" x2="260" y1="2940" y2="2980"/>
 </g>
 <g>
-<line x1="264" x2="272" y1="2232" y2="2232"/>
-<path d="M 264 2232 A 4 4 0 0 0 260 2236" fill="none"/>
-<path d="M 272 2232 A 4 4 0 0 0 276 2228" fill="none"/>
+<line class="fg_stroke" x1="262" x2="264" y1="3836" y2="3840"/>
+<path class="fg_stroke no_fill" d="M 264 3856 A 16 16 0 0 0 264 3840"/>
 </g>
 <g>
-<line x1="270" x2="272" y1="524" y2="528"/>
-<path d="M 272 544 A 16 16 0 0 0 272 528" fill="none"/>
+<line class="fg_stroke" x1="262" x2="264" y1="3860" y2="3856"/>
 </g>
 <g>
-<line x1="272" x2="270" y1="544" y2="548"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="264" x2="260" y1="520" y2="520"/>
+<path class="fg_stroke no_fill" d="M 270 524 A 8 8 0 0 0 264 520"/>
 </g>
 <g>
-<line x1="272" x2="280" y1="2168" y2="2168"/>
-<path d="M 272 2168 A 4 4 0 0 0 268 2172" fill="none"/>
-<path d="M 286 2172 A 8 8 0 0 0 280 2168" fill="none"/>
+<line class="fg_stroke" x1="264" x2="272" y1="2232" y2="2232"/>
+<path class="fg_stroke no_fill" d="M 264 2232 A 4 4 0 0 0 260 2236"/>
+<path class="fg_stroke no_fill" d="M 272 2232 A 4 4 0 0 0 276 2228"/>
 </g>
 <g>
-<line x1="272" x2="282" y1="2240" y2="2260"/>
-<path d="M 282 2260 A 8 8 0 0 0 288 2264" fill="none"/>
+<line class="fg_stroke" x1="270" x2="272" y1="524" y2="528"/>
+<path class="fg_stroke no_fill" d="M 272 544 A 16 16 0 0 0 272 528"/>
 </g>
 <g>
-<line x1="272" x2="280" y1="3344" y2="3328"/>
-<line x1="280" x2="288" y1="3328" y2="3344"/>
-<line x1="288" x2="296" y1="3344" y2="3328"/>
-<line x1="296" x2="304" y1="3328" y2="3344"/>
-<line x1="304" x2="312" y1="3344" y2="3328"/>
+<line class="fg_stroke" x1="272" x2="270" y1="544" y2="548"/>
 </g>
 <g>
-<line x1="276" x2="276" y1="1136" y2="1152"/>
-<line x1="276" x2="280" y1="1136" y2="1136"/>
-<line x1="280" x2="288" y1="1136" y2="1136"/>
-<line x1="288" x2="292" y1="1136" y2="1136"/>
-<line x1="292" x2="292" y1="1136" y2="1152"/>
-<line x1="292" x2="292" y1="1152" y2="1192"/>
-<path d="M 276 1168 A 10 10 0 0 0 276 1152" fill="none"/>
+<line class="fg_stroke" x1="272" x2="280" y1="2168" y2="2168"/>
+<path class="fg_stroke no_fill" d="M 272 2168 A 4 4 0 0 0 268 2172"/>
+<path class="fg_stroke no_fill" d="M 286 2172 A 8 8 0 0 0 280 2168"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="276" x2="276" y1="1168" y2="1192"/>
+<line class="fg_stroke" x1="272" x2="282" y1="2240" y2="2260"/>
+<path class="fg_stroke no_fill" d="M 282 2260 A 8 8 0 0 0 288 2264"/>
 </g>
 <g>
-<line x1="276" x2="292" y1="1176" y2="1176"/>
+<line class="fg_stroke" x1="272" x2="280" y1="3344" y2="3328"/>
+<line class="fg_stroke" x1="280" x2="288" y1="3328" y2="3344"/>
+<line class="fg_stroke" x1="288" x2="296" y1="3344" y2="3328"/>
+<line class="fg_stroke" x1="296" x2="304" y1="3328" y2="3344"/>
+<line class="fg_stroke" x1="304" x2="312" y1="3344" y2="3328"/>
 </g>
 <g>
-<line x1="276" x2="276" y1="3020" y2="3064"/>
-<line x1="276" x2="276" y1="3064" y2="3268"/>
-<line marker-end="url(#open_circle)" x1="276" x2="332" y1="3064" y2="3064"/>
-<line marker-end="url(#open_circle)" x1="332" x2="332" y1="3032" y2="3064"/>
-<line marker-start="url(#open_circle)" x1="332" x2="332" y1="3064" y2="3096"/>
-<line marker-start="url(#open_circle)" x1="332" x2="356" y1="3064" y2="3064"/>
+<line class="fg_stroke" x1="276" x2="276" y1="1136" y2="1152"/>
+<line class="fg_stroke" x1="276" x2="280" y1="1136" y2="1136"/>
+<line class="fg_stroke" x1="280" x2="288" y1="1136" y2="1136"/>
+<line class="fg_stroke" x1="288" x2="292" y1="1136" y2="1136"/>
+<line class="fg_stroke" x1="292" x2="292" y1="1136" y2="1152"/>
+<line class="fg_stroke" x1="292" x2="292" y1="1152" y2="1184"/>
+<line class="fg_stroke" x1="292" x2="292" y1="1184" y2="1192"/>
+<path class="fg_stroke no_fill" d="M 276 1168 A 10 10 0 0 0 276 1152"/>
 </g>
 <g>
-<line x1="276" x2="340" y1="3256" y2="3256"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="276" x2="276" y1="1168" y2="1192"/>
 </g>
 <g>
-<line x1="280" x2="288" y1="1144" y2="1144"/>
+<line class="fg_stroke" x1="276" x2="292" y1="1176" y2="1176"/>
 </g>
 <g>
-<line x1="286" x2="288" y1="2172" y2="2176"/>
-<path d="M 288 2192 A 16 16 0 0 0 288 2176" fill="none"/>
+<line class="fg_stroke" x1="276" x2="276" y1="3020" y2="3064"/>
+<line class="fg_stroke" x1="276" x2="276" y1="3064" y2="3268"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="276" x2="332" y1="3064" y2="3064"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="332" x2="332" y1="3032" y2="3064"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="332" x2="332" y1="3064" y2="3096"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="332" x2="356" y1="3064" y2="3064"/>
 </g>
 <g>
-<line x1="286" x2="288" y1="2524" y2="2528"/>
-<path d="M 288 2544 A 16 16 0 0 0 288 2528" fill="none"/>
+<line class="fg_stroke" x1="276" x2="340" y1="3256" y2="3256"/>
 </g>
 <g>
-<line x1="286" x2="288" y1="2548" y2="2544"/>
+<line class="fg_stroke" x1="280" x2="288" y1="1144" y2="1144"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="288" x2="316" y1="1384" y2="1384"/>
+<line class="fg_stroke" x1="286" x2="288" y1="2172" y2="2176"/>
+<path class="fg_stroke no_fill" d="M 288 2192 A 16 16 0 0 0 288 2176"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="288" x2="316" y1="1448" y2="1448"/>
+<line class="fg_stroke" x1="286" x2="288" y1="2524" y2="2528"/>
+<path class="fg_stroke no_fill" d="M 288 2544 A 16 16 0 0 0 288 2528"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="288" x2="316" y1="2264" y2="2264"/>
+<line class="fg_stroke" x1="286" x2="288" y1="2548" y2="2544"/>
 </g>
 <g>
-<line x1="296" x2="304" y1="2184" y2="2184"/>
-<path d="M 310 2188 A 8 8 0 0 0 304 2184" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="288" x2="316" y1="1384" y2="1384"/>
 </g>
 <g>
-<line x1="302" x2="304" y1="380" y2="384"/>
-<path d="M 304 400 A 16 16 0 0 0 304 384" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="288" x2="316" y1="1448" y2="1448"/>
 </g>
 <g>
-<line x1="302" x2="304" y1="404" y2="400"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="288" x2="316" y1="2264" y2="2264"/>
 </g>
 <g>
-<line x1="304" x2="312" y1="2216" y2="2216"/>
-<path d="M 304 2216 A 4 4 0 0 0 300 2220" fill="none"/>
-<path d="M 312 2216 A 4 4 0 0 0 316 2212" fill="none"/>
+<line class="fg_stroke" x1="296" x2="304" y1="2184" y2="2184"/>
+<path class="fg_stroke no_fill" d="M 310 2188 A 8 8 0 0 0 304 2184"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="304" x2="380" y1="2472" y2="2472"/>
-<path d="M 304 2472 A 8 8 0 0 0 298 2476" fill="none"/>
-<line marker-end="url(#open_circle)" x1="298" x2="284" y1="2476" y2="2504"/>
-<line marker-end="url(#open_circle)" x1="338" x2="284" y1="2396" y2="2504"/>
-<line marker-end="url(#open_circle)" x1="354" x2="284" y1="2364" y2="2504"/>
+<line class="fg_stroke" x1="302" x2="304" y1="380" y2="384"/>
+<path class="fg_stroke no_fill" d="M 304 400 A 16 16 0 0 0 304 384"/>
 </g>
 <g>
-<line x1="308" x2="308" y1="1836" y2="1844"/>
-<path d="M 308 1844 A 4 4 0 0 0 312 1848" fill="none"/>
-<path d="M 312 1832 A 4 4 0 0 0 308 1836" fill="none"/>
+<line class="fg_stroke" x1="302" x2="304" y1="404" y2="400"/>
 </g>
 <g>
-<line x1="308" x2="308" y1="1900" y2="1924"/>
-<path d="M 308 1924 A 4 4 0 0 0 312 1928" fill="none"/>
-<path d="M 312 1896 A 4 4 0 0 0 308 1900" fill="none"/>
+<line class="fg_stroke" x1="304" x2="312" y1="2216" y2="2216"/>
+<path class="fg_stroke no_fill" d="M 304 2216 A 4 4 0 0 0 300 2220"/>
+<path class="fg_stroke no_fill" d="M 312 2216 A 4 4 0 0 0 316 2212"/>
 </g>
 <g>
-<line x1="308" x2="308" y1="2060" y2="2084"/>
-<path d="M 308 2084 A 4 4 0 0 0 312 2088" fill="none"/>
-<path d="M 312 2056 A 4 4 0 0 0 308 2060" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="304" x2="380" y1="2472" y2="2472"/>
+<path class="fg_stroke no_fill" d="M 304 2472 A 8 8 0 0 0 298 2476"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="298" x2="284" y1="2476" y2="2504"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="338" x2="284" y1="2396" y2="2504"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="354" x2="284" y1="2364" y2="2504"/>
 </g>
 <g>
-<line x1="310" x2="312" y1="2188" y2="2192"/>
-<path d="M 312 2208 A 16 16 0 0 0 312 2192" fill="none"/>
+<line class="fg_stroke" x1="308" x2="308" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 308 1844 A 4 4 0 0 0 312 1848"/>
+<path class="fg_stroke no_fill" d="M 312 1832 A 4 4 0 0 0 308 1836"/>
 </g>
 <g>
-<line x1="312" x2="336" y1="1832" y2="1832"/>
-<path d="M 340 1836 A 4 4 0 0 0 336 1832" fill="none"/>
+<line class="fg_stroke" x1="308" x2="308" y1="1900" y2="1924"/>
+<path class="fg_stroke no_fill" d="M 308 1924 A 4 4 0 0 0 312 1928"/>
+<path class="fg_stroke no_fill" d="M 312 1896 A 4 4 0 0 0 308 1900"/>
 </g>
 <g>
-<line x1="312" x2="336" y1="1848" y2="1848"/>
-<path d="M 336 1848 A 4 4 0 0 0 340 1844" fill="none"/>
+<line class="fg_stroke" x1="308" x2="308" y1="2060" y2="2084"/>
+<path class="fg_stroke no_fill" d="M 308 2084 A 4 4 0 0 0 312 2088"/>
+<path class="fg_stroke no_fill" d="M 312 2056 A 4 4 0 0 0 308 2060"/>
 </g>
 <g>
-<line x1="312" x2="408" y1="1896" y2="1896"/>
-<path d="M 412 1900 A 4 4 0 0 0 408 1896" fill="none"/>
+<line class="fg_stroke" x1="310" x2="312" y1="2188" y2="2192"/>
+<path class="fg_stroke no_fill" d="M 312 2208 A 16 16 0 0 0 312 2192"/>
 </g>
 <g>
-<line x1="312" x2="408" y1="1928" y2="1928"/>
-<path d="M 408 1928 A 4 4 0 0 0 412 1924" fill="none"/>
+<line class="fg_stroke" x1="312" x2="336" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 340 1836 A 4 4 0 0 0 336 1832"/>
 </g>
 <g>
-<line x1="312" x2="624" y1="2056" y2="2056"/>
-<path d="M 628 2060 A 4 4 0 0 0 624 2056" fill="none"/>
+<line class="fg_stroke" x1="312" x2="336" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 336 1848 A 4 4 0 0 0 340 1844"/>
 </g>
 <g>
-<line x1="312" x2="624" y1="2088" y2="2088"/>
-<path d="M 624 2088 A 4 4 0 0 0 628 2084" fill="none"/>
+<line class="fg_stroke" x1="312" x2="408" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 412 1900 A 4 4 0 0 0 408 1896"/>
 </g>
 <g>
-<line x1="320" x2="322" y1="544" y2="548"/>
-<path d="M 320 528 A 16 16 0 0 0 320 544" fill="none"/>
+<line class="fg_stroke" x1="312" x2="408" y1="1928" y2="1928"/>
+<path class="fg_stroke no_fill" d="M 408 1928 A 4 4 0 0 0 412 1924"/>
 </g>
 <g>
-<line x1="320" x2="324" y1="2304" y2="2296"/>
-<line x1="324" x2="324" y1="2272" y2="2296"/>
+<line class="fg_stroke" x1="312" x2="624" y1="2056" y2="2056"/>
+<path class="fg_stroke no_fill" d="M 628 2060 A 4 4 0 0 0 624 2056"/>
 </g>
 <g>
-<line x1="322" x2="320" y1="524" y2="528"/>
-<path d="M 328 520 A 8 8 0 0 0 322 524" fill="none"/>
+<line class="fg_stroke" x1="312" x2="624" y1="2088" y2="2088"/>
+<path class="fg_stroke no_fill" d="M 624 2088 A 4 4 0 0 0 628 2084"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="324" x2="324" y1="1856" y2="1884"/>
+<line class="fg_stroke" x1="320" x2="322" y1="544" y2="548"/>
+<path class="fg_stroke no_fill" d="M 320 528 A 16 16 0 0 0 320 544"/>
 </g>
 <g>
-<line x1="324" x2="324" y1="2256" y2="2272"/>
-<line x1="324" x2="328" y1="2256" y2="2256"/>
-<line x1="328" x2="360" y1="2256" y2="2256"/>
-<line x1="360" x2="364" y1="2256" y2="2256"/>
-<line x1="364" x2="364" y1="2256" y2="2272"/>
-<line x1="364" x2="364" y1="2272" y2="2296"/>
+<line class="fg_stroke" x1="320" x2="324" y1="2304" y2="2296"/>
+<line class="fg_stroke" x1="324" x2="324" y1="2272" y2="2296"/>
 </g>
 <g>
-<line x1="324" x2="324" y1="2988" y2="3028"/>
-<path d="M 324 3028 A 4 4 0 0 0 328 3032" fill="none"/>
-<path d="M 328 2984 A 4 4 0 0 0 324 2988" fill="none"/>
+<line class="fg_stroke" x1="322" x2="320" y1="524" y2="528"/>
+<path class="fg_stroke no_fill" d="M 328 520 A 8 8 0 0 0 322 524"/>
 </g>
 <g>
-<line x1="324" x2="324" y1="3100" y2="3140"/>
-<path d="M 324 3140 A 4 4 0 0 0 328 3144" fill="none"/>
-<path d="M 328 3096 A 4 4 0 0 0 324 3100" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="324" x2="324" y1="1856" y2="1884"/>
 </g>
 <g>
-<line x1="324" x2="324" y1="4444" y2="4468"/>
+<line class="fg_stroke" x1="324" x2="324" y1="2256" y2="2272"/>
+<line class="fg_stroke" x1="324" x2="328" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="328" x2="360" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="360" x2="364" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="364" x2="364" y1="2256" y2="2272"/>
+<line class="fg_stroke" x1="364" x2="364" y1="2272" y2="2296"/>
 </g>
 <g>
-<line x1="326" x2="328" y1="2524" y2="2528"/>
-<line x1="328" x2="352" y1="2528" y2="2528"/>
-<line x1="352" x2="354" y1="2528" y2="2532"/>
-<path d="M 326 2524 A 8 8 0 0 0 320 2520" fill="none"/>
-<path d="M 354 2532 A 8 8 0 0 0 360 2536" fill="none"/>
-<line marker-start="url(#open_circle)" x1="300" x2="320" y1="2520" y2="2520"/>
+<line class="fg_stroke" x1="324" x2="324" y1="2988" y2="3028"/>
+<path class="fg_stroke no_fill" d="M 324 3028 A 4 4 0 0 0 328 3032"/>
+<path class="fg_stroke no_fill" d="M 328 2984 A 4 4 0 0 0 324 2988"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="328" x2="332" y1="520" y2="520"/>
+<line class="fg_stroke" x1="324" x2="324" y1="3100" y2="3140"/>
+<path class="fg_stroke no_fill" d="M 324 3140 A 4 4 0 0 0 328 3144"/>
+<path class="fg_stroke no_fill" d="M 328 3096 A 4 4 0 0 0 324 3100"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="328" x2="356" y1="2216" y2="2216"/>
+<line class="fg_stroke" x1="324" x2="324" y1="4444" y2="4468"/>
 </g>
 <g>
-<line x1="328" x2="360" y1="2288" y2="2288"/>
+<line class="fg_stroke" x1="326" x2="328" y1="2524" y2="2528"/>
+<line class="fg_stroke" x1="328" x2="352" y1="2528" y2="2528"/>
+<line class="fg_stroke" x1="352" x2="354" y1="2528" y2="2532"/>
+<path class="fg_stroke no_fill" d="M 326 2524 A 8 8 0 0 0 320 2520"/>
+<path class="fg_stroke no_fill" d="M 354 2532 A 8 8 0 0 0 360 2536"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="300" x2="320" y1="2520" y2="2520"/>
 </g>
 <g>
-<line x1="332" x2="332" y1="1164" y2="1188"/>
-<path d="M 332 1188 A 4 4 0 0 0 336 1192" fill="none"/>
-<path d="M 336 1160 A 4 4 0 0 0 332 1164" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="328" x2="332" y1="520" y2="520"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="332" x2="348" y1="1176" y2="1176"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="328" x2="356" y1="2216" y2="2216"/>
 </g>
 <g>
-<line x1="332" x2="332" y1="2912" y2="2984"/>
-<line x1="332" x2="328" y1="2984" y2="2984"/>
-<line x1="332" x2="336" y1="2984" y2="2984"/>
-<path d="M 340 2988 A 4 4 0 0 0 336 2984" fill="none"/>
+<line class="fg_stroke" x1="328" x2="360" y1="2288" y2="2288"/>
 </g>
 <g>
-<line x1="332" x2="328" y1="3032" y2="3032"/>
-<line x1="332" x2="336" y1="3032" y2="3032"/>
-<path d="M 336 3032 A 4 4 0 0 0 340 3028" fill="none"/>
+<line class="fg_stroke" x1="332" x2="332" y1="1164" y2="1188"/>
+<path class="fg_stroke no_fill" d="M 332 1188 A 4 4 0 0 0 336 1192"/>
+<path class="fg_stroke no_fill" d="M 336 1160 A 4 4 0 0 0 332 1164"/>
 </g>
 <g>
-<line x1="332" x2="328" y1="3096" y2="3096"/>
-<line x1="332" x2="336" y1="3096" y2="3096"/>
-<path d="M 340 3100 A 4 4 0 0 0 336 3096" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="332" x2="348" y1="1176" y2="1176"/>
 </g>
 <g>
-<line x1="332" x2="328" y1="3144" y2="3144"/>
-<line x1="332" x2="332" y1="3144" y2="3172"/>
-<line x1="332" x2="336" y1="3144" y2="3144"/>
-<path d="M 332 3172 A 4 4 0 0 0 336 3176" fill="none"/>
-<path d="M 336 3144 A 4 4 0 0 0 340 3140" fill="none"/>
+<line class="fg_stroke" x1="332" x2="332" y1="2912" y2="2984"/>
+<line class="fg_stroke" x1="332" x2="328" y1="2984" y2="2984"/>
+<line class="fg_stroke" x1="332" x2="336" y1="2984" y2="2984"/>
+<path class="fg_stroke no_fill" d="M 340 2988 A 4 4 0 0 0 336 2984"/>
 </g>
 <g>
-<line x1="336" x2="352" y1="1160" y2="1160"/>
-<path d="M 356 1164 A 4 4 0 0 0 352 1160" fill="none"/>
-<path d="M 360 1160 A 4 4 0 0 0 356 1164" fill="none"/>
+<line class="fg_stroke" x1="332" x2="328" y1="3032" y2="3032"/>
+<line class="fg_stroke" x1="332" x2="336" y1="3032" y2="3032"/>
+<path class="fg_stroke no_fill" d="M 336 3032 A 4 4 0 0 0 340 3028"/>
 </g>
 <g>
-<line x1="336" x2="352" y1="1192" y2="1192"/>
-<path d="M 352 1192 A 4 4 0 0 0 356 1188" fill="none"/>
-<path d="M 356 1188 A 4 4 0 0 0 360 1192" fill="none"/>
+<line class="fg_stroke" x1="332" x2="328" y1="3096" y2="3096"/>
+<line class="fg_stroke" x1="332" x2="336" y1="3096" y2="3096"/>
+<path class="fg_stroke no_fill" d="M 340 3100 A 4 4 0 0 0 336 3096"/>
 </g>
 <g>
-<line x1="336" x2="324" y1="2288" y2="2288"/>
+<line class="fg_stroke" x1="332" x2="328" y1="3144" y2="3144"/>
+<line class="fg_stroke" x1="332" x2="332" y1="3144" y2="3172"/>
+<line class="fg_stroke" x1="332" x2="336" y1="3144" y2="3144"/>
+<path class="fg_stroke no_fill" d="M 332 3172 A 4 4 0 0 0 336 3176"/>
+<path class="fg_stroke no_fill" d="M 336 3144 A 4 4 0 0 0 340 3140"/>
 </g>
 <g>
-<line x1="336" x2="372" y1="2616" y2="2616"/>
-<line x1="372" x2="386" y1="2616" y2="2644"/>
-<line marker-end="url(#triangle)" x1="372" x2="388" y1="2616" y2="2616"/>
-<path d="M 330 2612 A 8 8 0 0 0 336 2616" fill="none"/>
-<path d="M 386 2644 A 8 8 0 0 0 392 2648" fill="none"/>
-<line marker-start="url(#open_circle)" x1="300" x2="330" y1="2552" y2="2612"/>
+<line class="fg_stroke" x1="336" x2="352" y1="1160" y2="1160"/>
+<path class="fg_stroke no_fill" d="M 356 1164 A 4 4 0 0 0 352 1160"/>
+<path class="fg_stroke no_fill" d="M 360 1160 A 4 4 0 0 0 356 1164"/>
 </g>
 <g>
-<line x1="336" x2="368" y1="3176" y2="3176"/>
-<path d="M 368 3176 A 4 4 0 0 0 372 3172" fill="none"/>
-<line marker-start="url(#open_circle)" x1="372" x2="372" y1="3112" y2="3172"/>
-<line marker-start="url(#open_circle)" x1="372" x2="412" y1="3112" y2="3112"/>
+<line class="fg_stroke" x1="336" x2="352" y1="1192" y2="1192"/>
+<path class="fg_stroke no_fill" d="M 352 1192 A 4 4 0 0 0 356 1188"/>
+<path class="fg_stroke no_fill" d="M 356 1188 A 4 4 0 0 0 360 1192"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="1836" y2="1844"/>
+<line class="fg_stroke" x1="336" x2="324" y1="2288" y2="2288"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="1980" y2="2004"/>
-<path d="M 340 2004 A 4 4 0 0 0 344 2008" fill="none"/>
-<path d="M 344 1976 A 4 4 0 0 0 340 1980" fill="none"/>
+<line class="fg_stroke" x1="336" x2="372" y1="2616" y2="2616"/>
+<line class="fg_stroke" x1="372" x2="386" y1="2616" y2="2644"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="372" x2="388" y1="2616" y2="2616"/>
+<path class="fg_stroke no_fill" d="M 330 2612 A 8 8 0 0 0 336 2616"/>
+<path class="fg_stroke no_fill" d="M 386 2644 A 8 8 0 0 0 392 2648"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="300" x2="330" y1="2552" y2="2612"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="2988" y2="3028"/>
+<line class="fg_stroke" x1="336" x2="368" y1="3176" y2="3176"/>
+<path class="fg_stroke no_fill" d="M 368 3176 A 4 4 0 0 0 372 3172"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="372" x2="372" y1="3112" y2="3172"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="372" x2="412" y1="3112" y2="3112"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="3100" y2="3140"/>
+<line class="fg_stroke" x1="340" x2="340" y1="1836" y2="1844"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="3248" y2="3264"/>
+<line class="fg_stroke" x1="340" x2="340" y1="1980" y2="2004"/>
+<path class="fg_stroke no_fill" d="M 340 2004 A 4 4 0 0 0 344 2008"/>
+<path class="fg_stroke no_fill" d="M 344 1976 A 4 4 0 0 0 340 1980"/>
 </g>
 <g>
-<line x1="340" x2="340" y1="4432" y2="4480"/>
+<line class="fg_stroke" x1="340" x2="340" y1="2988" y2="3028"/>
 </g>
 <g>
-<line x1="344" x2="376" y1="408" y2="408"/>
-<path d="M 342 404 A 4 4 0 0 0 344 408" fill="none"/>
-<path d="M 376 408 A 4 4 0 0 0 378 404" fill="none"/>
+<line class="fg_stroke" x1="340" x2="340" y1="3100" y2="3140"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="344" x2="380" y1="440" y2="440"/>
+<line class="fg_stroke" x1="340" x2="340" y1="3248" y2="3264"/>
 </g>
 <g>
-<line x1="344" x2="376" y1="1976" y2="1976"/>
-<path d="M 380 1980 A 4 4 0 0 0 376 1976" fill="none"/>
+<line class="fg_stroke" x1="340" x2="340" y1="4432" y2="4480"/>
 </g>
 <g>
-<line x1="344" x2="376" y1="2008" y2="2008"/>
-<path d="M 376 2008 A 4 4 0 0 0 380 2004" fill="none"/>
+<line class="fg_stroke" x1="344" x2="376" y1="408" y2="408"/>
+<path class="fg_stroke no_fill" d="M 342 404 A 4 4 0 0 0 344 408"/>
+<path class="fg_stroke no_fill" d="M 376 408 A 4 4 0 0 0 378 404"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="344" x2="380" y1="2392" y2="2392"/>
-<path d="M 344 2392 A 8 8 0 0 0 338 2396" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="344" x2="380" y1="440" y2="440"/>
 </g>
 <g>
-<line x1="348" x2="348" y1="1552" y2="1624"/>
-<line marker-end="url(#open_circle)" x1="348" x2="364" y1="1624" y2="1624"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="364" x2="388" y1="1624" y2="1624"/>
-<line marker-start="url(#open_circle)" x1="388" x2="412" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="344" x2="376" y1="1976" y2="1976"/>
+<path class="fg_stroke no_fill" d="M 380 1980 A 4 4 0 0 0 376 1976"/>
 </g>
 <g>
-<line x1="348" x2="348" y1="3248" y2="3264"/>
+<line class="fg_stroke" x1="344" x2="376" y1="2008" y2="2008"/>
+<path class="fg_stroke no_fill" d="M 376 2008 A 4 4 0 0 0 380 2004"/>
 </g>
 <g>
-<line x1="348" x2="368" y1="3256" y2="3256"/>
-<path d="M 372 3260 A 4 4 0 0 0 368 3256" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="344" x2="380" y1="2392" y2="2392"/>
+<path class="fg_stroke no_fill" d="M 344 2392 A 8 8 0 0 0 338 2396"/>
 </g>
 <g>
-<line x1="352" x2="384" y1="456" y2="456"/>
+<line class="fg_stroke" x1="348" x2="348" y1="1552" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="348" x2="364" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="364" x2="388" y1="1624" y2="1624"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="388" x2="412" y1="1624" y2="1624"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="352" x2="348" y1="552" y2="552"/>
-<path d="M 352 552 A 8 8 0 0 0 358 548" fill="none"/>
+<line class="fg_stroke" x1="348" x2="348" y1="3248" y2="3264"/>
 </g>
 <g>
-<line x1="352" x2="364" y1="2288" y2="2288"/>
+<line class="fg_stroke" x1="348" x2="368" y1="3256" y2="3256"/>
+<path class="fg_stroke no_fill" d="M 372 3260 A 4 4 0 0 0 368 3256"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="352" x2="396" y1="2680" y2="2680"/>
-<path d="M 346 2676 A 8 8 0 0 0 352 2680" fill="none"/>
-<line marker-start="url(#open_circle)" x1="292" x2="346" y1="2568" y2="2676"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="352" x2="348" y1="456" y2="456"/>
+<line class="fg_stroke" x1="352" x2="384" y1="456" y2="456"/>
 </g>
 <g>
-<line x1="356" x2="356" y1="1164" y2="1188"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="352" x2="348" y1="552" y2="552"/>
+<path class="fg_stroke no_fill" d="M 352 552 A 8 8 0 0 0 358 548"/>
 </g>
 <g>
-<line x1="356" x2="356" y1="3040" y2="3064"/>
-<line x1="356" x2="356" y1="3064" y2="3088"/>
-<line marker-end="url(#triangle)" x1="356" x2="368" y1="3064" y2="3076"/>
-<line x1="372" x2="356" y1="3032" y2="3064"/>
+<line class="fg_stroke" x1="352" x2="364" y1="2288" y2="2288"/>
 </g>
 <g>
-<line x1="358" x2="360" y1="524" y2="528"/>
-<path d="M 360 544 A 16 16 0 0 0 360 528" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="352" x2="396" y1="2680" y2="2680"/>
+<path class="fg_stroke no_fill" d="M 346 2676 A 8 8 0 0 0 352 2680"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="292" x2="346" y1="2568" y2="2676"/>
 </g>
 <g>
-<line x1="358" x2="360" y1="548" y2="544"/>
+<line class="fg_stroke" x1="356" x2="356" y1="1164" y2="1188"/>
 </g>
 <g>
-<line x1="360" x2="342" y1="368" y2="404"/>
-<line x1="360" x2="378" y1="368" y2="404"/>
+<line class="fg_stroke" x1="356" x2="356" y1="3040" y2="3064"/>
+<line class="fg_stroke" x1="356" x2="356" y1="3064" y2="3088"/>
+<line class="fg_stroke" x1="356" x2="368" y1="3064" y2="3040"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="356" x2="368" y1="3064" y2="3076"/>
+<line class="fg_stroke" x1="372" x2="368" y1="3032" y2="3040"/>
 </g>
 <g>
-<line x1="360" x2="368" y1="1160" y2="1160"/>
-<path d="M 372 1164 A 4 4 0 0 0 368 1160" fill="none"/>
+<line class="fg_stroke" x1="358" x2="360" y1="524" y2="528"/>
+<path class="fg_stroke no_fill" d="M 360 544 A 16 16 0 0 0 360 528"/>
 </g>
 <g>
-<line x1="360" x2="368" y1="1192" y2="1192"/>
-<path d="M 368 1192 A 4 4 0 0 0 372 1188" fill="none"/>
+<line class="fg_stroke" x1="358" x2="360" y1="548" y2="544"/>
 </g>
 <g>
-<line x1="360" x2="364" y1="2304" y2="2296"/>
+<line class="fg_stroke" x1="360" x2="342" y1="368" y2="404"/>
+<line class="fg_stroke" x1="360" x2="378" y1="368" y2="404"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="360" x2="380" y1="2360" y2="2360"/>
-<path d="M 360 2360 A 8 8 0 0 0 354 2364" fill="none"/>
+<line class="fg_stroke" x1="360" x2="368" y1="1160" y2="1160"/>
+<path class="fg_stroke no_fill" d="M 372 1164 A 4 4 0 0 0 368 1160"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="360" x2="396" y1="2536" y2="2536"/>
-<line marker-end="url(#triangle)" marker-start="url(#circle)" x1="396" x2="428" y1="2536" y2="2536"/>
+<line class="fg_stroke" x1="360" x2="368" y1="1192" y2="1192"/>
+<path class="fg_stroke no_fill" d="M 368 1192 A 4 4 0 0 0 372 1188"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="360" x2="380" y1="2728" y2="2728"/>
-<path d="M 354 2724 A 8 8 0 0 0 360 2728" fill="none"/>
-<line marker-start="url(#open_circle)" x1="276" x2="354" y1="2568" y2="2724"/>
+<line class="fg_stroke" x1="360" x2="364" y1="2304" y2="2296"/>
 </g>
 <g>
-<line x1="364" x2="364" y1="1836" y2="1844"/>
-<path d="M 364 1844 A 4 4 0 0 0 368 1848" fill="none"/>
-<path d="M 368 1832 A 4 4 0 0 0 364 1836" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="360" x2="380" y1="2360" y2="2360"/>
+<path class="fg_stroke no_fill" d="M 360 2360 A 8 8 0 0 0 354 2364"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="364" x2="364" y1="1936" y2="1964"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="360" x2="396" y1="2536" y2="2536"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#circle)" x1="396" x2="428" y1="2536" y2="2536"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="364" x2="364" y1="2016" y2="2044"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="360" x2="380" y1="2728" y2="2728"/>
+<path class="fg_stroke no_fill" d="M 354 2724 A 8 8 0 0 0 360 2728"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="276" x2="354" y1="2568" y2="2724"/>
 </g>
 <g>
-<line x1="364" x2="364" y1="2208" y2="2224"/>
-<line x1="364" x2="376" y1="2224" y2="2224"/>
-<line x1="368" x2="364" y1="2208" y2="2208"/>
-<line x1="368" x2="448" y1="2208" y2="2208"/>
-<line x1="378" x2="376" y1="2220" y2="2224"/>
-<line x1="448" x2="452" y1="2208" y2="2208"/>
-<line x1="452" x2="452" y1="2208" y2="2224"/>
-<line x1="452" x2="448" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="364" x2="364" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 364 1844 A 4 4 0 0 0 368 1848"/>
+<path class="fg_stroke no_fill" d="M 368 1832 A 4 4 0 0 0 364 1836"/>
 </g>
 <g>
-<line x1="364" x2="364" y1="4444" y2="4468"/>
-<path d="M 364 4468 A 4 4 0 0 0 368 4472" fill="none"/>
-<path d="M 368 4440 A 4 4 0 0 0 364 4444" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="364" x2="364" y1="1936" y2="1964"/>
 </g>
 <g>
-<line x1="368" x2="392" y1="1832" y2="1832"/>
-<path d="M 396 1836 A 4 4 0 0 0 392 1832" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="364" x2="364" y1="2016" y2="2044"/>
 </g>
 <g>
-<line x1="368" x2="392" y1="1848" y2="1848"/>
-<path d="M 392 1848 A 4 4 0 0 0 396 1844" fill="none"/>
+<line class="fg_stroke" x1="364" x2="364" y1="2208" y2="2224"/>
+<line class="fg_stroke" x1="364" x2="376" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="368" x2="364" y1="2208" y2="2208"/>
+<line class="fg_stroke" x1="368" x2="448" y1="2208" y2="2208"/>
+<line class="fg_stroke" x1="378" x2="376" y1="2220" y2="2224"/>
+<line class="fg_stroke" x1="448" x2="452" y1="2208" y2="2208"/>
+<line class="fg_stroke" x1="452" x2="452" y1="2208" y2="2224"/>
+<line class="fg_stroke" x1="452" x2="448" y1="2224" y2="2224"/>
 </g>
 <g>
-<line x1="368" x2="408" y1="4440" y2="4440"/>
-<path d="M 412 4444 A 4 4 0 0 0 408 4440" fill="none"/>
+<line class="fg_stroke" x1="364" x2="364" y1="4444" y2="4468"/>
+<path class="fg_stroke no_fill" d="M 364 4468 A 4 4 0 0 0 368 4472"/>
+<path class="fg_stroke no_fill" d="M 368 4440 A 4 4 0 0 0 364 4444"/>
 </g>
 <g>
-<line x1="368" x2="408" y1="4472" y2="4472"/>
-<path d="M 408 4472 A 4 4 0 0 0 412 4468" fill="none"/>
+<line class="fg_stroke" x1="368" x2="392" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 396 1836 A 4 4 0 0 0 392 1832"/>
 </g>
 <g>
-<line x1="372" x2="372" y1="1164" y2="1188"/>
+<line class="fg_stroke" x1="368" x2="392" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 392 1848 A 4 4 0 0 0 396 1844"/>
 </g>
 <g>
-<line x1="372" x2="372" y1="2912" y2="3032"/>
+<line class="fg_stroke" x1="368" x2="408" y1="4440" y2="4440"/>
+<path class="fg_stroke no_fill" d="M 412 4444 A 4 4 0 0 0 408 4440"/>
 </g>
 <g>
-<line x1="372" x2="372" y1="3104" y2="3080"/>
-<line marker-start="url(#open_circle)" x1="372" x2="372" y1="3112" y2="3104"/>
+<line class="fg_stroke" x1="368" x2="408" y1="4472" y2="4472"/>
+<path class="fg_stroke no_fill" d="M 408 4472 A 4 4 0 0 0 412 4468"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="380" x2="380" y1="1856" y2="1884"/>
+<line class="fg_stroke" x1="372" x2="372" y1="1164" y2="1188"/>
 </g>
 <g>
-<line x1="380" x2="380" y1="1980" y2="2004"/>
+<line class="fg_stroke" x1="372" x2="372" y1="2912" y2="3024"/>
+<line class="fg_stroke" x1="372" x2="372" y1="3024" y2="3032"/>
 </g>
 <g>
-<line x1="380" x2="380" y1="2256" y2="2272"/>
-<line x1="380" x2="384" y1="2256" y2="2256"/>
-<line x1="380" x2="380" y1="2272" y2="2304"/>
-<line x1="380" x2="404" y1="2304" y2="2304"/>
-<line x1="384" x2="400" y1="2256" y2="2256"/>
-<line x1="400" x2="404" y1="2256" y2="2256"/>
-<line x1="404" x2="404" y1="2256" y2="2272"/>
-<line x1="404" x2="404" y1="2272" y2="2304"/>
+<line class="fg_stroke" x1="372" x2="372" y1="3104" y2="3080"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="372" x2="372" y1="3112" y2="3104"/>
 </g>
 <g>
-<line x1="384" x2="400" y1="2262" y2="2262"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="380" x2="380" y1="1856" y2="1884"/>
 </g>
 <g>
-<line x1="384" x2="400" y1="2266" y2="2266"/>
+<line class="fg_stroke" x1="380" x2="380" y1="1980" y2="2004"/>
 </g>
 <g>
-<line x1="384" x2="400" y1="2304" y2="2304"/>
+<line class="fg_stroke" x1="380" x2="380" y1="2256" y2="2272"/>
+<line class="fg_stroke" x1="380" x2="384" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="380" x2="380" y1="2272" y2="2304"/>
+<line class="fg_stroke" x1="380" x2="404" y1="2304" y2="2304"/>
+<line class="fg_stroke" x1="384" x2="400" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="400" x2="404" y1="2256" y2="2256"/>
+<line class="fg_stroke" x1="404" x2="404" y1="2256" y2="2272"/>
+<line class="fg_stroke" x1="404" x2="404" y1="2272" y2="2304"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="384" x2="388" y1="2728" y2="2728"/>
+<line class="fg_stroke" x1="384" x2="400" y1="2262" y2="2262"/>
 </g>
 <g>
-<line x1="392" x2="424" y1="1992" y2="1992"/>
-<path d="M 424 1992 A 4 4 0 0 0 428 1988" fill="none"/>
+<line class="fg_stroke" x1="384" x2="400" y1="2266" y2="2266"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="392" x2="428" y1="2648" y2="2648"/>
+<line class="fg_stroke" x1="384" x2="400" y1="2304" y2="2304"/>
 </g>
 <g>
-<line x1="396" x2="396" y1="1836" y2="1844"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="384" x2="388" y1="2728" y2="2728"/>
 </g>
 <g>
-<line x1="398" x2="400" y1="2220" y2="2224"/>
-<line x1="400" x2="416" y1="2224" y2="2224"/>
-<line x1="418" x2="416" y1="2220" y2="2224"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="392" x2="388" y1="1992" y2="1992"/>
+<line class="fg_stroke" x1="392" x2="424" y1="1992" y2="1992"/>
+<path class="fg_stroke no_fill" d="M 424 1992 A 4 4 0 0 0 428 1988"/>
 </g>
 <g>
-<line x1="404" x2="404" y1="3372" y2="3412"/>
-<path d="M 404 3412 A 4 4 0 0 0 408 3416" fill="none"/>
-<path d="M 408 3368 A 4 4 0 0 0 404 3372" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="392" x2="428" y1="2648" y2="2648"/>
 </g>
 <g>
-<line x1="408" x2="418" y1="1184" y2="1204"/>
-<path d="M 408 1168 A 16 16 0 0 0 408 1184" fill="none"/>
-<path d="M 418 1204 A 8 8 0 0 0 424 1208" fill="none"/>
+<line class="fg_stroke" x1="396" x2="396" y1="1836" y2="1844"/>
 </g>
 <g>
-<line x1="408" x2="418" y1="2400" y2="2420"/>
-<path d="M 418 2420 A 8 8 0 0 0 424 2424" fill="none"/>
+<line class="fg_stroke" x1="398" x2="400" y1="2220" y2="2224"/>
+<line class="fg_stroke" x1="400" x2="416" y1="2224" y2="2224"/>
+<line class="fg_stroke" x1="418" x2="416" y1="2220" y2="2224"/>
 </g>
 <g>
-<line x1="412" x2="408" y1="1176" y2="1176"/>
-<line x1="412" x2="416" y1="1176" y2="1176"/>
-<line x1="412" x2="424" y1="1176" y2="1152"/>
-<line x1="412" x2="424" y1="1176" y2="1200"/>
+<line class="fg_stroke" x1="404" x2="404" y1="3372" y2="3412"/>
+<path class="fg_stroke no_fill" d="M 404 3412 A 4 4 0 0 0 408 3416"/>
+<path class="fg_stroke no_fill" d="M 408 3368 A 4 4 0 0 0 404 3372"/>
 </g>
 <g>
-<line x1="412" x2="436" y1="1624" y2="1624"/>
-<line x1="436" x2="460" y1="1624" y2="1624"/>
-<line x1="460" x2="484" y1="1624" y2="1624"/>
-<line x1="484" x2="508" y1="1624" y2="1624"/>
-<line x1="508" x2="532" y1="1624" y2="1624"/>
-<line x1="532" x2="556" y1="1624" y2="1624"/>
-<line x1="556" x2="580" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="408" x2="416" y1="1184" y2="1200"/>
+<line class="fg_stroke" x1="416" x2="418" y1="1200" y2="1204"/>
+<path class="fg_stroke no_fill" d="M 408 1168 A 16 16 0 0 0 408 1184"/>
+<path class="fg_stroke no_fill" d="M 418 1204 A 8 8 0 0 0 424 1208"/>
 </g>
 <g>
-<line x1="412" x2="412" y1="1836" y2="1844"/>
-<path d="M 412 1844 A 4 4 0 0 0 416 1848" fill="none"/>
-<path d="M 416 1832 A 4 4 0 0 0 412 1836" fill="none"/>
+<line class="fg_stroke" x1="408" x2="418" y1="2400" y2="2420"/>
+<path class="fg_stroke no_fill" d="M 418 2420 A 8 8 0 0 0 424 2424"/>
 </g>
 <g>
-<line x1="412" x2="412" y1="1900" y2="1924"/>
+<line class="fg_stroke" x1="412" x2="408" y1="1176" y2="1176"/>
+<line class="fg_stroke" x1="412" x2="416" y1="1176" y2="1176"/>
+<line class="fg_stroke" x1="412" x2="424" y1="1176" y2="1152"/>
+<line class="fg_stroke" x1="412" x2="424" y1="1176" y2="1200"/>
 </g>
 <g>
-<line x1="412" x2="412" y1="3104" y2="3152"/>
+<line class="fg_stroke" x1="412" x2="436" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="436" x2="460" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="460" x2="484" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="484" x2="508" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="508" x2="532" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="532" x2="556" y1="1624" y2="1624"/>
+<line class="fg_stroke" x1="556" x2="580" y1="1624" y2="1624"/>
 </g>
 <g>
-<line x1="412" x2="408" y1="3368" y2="3368"/>
-<line x1="412" x2="416" y1="3368" y2="3368"/>
-<path d="M 420 3372 A 4 4 0 0 0 416 3368" fill="none"/>
-<line marker-start="url(#open_circle)" x1="412" x2="412" y1="3336" y2="3368"/>
-<line marker-start="url(#open_circle)" x1="412" x2="432" y1="3336" y2="3336"/>
+<line class="fg_stroke" x1="412" x2="412" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 412 1844 A 4 4 0 0 0 416 1848"/>
+<path class="fg_stroke no_fill" d="M 416 1832 A 4 4 0 0 0 412 1836"/>
 </g>
 <g>
-<line x1="412" x2="408" y1="3416" y2="3416"/>
-<line x1="412" x2="412" y1="3416" y2="3440"/>
-<line x1="412" x2="416" y1="3416" y2="3416"/>
-<path d="M 416 3416 A 4 4 0 0 0 420 3412" fill="none"/>
+<line class="fg_stroke" x1="412" x2="412" y1="1900" y2="1924"/>
 </g>
 <g>
-<line x1="412" x2="412" y1="4444" y2="4468"/>
+<line class="fg_stroke" x1="412" x2="412" y1="3104" y2="3152"/>
 </g>
 <g>
-<line x1="416" x2="440" y1="1832" y2="1832"/>
-<path d="M 444 1836 A 4 4 0 0 0 440 1832" fill="none"/>
+<line class="fg_stroke" x1="412" x2="408" y1="3368" y2="3368"/>
+<line class="fg_stroke" x1="412" x2="416" y1="3368" y2="3368"/>
+<path class="fg_stroke no_fill" d="M 420 3372 A 4 4 0 0 0 416 3368"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="412" x2="412" y1="3336" y2="3368"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="412" x2="432" y1="3336" y2="3336"/>
 </g>
 <g>
-<line x1="416" x2="440" y1="1848" y2="1848"/>
-<path d="M 440 1848 A 4 4 0 0 0 444 1844" fill="none"/>
+<line class="fg_stroke" x1="412" x2="408" y1="3416" y2="3416"/>
+<line class="fg_stroke" x1="412" x2="412" y1="3416" y2="3440"/>
+<line class="fg_stroke" x1="412" x2="416" y1="3416" y2="3416"/>
+<path class="fg_stroke no_fill" d="M 416 3416 A 4 4 0 0 0 420 3412"/>
 </g>
 <g>
-<line x1="418" x2="408" y1="1148" y2="1168"/>
-<path d="M 424 1144 A 8 8 0 0 0 418 1148" fill="none"/>
+<line class="fg_stroke" x1="412" x2="412" y1="4444" y2="4468"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="420" x2="420" y1="432" y2="476"/>
+<line class="fg_stroke" x1="416" x2="440" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 444 1836 A 4 4 0 0 0 440 1832"/>
 </g>
 <g>
-<line x1="420" x2="420" y1="3104" y2="3128"/>
-<line x1="420" x2="420" y1="3128" y2="3152"/>
-<line marker-end="url(#triangle)" x1="420" x2="436" y1="3128" y2="3128"/>
+<line class="fg_stroke" x1="416" x2="440" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 440 1848 A 4 4 0 0 0 444 1844"/>
 </g>
 <g>
-<line x1="420" x2="436" y1="3112" y2="3112"/>
-<line x1="436" x2="436" y1="3072" y2="3112"/>
+<line class="fg_stroke" x1="418" x2="408" y1="1148" y2="1168"/>
+<path class="fg_stroke no_fill" d="M 424 1144 A 8 8 0 0 0 418 1148"/>
 </g>
 <g>
-<line x1="420" x2="436" y1="3144" y2="3144"/>
-<line marker-end="url(#open_circle)" x1="436" x2="436" y1="3144" y2="3176"/>
-<line marker-start="url(#open_circle)" x1="436" x2="436" y1="3176" y2="3200"/>
-<line marker-start="url(#open_circle)" x1="436" x2="460" y1="3176" y2="3176"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="420" x2="420" y1="432" y2="476"/>
 </g>
 <g>
-<line x1="420" x2="420" y1="3372" y2="3412"/>
+<line class="fg_stroke" x1="420" x2="420" y1="3104" y2="3128"/>
+<line class="fg_stroke" x1="420" x2="420" y1="3128" y2="3152"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="420" x2="436" y1="3128" y2="3128"/>
 </g>
 <g>
-<line x1="424" x2="440" y1="1144" y2="1144"/>
-<path d="M 446 1148 A 8 8 0 0 0 440 1144" fill="none"/>
+<line class="fg_stroke" x1="420" x2="436" y1="3112" y2="3112"/>
+<line class="fg_stroke" x1="436" x2="436" y1="3072" y2="3112"/>
 </g>
 <g>
-<line marker-end="url(#circle)" x1="424" x2="436" y1="1176" y2="1176"/>
-<line marker-start="url(#circle)" x1="436" x2="448" y1="1176" y2="1176"/>
+<line class="fg_stroke" x1="420" x2="436" y1="3144" y2="3144"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="436" x2="436" y1="3144" y2="3176"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="436" x2="436" y1="3176" y2="3200"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="436" x2="460" y1="3176" y2="3176"/>
 </g>
 <g>
-<line x1="424" x2="440" y1="1208" y2="1208"/>
-<path d="M 440 1208 A 8 8 0 0 0 446 1204" fill="none"/>
+<line class="fg_stroke" x1="420" x2="420" y1="3372" y2="3412"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="424" x2="452" y1="2424" y2="2424"/>
+<line class="fg_stroke" x1="424" x2="440" y1="1144" y2="1144"/>
+<path class="fg_stroke no_fill" d="M 446 1148 A 8 8 0 0 0 440 1144"/>
 </g>
 <g>
-<line x1="424" x2="434" y1="2432" y2="2452"/>
-<path d="M 434 2452 A 8 8 0 0 0 440 2456" fill="none"/>
+<line class="fg_stroke" marker-end="url(#circle)" x1="424" x2="436" y1="1176" y2="1176"/>
+<line class="fg_stroke" marker-start="url(#circle)" x1="436" x2="448" y1="1176" y2="1176"/>
 </g>
 <g>
-<line x1="428" x2="420" y1="384" y2="392"/>
-<line x1="428" x2="436" y1="384" y2="376"/>
-<line x1="428" x2="420" y1="400" y2="392"/>
-<line x1="428" x2="436" y1="400" y2="408"/>
-<line x1="444" x2="436" y1="368" y2="376"/>
-<line x1="444" x2="452" y1="368" y2="360"/>
-<line x1="444" x2="436" y1="416" y2="408"/>
-<line x1="444" x2="452" y1="416" y2="424"/>
-<line x1="460" x2="452" y1="368" y2="360"/>
-<line x1="460" x2="468" y1="368" y2="376"/>
-<line x1="460" x2="452" y1="416" y2="424"/>
-<line x1="460" x2="468" y1="416" y2="408"/>
-<line x1="476" x2="468" y1="384" y2="376"/>
-<line x1="476" x2="484" y1="384" y2="392"/>
-<line x1="476" x2="468" y1="400" y2="408"/>
-<line x1="476" x2="484" y1="400" y2="392"/>
+<line class="fg_stroke" x1="424" x2="440" y1="1208" y2="1208"/>
+<path class="fg_stroke no_fill" d="M 440 1208 A 8 8 0 0 0 446 1204"/>
 </g>
 <g>
-<line x1="428" x2="428" y1="1856" y2="1988"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="424" x2="452" y1="2424" y2="2424"/>
 </g>
 <g>
-<line x1="428" x2="428" y1="2972" y2="2980"/>
-<path d="M 428 2980 A 4 4 0 0 0 432 2984" fill="none"/>
-<path d="M 432 2968 A 4 4 0 0 0 428 2972" fill="none"/>
+<line class="fg_stroke" x1="424" x2="434" y1="2432" y2="2452"/>
+<path class="fg_stroke no_fill" d="M 434 2452 A 8 8 0 0 0 440 2456"/>
 </g>
 <g>
-<line x1="432" x2="440" y1="2984" y2="2984"/>
-<path d="M 440 2984 A 4 4 0 0 0 444 2980" fill="none"/>
+<line class="fg_stroke" x1="428" x2="420" y1="384" y2="392"/>
+<line class="fg_stroke" x1="428" x2="436" y1="384" y2="376"/>
+<line class="fg_stroke" x1="428" x2="420" y1="400" y2="392"/>
+<line class="fg_stroke" x1="428" x2="436" y1="400" y2="408"/>
+<line class="fg_stroke" x1="444" x2="436" y1="368" y2="376"/>
+<line class="fg_stroke" x1="444" x2="452" y1="368" y2="360"/>
+<line class="fg_stroke" x1="444" x2="436" y1="416" y2="408"/>
+<line class="fg_stroke" x1="444" x2="452" y1="416" y2="424"/>
+<line class="fg_stroke" x1="460" x2="452" y1="368" y2="360"/>
+<line class="fg_stroke" x1="460" x2="468" y1="368" y2="376"/>
+<line class="fg_stroke" x1="460" x2="452" y1="416" y2="424"/>
+<line class="fg_stroke" x1="460" x2="468" y1="416" y2="408"/>
+<line class="fg_stroke" x1="476" x2="468" y1="384" y2="376"/>
+<line class="fg_stroke" x1="476" x2="484" y1="384" y2="392"/>
+<line class="fg_stroke" x1="476" x2="468" y1="400" y2="408"/>
+<line class="fg_stroke" x1="476" x2="484" y1="400" y2="392"/>
 </g>
 <g>
-<line x1="436" x2="436" y1="448" y2="480"/>
+<line class="fg_stroke" x1="428" x2="428" y1="1856" y2="1988"/>
 </g>
 <g>
-<line x1="436" x2="436" y1="2908" y2="2912"/>
-<line x1="436" x2="436" y1="2912" y2="2968"/>
-<line x1="436" x2="432" y1="2968" y2="2968"/>
-<line x1="436" x2="440" y1="2968" y2="2968"/>
-<path d="M 436 2908 A 4 4 0 0 0 432 2904" fill="none"/>
-<path d="M 444 2972 A 4 4 0 0 0 440 2968" fill="none"/>
+<line class="fg_stroke" x1="428" x2="428" y1="2972" y2="2980"/>
+<path class="fg_stroke no_fill" d="M 428 2980 A 4 4 0 0 0 432 2984"/>
+<path class="fg_stroke no_fill" d="M 432 2968 A 4 4 0 0 0 428 2972"/>
 </g>
 <g>
-<line x1="436" x2="436" y1="2992" y2="3072"/>
+<line class="fg_stroke" x1="432" x2="440" y1="2984" y2="2984"/>
+<path class="fg_stroke no_fill" d="M 440 2984 A 4 4 0 0 0 444 2980"/>
 </g>
 <g>
-<line x1="436" x2="436" y1="3248" y2="3264"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="436" x2="436" y1="448" y2="436"/>
+<line class="fg_stroke" x1="436" x2="436" y1="448" y2="480"/>
 </g>
 <g>
-<line x1="436" x2="436" y1="3328" y2="3344"/>
-<line x1="436" x2="440" y1="3328" y2="3328"/>
-<line x1="440" x2="464" y1="3328" y2="3328"/>
-<line x1="448" x2="436" y1="3344" y2="3344"/>
-<line x1="464" x2="468" y1="3328" y2="3328"/>
-<line x1="468" x2="468" y1="3328" y2="3344"/>
+<line class="fg_stroke" x1="436" x2="436" y1="2908" y2="2912"/>
+<line class="fg_stroke" x1="436" x2="436" y1="2912" y2="2968"/>
+<line class="fg_stroke" x1="436" x2="432" y1="2968" y2="2968"/>
+<line class="fg_stroke" x1="436" x2="440" y1="2968" y2="2968"/>
+<path class="fg_stroke no_fill" d="M 436 2908 A 4 4 0 0 0 432 2904"/>
+<path class="fg_stroke no_fill" d="M 444 2972 A 4 4 0 0 0 440 2968"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="440" x2="460" y1="2456" y2="2456"/>
+<line class="fg_stroke" x1="436" x2="436" y1="2992" y2="3072"/>
 </g>
 <g>
-<line x1="440" x2="464" y1="3344" y2="3344"/>
+<line class="fg_stroke" x1="436" x2="436" y1="3248" y2="3264"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="440" x2="556" y1="4456" y2="4456"/>
+<line class="fg_stroke" x1="436" x2="436" y1="3328" y2="3344"/>
+<line class="fg_stroke" x1="436" x2="440" y1="3328" y2="3328"/>
+<line class="fg_stroke" x1="440" x2="464" y1="3328" y2="3328"/>
+<line class="fg_stroke" x1="448" x2="436" y1="3344" y2="3344"/>
+<line class="fg_stroke" x1="464" x2="468" y1="3328" y2="3328"/>
+<line class="fg_stroke" x1="468" x2="468" y1="3328" y2="3344"/>
 </g>
 <g>
-<line x1="444" x2="444" y1="1836" y2="1844"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="440" x2="460" y1="2456" y2="2456"/>
 </g>
 <g>
-<line x1="444" x2="444" y1="1900" y2="1924"/>
-<path d="M 444 1924 A 4 4 0 0 0 448 1928" fill="none"/>
-<path d="M 448 1896 A 4 4 0 0 0 444 1900" fill="none"/>
+<line class="fg_stroke" x1="440" x2="464" y1="3344" y2="3344"/>
 </g>
 <g>
-<line x1="444" x2="444" y1="2972" y2="2980"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="440" x2="556" y1="4456" y2="4456"/>
 </g>
 <g>
-<line x1="444" x2="444" y1="3200" y2="3248"/>
+<line class="fg_stroke" x1="444" x2="444" y1="1836" y2="1844"/>
 </g>
 <g>
-<line x1="446" x2="456" y1="1148" y2="1168"/>
-<path d="M 456 1184 A 16 16 0 0 0 456 1168" fill="none"/>
+<line class="fg_stroke" x1="444" x2="444" y1="1900" y2="1924"/>
+<path class="fg_stroke no_fill" d="M 444 1924 A 4 4 0 0 0 448 1928"/>
+<path class="fg_stroke no_fill" d="M 448 1896 A 4 4 0 0 0 444 1900"/>
 </g>
 <g>
-<line x1="446" x2="448" y1="1204" y2="1200"/>
-<line x1="448" x2="456" y1="1200" y2="1184"/>
+<line class="fg_stroke" x1="444" x2="444" y1="2972" y2="2980"/>
 </g>
 <g>
-<line x1="448" x2="464" y1="528" y2="560"/>
+<line class="fg_stroke" x1="444" x2="444" y1="3200" y2="3248"/>
 </g>
 <g>
-<line x1="448" x2="536" y1="1896" y2="1896"/>
-<path d="M 540 1900 A 4 4 0 0 0 536 1896" fill="none"/>
+<line class="fg_stroke" x1="446" x2="456" y1="1148" y2="1168"/>
+<path class="fg_stroke no_fill" d="M 456 1184 A 16 16 0 0 0 456 1168"/>
 </g>
 <g>
-<line x1="448" x2="536" y1="1928" y2="1928"/>
-<path d="M 536 1928 A 4 4 0 0 0 540 1924" fill="none"/>
+<line class="fg_stroke" x1="446" x2="448" y1="1204" y2="1200"/>
+<line class="fg_stroke" x1="448" x2="456" y1="1200" y2="1184"/>
 </g>
 <g>
-<line x1="454" x2="464" y1="2540" y2="2560"/>
-<line x1="464" x2="520" y1="2560" y2="2560"/>
-<line x1="530" x2="520" y1="2540" y2="2560"/>
-<path d="M 454 2532 A 16 16 0 0 0 454 2540" fill="none"/>
-<path d="M 530 2540 A 16 16 0 0 0 530 2532" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="448" x2="442" y1="528" y2="516"/>
+<line class="fg_stroke" x1="448" x2="464" y1="528" y2="560"/>
 </g>
 <g>
-<line x1="456" x2="468" y1="3344" y2="3344"/>
+<line class="fg_stroke" x1="448" x2="536" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 540 1900 A 4 4 0 0 0 536 1896"/>
 </g>
 <g>
-<line x1="460" x2="460" y1="3168" y2="3184"/>
+<line class="fg_stroke" x1="448" x2="536" y1="1928" y2="1928"/>
+<path class="fg_stroke no_fill" d="M 536 1928 A 4 4 0 0 0 540 1924"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="464" x2="486" y1="512" y2="556"/>
+<line class="fg_stroke" x1="454" x2="464" y1="2540" y2="2560"/>
+<line class="fg_stroke" x1="464" x2="520" y1="2560" y2="2560"/>
+<line class="fg_stroke" x1="530" x2="520" y1="2540" y2="2560"/>
+<path class="fg_stroke no_fill" d="M 454 2532 A 16 16 0 0 0 454 2540"/>
+<path class="fg_stroke no_fill" d="M 530 2540 A 16 16 0 0 0 530 2532"/>
 </g>
 <g>
-<line x1="464" x2="454" y1="2512" y2="2532"/>
-<line x1="464" x2="520" y1="2512" y2="2512"/>
-<line x1="520" x2="530" y1="2512" y2="2532"/>
+<line class="fg_stroke" x1="456" x2="468" y1="3344" y2="3344"/>
 </g>
 <g>
-<line x1="468" x2="468" y1="1836" y2="1844"/>
-<path d="M 468 1844 A 4 4 0 0 0 472 1848" fill="none"/>
-<path d="M 472 1832 A 4 4 0 0 0 468 1836" fill="none"/>
+<line class="fg_stroke" x1="460" x2="460" y1="3168" y2="3184"/>
 </g>
 <g>
-<line x1="472" x2="488" y1="464" y2="432"/>
-<line marker-end="url(#triangle)" x1="488" x2="494" y1="432" y2="420"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="464" x2="486" y1="512" y2="556"/>
 </g>
 <g>
-<line x1="472" x2="496" y1="1832" y2="1832"/>
-<path d="M 500 1836 A 4 4 0 0 0 496 1832" fill="none"/>
+<line class="fg_stroke" x1="464" x2="454" y1="2512" y2="2532"/>
+<line class="fg_stroke" x1="464" x2="520" y1="2512" y2="2512"/>
+<line class="fg_stroke" x1="520" x2="530" y1="2512" y2="2532"/>
 </g>
 <g>
-<line x1="472" x2="496" y1="1848" y2="1848"/>
-<path d="M 496 1848 A 4 4 0 0 0 500 1844" fill="none"/>
+<line class="fg_stroke" x1="468" x2="468" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 468 1844 A 4 4 0 0 0 472 1848"/>
+<path class="fg_stroke no_fill" d="M 472 1832 A 4 4 0 0 0 468 1836"/>
 </g>
 <g>
-<line x1="472" x2="480" y1="3336" y2="3336"/>
-<path d="M 480 3336 A 4 4 0 0 0 484 3332" fill="none"/>
+<line class="fg_stroke" x1="472" x2="488" y1="464" y2="432"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="488" x2="494" y1="432" y2="420"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="484" x2="484" y1="1856" y2="1884"/>
+<line class="fg_stroke" x1="472" x2="496" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 500 1836 A 4 4 0 0 0 496 1832"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="484" x2="484" y1="1936" y2="2044"/>
+<line class="fg_stroke" x1="472" x2="496" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 496 1848 A 4 4 0 0 0 500 1844"/>
 </g>
 <g>
-<line x1="484" x2="484" y1="3332" y2="3328"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="472" x2="468" y1="3176" y2="3176"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="472" x2="484" y1="3176" y2="3176"/>
 </g>
 <g>
-<line x1="500" x2="500" y1="1836" y2="1844"/>
+<line class="fg_stroke" x1="472" x2="480" y1="3336" y2="3336"/>
+<path class="fg_stroke no_fill" d="M 480 3336 A 4 4 0 0 0 484 3332"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="504" x2="490" y1="432" y2="460"/>
-<line x1="504" x2="512" y1="432" y2="416"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="484" x2="484" y1="1856" y2="1884"/>
 </g>
 <g>
-<line x1="512" x2="536" y1="3224" y2="3224"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="484" x2="484" y1="1936" y2="2044"/>
 </g>
 <g>
-<line marker-end="url(#square)" marker-start="url(#square)" x1="516" x2="524" y1="3240" y2="3240"/>
-<line marker-start="url(#square)" x1="524" x2="524" y1="3240" y2="3264"/>
-<line marker-end="url(#square)" marker-start="url(#square)" x1="524" x2="532" y1="3240" y2="3240"/>
+<line class="fg_stroke" x1="484" x2="484" y1="3332" y2="3328"/>
 </g>
 <g>
-<line x1="524" x2="524" y1="1980" y2="2004"/>
-<path d="M 524 2004 A 4 4 0 0 0 528 2008" fill="none"/>
-<path d="M 528 1976 A 4 4 0 0 0 524 1980" fill="none"/>
+<line class="fg_stroke" x1="500" x2="500" y1="1836" y2="1844"/>
 </g>
 <g>
-<line x1="528" x2="600" y1="1976" y2="1976"/>
-<path d="M 604 1980 A 4 4 0 0 0 600 1976" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="504" x2="490" y1="432" y2="460"/>
+<line class="fg_stroke" x1="504" x2="512" y1="432" y2="416"/>
 </g>
 <g>
-<line x1="528" x2="600" y1="2008" y2="2008"/>
-<path d="M 600 2008 A 4 4 0 0 0 604 2004" fill="none"/>
+<line class="fg_stroke" x1="512" x2="536" y1="3224" y2="3224"/>
 </g>
 <g>
-<line x1="540" x2="540" y1="1836" y2="1844"/>
-<path d="M 540 1844 A 4 4 0 0 0 544 1848" fill="none"/>
-<path d="M 544 1832 A 4 4 0 0 0 540 1836" fill="none"/>
+<line class="fg_stroke" marker-end="url(#square)" marker-start="url(#square)" x1="516" x2="524" y1="3240" y2="3240"/>
+<line class="fg_stroke" marker-start="url(#square)" x1="524" x2="524" y1="3240" y2="3264"/>
+<line class="fg_stroke" marker-end="url(#square)" marker-start="url(#square)" x1="524" x2="532" y1="3240" y2="3240"/>
 </g>
 <g>
-<line x1="540" x2="540" y1="1900" y2="1924"/>
+<line class="fg_stroke" x1="524" x2="524" y1="1980" y2="2004"/>
+<path class="fg_stroke no_fill" d="M 524 2004 A 4 4 0 0 0 528 2008"/>
+<path class="fg_stroke no_fill" d="M 528 1976 A 4 4 0 0 0 524 1980"/>
 </g>
 <g>
-<line x1="544" x2="568" y1="1832" y2="1832"/>
-<path d="M 572 1836 A 4 4 0 0 0 568 1832" fill="none"/>
+<line class="fg_stroke" x1="528" x2="600" y1="1976" y2="1976"/>
+<path class="fg_stroke no_fill" d="M 604 1980 A 4 4 0 0 0 600 1976"/>
 </g>
 <g>
-<line x1="544" x2="568" y1="1848" y2="1848"/>
-<path d="M 568 1848 A 4 4 0 0 0 572 1844" fill="none"/>
+<line class="fg_stroke" x1="528" x2="600" y1="2008" y2="2008"/>
+<path class="fg_stroke no_fill" d="M 600 2008 A 4 4 0 0 0 604 2004"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="556" x2="556" y1="1856" y2="1964"/>
+<line class="fg_stroke" x1="540" x2="540" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 540 1844 A 4 4 0 0 0 544 1848"/>
+<path class="fg_stroke no_fill" d="M 544 1832 A 4 4 0 0 0 540 1836"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="564" x2="564" y1="2016" y2="2044"/>
+<line class="fg_stroke" x1="540" x2="540" y1="1900" y2="1924"/>
 </g>
 <g>
-<line x1="572" x2="572" y1="1836" y2="1844"/>
+<line class="fg_stroke" x1="544" x2="568" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 572 1836 A 4 4 0 0 0 568 1832"/>
 </g>
 <g>
-<line x1="580" x2="580" y1="1900" y2="1924"/>
-<path d="M 580 1924 A 4 4 0 0 0 584 1928" fill="none"/>
-<path d="M 584 1896 A 4 4 0 0 0 580 1900" fill="none"/>
+<line class="fg_stroke" x1="544" x2="568" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 568 1848 A 4 4 0 0 0 572 1844"/>
 </g>
 <g>
-<line x1="584" x2="624" y1="1896" y2="1896"/>
-<path d="M 628 1900 A 4 4 0 0 0 624 1896" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="556" x2="556" y1="1856" y2="1964"/>
 </g>
 <g>
-<line x1="584" x2="624" y1="1928" y2="1928"/>
-<path d="M 624 1928 A 4 4 0 0 0 628 1924" fill="none"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="564" x2="564" y1="2016" y2="2044"/>
 </g>
 <g>
-<line x1="596" x2="596" y1="1836" y2="1844"/>
-<path d="M 596 1844 A 4 4 0 0 0 600 1848" fill="none"/>
-<path d="M 600 1832 A 4 4 0 0 0 596 1836" fill="none"/>
+<line class="fg_stroke" x1="572" x2="572" y1="1836" y2="1844"/>
 </g>
 <g>
-<line x1="600" x2="624" y1="1832" y2="1832"/>
-<path d="M 628 1836 A 4 4 0 0 0 624 1832" fill="none"/>
+<line class="fg_stroke" x1="580" x2="580" y1="1900" y2="1924"/>
+<path class="fg_stroke no_fill" d="M 580 1924 A 4 4 0 0 0 584 1928"/>
+<path class="fg_stroke no_fill" d="M 584 1896 A 4 4 0 0 0 580 1900"/>
 </g>
 <g>
-<line x1="600" x2="624" y1="1848" y2="1848"/>
-<path d="M 624 1848 A 4 4 0 0 0 628 1844" fill="none"/>
+<line class="fg_stroke" x1="584" x2="624" y1="1896" y2="1896"/>
+<path class="fg_stroke no_fill" d="M 628 1900 A 4 4 0 0 0 624 1896"/>
 </g>
 <g>
-<line x1="604" x2="604" y1="1980" y2="2004"/>
+<line class="fg_stroke" x1="584" x2="624" y1="1928" y2="1928"/>
+<path class="fg_stroke no_fill" d="M 624 1928 A 4 4 0 0 0 628 1924"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" x1="612" x2="612" y1="1856" y2="1884"/>
+<line class="fg_stroke" x1="596" x2="596" y1="1836" y2="1844"/>
+<path class="fg_stroke no_fill" d="M 596 1844 A 4 4 0 0 0 600 1848"/>
+<path class="fg_stroke no_fill" d="M 600 1832 A 4 4 0 0 0 596 1836"/>
 </g>
 <g>
-<line x1="628" x2="628" y1="1836" y2="1844"/>
+<line class="fg_stroke" x1="600" x2="624" y1="1832" y2="1832"/>
+<path class="fg_stroke no_fill" d="M 628 1836 A 4 4 0 0 0 624 1832"/>
 </g>
 <g>
-<line x1="628" x2="628" y1="1900" y2="1924"/>
+<line class="fg_stroke" x1="600" x2="624" y1="1848" y2="1848"/>
+<path class="fg_stroke no_fill" d="M 624 1848 A 4 4 0 0 0 628 1844"/>
 </g>
 <g>
-<line x1="628" x2="628" y1="2060" y2="2084"/>
+<line class="fg_stroke" x1="604" x2="604" y1="1980" y2="2004"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="36" x2="36" y1="3952" y2="3984"/>
+<line class="fg_stroke" marker-end="url(#triangle)" x1="612" x2="612" y1="1856" y2="1884"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="36" x2="36" y1="4048" y2="4080"/>
+<line class="fg_stroke" x1="628" x2="628" y1="1836" y2="1844"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="36" x2="36" y1="4112" y2="4144"/>
+<line class="fg_stroke" x1="628" x2="628" y1="1900" y2="1924"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="36" x2="36" y1="4176" y2="4208"/>
+<line class="fg_stroke" x1="628" x2="628" y1="2060" y2="2084"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="92" x2="92" y1="2208" y2="2224"/>
+<line class="fg_stroke dashed" x1="36" x2="36" y1="3952" y2="3984"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="100" x2="100" y1="2208" y2="2224"/>
+<line class="fg_stroke dashed" x1="36" x2="36" y1="4048" y2="4080"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="332" x2="332" y1="2288" y2="2304"/>
+<line class="fg_stroke dashed" x1="36" x2="36" y1="4112" y2="4144"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="340" x2="340" y1="2288" y2="2304"/>
+<line class="fg_stroke dashed" x1="36" x2="36" y1="4176" y2="4208"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="348" x2="348" y1="2288" y2="2304"/>
+<line class="fg_stroke dashed" x1="92" x2="92" y1="2208" y2="2224"/>
 </g>
 <g>
-<line class="dashed" fill="none" x1="356" x2="356" y1="2288" y2="2304"/>
+<line class="fg_stroke dashed" x1="100" x2="100" y1="2208" y2="2224"/>
 </g>
 <g>
-<path d="M 240 2160 A 16 16 0 0 0 240 2176" fill="none"/>
+<line class="fg_stroke dashed" x1="332" x2="332" y1="2288" y2="2304"/>
 </g>
 <g>
-<path d="M 240 2224 A 16 16 0 0 0 240 2240" fill="none"/>
+<line class="fg_stroke dashed" x1="340" x2="340" y1="2288" y2="2304"/>
 </g>
 <g>
-<path d="M 248 2240 A 16 16 0 0 0 248 2224" fill="none"/>
+<line class="fg_stroke dashed" x1="348" x2="348" y1="2288" y2="2304"/>
 </g>
 <g>
-<path d="M 256 2176 A 16 16 0 0 0 256 2160" fill="none"/>
+<line class="fg_stroke dashed" x1="356" x2="356" y1="2288" y2="2304"/>
 </g>
 <g>
-<path d="M 288 2224 A 16 16 0 0 0 288 2208" fill="none"/>
+<path class="fg_stroke no_fill" d="M 240 2160 A 16 16 0 0 0 240 2176"/>
 </g>
 <g>
-<text x="1" y="60">
+<path class="fg_stroke no_fill" d="M 240 2224 A 16 16 0 0 0 240 2240"/>
+</g>
+<g>
+<path class="fg_stroke no_fill" d="M 248 2240 A 16 16 0 0 0 248 2224"/>
+</g>
+<g>
+<path class="fg_stroke no_fill" d="M 256 2176 A 16 16 0 0 0 256 2160"/>
+</g>
+<g>
+<path class="fg_stroke no_fill" d="M 288 2224 A 16 16 0 0 0 288 2208"/>
+</g>
+<g>
+<text class="fg_fill" x="1" y="60">
 ```bob
 </text>
 </g>
 <g>
-<text x="1" y="92">
+<text class="fg_fill" x="1" y="92">
 Svgbob
 </text>
 </g>
 <g>
-<text x="1" y="108">
+<text class="fg_fill" x="1" y="108">
 which
 </text>
 </g>
 <g>
-<text x="1" y="124">
+<text class="fg_fill" x="1" y="124">
 to
 </text>
 </g>
 <g>
-<text x="1" y="268">
+<text class="fg_fill" x="1" y="268">
 It
 </text>
 </g>
 <g>
-<text x="1" y="284">
+<text class="fg_fill" x="1" y="284">
 which are readily available on your keyboards
 </text>
 </g>
 <g>
-<text x="1" y="316">
+<text class="fg_fill" x="1" y="316">
 What
 </text>
 </g>
 <g>
-<text x="1" y="4284">
+<text class="fg_fill" x="1" y="4284">
 Footnotes:
 </text>
 </g>
 <g>
-<text x="1" y="4300">
+<text class="fg_fill" x="1" y="4300">
 *[0]: Fonts mostly condensed words to look
 </text>
 </g>
 <g>
-<text x="1" y="4620">
+<text class="fg_fill" x="1" y="4620">
 *[1]  In vim, there is a drawIt plugin which helps you easily draw ascii
 </text>
 </g>
 <g>
-<text x="1" y="4732">
+<text class="fg_fill" x="1" y="4732">
 ```
 </text>
 </g>
 <g>
-<text x="17" y="3660">
+<text class="fg_fill" x="17" y="3660">
 About
 </text>
 </g>
 <g>
-<text x="17" y="3852">
+<text class="fg_fill" x="17" y="3852">
 This
 </text>
 </g>
 <g>
-<text x="25" y="124">
+<text class="fg_fill" x="25" y="124">
 approximate
 </text>
 </g>
 <g>
-<text x="25" y="268">
+<text class="fg_fill" x="25" y="268">
 uses
 </text>
 </g>
 <g>
-<text x="25" y="764">
+<text class="fg_fill" x="25" y="764">
 +
 </text>
 </g>
 <g>
-<text x="25" y="3500">
+<text class="fg_fill" x="25" y="3500">
 Advantages:
 </text>
 </g>
 <g>
-<text x="25" y="3964">
+<text class="fg_fill" x="25" y="3964">
 Q
 </text>
 </g>
 <g>
-<text x="25" y="3980">
+<text class="fg_fill" x="25" y="3980">
 A
 </text>
 </g>
 <g>
-<text x="25" y="4060">
+<text class="fg_fill" x="25" y="4060">
 Q
 </text>
 </g>
 <g>
-<text x="25" y="4076">
+<text class="fg_fill" x="25" y="4076">
 A
 </text>
 </g>
 <g>
-<text x="25" y="4124">
+<text class="fg_fill" x="25" y="4124">
 Q
 </text>
 </g>
 <g>
-<text x="25" y="4140">
+<text class="fg_fill" x="25" y="4140">
 A
 </text>
 </g>
 <g>
-<text x="25" y="4188">
+<text class="fg_fill" x="25" y="4188">
 Q
 </text>
 </g>
 <g>
-<text x="25" y="4204">
+<text class="fg_fill" x="25" y="4204">
 A
 </text>
 </g>
 <g>
-<text x="33" y="1564">
+<text class="fg_fill" x="33" y="1564">
 E
 </text>
 </g>
 <g>
-<text x="33" y="1580">
+<text class="fg_fill" x="33" y="1580">
 D
 </text>
 </g>
 <g>
-<text x="33" y="1596">
+<text class="fg_fill" x="33" y="1596">
 C
 </text>
 </g>
 <g>
-<text x="33" y="1612">
+<text class="fg_fill" x="33" y="1612">
 B
 </text>
 </g>
 <g>
-<text x="33" y="1628">
+<text class="fg_fill" x="33" y="1628">
 A
 </text>
 </g>
 <g>
-<text x="33" y="3532">
+<text class="fg_fill" x="33" y="3532">
 Plain
 </text>
 </g>
 <g>
-<text x="33" y="3548">
+<text class="fg_fill" x="33" y="3548">
 Ultimately
 </text>
 </g>
 <g>
-<text x="33" y="3564">
+<text class="fg_fill" x="33" y="3564">
 Degrades
 </text>
 </g>
 <g>
-<text x="33" y="3580">
+<text class="fg_fill" x="33" y="3580">
 Even
 </text>
 </g>
 <g>
-<text x="33" y="3596">
+<text class="fg_fill" x="33" y="3596">
 as
 </text>
 </g>
 <g>
-<text x="33" y="3612">
+<text class="fg_fill" x="33" y="3612">
 Easiest
 </text>
 </g>
 <g>
-<text x="33" y="3708">
+<text class="fg_fill" x="33" y="3708">
 The
 </text>
 </g>
 <g>
-<text x="33" y="3724">
+<text class="fg_fill" x="33" y="3724">
 with
 </text>
 </g>
 <g>
-<text x="33" y="3756">
+<text class="fg_fill" x="33" y="3756">
 The
 </text>
 </g>
 <g>
-<text x="33" y="3772">
+<text class="fg_fill" x="33" y="3772">
 underneath
 </text>
 </g>
 <g>
-<text x="33" y="3788">
+<text class="fg_fill" x="33" y="3788">
 that
 </text>
 </g>
 <g>
-<text x="33" y="3804">
+<text class="fg_fill" x="33" y="3804">
 momentarily
 </text>
 </g>
 <g>
-<text x="33" y="3916">
+<text class="fg_fill" x="33" y="3916">
 FAQ:
 </text>
 </g>
 <g>
-<text x="41" y="316">
+<text class="fg_fill" x="41" y="316">
 can
 </text>
 </g>
 <g>
-<text x="41" y="1516">
+<text class="fg_fill" x="41" y="1516">
 Statistical
 </text>
 </g>
 <g>
-<text x="41" y="2332">
+<text class="fg_fill" x="41" y="2332">
 Mindmaps
 </text>
 </g>
 <g>
-<text x="41" y="2892">
+<text class="fg_fill" x="41" y="2892">
 +10-15V
 </text>
 </g>
 <g>
-<text x="49" y="108">
+<text class="fg_fill" x="49" y="108">
 uses
 </text>
 </g>
 <g>
-<text x="49" y="348">
+<text class="fg_fill" x="49" y="348">
 Basic
 </text>
 </g>
 <g>
-<text x="49" y="1116">
+<text class="fg_fill" x="49" y="1116">
 Quick
 </text>
 </g>
 <g>
-<text x="49" y="1260">
+<text class="fg_fill" x="49" y="1260">
 Even
 </text>
 </g>
 <g>
-<text x="49" y="1356">
+<text class="fg_fill" x="49" y="1356">
 Sequence
 </text>
 </g>
 <g>
-<text x="49" y="1820">
+<text class="fg_fill" x="49" y="1820">
 Flow
 </text>
 </g>
 <g>
-<text x="49" y="2140">
+<text class="fg_fill" x="49" y="2140">
 Block
 </text>
 </g>
 <g>
-<text x="49" y="2444">
+<text class="fg_fill" x="49" y="2444">
 Initial
 </text>
 </g>
 <g>
-<text x="49" y="2844">
+<text class="fg_fill" x="49" y="2844">
 It
 </text>
 </g>
 <g>
-<text x="49" y="2956">
+<text class="fg_fill" x="49" y="2956">
 470uF
 </text>
 </g>
 <g>
-<text x="49" y="3740">
+<text class="fg_fill" x="49" y="3740">
 i.e:
 </text>
 </g>
 <g>
-<text x="49" y="3964">
+<text class="fg_fill" x="49" y="3964">
 Why is there too much spacing on words
 </text>
 </g>
 <g>
-<text x="49" y="3980">
+<text class="fg_fill" x="49" y="3980">
 It
 </text>
 </g>
 <g>
-<text x="49" y="3996">
+<text class="fg_fill" x="49" y="3996">
 for
 </text>
 </g>
 <g>
-<text x="49" y="4012">
+<text class="fg_fill" x="49" y="4012">
 elements
 </text>
 </g>
 <g>
-<text x="49" y="4028">
+<text class="fg_fill" x="49" y="4028">
 a bit of alignment closes to their original location. *[0]
 </text>
 </g>
 <g>
-<text x="49" y="4060">
+<text class="fg_fill" x="49" y="4060">
 Do
 </text>
 </g>
 <g>
-<text x="49" y="4076">
+<text class="fg_fill" x="49" y="4076">
 Using
 </text>
 </g>
 <g>
-<text x="49" y="4092">
+<text class="fg_fill" x="49" y="4092">
 tedious. Power users of vim or emacs can make diagrams with ease.*[1]
 </text>
 </g>
 <g>
-<text x="49" y="4124">
+<text class="fg_fill" x="49" y="4124">
 Your
 </text>
 </g>
 <g>
-<text x="49" y="4140">
+<text class="fg_fill" x="49" y="4140">
 That&#39;
 </text>
 </g>
 <g>
-<text x="49" y="4156">
+<text class="fg_fill" x="49" y="4156">
 Use
 </text>
 </g>
 <g>
-<text x="49" y="4188">
+<text class="fg_fill" x="49" y="4188">
 How to integrate this in markdown?
 </text>
 </g>
 <g>
-<text x="49" y="4204">
+<text class="fg_fill" x="49" y="4204">
 There is a project called [Spongedown](https://ivanceras.github.io/spongedown)
 </text>
 </g>
 <g>
-<text x="49" y="4220">
+<text class="fg_fill" x="49" y="4220">
 which
 </text>
 </g>
 <g>
-<text x="49" y="4236">
+<text class="fg_fill" x="49" y="4236">
 with
 </text>
 </g>
 <g>
-<text x="49" y="4316">
+<text class="fg_fill" x="49" y="4316">
 and
 </text>
 </g>
 <g>
-<text x="49" y="4332">
+<text class="fg_fill" x="49" y="4332">
 problem,
 </text>
 </g>
 <g>
-<text x="49" y="4348">
+<text class="fg_fill" x="49" y="4348">
 are
 </text>
 </g>
 <g>
-<text x="49" y="4364">
+<text class="fg_fill" x="49" y="4364">
 are
 </text>
 </g>
 <g>
-<text x="49" y="4380">
+<text class="fg_fill" x="49" y="4380">
 instead of 2x larger). In the terminal however, full-width
 </text>
 </g>
 <g>
-<text x="49" y="4396">
+<text class="fg_fill" x="49" y="4396">
 characters
 </text>
 </g>
 <g>
-<text x="49" y="4412">
+<text class="fg_fill" x="49" y="4412">
 or
 </text>
 </g>
 <g>
-<text x="49" y="4508">
+<text class="fg_fill" x="49" y="4508">
 Also
 </text>
 </g>
 <g>
-<text x="49" y="4524">
+<text class="fg_fill" x="49" y="4524">
 something for devs, instead of documents for all.
 </text>
 </g>
 <g>
-<text x="49" y="4540">
+<text class="fg_fill" x="49" y="4540">
 For
 </text>
 </g>
 <g>
-<text x="49" y="4556">
+<text class="fg_fill" x="49" y="4556">
 there is also [Spongedown](https://ivanceras.github.io/spongedown)
 </text>
 </g>
 <g>
-<text x="49" y="4572">
+<text class="fg_fill" x="49" y="4572">
 which
 </text>
 </g>
 <g>
-<text x="49" y="4588">
+<text class="fg_fill" x="49" y="4588">
 together some other features like csv and math equations.
 </text>
 </g>
 <g>
-<text x="49" y="4636">
+<text class="fg_fill" x="49" y="4636">
 diagrams.
 </text>
 </g>
 <g>
-<text x="49" y="4652">
+<text class="fg_fill" x="49" y="4652">
 of BLOCK mode editing(CTRL-v), REPLACE mode(SHIFT-r)
 </text>
 </g>
 <g>
-<text x="49" y="4668">
+<text class="fg_fill" x="49" y="4668">
 :set
 </text>
 </g>
 <g>
-<text x="49" y="4684">
+<text class="fg_fill" x="49" y="4684">
 cut, copy and paste text in block mode (&lt;C-v&gt; jjll 1vp)
 </text>
 </g>
 <g>
-<text x="49" y="4700">
+<text class="fg_fill" x="49" y="4700">
 For
 </text>
 </g>
 <g>
-<text x="57" y="92">
+<text class="fg_fill" x="57" y="92">
 is
 </text>
 </g>
 <g>
-<text x="57" y="3596">
+<text class="fg_fill" x="57" y="3596">
 text
 </text>
 </g>
 <g>
-<text x="57" y="3852">
+<text class="fg_fill" x="57" y="3852">
 page
 </text>
 </g>
 <g>
-<text x="65" y="268">
+<text class="fg_fill" x="65" y="268">
 a
 </text>
 </g>
 <g>
-<text x="65" y="700">
+<text class="fg_fill" x="65" y="700">
 +
 </text>
 </g>
 <g>
-<text x="65" y="844">
+<text class="fg_fill" x="65" y="844">
 3
 </text>
 </g>
 <g>
-<text x="65" y="1644">
+<text class="fg_fill" x="65" y="1644">
 5
 </text>
 </g>
 <g>
-<text x="65" y="3660">
+<text class="fg_fill" x="65" y="3660">
 Svgbob
 </text>
 </g>
 <g>
-<text x="65" y="3708">
+<text class="fg_fill" x="65" y="3708">
 editor
 </text>
 </g>
 <g>
-<text x="65" y="3756">
+<text class="fg_fill" x="65" y="3756">
 editor
 </text>
 </g>
 <g>
-<text x="73" y="316">
+<text class="fg_fill" x="73" y="316">
 it
 </text>
 </g>
 <g>
-<text x="73" y="2844">
+<text class="fg_fill" x="73" y="2844">
 can
 </text>
 </g>
 <g>
-<text x="73" y="3580">
+<text class="fg_fill" x="73" y="3580">
 when
 </text>
 </g>
 <g>
-<text x="73" y="3724">
+<text class="fg_fill" x="73" y="3724">
 smarter
 </text>
 </g>
 <g>
-<text x="73" y="3788">
+<text class="fg_fill" x="73" y="3788">
 build
 </text>
 </g>
 <g>
-<text x="73" y="3980">
+<text class="fg_fill" x="73" y="3980">
 is
 </text>
 </g>
 <g>
-<text x="73" y="4060">
+<text class="fg_fill" x="73" y="4060">
 people
 </text>
 </g>
 <g>
-<text x="73" y="4412">
+<text class="fg_fill" x="73" y="4412">
 non-monspaced
 </text>
 </g>
 <g>
-<text x="81" y="92">
+<text class="fg_fill" x="81" y="92">
 a
 </text>
 </g>
 <g>
-<text x="81" y="268">
+<text class="fg_fill" x="81" y="268">
 combination
 </text>
 </g>
 <g>
-<text x="81" y="1404">
+<text class="fg_fill" x="81" y="1404">
 A
 </text>
 </g>
 <g>
-<text x="81" y="1644">
+<text class="fg_fill" x="81" y="1644">
 10
 </text>
 </g>
 <g>
-<text x="81" y="2412">
+<text class="fg_fill" x="81" y="2412">
 Planning
 </text>
 </g>
 <g>
-<text x="81" y="3532">
+<text class="fg_fill" x="81" y="3532">
 text
 </text>
 </g>
 <g>
-<text x="81" y="3996">
+<text class="fg_fill" x="81" y="3996">
 labels.
 </text>
 </g>
 <g>
-<text x="81" y="4156">
+<text class="fg_fill" x="81" y="4156">
 whatever
 </text>
 </g>
 <g>
-<text x="81" y="4316">
+<text class="fg_fill" x="81" y="4316">
 render
 </text>
 </g>
 <g>
-<text x="81" y="4348">
+<text class="fg_fill" x="81" y="4348">
 not
 </text>
 </g>
 <g>
-<text x="81" y="4364">
+<text class="fg_fill" x="81" y="4364">
 only
 </text>
 </g>
 <g>
-<text x="81" y="4540">
+<text class="fg_fill" x="81" y="4540">
 a
 </text>
 </g>
 <g>
-<text x="81" y="4700">
+<text class="fg_fill" x="81" y="4700">
 emacs:
 </text>
 </g>
 <g>
-<text x="89" y="108">
+<text class="fg_fill" x="89" y="108">
 a
 </text>
 </g>
 <g>
-<text x="89" y="1260">
+<text class="fg_fill" x="89" y="1260">
 unicode
 </text>
 </g>
 <g>
-<text x="89" y="1820">
+<text class="fg_fill" x="89" y="1820">
 charts
 </text>
 </g>
 <g>
-<text x="89" y="3740">
+<text class="fg_fill" x="89" y="3740">
 typing
 </text>
 </g>
 <g>
-<text x="89" y="4124">
+<text class="fg_fill" x="89" y="4124">
 editor
 </text>
 </g>
 <g>
-<text x="89" y="4140">
+<text class="fg_fill" x="89" y="4140">
 s
 </text>
 </g>
 <g>
-<text x="89" y="4236">
+<text class="fg_fill" x="89" y="4236">
 ```bob
 </text>
 </g>
 <g>
-<text x="89" y="4508">
+<text class="fg_fill" x="89" y="4508">
 using
 </text>
 </g>
 <g>
-<text x="89" y="4668">
+<text class="fg_fill" x="89" y="4668">
 virtualedit=all
 </text>
 </g>
 <g>
-<text x="97" y="92">
+<text class="fg_fill" x="97" y="92">
 diagramming
 </text>
 </g>
 <g>
-<text x="97" y="316">
+<text class="fg_fill" x="97" y="316">
 do?
 </text>
 </g>
 <g>
-<text x="97" y="348">
+<text class="fg_fill" x="97" y="348">
 shapes
 </text>
 </g>
 <g>
-<text x="97" y="1116">
+<text class="fg_fill" x="97" y="1116">
 logo
 </text>
 </g>
 <g>
-<text x="97" y="2140">
+<text class="fg_fill" x="97" y="2140">
 diagrams
 </text>
 </g>
 <g>
-<text x="97" y="3020">
+<text class="fg_fill" x="97" y="3020">
 GND
 </text>
 </g>
 <g>
-<text x="97" y="3596">
+<text class="fg_fill" x="97" y="3596">
 based
 </text>
 </g>
 <g>
-<text x="97" y="3612">
+<text class="fg_fill" x="97" y="3612">
 to
 </text>
 </g>
 <g>
-<text x="97" y="3852">
+<text class="fg_fill" x="97" y="3852">
 is
 </text>
 </g>
 <g>
-<text x="97" y="3980">
+<text class="fg_fill" x="97" y="3980">
 an
 </text>
 </g>
 <g>
-<text x="97" y="4076">
+<text class="fg_fill" x="97" y="4076">
 simple
 </text>
 </g>
 <g>
-<text x="97" y="4220">
+<text class="fg_fill" x="97" y="4220">
 specifically
 </text>
 </g>
 <g>
-<text x="97" y="4540">
+<text class="fg_fill" x="97" y="4540">
 more
 </text>
 </g>
 <g>
-<text x="97" y="4572">
+<text class="fg_fill" x="97" y="4572">
 allow
 </text>
 </g>
 <g>
-<text x="105" y="108">
+<text class="fg_fill" x="105" y="108">
 set
 </text>
 </g>
 <g>
-<text x="105" y="1644">
+<text class="fg_fill" x="105" y="1644">
 15
 </text>
 </g>
 <g>
-<text x="105" y="2732">
+<text class="fg_fill" x="105" y="2732">
 Worklaod
 </text>
 </g>
 <g>
-<text x="105" y="2844">
+<text class="fg_fill" x="105" y="2844">
 do
 </text>
 </g>
 <g>
-<text x="105" y="3564">
+<text class="fg_fill" x="105" y="3564">
 gracefully
 </text>
 </g>
 <g>
-<text x="105" y="4140">
+<text class="fg_fill" x="105" y="4140">
 the
 </text>
 </g>
 <g>
-<text x="113" y="2444">
+<text class="fg_fill" x="113" y="2444">
 research
 </text>
 </g>
 <g>
-<text x="113" y="3580">
+<text class="fg_fill" x="113" y="3580">
 not
 </text>
 </g>
 <g>
-<text x="113" y="4348">
+<text class="fg_fill" x="113" y="4348">
 really
 </text>
 </g>
 <g>
-<text x="113" y="4460">
+<text class="fg_fill" x="113" y="4460">
 文
 </text>
 </g>
 <g>
-<text x="121" y="124">
+<text class="fg_fill" x="121" y="124">
 the
 </text>
 </g>
 <g>
-<text x="121" y="1356">
+<text class="fg_fill" x="121" y="1356">
 Diagrams
 </text>
 </g>
 <g>
-<text x="121" y="2972">
+<text class="fg_fill" x="121" y="2972">
 +
 </text>
 </g>
 <g>
-<text x="121" y="3532">
+<text class="fg_fill" x="121" y="3532">
 format
 </text>
 </g>
 <g>
-<text x="121" y="3548">
+<text class="fg_fill" x="121" y="3548">
 portable,
 </text>
 </g>
 <g>
-<text x="121" y="3612">
+<text class="fg_fill" x="121" y="3612">
 use.
 </text>
 </g>
 <g>
-<text x="121" y="3660">
+<text class="fg_fill" x="121" y="3660">
 editor:
 </text>
 </g>
 <g>
-<text x="121" y="3708">
+<text class="fg_fill" x="121" y="3708">
 is
 </text>
 </g>
 <g>
-<text x="121" y="3756">
+<text class="fg_fill" x="121" y="3756">
 also
 </text>
 </g>
 <g>
-<text x="121" y="3772">
+<text class="fg_fill" x="121" y="3772">
 that
 </text>
 </g>
 <g>
-<text x="121" y="3788">
+<text class="fg_fill" x="121" y="3788">
 up
 </text>
 </g>
 <g>
-<text x="121" y="3852">
+<text class="fg_fill" x="121" y="3852">
 editable.
 </text>
 </g>
 <g>
-<text x="121" y="3980">
+<text class="fg_fill" x="121" y="3980">
 intended
 </text>
 </g>
 <g>
-<text x="121" y="4012">
+<text class="fg_fill" x="121" y="4012">
 in
 </text>
 </g>
 <g>
-<text x="121" y="4332">
+<text class="fg_fill" x="121" y="4332">
 however
 </text>
 </g>
 <g>
-<text x="121" y="4364">
+<text class="fg_fill" x="121" y="4364">
 rendered
 </text>
 </g>
 <g>
-<text x="129" y="1644">
+<text class="fg_fill" x="129" y="1644">
 20
 </text>
 </g>
 <g>
-<text x="129" y="2700">
+<text class="fg_fill" x="129" y="2700">
 Team
 </text>
 </g>
 <g>
-<text x="129" y="2844">
+<text class="fg_fill" x="129" y="2844">
 complex
 </text>
 </g>
 <g>
-<text x="129" y="3804">
+<text class="fg_fill" x="129" y="3804">
 cancels
 </text>
 </g>
 <g>
-<text x="129" y="4060">
+<text class="fg_fill" x="129" y="4060">
 really
 </text>
 </g>
 <g>
-<text x="129" y="4460">
+<text class="fg_fill" x="129" y="4460">
 件
 </text>
 </g>
 <g>
-<text x="129" y="4636">
+<text class="fg_fill" x="129" y="4636">
 For
 </text>
 </g>
 <g>
-<text x="137" y="108">
+<text class="fg_fill" x="137" y="108">
 of
 </text>
 </g>
 <g>
-<text x="137" y="1116">
+<text class="fg_fill" x="137" y="1116">
 scribbles
 </text>
 </g>
 <g>
-<text x="137" y="1516">
+<text class="fg_fill" x="137" y="1516">
 charts
 </text>
 </g>
 <g>
-<text x="137" y="2764">
+<text class="fg_fill" x="137" y="2764">
 PTO
 </text>
 </g>
 <g>
-<text x="137" y="2796">
+<text class="fg_fill" x="137" y="2796">
 Bug
 </text>
 </g>
 <g>
-<text x="137" y="3724">
+<text class="fg_fill" x="137" y="3724">
 prediction
 </text>
 </g>
 <g>
-<text x="137" y="4140">
+<text class="fg_fill" x="137" y="4140">
 beauty
 </text>
 </g>
 <g>
-<text x="137" y="4316">
+<text class="fg_fill" x="137" y="4316">
 nicely.
 </text>
 </g>
 <g>
-<text x="137" y="4396">
+<text class="fg_fill" x="137" y="4396">
 are
 </text>
 </g>
 <g>
-<text x="137" y="4508">
+<text class="fg_fill" x="137" y="4508">
 monofont
 </text>
 </g>
 <g>
-<text x="137" y="4540">
+<text class="fg_fill" x="137" y="4540">
 heavy
 </text>
 </g>
 <g>
-<text x="137" y="4700">
+<text class="fg_fill" x="137" y="4700">
 there
 </text>
 </g>
 <g>
-<text x="145" y="1404">
+<text class="fg_fill" x="145" y="1404">
 B
 </text>
 </g>
 <g>
-<text x="145" y="3580">
+<text class="fg_fill" x="145" y="3580">
 using
 </text>
 </g>
 <g>
-<text x="145" y="3596">
+<text class="fg_fill" x="145" y="3596">
 diagrams.
 </text>
 </g>
 <g>
-<text x="145" y="3708">
+<text class="fg_fill" x="145" y="3708">
 a
 </text>
 </g>
 <g>
-<text x="145" y="3788">
+<text class="fg_fill" x="145" y="3788">
 which
 </text>
 </g>
 <g>
-<text x="145" y="3996">
+<text class="fg_fill" x="145" y="3996">
 Each
 </text>
 </g>
 <g>
-<text x="145" y="4012">
+<text class="fg_fill" x="145" y="4012">
 the
 </text>
 </g>
 <g>
-<text x="145" y="4124">
+<text class="fg_fill" x="145" y="4124">
 sucks!
 </text>
 </g>
 <g>
-<text x="145" y="4236">
+<text class="fg_fill" x="145" y="4236">
 code
 </text>
 </g>
 <g>
-<text x="145" y="4460">
+<text class="fg_fill" x="145" y="4460">
 系
 </text>
 </g>
 <g>
-<text x="145" y="4572">
+<text class="fg_fill" x="145" y="4572">
 you
 </text>
 </g>
 <g>
-<text x="153" y="124">
+<text class="fg_fill" x="153" y="124">
 intended
 </text>
 </g>
 <g>
-<text x="153" y="1260">
+<text class="fg_fill" x="153" y="1260">
 box
 </text>
 </g>
 <g>
-<text x="153" y="1644">
+<text class="fg_fill" x="153" y="1644">
 25
 </text>
 </g>
 <g>
-<text x="153" y="4076">
+<text class="fg_fill" x="153" y="4076">
 text
 </text>
 </g>
 <g>
-<text x="153" y="4156">
+<text class="fg_fill" x="153" y="4156">
 editor
 </text>
 </g>
 <g>
-<text x="161" y="108">
+<text class="fg_fill" x="161" y="108">
 typing
 </text>
 </g>
 <g>
-<text x="161" y="3612">
+<text class="fg_fill" x="161" y="3612">
 Anyone
 </text>
 </g>
 <g>
-<text x="161" y="3708">
+<text class="fg_fill" x="161" y="3708">
 plain
 </text>
 </g>
 <g>
-<text x="161" y="3756">
+<text class="fg_fill" x="161" y="3756">
 has
 </text>
 </g>
 <g>
-<text x="161" y="3772">
+<text class="fg_fill" x="161" y="3772">
 comprises
 </text>
 </g>
 <g>
-<text x="161" y="4460">
+<text class="fg_fill" x="161" y="4460">
 统
 </text>
 </g>
 <g>
-<text x="161" y="4636">
+<text class="fg_fill" x="161" y="4636">
 vim
 </text>
 </g>
 <g>
-<text x="169" y="1468">
+<text class="fg_fill" x="169" y="1468">
 B
 </text>
 </g>
 <g>
-<text x="169" y="4348">
+<text class="fg_fill" x="169" y="4348">
 monospaced
 </text>
 </g>
 <g>
-<text x="169" y="4396">
+<text class="fg_fill" x="169" y="4396">
 rendered
 </text>
 </g>
 <g>
-<text x="177" y="268">
+<text class="fg_fill" x="177" y="268">
 of
 </text>
 </g>
 <g>
-<text x="177" y="1644">
+<text class="fg_fill" x="177" y="1644">
 30
 </text>
 </g>
 <g>
-<text x="177" y="3740">
+<text class="fg_fill" x="177" y="3740">
 will
 </text>
 </g>
 <g>
-<text x="177" y="4012">
+<text class="fg_fill" x="177" y="4012">
 SVG
 </text>
 </g>
 <g>
-<text x="177" y="4572">
+<text class="fg_fill" x="177" y="4572">
 to
 </text>
 </g>
 <g>
-<text x="185" y="1260">
+<text class="fg_fill" x="185" y="1260">
 drawing
 </text>
 </g>
 <g>
-<text x="185" y="3996">
+<text class="fg_fill" x="185" y="3996">
 words
 </text>
 </g>
 <g>
-<text x="185" y="4060">
+<text class="fg_fill" x="185" y="4060">
 type
 </text>
 </g>
 <g>
-<text x="185" y="4236">
+<text class="fg_fill" x="185" y="4236">
 block
 </text>
 </g>
 <g>
-<text x="185" y="4332">
+<text class="fg_fill" x="185" y="4332">
 the
 </text>
 </g>
 <g>
-<text x="185" y="4412">
+<text class="fg_fill" x="185" y="4412">
 fonts.
 </text>
 </g>
 <g>
-<text x="185" y="4540">
+<text class="fg_fill" x="185" y="4540">
 usage
 </text>
 </g>
 <g>
-<text x="185" y="4700">
+<text class="fg_fill" x="185" y="4700">
 is
 </text>
 </g>
 <g>
-<text x="193" y="92">
+<text class="fg_fill" x="193" y="92">
 model
 </text>
 </g>
 <g>
-<text x="193" y="2844">
+<text class="fg_fill" x="193" y="2844">
 stuff
 </text>
 </g>
 <g>
-<text x="193" y="3004">
+<text class="fg_fill" x="193" y="3004">
 6
 </text>
 </g>
 <g>
-<text x="193" y="3148">
+<text class="fg_fill" x="193" y="3148">
 MC34063
 </text>
 </g>
 <g>
-<text x="193" y="3580">
+<text class="fg_fill" x="193" y="3580">
 a
 </text>
 </g>
 <g>
-<text x="193" y="3756">
+<text class="fg_fill" x="193" y="3756">
 an
 </text>
 </g>
 <g>
-<text x="193" y="3788">
+<text class="fg_fill" x="193" y="3788">
 image,
 </text>
 </g>
 <g>
-<text x="193" y="3804">
+<text class="fg_fill" x="193" y="3804">
 the
 </text>
 </g>
 <g>
-<text x="193" y="3980">
+<text class="fg_fill" x="193" y="3980">
 behaviour
 </text>
 </g>
 <g>
-<text x="193" y="4076">
+<text class="fg_fill" x="193" y="4076">
 editors
 </text>
 </g>
 <g>
-<text x="193" y="4140">
+<text class="fg_fill" x="193" y="4140">
 of
 </text>
 </g>
 <g>
-<text x="193" y="4364">
+<text class="fg_fill" x="193" y="4364">
 1.5x
 </text>
 </g>
 <g>
-<text x="193" y="4636">
+<text class="fg_fill" x="193" y="4636">
 without
 </text>
 </g>
 <g>
-<text x="201" y="268">
+<text class="fg_fill" x="201" y="268">
 these
 </text>
 </g>
 <g>
-<text x="201" y="1404">
+<text class="fg_fill" x="201" y="1404">
 C
 </text>
 </g>
 <g>
-<text x="201" y="1644">
+<text class="fg_fill" x="201" y="1644">
 35
 </text>
 </g>
 <g>
-<text x="201" y="3548">
+<text class="fg_fill" x="201" y="3548">
 backward
 </text>
 </g>
 <g>
-<text x="201" y="3852">
+<text class="fg_fill" x="201" y="3852">
 Try
 </text>
 </g>
 <g>
-<text x="201" y="4220">
+<text class="fg_fill" x="201" y="4220">
 does
 </text>
 </g>
 <g>
-<text x="201" y="4316">
+<text class="fg_fill" x="201" y="4316">
 Monospace
 </text>
 </g>
 <g>
-<text x="201" y="4572">
+<text class="fg_fill" x="201" y="4572">
 write
 </text>
 </g>
 <g>
-<text x="209" y="2892">
+<text class="fg_fill" x="209" y="2892">
 0,047R
 </text>
 </g>
 <g>
-<text x="209" y="3292">
+<text class="fg_fill" x="209" y="3292">
 5
 </text>
 </g>
 <g>
-<text x="209" y="3580">
+<text class="fg_fill" x="209" y="3580">
 graphical
 </text>
 </g>
 <g>
-<text x="209" y="3708">
+<text class="fg_fill" x="209" y="3708">
 text
 </text>
 </g>
 <g>
-<text x="209" y="4012">
+<text class="fg_fill" x="209" y="4012">
 output
 </text>
 </g>
 <g>
-<text x="209" y="4156">
+<text class="fg_fill" x="209" y="4156">
 you
 </text>
 </g>
 <g>
-<text x="209" y="4508">
+<text class="fg_fill" x="209" y="4508">
 on
 </text>
 </g>
 <g>
-<text x="209" y="4700">
+<text class="fg_fill" x="209" y="4700">
 artist
 </text>
 </g>
 <g>
-<text x="217" y="108">
+<text class="fg_fill" x="217" y="108">
 characters
 </text>
 </g>
 <g>
-<text x="217" y="1468">
+<text class="fg_fill" x="217" y="1468">
 C
 </text>
 </g>
 <g>
-<text x="217" y="3612">
+<text class="fg_fill" x="217" y="3612">
 knows
 </text>
 </g>
 <g>
-<text x="217" y="3740">
+<text class="fg_fill" x="217" y="3740">
 move
 </text>
 </g>
 <g>
-<text x="217" y="3756">
+<text class="fg_fill" x="217" y="3756">
 xray
 </text>
 </g>
 <g>
-<text x="217" y="4140">
+<text class="fg_fill" x="217" y="4140">
 plain
 </text>
 </g>
 <g>
-<text x="217" y="4332">
+<text class="fg_fill" x="217" y="4332">
 monospace
 </text>
 </g>
 <g>
-<text x="217" y="4668">
+<text class="fg_fill" x="217" y="4668">
 to
 </text>
 </g>
 <g>
-<text x="225" y="124">
+<text class="fg_fill" x="225" y="124">
 shape.
 </text>
 </g>
 <g>
-<text x="225" y="1404">
+<text class="fg_fill" x="225" y="1404">
 D
 </text>
 </g>
 <g>
-<text x="225" y="1644">
+<text class="fg_fill" x="225" y="1644">
 40
 </text>
 </g>
 <g>
-<text x="225" y="3596">
+<text class="fg_fill" x="225" y="3596">
 Paste
 </text>
 </g>
 <g>
-<text x="225" y="3724">
+<text class="fg_fill" x="225" y="3724">
 on
 </text>
 </g>
 <g>
-<text x="225" y="3804">
+<text class="fg_fill" x="225" y="3804">
 xray
 </text>
 </g>
 <g>
-<text x="225" y="4060">
+<text class="fg_fill" x="225" y="4060">
 in
 </text>
 </g>
 <g>
-<text x="233" y="1852">
+<text class="fg_fill" x="233" y="1852">
 OS
 </text>
 </g>
 <g>
-<text x="233" y="3004">
+<text class="fg_fill" x="233" y="3004">
 7
 </text>
 </g>
 <g>
-<text x="233" y="3852">
+<text class="fg_fill" x="233" y="3852">
 it!
 </text>
 </g>
 <g>
-<text x="233" y="3996">
+<text class="fg_fill" x="233" y="3996">
 of
 </text>
 </g>
 <g>
-<text x="233" y="4236">
+<text class="fg_fill" x="233" y="4236">
 so
 </text>
 </g>
 <g>
-<text x="233" y="4364">
+<text class="fg_fill" x="233" y="4364">
 larger
 </text>
 </g>
 <g>
-<text x="233" y="4508">
+<text class="fg_fill" x="233" y="4508">
 final
 </text>
 </g>
 <g>
-<text x="233" y="4540">
+<text class="fg_fill" x="233" y="4540">
 of
 </text>
 </g>
 <g>
-<text x="241" y="2844">
+<text class="fg_fill" x="241" y="2844">
 such
 </text>
 </g>
 <g>
-<text x="241" y="3772">
+<text class="fg_fill" x="241" y="3772">
 the
 </text>
 </g>
 <g>
-<text x="241" y="4156">
+<text class="fg_fill" x="241" y="4156">
 like.
 </text>
 </g>
 <g>
-<text x="241" y="4220">
+<text class="fg_fill" x="241" y="4220">
 that.
 </text>
 </g>
 <g>
-<text x="241" y="4396">
+<text class="fg_fill" x="241" y="4396">
 2x
 </text>
 </g>
 <g>
-<text x="241" y="4668">
+<text class="fg_fill" x="241" y="4668">
 easily
 </text>
 </g>
 <g>
-<text x="249" y="268">
+<text class="fg_fill" x="249" y="268">
 characters
 </text>
 </g>
 <g>
-<text x="249" y="1260">
+<text class="fg_fill" x="249" y="1260">
 characters
 </text>
 </g>
 <g>
-<text x="249" y="1644">
+<text class="fg_fill" x="249" y="1644">
 45
 </text>
 </g>
 <g>
-<text x="249" y="3292">
+<text class="fg_fill" x="249" y="3292">
 4
 </text>
 </g>
 <g>
-<text x="249" y="3708">
+<text class="fg_fill" x="249" y="3708">
 editor
 </text>
 </g>
 <g>
-<text x="249" y="3724">
+<text class="fg_fill" x="249" y="3724">
 where
 </text>
 </g>
 <g>
-<text x="249" y="3788">
+<text class="fg_fill" x="249" y="3788">
 while
 </text>
 </g>
 <g>
-<text x="249" y="4060">
+<text class="fg_fill" x="249" y="4060">
 diagrams
 </text>
 </g>
 <g>
-<text x="249" y="4572">
+<text class="fg_fill" x="249" y="4572">
 in
 </text>
 </g>
 <g>
-<text x="257" y="1852">
+<text class="fg_fill" x="257" y="1852">
 API
 </text>
 </g>
 <g>
-<text x="257" y="3004">
+<text class="fg_fill" x="257" y="3004">
 8
 </text>
 </g>
 <g>
-<text x="257" y="3740">
+<text class="fg_fill" x="257" y="3740">
 the
 </text>
 </g>
 <g>
-<text x="257" y="3756">
+<text class="fg_fill" x="257" y="3756">
 lens
 </text>
 </g>
 <g>
-<text x="257" y="3996">
+<text class="fg_fill" x="257" y="3996">
 sentences
 </text>
 </g>
 <g>
-<text x="257" y="4076">
+<text class="fg_fill" x="257" y="4076">
 to
 </text>
 </g>
 <g>
-<text x="257" y="4236">
+<text class="fg_fill" x="257" y="4236">
 as
 </text>
 </g>
 <g>
-<text x="257" y="4348">
+<text class="fg_fill" x="257" y="4348">
 (i.e
 </text>
 </g>
 <g>
-<text x="257" y="4460">
+<text class="fg_fill" x="257" y="4460">
 调
 </text>
 </g>
 <g>
-<text x="257" y="4540">
+<text class="fg_fill" x="257" y="4540">
 text
 </text>
 </g>
 <g>
-<text x="257" y="4636">
+<text class="fg_fill" x="257" y="4636">
 using
 </text>
 </g>
 <g>
-<text x="265" y="3612">
+<text class="fg_fill" x="265" y="3612">
 how
 </text>
 </g>
 <g>
-<text x="265" y="4012">
+<text class="fg_fill" x="265" y="4012">
 in
 </text>
 </g>
 <g>
-<text x="265" y="4140">
+<text class="fg_fill" x="265" y="4140">
 text.
 </text>
 </g>
 <g>
-<text x="265" y="4396">
+<text class="fg_fill" x="265" y="4396">
 larger
 </text>
 </g>
 <g>
-<text x="265" y="4700">
+<text class="fg_fill" x="265" y="4700">
 mode.
 </text>
 </g>
 <g>
-<text x="273" y="1644">
+<text class="fg_fill" x="273" y="1644">
 50
 </text>
 </g>
 <g>
-<text x="273" y="2956">
+<text class="fg_fill" x="273" y="2956">
 2k2
 </text>
 </g>
 <g>
-<text x="273" y="3548">
+<text class="fg_fill" x="273" y="3548">
 compatible
 </text>
 </g>
 <g>
-<text x="273" y="3596">
+<text class="fg_fill" x="273" y="3596">
 the
 </text>
 </g>
 <g>
-<text x="273" y="3772">
+<text class="fg_fill" x="273" y="3772">
 graph.
 </text>
 </g>
 <g>
-<text x="273" y="3980">
+<text class="fg_fill" x="273" y="3980">
 as
 </text>
 </g>
 <g>
-<text x="273" y="4460">
+<text class="fg_fill" x="273" y="4460">
 度
 </text>
 </g>
 <g>
-<text x="273" y="4572">
+<text class="fg_fill" x="273" y="4572">
 markdown,
 </text>
 </g>
 <g>
-<text x="281" y="2844">
+<text class="fg_fill" x="281" y="2844">
 as
 </text>
 </g>
 <g>
-<text x="281" y="3052">
+<text class="fg_fill" x="281" y="3052">
 1
 </text>
 </g>
 <g>
-<text x="281" y="3196">
+<text class="fg_fill" x="281" y="3196">
 2
 </text>
 </g>
 <g>
-<text x="281" y="3244">
+<text class="fg_fill" x="281" y="3244">
 3
 </text>
 </g>
 <g>
-<text x="281" y="4076">
+<text class="fg_fill" x="281" y="4076">
 make
 </text>
 </g>
 <g>
-<text x="281" y="4236">
+<text class="fg_fill" x="281" y="4236">
 not
 </text>
 </g>
 <g>
-<text x="281" y="4316">
+<text class="fg_fill" x="281" y="4316">
 fonts
 </text>
 </g>
 <g>
-<text x="281" y="4508">
+<text class="fg_fill" x="281" y="4508">
 output
 </text>
 </g>
 <g>
-<text x="289" y="3116">
+<text class="fg_fill" x="289" y="3116">
 220R
 </text>
 </g>
 <g>
-<text x="289" y="3228">
+<text class="fg_fill" x="289" y="3228">
 GND
 </text>
 </g>
 <g>
-<text x="289" y="3580">
+<text class="fg_fill" x="289" y="3580">
 renderer,
 </text>
 </g>
 <g>
-<text x="289" y="3740">
+<text class="fg_fill" x="289" y="3740">
 cursor
 </text>
 </g>
 <g>
-<text x="289" y="4012">
+<text class="fg_fill" x="289" y="4012">
 order
 </text>
 </g>
 <g>
-<text x="289" y="4220">
+<text class="fg_fill" x="289" y="4220">
 The
 </text>
 </g>
 <g>
-<text x="289" y="4364">
+<text class="fg_fill" x="289" y="4364">
 than
 </text>
 </g>
 <g>
-<text x="289" y="4460">
+<text class="fg_fill" x="289" y="4460">
 器
 </text>
 </g>
 <g>
-<text x="297" y="3004">
+<text class="fg_fill" x="297" y="3004">
 1k
 </text>
 </g>
 <g>
-<text x="297" y="3612">
+<text class="fg_fill" x="297" y="3612">
 to
 </text>
 </g>
 <g>
-<text x="297" y="3724">
+<text class="fg_fill" x="297" y="3724">
 you
 </text>
 </g>
 <g>
-<text x="297" y="3756">
+<text class="fg_fill" x="297" y="3756">
 that
 </text>
 </g>
 <g>
-<text x="297" y="3788">
+<text class="fg_fill" x="297" y="3788">
 holding
 </text>
 </g>
 <g>
-<text x="297" y="3980">
+<text class="fg_fill" x="297" y="3980">
 all
 </text>
 </g>
 <g>
-<text x="297" y="4332">
+<text class="fg_fill" x="297" y="4332">
 fonts
 </text>
 </g>
 <g>
-<text x="297" y="4348">
+<text class="fg_fill" x="297" y="4348">
 CJK
 </text>
 </g>
 <g>
-<text x="297" y="4540">
+<text class="fg_fill" x="297" y="4540">
 just
 </text>
 </g>
 <g>
-<text x="297" y="4668">
+<text class="fg_fill" x="297" y="4668">
 move
 </text>
 </g>
 <g>
-<text x="305" y="2844">
+<text class="fg_fill" x="305" y="2844">
 circuit
 </text>
 </g>
 <g>
-<text x="305" y="3596">
+<text class="fg_fill" x="305" y="3596">
 text
 </text>
 </g>
 <g>
-<text x="305" y="3708">
+<text class="fg_fill" x="305" y="3708">
 in
 </text>
 </g>
 <g>
-<text x="305" y="4636">
+<text class="fg_fill" x="305" y="4636">
 any
 </text>
 </g>
 <g>
-<text x="313" y="4236">
+<text class="fg_fill" x="313" y="4236">
 to
 </text>
 </g>
 <g>
-<text x="321" y="1916">
+<text class="fg_fill" x="321" y="1916">
 Filesystem
 </text>
 </g>
 <g>
-<text x="321" y="3612">
+<text class="fg_fill" x="321" y="3612">
 edit
 </text>
 </g>
 <g>
-<text x="321" y="4060">
+<text class="fg_fill" x="321" y="4060">
 in
 </text>
 </g>
 <g>
-<text x="321" y="4076">
+<text class="fg_fill" x="321" y="4076">
 text
 </text>
 </g>
 <g>
-<text x="321" y="4220">
+<text class="fg_fill" x="321" y="4220">
 svgbob
 </text>
 </g>
 <g>
-<text x="321" y="4396">
+<text class="fg_fill" x="321" y="4396">
 using
 </text>
 </g>
 <g>
-<text x="329" y="1564">
+<text class="fg_fill" x="329" y="1564">
 E
 </text>
 </g>
 <g>
-<text x="329" y="1580">
+<text class="fg_fill" x="329" y="1580">
 D
 </text>
 </g>
 <g>
-<text x="329" y="1596">
+<text class="fg_fill" x="329" y="1596">
 C
 </text>
 </g>
 <g>
-<text x="329" y="1612">
+<text class="fg_fill" x="329" y="1612">
 B
 </text>
 </g>
 <g>
-<text x="329" y="1628">
+<text class="fg_fill" x="329" y="1628">
 A
 </text>
 </g>
 <g>
-<text x="329" y="3708">
+<text class="fg_fill" x="329" y="3708">
 replace
 </text>
 </g>
 <g>
-<text x="329" y="3724">
+<text class="fg_fill" x="329" y="3724">
 intended
 </text>
 </g>
 <g>
-<text x="329" y="3772">
+<text class="fg_fill" x="329" y="3772">
 Move
 </text>
 </g>
 <g>
-<text x="329" y="3980">
+<text class="fg_fill" x="329" y="3980">
 the
 </text>
 </g>
 <g>
-<text x="329" y="4316">
+<text class="fg_fill" x="329" y="4316">
 should
 </text>
 </g>
 <g>
-<text x="329" y="4348">
+<text class="fg_fill" x="329" y="4348">
 full-width
 </text>
 </g>
 <g>
-<text x="329" y="4364">
+<text class="fg_fill" x="329" y="4364">
 ascii
 </text>
 </g>
 <g>
-<text x="337" y="1260">
+<text class="fg_fill" x="337" y="1260">
 are
 </text>
 </g>
 <g>
-<text x="337" y="1388">
+<text class="fg_fill" x="337" y="1388">
 F
 </text>
 </g>
 <g>
-<text x="337" y="1420">
+<text class="fg_fill" x="337" y="1420">
 E
 </text>
 </g>
 <g>
-<text x="337" y="1452">
+<text class="fg_fill" x="337" y="1452">
 G
 </text>
 </g>
 <g>
-<text x="337" y="3244">
+<text class="fg_fill" x="337" y="3244">
 1nF
 </text>
 </g>
 <g>
-<text x="337" y="3756">
+<text class="fg_fill" x="337" y="3756">
 reveals
 </text>
 </g>
 <g>
-<text x="337" y="3996">
+<text class="fg_fill" x="337" y="3996">
 corresponds
 </text>
 </g>
 <g>
-<text x="337" y="4012">
+<text class="fg_fill" x="337" y="4012">
 to
 </text>
 </g>
 <g>
-<text x="337" y="4236">
+<text class="fg_fill" x="337" y="4236">
 pollute
 </text>
 </g>
 <g>
-<text x="337" y="4508">
+<text class="fg_fill" x="337" y="4508">
 document
 </text>
 </g>
 <g>
-<text x="337" y="4540">
+<text class="fg_fill" x="337" y="4540">
 use
 </text>
 </g>
 <g>
-<text x="337" y="4636">
+<text class="fg_fill" x="337" y="4636">
 plugins,
 </text>
 </g>
 <g>
-<text x="337" y="4668">
+<text class="fg_fill" x="337" y="4668">
 the
 </text>
 </g>
 <g>
-<text x="345" y="3596">
+<text class="fg_fill" x="345" y="3596">
 in
 </text>
 </g>
 <g>
-<text x="345" y="3740">
+<text class="fg_fill" x="345" y="3740">
 north
 </text>
 </g>
 <g>
-<text x="345" y="4060">
+<text class="fg_fill" x="345" y="4060">
 text,
 </text>
 </g>
 <g>
-<text x="345" y="4332">
+<text class="fg_fill" x="345" y="4332">
 used
 </text>
 </g>
 <g>
-<text x="353" y="1996">
+<text class="fg_fill" x="353" y="1996">
 IO
 </text>
 </g>
 <g>
-<text x="353" y="4572">
+<text class="fg_fill" x="353" y="4572">
 combine
 </text>
 </g>
 <g>
-<text x="361" y="1644">
+<text class="fg_fill" x="361" y="1644">
 5
 </text>
 </g>
 <g>
-<text x="361" y="3548">
+<text class="fg_fill" x="361" y="3548">
 and
 </text>
 </g>
 <g>
-<text x="361" y="3612">
+<text class="fg_fill" x="361" y="3612">
 text.
 </text>
 </g>
 <g>
-<text x="361" y="3788">
+<text class="fg_fill" x="361" y="3788">
 the
 </text>
 </g>
 <g>
-<text x="361" y="3980">
+<text class="fg_fill" x="361" y="3980">
 text
 </text>
 </g>
 <g>
-<text x="361" y="4012">
+<text class="fg_fill" x="361" y="4012">
 maintain
 </text>
 </g>
 <g>
-<text x="361" y="4076">
+<text class="fg_fill" x="361" y="4076">
 diagrams
 </text>
 </g>
 <g>
-<text x="369" y="1260">
+<text class="fg_fill" x="369" y="1260">
 supported
 </text>
 </g>
 <g>
-<text x="369" y="2844">
+<text class="fg_fill" x="369" y="2844">
 diagrams
 </text>
 </g>
 <g>
-<text x="369" y="3580">
+<text class="fg_fill" x="369" y="3580">
 it
 </text>
 </g>
 <g>
-<text x="369" y="3596">
+<text class="fg_fill" x="369" y="3596">
 your
 </text>
 </g>
 <g>
-<text x="369" y="3772">
+<text class="fg_fill" x="369" y="3772">
 the
 </text>
 </g>
 <g>
-<text x="369" y="4396">
+<text class="fg_fill" x="369" y="4396">
 either
 </text>
 </g>
 <g>
-<text x="369" y="4540">
+<text class="fg_fill" x="369" y="4540">
 markdown
 </text>
 </g>
 <g>
-<text x="369" y="4668">
+<text class="fg_fill" x="369" y="4668">
 cursor
 </text>
 </g>
 <g>
-<text x="377" y="284">
+<text class="fg_fill" x="377" y="284">
 .
 </text>
 </g>
 <g>
-<text x="377" y="1644">
+<text class="fg_fill" x="377" y="1644">
 10
 </text>
 </g>
 <g>
-<text x="377" y="4220">
+<text class="fg_fill" x="377" y="4220">
 diagramming
 </text>
 </g>
 <g>
-<text x="377" y="4364">
+<text class="fg_fill" x="377" y="4364">
 characters,
 </text>
 </g>
 <g>
-<text x="377" y="4460">
+<text class="fg_fill" x="377" y="4460">
 MMU
 </text>
 </g>
 <g>
-<text x="385" y="2220">
+<text class="fg_fill" x="385" y="2220">
 .
 </text>
 </g>
 <g>
-<text x="385" y="3052">
+<text class="fg_fill" x="385" y="3052">
 BC
 </text>
 </g>
 <g>
-<text x="385" y="3068">
+<text class="fg_fill" x="385" y="3068">
 547
 </text>
 </g>
 <g>
-<text x="385" y="3228">
+<text class="fg_fill" x="385" y="3228">
 30uH
 </text>
 </g>
 <g>
-<text x="385" y="4316">
+<text class="fg_fill" x="385" y="4316">
 have
 </text>
 </g>
 <g>
-<text x="385" y="4332">
+<text class="fg_fill" x="385" y="4332">
 in
 </text>
 </g>
 <g>
-<text x="393" y="2476">
+<text class="fg_fill" x="393" y="2476">
 Beta
 </text>
 </g>
 <g>
-<text x="393" y="3548">
+<text class="fg_fill" x="393" y="3548">
 future
 </text>
 </g>
 <g>
-<text x="393" y="3580">
+<text class="fg_fill" x="393" y="3580">
 would
 </text>
 </g>
 <g>
-<text x="393" y="3708">
+<text class="fg_fill" x="393" y="3708">
 and
 </text>
 </g>
 <g>
-<text x="393" y="3740">
+<text class="fg_fill" x="393" y="3740">
 east
 </text>
 </g>
 <g>
-<text x="393" y="3788">
+<text class="fg_fill" x="393" y="3788">
 mouse
 </text>
 </g>
 <g>
-<text x="393" y="4060">
+<text class="fg_fill" x="393" y="4060">
 isn&#39;
 </text>
 </g>
 <g>
-<text x="401" y="1644">
+<text class="fg_fill" x="401" y="1644">
 15
 </text>
 </g>
 <g>
-<text x="401" y="2364">
+<text class="fg_fill" x="401" y="2364">
 Alpha
 </text>
 </g>
 <g>
-<text x="401" y="2396">
+<text class="fg_fill" x="401" y="2396">
 Initial
 </text>
 </g>
 <g>
-<text x="401" y="2732">
+<text class="fg_fill" x="401" y="2732">
 Career
 </text>
 </g>
 <g>
-<text x="401" y="3452">
+<text class="fg_fill" x="401" y="3452">
 GND
 </text>
 </g>
 <g>
-<text x="401" y="3724">
+<text class="fg_fill" x="401" y="3724">
 to
 </text>
 </g>
 <g>
-<text x="401" y="3756">
+<text class="fg_fill" x="401" y="3756">
 the
 </text>
 </g>
 <g>
-<text x="401" y="3772">
+<text class="fg_fill" x="401" y="3772">
 mouse
 </text>
 </g>
 <g>
-<text x="401" y="3980">
+<text class="fg_fill" x="401" y="3980">
 are
 </text>
 </g>
 <g>
-<text x="401" y="4236">
+<text class="fg_fill" x="401" y="4236">
 the
 </text>
 </g>
 <g>
-<text x="409" y="2620">
+<text class="fg_fill" x="409" y="2620">
 Push
 </text>
 </g>
 <g>
-<text x="409" y="2684">
+<text class="fg_fill" x="409" y="2684">
 Reception
 </text>
 </g>
 <g>
-<text x="409" y="3596">
+<text class="fg_fill" x="409" y="3596">
 source
 </text>
 </g>
 <g>
-<text x="409" y="4332">
+<text class="fg_fill" x="409" y="4332">
 browsers
 </text>
 </g>
 <g>
-<text x="409" y="4508">
+<text class="fg_fill" x="409" y="4508">
 makes
 </text>
 </g>
 <g>
-<text x="409" y="4636">
+<text class="fg_fill" x="409" y="4636">
 you
 </text>
 </g>
 <g>
-<text x="417" y="4348">
+<text class="fg_fill" x="417" y="4348">
 characters
 </text>
 </g>
 <g>
-<text x="417" y="4572">
+<text class="fg_fill" x="417" y="4572">
 it
 </text>
 </g>
 <g>
-<text x="425" y="1644">
+<text class="fg_fill" x="425" y="1644">
 20
 </text>
 </g>
 <g>
-<text x="425" y="2220">
+<text class="fg_fill" x="425" y="2220">
 ..°
 </text>
 </g>
 <g>
-<text x="425" y="3276">
+<text class="fg_fill" x="425" y="3276">
 GND
 </text>
 </g>
 <g>
-<text x="425" y="3708">
+<text class="fg_fill" x="425" y="3708">
 block
 </text>
 </g>
 <g>
-<text x="425" y="3724">
+<text class="fg_fill" x="425" y="3724">
 type
 </text>
 </g>
 <g>
-<text x="425" y="4060">
+<text class="fg_fill" x="425" y="4060">
 t
 </text>
 </g>
 <g>
-<text x="425" y="4316">
+<text class="fg_fill" x="425" y="4316">
 solved
 </text>
 </g>
 <g>
-<text x="425" y="4396">
+<text class="fg_fill" x="425" y="4396">
 monospace
 </text>
 </g>
 <g>
-<text x="425" y="4668">
+<text class="fg_fill" x="425" y="4668">
 everywhere,
 </text>
 </g>
 <g>
-<text x="433" y="3212">
+<text class="fg_fill" x="433" y="3212">
 C
 </text>
 </g>
 <g>
-<text x="433" y="3228">
+<text class="fg_fill" x="433" y="3228">
 C
 </text>
 </g>
 <g>
-<text x="433" y="3244">
+<text class="fg_fill" x="433" y="3244">
 C
 </text>
 </g>
 <g>
-<text x="433" y="3388">
+<text class="fg_fill" x="433" y="3388">
 5k6
 </text>
 </g>
 <g>
-<text x="433" y="3404">
+<text class="fg_fill" x="433" y="3404">
 in
 </text>
 </g>
 <g>
-<text x="433" y="3740">
+<text class="fg_fill" x="433" y="3740">
 to
 </text>
 </g>
 <g>
-<text x="433" y="3756">
+<text class="fg_fill" x="433" y="3756">
 underlying
 </text>
 </g>
 <g>
-<text x="433" y="3980">
+<text class="fg_fill" x="433" y="3980">
 meant
 </text>
 </g>
 <g>
-<text x="433" y="3996">
+<text class="fg_fill" x="433" y="3996">
 to
 </text>
 </g>
 <g>
-<text x="433" y="4076">
+<text class="fg_fill" x="433" y="4076">
 like
 </text>
 </g>
 <g>
-<text x="433" y="4236">
+<text class="fg_fill" x="433" y="4236">
 markdown
 </text>
 </g>
 <g>
-<text x="441" y="2652">
+<text class="fg_fill" x="441" y="2652">
 Setbacks
 </text>
 </g>
 <g>
-<text x="441" y="3580">
+<text class="fg_fill" x="441" y="3580">
 still
 </text>
 </g>
 <g>
-<text x="441" y="3788">
+<text class="fg_fill" x="441" y="3788">
 down
 </text>
 </g>
 <g>
-<text x="441" y="4060">
+<text class="fg_fill" x="441" y="4060">
 that
 </text>
 </g>
 <g>
-<text x="441" y="4444">
+<text class="fg_fill" x="441" y="4444">
 Look
 </text>
 </g>
 <g>
-<text x="441" y="4476">
+<text class="fg_fill" x="441" y="4476">
 monospace
 </text>
 </g>
 <g>
-<text x="441" y="4540">
+<text class="fg_fill" x="441" y="4540">
 format,
 </text>
 </g>
 <g>
-<text x="441" y="4572">
+<text class="fg_fill" x="441" y="4572">
 with
 </text>
 </g>
 <g>
-<text x="441" y="4636">
+<text class="fg_fill" x="441" y="4636">
 can
 </text>
 </g>
 <g>
-<text x="449" y="1644">
+<text class="fg_fill" x="449" y="1644">
 25
 </text>
 </g>
 <g>
-<text x="449" y="2620">
+<text class="fg_fill" x="449" y="2620">
 backs
 </text>
 </g>
 <g>
-<text x="449" y="3548">
+<text class="fg_fill" x="449" y="3548">
 proof.
 </text>
 </g>
 <g>
-<text x="449" y="3772">
+<text class="fg_fill" x="449" y="3772">
 around
 </text>
 </g>
 <g>
-<text x="457" y="1916">
+<text class="fg_fill" x="457" y="1916">
 Scheduler
 </text>
 </g>
 <g>
-<text x="457" y="2076">
+<text class="fg_fill" x="457" y="2076">
 HAL
 </text>
 </g>
 <g>
-<text x="457" y="2732">
+<text class="fg_fill" x="457" y="2732">
 change
 </text>
 </g>
 <g>
-<text x="457" y="3116">
+<text class="fg_fill" x="457" y="3116">
 IRF9Z34
 </text>
 </g>
 <g>
-<text x="457" y="3164">
+<text class="fg_fill" x="457" y="3164">
 BYV29
 </text>
 </g>
 <g>
-<text x="457" y="3404">
+<text class="fg_fill" x="457" y="3404">
 Serie
 </text>
 </g>
 <g>
-<text x="457" y="3740">
+<text class="fg_fill" x="457" y="3740">
 continue
 </text>
 </g>
 <g>
-<text x="457" y="3996">
+<text class="fg_fill" x="457" y="3996">
 each
 </text>
 </g>
 <g>
-<text x="457" y="4508">
+<text class="fg_fill" x="457" y="4508">
 it
 </text>
 </g>
 <g>
-<text x="465" y="2396">
+<text class="fg_fill" x="465" y="2396">
 Release
 </text>
 </g>
 <g>
-<text x="465" y="2428">
+<text class="fg_fill" x="465" y="2428">
 Patch
 </text>
 </g>
 <g>
-<text x="465" y="2540">
+<text class="fg_fill" x="465" y="2540">
 Release
 </text>
 </g>
 <g>
-<text x="465" y="3388">
+<text class="fg_fill" x="465" y="3388">
 +
 </text>
 </g>
 <g>
-<text x="465" y="3596">
+<text class="fg_fill" x="465" y="3596">
 code.
 </text>
 </g>
 <g>
-<text x="465" y="3724">
+<text class="fg_fill" x="465" y="3724">
 next.
 </text>
 </g>
 <g>
-<text x="473" y="1644">
+<text class="fg_fill" x="473" y="1644">
 30
 </text>
 </g>
 <g>
-<text x="473" y="3356">
+<text class="fg_fill" x="473" y="3356">
 1k0
 </text>
 </g>
 <g>
-<text x="473" y="3708">
+<text class="fg_fill" x="473" y="3708">
 mode
 </text>
 </g>
 <g>
-<text x="473" y="4076">
+<text class="fg_fill" x="473" y="4076">
 these
 </text>
 </g>
 <g>
-<text x="473" y="4220">
+<text class="fg_fill" x="473" y="4220">
 feature
 </text>
 </g>
 <g>
-<text x="473" y="4636">
+<text class="fg_fill" x="473" y="4636">
 use
 </text>
 </g>
 <g>
-<text x="481" y="2460">
+<text class="fg_fill" x="481" y="2460">
 Patch
 </text>
 </g>
 <g>
-<text x="481" y="3388">
+<text class="fg_fill" x="481" y="3388">
 3k3
 </text>
 </g>
 <g>
-<text x="481" y="4060">
+<text class="fg_fill" x="481" y="4060">
 tedious?
 </text>
 </g>
 <g>
-<text x="481" y="4316">
+<text class="fg_fill" x="481" y="4316">
 this
 </text>
 </g>
 <g>
-<text x="481" y="4444">
+<text class="fg_fill" x="481" y="4444">
 at
 </text>
 </g>
 <g>
-<text x="481" y="4508">
+<text class="fg_fill" x="481" y="4508">
 look
 </text>
 </g>
 <g>
-<text x="481" y="4572">
+<text class="fg_fill" x="481" y="4572">
 svgbob
 </text>
 </g>
 <g>
-<text x="481" y="4652">
+<text class="fg_fill" x="481" y="4652">
 ,
 </text>
 </g>
 <g>
-<text x="489" y="3580">
+<text class="fg_fill" x="489" y="3580">
 looks
 </text>
 </g>
 <g>
-<text x="497" y="1644">
+<text class="fg_fill" x="497" y="1644">
 35
 </text>
 </g>
 <g>
-<text x="497" y="3996">
+<text class="fg_fill" x="497" y="3996">
 separate
 </text>
 </g>
 <g>
-<text x="505" y="3772">
+<text class="fg_fill" x="505" y="3772">
 to
 </text>
 </g>
 <g>
-<text x="505" y="4236">
+<text class="fg_fill" x="505" y="4236">
 syntax.
 </text>
 </g>
 <g>
-<text x="505" y="4444">
+<text class="fg_fill" x="505" y="4444">
 that
 </text>
 </g>
 <g>
-<text x="505" y="4636">
+<text class="fg_fill" x="505" y="4636">
 combination
 </text>
 </g>
 <g>
-<text x="505" y="4684">
+<text class="fg_fill" x="505" y="4684">
 .
 </text>
 </g>
 <g>
-<text x="513" y="2428">
+<text class="fg_fill" x="513" y="2428">
 1
 </text>
 </g>
 <g>
-<text x="513" y="3276">
+<text class="fg_fill" x="513" y="3276">
 GND
 </text>
 </g>
 <g>
-<text x="521" y="1644">
+<text class="fg_fill" x="521" y="1644">
 40
 </text>
 </g>
 <g>
-<text x="521" y="3756">
+<text class="fg_fill" x="521" y="3756">
 characters
 </text>
 </g>
 <g>
-<text x="521" y="4076">
+<text class="fg_fill" x="521" y="4076">
 are
 </text>
 </g>
 <g>
-<text x="521" y="4476">
+<text class="fg_fill" x="521" y="4476">
 eh?
 </text>
 </g>
 <g>
-<text x="521" y="4508">
+<text class="fg_fill" x="521" y="4508">
 like
 </text>
 </g>
 <g>
-<text x="529" y="2460">
+<text class="fg_fill" x="529" y="2460">
 2
 </text>
 </g>
 <g>
-<text x="529" y="3740">
+<text class="fg_fill" x="529" y="3740">
 the
 </text>
 </g>
 <g>
-<text x="529" y="3772">
+<text class="fg_fill" x="529" y="3772">
 see
 </text>
 </g>
 <g>
-<text x="537" y="1996">
+<text class="fg_fill" x="537" y="1996">
 Network
 </text>
 </g>
 <g>
-<text x="537" y="3164">
+<text class="fg_fill" x="537" y="3164">
 -12V6
 </text>
 </g>
 <g>
-<text x="537" y="3260">
+<text class="fg_fill" x="537" y="3260">
 +
 </text>
 </g>
 <g>
-<text x="537" y="3580">
+<text class="fg_fill" x="537" y="3580">
 good
 </text>
 </g>
 <g>
-<text x="537" y="4220">
+<text class="fg_fill" x="537" y="4220">
 is
 </text>
 </g>
 <g>
-<text x="537" y="4572">
+<text class="fg_fill" x="537" y="4572">
 diagrams,
 </text>
 </g>
 <g>
-<text x="545" y="1644">
+<text class="fg_fill" x="545" y="1644">
 45
 </text>
 </g>
 <g>
-<text x="545" y="3180">
+<text class="fg_fill" x="545" y="3180">
 X
 </text>
 </g>
 <g>
-<text x="545" y="3228">
+<text class="fg_fill" x="545" y="3228">
 470
 </text>
 </g>
 <g>
-<text x="553" y="3244">
+<text class="fg_fill" x="553" y="3244">
 uF
 </text>
 </g>
 <g>
-<text x="553" y="4076">
+<text class="fg_fill" x="553" y="4076">
 really
 </text>
 </g>
 <g>
-<text x="561" y="3180">
+<text class="fg_fill" x="561" y="3180">
 OUT
 </text>
 </g>
 <g>
-<text x="561" y="3740">
+<text class="fg_fill" x="561" y="3740">
 line.
 </text>
 </g>
 <g>
-<text x="561" y="3772">
+<text class="fg_fill" x="561" y="3772">
 the
 </text>
 </g>
 <g>
-<text x="561" y="4220">
+<text class="fg_fill" x="561" y="4220">
 guarded
 </text>
 </g>
 <g>
-<text x="561" y="4508">
+<text class="fg_fill" x="561" y="4508">
 meant
 </text>
 </g>
 <g>
-<text x="569" y="1644">
+<text class="fg_fill" x="569" y="1644">
 50
 </text>
 </g>
 <g>
-<text x="569" y="3996">
+<text class="fg_fill" x="569" y="3996">
 text
 </text>
 </g>
 <g>
-<text x="593" y="1916">
+<text class="fg_fill" x="593" y="1916">
 MMU
 </text>
 </g>
 <g>
-<text x="593" y="3772">
+<text class="fg_fill" x="593" y="3772">
 characters
 </text>
 </g>
 <g>
-<circle class="open" cx="32" cy="760" r="20"/>
+<circle class="fg_stroke no_fill" cx="32" cy="760" r="20"/>
 </g>
 <g>
-<circle class="open" cx="56" cy="1040" r="48"/>
+<circle class="fg_stroke no_fill" cx="56" cy="1040" r="48"/>
 </g>
 <g>
-<circle class="open" cx="68" cy="632" r="16"/>
+<circle class="fg_stroke no_fill" cx="68" cy="632" r="16"/>
 </g>
 <g>
-<circle class="open" cx="68" cy="696" r="16"/>
+<circle class="fg_stroke no_fill" cx="68" cy="696" r="16"/>
 </g>
 <g>
-<circle class="open" cx="68" cy="840" r="24"/>
+<circle class="fg_stroke no_fill" cx="68" cy="840" r="24"/>
 </g>
 <g>
-<circle class="open" cx="436" cy="1176" r="16"/>
+<circle class="fg_stroke no_fill" cx="436" cy="1176" r="16"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="344" y2="344"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="344" y2="344"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1112" y2="1112"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1112" y2="1112"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1256" y2="1256"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1256" y2="1256"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1352" y2="1352"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1352" y2="1352"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1512" y2="1512"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1512" y2="1512"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1816" y2="1816"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="1816" y2="1816"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2136" y2="2136"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2136" y2="2136"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2328" y2="2328"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2328" y2="2328"/>
 </g>
 <g>
-<line marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2840" y2="2840"/>
+<line class="fg_stroke" marker-end="url(#triangle)" marker-start="url(#open_circle)" x1="12" x2="28" y1="2840" y2="2840"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="52" x2="68" y1="168" y2="168"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="52" x2="68" y1="168" y2="168"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" marker-start="url(#circle)" x1="52" x2="108" y1="2904" y2="2904"/>
-<line marker-start="url(#open_circle)" x1="108" x2="108" y1="2904" y2="2928"/>
-<line marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="108" x2="164" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#circle)" x1="52" x2="108" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="108" x2="108" y1="2904" y2="2928"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#open_circle)" x1="108" x2="164" y1="2904" y2="2904"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" marker-start="url(#circle)" x1="52" x2="108" y1="2984" y2="2984"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" marker-start="url(#circle)" x1="52" x2="108" y1="2984" y2="2984"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="60" x2="76" y1="1144" y2="1144"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="60" x2="76" y1="1144" y2="1144"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="216" x2="228" y1="2904" y2="2904"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="216" x2="228" y1="2904" y2="2904"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="276" x2="300" y1="3208" y2="3208"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="276" x2="300" y1="3208" y2="3208"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="308" x2="412" y1="3336" y2="3336"/>
+<line class="fg_stroke" marker-end="url(#open_circle)" x1="308" x2="412" y1="3336" y2="3336"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="412" x2="412" y1="1608" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="412" x2="412" y1="1608" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="436" x2="436" y1="1608" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="436" x2="436" y1="1608" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="460" x2="460" y1="1592" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="460" x2="460" y1="1592" y2="1632"/>
 </g>
 <g>
-<line marker-end="url(#open_circle)" x1="472" x2="484" y1="3176" y2="3176"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="484" x2="484" y1="1592" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="484" x2="484" y1="1592" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="508" x2="508" y1="1576" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="508" x2="508" y1="1576" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="532" x2="532" y1="1576" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="532" x2="532" y1="1576" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="556" x2="556" y1="1560" y2="1632"/>
 </g>
 <g>
-<line marker-start="url(#open_circle)" x1="556" x2="556" y1="1560" y2="1632"/>
-</g>
-<g>
-<line marker-start="url(#open_circle)" x1="580" x2="580" y1="1576" y2="1632"/>
+<line class="fg_stroke" marker-start="url(#open_circle)" x1="580" x2="580" y1="1576" y2="1632"/>
 </g>
 </svg>
