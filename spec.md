@@ -31,6 +31,8 @@ Svgbob is a diagramming model which uses common typing characters to approximate
 |   `=`    | equal sign           | for double horizontal line
 |   `x`    | lowercase letter `x` | for intersection
 |   `X`    | uppercase letter `X` | for intersection
+|   `:`    | colon                | for vertical dashed lines
+|   `~`    | tilde                | for horizontal dashed lines
 
 ## Principle
 The rendered shape should closely resembles to that of the ascii
