@@ -9,8 +9,9 @@ Svgbob is an ascii to svg converter.
 There is a Work-in-Progress spec [here](https://github.com/ivanceras/svgbob/blob/master/spec.md)
 Contribution to the spec is welcomed.
 
-I've spent a huge time on developing the spec and implementation on my free-time.
-If you like this project please consider supporting me on [patreon](https://www.patreon.com/ivanceras)
+#### Please support this project:
+ [![Become a patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/ivanceras)
+
 
 [Demo](http://ivanceras.github.io/svgbob-editor/)
 
