@@ -7,6 +7,7 @@ public/
 parts/
 prime/
 snap/
+**/out/*
 stage/
 *.snap*
 *.tar*
