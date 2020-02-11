@@ -1,5 +1,9 @@
 # Svgbob Architecture and Design phases
 
+Svgbob creates an svg drawing based on the input ascii art diagrams.
+It achieves this by creating a corresponding fragment for each character, and then this little fragments
+are then merged to form lines and arcs. The lines and arcs are then endorsed into high level shapes such as rect, circles.
+
 ## Name inspiration:
 - svg for svg document and drawing.
 - bob for Alice and Bob as common characters in most diagrams
@@ -491,6 +495,44 @@ Pros:
 
 PropertyBuffer is calculated only once for each character, so the succeeding lookup should not waste execution time to recompute.
 
+
+### How the fragments are conceived based on a character.
+
+### Neighbor character: There are 8 neighbors of a character and each character on the input is checked agains this 8 neighbor for appropriate drawing element
+```bob
++---------+  +-----+   +---------+
+|  TopLeft|  | Top |   | TopRight|
++---------+--+-----+---+---------+
+
++---------+  +------+  +--------+
+|  Left   |  |(char)|  | Right  |
++---------+  +------+  +--------+
+
++----------+ +------+  +-----------+
+|BottomLeft| |Bottom|  |BottomRight|
++----------+ +------+  +-----------+
+```
+
+### Character Grid: a 5x5 grid which covers the most significant points for a character to be converted into drawing elements.
+
+Character grid: / is the line connecting E to U. Dash is connecting K to O, etc.
+```bob
+
+  0 1 2 3 4           B C D
+ 0┌─┬─┬─┬─┐        A┌─┬─┬─┬─┐E
+ 1├─┼─┼─┼─┤         │ │ │ │ │
+ 2├─┼─┼─┼─┤        F├─G─H─I─┤J
+ 3├─┼─┼─┼─┤         │ │ │ │ │
+ 4├─┼─┼─┼─┤        K├─L─M─N─┤O
+ 5├─┼─┼─┼─┤         │ │ │ │ │
+ 6├─┼─┼─┼─┤        P├─Q─R─S─┤T
+ 7├─┼─┼─┼─┤         │ │ │ │ │
+ 8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
+                      V W X
+
+```
+These fragments are processed such as merging collinear lines that are touching their endpoints.
+
 ```bob
 
 +--------------+        +------------+         +----------------+          +-----------------+
@@ -501,9 +543,9 @@ PropertyBuffer is calculated only once for each character, so the succeeding loo
                                 `-->| Spans |                                           /
                                     +-------+                                          /
                                       \                                               /
-                                       \    +---------------+    .---------------.   /
+                                       \    +---------------+    .----------------.  /
                                         `-->|Contact groups |---/ endorse shapes /--'
-                                            +---------------+   `---------------'
+                                            +---------------+  '----------------'
 ```
 
 - Optimizations.

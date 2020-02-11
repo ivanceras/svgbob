@@ -56,14 +56,18 @@ impl DerefMut for CellBuffer {
 
 impl CellBuffer {
     pub fn new() -> Self {
-        CellBuffer { map: BTreeMap::new(), css_styles: vec![] }
+        CellBuffer {
+            map: BTreeMap::new(),
+            css_styles: vec![],
+        }
     }
 
     pub fn add_css_styles(&mut self, css_styles: Vec<(String, String)>) {
         self.css_styles.extend(css_styles);
     }
 
-    /// Groups cell that are adjacents
+    /// Groups cell that are adjacents (cells that are next to each other, horizontally or
+    /// vertically)
     /// Note: using .rev() since this has a high change that the last cell is adjacent with the
     /// current cell tested
     pub fn group_adjacents(&self) -> Vec<Span> {
@@ -89,7 +93,11 @@ impl CellBuffer {
         let original_len = adjacents.len();
         let merged = Self::second_pass_merge(adjacents);
         // if has merged continue merging until nothing can be merged
-        if merged.len() < original_len { Self::merge_recursive(merged) } else { merged }
+        if merged.len() < original_len {
+            Self::merge_recursive(merged)
+        } else {
+            merged
+        }
     }
 
     /// second pass merge is operating on span comparing to other spans
@@ -144,17 +152,23 @@ impl CellBuffer {
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
         // the svg node
-        let (vec_fragments, vec_contacts): (Vec<Vec<Fragment>>, Vec<Vec<Contacts>>) =
-            self.group_adjacents().into_iter().map(|span| span.endorse()).unzip();
-
+        let (vec_fragments, vec_contacts): (Vec<Vec<Fragment>>, Vec<Vec<Contacts>>) = self
+            .group_adjacents()
+            .into_iter()
+            .map(|span| span.endorse())
+            .unzip();
 
         // partition the vec_groups into groups that is alone and the group
         // that is contacting their parts
-        let (single_member, vec_groups): (Vec<Contacts>, Vec<Contacts>) =
-            vec_contacts.into_iter().flatten().partition(move |contacts| contacts.0.len() == 1);
+        let (single_member, vec_groups): (Vec<Contacts>, Vec<Contacts>) = vec_contacts
+            .into_iter()
+            .flatten()
+            .partition(move |contacts| contacts.0.len() == 1);
 
-        let single_member_fragments: Vec<Fragment> =
-            single_member.into_iter().flat_map(|contact| contact.0).collect();
+        let single_member_fragments: Vec<Fragment> = single_member
+            .into_iter()
+            .flat_map(|contact| contact.0)
+            .collect();
 
         let group_nodes: Vec<Node<()>> = vec_groups
             .into_iter()
@@ -186,8 +200,10 @@ impl CellBuffer {
     }
 
     fn get_style(settings: &Settings, legend_css: String) -> Node<()> {
-        html::tags::style(vec![], vec![text(format!(
-            "line, path, circle,rect,polygon {{
+        html::tags::style(
+            vec![],
+            vec![text(format!(
+                "line, path, circle,rect,polygon {{
                           stroke: {stroke_color};
                           stroke-width: {stroke_width};
                           stroke-opacity: 1;
@@ -258,14 +274,15 @@ impl CellBuffer {
 
                          {legend_css}
                         ",
-            background = settings.background,
-            fill_color = settings.fill_color,
-            stroke_color = settings.stroke_color,
-            stroke_width = settings.stroke_width,
-            font_size = settings.font_size,
-            font_family = settings.font_family,
-            legend_css = legend_css,
-        ))])
+                background = settings.background,
+                fill_color = settings.fill_color,
+                stroke_color = settings.stroke_color,
+                stroke_width = settings.stroke_width,
+                font_size = settings.font_size,
+                font_family = settings.font_family,
+                legend_css = legend_css,
+            ))],
+        )
     }
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
@@ -277,28 +294,38 @@ impl CellBuffer {
         w: f32,
         h: f32,
     ) -> Node<()> {
-        let fragments_scaled: Vec<Fragment> =
-            fragments.into_iter().map(|frag| frag.scale(settings.scale)).collect();
+        let fragments_scaled: Vec<Fragment> = fragments
+            .into_iter()
+            .map(|frag| frag.scale(settings.scale))
+            .collect();
         let fragment_nodes: Vec<Node<()>> = FragmentTree::fragments_to_node(fragments_scaled);
 
-
-        let svg_node = svg(vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)], vec![
-            Self::get_style(settings, legend_css),
-            Self::get_defs(),
-            rect(vec![class("backdrop"), x(0), y(0), width(w), height(h)], vec![]),
-        ])
+        let svg_node = svg(
+            vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
+            vec![
+                Self::get_style(settings, legend_css),
+                Self::get_defs(),
+                rect(
+                    vec![class("backdrop"), x(0), y(0), width(w), height(h)],
+                    vec![],
+                ),
+            ],
+        )
         .add_children(fragment_nodes);
         svg_node
     }
 
     fn get_defs() -> Node<()> {
-        defs(vec![], vec![
-            Self::arrow_marker(),
-            Self::diamond_marker(),
-            Self::circle_marker(),
-            Self::open_circle_marker(),
-            Self::big_open_circle_marker(),
-        ])
+        defs(
+            vec![],
+            vec![
+                Self::arrow_marker(),
+                Self::diamond_marker(),
+                Self::circle_marker(),
+                Self::open_circle_marker(),
+                Self::big_open_circle_marker(),
+            ],
+        )
     }
 
     fn arrow_marker() -> Node<()> {
@@ -342,7 +369,10 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(vec![cx(4), cy(4), r(2), html::attributes::class("bg_filled")], vec![])],
+            vec![circle(
+                vec![cx(4), cy(4), r(2), html::attributes::class("bg_filled")],
+                vec![],
+            )],
         )
     }
 
@@ -357,7 +387,10 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(vec![cx(4), cy(4), r(2), html::attributes::class("filled")], vec![])],
+            vec![circle(
+                vec![cx(4), cy(4), r(2), html::attributes::class("filled")],
+                vec![],
+            )],
         )
     }
 
@@ -372,11 +405,13 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(vec![cx(4), cy(4), r(3), html::attributes::class("bg_filled")], vec![])],
+            vec![circle(
+                vec![cx(4), cy(4), r(3), html::attributes::class("bg_filled")],
+                vec![],
+            )],
         )
     }
 }
-
 
 impl fmt::Display for CellBuffer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -427,7 +462,6 @@ impl From<StringBuffer> for CellBuffer {
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn test_simple_adjacents() {
