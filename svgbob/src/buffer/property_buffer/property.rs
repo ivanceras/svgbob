@@ -1,7 +1,7 @@
 use self::Signal::Strong;
 use crate::{
     map::{ASCII_PROPERTIES, UNICODE_PROPERTIES},
-    Fragment, Point,
+    Fragment, Point, Settings,
 };
 use std::{cmp, fmt, sync::Arc};
 
@@ -58,6 +58,7 @@ pub struct Property {
     /// depending on flag that is meet when checked agains the surrounding characters
     pub behavior: Arc<
         dyn Fn(
+                &Settings,
                 &Property,
                 &Property,
                 &Property,
@@ -74,7 +75,12 @@ pub struct Property {
 
 impl fmt::Debug for Property {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        writeln!(f, "{{ char: {}, has {} signature }}", self.ch, self.signature.len())
+        writeln!(
+            f,
+            "{{ char: {}, has {} signature }}",
+            self.ch,
+            self.signature.len()
+        )
     }
 }
 
@@ -84,6 +90,7 @@ impl Property {
         signature: Vec<(Signal, Vec<Fragment>)>,
         behavior: Arc<
             dyn Fn(
+                    &Settings,
                     &Property,
                     &Property,
                     &Property,
@@ -97,7 +104,11 @@ impl Property {
                 + Send,
         >,
     ) -> Self {
-        Property { ch, signature, behavior }
+        Property {
+            ch,
+            signature,
+            behavior,
+        }
     }
 
     /// get the matching property of this char
@@ -113,7 +124,11 @@ impl Property {
     /// empty property serves as a substitue for None property for simplicity in
     /// the behavior code, never have to deal with Option
     pub fn empty() -> Self {
-        Property { ch: ' ', signature: vec![], behavior: Arc::new(|_, _, _, _, _, _, _, _| vec![]) }
+        Property {
+            ch: ' ',
+            signature: vec![],
+            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| vec![]),
+        }
     }
 
     /// derive a strong property with a strong signal
@@ -122,7 +137,7 @@ impl Property {
             ch,
             signature: vec![(Signal::Strong, fragments)],
             //TODO find a way to move the fragments here
-            behavior: Arc::new(|_, _, _, _, _, _, _, _| vec![(true, vec![])]),
+            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| vec![(true, vec![])]),
         }
     }
 
@@ -130,7 +145,13 @@ impl Property {
         let mut fragments: Vec<Fragment> = self
             .signature
             .iter()
-            .filter_map(|(sig, fragments)| if *sig == signal { Some(fragments) } else { None })
+            .filter_map(|(sig, fragments)| {
+                if *sig == signal {
+                    Some(fragments)
+                } else {
+                    None
+                }
+            })
             .flatten()
             .map(Clone::clone)
             .collect();
@@ -183,9 +204,12 @@ impl Property {
     /// Check to see if any fragment that is generated in this character
     /// can overlap (completely covered) line a b
     fn line_overlap_with_signal(&self, a: Point, b: Point, required_signal: Signal) -> bool {
-        self.signature.iter().filter(|(signal, _signature)| *signal >= required_signal).any(
-            |(_signal, signature)| signature.iter().any(|fragment| fragment.line_overlap(a, b)),
-        )
+        self.signature
+            .iter()
+            .filter(|(signal, _signature)| *signal >= required_signal)
+            .any(|(_signal, signature)| {
+                signature.iter().any(|fragment| fragment.line_overlap(a, b))
+            })
     }
 
     /// Check to see if any fragment that is generated in this character
@@ -199,6 +223,7 @@ impl Property {
     /// the fragments of this property when the surrounding properties is supplied
     pub(in crate) fn fragments(
         &self,
+        settings: &Settings,
         top_left: &Property,
         top: &Property,
         top_right: &Property,
@@ -209,6 +234,7 @@ impl Property {
         bottom_right: &Property,
     ) -> Vec<Fragment> {
         let bool_fragments = self.behavior.as_ref()(
+            settings,
             top_left,
             top,
             top_right,
@@ -219,12 +245,14 @@ impl Property {
             bottom_right,
         );
         let cell_fragments: Vec<Fragment> =
-            bool_fragments.into_iter().fold(vec![], |mut acc, (passed, fragments)| {
-                if passed {
-                    acc.extend(fragments);
-                };
-                acc
-            });
+            bool_fragments
+                .into_iter()
+                .fold(vec![], |mut acc, (passed, fragments)| {
+                    if passed {
+                        acc.extend(fragments);
+                    };
+                    acc
+                });
         cell_fragments
     }
 }

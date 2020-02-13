@@ -35,12 +35,16 @@ impl CellText {
     }
 
     fn is_adjacent_cell(&self, other_cell: Cell) -> bool {
-        self.cells().into_iter().any(|cell| cell.y == other_cell.y && cell.is_adjacent(&other_cell))
+        self.cells()
+            .into_iter()
+            .any(|cell| cell.y == other_cell.y && cell.is_adjacent(&other_cell))
     }
 
     /// cell text is groupable when they are adjacent
     pub(crate) fn is_contacting(&self, other: &Self) -> bool {
-        self.cells().into_iter().any(|cell| other.is_adjacent_cell(cell))
+        self.cells()
+            .into_iter()
+            .any(|cell| other.is_adjacent_cell(cell))
     }
 
     /// text can merge if they are next to each other and at the same line
@@ -53,9 +57,15 @@ impl CellText {
     pub(in crate) fn merge(&self, other: &Self) -> Option<Self> {
         if self.can_merge(other) {
             if self.start.x < other.start.x {
-                Some(CellText::new(self.start, format!("{}{}", self.content, other.content)))
+                Some(CellText::new(
+                    self.start,
+                    format!("{}{}", self.content, other.content),
+                ))
             } else {
-                Some(CellText::new(other.start, format!("{}{}", other.content, self.content)))
+                Some(CellText::new(
+                    other.start,
+                    format!("{}{}", other.content, self.content),
+                ))
             }
         } else {
             None
@@ -63,13 +73,19 @@ impl CellText {
     }
 
     pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
-        CellText { start: Cell::new(self.start.x + cell.x, self.start.y + cell.y), ..self.clone() }
+        CellText {
+            start: Cell::new(self.start.x + cell.x, self.start.y + cell.y),
+            ..self.clone()
+        }
     }
 }
 
 impl Bounds for CellText {
     fn bounds(&self) -> (Point, Point) {
-        (self.start.top_left_most(), self.end_cell().bottom_right_most())
+        (
+            self.start.top_left_most(),
+            self.end_cell().bottom_right_most(),
+        )
     }
 }
 
@@ -110,11 +126,17 @@ impl Text {
     }
 
     pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
-        Text { start: cell.absolute_position(self.start), ..self.clone() }
+        Text {
+            start: cell.absolute_position(self.start),
+            ..self.clone()
+        }
     }
 
     pub(in crate) fn scale(&self, scale: f32) -> Self {
-        Text { start: self.start.scale(scale), ..self.clone() }
+        Text {
+            start: self.start.scale(scale),
+            ..self.clone()
+        }
     }
 }
 
@@ -134,7 +156,6 @@ fn escape_html_text(s: &str) -> String {
     s.chars().map(|ch| replace_html_char(ch)).collect()
 }
 
-
 impl fmt::Display for Text {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "T {} {}", self.start, self.text)
@@ -143,15 +164,19 @@ impl fmt::Display for Text {
 
 impl Into<Node<()>> for Text {
     fn into(self) -> Node<()> {
-        svg::tags::text(vec![x(self.start.x), y(self.start.y)], vec![text(escape_html_text(
-            &self.text,
-        ))])
+        svg::tags::text(
+            vec![x(self.start.x), y(self.start.y)],
+            vec![text(escape_html_text(&self.text))],
+        )
     }
 }
 
 impl Bounds for Text {
     fn bounds(&self) -> (Point, Point) {
-        (self.start, Point::new(self.start.x + self.text_width(), self.start.y))
+        (
+            self.start,
+            Point::new(self.start.x + self.text_width(), self.start.y),
+        )
     }
 }
 
@@ -160,7 +185,9 @@ impl Eq for Text {}
 /// This is needed since this struct contains f32 which rust doesn't provide Eq implementation
 impl Ord for Text {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.start.cmp(&other.start).then(self.text.cmp(&other.text))
+        self.start
+            .cmp(&other.start)
+            .then(self.text.cmp(&other.text))
     }
 }
 
@@ -181,6 +208,7 @@ mod tests {
     use crate::{
         buffer::{Cell, CellBuffer, Contacts, Span},
         fragment::CellText,
+        Settings,
     };
 
     #[test]
@@ -216,7 +244,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts();
+        let groups = span1.get_contacts(&Settings::default());
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
@@ -257,8 +285,9 @@ mod tests {
         let cell_buffer = CellBuffer::from(art);
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 2);
-        let groups2 = spans.remove(1).get_contacts();
-        let groups1 = spans.remove(0).get_contacts();
+        let settings = &Settings::default();
+        let groups2 = spans.remove(1).get_contacts(settings);
+        let groups1 = spans.remove(0).get_contacts(settings);
         println!("span1 groups:");
         for (i, group1) in groups1.iter().enumerate() {
             println!("\tgroup {} {}", i, group1);
@@ -269,7 +298,13 @@ mod tests {
         }
         assert_eq!(groups1.len(), 15);
         assert_eq!(groups2.len(), 33);
-        assert_eq!(groups1[0].as_ref()[0].as_cell_text().unwrap().start, Cell::new(0, 0));
-        assert_eq!(groups2[0].as_ref()[0].as_cell_text().unwrap().start, Cell::new(0, 0));
+        assert_eq!(
+            groups1[0].as_ref()[0].as_cell_text().unwrap().start,
+            Cell::new(0, 0)
+        );
+        assert_eq!(
+            groups2[0].as_ref()[0].as_cell_text().unwrap().start,
+            Cell::new(0, 0)
+        );
     }
 }

@@ -7,7 +7,7 @@ use crate::{
     fragment,
     fragment::{Circle, Marker},
     map::{circle_map, UNICODE_FRAGMENTS},
-    Cell, Fragment,
+    Cell, Fragment, Settings,
 };
 use itertools::Itertools;
 use std::{
@@ -40,16 +40,20 @@ impl Span {
     }
 
     pub(super) fn is_adjacent(&self, cell: &Cell) -> bool {
-        self.iter().rev().any(|(ex_cell, _)| ex_cell.is_adjacent(cell))
+        self.iter()
+            .rev()
+            .any(|(ex_cell, _)| ex_cell.is_adjacent(cell))
     }
 
     /// if any cell of this span is adjacent to any cell of the other
     /// Use .rev() to check the last cell of this Span agains the first cell of the other Span
     /// They have a high change of matching faster
     pub(super) fn can_merge(&self, other: &Self) -> bool {
-        self.iter()
-            .rev()
-            .any(|(cell, _)| other.iter().any(|(other_cell, _)| cell.is_adjacent(other_cell)))
+        self.iter().rev().any(|(cell, _)| {
+            other
+                .iter()
+                .any(|(other_cell, _)| cell.is_adjacent(other_cell))
+        })
     }
 
     pub(super) fn merge(&mut self, other: &Self) {
@@ -93,9 +97,9 @@ impl Span {
     /// Only elements on the same span are checked to see if they
     /// belong on the same group
     ///
-    pub(crate) fn get_contacts(self) -> Vec<Contacts> {
+    pub(crate) fn get_contacts(self, settings: &Settings) -> Vec<Contacts> {
         let localize_self = self.localize();
-        let fb: FragmentBuffer = (&localize_self).into();
+        let fb: FragmentBuffer = (&localize_self).into_fragment_buffer(settings);
 
         let mut groups: Vec<Contacts> = vec![];
         let merged_fragments = fb.merge_fragments();
@@ -120,7 +124,11 @@ impl Span {
         let grouped = Self::second_pass_groupable(groups);
         // continue calling group recursive until the original len
         // has not decreased
-        if grouped.len() < original_len { Self::group_recursive(grouped) } else { grouped }
+        if grouped.len() < original_len {
+            Self::group_recursive(grouped)
+        } else {
+            grouped
+        }
     }
 
     fn second_pass_groupable(groups: Vec<Contacts>) -> Vec<Contacts> {
@@ -192,9 +200,9 @@ impl Span {
     /// The second element of the tuple: `contacts` are fragments that are touching together
     /// but can not form a fragment shape. These will be grouped in the svg nodes
     /// to keep them go together, when dragged (editing)
-    pub(crate) fn endorse(self) -> (Vec<Fragment>, Vec<Contacts>) {
+    pub(crate) fn endorse(self, settings: &Settings) -> (Vec<Fragment>, Vec<Contacts>) {
         let (top_left, _) = self.bounds().expect("mut have bounds");
-        let groups: Vec<Contacts> = self.get_contacts();
+        let groups: Vec<Contacts> = self.get_contacts(settings);
         // 1st phase, successful_endorses fragments, unendorsed one)
         let (mut fragments, mut un_endorsed) = Self::endorse_rects(groups);
         // 2nd phase, try to endorse to circles and arcs from the rejects of the 1st phase
@@ -202,8 +210,14 @@ impl Span {
 
         fragments.extend(circle_fragments);
         (
-            fragments.iter().map(|frag| frag.absolute_position(top_left)).collect(),
-            un_endorsed.iter().map(|group| group.absolute_position(top_left)).collect(),
+            fragments
+                .iter()
+                .map(|frag| frag.absolute_position(top_left))
+                .collect(),
+            un_endorsed
+                .iter()
+                .map(|group| group.absolute_position(top_left))
+                .collect(),
         )
     }
 
@@ -224,7 +238,7 @@ impl<'p> Into<PropertyBuffer<'p>> for &Span {
         let mut pb = PropertyBuffer::new();
         for (cell, ch) in self.iter() {
             if let Some(property) = Property::from_char(*ch) {
-                pb.insert(*cell, property);
+                pb.as_mut().insert(*cell, property);
             } else {
             }
         }
@@ -237,12 +251,12 @@ impl<'p> Into<PropertyBuffer<'p>> for &Span {
 ///
 /// If a character has no property, try to see if has equivalent fragments from unicode_map
 /// otherwise add it to the fragment_buffer as a text fragment
-impl Into<FragmentBuffer> for &Span {
-    fn into(self) -> FragmentBuffer {
+impl Span {
+    fn into_fragment_buffer(&self, settings: &Settings) -> FragmentBuffer {
         let pb: PropertyBuffer = self.into();
-        let mut fb: FragmentBuffer = (&pb).into();
+        let mut fb: FragmentBuffer = pb.into_fragment_buffer(settings);
         for (cell, ch) in self.iter() {
-            if pb.get(cell).is_none() {
+            if pb.as_ref().get(cell).is_none() {
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(ch) {
                     fb.add_fragments_to_cell(*cell, fragments.clone());
                 } else {
@@ -253,7 +267,6 @@ impl Into<FragmentBuffer> for &Span {
         fb
     }
 }
-
 
 impl fmt::Display for Span {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -280,8 +293,6 @@ mod tests {
         },
         Point,
     };
-
-
 
     #[test]
     fn test_bounds() {
@@ -334,14 +345,18 @@ mod tests {
         let span = adjacents.remove(0);
         let (top_left, _) = span.bounds().unwrap();
         assert_eq!(top_left, Cell::new(0, 1));
-        let groups: Vec<Contacts> = span.get_contacts();
+        let groups: Vec<Contacts> = span.get_contacts(&Settings::default());
         for (i, group) in groups.iter().enumerate() {
             println!("group {} is: \n{}", i, group);
         }
         assert_eq!(groups.len(), 1);
         let rect = groups[0].endorse_rects().unwrap();
-        let expected =
-            Fragment::Rect(Rect::new(Point::new(0.5, 1.0), Point::new(9.5, 5.0), false, false));
+        let expected = Fragment::Rect(Rect::new(
+            Point::new(0.5, 1.0),
+            Point::new(9.5, 5.0),
+            false,
+            false,
+        ));
         assert_eq!(rect, expected);
     }
 
@@ -369,8 +384,9 @@ mod tests {
         let (bound2, _) = span2.bounds().unwrap();
         assert_eq!(bound1, Cell::new(0, 1));
         assert_eq!(bound2, Cell::new(0, 5));
-        let groups1: Vec<Contacts> = span1.get_contacts();
-        let groups2: Vec<Contacts> = span2.get_contacts();
+        let settings = &Settings::default();
+        let groups1: Vec<Contacts> = span1.get_contacts(settings);
+        let groups2: Vec<Contacts> = span2.get_contacts(settings);
         assert_eq!(groups1.len(), 1);
         assert_eq!(groups2.len(), 1);
 
@@ -378,11 +394,21 @@ mod tests {
         let rect2 = groups2[0].endorse_rects().unwrap();
         assert_eq!(
             rect1,
-            Fragment::Rect(Rect::new(Point::new(0.5, 1.0), Point::new(9.5, 5.0), false, false))
+            Fragment::Rect(Rect::new(
+                Point::new(0.5, 1.0),
+                Point::new(9.5, 5.0),
+                false,
+                false
+            ))
         );
         assert_eq!(
             rect2,
-            Fragment::Rect(Rect::new(Point::new(0.5, 1.0), Point::new(9.5, 5.0), false, false))
+            Fragment::Rect(Rect::new(
+                Point::new(0.5, 1.0),
+                Point::new(9.5, 5.0),
+                false,
+                false
+            ))
         );
     }
 
@@ -405,7 +431,7 @@ mod tests {
         let span1 = spans.remove(0);
         let (bound1, _) = span1.bounds().unwrap();
         assert_eq!(bound1, Cell::new(0, 1));
-        let groups: Vec<Contacts> = span1.get_contacts();
+        let groups: Vec<Contacts> = span1.get_contacts(&Settings::default());
         assert_eq!(groups.len(), 2);
 
         let rect1 = groups[0].endorse_rects().unwrap();
@@ -447,13 +473,16 @@ mod tests {
         let span = adjacents.remove(0);
         let (top_left, _) = span.bounds().unwrap();
         assert_eq!(top_left, Cell::new(8, 1));
-        let (mut fragments, _groups) = span.endorse();
+        let (mut fragments, _groups) = span.endorse(&Settings::default());
         for (i, frag) in fragments.iter().enumerate() {
             println!("frag {}:\n{}", i, frag);
         }
         assert_eq!(fragments.len(), 1);
         let circle = fragments.remove(0);
-        assert_eq!(circle, Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false)));
+        assert_eq!(
+            circle,
+            Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false))
+        );
     }
 
     #[test]
@@ -475,19 +504,27 @@ mod tests {
         let span1 = adjacents.remove(0);
         let (top_left1, _) = span1.bounds().unwrap();
         assert_eq!(top_left1, Cell::new(8, 1));
-        let (mut fragments, _groups) = span1.endorse();
+        let (mut fragments, _groups) = span1.endorse(&Settings::default());
         assert_eq!(fragments.len(), 2);
 
         let rect = fragments.remove(0);
         assert!(rect.is_rect());
         assert_eq!(
             rect,
-            Fragment::Rect(Rect::new(Point::new(9.5, 9.0), Point::new(19.5, 13.0), false, false))
+            Fragment::Rect(Rect::new(
+                Point::new(9.5, 9.0),
+                Point::new(19.5, 13.0),
+                false,
+                false
+            ))
         );
 
         let circle = fragments.remove(0);
         assert!(circle.is_circle());
-        assert_eq!(circle, Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false)));
+        assert_eq!(
+            circle,
+            Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false))
+        );
     }
 
     #[test]
@@ -515,13 +552,15 @@ mod tests {
         let span1 = adjacents.remove(0);
         let (top_left1, _) = span1.bounds().unwrap();
         assert_eq!(top_left1, Cell::new(12, 3));
-        let (mut fragments, _groups) = span1.endorse();
+        let (mut fragments, _groups) = span1.endorse(&Settings::default());
         assert_eq!(fragments.len(), 1);
-
 
         let circle = fragments.remove(0);
         assert!(circle.is_circle());
-        assert_eq!(circle, Fragment::Circle(Circle::new(Point::new(22.0, 17.0), 9.5, false)));
+        assert_eq!(
+            circle,
+            Fragment::Circle(Circle::new(Point::new(22.0, 17.0), 9.5, false))
+        );
     }
 
     #[test]
@@ -549,7 +588,7 @@ mod tests {
         let span1 = adjacents.remove(0);
         let (top_left1, _) = span1.bounds().unwrap();
         assert_eq!(top_left1, Cell::new(12, 3));
-        let (fragments, groups) = span1.endorse();
+        let (fragments, groups) = span1.endorse(&Settings::default());
         assert_eq!(fragments.len(), 1);
         assert_eq!(groups.len(), 1);
         for (i, fragment) in groups.iter().enumerate() {
@@ -580,7 +619,7 @@ mod tests {
         let (top_left1, _br) = span1.bounds().unwrap();
         assert_eq!(top_left1, Cell::new(8, 5));
 
-        let groups1 = span1.get_contacts();
+        let groups1 = span1.get_contacts(&Settings::default());
         let since = groups1[11].as_ref()[0].as_cell_text().unwrap();
         assert_eq!(since.content, "since");
         assert_eq!(since.start, Cell::new(20, 1));

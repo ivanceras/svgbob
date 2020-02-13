@@ -1,7 +1,7 @@
 use crate::{
     fragment,
     map::{ASCII_PROPERTIES, UNICODE_FRAGMENTS},
-    Cell, Fragment, FragmentBuffer,
+    Cell, Fragment, FragmentBuffer, Settings,
 };
 pub use property::{Property, Signal};
 use std::{
@@ -31,27 +31,33 @@ impl<'p> PropertyBuffer<'p> {
     /// into the most fitting ascii / unicode character
     pub fn match_char_from_cell(
         &self,
+        settings: &Settings,
         cell: Cell,
         fragments: &Vec<Fragment>,
         try_unicode: bool,
     ) -> Option<char> {
         // try the unicode first
-        let matched_unicode = if try_unicode { Fragment::match_unicode(fragments) } else { None };
+        let matched_unicode = if try_unicode {
+            Fragment::match_unicode(fragments)
+        } else {
+            None
+        };
 
         if let Some(matched_unicode) = matched_unicode {
             Some(matched_unicode)
         } else {
             let empty = &&Property::empty();
-            let top_left = self.get(&cell.top_left()).unwrap_or(empty);
-            let top = self.get(&cell.top()).unwrap_or(empty);
-            let top_right = self.get(&cell.top_right()).unwrap_or(empty);
-            let left = self.get(&cell.left()).unwrap_or(empty);
-            let right = self.get(&cell.right()).unwrap_or(empty);
-            let bottom_left = self.get(&cell.bottom_left()).unwrap_or(empty);
-            let bottom = self.get(&cell.bottom()).unwrap_or(empty);
-            let bottom_right = self.get(&cell.bottom_right()).unwrap_or(empty);
+            let top_left = self.as_ref().get(&cell.top_left()).unwrap_or(empty);
+            let top = self.as_ref().get(&cell.top()).unwrap_or(empty);
+            let top_right = self.as_ref().get(&cell.top_right()).unwrap_or(empty);
+            let left = self.as_ref().get(&cell.left()).unwrap_or(empty);
+            let right = self.as_ref().get(&cell.right()).unwrap_or(empty);
+            let bottom_left = self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
+            let bottom = self.as_ref().get(&cell.bottom()).unwrap_or(empty);
+            let bottom_right = self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
 
             Self::match_char_with_surrounding_properties(
+                settings,
                 &fragments,
                 top_left,
                 top,
@@ -68,6 +74,7 @@ impl<'p> PropertyBuffer<'p> {
     /// if the fragments match to the return fragments
     /// of the property behavior, then it is a match
     pub fn match_char_with_surrounding_properties(
+        settings: &Settings,
         fragments: &Vec<Fragment>,
         top_left: &Property,
         top: &Property,
@@ -91,6 +98,7 @@ impl<'p> PropertyBuffer<'p> {
         } else {
             ASCII_PROPERTIES.iter().find_map(|(ch, property)| {
                 let mut behavioral_fragments = property.fragments(
+                    settings,
                     top_left,
                     top,
                     top_right,
@@ -117,34 +125,33 @@ impl<'p> PropertyBuffer<'p> {
     }
 }
 
-impl<'p> Deref for PropertyBuffer<'p> {
-    type Target = HashMap<Cell, &'p Property>;
-
-    fn deref(&self) -> &Self::Target {
+impl<'p> AsRef<HashMap<Cell, &'p Property>> for PropertyBuffer<'p> {
+    fn as_ref(&self) -> &HashMap<Cell, &'p Property> {
         &self.0
     }
 }
-impl<'p> DerefMut for PropertyBuffer<'p> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
+impl<'p> AsMut<HashMap<Cell, &'p Property>> for PropertyBuffer<'p> {
+    fn as_mut(&mut self) -> &mut HashMap<Cell, &'p Property> {
         &mut self.0
     }
 }
 
 /// convert property buffer to fragment buffer
-impl<'p> Into<FragmentBuffer> for &PropertyBuffer<'p> {
-    fn into(self) -> FragmentBuffer {
+impl<'p> PropertyBuffer<'p> {
+    pub(crate) fn into_fragment_buffer(&self, settings: &Settings) -> FragmentBuffer {
         let mut fb = FragmentBuffer::new();
-        for (cell, property) in self.deref() {
+        for (cell, property) in self.as_ref() {
             let empty = &&Property::empty();
-            let top_left = self.get(&cell.top_left()).unwrap_or(empty);
-            let top = self.get(&cell.top()).unwrap_or(empty);
-            let top_right = self.get(&cell.top_right()).unwrap_or(empty);
-            let left = self.get(&cell.left()).unwrap_or(empty);
-            let right = self.get(&cell.right()).unwrap_or(empty);
-            let bottom_left = self.get(&cell.bottom_left()).unwrap_or(empty);
-            let bottom = self.get(&cell.bottom()).unwrap_or(empty);
-            let bottom_right = self.get(&cell.bottom_right()).unwrap_or(empty);
+            let top_left = self.as_ref().get(&cell.top_left()).unwrap_or(empty);
+            let top = self.as_ref().get(&cell.top()).unwrap_or(empty);
+            let top_right = self.as_ref().get(&cell.top_right()).unwrap_or(empty);
+            let left = self.as_ref().get(&cell.left()).unwrap_or(empty);
+            let right = self.as_ref().get(&cell.right()).unwrap_or(empty);
+            let bottom_left = self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
+            let bottom = self.as_ref().get(&cell.bottom()).unwrap_or(empty);
+            let bottom_right = self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
             let cell_fragments = property.fragments(
+                settings,
                 top_left,
                 top,
                 top_right,
@@ -194,6 +201,7 @@ mod tests {
         let bottom = &Property::empty();
         let bottom_right = &Property::empty();
         let ch = PropertyBuffer::match_char_with_surrounding_properties(
+            &Settings::default(),
             &fragments,
             top_left,
             top,
@@ -230,6 +238,7 @@ mod tests {
         let bottom = &Property::empty();
         let bottom_right = &Property::empty();
         let ch = PropertyBuffer::match_char_with_surrounding_properties(
+            &Settings::default(),
             &fragments,
             top_left,
             top,
@@ -267,6 +276,7 @@ mod tests {
         let bottom = &Property::from_char('|').unwrap();
         let bottom_right = &Property::empty();
         let ch = PropertyBuffer::match_char_with_surrounding_properties(
+            &Settings::default(),
             &fragments,
             top_left,
             top,
@@ -299,6 +309,7 @@ mod tests {
         let bottom = &Property::empty();
         let bottom_right = &Property::empty();
         let ch = PropertyBuffer::match_char_with_surrounding_properties(
+            &Settings::default(),
             &fragments,
             top_left,
             top,
@@ -331,6 +342,7 @@ mod tests {
         let bottom = &Property::empty();
         let bottom_right = &Property::empty();
         let ch = PropertyBuffer::match_char_with_surrounding_properties(
+            &Settings::default(),
             &fragments,
             top_left,
             top,

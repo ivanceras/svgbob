@@ -2,7 +2,7 @@ use crate::{
     buffer::{CellBuffer, Contacts, Span},
     fragment,
     fragment::Circle,
-    Cell, Point,
+    Cell, Point, Settings,
 };
 use lazy_static::lazy_static;
 use std::{collections::BTreeMap, iter::FromIterator};
@@ -253,7 +253,7 @@ lazy_static! {
     /// Calculate the span and get the group fragments
     pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
         CIRCLE_MAP.iter().map(|(art, center_cell, center, radius)|{
-            (circle_art_to_group(art), Circle::new(*center, *radius, false))
+            (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
 
@@ -364,31 +364,40 @@ lazy_static! {
                 let arc4_span = span.extract(arc4_top_left, arc4_bottom_right);
                 let arc4 = fragment::Arc::new(Point::new(arc4_center.x, arc4_center.y + radius), Point::new(arc4_center.x + radius, arc4_center.y), *radius);
 
+                let settings = &Settings::default();
+
                 vec![
-                    (arc1_span.get_contacts(), arc1),
-                    (arc2_span.get_contacts(), arc2),
-                    (arc3_span.get_contacts(), arc3),
-                    (arc4_span.get_contacts(), arc4),
+                    (arc1_span.get_contacts(settings), arc1),
+                    (arc2_span.get_contacts(settings), arc2),
+                    (arc3_span.get_contacts(settings), arc3),
+                    (arc4_span.get_contacts(settings), arc4),
                 ]
             })
     );
 }
 
-fn circle_art_to_group(art: &str) -> Vec<Contacts> {
+fn circle_art_to_group(art: &str, settings: &Settings) -> Vec<Contacts> {
     let cell_buffer = CellBuffer::from(art);
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    span1.get_contacts()
+    span1.get_contacts(settings)
 }
 
 /// [X](Done) TODO: search only the subset of contacts that matches the circle.
 /// if it is a subset then the circle is matched and the non-matching ones are returned
 pub fn endorse_circle(search: &Vec<Contacts>) -> Option<(&Circle, Vec<usize>)> {
-    FRAGMENTS_CIRCLE.iter().rev().find_map(|(contacts, circle)| {
-        let (matched, unmatched) = is_subset_of(contacts, search);
-        if matched { Some((circle, unmatched)) } else { None }
-    })
+    FRAGMENTS_CIRCLE
+        .iter()
+        .rev()
+        .find_map(|(contacts, circle)| {
+            let (matched, unmatched) = is_subset_of(contacts, search);
+            if matched {
+                Some((circle, unmatched))
+            } else {
+                None
+            }
+        })
 }
 
 /// returns true if all the contacts in subset is in big_set
@@ -422,8 +431,6 @@ pub fn endorse_arc(search: &Vec<Contacts>) -> Option<&fragment::Arc> {
         .find_map(|(contacts, arc)| if contacts == search { Some(arc) } else { None })
 }
 
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -446,7 +453,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts();
+        let groups = span1.get_contacts(&Settings::default());
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
@@ -464,7 +471,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts();
+        let groups = span1.get_contacts(&Settings::default());
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }

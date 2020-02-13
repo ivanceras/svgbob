@@ -155,7 +155,7 @@ impl CellBuffer {
         let (vec_fragments, vec_contacts): (Vec<Vec<Fragment>>, Vec<Vec<Contacts>>) = self
             .group_adjacents()
             .into_iter()
-            .map(|span| span.endorse())
+            .map(|span| span.endorse(settings))
             .unzip();
 
         // partition the vec_groups into groups that is alone and the group
