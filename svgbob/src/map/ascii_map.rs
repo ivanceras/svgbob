@@ -158,15 +158,15 @@ lazy_static! {
                             // here
                             //    |
                             //   /
-                            (bottom_left.is('/'), vec![line(c,m),line(m,u)]),
+                            (bottom_left.line_overlap(e,u), vec![line(c,m),line(m,u)]),
                             // TODO: restrict left, right, bottom, top_left, top_right
                             //   |
                             //    \
-                            (bottom_right.is('\\'), vec![line(c,m), line(m,y)]),
+                            (bottom_right.line_overlap(a,y), vec![line(c,m), line(m,y)]),
                             // TODO: restrict left, right, top, bottom_left, bottom_right
                             //    \ /
                             //     |
-                            (top_left.is('\\') && top_right.is('/'), vec![line(a,m),line(m,w),line(m,e)]),
+                            (top_left.line_overlap(a,y) && top_right.line_overlap(e,u), vec![line(a,m),line(m,w),line(m,e)]),
                         ]
                     }
                 )
@@ -448,26 +448,26 @@ lazy_static! {
                             (right.is('\'') && bottom_left.is('\''),vec![broken_line(cell.right().c(), cell.bottom_left().c())]),
                             // '.   `.
                             //   \    \
-                            ((left.is('\'')||left.is('`')) && bottom_right.is('\\'),vec![arc(y, cell.left().a(), unit8 * 2.0)]),
+                            ((left.is('\'')||left.is('`')) && bottom_right.line_overlap(a,m),vec![arc(y, cell.left().a(), unit8 * 2.0)]),
                             //   .'
                             //  /
-                            (right.is('\'') && bottom_left.is('/'), vec![arc(cell.right().e(), u, unit8 * 2.0)]),
+                            (right.is('\'') && bottom_left.line_overlap(e,m), vec![arc(cell.right().e(), u, unit8 * 2.0)]),
                             // TODO: restrict left, right, bottom, top_right, is not connecting to here
                             //     |
                             //     .
                             //    /
-                            (top.is('|') && bottom_left.is('/'), vec![arc(q,h,unit8), line(c,h), line(q,u)]),
+                            (top.line_overlap(m,w) && bottom_left.line_overlap(e,m), vec![arc(q,h,unit8), line(c,h), line(q,u)]),
                             // TODO: restrict left, right, bottom,top, is not connecting to here
                             //      /
                             //     .
                             //    /
-                            (top_right.is('/') && bottom_left.is('/'), vec![line(u,e)]),
+                            (top_right.line_overlap(m,u) && bottom_left.line_overlap(e,m), vec![line(u,e)]),
                             // TODO: restrict left, right, bottom, top_left, does not connect to
                             // here
                             //   |
                             //   .
                             //    \
-                            (top.is('|') && bottom_right.is('\\'), vec![line(c,h), arc(h,s,unit8), line(s,y)]),
+                            (top.line_overlap(m,w) && bottom_right.line_overlap(a,m), vec![line(c,h), arc(h,s,unit8), line(s,y)]),
                         ]}
                     )
             ),
@@ -695,7 +695,7 @@ lazy_static! {
 
                                 //    \
                                 //    |
-                                (bottom.is('|'), vec![line(a,m),line(m,w)]),
+                                (bottom.line_overlap(c,m), vec![line(a,m),line(m,w)]),
                             ]
                         }
                     )
