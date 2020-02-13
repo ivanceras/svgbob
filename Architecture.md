@@ -367,51 +367,7 @@ but the control flow is not very intuitive.
                             can: ConnectTo(A, Strong),
                         },
                     ),
-                    //      \     only \ or else this connects as well  _
-                    //       .                                           .
-                    (
-                        A,
-                        Condition {
-                            loc: top_left(),
-                            can: IsStrongAll(vec![A, Y]),
-                        },
-                    ),
-                    //   .    .
-                    //   |    '
-                    (
-                        W,
-                        Condition {
-                            loc: bottom(),
-                            can: ConnectTo(C, Medium),
-                        },
-                    ),
-                    //   |    only |
-                    //   .
-                    (
-                        C,
-                        Condition {
-                            loc: top(),
-                            can: Is('|'),
-                        },
-                    ),
-                    //   .    only X
-                    //    X
-                    (
-                        Y,
-                        Condition {
-                            loc: bottom_right(),
-                            can: Is('X'),
-                        },
-                    ),
-                    //     .  only X
-                    //    X
-                    (
-                        U,
-                        Condition {
-                            loc: bottom_left(),
-                            can: Is('X'),
-                        },
-                    ),
+                    ...
                 ],
                 intended_behavior: vec![
                     //     .-
@@ -433,38 +389,7 @@ but the control flow is not very intuitive.
                     //     \
                     //      .
                     //       \
-                    (vec![A, Y], vec![line(a, y)]),
-                    //    \
-                    //     .
-                    //     |
-                    (vec![A, W], vec![line(a, g), arc(r, g, 8), line(r, w)]),
-                    //    \
-                    //     .
-                    //    /
-                    (vec![A, U], vec![line(a, g), arc(q, g, 8), line(q, u)]),
-                    //      /
-                    //     .
-                    //      \
-                    (vec![E, Y], vec![line(e, i), arc(i, s, 8), line(s, y)]),
-                    //     |
-                    //     .
-                    //     |
-                    (vec![C, W], vec![line(c, w)]),
-                    //       /
-                    //      .
-                    //      |
-                    (vec![E, W], vec![line(e, i), arc(i, r, 8), line(r, w)]),
-                    //     |
-                    //     .
-                    //    /
-                    (vec![C, U], vec![line(u, q), arc(q, h, 8), line(h, c)]),
-                    //     |
-                    //     .
-                    //      \
-                    (vec![C, Y], vec![line(c, h), arc(h, s, 8), line(s, y)]),
-                    //      .
-                    //     / \
-                    (vec![U, Y], vec![line(m, u), line(m, y)]),
+                    ...
                 ],
                 properties: vec![
                     (O, Weak, vec![arc(o, r, 2)]),
@@ -634,39 +559,7 @@ These fragments are processed such as merging collinear lines that are touching 
                             //   )
                             (bottom_right.arcs_to(u,a),vec![arc(s, k, unit4), line(s, y)]),
 
-                            //   _.-
-                            (left.line_overlap(u,y) && right.line_overlap(k,o), vec![line(u,o)]),
-                            //   -._
-                            (left.line_overlap(k,o) && right.line_overlap(u,y), vec![line(k,y)]),
-
-                            // `.
-                            //   `
-                            (left.is('`') && bottom_right.is('`'), vec![broken_line(cell.left().c(), cell.bottom_right().c())]),
-                            //   .'
-                            //  '
-                            (right.is('\'') && bottom_left.is('\''),vec![broken_line(cell.right().c(), cell.bottom_left().c())]),
-                            // '.   `.
-                            //   \    \
-                            ((left.is('\'')||left.is('`')) && bottom_right.is('\\'),vec![arc(y, cell.left().a(), unit8 * 2.0)]),
-                            //   .'
-                            //  /
-                            (right.is('\'') && bottom_left.is('/'), vec![arc(cell.right().e(), u, unit8 * 2.0)]),
-                            // TODO: restrict left, right, bottom, top_right, is not connecting to here
-                            //     |
-                            //     .
-                            //    /
-                            (top.is('|') && bottom_left.is('/'), vec![arc(q,h,unit8), line(c,h), line(q,u)]),
-                            // TODO: restrict left, right, bottom,top, is not connecting to here
-                            //      /
-                            //     .
-                            //    /
-                            (top_right.is('/') && bottom_left.is('/'), vec![line(u,e)]),
-                            // TODO: restrict left, right, bottom, top_left, does not connect to
-                            // here
-                            //   |
-                            //   .
-                            //    \
-                            (top.is('|') && bottom_right.is('\\'), vec![line(c,h), arc(h,s,unit8), line(s,y)]),
+                            ...
                         ]}
                     )
             ),
