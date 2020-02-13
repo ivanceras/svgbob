@@ -111,7 +111,15 @@ lazy_static! {
                 Arc::new(
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
-                            (true, vec![line(k, o)]),
+                            (true, vec![line(k,o)]),
+                            /*
+                            //   |
+                            //  .-.
+                            //   |
+                            (settings.enhance_circuitries && left.is('.') && right.is('.') && top.line_strongly_overlap(r,w) && bottom.line_strongly_overlap(c,h),
+                                vec![arc(o,k,unit4),line(c,w)]
+                            ),
+                            */
                         ]
                     }
                 )
@@ -154,6 +162,10 @@ lazy_static! {
                             (right.line_overlap(u,v), vec![line(w,y)]),
                             //  _|
                             (left.line_overlap(x,y), vec![line(u,w)]),
+                            //  |-
+                            (right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                            //  -|
+                            (left.line_strongly_overlap(n,o), vec![line(k,m)]),
                             // TODO: restrict lef, right, bottom, top_right, is not connecting to
                             // here
                             //    |
@@ -209,7 +221,7 @@ lazy_static! {
             (
                 '+',
                 vec![
-                    (Strong, vec![line(c,w),line(k,o)]),
+                    (Medium, vec![line(c,w),line(k,o)]),
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
@@ -258,12 +270,37 @@ lazy_static! {
                 Arc::new(
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
+                            /*
                             // \    X
                             //  X    \
                             (top_left.line_overlap(s,y) || bottom_right.line_overlap(a,g), vec![line(a, y)]),
                             //   /   X
                             //  X   /
                             (top_right.line_overlap(q,u) || bottom_left.line_overlap(e,i), vec![line(e, u)]),
+                            */
+
+                            //   -x
+                            (left.line_strongly_overlap(m,o), vec![line(m,k)]),
+                            //   x-
+                            (right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                            //   |
+                            //   x
+                            (top.line_strongly_overlap(r,w), vec![line(m,c)]),
+                            //   x
+                            //   |
+                            (bottom.line_strongly_overlap(c,h), vec![line(m,w)]),
+                            //    \
+                            //     x
+                            (top_left.line_strongly_overlap(s,y), vec![line(m,a)]),
+                            //     /
+                            //    x
+                            (top_right.line_strongly_overlap(u,q), vec![line(m,e)]),
+                            //     x
+                            //    /
+                            (bottom_left.line_strongly_overlap(e,i), vec![line(m,u)]),
+                            //     x
+                            //      \
+                            (bottom_right.line_strongly_overlap(a,g), vec![line(m,y)]),
                         ]
                     }
                 )
@@ -282,6 +319,28 @@ lazy_static! {
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (true, vec![circle(m,unit2, true)]),
+                            //   -*
+                            (left.line_strongly_overlap(m,o), vec![line(m,k)]),
+                            //   *-
+                            (right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                            //   |
+                            //   *
+                            (top.line_strongly_overlap(r,w), vec![line(m,c)]),
+                            //   *
+                            //   |
+                            (bottom.line_strongly_overlap(c,h), vec![line(m,w)]),
+                            //    \
+                            //     *
+                            (top_left.line_strongly_overlap(s,y), vec![line(m,a)]),
+                            //     /
+                            //    *
+                            (top_right.line_strongly_overlap(u,q), vec![line(m,e)]),
+                            //     *
+                            //    /
+                            (bottom_left.line_strongly_overlap(e,i), vec![line(m,u)]),
+                            //     *
+                            //      \
+                            (bottom_right.line_strongly_overlap(a,g), vec![line(m,y)]),
                         ]
                     }
                 )
@@ -334,6 +393,28 @@ lazy_static! {
                                 || top_left.line_strongly_overlap(s,y)|| bottom_right.line_strongly_overlap(a,g)
                               || bottom_left.line_strongly_overlap(u,q) || top_right.line_strongly_overlap(e,i),
                                 vec![circle(m,unit1,false)]),
+                            //   -o
+                            (left.line_strongly_overlap(m,o), vec![line(m,k)]),
+                            //   o-
+                            (right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                            //   |
+                            //   o
+                            (top.line_strongly_overlap(r,w), vec![line(m,c)]),
+                            //   o
+                            //   |
+                            (bottom.line_strongly_overlap(c,h), vec![line(m,w)]),
+                            //    \
+                            //     o
+                            (top_left.line_strongly_overlap(s,y), vec![line(m,a)]),
+                            //     /
+                            //    o
+                            (top_right.line_strongly_overlap(u,q), vec![line(m,e)]),
+                            //     o
+                            //    /
+                            (bottom_left.line_strongly_overlap(e,i), vec![line(m,u)]),
+                            //     o
+                            //      \
+                            (bottom_right.line_strongly_overlap(a,g), vec![line(m,y)]),
                         ]
                     }
                 )
@@ -360,6 +441,28 @@ lazy_static! {
                                 || left.line_strongly_overlap(n,o) || right.line_strongly_overlap(k,l)
                                 || top_left.line_strongly_overlap(s,y)|| bottom_right.line_strongly_overlap(a,g)
                               || bottom_left.line_strongly_overlap(u,q) || top_right.line_strongly_overlap(e,i), vec![circle(m,unit2,false)]),
+                            //   -O
+                            (left.line_strongly_overlap(m,o), vec![line(m,k)]),
+                            //   O-
+                            (right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                            //   |
+                            //   O
+                            (top.line_strongly_overlap(r,w), vec![line(m,c)]),
+                            //   O
+                            //   |
+                            (bottom.line_strongly_overlap(c,h), vec![line(m,w)]),
+                            //    \
+                            //     O
+                            (top_left.line_strongly_overlap(s,y), vec![line(m,a)]),
+                            //     /
+                            //    O
+                            (top_right.line_strongly_overlap(u,q), vec![line(m,e)]),
+                            //     O
+                            //    /
+                            (bottom_left.line_strongly_overlap(e,i), vec![line(m,u)]),
+                            //     O
+                            //      \
+                            (bottom_right.line_strongly_overlap(a,g), vec![line(m,y)]),
                         ]
                     }
                 )
@@ -660,7 +763,7 @@ lazy_static! {
                     )
             ),
             //////////////////////
-            // forward slash /
+            // forward slash / slant line
             //////////////////////
             (
                 '/',
@@ -670,7 +773,14 @@ lazy_static! {
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
-                             (true, vec![line(u,e)]),
+                             (!bottom.line_strongly_overlap(c,h), vec![line(u,e)]),
+                             //    /-
+                             (settings.enhance_circuitries && right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                             //    -/
+                             (settings.enhance_circuitries && left.line_strongly_overlap(n,o), vec![line(m,k)]),
+                             //    /
+                             //    |
+                             (settings.enhance_circuitries && bottom.line_strongly_overlap(c,h), vec![line(e,m),line(m,w)]),
                         ]}
                     )
             ),
@@ -696,6 +806,10 @@ lazy_static! {
                                 //    \
                                 //    |
                                 (bottom.line_overlap(c,m), vec![line(a,m),line(m,w)]),
+                                //    \-
+                                (settings.enhance_circuitries && right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                                //    -\
+                                (settings.enhance_circuitries && left.line_strongly_overlap(n,o), vec![line(m,k)]),
                             ]
                         }
                     )
@@ -710,7 +824,13 @@ lazy_static! {
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
-                                (true, vec![arc(e,y,unit8)]),
+                                (!top.line_overlap(r,w) && !bottom.line_overlap(c,h),  vec![arc(e,y,unit8)]),
+                                //   |
+                                //   (
+                                //   |
+                                (settings.enhance_circuitries && top.line_overlap(r,w) && bottom.line_overlap(c,h), vec![arc(c,w,unit6)]),
+                                //   -(-
+                                (settings.enhance_circuitries && left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
                             ]
                         }
                     )
@@ -725,14 +845,13 @@ lazy_static! {
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
-                                (!top.is('|') && !bottom.is('|'), vec![arc(u,a,unit8)]),
+                                (!top.line_overlap(r,w) && !bottom.line_overlap(c,h), vec![arc(u,a,unit8)]),
                                 //   |
                                 //   )
                                 //   |
-                                (top.is('|') && bottom.is('|'), vec![arc(w,c,unit8)]),
-                                // TODO: this should be gated with Settings.enhance_circuitries
+                                (settings.enhance_circuitries && top.line_overlap(r,w) && bottom.line_overlap(c,h), vec![arc(w,c,unit6)]),
                                 //   -)-
-                                (left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
+                                (settings.enhance_circuitries && left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
                             ]
                         }
                     )

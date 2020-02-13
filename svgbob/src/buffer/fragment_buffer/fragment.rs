@@ -60,7 +60,6 @@ pub trait Bounds {
     }
 }
 
-
 impl Fragment {
     /// get the character that matches the shape present on this cell
     pub fn match_unicode(fragments: &Vec<Self>) -> Option<char> {
@@ -124,10 +123,14 @@ impl Fragment {
                 mline.can_merge_polygon(polygon)
             }
 
+            //TODO: make a function level2 merge where it merges fragments into
+            //  marker_lines
+            /*
             // line and circle
             (Fragment::Line(line), Fragment::Circle(circle)) => line.can_merge_circle(circle),
             // circle and line
             (Fragment::Circle(circle), Fragment::Line(line)) => line.can_merge_circle(circle),
+            */
             // cell_text and cell_text
             (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
                 ctext.can_merge(other_ctext)
@@ -192,7 +195,11 @@ impl Fragment {
         let original_len = fragments.len();
         let merged = Self::second_pass_merge(fragments);
         // if has merged continue merging untila nothing can be merged
-        if merged.len() < original_len { Self::merge_recursive(merged) } else { merged }
+        if merged.len() < original_len {
+            Self::merge_recursive(merged)
+        } else {
+            merged
+        }
     }
 
     /// second pass merge is operating on fragments comparing to other spans
@@ -521,7 +528,6 @@ pub fn rounded_rect(
     Fragment::Rect(Rect::rounded_new(start, end, is_filled, radius, is_broken))
 }
 
-
 /// creates a cell text meant to be stored
 /// in a cell of a fragment_buffer,
 pub fn cell_text(ch: char) -> Fragment {
@@ -692,8 +698,14 @@ mod tests {
 
     #[test]
     fn equal_lines() {
-        assert_eq!(line(CellGrid::a(), CellGrid::y()), line(CellGrid::y(), CellGrid::a()));
-        assert_eq!(line(CellGrid::k(), CellGrid::o()), line(CellGrid::o(), CellGrid::k()));
+        assert_eq!(
+            line(CellGrid::a(), CellGrid::y()),
+            line(CellGrid::y(), CellGrid::a())
+        );
+        assert_eq!(
+            line(CellGrid::k(), CellGrid::o()),
+            line(CellGrid::o(), CellGrid::k())
+        );
     }
 
     #[test]

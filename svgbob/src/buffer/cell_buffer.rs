@@ -229,7 +229,7 @@ impl CellBuffer {
                             fill: {background};
                         }}
                         .nofill{{
-                            fill: none;
+                            fill: {background};
                         }}
 
                         text {{

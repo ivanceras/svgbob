@@ -15,7 +15,11 @@ pub struct Circle {
 
 impl Circle {
     pub(in crate) fn new(center: Point, radius: f32, is_filled: bool) -> Self {
-        Circle { center, radius, is_filled }
+        Circle {
+            center,
+            radius,
+            is_filled,
+        }
     }
 
     /// the top most point of this circle for sorting.
@@ -30,11 +34,18 @@ impl Circle {
 
     /// offset the circles parameter from the arg cell
     pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
-        Circle { center: cell.absolute_position(self.center), ..*self }
+        Circle {
+            center: cell.absolute_position(self.center),
+            ..*self
+        }
     }
 
     pub(in crate) fn scale(&self, scale: f32) -> Self {
-        Circle { center: self.center.scale(scale), radius: self.radius * scale, ..*self }
+        Circle {
+            center: self.center.scale(scale),
+            radius: self.radius * scale,
+            ..*self
+        }
     }
 }
 

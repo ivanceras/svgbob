@@ -14,6 +14,8 @@ pub struct Settings {
     pub stroke_width: f32,
     /// the scale multiplier
     pub scale: f32,
+    /// flag whether to enhace circuitries or not, default true
+    pub enhance_circuitries: bool,
 }
 impl Settings {
     /// the inverse of the default scale 10
@@ -32,6 +34,7 @@ impl Default for Settings {
             stroke_color: "black".into(),
             stroke_width: 2.0,
             scale: 10.0,
+            enhance_circuitries: true,
         }
     }
 }
