@@ -461,14 +461,8 @@ dependencies = [
  "cfg-if",
  "lazy_static",
  "log 0.4.8",
- "sauron_vdom 0.21.0",
+ "sauron_vdom",
 ]
-
-[[package]]
-name = "sauron_vdom"
-version = "0.20.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dfe93084d05ccac8279a19e75be5201cc7a3891a266617d6e2f320a00cc9261c"
 
 [[package]]
 name = "sauron_vdom"
@@ -527,7 +521,7 @@ dependencies = [
  "ncollide2d",
  "pom",
  "sauron",
- "sauron_vdom 0.20.0",
+ "sauron_vdom",
  "serde_json",
  "unicode-width",
 ]

@@ -3,7 +3,8 @@ name = "svgbob"
 version = "0.5.0"
 authors = ["lee"]
 edition = "2018"
-publish = false
+publish = true
+license = "Apache-2.0"
 
 [dependencies]
 nalgebra = "0.18.0"
@@ -15,6 +16,6 @@ itertools = "0.8.0"
 pom = { version = "3.1.0" }
 
 [dev-dependencies]
-sauron_vdom = {version = "0.20.0"}
+sauron_vdom = {version = "0.21.0"}
 serde_json = "1.0.41"
 
