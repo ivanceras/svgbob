@@ -184,8 +184,12 @@ mod tests {
         println!("group: {:#?}", group);
         assert_eq!(group, vec![(0, 2), (1, 3)]);
 
-        let rect =
-            endorse_rect(&vec![line_ae.clone(), line_au.clone(), line_uy.clone(), line_ey.clone()]);
+        let rect = endorse_rect(&vec![
+            line_ae.clone(),
+            line_au.clone(),
+            line_uy.clone(),
+            line_ey.clone(),
+        ]);
         assert!(rect.is_some());
         assert_eq!(rect, Some(Rect::new(a, y, false, false)));
         assert!(is_rect(&vec![line_ae, line_au, line_uy, line_ey]));

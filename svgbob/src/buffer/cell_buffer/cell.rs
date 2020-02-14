@@ -56,7 +56,9 @@ macro_rules! cell_grid {
 }
 
 impl Cell {
-    cell_grid!(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y);
+    cell_grid!(
+        a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y
+    );
 
     pub fn new(x: i32, y: i32) -> Self {
         Cell { x, y }
@@ -81,8 +83,10 @@ impl Cell {
     }
 
     pub fn snap_group(points: &[Point]) -> Self {
-        let snaps: Vec<(Self, Point)> =
-            points.iter().map(|point| Self::snap_point(*point)).collect();
+        let snaps: Vec<(Self, Point)> = points
+            .iter()
+            .map(|point| Self::snap_point(*point))
+            .collect();
         let (cells, _snap_points): (Vec<Self>, Vec<Point>) = snaps.into_iter().unzip();
         let min_cell: Self = cells.into_iter().min().expect("should have a min cell");
         min_cell
@@ -118,9 +122,14 @@ impl Cell {
     /// the bounding box of this cell
     #[inline]
     fn bounding_box(&self) -> AABB<f32> {
-        let start = Point::new(self.x as f32 * Self::width(), self.y as f32 * Self::height());
-        let end =
-            Point::new((self.x + 1) as f32 * Self::width(), (self.y + 1) as f32 * Self::height());
+        let start = Point::new(
+            self.x as f32 * Self::width(),
+            self.y as f32 * Self::height(),
+        );
+        let end = Point::new(
+            (self.x + 1) as f32 * Self::width(),
+            (self.y + 1) as f32 * Self::height(),
+        );
         AABB::new(*start, *end)
     }
 
@@ -159,7 +168,13 @@ impl Cell {
     pub fn is_intersected(&self, start: Point, end: Point) -> bool {
         let pl = self.polyline();
         let segment = Segment::new(*start, *end);
-        let prox = proximity(&Isometry::identity(), &pl, &Isometry::identity(), &segment, 0.0);
+        let prox = proximity(
+            &Isometry::identity(),
+            &pl,
+            &Isometry::identity(),
+            &segment,
+            0.0,
+        );
         prox == Proximity::Intersecting
     }
 
@@ -193,7 +208,8 @@ impl Cell {
     }
 
     pub fn clip_line_snap(&self, start: Point, end: Point) -> Option<(Point, Point)> {
-        self.clip_line(start, end).map(|(s, e)| (Self::snap(s), Self::snap(e)))
+        self.clip_line(start, end)
+            .map(|(s, e)| (Self::snap(s), Self::snap(e)))
     }
 
     /// clip line then localize the points and snap to the nearest cell grid intersection
@@ -205,46 +221,69 @@ impl Cell {
     /// The cell at the top left of this cell
     #[inline]
     pub fn top_left(&self) -> Self {
-        Cell { x: self.x - 1, y: self.y - 1 }
+        Cell {
+            x: self.x - 1,
+            y: self.y - 1,
+        }
     }
 
     #[inline]
     pub fn top(&self) -> Self {
-        Cell { x: self.x, y: self.y - 1 }
+        Cell {
+            x: self.x,
+            y: self.y - 1,
+        }
     }
 
     #[inline]
     pub fn top_right(&self) -> Self {
-        Cell { x: self.x + 1, y: self.y - 1 }
+        Cell {
+            x: self.x + 1,
+            y: self.y - 1,
+        }
     }
 
     /// The cell at the left of this cell
     #[inline]
     pub fn left(&self) -> Self {
-        Cell { x: self.x - 1, y: self.y }
+        Cell {
+            x: self.x - 1,
+            y: self.y,
+        }
     }
 
     #[inline]
     pub fn right(&self) -> Self {
-        Cell { x: self.x + 1, y: self.y }
+        Cell {
+            x: self.x + 1,
+            y: self.y,
+        }
     }
 
     #[inline]
     pub fn bottom_left(&self) -> Self {
-        Cell { x: self.x - 1, y: self.y + 1 }
+        Cell {
+            x: self.x - 1,
+            y: self.y + 1,
+        }
     }
 
     #[inline]
     pub fn bottom(&self) -> Self {
-        Cell { x: self.x, y: self.y + 1 }
+        Cell {
+            x: self.x,
+            y: self.y + 1,
+        }
     }
 
     #[inline]
     pub fn bottom_right(&self) -> Self {
-        Cell { x: self.x + 1, y: self.y + 1 }
+        Cell {
+            x: self.x + 1,
+            y: self.y + 1,
+        }
     }
 }
-
 
 /// rearrange the bound of 2 cells
 pub fn rearrange_bound(bound1: Cell, bound2: Cell) -> (Cell, Cell) {

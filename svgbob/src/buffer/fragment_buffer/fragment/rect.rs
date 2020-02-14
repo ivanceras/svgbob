@@ -23,7 +23,13 @@ impl Rect {
     /// creates a new rect and reorder the points swapping the end points if necessary
     /// such that the start is the most top-left and end point is the most bottom-right
     pub(in crate) fn new(start: Point, end: Point, is_filled: bool, is_broken: bool) -> Self {
-        let mut rect = Rect { start, end, is_filled, radius: None, is_broken };
+        let mut rect = Rect {
+            start,
+            end,
+            is_filled,
+            radius: None,
+            is_broken,
+        };
         rect.sort_reorder_end_points();
         rect
     }
@@ -35,7 +41,13 @@ impl Rect {
         radius: f32,
         is_broken: bool,
     ) -> Self {
-        let mut rect = Rect { start, end, is_filled, radius: Some(radius), is_broken };
+        let mut rect = Rect {
+            start,
+            end,
+            is_filled,
+            radius: Some(radius),
+            is_broken,
+        };
         rect.sort_reorder_end_points();
         rect
     }
@@ -109,7 +121,11 @@ impl Into<Node<()>> for Rect {
                     ("filled", self.is_filled),
                     ("nofill", !self.is_filled),
                 ]),
-                if let Some(radius) = self.radius { rx(radius) } else { rx(0) },
+                if let Some(radius) = self.radius {
+                    rx(radius)
+                } else {
+                    rx(0)
+                },
             ],
             vec![],
         )

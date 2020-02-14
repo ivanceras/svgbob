@@ -55,7 +55,11 @@ pub fn clip_line(aabb: &AABB<f32>, start: Point, end: Point) -> Option<(Point, P
         if aabb.contains_point(identity, &end) {
             clip_end = end;
         }
-        if clip_start == clip_end { None } else { Some((clip_start, clip_end)) }
+        if clip_start == clip_end {
+            None
+        } else {
+            Some((clip_start, clip_end))
+        }
     } else {
         None
     }
@@ -70,7 +74,6 @@ pub fn is_collinear(a: &Point, b: &Point, c: &Point) -> bool {
 pub fn pad(v: f32) -> f32 {
     if v > 0.0 { v.ceil() } else { v.floor() }
 }
-
 
 /// this is parser module which provides parsing for identifier for
 /// extracting the css tag of inside of a shape fragment
@@ -153,7 +156,6 @@ pub mod parser {
         one_of(" \t\r\n").repeat(0..).discard()
     }
 
-
     /// a valid identifier
     pub(crate) fn ident<'a>() -> Parser<'a, char, String> {
         (is_a(alpha_or_underscore) + is_a(alphanum_or_underscore).repeat(0..))
@@ -222,7 +224,6 @@ pub mod parser {
         css_legend_with_padding().parse(input)
     }
 
-
     #[cfg(test)]
     mod tests {
         use super::*;
@@ -252,10 +253,13 @@ pub mod parser {
             let input_chars: Vec<char> = input.chars().collect();
             let css = css_style_list().parse(&input_chars).expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, vec![
-                ("a".to_string(), "fill:blue; stroke:red;".to_string()),
-                ("b".to_string(), "fill:red; stroke:black;".to_string())
-            ]);
+            assert_eq!(
+                css,
+                vec![
+                    ("a".to_string(), "fill:blue; stroke:red;".to_string()),
+                    ("b".to_string(), "fill:red; stroke:black;".to_string())
+                ]
+            );
         }
 
         #[test]
@@ -264,12 +268,17 @@ pub mod parser {
                     a = {fill:blue; stroke:red;}\n\
                     b = {fill:red; stroke:black;}";
             let input_chars: Vec<char> = input.chars().collect();
-            let css = css_legend_with_padding().parse(&input_chars).expect("should parse");
+            let css = css_legend_with_padding()
+                .parse(&input_chars)
+                .expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, vec![
-                ("a".to_string(), "fill:blue; stroke:red;".to_string()),
-                ("b".to_string(), "fill:red; stroke:black;".to_string())
-            ]);
+            assert_eq!(
+                css,
+                vec![
+                    ("a".to_string(), "fill:blue; stroke:red;".to_string()),
+                    ("b".to_string(), "fill:red; stroke:black;".to_string())
+                ]
+            );
         }
 
         #[test]
@@ -278,12 +287,17 @@ pub mod parser {
                     big_circle = {fill:blue;}\n\
                     red = {stroke:red;}\n\n\n";
             let input_chars: Vec<char> = input.chars().collect();
-            let css = css_legend_with_padding().parse(&input_chars).expect("should parse");
+            let css = css_legend_with_padding()
+                .parse(&input_chars)
+                .expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, vec![
-                ("big_circle".to_string(), "fill:blue;".to_string()),
-                ("red".to_string(), "stroke:red;".to_string())
-            ]);
+            assert_eq!(
+                css,
+                vec![
+                    ("big_circle".to_string(), "fill:blue;".to_string()),
+                    ("red".to_string(), "stroke:red;".to_string())
+                ]
+            );
         }
         #[test]
         fn test_css_legend3() {
@@ -291,12 +305,17 @@ pub mod parser {
                     big_circle = {fill:blue;}\n\
                     red = {stroke:red;}\n";
             let input_chars: Vec<char> = input.chars().collect();
-            let css = css_legend_with_padding().parse(&input_chars).expect("should parse");
+            let css = css_legend_with_padding()
+                .parse(&input_chars)
+                .expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, vec![
-                ("big_circle".to_string(), "fill:blue;".to_string()),
-                ("red".to_string(), "stroke:red;".to_string())
-            ]);
+            assert_eq!(
+                css,
+                vec![
+                    ("big_circle".to_string(), "fill:blue;".to_string()),
+                    ("red".to_string(), "stroke:red;".to_string())
+                ]
+            );
         }
 
         #[test]
@@ -308,10 +327,13 @@ pub mod parser {
             let input_chars: Vec<char> = input.chars().collect();
             let css = css_legend().parse(&input_chars).expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, vec![
-                ("a".to_string(), "fill:blue; stroke:red;".to_string()),
-                ("b".to_string(), "fill:red; stroke:black;".to_string())
-            ]);
+            assert_eq!(
+                css,
+                vec![
+                    ("a".to_string(), "fill:blue; stroke:red;".to_string()),
+                    ("b".to_string(), "fill:red; stroke:black;".to_string())
+                ]
+            );
         }
 
         #[test]
@@ -368,8 +390,6 @@ pub mod parser {
 mod tests {
     use super::*;
     use crate::buffer::CellGrid;
-
-
 
     #[test]
     fn test_collinear() {

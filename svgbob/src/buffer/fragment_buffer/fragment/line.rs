@@ -39,7 +39,6 @@ pub struct Line {
     pub is_broken: bool,
 }
 
-
 impl Direction {
     /// diamon matches alongside for everything.
     pub(crate) fn is_along_side(&self, tags: &[PolygonTag]) -> bool {
@@ -86,14 +85,22 @@ impl Line {
     /// creates a new line and reorder the points swapping the end points if necessary
     /// such that the start is the most top-left and end point is the most bottom-right
     pub(in crate) fn new(start: Point, end: Point, is_broken: bool) -> Self {
-        let mut line = Line { start, end, is_broken };
+        let mut line = Line {
+            start,
+            end,
+            is_broken,
+        };
         line.sort_reorder_end_points();
         line
     }
 
     /// creates a new line, but don't reorder the points
     pub(in crate) fn new_noswap(start: Point, end: Point, is_broken: bool) -> Self {
-        Line { start, end, is_broken }
+        Line {
+            start,
+            end,
+            is_broken,
+        }
     }
 
     /// reorder the end points swap end points such that
@@ -363,6 +370,9 @@ impl Line {
         is_along_side && (is_close_start_point || is_close_end_point)
     }
 
+    /// TODO: the get_marker function don't take into account the direction
+    /// of the line from start to end. The direction is not followed.
+    ///
     /// merge this line to the marker line
     pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         if self.can_merge_polygon(polygon) {
@@ -430,9 +440,13 @@ impl Line {
             panic!("There is no endpoint of the line is that close to the arrow");
         };
 
-
-        let marker_line =
-            marker_line(new_line.start, new_line.end, new_line.is_broken, None, marker);
+        let marker_line = marker_line(
+            new_line.start,
+            new_line.end,
+            new_line.is_broken,
+            None,
+            marker,
+        );
         Some(marker_line)
     }
 
@@ -520,7 +534,11 @@ impl Line {
     }
 
     pub(crate) fn align(&self) -> Self {
-        Line { start: self.start.align(), end: self.end.align(), is_broken: self.is_broken }
+        Line {
+            start: self.start.align(),
+            end: self.end.align(),
+            is_broken: self.is_broken,
+        }
     }
 
     /// extend the line by a length added to the end point
@@ -604,27 +622,45 @@ mod tests {
     fn test_extend_line() {
         let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(10.0, 0.0), false);
         let extended = line1.extend(1.0);
-        assert_eq!(extended, Line::new(Point::new(0.0, 0.0), Point::new(11.0, 0.0), false));
+        assert_eq!(
+            extended,
+            Line::new(Point::new(0.0, 0.0), Point::new(11.0, 0.0), false)
+        );
         let extended2 = line1.extend(2.0);
-        assert_eq!(extended2, Line::new(Point::new(0.0, 0.0), Point::new(12.0, 0.0), false));
+        assert_eq!(
+            extended2,
+            Line::new(Point::new(0.0, 0.0), Point::new(12.0, 0.0), false)
+        );
     }
 
     #[test]
     fn test_extend_line_start() {
         let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(10.0, 0.0), false);
         let extended = line1.extend_start(1.0);
-        assert_eq!(extended, Line::new(Point::new(-1.0, 0.0), Point::new(10.0, 0.0), false));
+        assert_eq!(
+            extended,
+            Line::new(Point::new(-1.0, 0.0), Point::new(10.0, 0.0), false)
+        );
         let extended2 = line1.extend_start(2.0);
-        assert_eq!(extended2, Line::new(Point::new(-2.0, 0.0), Point::new(10.0, 0.0), false));
+        assert_eq!(
+            extended2,
+            Line::new(Point::new(-2.0, 0.0), Point::new(10.0, 0.0), false)
+        );
     }
 
     #[test]
     fn test_extend_line_vertical() {
         let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(0.0, 10.0), false);
         let extended = line1.extend(1.0);
-        assert_eq!(extended, Line::new(Point::new(0.0, 0.0), Point::new(0.0, 11.0), false));
+        assert_eq!(
+            extended,
+            Line::new(Point::new(0.0, 0.0), Point::new(0.0, 11.0), false)
+        );
         let extended2 = line1.extend(2.0);
-        assert_eq!(extended2, Line::new(Point::new(0.0, 0.0), Point::new(0.0, 12.0), false));
+        assert_eq!(
+            extended2,
+            Line::new(Point::new(0.0, 0.0), Point::new(0.0, 12.0), false)
+        );
     }
 
     #[test]

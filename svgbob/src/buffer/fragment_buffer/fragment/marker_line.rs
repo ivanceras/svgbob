@@ -34,7 +34,6 @@ impl Marker {
     }
 }
 
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct MarkerLine {
     pub line: Line,
@@ -50,7 +49,11 @@ impl MarkerLine {
         start_marker: Option<Marker>,
         end_marker: Option<Marker>,
     ) -> Self {
-        MarkerLine { line: Line::new_noswap(a, b, is_broken), start_marker, end_marker }
+        MarkerLine {
+            line: Line::new_noswap(a, b, is_broken),
+            start_marker,
+            end_marker,
+        }
     }
 
     pub fn absolute_position(&self, cell: Cell) -> Self {
@@ -159,10 +162,13 @@ impl fmt::Display for Marker {
 
 impl fmt::Display for MarkerLine {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{} {:?} {:?}", self.line, self.start_marker, self.end_marker)
+        write!(
+            f,
+            "{} {:?} {:?}",
+            self.line, self.start_marker, self.end_marker
+        )
     }
 }
-
 
 impl Into<Node<()>> for MarkerLine {
     fn into(self) -> Node<()> {

@@ -31,11 +31,17 @@ impl Contacts {
     /// We use `.rev()` on this list of fragment since it has a high change of matching at the last
     /// added fragment of the next fragments to be checked.
     pub(crate) fn is_contacting_frag(&self, other_frag: &Fragment) -> bool {
-        self.as_ref().iter().rev().any(|frag| frag.is_contacting(other_frag))
+        self.as_ref()
+            .iter()
+            .rev()
+            .any(|frag| frag.is_contacting(other_frag))
     }
 
     pub(crate) fn is_contacting(&self, other: &Self) -> bool {
-        other.as_ref().iter().any(|other_frag| self.is_contacting_frag(other_frag))
+        other
+            .as_ref()
+            .iter()
+            .any(|other_frag| self.is_contacting_frag(other_frag))
     }
 
     /// Endorse if the fragments in this group
@@ -53,7 +59,12 @@ impl Contacts {
     }
 
     pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
-        Contacts(self.as_ref().iter().map(|frag| frag.absolute_position(cell)).collect())
+        Contacts(
+            self.as_ref()
+                .iter()
+                .map(|frag| frag.absolute_position(cell))
+                .collect(),
+        )
     }
 }
 

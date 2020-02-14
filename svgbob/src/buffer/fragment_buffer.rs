@@ -150,7 +150,11 @@ impl FragmentBuffer {
     fn merge_recursive(fragments: Vec<Fragment>) -> Vec<Fragment> {
         let original_len = fragments.len();
         let merged = Self::second_pass_merge(fragments);
-        if merged.len() < original_len { Self::merge_recursive(merged) } else { merged }
+        if merged.len() < original_len {
+            Self::merge_recursive(merged)
+        } else {
+            merged
+        }
     }
 
     fn second_pass_merge(fragments: Vec<Fragment>) -> Vec<Fragment> {

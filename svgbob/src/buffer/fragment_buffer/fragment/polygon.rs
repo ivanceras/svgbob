@@ -69,17 +69,33 @@ impl PolygonTag {
 
 impl Polygon {
     pub(in crate) fn new(points: Vec<Point>, is_filled: bool, tags: Vec<PolygonTag>) -> Self {
-        Polygon { points, is_filled, tags }
+        Polygon {
+            points,
+            is_filled,
+            tags,
+        }
     }
 
     pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
-        let points: Vec<Point> = self.points.iter().map(|p| cell.absolute_position(*p)).collect();
-        Polygon { points, is_filled: self.is_filled, tags: self.tags.clone() }
+        let points: Vec<Point> = self
+            .points
+            .iter()
+            .map(|p| cell.absolute_position(*p))
+            .collect();
+        Polygon {
+            points,
+            is_filled: self.is_filled,
+            tags: self.tags.clone(),
+        }
     }
 
     pub(in crate) fn scale(&self, scale: f32) -> Self {
         let points: Vec<Point> = self.points.iter().map(|p| p.scale(scale)).collect();
-        Polygon { points, is_filled: self.is_filled, tags: self.tags.clone() }
+        Polygon {
+            points,
+            is_filled: self.is_filled,
+            tags: self.tags.clone(),
+        }
     }
 
     fn first(&self) -> Point {
@@ -110,7 +126,11 @@ impl fmt::Display for Polygon {
         write!(
             f,
             "P {}",
-            self.points.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(" ")
+            self.points
+                .iter()
+                .map(|p| p.to_string())
+                .collect::<Vec<String>>()
+                .join(" ")
         )
     }
 }
