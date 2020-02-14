@@ -4,20 +4,21 @@ Svgbob creates an svg drawing based on the input ascii art diagrams.
 It achieves this by creating a corresponding fragment for each character, and then this little fragments
 are then merged to form lines and arcs. The lines and arcs are then endorsed into high level shapes such as rect, circles.
 
-## Name inspiration:
+### Name inspiration:
 - svg for svg document and drawing.
 - bob for Alice and Bob as common characters in most diagrams
    Bob Ross - a painter who like to draws happy little trees.
 
-## Library used
+### Library used
 - [nalgebra](https://www.nalgebra.org/) and [ncollide2d](https://ncollide.org/) for geometric function calculations such as calculating whether lines are intersecting, collinear. Computing the clipping of lines and boxes.
 - [pom](https://github.com/J-F-Liu/pom) for parsing the styling directives(Legend) at the bottom of the document
 - [sauron](https://github.com/ivanceras/sauron) for building the svg document object tree.
 
 
-# **Iterations, re-architecture rewrites**
+### **Iterations, re-architecture rewrites**
 
-##  Phase 1: Exploding if statements. This was in elm
+####  Phase 1
+Exploding if statements. This was in elm
    [fullcode](https://github.com/ivanceras/elm-examples/blob/master/elm-bot-lines/Grid.elm)
 
 ```elm
@@ -82,18 +83,19 @@ Though elm is fast, but if you throw a lot of conditional branching to it, it wi
 At least I don't get to have runtime errors here if it was written in js.
 Adding an edgecase is just appending a new if else statement at the bottom of the statements.
 
-Pros: Very simple design. Just if statements and return the appropriate shape the character will take form
+**Pros:** Very simple design. Just if statements and return the appropriate shape the character will take form
     Adding edge case behaviour is just appending an `else if` to the nearest conditional(`if`) behavior.
 
-Caveats: The fragments/drawing elements are named. Naming is hard, we can not name all of them. Consistency is broken.
+**Caveats:** The fragments/drawing elements are named. Naming is hard, we can not name all of them. Consistency is broken.
 
 
 
 
-## Phase2: Now in rust. The character behavior is stored in a `Vec<(condition, drawing_elements)>`
+#### Phase2:
+Now in rust. The character behavior is stored in a `Vec<(condition, drawing_elements)>`
 This is already close to the current architecture.
 
-  Improvements:
+  **Improvements:**
    - Runs a lot faster than elm. Converting the code from elm to rust, accelerate my learning of the usage of functional programming in rust.
    - Consumed elements, if certain group of elements matches a higher level shapes, those elements are consumed/remove from the grid to
    avoid generating additional drawing elements when iterated with the rest of the characters in the grid.
@@ -262,8 +264,7 @@ This is already close to the current architecture.
             ]);
         }
 ```
-Caveats:
-
+**Caveats:**
     - Merging of small fragments requires checking against all the other fragments of the entire grid. Runtime complexity is at least O(n^2)
     - Endorsing to shapes requires a lot of if statement comparisons and every cell is checked even for cell that has only a few elements that couldn't form into a certain shapes is tested.
     - Processing high level stage and low level fragment stage is one execution.
@@ -272,7 +273,8 @@ Caveats:
 
 
 
-## Phase 3: Attempts to add a signal strength to characters depending on their
+#### Phase 3:
+Attempts to add a signal strength to characters depending on their
 neighboring character whether they should connect or not. This makes the dynamic behavior flexible
 but the control flow is not very intuitive.
 
@@ -406,12 +408,14 @@ but the control flow is not very intuitive.
         }
 ```
 
-Pros:
+**Pros:**
  - Characters are assigned with certain properties. This allows similar characters such as dash(-) and line drawing (-) to have the same behavior
      without explicitly coding for each of those variations.
 
 
-## Phase 4.
+#### Phase 4.
+
+**Improvements:**
 - Uses of Buffers
    - StringBuffer, input strings are slices into rows and columns
    - CellBuffer, which cells contains which character.
@@ -421,24 +425,23 @@ Pros:
 PropertyBuffer is calculated only once for each character, so the succeeding lookup should not waste execution time to recompute.
 
 
-### How the fragments are conceived based on a character.
+**How the fragments are conceived based on a character?**
 
-### Neighbor character: There are 8 neighbors of a character and each character on the input is checked agains this 8 neighbor for appropriate drawing element
+**Neighbor character:** There are 8 neighbors of a character and each character on the input is checked agains this 8 neighbor for appropriate drawing element
+
 ```bob
-+---------+  +-----+   +---------+
-|  TopLeft|  | Top |   | TopRight|
-+---------+--+-----+---+---------+
-
-+---------+  +------+  +--------+
-|  Left   |  |(char)|  | Right  |
-+---------+  +------+  +--------+
-
-+----------+ +------+  +-----------+
-|BottomLeft| |Bottom|  |BottomRight|
-+----------+ +------+  +-----------+
+  +---------+  +------+  +--------+
+  |  TopLeft|  | Top  |  |TopRight|
+  +---------+  +------+  +--------+
+  +---------+  +------+  +--------+
+  |  Left   |  |(char)|  | Right  |
+  +---------+  +------+  +--------+
+ +----------+  +------+  +-----------+
+ |BottomLeft|  |Bottom|  |BottomRight|
+ +----------+  +------+  +-----------+
 ```
 
-### Character Grid: a 5x5 grid which covers the most significant points for a character to be converted into drawing elements.
+**Character Grid:** a 5x5 grid which covers the most significant points for a character to be converted into drawing elements.
 
 Character grid: / is the line connecting E to U. Dash is connecting K to O, etc.
 ```bob
@@ -473,7 +476,7 @@ These fragments are processed such as merging collinear lines that are touching 
                                             +---------------+  '----------------'
 ```
 
-- Optimizations.
+- **Optimizations.**
     - Usage of span and contact groups.
        Span group together that are neighbors. Contact groups group together fragments
        that are touching together. Cells don't need to be checked against other cells
@@ -482,7 +485,7 @@ These fragments are processed such as merging collinear lines that are touching 
 - Endorsing group of fragments into higher level shapes.
     - rect, rounded rect, circles, arcs are higher level shapes that are from small fragment components: arc,lines,
 
-- Tagging shapes.
+- **Tagging shapes.**
     Text inside of a shape with the pattern "{", <ident> "}" will become a tag of the enclosing shape.
     At the DOM level, the shape is an svg dom element such as: rect,circle,path and the tag is the element `class`
     which you can use css to apply a style to the element. The legend part at the bottom of the document is parsed
@@ -552,12 +555,6 @@ These fragments are processed such as merging collinear lines that are touching 
                             //     -.
                             //     /
                             (left.line_overlap(n,o) && bottom_left.line_overlap(e,i), vec![arc(q, k, between1_2), line(u, q)]),
-                            //   .
-                            //  (
-                            (bottom_left.arcs_to(e,y), vec![arc(o, q, unit4), line(q, u)]),
-                            //  .
-                            //   )
-                            (bottom_right.arcs_to(u,a),vec![arc(s, k, unit4), line(s, y)]),
 
                             ...
                         ]}
@@ -565,7 +562,7 @@ These fragments are processed such as merging collinear lines that are touching 
             ),
 ```
 
-## Endorse to higher level shapes
+#### **Endorse to higher level shapes**
 
 ```rust
 
@@ -712,27 +709,28 @@ These fragments are processed such as merging collinear lines that are touching 
 
 ```
 
-## Flexibility:
+#### Flexibility:
 - Adding behaviours and edge-cases is still simple
 - Due to the grouping of spans and contacts, it is now more efficient to check whether a combination
     of fragments can be endorsed into a high level shapes.
 - Behavior can be coded according to the properties of their neighboring characters,
     and/or can also specify that a neighbor should match a specific character. (ie: neighboring character top should be a caret `^`, then this is the behavior)
 
-## Modular:
+#### Modular:
 -  Adding more shapes it can endorse to, such as in the circle map is merely putting the ascii art
 to right next to the existing ones, as oppused to the multiple if-statements in Phase 2
 - Adding endorse code to certain shapes is merely describing the filter rules on the combination of the fragments
 
-## Extensiblity:
+#### Extensiblity:
 - Since the new architecture is now implemented through the use of Buffers. It opens to a lot of possible improvements.
 - Shapes are now properly endorsed, which can be styled with css standard. Which means, users can add crazy css-animation to the shapes.
 - Making the cell buffer as a canvas. Meaning you can draw lines and shapes on it, while the system will try to match
     the closest character appropriate to the input shape. A possibility of generating an ascii drawing from svg diagrams.
     The reverse of the functionality of svgbob.
 
-## Adaption of svgbob
+#### Adaption of svgbob
 - As archlinux [package](https://aur.archlinux.org/packages/svgbob-git/)
 - As diagram module for [asciidoctor](https://asciidoctor.org/docs/asciidoctor-diagram/)
 - [Asciigrid](https://gitlab.com/mbarkhau/asciigrid/)
 - [kroki.io](https://kroki.io/)
+
