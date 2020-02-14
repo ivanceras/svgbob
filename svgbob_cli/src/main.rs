@@ -2,17 +2,15 @@
 #[macro_use]
 extern crate clap;
 
-extern crate svg;
 extern crate svgbob;
 
-use svgbob::Grid;
 use svgbob::Settings;
 
 use clap::ArgMatches;
-use std::fs::{self, File};
-use std::path::{Path, PathBuf};
 use std::error::Error;
+use std::fs::{self, File};
 use std::io::Read;
+use std::path::{Path, PathBuf};
 use std::process::exit;
 use std::str::FromStr;
 
@@ -71,7 +69,8 @@ fn main() {
     let mut bob = String::new();
 
     if args.is_present("inline") {
-        bob = args.value_of("input")
+        bob = args
+            .value_of("input")
             .unwrap()
             .replace("\\n", "\n")
             .to_string();
@@ -89,7 +88,8 @@ fn main() {
                         "Failed to open input file {}: {}",
                         file,
                         e
-                    ).unwrap();
+                    )
+                    .unwrap();
                     exit(1);
                 }
             }
@@ -114,14 +114,13 @@ fn main() {
     }
 
     if let Some(scale) = parse_value_of(&args, "scale") {
-        settings.scale(scale);
+        settings.scale = scale;
     }
 
-    let g = Grid::from_str(&*bob, &settings);
-    let svg = g.get_svg();
+    let svg = svgbob::to_svg_with_settings(&*bob, &settings);
 
     if let Some(file) = args.value_of("output") {
-        if let Err(e) = svg::save(file, &svg) {
+        if let Err(e) = fs::write(file, &svg) {
             use std::io::Write;
 
             writeln!(
@@ -129,7 +128,8 @@ fn main() {
                 "Failed to write to output file {}: {}",
                 file,
                 e
-            ).unwrap();
+            )
+            .unwrap();
             exit(2);
         }
     } else {
@@ -141,7 +141,8 @@ fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T>
 where
     <T as std::str::FromStr>::Err: std::fmt::Display,
 {
-    return args.value_of(arg_name)
+    return args
+        .value_of(arg_name)
         .and_then(|arg| match arg.parse::<T>() {
             Ok(a) => Some(a),
             Err(e) => {
@@ -152,7 +153,8 @@ where
                     "Illegal value for argument {}: {}",
                     arg_name,
                     e
-                ).unwrap();
+                )
+                .unwrap();
                 exit(1);
             }
         });
@@ -225,8 +227,7 @@ fn convert_file(input: PathBuf, output: PathBuf) -> Result<(), Box<dyn Error>> {
     let mut bob = String::new();
     let mut f = File::open(&input)?;
     f.read_to_string(&mut bob).unwrap();
-    let g = Grid::from_str(&*bob, &Settings::default());
-    let svg = g.get_svg();
-    svg::save(&output, &svg)?;
+    let svg = svgbob::to_svg_with_settings(&*bob, &Settings::default());
+    fs::write(&output, &svg)?;
     Ok(())
 }

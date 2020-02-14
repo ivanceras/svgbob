@@ -1,14 +1,12 @@
-extern crate svg;
+use std::{fs, io, time::Instant};
+
 extern crate svgbob;
 
-use svgbob::Grid;
-use svgbob::Settings;
-
-fn main() {
-    let file = "examples/circuits.svg";
-    let arg = include_str!("circuits.bob");
-    let g = Grid::from_str(arg, &Settings::default());
-    let svg = g.get_svg();
-    svg::save(file, &svg).unwrap();
-    println!("Saved to {}", file);
+fn main() -> io::Result<()> {
+    let art = include_str!("../test_data/circuits.bob");
+    let t1 = Instant::now();
+    fs::create_dir_all("out")?;
+    fs::write("out/circuits.svg", svgbob::to_svg(art))?;
+    println!("took {}ms", t1.elapsed().as_millis());
+    Ok(())
 }
