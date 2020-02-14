@@ -123,18 +123,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "handlebars"
-version = "0.21.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "937e9d49d65ffb5f70e95710a6c8539addf40200275ad8b6cdba0f0a59d5814d"
-dependencies = [
- "log 0.3.9",
- "pest",
- "quick-error",
- "rustc-serialize",
-]
-
-[[package]]
 name = "hermit-abi"
 version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -153,12 +141,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "itoa"
-version = "0.4.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8b7a7c0c47db5545ed3fef7468ee7bb5b74691498139e4b3f6a20685dc6dd8e"
-
-[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -175,15 +157,6 @@ name = "libm"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7fc7aa29613bd6a620df431842069224d8bc9011086b1db4c0e0cd47fa03ec9a"
-
-[[package]]
-name = "log"
-version = "0.3.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e19e8d5c34a3e0e2223db8e060f9e8264aeeb5c5fc64a4ee9965c062211c024b"
-dependencies = [
- "log 0.4.8",
-]
 
 [[package]]
 name = "log"
@@ -292,12 +265,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a86ed3f5f244b372d6b1a00b72ef7f8876d0bc6a78a4c9985c53614041512063"
 
 [[package]]
-name = "pest"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0a6dda33d67c26f0aac90d324ab2eb7239c819fc7b2552fe9faa4fe88441edc8"
-
-[[package]]
 name = "petgraph"
 version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -312,12 +279,6 @@ name = "pom"
 version = "3.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ef5cf7f52c12da93c26b63ee0d9f012bc82fb071851c546c030dc6ecb5f2994b"
-
-[[package]]
-name = "quick-error"
-version = "1.2.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1d01941d82fa2ab50be1e79e6714289dd7cde78eba4c074bc5a4374f650dfe0"
 
 [[package]]
 name = "rand"
@@ -441,18 +402,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustc-serialize"
-version = "0.3.24"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dcf128d1287d2ea9d80910b5f1120d0b8eede3fbf1abe91c40d39ea7d51e6fda"
-
-[[package]]
-name = "ryu"
-version = "1.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bfa8506c1de11c9c4e4c38863ccbe02a305c8188e85a05a784c9e11e1c3910c8"
-
-[[package]]
 name = "sauron"
 version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -460,7 +409,7 @@ checksum = "ee92eb275e1c4dd3d2f314cf162d67f9db7916436a59aebf93715c40d6818c16"
 dependencies = [
  "cfg-if",
  "lazy_static",
- "log 0.4.8",
+ "log",
  "sauron_vdom",
 ]
 
@@ -470,24 +419,7 @@ version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce9de12db6e3f973366706550ff4a3a2a3396d5dd4398ec666dd8d3552eb5ebe"
 dependencies = [
- "log 0.4.8",
-]
-
-[[package]]
-name = "serde"
-version = "1.0.104"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "414115f25f818d7dfccec8ee535d76949ae78584fc4f79a6f45a904bf8ab4449"
-
-[[package]]
-name = "serde_json"
-version = "1.0.46"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21b01d7f0288608a01dca632cf1df859df6fd6ffa885300fc275ce2ba6221953"
-dependencies = [
- "itoa",
- "ryu",
- "serde",
+ "log",
 ]
 
 [[package]]
@@ -513,7 +445,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.5.0"
+version = "0.5.0-alpha.0"
 dependencies = [
  "itertools",
  "lazy_static",
@@ -521,8 +453,6 @@ dependencies = [
  "ncollide2d",
  "pom",
  "sauron",
- "sauron_vdom",
- "serde_json",
  "unicode-width",
 ]
 
@@ -531,7 +461,6 @@ name = "svgbob_cli"
 version = "0.5.0"
 dependencies = [
  "clap",
- "handlebars",
  "svgbob",
 ]
 

@@ -1,9 +1,12 @@
 [package]
 name = "svgbob"
-version = "0.5.0"
-authors = ["lee"]
+version = "0.5.0-alpha.0"
+authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 edition = "2018"
-publish = true
+description = "Transform your ascii diagrams into happy little SVG"
+repository = "https://github.com/ivanceras/svgbob"
+documentation = "https://docs.rs/svgbob"
+keywords = ["ascii","plain","text", "svg", "bob"]
 license = "Apache-2.0"
 
 [dependencies]
@@ -15,7 +18,4 @@ unicode-width = "0.1.5"
 itertools = "0.8.0"
 pom = { version = "3.1.0" }
 
-[dev-dependencies]
-sauron_vdom = {version = "0.21.0"}
-serde_json = "1.0.41"
 
