@@ -27,13 +27,13 @@ impl Settings {
 impl Default for Settings {
     fn default() -> Self {
         Settings {
-            font_size: 16,
+            font_size: 14,
             font_family: "monospace".into(),
             fill_color: "black".into(),
             background: "white".into(),
             stroke_color: "black".into(),
             stroke_width: 2.0,
-            scale: 10.0,
+            scale: 8.0,
             enhance_circuitries: true,
         }
     }
