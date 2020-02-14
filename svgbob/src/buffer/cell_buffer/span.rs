@@ -573,7 +573,7 @@ mod tests {
              /                \
             .                  .
             |                  |
-            |------------------|
+            | ---------------- |
             |                  |
              \                /
               `._          _.'
@@ -584,13 +584,13 @@ mod tests {
         println!("buffer: {}", buffer);
         let mut adjacents = buffer.group_adjacents();
         println!("There are {} adjacents", adjacents.len());
-        assert_eq!(1, adjacents.len());
+        assert_eq!(2, adjacents.len());
         let span1 = adjacents.remove(0);
         let (top_left1, _) = span1.bounds().unwrap();
         assert_eq!(top_left1, Cell::new(12, 3));
         let (fragments, groups) = span1.endorse(&Settings::default());
         assert_eq!(fragments.len(), 1);
-        assert_eq!(groups.len(), 1);
+        assert_eq!(groups.len(), 0);
         for (i, fragment) in groups.iter().enumerate() {
             println!("fragment {}: \n{}", i, fragment);
         }
