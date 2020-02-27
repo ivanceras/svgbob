@@ -9,7 +9,8 @@ mod point;
 pub mod util;
 
 pub use buffer::{
-    fragment, fragment::Fragment, Cell, CellBuffer, FragmentBuffer, Property, Settings, Signal,
+    fragment, fragment::Fragment, Cell, CellBuffer, Direction, FragmentBuffer, Property, Settings,
+    Signal,
 };
 pub use point::Point;
 

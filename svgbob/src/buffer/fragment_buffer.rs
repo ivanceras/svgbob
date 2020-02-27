@@ -1,4 +1,5 @@
 use crate::{buffer::Settings, Cell};
+pub use direction::Direction;
 pub use fragment::Fragment;
 pub use fragment_tree::FragmentTree;
 use itertools::Itertools;
@@ -7,6 +8,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
+pub mod direction;
 pub mod fragment;
 mod fragment_tree;
 

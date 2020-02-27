@@ -92,14 +92,19 @@ impl MarkerLine {
         let can_connect_start = is_close_start_point && self.start_marker.is_none();
         let can_connect_end = is_close_end_point && self.end_marker.is_none();
 
-        let is_along_side = self.line.heading().is_along_side(&polygon.tags);
-        is_along_side && (can_connect_start || can_connect_end)
+        let is_same_direction = polygon
+            .tags
+            .iter()
+            .any(|tag| tag.matched_direction(self.line.heading()));
+
+        is_same_direction && (can_connect_start || can_connect_end)
     }
 
     /// merge this marker line to the polygon
     pub(crate) fn merge_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         if self.can_merge_polygon(polygon) {
             let marker = polygon.tags.get(0).map(|tag| tag.get_marker());
+            let direction = polygon.tags.get(0).map(|tag| tag.direction());
             let poly_center = polygon.center();
             let distance_end_center = self.line.end.distance(&poly_center);
             let distance_start_center = self.line.start.distance(&poly_center);

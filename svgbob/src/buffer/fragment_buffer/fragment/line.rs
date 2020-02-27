@@ -4,7 +4,7 @@ use crate::{
         Cell, CellGrid, Fragment,
     },
     fragment::{marker_line, Bounds, Circle, Marker, MarkerLine},
-    util, Point,
+    util, Direction, Point,
 };
 use ncollide2d::{
     math::Isometry,
@@ -20,65 +20,11 @@ use sauron::{
     Node,
 };
 
-#[derive(Debug, Clone, PartialEq)]
-pub enum Direction {
-    TopLeft,
-    Top,
-    TopRight,
-    Left,
-    Right,
-    BottomLeft,
-    Bottom,
-    BottomRight,
-}
-
 #[derive(Debug, Clone)]
 pub struct Line {
     pub start: Point,
     pub end: Point,
     pub is_broken: bool,
-}
-
-impl Direction {
-    /// diamon matches alongside for everything.
-    pub(crate) fn is_along_side(&self, tags: &[PolygonTag]) -> bool {
-        if tags.contains(&PolygonTag::DiamondBullet) {
-            return true;
-        }
-        match self {
-            Direction::TopLeft | Direction::BottomRight => {
-                tags.contains(&PolygonTag::ArrowTopLeft)
-                    | tags.contains(&PolygonTag::ArrowBottomRight)
-                    | tags.contains(&PolygonTag::ArrowTop)
-                    | tags.contains(&PolygonTag::ArrowBottom)
-            }
-            Direction::Top | Direction::Bottom => {
-                tags.contains(&PolygonTag::ArrowTop) | tags.contains(&PolygonTag::ArrowBottom)
-            }
-            Direction::TopRight | Direction::BottomLeft => {
-                tags.contains(&PolygonTag::ArrowTopRight)
-                    | tags.contains(&PolygonTag::ArrowBottomLeft)
-                    | tags.contains(&PolygonTag::ArrowTop)
-                    | tags.contains(&PolygonTag::ArrowBottom)
-            }
-            Direction::Left | Direction::Right => {
-                tags.contains(&PolygonTag::ArrowLeft) | tags.contains(&PolygonTag::ArrowRight)
-            }
-        }
-    }
-
-    /// calculate the threshold length which is the basis
-    /// if the arrow and the line is connected
-    pub(crate) fn threshold_length(&self) -> f32 {
-        match self {
-            Direction::TopLeft
-            | Direction::TopRight
-            | Direction::BottomLeft
-            | Direction::BottomRight => CellGrid::diagonal_length(),
-            Direction::Left | Direction::Right => CellGrid::width(),
-            Direction::Top | Direction::Bottom => CellGrid::height(),
-        }
-    }
 }
 
 impl Line {
@@ -366,17 +312,36 @@ impl Line {
         let is_close_start_point = distance_start_center < threshold_length;
         let is_close_end_point = distance_end_center < threshold_length;
 
-        let is_along_side = self.heading().is_along_side(&polygon.tags);
-        is_along_side && (is_close_start_point || is_close_end_point)
+        let direction = polygon.tags.get(0).map(|tag| tag.direction()).flatten();
+
+        let is_same_direction = polygon
+            .tags
+            .iter()
+            .any(|tag| tag.matched_direction(self.heading()));
+
+        //TODO: deal with merging with the opposite direction
+        /*
+        let is_opposite = polygon
+            .tags
+            .iter()
+            .any(|tag| tag.matched_direction(self.heading().opposite()));
+        */
+
+        is_same_direction && (is_close_start_point || is_close_end_point)
     }
 
     /// TODO: the get_marker function don't take into account the direction
     /// of the line from start to end. The direction is not followed.
+    /// TODO: If the marker direction is on opposite direction of the line
+    /// heading, swap the line start and end point
     ///
     /// merge this line to the marker line
     pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         if self.can_merge_polygon(polygon) {
             let marker = polygon.tags.get(0).map(|tag| tag.get_marker());
+            let direction = polygon.tags.get(0).map(|tag| tag.direction()).flatten();
+            let heading = self.heading();
+
             let poly_center = polygon.center();
             let distance_end_center = self.end.distance(&poly_center);
             let distance_start_center = self.start.distance(&poly_center);
@@ -384,6 +349,18 @@ impl Line {
             let threshold_length = self.heading().threshold_length();
             let is_close_start_point = distance_start_center < threshold_length;
             let is_close_end_point = distance_end_center < threshold_length;
+
+            let is_same_direction = polygon
+                .tags
+                .iter()
+                .any(|tag| tag.matched_direction(self.heading()));
+
+            let is_opposite = polygon
+                .tags
+                .iter()
+                .any(|tag| tag.matched_direction(self.heading().opposite()));
+
+            let is_diamond = Some(Marker::Diamond) == marker;
 
             let new_line = if is_close_end_point {
                 Line::new_noswap(self.start, self.end, self.is_broken)
@@ -393,7 +370,14 @@ impl Line {
             } else {
                 panic!("There is no endpoint of the line is that close to the arrow");
             };
-            let extended_line = new_line.extend(threshold_length);
+            let mut extended_line = new_line.extend(threshold_length);
+
+            //TODO: deal with the opposite direction
+            /*
+            if !is_diamond && is_opposite {
+                extended_line.swap();
+            }
+            */
             Some(marker_line(
                 extended_line.start,
                 extended_line.end,

@@ -1,3 +1,4 @@
+use crate::Direction;
 use crate::{
     fragment::{
         marker_line::{Marker, MarkerLine},
@@ -63,6 +64,29 @@ impl PolygonTag {
             | PolygonTag::ArrowBottom
             | PolygonTag::ArrowBottomRight => Marker::Arrow,
             PolygonTag::DiamondBullet => Marker::Diamond,
+        }
+    }
+
+    pub(crate) fn direction(&self) -> Option<Direction> {
+        match self {
+            PolygonTag::ArrowTopLeft => Some(Direction::TopLeft),
+            PolygonTag::ArrowTop => Some(Direction::Top),
+            PolygonTag::ArrowTopRight => Some(Direction::TopRight),
+            PolygonTag::ArrowLeft => Some(Direction::Left),
+            PolygonTag::ArrowRight => Some(Direction::Right),
+            PolygonTag::ArrowBottomLeft => Some(Direction::BottomLeft),
+            PolygonTag::ArrowBottom => Some(Direction::Bottom),
+            PolygonTag::ArrowBottomRight => Some(Direction::BottomRight),
+            PolygonTag::DiamondBullet => None,
+        }
+    }
+
+    pub(crate) fn matched_direction(&self, arg: Direction) -> bool {
+        if let Some(direction) = self.direction() {
+            direction == arg
+        } else {
+            // DiamondBullet just match any direction
+            true
         }
     }
 }
