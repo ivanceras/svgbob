@@ -95,8 +95,8 @@ impl Into<Text> for CellText {
     }
 }
 
-impl Into<Node<()>> for CellText {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for CellText {
+    fn into(self) -> Node<MSG> {
         let text: Text = self.into();
         text.into()
     }
@@ -162,11 +162,14 @@ impl fmt::Display for Text {
     }
 }
 
-impl Into<Node<()>> for Text {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Text {
+    fn into(self) -> Node<MSG> {
         svg::tags::text(
             vec![x(self.start.x), y(self.start.y)],
+            #[cfg(not(feature = "with-dom"))]
             vec![text(escape_html_text(&self.text))],
+            #[cfg(feature = "with-dom")]
+            vec![text(&self.text)],
         )
     }
 }

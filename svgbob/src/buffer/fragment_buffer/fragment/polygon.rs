@@ -159,8 +159,8 @@ impl fmt::Display for Polygon {
     }
 }
 
-impl Into<Node<()>> for Polygon {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Polygon {
+    fn into(self) -> Node<MSG> {
         polygon(
             vec![
                 points(

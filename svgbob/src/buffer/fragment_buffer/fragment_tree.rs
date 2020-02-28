@@ -99,9 +99,9 @@ impl FragmentTree {
     }
 
     /// convert back into fragments
-    fn into_nodes(self) -> Vec<Node<()>> {
+    fn into_nodes<MSG>(self) -> Vec<Node<MSG>> {
         let mut nodes = vec![];
-        let mut fragment_node: Node<()> = self.fragment.into();
+        let mut fragment_node: Node<MSG> = self.fragment.into();
         fragment_node = fragment_node.add_attributes(vec![classes(self.css_tag)]);
         nodes.push(fragment_node);
         for child in self.enclosing {
@@ -112,7 +112,7 @@ impl FragmentTree {
 
     /// convert fragments to node, where cell_text and text may become
     /// css class of the contain fragment
-    pub(crate) fn fragments_to_node(fragments: Vec<Fragment>) -> Vec<Node<()>> {
+    pub(crate) fn fragments_to_node<MSG>(fragments: Vec<Fragment>) -> Vec<Node<MSG>> {
         let fragment_trees: Vec<FragmentTree> = Self::enclose_fragments(fragments);
         fragment_trees
             .into_iter()

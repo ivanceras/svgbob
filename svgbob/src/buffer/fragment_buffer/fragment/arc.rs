@@ -156,8 +156,8 @@ impl fmt::Display for Arc {
     }
 }
 
-impl Into<Node<()>> for Arc {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Arc {
+    fn into(self) -> Node<MSG> {
         let dv = format!(
             "M {},{} A {},{} {},{},{} {},{}",
             self.start.x,

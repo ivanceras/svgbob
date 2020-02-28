@@ -450,8 +450,8 @@ impl Bounds for Fragment {
     }
 }
 
-impl Into<Node<()>> for Fragment {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Fragment {
+    fn into(self) -> Node<MSG> {
         match self {
             Fragment::Line(line) => line.into(),
             Fragment::MarkerLine(marker_line) => marker_line.into(),

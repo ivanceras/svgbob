@@ -13,16 +13,18 @@ pub use buffer::{
     Signal,
 };
 pub use point::Point;
+use sauron::Node;
 
 /// convert svgbob ascii art to svg
 pub fn to_svg(ascii: &str) -> String {
     let cb = CellBuffer::from(ascii);
-    cb.get_node().to_string()
+    let node: Node<()> = cb.get_node();
+    node.to_string()
 }
 
 /// convert ascii art into an svg
 pub fn to_svg_with_settings(ascii: &str, settings: &Settings) -> String {
     let cb = CellBuffer::from(ascii);
-    let (node, _w, _h) = cb.get_node_with_size(settings);
+    let (node, _w, _h): (Node<()>, f32, f32) = cb.get_node_with_size(settings);
     node.to_string()
 }

@@ -175,9 +175,9 @@ impl fmt::Display for MarkerLine {
     }
 }
 
-impl Into<Node<()>> for MarkerLine {
-    fn into(self) -> Node<()> {
-        let mut node: Node<()> = self.line.into();
+impl<MSG> Into<Node<MSG>> for MarkerLine {
+    fn into(self) -> Node<MSG> {
+        let mut node: Node<MSG> = self.line.into();
         let mut classes = vec![];
         if let Some(start_marker) = self.start_marker {
             classes.push(class(format!("start_marked_{}", start_marker)));

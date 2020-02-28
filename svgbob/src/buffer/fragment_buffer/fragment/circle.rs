@@ -61,8 +61,8 @@ impl fmt::Display for Circle {
     }
 }
 
-impl Into<Node<()>> for Circle {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Circle {
+    fn into(self) -> Node<MSG> {
         circle(
             vec![
                 cx(self.center.x),

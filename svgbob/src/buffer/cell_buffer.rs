@@ -131,7 +131,7 @@ impl CellBuffer {
     }
 
     /// get the svg node of this cell buffer, using the default settings for the sizes
-    pub fn get_node(&self) -> Node<()> {
+    pub fn get_node<MSG>(&self) -> Node<MSG> {
         let (node, _w, _h) = self.get_node_with_size(&Settings::default());
         node
     }
@@ -146,7 +146,7 @@ impl CellBuffer {
     }
 
     /// get all nodes of this cell buffer
-    pub fn get_node_with_size(&self, settings: &Settings) -> (Node<()>, f32, f32) {
+    pub fn get_node_with_size<MSG>(&self, settings: &Settings) -> (Node<MSG>, f32, f32) {
         let (w, h) = self.get_size(&settings);
         // vec_fragments are the fragment result of successful endorsement
         //
@@ -170,14 +170,18 @@ impl CellBuffer {
             .flat_map(|contact| contact.0)
             .collect();
 
-        let group_nodes: Vec<Node<()>> = vec_groups
+        let group_nodes: Vec<Node<MSG>> = vec_groups
             .into_iter()
             .map(|contact| contact.0)
             .map(move |contacts| {
                 let mut group_members = contacts
                     .iter()
-                    .map(move |gfrag| gfrag.scale(settings.scale).into())
-                    .collect::<Vec<_>>();
+                    .map(move |gfrag| {
+                        let scaled = gfrag.scale(settings.scale);
+                        let node: Node<MSG> = scaled.into();
+                        node
+                    })
+                    .collect::<Vec<Node<MSG>>>();
                 g(vec![], group_members)
             })
             .collect();
@@ -199,7 +203,7 @@ impl CellBuffer {
         classes.join("\n")
     }
 
-    fn get_style(settings: &Settings, legend_css: String) -> Node<()> {
+    fn get_style<MSG>(settings: &Settings, legend_css: String) -> Node<MSG> {
         html::tags::style(
             vec![],
             vec![text(format!(
@@ -287,18 +291,18 @@ impl CellBuffer {
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
     /// dimension
-    pub(crate) fn fragments_to_node(
+    pub(crate) fn fragments_to_node<MSG>(
         fragments: Vec<Fragment>,
         legend_css: String,
         settings: &Settings,
         w: f32,
         h: f32,
-    ) -> Node<()> {
+    ) -> Node<MSG> {
         let fragments_scaled: Vec<Fragment> = fragments
             .into_iter()
             .map(|frag| frag.scale(settings.scale))
             .collect();
-        let fragment_nodes: Vec<Node<()>> = FragmentTree::fragments_to_node(fragments_scaled);
+        let fragment_nodes: Vec<Node<MSG>> = FragmentTree::fragments_to_node(fragments_scaled);
 
         let svg_node = svg(
             vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
@@ -315,7 +319,7 @@ impl CellBuffer {
         svg_node
     }
 
-    fn get_defs() -> Node<()> {
+    fn get_defs<MSG>() -> Node<MSG> {
         defs(
             vec![],
             vec![
@@ -328,7 +332,7 @@ impl CellBuffer {
         )
     }
 
-    fn arrow_marker() -> Node<()> {
+    fn arrow_marker<MSG>() -> Node<MSG> {
         marker(
             vec![
                 id("arrow"),
@@ -343,7 +347,7 @@ impl CellBuffer {
         )
     }
 
-    fn diamond_marker() -> Node<()> {
+    fn diamond_marker<MSG>() -> Node<MSG> {
         marker(
             vec![
                 id("diamond"),
@@ -358,7 +362,7 @@ impl CellBuffer {
         )
     }
 
-    fn open_circle_marker() -> Node<()> {
+    fn open_circle_marker<MSG>() -> Node<MSG> {
         marker(
             vec![
                 id("open_circle"),
@@ -376,7 +380,7 @@ impl CellBuffer {
         )
     }
 
-    fn circle_marker() -> Node<()> {
+    fn circle_marker<MSG>() -> Node<MSG> {
         marker(
             vec![
                 id("circle"),
@@ -394,7 +398,7 @@ impl CellBuffer {
         )
     }
 
-    fn big_open_circle_marker() -> Node<()> {
+    fn big_open_circle_marker<MSG>() -> Node<MSG> {
         marker(
             vec![
                 id("big_open_circle"),

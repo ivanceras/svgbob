@@ -558,8 +558,8 @@ impl fmt::Display for Line {
     }
 }
 
-impl Into<Node<()>> for Line {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Line {
+    fn into(self) -> Node<MSG> {
         svg::tags::line(
             vec![
                 x1(self.start.x),

@@ -107,8 +107,8 @@ impl fmt::Display for Rect {
     }
 }
 
-impl Into<Node<()>> for Rect {
-    fn into(self) -> Node<()> {
+impl<MSG> Into<Node<MSG>> for Rect {
+    fn into(self) -> Node<MSG> {
         rect(
             vec![
                 x(self.start.x),
