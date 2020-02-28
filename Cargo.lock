@@ -468,8 +468,6 @@ dependencies = [
 [[package]]
 name = "sauron"
 version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "987022bf1b21c2d5d5cbd02af2af0a9c78b954b1e8b493e177250e43e5f6f28a"
 dependencies = [
  "cfg-if",
  "js-sys",
@@ -484,8 +482,6 @@ dependencies = [
 [[package]]
 name = "sauron_vdom"
 version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f60ed6fcda6e9822203da7ecf0c04d14e6e85475992ada0589e0ad357e3f3179"
 dependencies = [
  "log",
 ]
