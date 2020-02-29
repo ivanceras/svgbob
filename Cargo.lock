@@ -145,9 +145,9 @@ dependencies = [
 
 [[package]]
 name = "hermit-abi"
-version = "0.1.6"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eff2656d88f158ce120947499e971d743c05dbcbed62e5bd2f38f1698bbc3772"
+checksum = "1010591b26bbfe835e9faeabeb11866061cc7dcebffd56ad7d0942d0e61aefd8"
 dependencies = [
  "libc",
 ]
@@ -178,9 +178,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.66"
+version = "0.2.67"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d515b1f41455adea1313a4a2ac8a8a477634fbae63cc6100e3aebb207ce61558"
+checksum = "eb147597cdf94ed43ab7a9038716637d2d1bf2bc571da995d0028dec06bd3018"
 
 [[package]]
 name = "libm"
@@ -467,7 +467,9 @@ dependencies = [
 
 [[package]]
 name = "sauron"
-version = "0.22.0"
+version = "0.22.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d666f0c2193238a483709a2b7731344c92f22e46fb17ac16c0ef3992b35a2ea"
 dependencies = [
  "cfg-if",
  "js-sys",
@@ -482,6 +484,8 @@ dependencies = [
 [[package]]
 name = "sauron_vdom"
 version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f60ed6fcda6e9822203da7ecf0c04d14e6e85475992ada0589e0ad357e3f3179"
 dependencies = [
  "log",
 ]
@@ -515,7 +519,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.5.0-alpha.0"
+version = "0.5.0-alpha.1"
 dependencies = [
  "itertools",
  "lazy_static",
