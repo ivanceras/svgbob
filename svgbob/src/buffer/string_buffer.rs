@@ -77,10 +77,11 @@ impl From<&str> for StringBuffer {
         for line in s.lines() {
             let mut row = vec![];
             for ch in line.chars() {
-                // TODO: deal with multi-width , zero width, fixed with string
                 row.push(ch);
-                if let Some(2) = ch.width() {
-                    row.push('\0');
+                if let Some(width) = ch.width() {
+                    for i in 1..width {
+                        row.push('\0');
+                    }
                 }
             }
             rows.push(row);
