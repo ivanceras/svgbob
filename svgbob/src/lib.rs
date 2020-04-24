@@ -13,7 +13,7 @@ pub use buffer::{
     Signal,
 };
 pub use point::Point;
-use sauron::Node;
+pub use sauron::Node;
 
 /// convert svgbob ascii art to svg
 pub fn to_svg(ascii: &str) -> String {
