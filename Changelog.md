@@ -1,4 +1,7 @@
 # Changelog
+## 0.5.0-alpha.4
+- update to sauron `0.24.0`
+
 ## 0.5.0-alpha.3
 - remove local paths
 - update to sauron `0.23.0`
