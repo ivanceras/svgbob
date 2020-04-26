@@ -1,4 +1,7 @@
 # Changelog
+## 0.5.0-alpha.3
+- remove local paths
+- update to sauron `0.23.0`
 
 ## 0.5.0-alpha.2
 -  re-export `sauron::Node`
