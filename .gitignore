@@ -1,6 +1,7 @@
 target
 *.sw*
 *.bk
+Cargo.lock
 
 .DS_Store
 public/
