@@ -10,7 +10,7 @@ keywords = ["ascii", "svg", "convert", "bob"]
 license = "Apache-2.0"
 
 [dependencies]
-svgbob = { path = "../svgbob", version = "0.5.0-alpha.4" }
+svgbob = { path = "../svgbob", version = "0.5.0-alpha.5" }
 clap = "2.16"
 
 
