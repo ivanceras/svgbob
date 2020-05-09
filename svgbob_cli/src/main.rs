@@ -20,6 +20,10 @@ fn main() {
     let args = App::new("svgbob")
         .version(crate_version!())
         .about("SvgBobRus is an ascii to svg converter")
+        .arg(Arg::with_name("background")
+             .long("background")
+             .takes_value(true)
+             .help("backdrop background will be filled with this color (default: 'white')"))
         .arg(Arg::with_name("inline").short("s").help("parse an inline string"))
         .arg(Arg::with_name("input").index(1).help("svgbob text file or inline string to parse [default: STDIN]"))
         .arg(Arg::with_name("output")
@@ -27,6 +31,10 @@ fn main() {
             .long("output")
             .takes_value(true)
             .help("where to write svg output [default: STDOUT]"))
+        .arg(Arg::with_name("fill-color")
+             .long("fill-color")
+             .takes_value(true)
+             .help("solid shapes will be filled with this color (default: 'black')"))
         .arg(Arg::with_name("font-family")
              .long("font-family")
              .takes_value(true)
@@ -100,6 +108,14 @@ fn main() {
     }
 
     let mut settings = Settings::default();
+
+    if let Some(background) = args.value_of("background") {
+        settings.background = background.to_string();
+    }
+
+    if let Some(fill_color) = args.value_of("fill-color") {
+        settings.fill_color = fill_color.to_string();
+    }
 
     if let Some(font_family) = args.value_of("font-family") {
         settings.font_family = font_family.to_string();
