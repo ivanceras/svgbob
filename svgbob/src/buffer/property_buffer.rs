@@ -112,9 +112,9 @@ impl<'p> PropertyBuffer<'p> {
                     Fragment::merge_recursive(behavioral_fragments);
                 merged_behavioral_fragments.sort();
                 merged_behavioral_fragments.dedup();
-                assert!(merged_behavioral_fragments.is_sorted());
+                //assert!(merged_behavioral_fragments.is_sorted());
 
-                assert!(fragments.is_sorted());
+                //assert!(fragments.is_sorted());
                 if merged_behavioral_fragments == *fragments {
                     Some(*ch)
                 } else {

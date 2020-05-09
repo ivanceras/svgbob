@@ -297,21 +297,6 @@ pub fn rearrange_bound(bound1: Cell, bound2: Cell) -> (Cell, Cell) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    extern crate test;
-    use test::{black_box, Bencher};
-
-    #[bench]
-    fn bench_adjacent(bencher: &mut Bencher) {
-        bencher.iter(|| {
-            for i in 0..1000 {
-                for j in 0..1000 {
-                    let cell1 = Cell::new(i, j);
-                    let cell2 = Cell::new(i + 1, j + 1);
-                    black_box(cell1.is_adjacent(&cell2));
-                }
-            }
-        })
-    }
 
     #[test]
     fn test_bottom_right() {

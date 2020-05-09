@@ -65,7 +65,7 @@ impl Fragment {
     pub fn match_unicode(fragments: &Vec<Self>) -> Option<char> {
         let mut sorted_shapes = fragments.clone();
         sorted_shapes.sort();
-        assert!(sorted_shapes.is_sorted());
+        //assert!(sorted_shapes.is_sorted());
         FRAGMENTS_UNICODE.get(&sorted_shapes).map(|c| *c)
     }
 
@@ -616,7 +616,6 @@ impl PartialEq for Fragment {
 #[cfg(test)]
 mod tests {
     use super::*;
-    extern crate test;
     use crate::buffer::CellGrid;
 
     #[test]

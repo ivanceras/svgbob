@@ -1,7 +1,4 @@
-//#![deny(warnings)]
 #![deny(clippy::all)]
-#![feature(is_sorted)]
-#![feature(test)]
 
 pub mod buffer;
 mod map;

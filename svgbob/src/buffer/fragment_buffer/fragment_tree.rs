@@ -124,7 +124,6 @@ impl FragmentTree {
 #[cfg(test)]
 mod tests {
     use super::*;
-    extern crate test;
     use crate::{
         buffer::Cell,
         fragment::{rect, CellText},
