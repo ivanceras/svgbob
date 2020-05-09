@@ -144,7 +144,7 @@ pub mod parser {
     }
 
     pub fn new_line<'a>() -> Parser<'a, char, ()> {
-        one_of("\n").discard()
+        one_of("\r\n").discard()
     }
 
     /// any whitespace character
