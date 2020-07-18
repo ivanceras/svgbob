@@ -9,6 +9,7 @@ use crate::{
 use nalgebra::Point2;
 use ncollide2d::shape::{shape::Shape, Polyline};
 use sauron::{
+    html::attributes::*,
     svg::{attributes::*, *},
     Node,
 };

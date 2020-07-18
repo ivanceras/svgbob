@@ -15,6 +15,7 @@ use std::{cmp::Ordering, fmt};
 
 use crate::fragment::Arc;
 use sauron::{
+    html::attributes::*,
     svg,
     svg::{attributes::*, *},
     Node,

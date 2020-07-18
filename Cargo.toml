@@ -3,3 +3,7 @@ members = [
     "svgbob",
     "svgbob_cli",
 ]
+
+[patch.crates-io]
+sauron = { path = "../sauron" }
+

@@ -2,6 +2,7 @@ use crate::{fragment::Bounds, util, Cell, Point};
 use std::{cmp::Ordering, fmt};
 
 use sauron::{
+    html::attributes::*,
     svg::{attributes::*, *},
     Node,
 };
