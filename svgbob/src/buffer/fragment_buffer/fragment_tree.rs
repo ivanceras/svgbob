@@ -102,7 +102,30 @@ impl FragmentTree {
     fn into_nodes<MSG>(self) -> Vec<Node<MSG>> {
         let mut nodes = vec![];
         let mut fragment_node: Node<MSG> = self.fragment.into();
-        fragment_node = fragment_node.add_attributes(vec![classes(self.css_tag)]);
+        let css_tag_len = self.css_tag.len();
+        if css_tag_len > 0 {
+            if let Some(ex_classes) = fragment_node
+                .get_attributes()
+                .unwrap()
+                .iter()
+                .find(|att| att.name() == &"class")
+            {
+                println!("existing classes: {:#?}", ex_classes);
+                println!("css tags: {:#?}", self.css_tag);
+            }
+        }
+        fragment_node = fragment_node.merge_attributes(vec![classes(self.css_tag)]);
+
+        if css_tag_len > 0 {
+            if let Some(ex_classes) = fragment_node
+                .get_attributes()
+                .unwrap()
+                .iter()
+                .find(|att| att.name() == &"class")
+            {
+                println!("AFTER merged: {:#?}", ex_classes);
+            }
+        }
         nodes.push(fragment_node);
         for child in self.enclosing {
             nodes.extend(child.into_nodes())
