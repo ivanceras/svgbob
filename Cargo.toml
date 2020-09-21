@@ -4,6 +4,6 @@ members = [
     "svgbob_cli",
 ]
 
-[path.crates-io]
+#[path.crates-io]
 #sauron = { path = "../sauron" }
 #mt-dom = { path = "../mt-dom" }

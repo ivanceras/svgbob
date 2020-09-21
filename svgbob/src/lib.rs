@@ -10,6 +10,7 @@ pub use buffer::{
     Signal,
 };
 pub use point::Point;
+pub use sauron;
 pub use sauron::{Node, Render};
 
 /// convert svgbob ascii art to svg
