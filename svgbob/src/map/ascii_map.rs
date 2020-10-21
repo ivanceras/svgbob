@@ -548,7 +548,9 @@ lazy_static! {
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
-                             (true, vec![line(u,y)]),
+                            // ensure that the underscore is not in the middle of a word, e.g.
+                            // underscores in "Derived_A" and "product_id" should not become lines
+                             (!left.ch.is_alphanumeric() || !right.ch.is_alphanumeric(), vec![line(u,y)]),
                              //   /_
                              (left.line_strongly_overlap(e,u), vec![line(u, cell.left().u())]),
                              //   _\
