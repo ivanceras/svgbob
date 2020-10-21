@@ -101,6 +101,72 @@ lazy_static! {
             Arc<dyn Fn(&Settings, &Property, &Property, &Property, &Property, &Property, &Property, &Property, &Property) -> Vec<(bool, Vec<Fragment>)> + Sync + Send >,
         )> = vec![
             ///////////////
+            // all letters and digits, necessary for .is_alphanumeric() to work
+            ///////////////
+            ('0',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('1',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('2',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('3',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('4',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('5',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('6',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('7',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('8',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('9',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('a',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('b',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('c',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('d',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('e',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('f',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('g',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('h',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('i',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('j',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('k',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('l',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('m',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('n',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            // ('o',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('p',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('q',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('r',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('s',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('t',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('u',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            // ('v',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('w',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('x',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('y',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('z',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('A',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('B',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('C',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('D',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('E',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('F',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('G',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('H',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('I',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('J',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('K',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('L',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('M',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('N',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            // ('O',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('P',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('Q',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('R',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('S',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('T',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('U',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            // ('V',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('W',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            // ('X',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('Y',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+            ('Z',vec![],Arc::new(move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {vec![]})),
+
+            ///////////////
             // dash -
             ///////////////
             (
@@ -111,7 +177,11 @@ lazy_static! {
                 Arc::new(
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
-                            (true, vec![line(k,o)]),
+                            // ensure that the dash is not in the middle of a word, e.g.
+                            // the dashes in "e-mail" and "2019-10-31" should not become lines
+                            // TODO: allow 'o-o' to become line?
+                            (!left.ch.is_alphanumeric() || !right.ch.is_alphanumeric(), vec![line(k,o)]),
+
                             /*
                             //   |
                             //  .-.
