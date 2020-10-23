@@ -1,5 +1,5 @@
 ## TODO
-- [ ] detect rectangles
+- [x] detect rectangles
 - [x] detect whether used as text or used as graphs (if any of the 8 has no get character then it is used as text)
 - [ ] complete the specs
 - [ ] ~~Make the string literal escape work multiline~~ Impractical
@@ -11,3 +11,4 @@
 - [x] Support for geometric shapes https://en.wikipedia.org/wiki/Geometric_Shapes
 - [x] Add enhance circle, detect circles then enhance it.
 - [ ] Add test cases
+- [ ] Re-implement the escape string with double quotes.

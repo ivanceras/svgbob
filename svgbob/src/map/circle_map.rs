@@ -104,14 +104,14 @@ lazy_static! {
             "#, Cell::new(4,2), Cell::new(4,2).w(), 4.5),
 
             // CIRCLE_10
-            //center: 4,3,y radius: 5.0
+            //center: 4,2,y radius: 5.0
             (r#"
                ____
              ,'    `.
             /        \
             \        /
              `.____.'
-            "#, Cell::new(4,3), Cell::new(4,3).y(), 5.0),
+            "#, Cell::new(4,2), Cell::new(4,2).y(), 5.0),
 
             // CIRCLE_11
             //center:5,3,o radius: 5.5

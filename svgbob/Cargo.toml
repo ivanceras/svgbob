@@ -13,10 +13,7 @@ license = "Apache-2.0"
 nalgebra = "0.18.0"
 ncollide2d = "0.19.1"
 lazy_static = "1.3.0"
-sauron = { version = "0.32", default-features = false }
+sauron = { version = "0.32" }
 unicode-width = "0.1.5"
 itertools = "0.8.0"
 pom = { version = "3.1.0" }
-
-[features]
-with-dom = ["sauron/with-dom"]
