@@ -283,6 +283,9 @@ lazy_static! {
                 let cb = CellBuffer::from(*art);
                 let mut spans = cb.group_adjacents();
                 assert_eq!(spans.len(), 1);
+                //TODO: span localize here affects the center of the arc,
+                //need to use the exact center used in the circle here
+                //Need to fix the calculation here involving the span
                 let span = spans.remove(0).localize();
                 let (tl_bounds, br_bounds) = span.bounds().expect("There should be bounds");
 
