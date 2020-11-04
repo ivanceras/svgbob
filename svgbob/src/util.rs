@@ -72,12 +72,17 @@ pub fn is_collinear(a: &Point, b: &Point, c: &Point) -> bool {
 }
 
 pub fn pad(v: f32) -> f32 {
-    if v > 0.0 { v.ceil() } else { v.floor() }
+    if v > 0.0 {
+        v.ceil()
+    } else {
+        v.floor()
+    }
 }
 
 /// this is parser module which provides parsing for identifier for
 /// extracting the css tag of inside of a shape fragment
 pub mod parser {
+    use crate::Cell;
     use pom::parser::{call, end, is_a, list, none_of, one_of, sym, tag, Parser};
     use std::iter::FromIterator;
 
@@ -224,9 +229,39 @@ pub mod parser {
         css_legend_with_padding().parse(input)
     }
 
+    fn escape_string<'a>() -> pom::parser::Parser<'a, char, (usize, usize)> {
+        let escape_sequence = sym('\\') * sym('"'); //escape sequence \"
+        let char_string = escape_sequence | none_of("\"");
+        let escaped_string_end = sym('"') * char_string.repeat(0..).pos() - sym('"');
+        none_of("\"").repeat(0..).pos() + escaped_string_end - none_of("\"").repeat(0..).discard()
+    }
+
+    pub(crate) fn line_parse<'a>() -> pom::parser::Parser<'a, char, Vec<(usize, usize)>> {
+        escape_string().repeat(0..)
+    }
+
     #[cfg(test)]
     mod tests {
         use super::*;
+
+        #[test]
+        fn test_escaped_string() {
+            let raw = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+            let input_chars: Vec<char> = raw.chars().collect();
+            let char_locs = line_parse().parse(&input_chars).expect("should parse");
+            println!("output3: {:?}", char_locs);
+            let mut escaped = vec![];
+            let mut cleaned = vec![];
+            for (start, end) in char_locs.iter() {
+                escaped.push(&raw[*start..=*end]);
+                cleaned.push(&raw[*start + 1..*end]);
+            }
+            println!("{:#?}", escaped);
+            let expected = vec![r#""qu/i/ck""#, r#""fox\"s""#, r#""do|g""#];
+            assert_eq!(expected, escaped);
+            let expected_cleaned = vec![r#"qu/i/ck"#, r#"fox\"s"#, r#"do|g"#];
+            assert_eq!(expected_cleaned, cleaned);
+        }
 
         #[test]
         fn test_css_styles() {

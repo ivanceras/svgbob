@@ -38,6 +38,7 @@ pub struct CellBuffer {
     /// .class { styles }
     /// ```
     css_styles: Vec<(String, String)>,
+    escaped_text: Vec<(Cell, String)>,
 }
 
 impl Deref for CellBuffer {
@@ -59,6 +60,7 @@ impl CellBuffer {
         CellBuffer {
             map: BTreeMap::new(),
             css_styles: vec![],
+            escaped_text: vec![],
         }
     }
 
@@ -426,6 +428,28 @@ impl CellBuffer {
             )],
         )
     }
+
+    /// returns a (Cell, escaped string), and the strings that are not part of the escape string
+    fn escape_line(line: usize, raw: &str) -> (Vec<(Cell, String)>, String) {
+        let mut no_escaped_text = String::new();
+
+        let mut index = 0;
+        let mut escaped_text = vec![];
+        let input_chars: Vec<char> = raw.chars().collect();
+        let char_locs = parser::line_parse()
+            .parse(&input_chars)
+            .expect("should parse");
+        for (start, end) in char_locs.iter() {
+            let escaped = raw[*start + 1..*end].to_string();
+            let cell = Cell::new(*start as i32, line as i32);
+            escaped_text.push((cell, escaped));
+
+            no_escaped_text.push_str(&raw[index..*start]);
+            no_escaped_text.push_str(&" ".repeat(end + 1 - start));
+            index = end + 1;
+        }
+        (escaped_text, no_escaped_text)
+    }
 }
 
 impl fmt::Display for CellBuffer {
@@ -477,6 +501,24 @@ impl From<StringBuffer> for CellBuffer {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_escape_line() {
+        let raw = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+        let ex2 = r#"The           brown          jumps over the lazy       "#;
+        let (escaped, unescaped) = CellBuffer::escape_line(0, raw);
+        println!("escaped: {:#?}", escaped);
+        println!("unescaped: {}", unescaped);
+        assert_eq!(
+            vec![
+                (Cell::new(4, 0), "qu/i/ck".to_string()),
+                (Cell::new(20, 0), r#"fox\"s"#.to_string()),
+                (Cell::new(49, 0), "do|g".to_string())
+            ],
+            escaped
+        );
+        assert_eq!(ex2, unescaped);
+    }
 
     #[test]
     fn test_simple_adjacents() {
