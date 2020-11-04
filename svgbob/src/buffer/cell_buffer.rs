@@ -311,14 +311,18 @@ impl CellBuffer {
         if settings.include_defs {
             children.push(Self::get_defs());
         }
-        children.extend(fragment_nodes);
 
+        // backdrop needs to appear first before the fragment nodes
+        // otherwise it will cover the other elements
+        // in accordance to how z-index works
         if settings.include_backdrop {
             children.push(rect(
                 vec![class("backdrop"), x(0), y(0), width(w), height(h)],
                 vec![],
             ));
         }
+
+        children.extend(fragment_nodes);
 
         svg(
             vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
