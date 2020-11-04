@@ -16,6 +16,13 @@ pub struct Settings {
     pub scale: f32,
     /// flag whether to enhace circuitries or not, default true
     pub enhance_circuitries: bool,
+    /// flag whether to include the big rectangle as backdrop
+    /// for all of the svg shapes
+    pub include_backdrop: bool,
+    /// flag whether to include the svg styles and legen css styles
+    pub include_styles: bool,
+    /// flag whether to include the def of markers, etc in the svg
+    pub include_defs: bool,
 }
 impl Settings {
     /// the inverse of the default scale 10
@@ -35,6 +42,9 @@ impl Default for Settings {
             stroke_width: 2.0,
             scale: 8.0,
             enhance_circuitries: true,
+            include_backdrop: true,
+            include_styles: true,
+            include_defs: true,
         }
     }
 }

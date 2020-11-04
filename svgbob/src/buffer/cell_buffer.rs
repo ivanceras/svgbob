@@ -304,19 +304,26 @@ impl CellBuffer {
             .collect();
         let fragment_nodes: Vec<Node<MSG>> = FragmentTree::fragments_to_node(fragments_scaled);
 
-        let svg_node = svg(
+        let mut children = vec![];
+        if settings.include_styles {
+            children.push(Self::get_style(settings, legend_css));
+        }
+        if settings.include_defs {
+            children.push(Self::get_defs());
+        }
+        children.extend(fragment_nodes);
+
+        if settings.include_backdrop {
+            children.push(rect(
+                vec![class("backdrop"), x(0), y(0), width(w), height(h)],
+                vec![],
+            ));
+        }
+
+        svg(
             vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
-            vec![
-                Self::get_style(settings, legend_css),
-                Self::get_defs(),
-                rect(
-                    vec![class("backdrop"), x(0), y(0), width(w), height(h)],
-                    vec![],
-                ),
-            ],
+            children,
         )
-        .add_children(fragment_nodes);
-        svg_node
     }
 
     fn get_defs<MSG>() -> Node<MSG> {
