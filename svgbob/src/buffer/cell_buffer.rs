@@ -1,3 +1,4 @@
+use crate::fragment::CellText;
 use crate::{
     buffer::{fragment_buffer::FragmentTree, Fragment, StringBuffer},
     util::parser,
@@ -190,9 +191,19 @@ impl CellBuffer {
 
         let mut fragments: Vec<Fragment> = vec_fragments.into_iter().flatten().collect();
         fragments.extend(single_member_fragments);
+        fragments.extend(self.escaped_text_nodes());
         let mut svg_node = Self::fragments_to_node(fragments, self.legend_css(), settings, w, h)
             .add_children(group_nodes);
         (svg_node, w, h)
+    }
+
+    fn escaped_text_nodes(&self) -> Vec<Fragment> {
+        let mut fragments = vec![];
+        for (cell, text) in &self.escaped_text {
+            let cell_text = CellText::new(*cell, text.to_string());
+            fragments.push(cell_text.into());
+        }
+        fragments
     }
 
     /// construct the css from the # Legend: of the diagram
@@ -439,14 +450,18 @@ impl CellBuffer {
         let char_locs = parser::line_parse()
             .parse(&input_chars)
             .expect("should parse");
-        for (start, end) in char_locs.iter() {
-            let escaped = raw[*start + 1..*end].to_string();
-            let cell = Cell::new(*start as i32, line as i32);
-            escaped_text.push((cell, escaped));
+        if char_locs.is_empty() {
+            no_escaped_text = raw.to_string();
+        } else {
+            for (start, end) in char_locs.iter() {
+                let escaped = raw[*start + 1..*end].to_string();
+                let cell = Cell::new(*start as i32, line as i32);
+                escaped_text.push((cell, escaped));
 
-            no_escaped_text.push_str(&raw[index..*start]);
-            no_escaped_text.push_str(&" ".repeat(end + 1 - start));
-            index = end + 1;
+                no_escaped_text.push_str(&raw[index..*start]);
+                no_escaped_text.push_str(&" ".repeat(end + 1 - start));
+                index = end + 1;
+            }
         }
         (escaped_text, no_escaped_text)
     }
@@ -485,12 +500,20 @@ impl From<&str> for CellBuffer {
 
 impl From<StringBuffer> for CellBuffer {
     fn from(sb: StringBuffer) -> Self {
+        use std::iter::FromIterator;
+
         let mut buffer = CellBuffer::new();
         for (y, line) in sb.iter().enumerate() {
-            for (x, ch) in line.iter().enumerate() {
-                if *ch != '\0' && !ch.is_whitespace() {
+            let line_str = String::from_iter(line);
+            println!("line_str: {:?}", line_str);
+            let (escaped_text, unescaped) = Self::escape_line(y, &line_str);
+            println!("unescaped: {:?}", unescaped);
+            buffer.escaped_text.extend(escaped_text);
+
+            for (x, ch) in unescaped.chars().enumerate() {
+                if ch != '\0' && !ch.is_whitespace() {
                     let cell = Cell::new(x as i32, y as i32);
-                    buffer.insert(cell, *ch);
+                    buffer.insert(cell, ch);
                 }
             }
         }
