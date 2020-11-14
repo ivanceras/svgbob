@@ -505,9 +505,7 @@ impl From<StringBuffer> for CellBuffer {
         let mut buffer = CellBuffer::new();
         for (y, line) in sb.iter().enumerate() {
             let line_str = String::from_iter(line);
-            println!("line_str: {:?}", line_str);
             let (escaped_text, unescaped) = Self::escape_line(y, &line_str);
-            println!("unescaped: {:?}", unescaped);
             buffer.escaped_text.extend(escaped_text);
 
             for (x, ch) in unescaped.chars().enumerate() {
