@@ -6,5 +6,5 @@
 
 Svgbob transform your ascii diagrams into a nice svg representation.
 
-[**Demo**](http://ivanceras.github.io/svgbob-editor/)
+[**Demo**](https://svgbob-editor.netlify.app/)
 
