@@ -557,6 +557,7 @@ impl PartialEq for Line {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::buffer::fragment_buffer::fragment::polygon::PolygonTag;
     use crate::buffer::CellGrid;
 
     #[test]

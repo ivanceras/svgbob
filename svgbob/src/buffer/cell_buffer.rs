@@ -201,8 +201,10 @@ impl CellBuffer {
 
         let mut fragments: Vec<Fragment> =
             vec_fragments.into_iter().flatten().collect();
+
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
+
         let svg_node = Self::fragments_to_node(
             fragments,
             self.legend_css(),
@@ -480,6 +482,8 @@ impl CellBuffer {
                 no_escaped_text.push_str(&" ".repeat(end + 1 - start));
                 index = end + 1;
             }
+            // the rest of the text
+            no_escaped_text.push_str(&raw[index..raw.len()]);
         }
         (escaped_text, no_escaped_text)
     }
@@ -557,6 +561,28 @@ mod tests {
             ],
             escaped
         );
+        assert_eq!(ex2, unescaped);
+    }
+
+    #[test]
+    fn test_escape_line2() {
+        let raw = r#"The quick brown fox jumps over the "lazy" dog"#;
+        let ex2 = r#"The quick brown fox jumps over the        dog"#;
+        let (escaped, unescaped) = CellBuffer::escape_line(0, raw);
+        println!("escaped: {:#?}", escaped);
+        println!("unescaped: {}", unescaped);
+        assert_eq!(vec![(Cell::new(35, 0), "lazy".to_string())], escaped);
+        assert_eq!(ex2, unescaped);
+    }
+
+    #[test]
+    fn test_escape_line3() {
+        let raw = r#" in between "|      |" these "#;
+        let ex2 = r#" in between            these "#;
+        let (escaped, unescaped) = CellBuffer::escape_line(0, raw);
+        println!("escaped: {:#?}", escaped);
+        println!("unescaped: {}", unescaped);
+        assert_eq!(vec![(Cell::new(12, 0), "|      |".to_string())], escaped);
         assert_eq!(ex2, unescaped);
     }
 
