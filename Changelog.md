@@ -1,4 +1,10 @@
 # Changelog
+
+## 0.5.0-alpha.11
+- Reinstated double quote escaping of text that are not meant to be interpreted as drawing element
+- Fix merging of polygons and lines, arrows and lines, circles and lines.
+- Disabled merging of marker_line to any other shape for now.
+
 ## 0.5.0-alpha.4
 - update to sauron `0.24.0`
 
