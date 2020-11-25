@@ -1,7 +1,7 @@
 use crate::buffer::CellGrid;
 use crate::fragment::PolygonTag;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Copy)]
 pub enum Direction {
     TopLeft,
     Top,
@@ -27,6 +27,7 @@ impl Direction {
             Direction::BottomRight => Direction::TopLeft,
         }
     }
+    /*
     pub(crate) fn any_along_side(&self, tags: &[PolygonTag]) -> bool {
         tags.iter().any(|tag| self.is_along_side(tag))
     }
@@ -60,6 +61,7 @@ impl Direction {
             },
         }
     }
+    */
 
     /// calculate the threshold length which is the basis
     /// if the arrow and the line is connected

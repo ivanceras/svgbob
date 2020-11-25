@@ -130,12 +130,8 @@ impl FragmentBuffer {
                 // parameters and is derived from the cell position
                 let abs_frag = frag.absolute_position(*cell);
                 let had_merged = merged.iter_mut().rev().any(|mfrag| {
-                    if mfrag.can_merge(&abs_frag) {
-                        if let Some(new_merge) = mfrag.merge(&abs_frag) {
-                            *mfrag = new_merge;
-                        } else {
-                            panic!("Should merged");
-                        }
+                    if let Some(new_merge) = mfrag.merge(&abs_frag) {
+                        *mfrag = new_merge;
                         true
                     } else {
                         false
@@ -163,8 +159,8 @@ impl FragmentBuffer {
         let mut new_fragments: Vec<Fragment> = vec![];
         for fragment in fragments.into_iter() {
             let is_merged = new_fragments.iter_mut().rev().any(|new_frag| {
-                if new_frag.can_merge(&fragment) {
-                    *new_frag = new_frag.merge(&fragment).expect("should merge");
+                if let Some(new_merged) = new_frag.merge(&fragment) {
+                    *new_frag = new_merged;
                     true
                 } else {
                     false

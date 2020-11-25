@@ -97,52 +97,6 @@ impl Fragment {
         }
     }
 
-    /// check if 2 fragments can merge into one
-    /// FIXME: This is only merging lines and text right now
-    pub fn can_merge(&self, other: &Self) -> bool {
-        match (self, other) {
-            // line and line
-            (Fragment::Line(line), Fragment::Line(other_line)) => line.can_merge(other_line),
-
-            /*
-            // line and polygon
-            (Fragment::Line(line), Fragment::Polygon(polygon)) => line.can_merge_polygon(polygon),
-
-            // polygon and line
-            (Fragment::Polygon(polygon), Fragment::Line(line)) => line.can_merge_polygon(polygon),
-            */
-
-            /*
-            // line and marker_line
-            (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
-                line.can_merge_marker_line(mline)
-            }
-
-            // marker_line and line
-            (Fragment::MarkerLine(mline), Fragment::Line(line)) => {
-                line.can_merge_marker_line(mline)
-            }
-            (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
-                mline.can_merge_polygon(polygon)
-            }
-            */
-
-            //TODO: make a function level2 merge where it merges fragments into
-            //  marker_lines
-            /*
-            // line and circle
-            (Fragment::Line(line), Fragment::Circle(circle)) => line.can_merge_circle(circle),
-            // circle and line
-            (Fragment::Circle(circle), Fragment::Line(line)) => line.can_merge_circle(circle),
-            */
-            // cell_text and cell_text
-            (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
-                ctext.can_merge(other_ctext)
-            }
-            _ => false,
-        }
-    }
-
     /// FIXME: This is only merging lines and text right now
     pub fn merge(&self, other: &Self) -> Option<Self> {
         match (self, other) {
@@ -155,13 +109,11 @@ impl Fragment {
                 }
             }
 
-            /*
             // line and polygon
             (Fragment::Line(line), Fragment::Polygon(polygon)) => line.merge_line_polygon(polygon),
 
             // polygon and line
             (Fragment::Polygon(polygon), Fragment::Line(line)) => line.merge_line_polygon(polygon),
-            */
 
             /*
             // line and marker_line
@@ -214,8 +166,8 @@ impl Fragment {
         let mut new_groups: Vec<Self> = vec![];
         for fragment in fragments.into_iter() {
             let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if new_group.can_merge(&fragment) {
-                    *new_group = new_group.merge(&fragment).expect("must merge");
+                if let Some(new_merged) = new_group.merge(&fragment) {
+                    *new_group = new_merged;
                     true
                 } else {
                     false
@@ -673,9 +625,37 @@ mod tests {
         let n = CellGrid::n();
         let o = CellGrid::o();
         let j = CellGrid::j();
-        assert!(line(k, m).can_merge(&line(m, o))); // collinear and connected
-        assert!(!line(k, l).can_merge(&line(n, o))); //collinear but not connected
-        assert!(!line(k, o).can_merge(&line(o, j))); // connected but not collinear
+        assert!(line(k, m).merge(&line(m, o)).is_some()); // collinear and connected
+        assert!(!line(k, l).merge(&line(n, o)).is_some()); //collinear but not connected
+        assert!(!line(k, o).merge(&line(o, j)).is_some()); // connected but not collinear
+    }
+
+    #[test]
+    fn merge_unicode_triangle_and_line() {
+        let arrow = '▶';
+        let entry = crate::map::UNICODE_FRAGMENTS
+            .get(&arrow)
+            .expect("must have a fragement");
+        let a = CellGrid::a();
+        let y = CellGrid::y();
+
+        let polygon = entry[0].absolute_position(Cell::new(0, 0));
+        let diagonal: Fragment = Line::new_noswap(y, a, false).into();
+        let diagonal = diagonal.absolute_position(Cell::new(1, 1));
+
+        println!("polygon: {:#?}", polygon);
+        println!("diagonal: {:#?}", diagonal);
+
+        let merged = polygon.merge(&diagonal);
+
+        let expected = marker_line(
+            Point::new(2.0, 4.0),
+            Point::new(0.0, 0.0),
+            false,
+            None,
+            Some(Marker::Arrow),
+        );
+        assert_eq!(Some(expected), merged);
     }
 
     #[test]

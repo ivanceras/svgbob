@@ -308,29 +308,20 @@ impl Line {
         // check also if the distance of this line end-point to the center
         // of the polygon is less than the diagonal width of the cell grid.
         let poly_center = polygon.center();
+
+        println!("poly_center: {:?}", poly_center);
         let distance_end_center = self.end.distance(&poly_center);
         let distance_start_center = self.start.distance(&poly_center);
 
-        let threshold_length = self.heading().threshold_length();
-        let is_close_start_point = distance_start_center < threshold_length;
-        let is_close_end_point = distance_end_center < threshold_length;
+        let threshold_length = dbg!(self.heading().threshold_length());
+        let is_close_start_point = dbg!(distance_start_center < threshold_length);
+        let is_close_end_point = dbg!(distance_end_center < threshold_length);
 
-        let direction = polygon.tags.get(0).map(|tag| tag.direction()).flatten();
+        let is_same_direction = dbg!(polygon.matched_direction(self.heading()));
 
-        let is_same_direction = polygon
-            .tags
-            .iter()
-            .any(|tag| tag.matched_direction(self.heading()));
+        let is_opposite_direction = dbg!(polygon.matched_direction(self.heading().opposite()));
 
-        //TODO: deal with merging with the opposite direction
-        /*
-        let is_opposite = polygon
-            .tags
-            .iter()
-            .any(|tag| tag.matched_direction(self.heading().opposite()));
-        */
-
-        is_same_direction && (is_close_start_point || is_close_end_point)
+        (is_same_direction || is_opposite_direction) && (is_close_start_point || is_close_end_point)
     }
 
     /// TODO: the get_marker function don't take into account the direction
@@ -341,9 +332,7 @@ impl Line {
     /// merge this line to the marker line
     pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         if self.can_merge_polygon(polygon) {
-            let marker = polygon.tags.get(0).map(|tag| tag.get_marker());
-            let direction = polygon.tags.get(0).map(|tag| tag.direction()).flatten();
-            let heading = self.heading();
+            let marker = polygon.get_marker();
 
             let poly_center = polygon.center();
             let distance_end_center = self.end.distance(&poly_center);
@@ -353,17 +342,9 @@ impl Line {
             let is_close_start_point = distance_start_center < threshold_length;
             let is_close_end_point = distance_end_center < threshold_length;
 
-            let is_same_direction = polygon
-                .tags
-                .iter()
-                .any(|tag| tag.matched_direction(self.heading()));
+            let is_same_direction = dbg!(polygon.matched_direction(self.heading()));
 
-            let is_opposite = polygon
-                .tags
-                .iter()
-                .any(|tag| tag.matched_direction(self.heading().opposite()));
-
-            let is_diamond = Some(Marker::Diamond) == marker;
+            let is_opposite_direction = dbg!(polygon.matched_direction(self.heading().opposite()));
 
             let new_line = if is_close_end_point {
                 Line::new_noswap(self.start, self.end, self.is_broken)
@@ -375,12 +356,6 @@ impl Line {
             };
             let mut extended_line = new_line.extend(threshold_length);
 
-            //TODO: deal with the opposite direction
-            /*
-            if !is_diamond && is_opposite {
-                extended_line.swap();
-            }
-            */
             Some(marker_line(
                 extended_line.start,
                 extended_line.end,

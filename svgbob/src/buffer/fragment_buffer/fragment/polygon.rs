@@ -1,5 +1,6 @@
 use crate::Direction;
 use crate::{
+    buffer::CellGrid,
     fragment::{
         marker_line::{Marker, MarkerLine},
         Bounds,
@@ -90,6 +91,22 @@ impl PolygonTag {
             true
         }
     }
+
+    /*
+    /// calculate the threshold length which is the basis
+    /// if the arrow and the line is connected
+    pub(crate) fn threshold_length(&self) -> f32 {
+        match self {
+            PolygonTag::ArrowTopRight
+            | PolygonTag::ArrowBottomRight
+            | PolygonTag::ArrowBottomLeft
+            | PolygonTag::ArrowTopLeft => CellGrid::diagonal_length(),
+            PolygonTag::ArrowBottom | PolygonTag::ArrowTop => CellGrid::height(),
+            PolygonTag::ArrowLeft | PolygonTag::ArrowRight => CellGrid::width(),
+            PolygonTag::DiamondBullet => CellGrid::diagonal_length(),
+        }
+    }
+    */
 }
 
 impl Polygon {
@@ -111,6 +128,38 @@ impl Polygon {
             points,
             is_filled: self.is_filled,
             tags: self.tags.clone(),
+        }
+    }
+
+    pub(crate) fn matched_direction(&self, direction: Direction) -> bool {
+        self.tags.iter().any(|tag| tag.matched_direction(direction))
+    }
+
+    fn is_diamond(&self) -> bool {
+        self.tags.len() == 1
+            && self
+                .tags
+                .iter()
+                .all(|tag| *tag == PolygonTag::DiamondBullet)
+    }
+
+    /// returns Diamond marker if the tags is a DiamondBullet
+    /// otherwise if it is an Arrow direction, then return Arrow.
+    pub(crate) fn get_marker(&self) -> Option<Marker> {
+        if !self.tags.is_empty() {
+            if self.is_diamond() {
+                Some(Marker::Diamond)
+            } else if self
+                .tags
+                .iter()
+                .all(|tag| tag.get_marker() == Marker::Arrow)
+            {
+                Some(Marker::Arrow)
+            } else {
+                None
+            }
+        } else {
+            None
         }
     }
 

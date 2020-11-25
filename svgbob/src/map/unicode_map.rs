@@ -162,10 +162,23 @@ lazy_static! {
             ('△', vec![line(c,y), line(y,u), line(u,c)]),
 
             // arrow down matching v
+            //
+            //  |
+            //  ▾
             ('▾', vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+            //
+            //  ▴
+            //  |
             ('▴', vec![polygon(vec![p,c,t], true, vec![ArrowTop])]),
+            //
+            // --▸
+            //
             ('▸', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
+            //
+            // ◂--
+            //
             ('◂', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
+
             ('◆', vec![polygon(vec![k,h,o,r,k], true, vec![DiamondBullet])]),
             ('▪', vec![rect(f,t,true, false)]),
 
@@ -186,9 +199,17 @@ lazy_static! {
             // 8/8
             ('█', vec![rect(a,y,true,false)]),
 
+            //              /
+            // --▶    ▶    ▶
+            //         \
+            //
+            ('▶', vec![polygon(vec![f,o,p], true, vec![ArrowRight, ArrowTopLeft, ArrowBottomLeft])]),
 
-            ('▶', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
-            ('◀', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
+            //      \
+            // ◀--   ◀    ◀
+            //           /
+            //
+            ('◀', vec![polygon(vec![j,k,t], true, vec![ArrowLeft, ArrowBottomRight, ArrowTopRight])]),
 
 
             // L shape bottom-left box

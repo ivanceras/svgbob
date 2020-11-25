@@ -359,10 +359,18 @@ lazy_static! {
                 Arc::new(
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
+                            //
+                            //  |    #
+                            //  #    |  --#   #--
+                            //
                             (top.line_overlap(r,w) || bottom.line_overlap(c,h)
                                 || left.line_overlap(n,o) || right.line_overlap(k,l),
                              vec![rect(f,t, true, false)]),
 
+                            //
+                            //  \     #     /    #
+                            //   #     \   #    /
+                            //
                             (top_left.line_overlap(s,y)|| bottom_right.line_overlap(a,g)
                               || bottom_left.line_overlap(u,q) || top_right.line_overlap(e,i),
                              vec![polygon(vec![k,h,o,r,k],true, vec![DiamondBullet])]),
@@ -861,7 +869,7 @@ lazy_static! {
             ////////////////////////
             ('V',
                 vec![
-                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom, ArrowBottomLeft, ArrowBottomRight])]),
                   (Weak, vec![line(m,w)]),
                 ],
                 Arc::new(
@@ -895,7 +903,7 @@ lazy_static! {
             ////////////////////////
             ('v',
                 vec![
-                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom, ArrowBottomLeft, ArrowBottomRight])]),
                 ],
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
@@ -927,7 +935,7 @@ lazy_static! {
             ////////////////////////
             ('^',
                 vec![
-                  (Medium, vec![polygon(vec![p,c,t], true, vec![ArrowTop])]),
+                  (Medium, vec![polygon(vec![p,c,t], true, vec![ArrowTop, ArrowTopLeft, ArrowTopRight])]),
                 ],
                 Arc::new(
                         move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
