@@ -104,12 +104,15 @@ impl Fragment {
             // line and line
             (Fragment::Line(line), Fragment::Line(other_line)) => line.can_merge(other_line),
 
+            /*
             // line and polygon
             (Fragment::Line(line), Fragment::Polygon(polygon)) => line.can_merge_polygon(polygon),
 
             // polygon and line
             (Fragment::Polygon(polygon), Fragment::Line(line)) => line.can_merge_polygon(polygon),
+            */
 
+            /*
             // line and marker_line
             (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
                 line.can_merge_marker_line(mline)
@@ -122,6 +125,7 @@ impl Fragment {
             (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
                 mline.can_merge_polygon(polygon)
             }
+            */
 
             //TODO: make a function level2 merge where it merges fragments into
             //  marker_lines
@@ -151,12 +155,15 @@ impl Fragment {
                 }
             }
 
+            /*
             // line and polygon
             (Fragment::Line(line), Fragment::Polygon(polygon)) => line.merge_line_polygon(polygon),
 
             // polygon and line
             (Fragment::Polygon(polygon), Fragment::Line(line)) => line.merge_line_polygon(polygon),
+            */
 
+            /*
             // line and marker_line
             (Fragment::Line(line), Fragment::MarkerLine(mline)) => line.merge_marker_line(mline),
 
@@ -165,7 +172,7 @@ impl Fragment {
             (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
                 mline.merge_polygon(polygon)
             }
-
+            */
             // line and circle
             (Fragment::Line(line), Fragment::Circle(circle)) => line.merge_circle(circle),
 

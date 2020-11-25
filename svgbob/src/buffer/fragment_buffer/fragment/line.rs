@@ -210,6 +210,7 @@ impl Line {
         }
     }
 
+    /*
     pub(crate) fn merge_marker_line(&self, mline: &MarkerLine) -> Option<Fragment> {
         if self.can_merge_marker_line(mline) {
             if mline.start_marker.is_none() {
@@ -261,6 +262,7 @@ impl Line {
             None
         }
     }
+    */
 
     pub(crate) fn is_touching_circle(&self, circle: &Circle) -> bool {
         let center = circle.center;

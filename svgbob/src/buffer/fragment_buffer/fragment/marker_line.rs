@@ -80,6 +80,7 @@ impl MarkerLine {
         }
     }
 
+    /*
     pub(crate) fn can_merge_polygon(&self, polygon: &Polygon) -> bool {
         let poly_center = polygon.center();
         let distance_end_center = self.line.end.distance(&poly_center);
@@ -99,7 +100,9 @@ impl MarkerLine {
 
         is_same_direction && (can_connect_start || can_connect_end)
     }
+    */
 
+    /*
     /// merge this marker line to the polygon
     pub(crate) fn merge_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         if self.can_merge_polygon(polygon) {
@@ -143,6 +146,7 @@ impl MarkerLine {
             None
         }
     }
+    */
 }
 
 impl Bounds for MarkerLine {
