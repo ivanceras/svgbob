@@ -17,3 +17,12 @@ sauron = { version = "0.32" }
 unicode-width = "0.1.5"
 itertools = "0.8.0"
 pom = { version = "3.1.0" }
+
+
+
+[features]
+# This affects the rendering of text nodes
+# if the svg is rendered statically, characters such as '<' needed to be escaped
+# while if it is rendered in the dom, no escaping is needed.
+with-dom = []
+
