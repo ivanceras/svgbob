@@ -192,6 +192,7 @@ impl Line {
         }
     }
 
+    /*
     /// if this line is colliean with the marker line and the
     pub(crate) fn can_merge_marker_line(&self, mline: &MarkerLine) -> bool {
         if self.can_merge(&mline.line) {
@@ -209,60 +210,55 @@ impl Line {
             false
         }
     }
+    */
 
-    /*
     pub(crate) fn merge_marker_line(&self, mline: &MarkerLine) -> Option<Fragment> {
-        if self.can_merge_marker_line(mline) {
-            if mline.start_marker.is_none() {
-                if self.end == mline.line.start {
-                    Some(marker_line(
-                        self.start,
-                        mline.line.end,
-                        mline.line.is_broken,
-                        None,
-                        mline.end_marker.clone(),
-                    ))
-                } else if self.start == mline.line.start {
-                    Some(marker_line(
-                        self.end,
-                        mline.line.end,
-                        mline.line.is_broken,
-                        None,
-                        mline.end_marker.clone(),
-                    ))
-                } else {
-                    None
-                }
-            } else if mline.end_marker.is_none() {
-                if self.end == mline.line.end {
-                    println!("success 3");
-                    Some(marker_line(
-                        self.start,
-                        mline.line.start,
-                        mline.line.is_broken,
-                        mline.start_marker.clone(),
-                        None,
-                    ))
-                } else if self.start == mline.line.end {
-                    println!("success 4");
-                    Some(marker_line(
-                        self.end,
-                        mline.line.start,
-                        mline.line.is_broken,
-                        mline.start_marker.clone(),
-                        None,
-                    ))
-                } else {
-                    None
-                }
+        if mline.start_marker.is_none() {
+            if self.end == mline.line.start {
+                Some(marker_line(
+                    self.start,
+                    mline.line.end,
+                    mline.line.is_broken,
+                    None,
+                    mline.end_marker.clone(),
+                ))
+            } else if self.start == mline.line.start {
+                Some(marker_line(
+                    self.end,
+                    mline.line.end,
+                    mline.line.is_broken,
+                    None,
+                    mline.end_marker.clone(),
+                ))
             } else {
-                panic!("marker line should have at least one marker");
+                None
+            }
+        } else if mline.end_marker.is_none() {
+            if self.end == mline.line.end {
+                println!("success 3");
+                Some(marker_line(
+                    self.start,
+                    mline.line.start,
+                    mline.line.is_broken,
+                    mline.start_marker.clone(),
+                    None,
+                ))
+            } else if self.start == mline.line.end {
+                println!("success 4");
+                Some(marker_line(
+                    self.end,
+                    mline.line.start,
+                    mline.line.is_broken,
+                    mline.start_marker.clone(),
+                    None,
+                ))
+            } else {
+                None
             }
         } else {
-            None
+            panic!("marker line should have at least one marker");
         }
     }
-    */
 
     pub(crate) fn is_touching_circle(&self, circle: &Circle) -> bool {
         let center = circle.center;
