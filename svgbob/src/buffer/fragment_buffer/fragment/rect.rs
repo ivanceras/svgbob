@@ -3,7 +3,7 @@ use std::fmt;
 
 use ncollide2d::shape::{Segment, Shape};
 use sauron::{
-    html::{attributes::*},
+    html::attributes::*,
     svg::{attributes::*, *},
     Node,
 };
@@ -22,7 +22,12 @@ pub struct Rect {
 impl Rect {
     /// creates a new rect and reorder the points swapping the end points if necessary
     /// such that the start is the most top-left and end point is the most bottom-right
-    pub(in crate) fn new(start: Point, end: Point, is_filled: bool, is_broken: bool) -> Self {
+    pub(in crate) fn new(
+        start: Point,
+        end: Point,
+        is_filled: bool,
+        is_broken: bool,
+    ) -> Self {
         let mut rect = Rect {
             start,
             end,

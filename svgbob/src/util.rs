@@ -1,6 +1,7 @@
-use crate::{Point};
+use crate::Point;
 use ncollide2d::{
-    bounding_volume::AABB, math::Isometry, query::point_internal::point_query::PointQuery,
+    bounding_volume::AABB, math::Isometry,
+    query::point_internal::point_query::PointQuery,
 };
 use std::cmp::Ordering;
 
@@ -28,7 +29,11 @@ pub fn ord(f1: f32, f2: f32) -> Ordering {
 
 /// clips a line to the bounding box of this whole grid
 /// and approximate each point to the closes intersection
-fn clip_line_internal(aabb: &AABB<f32>, start: Point, end: Point) -> Option<(Point, Point)> {
+fn clip_line_internal(
+    aabb: &AABB<f32>,
+    start: Point,
+    end: Point,
+) -> Option<(Point, Point)> {
     let start_v = start.to_vector();
     let end_v = end.to_vector() - start_v;
     let clipped = aabb.clip_line(&start, &end_v);
@@ -42,7 +47,11 @@ fn clip_line_internal(aabb: &AABB<f32>, start: Point, end: Point) -> Option<(Poi
 }
 
 /// clip a line but do not extend the points
-pub fn clip_line(aabb: &AABB<f32>, start: Point, end: Point) -> Option<(Point, Point)> {
+pub fn clip_line(
+    aabb: &AABB<f32>,
+    start: Point,
+    end: Point,
+) -> Option<(Point, Point)> {
     let clipped = clip_line_internal(aabb, start, end);
     let identity = &Isometry::identity();
     if let Some(clipped) = clipped {
@@ -82,7 +91,7 @@ pub fn pad(v: f32) -> f32 {
 /// this is parser module which provides parsing for identifier for
 /// extracting the css tag of inside of a shape fragment
 pub mod parser {
-    
+
     use pom::parser::{is_a, list, none_of, one_of, sym, tag, Parser};
     use std::iter::FromIterator;
 
@@ -164,7 +173,9 @@ pub mod parser {
     /// a valid identifier
     pub(crate) fn ident<'a>() -> Parser<'a, char, String> {
         (is_a(alpha_or_underscore) + is_a(alphanum_or_underscore).repeat(0..))
-            .map(|(ch1, rest_ch)| format!("{}{}", ch1, String::from_iter(rest_ch)))
+            .map(|(ch1, rest_ch)| {
+                format!("{}{}", ch1, String::from_iter(rest_ch))
+            })
     }
 
     fn classes<'a>() -> Parser<'a, char, Vec<String>> {
@@ -176,7 +187,9 @@ pub mod parser {
     }
 
     /// parse css tag in the format of '{', <identifier>, '}'
-    pub(crate) fn parse_css_tag(input: &str) -> Result<Vec<String>, pom::Error> {
+    pub(crate) fn parse_css_tag(
+        input: &str,
+    ) -> Result<Vec<String>, pom::Error> {
         let cell_text_chars: Vec<char> = input.chars().collect();
         parse_css_tag_chars(&cell_text_chars)
     }
@@ -213,30 +226,39 @@ pub mod parser {
     ///  b = {stroke: blue}
     ///
     fn css_legend<'a>() -> Parser<'a, char, Vec<(String, String)>> {
-        (space() - sym('#') - space() - tag("Legend:") - space() - new_line()) * css_style_list()
+        (space() - sym('#') - space() - tag("Legend:") - space() - new_line())
+            * css_style_list()
     }
 
-    fn css_legend_with_padding<'a>() -> Parser<'a, char, Vec<(String, String)>> {
+    fn css_legend_with_padding<'a>() -> Parser<'a, char, Vec<(String, String)>>
+    {
         css_legend() - white_space()
     }
 
-    pub(crate) fn parse_css_legend(input: &str) -> Result<Vec<(String, String)>, pom::Error> {
+    pub(crate) fn parse_css_legend(
+        input: &str,
+    ) -> Result<Vec<(String, String)>, pom::Error> {
         let input_chars: Vec<char> = input.chars().collect();
         parse_css_legend_chars(&input_chars)
     }
 
-    fn parse_css_legend_chars(input: &[char]) -> Result<Vec<(String, String)>, pom::Error> {
+    fn parse_css_legend_chars(
+        input: &[char],
+    ) -> Result<Vec<(String, String)>, pom::Error> {
         css_legend_with_padding().parse(input)
     }
 
     fn escape_string<'a>() -> pom::parser::Parser<'a, char, (usize, usize)> {
         let escape_sequence = sym('\\') * sym('"'); //escape sequence \"
         let char_string = escape_sequence | none_of("\"");
-        let escaped_string_end = sym('"') * char_string.repeat(0..).pos() - sym('"');
-        none_of("\"").repeat(0..).pos() + escaped_string_end - none_of("\"").repeat(0..).discard()
+        let escaped_string_end =
+            sym('"') * char_string.repeat(0..).pos() - sym('"');
+        none_of("\"").repeat(0..).pos() + escaped_string_end
+            - none_of("\"").repeat(0..).discard()
     }
 
-    pub(crate) fn line_parse<'a>() -> pom::parser::Parser<'a, char, Vec<(usize, usize)>> {
+    pub(crate) fn line_parse<'a>(
+    ) -> pom::parser::Parser<'a, char, Vec<(usize, usize)>> {
         escape_string().repeat(0..)
     }
 
@@ -246,9 +268,11 @@ pub mod parser {
 
         #[test]
         fn test_escaped_string() {
-            let raw = r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
+            let raw =
+                r#"The "qu/i/ck" brown "fox\"s" jumps over the lazy "do|g""#;
             let input_chars: Vec<char> = raw.chars().collect();
-            let char_locs = line_parse().parse(&input_chars).expect("should parse");
+            let char_locs =
+                line_parse().parse(&input_chars).expect("should parse");
             println!("output3: {:?}", char_locs);
             let mut escaped = vec![];
             let mut cleaned = vec![];
@@ -276,9 +300,13 @@ pub mod parser {
         fn test_class_and_style() {
             let input = "a = {fill:blue; stroke:red;}";
             let input_chars: Vec<char> = input.chars().collect();
-            let css = class_and_style().parse(&input_chars).expect("should parse");
+            let css =
+                class_and_style().parse(&input_chars).expect("should parse");
             println!("css: {:?}", css);
-            assert_eq!(css, ("a".to_string(), "fill:blue; stroke:red;".to_string()));
+            assert_eq!(
+                css,
+                ("a".to_string(), "fill:blue; stroke:red;".to_string())
+            );
         }
 
         #[test]
@@ -286,7 +314,8 @@ pub mod parser {
             let input = "a = {fill:blue; stroke:red;}\n\
                     b = {fill:red; stroke:black;}";
             let input_chars: Vec<char> = input.chars().collect();
-            let css = css_style_list().parse(&input_chars).expect("should parse");
+            let css =
+                css_style_list().parse(&input_chars).expect("should parse");
             println!("css: {:?}", css);
             assert_eq!(
                 css,
@@ -416,7 +445,10 @@ pub mod parser {
             let input = "{blue_circle,red_dot}";
             let input_chars: Vec<char> = input.chars().collect();
             let tag = tag_classes().parse(&input_chars).expect("should parse");
-            assert_eq!(tag, vec!["blue_circle".to_string(), "red_dot".to_string()]);
+            assert_eq!(
+                tag,
+                vec!["blue_circle".to_string(), "red_dot".to_string()]
+            );
         }
     }
 }

@@ -7,7 +7,8 @@ use crate::{
 /// rectangle
 pub fn endorse_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
     if is_rect(fragments) {
-        let is_any_broken = fragments.iter().any(|fragment| fragment.is_broken());
+        let is_any_broken =
+            fragments.iter().any(|fragment| fragment.is_broken());
         let all_points = fragments.iter().fold(vec![], |mut acc, frag| {
             let (p1, p2) = frag.bounds();
             acc.push(p1);
@@ -55,7 +56,8 @@ fn is_rect(fragments: &Vec<Fragment>) -> bool {
 ///  - each of the right angle touches 2 lines that are aabb_perpendicular
 pub fn endorse_rounded_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
     if let (true, arc_radius) = is_rounded_rect(fragments) {
-        let is_any_broken = fragments.iter().any(|fragment| fragment.is_broken());
+        let is_any_broken =
+            fragments.iter().any(|fragment| fragment.is_broken());
         let all_points = fragments.iter().fold(vec![], |mut acc, frag| {
             let (p1, p2) = frag.bounds();
             acc.push(p1);
@@ -90,15 +92,16 @@ fn is_rounded_rect(fragments: &Vec<Fragment>) -> (bool, Option<f32>) {
         if parallels.len() == 2 && right_arcs.len() == 4 {
             let first_right_arc_index = right_arcs[0];
             let arc_fragment = &fragments[first_right_arc_index];
-            let arc_radius = arc_fragment.as_arc().expect("expecting an arc").radius;
+            let arc_radius =
+                arc_fragment.as_arc().expect("expecting an arc").radius;
             let (a1, a2) = parallels[0];
             let (b1, b2) = parallels[1];
             let line_a1 = fragments[a1].as_line().expect("expecting a line");
             let line_b1 = fragments[b1].as_line().expect("expecting a line");
             let line_a2 = fragments[a2].as_line().expect("expecting a line");
             let line_b2 = fragments[b2].as_line().expect("expecting a line");
-            let passed =
-                line_a1.is_aabb_perpendicular(line_b1) && line_a2.is_aabb_perpendicular(line_b2);
+            let passed = line_a1.is_aabb_perpendicular(line_b1)
+                && line_a2.is_aabb_perpendicular(line_b2);
             (passed, Some(arc_radius))
         } else {
             (false, None)
@@ -134,7 +137,10 @@ fn parallel_aabb_group(fragments: &Vec<Fragment>) -> Vec<(usize, usize)> {
         for (index2, frag2) in fragments.iter().enumerate() {
             if index1 != index2
                 && !parallels.iter().any(|(pair1, pair2)| {
-                    index1 == *pair1 || index1 == *pair2 || index2 == *pair1 || index2 == *pair2
+                    index1 == *pair1
+                        || index1 == *pair2
+                        || index2 == *pair1
+                        || index2 == *pair2
                 })
                 && frag1.is_aabb_parallel(&frag2)
             {

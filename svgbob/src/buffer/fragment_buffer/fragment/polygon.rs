@@ -90,7 +90,11 @@ impl PolygonTag {
 }
 
 impl Polygon {
-    pub(in crate) fn new(points: Vec<Point>, is_filled: bool, tags: Vec<PolygonTag>) -> Self {
+    pub(in crate) fn new(
+        points: Vec<Point>,
+        is_filled: bool,
+        tags: Vec<PolygonTag>,
+    ) -> Self {
         Polygon {
             points,
             is_filled,
@@ -144,7 +148,8 @@ impl Polygon {
     }
 
     pub(in crate) fn scale(&self, scale: f32) -> Self {
-        let points: Vec<Point> = self.points.iter().map(|p| p.scale(scale)).collect();
+        let points: Vec<Point> =
+            self.points.iter().map(|p| p.scale(scale)).collect();
         Polygon {
             points,
             is_filled: self.is_filled,
@@ -162,14 +167,16 @@ impl Polygon {
     }
 
     pub(crate) fn center(&self) -> Point {
-        let points: Vec<Point2<f32>> = self.points.iter().map(|p| **p).collect();
+        let points: Vec<Point2<f32>> =
+            self.points.iter().map(|p| **p).collect();
         (ncollide2d::utils::center(&points)).into()
     }
 }
 
 impl Bounds for Polygon {
     fn bounds(&self) -> (Point, Point) {
-        let points: Vec<Point2<f32>> = self.points.iter().map(|p| **p).collect();
+        let points: Vec<Point2<f32>> =
+            self.points.iter().map(|p| **p).collect();
         let aabb = Polyline::new(points, None).local_aabb();
         (Point::from(*aabb.mins()), Point::from(*aabb.maxs()))
     }
@@ -200,7 +207,10 @@ impl<MSG> Into<Node<MSG>> for Polygon {
                         .collect::<Vec<String>>()
                         .join(" "),
                 ),
-                classes_flag([("filled", self.is_filled), ("nofill", !self.is_filled)]),
+                classes_flag([
+                    ("filled", self.is_filled),
+                    ("nofill", !self.is_filled),
+                ]),
             ],
             vec![],
         )

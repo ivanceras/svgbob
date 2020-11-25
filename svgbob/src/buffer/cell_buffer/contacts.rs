@@ -1,8 +1,6 @@
 use super::endorse;
 use crate::buffer::{fragment::Fragment, Cell};
-use std::{
-    fmt,
-};
+use std::fmt;
 
 /// Contains a group of fragments that are touching each other
 /// The purpose of Contacts is to group fragments together
@@ -50,7 +48,9 @@ impl Contacts {
     pub(crate) fn endorse_rects(&self) -> Option<Fragment> {
         if let Some(rect) = endorse::endorse_rect(self.as_ref()) {
             Some(rect.into())
-        } else if let Some(rounded_rect) = endorse::endorse_rounded_rect(self.as_ref()) {
+        } else if let Some(rounded_rect) =
+            endorse::endorse_rounded_rect(self.as_ref())
+        {
             Some(rounded_rect.into())
         } else {
             None

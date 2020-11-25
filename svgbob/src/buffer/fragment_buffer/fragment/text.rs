@@ -254,11 +254,15 @@ mod tests {
         assert_eq!(15, groups.len());
         assert_eq!(
             groups[0],
-            Contacts::new(CellText::new(Cell::new(0, 0), "This".to_string()).into())
+            Contacts::new(
+                CellText::new(Cell::new(0, 0), "This".to_string()).into()
+            )
         );
         assert_eq!(
             groups[5],
-            Contacts::new(CellText::new(Cell::new(21, 0), "a".to_string()).into())
+            Contacts::new(
+                CellText::new(Cell::new(21, 0), "a".to_string()).into()
+            )
         );
         assert_eq!(
             groups[14],

@@ -1,6 +1,5 @@
 use crate::buffer::CellGrid;
 
-
 #[derive(Debug, Clone, PartialEq, Copy)]
 pub enum Direction {
     TopLeft,

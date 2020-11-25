@@ -6,7 +6,7 @@ pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
 pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;
-use sauron::{Node};
+use sauron::Node;
 use std::{cmp::Ordering, fmt};
 pub use text::{CellText, Text};
 
@@ -111,10 +111,14 @@ impl Fragment {
             }
 
             // line and polygon
-            (Fragment::Line(line), Fragment::Polygon(polygon)) => line.merge_line_polygon(polygon),
+            (Fragment::Line(line), Fragment::Polygon(polygon)) => {
+                line.merge_line_polygon(polygon)
+            }
 
             // polygon and line
-            (Fragment::Polygon(polygon), Fragment::Line(line)) => line.merge_line_polygon(polygon),
+            (Fragment::Polygon(polygon), Fragment::Line(line)) => {
+                line.merge_line_polygon(polygon)
+            }
 
             /*
             // line and marker_line
@@ -130,10 +134,14 @@ impl Fragment {
             }
             */
             // line and circle
-            (Fragment::Line(line), Fragment::Circle(circle)) => line.merge_circle(circle),
+            (Fragment::Line(line), Fragment::Circle(circle)) => {
+                line.merge_circle(circle)
+            }
 
             // circle and line
-            (Fragment::Circle(circle), Fragment::Line(line)) => line.merge_circle(circle),
+            (Fragment::Circle(circle), Fragment::Line(line)) => {
+                line.merge_circle(circle)
+            }
             // cell_text and cell_text
             (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
                 if let Some(merged_ctext) = ctext.merge(other_ctext) {
@@ -150,7 +158,10 @@ impl Fragment {
     pub(crate) fn can_fit(&self, other: &Self) -> bool {
         let (tl, br) = self.bounds();
         let (other_tl, other_br) = other.bounds();
-        tl.x <= other_tl.x && tl.y <= other_tl.y && br.x >= other_br.x && br.y >= other_br.y
+        tl.x <= other_tl.x
+            && tl.y <= other_tl.y
+            && br.x >= other_br.x
+            && br.y >= other_br.y
     }
 
     /// merge fragments recursively until it hasn't changed the number of fragments
@@ -187,7 +198,9 @@ impl Fragment {
     /// are lines axis align and parallel
     pub(in crate) fn is_aabb_parallel(&self, other: &Self) -> bool {
         match (self, other) {
-            (Fragment::Line(line), Fragment::Line(other)) => line.is_aabb_parallel(other),
+            (Fragment::Line(line), Fragment::Line(other)) => {
+                line.is_aabb_parallel(other)
+            }
             (_, _) => false,
         }
     }
@@ -195,7 +208,9 @@ impl Fragment {
     #[allow(unused)]
     pub(in crate) fn is_aabb_perpendicular(&self, other: &Self) -> bool {
         match (self, other) {
-            (Fragment::Line(line), Fragment::Line(other)) => line.is_aabb_perpendicular(other),
+            (Fragment::Line(line), Fragment::Line(other)) => {
+                line.is_aabb_perpendicular(other)
+            }
             (_, _) => false,
         }
     }
@@ -207,12 +222,16 @@ impl Fragment {
             Fragment::Line(line) => match other {
                 Fragment::Line(other) => line.is_touching(other),
                 Fragment::Arc(other_arc) => line.is_touching_arc(other_arc),
-                Fragment::Polygon(polygon) => line.merge_line_polygon(polygon).is_some(),
+                Fragment::Polygon(polygon) => {
+                    line.merge_line_polygon(polygon).is_some()
+                }
                 Fragment::Circle(circle) => line.is_touching_circle(circle),
                 _ => false,
             },
             Fragment::Polygon(polygon) => match other {
-                Fragment::Line(other) => other.merge_line_polygon(polygon).is_some(),
+                Fragment::Line(other) => {
+                    other.merge_line_polygon(polygon).is_some()
+                }
                 _ => false,
             },
             Fragment::Arc(arc) => match other {
@@ -225,7 +244,9 @@ impl Fragment {
                 _ => false,
             },
             Fragment::CellText(ctext) => match other {
-                Fragment::CellText(other_ctext) => ctext.is_contacting(other_ctext),
+                Fragment::CellText(other_ctext) => {
+                    ctext.is_contacting(other_ctext)
+                }
                 _ => false,
             },
             _ => false,
@@ -236,16 +257,28 @@ impl Fragment {
     /// offset by the cell location
     pub fn absolute_position(&self, cell: Cell) -> Self {
         match self {
-            Fragment::Line(line) => Fragment::Line(line.absolute_position(cell)),
+            Fragment::Line(line) => {
+                Fragment::Line(line.absolute_position(cell))
+            }
             Fragment::MarkerLine(marker_line) => {
                 Fragment::MarkerLine(marker_line.absolute_position(cell))
             }
-            Fragment::Circle(circle) => Fragment::Circle(circle.absolute_position(cell)),
+            Fragment::Circle(circle) => {
+                Fragment::Circle(circle.absolute_position(cell))
+            }
             Fragment::Arc(arc) => Fragment::Arc(arc.absolute_position(cell)),
-            Fragment::Polygon(polygon) => Fragment::Polygon(polygon.absolute_position(cell)),
-            Fragment::Rect(rect) => Fragment::Rect(rect.absolute_position(cell)),
-            Fragment::Text(text) => Fragment::Text(text.absolute_position(cell)),
-            Fragment::CellText(ctext) => Fragment::CellText(ctext.absolute_position(cell)),
+            Fragment::Polygon(polygon) => {
+                Fragment::Polygon(polygon.absolute_position(cell))
+            }
+            Fragment::Rect(rect) => {
+                Fragment::Rect(rect.absolute_position(cell))
+            }
+            Fragment::Text(text) => {
+                Fragment::Text(text.absolute_position(cell))
+            }
+            Fragment::CellText(ctext) => {
+                Fragment::CellText(ctext.absolute_position(cell))
+            }
         }
     }
 
@@ -253,10 +286,14 @@ impl Fragment {
     pub fn scale(&self, scale: f32) -> Self {
         match self {
             Fragment::Line(line) => Fragment::Line(line.scale(scale)),
-            Fragment::MarkerLine(marker_line) => Fragment::MarkerLine(marker_line.scale(scale)),
+            Fragment::MarkerLine(marker_line) => {
+                Fragment::MarkerLine(marker_line.scale(scale))
+            }
             Fragment::Circle(circle) => Fragment::Circle(circle.scale(scale)),
             Fragment::Arc(arc) => Fragment::Arc(arc.scale(scale)),
-            Fragment::Polygon(polygon) => Fragment::Polygon(polygon.scale(scale)),
+            Fragment::Polygon(polygon) => {
+                Fragment::Polygon(polygon.scale(scale))
+            }
             Fragment::Rect(rect) => Fragment::Rect(rect.scale(scale)),
             Fragment::Text(text) => Fragment::Text(text.scale(scale)),
             // the CellText is converted into text fragment first, then scaled
@@ -269,14 +306,18 @@ impl Fragment {
     pub fn align(&self) -> Self {
         match self {
             Fragment::Line(line) => Fragment::Line(line.align()),
-            Fragment::MarkerLine(marker_line) => Fragment::MarkerLine(marker_line.align()),
+            Fragment::MarkerLine(marker_line) => {
+                Fragment::MarkerLine(marker_line.align())
+            }
             Fragment::Circle(circle) => Fragment::Circle(circle.clone()),
             Fragment::Arc(arc) => Fragment::Arc(arc.clone()),
             Fragment::Polygon(polygon) => Fragment::Polygon(polygon.clone()),
             Fragment::Rect(rect) => Fragment::Rect(rect.clone()),
             Fragment::Text(text) => Fragment::Text(text.clone()),
             // the CellText is converted into text fragment first, then scaled
-            Fragment::CellText(ctext) => Fragment::Text(Into::<Text>::into(ctext.clone())),
+            Fragment::CellText(ctext) => {
+                Fragment::Text(Into::<Text>::into(ctext.clone()))
+            }
         }
     }
 
@@ -334,13 +375,14 @@ impl Fragment {
     /// if this is a cell text and is wrapped in braces then it is a css
     /// tag for the container
     pub fn as_css_tag(&self) -> Vec<String> {
-        let input_text: Option<&str> = if let Some(cell_text) = self.as_cell_text() {
-            Some(&cell_text.content)
-        } else if let Some(text) = self.as_text() {
-            Some(&text.text)
-        } else {
-            None
-        };
+        let input_text: Option<&str> =
+            if let Some(cell_text) = self.as_cell_text() {
+                Some(&cell_text.content)
+            } else if let Some(text) = self.as_text() {
+                Some(&text.text)
+            } else {
+                None
+            };
 
         if let Some(input_text) = input_text {
             if let Ok(tags) = crate::util::parser::parse_css_tag(&input_text) {
@@ -454,7 +496,13 @@ pub fn marker_line(
     start_marker: Option<Marker>,
     end_marker: Option<Marker>,
 ) -> Fragment {
-    Fragment::MarkerLine(MarkerLine::new(a, b, is_broken, start_marker, end_marker))
+    Fragment::MarkerLine(MarkerLine::new(
+        a,
+        b,
+        is_broken,
+        start_marker,
+        end_marker,
+    ))
 }
 
 pub fn broken_line(a: Point, b: Point) -> Fragment {
@@ -469,15 +517,29 @@ pub fn arc(a: Point, b: Point, r: f32) -> Fragment {
     Fragment::Arc(Arc::new(a, b, r))
 }
 
-pub fn arc_with_sweep(a: Point, b: Point, r: f32, sweep_flag: bool) -> Fragment {
+pub fn arc_with_sweep(
+    a: Point,
+    b: Point,
+    r: f32,
+    sweep_flag: bool,
+) -> Fragment {
     Fragment::Arc(Arc::new_with_sweep(a, b, r, sweep_flag))
 }
 
-pub fn polygon(points: Vec<Point>, is_filled: bool, tags: Vec<PolygonTag>) -> Fragment {
+pub fn polygon(
+    points: Vec<Point>,
+    is_filled: bool,
+    tags: Vec<PolygonTag>,
+) -> Fragment {
     Fragment::Polygon(Polygon::new(points, is_filled, tags))
 }
 
-pub fn rect(start: Point, end: Point, is_filled: bool, is_broken: bool) -> Fragment {
+pub fn rect(
+    start: Point,
+    end: Point,
+    is_filled: bool,
+    is_broken: bool,
+) -> Fragment {
     Fragment::Rect(Rect::new(start, end, is_filled, is_broken))
 }
 
@@ -548,13 +610,17 @@ impl Ord for Fragment {
         match (self, other) {
             (Fragment::Line(line), Fragment::Line(other)) => line.cmp(other),
             (Fragment::Arc(arc), Fragment::Arc(other)) => arc.cmp(other),
-            (Fragment::Circle(circle), Fragment::Circle(other)) => circle.cmp(other),
+            (Fragment::Circle(circle), Fragment::Circle(other)) => {
+                circle.cmp(other)
+            }
             (Fragment::Polygon(polygon), Fragment::Polygon(other_polygon)) => {
                 polygon.cmp(other_polygon)
             } //Note: the tags are not compared here
             (Fragment::Rect(rect), Fragment::Rect(other)) => rect.cmp(other),
             (Fragment::Text(text), Fragment::Text(other)) => text.cmp(other),
-            (Fragment::CellText(ctext), Fragment::CellText(other)) => ctext.cmp(other),
+            (Fragment::CellText(ctext), Fragment::CellText(other)) => {
+                ctext.cmp(other)
+            }
             _ => self
                 .mins()
                 .cmp(&other.mins())
@@ -583,9 +649,14 @@ mod tests {
 
     #[test]
     fn test_can_fit() {
-        let rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
-        let rect2 = rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
-        let text1 = Fragment::CellText(CellText::new(Cell::new(2, 2), "{doc}".to_string()));
+        let rect1 =
+            rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
+        let rect2 =
+            rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
+        let text1 = Fragment::CellText(CellText::new(
+            Cell::new(2, 2),
+            "{doc}".to_string(),
+        ));
         let text2 = Fragment::CellText(CellText::new(
             Cell::new(2, 2),
             "This is a hello world!".to_string(),

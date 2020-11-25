@@ -132,12 +132,17 @@ impl Property {
     }
 
     /// derive a strong property with a strong signal
-    pub(in crate) fn with_strong_fragments(ch: char, fragments: Vec<Fragment>) -> Self {
+    pub(in crate) fn with_strong_fragments(
+        ch: char,
+        fragments: Vec<Fragment>,
+    ) -> Self {
         Property {
             ch,
             signature: vec![(Signal::Strong, fragments)],
             //TODO find a way to move the fragments here
-            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| vec![(true, vec![])]),
+            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| {
+                vec![(true, vec![])]
+            }),
         }
     }
 
@@ -196,14 +201,19 @@ impl Property {
 
     /// Check to see if this spot has an endpoint to p
     pub(in crate) fn has_endpoint(&self, p: Point) -> bool {
-        self.signature
-            .iter()
-            .any(|(_signal, signature)| signature.iter().any(|fragment| fragment.has_endpoint(p)))
+        self.signature.iter().any(|(_signal, signature)| {
+            signature.iter().any(|fragment| fragment.has_endpoint(p))
+        })
     }
 
     /// Check to see if any fragment that is generated in this character
     /// can overlap (completely covered) line a b
-    fn line_overlap_with_signal(&self, a: Point, b: Point, required_signal: Signal) -> bool {
+    fn line_overlap_with_signal(
+        &self,
+        a: Point,
+        b: Point,
+        required_signal: Signal,
+    ) -> bool {
         self.signature
             .iter()
             .filter(|(signal, _signature)| *signal >= required_signal)
@@ -215,9 +225,9 @@ impl Property {
     /// Check to see if any fragment that is generated in this character
     /// can arc from a to b regardless of the radius
     pub(in crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
-        self.signature
-            .iter()
-            .any(|(_signal, signature)| signature.iter().any(|fragment| fragment.arcs_to(a, b)))
+        self.signature.iter().any(|(_signal, signature)| {
+            signature.iter().any(|fragment| fragment.arcs_to(a, b))
+        })
     }
 
     /// the fragments of this property when the surrounding properties is supplied
@@ -244,15 +254,15 @@ impl Property {
             bottom,
             bottom_right,
         );
-        let cell_fragments: Vec<Fragment> =
-            bool_fragments
-                .into_iter()
-                .fold(vec![], |mut acc, (passed, fragments)| {
-                    if passed {
-                        acc.extend(fragments);
-                    };
-                    acc
-                });
+        let cell_fragments: Vec<Fragment> = bool_fragments.into_iter().fold(
+            vec![],
+            |mut acc, (passed, fragments)| {
+                if passed {
+                    acc.extend(fragments);
+                };
+                acc
+            },
+        );
         cell_fragments
     }
 }

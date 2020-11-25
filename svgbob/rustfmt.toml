@@ -1,0 +1,19 @@
+# Use unstable features
+unstable_features = true
+
+max_width = 80
+
+## Visually align, useful in writing the view
+indent_style = "Block"
+imports_indent = "Block"
+reorder_imports = true
+reorder_impl_items = true
+merge_imports = true
+## I want to be able to delete unused imports easily
+imports_layout = "Vertical"
+## Default value is false, yet clipy keeps nagging on this
+use_field_init_shorthand = true
+
+## also format macro
+format_macro_matchers = true
+force_multiline_blocks = true

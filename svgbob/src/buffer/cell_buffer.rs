@@ -75,14 +75,15 @@ impl CellBuffer {
     pub fn group_adjacents(&self) -> Vec<Span> {
         let mut adjacents: Vec<Span> = vec![];
         for (cell, ch) in self.iter() {
-            let belongs_to_adjacents = adjacents.iter_mut().rev().any(|contacts| {
-                if contacts.is_adjacent(cell) {
-                    contacts.push((*cell, *ch));
-                    true
-                } else {
-                    false
-                }
-            });
+            let belongs_to_adjacents =
+                adjacents.iter_mut().rev().any(|contacts| {
+                    if contacts.is_adjacent(cell) {
+                        contacts.push((*cell, *ch));
+                        true
+                    } else {
+                        false
+                    }
+                });
             if !belongs_to_adjacents {
                 adjacents.push(Span::new(*cell, *ch));
             }
@@ -122,8 +123,10 @@ impl CellBuffer {
     }
 
     fn bounds(&self) -> Option<(Cell, Cell)> {
-        let xlimits = self.iter().map(|(cell, _)| cell.x).minmax().into_option();
-        let ylimits = self.iter().map(|(cell, _)| cell.y).minmax().into_option();
+        let xlimits =
+            self.iter().map(|(cell, _)| cell.x).minmax().into_option();
+        let ylimits =
+            self.iter().map(|(cell, _)| cell.y).minmax().into_option();
         match (xlimits, ylimits) {
             (Some((min_x, max_x)), Some((min_y, max_y))) => {
                 Some((Cell::new(min_x, min_y), Cell::new(max_x, max_y)))
@@ -141,20 +144,27 @@ impl CellBuffer {
     /// calculate the appropriate size (w,h) in pixels for the whole cell buffer to fit
     /// appropriately
     pub(crate) fn get_size(&self, settings: &Settings) -> (f32, f32) {
-        let (_top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
+        let (_top_left, bottom_right) =
+            self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
         let w = settings.scale * (bottom_right.x + 2) as f32 * Cell::width();
         let h = settings.scale * (bottom_right.y + 2) as f32 * Cell::height();
         (w, h)
     }
 
     /// get all nodes of this cell buffer
-    pub fn get_node_with_size<MSG>(&self, settings: &Settings) -> (Node<MSG>, f32, f32) {
+    pub fn get_node_with_size<MSG>(
+        &self,
+        settings: &Settings,
+    ) -> (Node<MSG>, f32, f32) {
         let (w, h) = self.get_size(&settings);
         // vec_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
         // the svg node
-        let (vec_fragments, vec_contacts): (Vec<Vec<Fragment>>, Vec<Vec<Contacts>>) = self
+        let (vec_fragments, vec_contacts): (
+            Vec<Vec<Fragment>>,
+            Vec<Vec<Contacts>>,
+        ) = self
             .group_adjacents()
             .into_iter()
             .map(|span| span.endorse(settings))
@@ -162,10 +172,11 @@ impl CellBuffer {
 
         // partition the vec_groups into groups that is alone and the group
         // that is contacting their parts
-        let (single_member, vec_groups): (Vec<Contacts>, Vec<Contacts>) = vec_contacts
-            .into_iter()
-            .flatten()
-            .partition(move |contacts| contacts.0.len() == 1);
+        let (single_member, vec_groups): (Vec<Contacts>, Vec<Contacts>) =
+            vec_contacts
+                .into_iter()
+                .flatten()
+                .partition(move |contacts| contacts.0.len() == 1);
 
         let single_member_fragments: Vec<Fragment> = single_member
             .into_iter()
@@ -188,11 +199,18 @@ impl CellBuffer {
             })
             .collect();
 
-        let mut fragments: Vec<Fragment> = vec_fragments.into_iter().flatten().collect();
+        let mut fragments: Vec<Fragment> =
+            vec_fragments.into_iter().flatten().collect();
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
-        let svg_node = Self::fragments_to_node(fragments, self.legend_css(), settings, w, h)
-            .add_children(group_nodes);
+        let svg_node = Self::fragments_to_node(
+            fragments,
+            self.legend_css(),
+            settings,
+            w,
+            h,
+        )
+        .add_children(group_nodes);
         (svg_node, w, h)
     }
 
@@ -314,7 +332,8 @@ impl CellBuffer {
             .into_iter()
             .map(|frag| frag.scale(settings.scale))
             .collect();
-        let fragment_nodes: Vec<Node<MSG>> = FragmentTree::fragments_to_node(fragments_scaled);
+        let fragment_nodes: Vec<Node<MSG>> =
+            FragmentTree::fragments_to_node(fragments_scaled);
 
         let mut children = vec![];
         if settings.include_styles {
@@ -488,7 +507,8 @@ impl From<&str> for CellBuffer {
             None
         };
         if let Some((loc, css_styles)) = css_styles {
-            let mut cell_buffer = CellBuffer::from(StringBuffer::from(&input[..loc]));
+            let mut cell_buffer =
+                CellBuffer::from(StringBuffer::from(&input[..loc]));
             cell_buffer.add_css_styles(css_styles);
             cell_buffer
         } else {

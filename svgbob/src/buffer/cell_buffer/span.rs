@@ -1,5 +1,8 @@
 use crate::{
-    buffer::{cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer, StringBuffer},
+    buffer::{
+        cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer,
+        StringBuffer,
+    },
     fragment,
     map::{circle_map, UNICODE_FRAGMENTS},
     Cell, Fragment, Settings,
@@ -57,8 +60,11 @@ impl Span {
 
     /// returns the top_left most cell which aligns the top most and the left most cell.
     pub(crate) fn bounds(&self) -> Option<(Cell, Cell)> {
-        if let Some((min_y, max_y)) = self.iter().map(|(cell, _)| cell.y).minmax().into_option() {
-            if let Some((min_x, max_x)) = self.iter().map(|(cell, _)| cell.x).minmax().into_option()
+        if let Some((min_y, max_y)) =
+            self.iter().map(|(cell, _)| cell.y).minmax().into_option()
+        {
+            if let Some((min_x, max_x)) =
+                self.iter().map(|(cell, _)| cell.x).minmax().into_option()
             {
                 Some((Cell::new(min_x, min_y), Cell::new(max_x, max_y)))
             } else {
@@ -94,7 +100,8 @@ impl Span {
     ///
     pub(crate) fn get_contacts(self, settings: &Settings) -> Vec<Contacts> {
         let localize_self = self.localize();
-        let fb: FragmentBuffer = (&localize_self).into_fragment_buffer(settings);
+        let fb: FragmentBuffer =
+            (&localize_self).into_fragment_buffer(settings);
 
         let mut groups: Vec<Contacts> = vec![];
         let merged_fragments = fb.merge_fragments();
@@ -169,7 +176,9 @@ impl Span {
     /// This function is calling on endorse algorithmn on fragments that
     /// are neighbors, but not necessarily touching to be promoted to a shape.
     /// These includes: circle, arc, and line with arrow heads.
-    fn endorse_circles_and_arcs(groups: Vec<Contacts>) -> (Vec<Fragment>, Vec<Contacts>) {
+    fn endorse_circles_and_arcs(
+        groups: Vec<Contacts>,
+    ) -> (Vec<Fragment>, Vec<Contacts>) {
         let mut fragments = vec![];
         let mut un_endorsed_circles: Vec<Contacts> = vec![];
         if let Some((circle, unmatched)) = circle_map::endorse_circle(&groups) {
@@ -195,13 +204,17 @@ impl Span {
     /// The second element of the tuple: `contacts` are fragments that are touching together
     /// but can not form a fragment shape. These will be grouped in the svg nodes
     /// to keep them go together, when dragged (editing)
-    pub(crate) fn endorse(self, settings: &Settings) -> (Vec<Fragment>, Vec<Contacts>) {
+    pub(crate) fn endorse(
+        self,
+        settings: &Settings,
+    ) -> (Vec<Fragment>, Vec<Contacts>) {
         let (top_left, _) = self.bounds().expect("mut have bounds");
         let groups: Vec<Contacts> = self.get_contacts(settings);
         // 1st phase, successful_endorses fragments, unendorsed one)
         let (mut fragments, un_endorsed) = Self::endorse_rects(groups);
         // 2nd phase, try to endorse to circles and arcs from the rejects of the 1st phase
-        let (circle_fragments, un_endorsed) = Self::endorse_circles_and_arcs(un_endorsed);
+        let (circle_fragments, un_endorsed) =
+            Self::endorse_circles_and_arcs(un_endorsed);
 
         fragments.extend(circle_fragments);
         (

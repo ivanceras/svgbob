@@ -94,7 +94,8 @@ impl MarkerLine {
 
         let is_same_direction = polygon.matched_direction(line_heading);
 
-        let is_opposite_direction = polygon.matched_direction(line_heading.opposite());
+        let is_opposite_direction =
+            polygon.matched_direction(line_heading.opposite());
 
         let can_merge = (is_same_direction || is_opposite_direction)
             && (is_close_start_point || is_close_end_point);
@@ -102,12 +103,14 @@ impl MarkerLine {
         if can_merge {
             let marker = polygon.get_marker();
 
-            let start_marker = if is_close_start_point && self.start_marker.is_none() {
-                marker.clone()
-            } else {
-                self.start_marker.clone()
-            };
-            let end_marker = if is_close_end_point && self.end_marker.is_none() {
+            let start_marker =
+                if is_close_start_point && self.start_marker.is_none() {
+                    marker.clone()
+                } else {
+                    self.start_marker.clone()
+                };
+            let end_marker = if is_close_end_point && self.end_marker.is_none()
+            {
                 marker
             } else {
                 self.end_marker.clone()

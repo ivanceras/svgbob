@@ -1,8 +1,8 @@
 use crate::{
     buffer::{
         fragment::PolygonTag::{
-            ArrowBottom, ArrowBottomLeft, ArrowBottomRight, ArrowLeft, ArrowRight, ArrowTop,
-            ArrowTopLeft, ArrowTopRight, DiamondBullet,
+            ArrowBottom, ArrowBottomLeft, ArrowBottomRight, ArrowLeft,
+            ArrowRight, ArrowTop, ArrowTopLeft, ArrowTopRight, DiamondBullet,
         },
         Cell, CellGrid, Settings,
     },

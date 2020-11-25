@@ -34,7 +34,11 @@ impl Line {
     }
 
     /// creates a new line, but don't reorder the points
-    pub(in crate) fn new_noswap(start: Point, end: Point, is_broken: bool) -> Self {
+    pub(in crate) fn new_noswap(
+        start: Point,
+        end: Point,
+        is_broken: bool,
+    ) -> Self {
         Line {
             start,
             end,
@@ -60,7 +64,8 @@ impl Line {
     pub(in crate) fn overlaps(&self, a: Point, b: Point) -> bool {
         let segment = Segment::new(*self.start, *self.end);
         let identity = &Isometry::identity();
-        segment.contains_point(identity, &a) && segment.contains_point(identity, &b)
+        segment.contains_point(identity, &a)
+            && segment.contains_point(identity, &b)
     }
 
     fn contains_point(&self, p: Point) -> bool {
@@ -205,7 +210,10 @@ impl Line {
     */
 
     #[allow(unused)]
-    pub(crate) fn merge_marker_line(&self, mline: &MarkerLine) -> Option<Fragment> {
+    pub(crate) fn merge_marker_line(
+        &self,
+        mline: &MarkerLine,
+    ) -> Option<Fragment> {
         if mline.start_marker.is_none() {
             if self.end == mline.line.start {
                 Some(marker_line(
@@ -290,7 +298,10 @@ impl Line {
     }
 
     /// merge this line to the marker line
-    pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
+    pub(crate) fn merge_line_polygon(
+        &self,
+        polygon: &Polygon,
+    ) -> Option<Fragment> {
         let poly_center = polygon.center();
         let distance_end_center = self.end.distance(&poly_center);
         let distance_start_center = self.start.distance(&poly_center);
@@ -303,7 +314,8 @@ impl Line {
 
         let is_same_direction = polygon.matched_direction(line_heading);
 
-        let is_opposite_direction = polygon.matched_direction(line_heading.opposite());
+        let is_opposite_direction =
+            polygon.matched_direction(line_heading.opposite());
 
         let can_merge = (is_same_direction || is_opposite_direction)
             && (is_close_start_point || is_close_end_point);
@@ -336,11 +348,12 @@ impl Line {
         let distance_start_center = self.start.distance(&circle.center);
 
         let threshold_length = self.heading().threshold_length();
-        let is_close_start_point = distance_start_center <= threshold_length * 0.75;
+        let is_close_start_point =
+            distance_start_center <= threshold_length * 0.75;
         let is_close_end_point = distance_end_center <= threshold_length * 0.75;
 
-        let can_merge =
-            circle.radius <= Cell::unit(3) && (is_close_start_point || is_close_end_point);
+        let can_merge = circle.radius <= Cell::unit(3)
+            && (is_close_start_point || is_close_end_point);
 
         if can_merge {
             let marker = if circle.is_filled {
@@ -421,7 +434,10 @@ impl Line {
     }
 
     /// check if 2 lines are touching and aabb perpendicular at the same time
-    pub(in crate) fn is_touching_aabb_perpendicular(&self, other: &Self) -> bool {
+    pub(in crate) fn is_touching_aabb_perpendicular(
+        &self,
+        other: &Self,
+    ) -> bool {
         self.is_touching(other) && self.is_aabb_perpendicular(other)
     }
 
@@ -504,7 +520,10 @@ impl<MSG> Into<Node<MSG>> for Line {
                 y1(self.start.y),
                 x2(self.end.x),
                 y2(self.end.y),
-                classes_flag([("broken", self.is_broken), ("solid", !self.is_broken)]),
+                classes_flag([
+                    ("broken", self.is_broken),
+                    ("solid", !self.is_broken),
+                ]),
             ],
             vec![],
         )
@@ -542,7 +561,11 @@ mod tests {
 
     #[test]
     fn test_extend_line() {
-        let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(10.0, 0.0), false);
+        let line1 = Line::new_noswap(
+            Point::new(0.0, 0.0),
+            Point::new(10.0, 0.0),
+            false,
+        );
         let extended = line1.extend(1.0);
         assert_eq!(
             extended,
@@ -557,7 +580,11 @@ mod tests {
 
     #[test]
     fn test_extend_line_start() {
-        let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(10.0, 0.0), false);
+        let line1 = Line::new_noswap(
+            Point::new(0.0, 0.0),
+            Point::new(10.0, 0.0),
+            false,
+        );
         let extended = line1.extend_start(1.0);
         assert_eq!(
             extended,
@@ -572,7 +599,11 @@ mod tests {
 
     #[test]
     fn test_extend_line_vertical() {
-        let line1 = Line::new_noswap(Point::new(0.0, 0.0), Point::new(0.0, 10.0), false);
+        let line1 = Line::new_noswap(
+            Point::new(0.0, 0.0),
+            Point::new(0.0, 10.0),
+            false,
+        );
         let extended = line1.extend(1.0);
         assert_eq!(
             extended,
@@ -587,15 +618,25 @@ mod tests {
 
     #[test]
     fn line_merge() {
-        let line1 = Line::new(Point::new(4.0, 0.0), Point::new(2.0, 4.0), false);
-        let line2 = Line::new(Point::new(2.0, 4.0), Point::new(1.0, 6.0), false);
+        let line1 =
+            Line::new(Point::new(4.0, 0.0), Point::new(2.0, 4.0), false);
+        let line2 =
+            Line::new(Point::new(2.0, 4.0), Point::new(1.0, 6.0), false);
         assert!(line1.is_touching(&line2));
         assert!(line2.is_touching(&line1));
         assert!(util::is_collinear(&line1.start, &line1.end, &line2.start));
         assert!(util::is_collinear(&line2.start, &line2.end, &line1.end));
-        let area1 = ncollide2d::utils::triangle_area(&line1.start, &line1.end, &line2.start);
+        let area1 = ncollide2d::utils::triangle_area(
+            &line1.start,
+            &line1.end,
+            &line2.start,
+        );
         println!("area1: {}", area1);
-        let area2 = ncollide2d::utils::triangle_area(&line1.start, &line1.end, &line2.end);
+        let area2 = ncollide2d::utils::triangle_area(
+            &line1.start,
+            &line1.end,
+            &line2.end,
+        );
         println!("area2: {}", area2);
         assert!(line1.can_merge(&line2));
     }
@@ -608,7 +649,8 @@ mod tests {
         let p2 = Cell::new(11, 0).o();
         let p3 = Cell::new(11, 0).p();
 
-        let polygon = Polygon::new(vec![p1, p2, p3], false, vec![PolygonTag::ArrowRight]);
+        let polygon =
+            Polygon::new(vec![p1, p2, p3], false, vec![PolygonTag::ArrowRight]);
 
         let line = Line::new(m, end, false);
         assert!(line.merge_line_polygon(&polygon).is_some());

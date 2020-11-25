@@ -57,7 +57,8 @@ macro_rules! cell_grid {
 
 impl Cell {
     cell_grid!(
-        a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y
+        a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x,
+        y
     );
 
     pub fn new(x: i32, y: i32) -> Self {
@@ -87,8 +88,10 @@ impl Cell {
             .iter()
             .map(|point| Self::snap_point(*point))
             .collect();
-        let (cells, _snap_points): (Vec<Self>, Vec<Point>) = snaps.into_iter().unzip();
-        let min_cell: Self = cells.into_iter().min().expect("should have a min cell");
+        let (cells, _snap_points): (Vec<Self>, Vec<Point>) =
+            snaps.into_iter().unzip();
+        let min_cell: Self =
+            cells.into_iter().min().expect("should have a min cell");
         min_cell
     }
 
@@ -207,13 +210,21 @@ impl Cell {
         util::clip_line(&aabb, start, end)
     }
 
-    pub fn clip_line_snap(&self, start: Point, end: Point) -> Option<(Point, Point)> {
+    pub fn clip_line_snap(
+        &self,
+        start: Point,
+        end: Point,
+    ) -> Option<(Point, Point)> {
         self.clip_line(start, end)
             .map(|(s, e)| (Self::snap(s), Self::snap(e)))
     }
 
     /// clip line then localize the points and snap to the nearest cell grid intersection
-    pub fn clip_line_localize(&self, start: Point, end: Point) -> Option<(Point, Point)> {
+    pub fn clip_line_localize(
+        &self,
+        start: Point,
+        end: Point,
+    ) -> Option<(Point, Point)> {
         self.clip_line_snap(start, end)
             .map(|(s, e)| (self.localize_point(s), self.localize_point(e)))
     }
@@ -408,49 +419,60 @@ mod tests {
     #[test]
     fn test_clip_line() {
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(-0.01, -0.01), Point::new(1.01, 2.01)),
+            Cell::new(0, 0).clip_line_snap(
+                Point::new(-0.01, -0.01),
+                Point::new(1.01, 2.01)
+            ),
             Some((CellGrid::a(), CellGrid::y()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(0.0, 0.0), Point::new(1.00, 0.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(0.0, 0.0), Point::new(1.00, 0.0)),
             Some((CellGrid::a(), CellGrid::e()))
         );
 
-        let clipped = Cell::new(0, 0).clip_line_snap(Point::new(0.0, 1.0), Point::new(1.0, 1.0));
+        let clipped = Cell::new(0, 0)
+            .clip_line_snap(Point::new(0.0, 1.0), Point::new(1.0, 1.0));
         assert_eq!(clipped, Some((CellGrid::k(), CellGrid::o())));
 
-        let clipped =
-            Cell::new(0, 0).clip_line_snap(Point::new(-0.01, 1.01), Point::new(1.01, 0.95));
+        let clipped = Cell::new(0, 0)
+            .clip_line_snap(Point::new(-0.01, 1.01), Point::new(1.01, 0.95));
         assert_eq!(clipped, Some((CellGrid::k(), CellGrid::o())));
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(0.0, 2.0), Point::new(1.0, 2.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(0.0, 2.0), Point::new(1.0, 2.0)),
             Some((CellGrid::u(), CellGrid::y()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(0.0, 0.0), Point::new(0.0, 2.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(0.0, 0.0), Point::new(0.0, 2.0)),
             Some((CellGrid::a(), CellGrid::u()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(1.0, 0.0), Point::new(1.0, 2.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(1.0, 0.0), Point::new(1.0, 2.0)),
             Some((CellGrid::e(), CellGrid::y()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(1.0, 0.0), Point::new(0.0, 0.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(1.0, 0.0), Point::new(0.0, 0.0)),
             Some((CellGrid::e(), CellGrid::a()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(0.5, 1.0), Point::new(1.0, 1.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(0.5, 1.0), Point::new(1.0, 1.0)),
             Some((CellGrid::m(), CellGrid::o()))
         );
 
         assert_eq!(
-            Cell::new(0, 0).clip_line_snap(Point::new(0.25, 1.0), Point::new(1.0, 1.0)),
+            Cell::new(0, 0)
+                .clip_line_snap(Point::new(0.25, 1.0), Point::new(1.0, 1.0)),
             Some((CellGrid::l(), CellGrid::o()))
         );
     }

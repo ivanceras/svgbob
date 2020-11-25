@@ -1,4 +1,3 @@
-
 use std::ops::{Deref, DerefMut};
 use unicode_width::UnicodeWidthChar;
 

@@ -405,7 +405,10 @@ pub fn endorse_circle(search: &Vec<Contacts>) -> Option<(&Circle, Vec<usize>)> {
 
 /// returns true if all the contacts in subset is in big_set
 /// This also returns the indices of big_set that are not found in the subset
-fn is_subset_of(subset: &Vec<Contacts>, big_set: &Vec<Contacts>) -> (bool, Vec<usize>) {
+fn is_subset_of(
+    subset: &Vec<Contacts>,
+    big_set: &Vec<Contacts>,
+) -> (bool, Vec<usize>) {
     let mut unmatched = vec![];
     let mut matched = 0;
     for (_i, set) in subset.iter().enumerate() {
@@ -428,10 +431,13 @@ fn is_subset_of(subset: &Vec<Contacts>, big_set: &Vec<Contacts>) -> (bool, Vec<u
 /// arc parameters is determine only by the contacts, and have no clue about it's radius.
 /// Multiple arc contacts can be the same while not having the same arc radius.
 pub fn endorse_arc(search: &Vec<Contacts>) -> Option<&fragment::Arc> {
-    FRAGMENTS_ARC
-        .iter()
-        .rev()
-        .find_map(|(contacts, arc)| if contacts == search { Some(arc) } else { None })
+    FRAGMENTS_ARC.iter().rev().find_map(|(contacts, arc)| {
+        if contacts == search {
+            Some(arc)
+        } else {
+            None
+        }
+    })
 }
 
 #[cfg(test)]

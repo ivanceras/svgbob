@@ -87,8 +87,10 @@ impl FragmentBuffer {
     }
 
     fn bounds(&self) -> Option<(Cell, Cell)> {
-        let xlimits = self.iter().map(|(cell, _)| cell.x).minmax().into_option();
-        let ylimits = self.iter().map(|(cell, _)| cell.y).minmax().into_option();
+        let xlimits =
+            self.iter().map(|(cell, _)| cell.x).minmax().into_option();
+        let ylimits =
+            self.iter().map(|(cell, _)| cell.y).minmax().into_option();
         match (xlimits, ylimits) {
             (Some((min_x, max_x)), Some((min_y, max_y))) => {
                 Some((Cell::new(min_x, min_y), Cell::new(max_x, max_y)))
@@ -98,14 +100,19 @@ impl FragmentBuffer {
     }
 
     pub(crate) fn get_size(&self, settings: &Settings) -> (f32, f32) {
-        let (_top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
+        let (_top_left, bottom_right) =
+            self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
         let w = settings.scale * (bottom_right.x + 2) as f32 * Cell::width();
         let h = settings.scale * (bottom_right.y + 2) as f32 * Cell::height();
         (w, h)
     }
 
     /// add multiple fragments to cell
-    pub fn add_fragments_to_cell(&mut self, cell: Cell, fragments: Vec<Fragment>) {
+    pub fn add_fragments_to_cell(
+        &mut self,
+        cell: Cell,
+        fragments: Vec<Fragment>,
+    ) {
         if let Some(existing) = self.get_mut(&cell) {
             existing.extend(fragments);
         } else {

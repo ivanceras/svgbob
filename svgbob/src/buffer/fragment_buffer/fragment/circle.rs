@@ -69,7 +69,10 @@ impl<MSG> Into<Node<MSG>> for Circle {
                 cx(self.center.x),
                 cy(self.center.y),
                 r(self.radius),
-                classes_flag([("filled", self.is_filled), ("nofill", !self.is_filled)]),
+                classes_flag([
+                    ("filled", self.is_filled),
+                    ("nofill", !self.is_filled),
+                ]),
             ],
             vec![],
         )

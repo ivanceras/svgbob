@@ -38,7 +38,9 @@ impl Arc {
     /// disregarding radius
     pub(in crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
         let arc = Arc::new(a, b, 1.0);
-        self.start == arc.start && self.end == arc.end && self.sweep_flag == arc.sweep_flag
+        self.start == arc.start
+            && self.end == arc.end
+            && self.sweep_flag == arc.sweep_flag
     }
 
     pub(in crate) fn new_with_sweep(

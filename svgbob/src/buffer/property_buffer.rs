@@ -4,9 +4,7 @@ use crate::{
     Cell, Fragment, FragmentBuffer, Settings,
 };
 pub use property::{Property, Signal};
-use std::{
-    collections::HashMap,
-};
+use std::collections::HashMap;
 
 mod property;
 
@@ -48,12 +46,15 @@ impl<'p> PropertyBuffer<'p> {
             let empty = &&Property::empty();
             let top_left = self.as_ref().get(&cell.top_left()).unwrap_or(empty);
             let top = self.as_ref().get(&cell.top()).unwrap_or(empty);
-            let top_right = self.as_ref().get(&cell.top_right()).unwrap_or(empty);
+            let top_right =
+                self.as_ref().get(&cell.top_right()).unwrap_or(empty);
             let left = self.as_ref().get(&cell.left()).unwrap_or(empty);
             let right = self.as_ref().get(&cell.right()).unwrap_or(empty);
-            let bottom_left = self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
+            let bottom_left =
+                self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
             let bottom = self.as_ref().get(&cell.bottom()).unwrap_or(empty);
-            let bottom_right = self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
+            let bottom_right =
+                self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
 
             Self::match_char_with_surrounding_properties(
                 settings,
@@ -84,13 +85,14 @@ impl<'p> PropertyBuffer<'p> {
         bottom: &Property,
         bottom_right: &Property,
     ) -> Option<char> {
-        let signature_match = ASCII_PROPERTIES.iter().find_map(|(ch, property)| {
-            if property.match_signature(fragments) {
-                Some(*ch)
-            } else {
-                None
-            }
-        });
+        let signature_match =
+            ASCII_PROPERTIES.iter().find_map(|(ch, property)| {
+                if property.match_signature(fragments) {
+                    Some(*ch)
+                } else {
+                    None
+                }
+            });
         // if no match in signature, find it in behavior match
         if signature_match.is_some() {
             signature_match
@@ -137,18 +139,24 @@ impl<'p> AsMut<HashMap<Cell, &'p Property>> for PropertyBuffer<'p> {
 
 /// convert property buffer to fragment buffer
 impl<'p> PropertyBuffer<'p> {
-    pub(crate) fn into_fragment_buffer(&self, settings: &Settings) -> FragmentBuffer {
+    pub(crate) fn into_fragment_buffer(
+        &self,
+        settings: &Settings,
+    ) -> FragmentBuffer {
         let mut fb = FragmentBuffer::new();
         for (cell, property) in self.as_ref() {
             let empty = &&Property::empty();
             let top_left = self.as_ref().get(&cell.top_left()).unwrap_or(empty);
             let top = self.as_ref().get(&cell.top()).unwrap_or(empty);
-            let top_right = self.as_ref().get(&cell.top_right()).unwrap_or(empty);
+            let top_right =
+                self.as_ref().get(&cell.top_right()).unwrap_or(empty);
             let left = self.as_ref().get(&cell.left()).unwrap_or(empty);
             let right = self.as_ref().get(&cell.right()).unwrap_or(empty);
-            let bottom_left = self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
+            let bottom_left =
+                self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
             let bottom = self.as_ref().get(&cell.bottom()).unwrap_or(empty);
-            let bottom_right = self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
+            let bottom_right =
+                self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
             let cell_fragments = property.fragments(
                 settings,
                 top_left,
@@ -165,10 +173,14 @@ impl<'p> PropertyBuffer<'p> {
             } else {
                 //If no match make it a text fragment
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(&property.ch) {
-                    let merged_fragments = Fragment::merge_recursive(fragments.clone());
+                    let merged_fragments =
+                        Fragment::merge_recursive(fragments.clone());
                     fb.add_fragments_to_cell(*cell, merged_fragments);
                 } else {
-                    fb.add_fragment_to_cell(*cell, fragment::cell_text(property.ch));
+                    fb.add_fragment_to_cell(
+                        *cell,
+                        fragment::cell_text(property.ch),
+                    );
                 }
             }
         }
@@ -324,7 +336,8 @@ mod tests {
     }
 
     #[test]
-    fn test_match_char_with_surrounding_properties_with_2_vertically_aligned_underscore() {
+    fn test_match_char_with_surrounding_properties_with_2_vertically_aligned_underscore(
+    ) {
         let u = CellGrid::u();
         let y = CellGrid::y();
         //     _

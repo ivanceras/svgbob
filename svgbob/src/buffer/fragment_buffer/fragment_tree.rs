@@ -1,4 +1,4 @@
-use crate::{Fragment};
+use crate::Fragment;
 use sauron::{html::attributes::*, Node};
 
 /// A tree of fragments where a fragment can contain other fragments
@@ -103,7 +103,8 @@ impl FragmentTree {
         let mut nodes = vec![];
         let mut fragment_node: Node<MSG> = self.fragment.into();
         let _css_tag_len = self.css_tag.len();
-        fragment_node = fragment_node.merge_attributes(vec![classes(self.css_tag)]);
+        fragment_node =
+            fragment_node.merge_attributes(vec![classes(self.css_tag)]);
 
         nodes.push(fragment_node);
         for child in self.enclosing {
@@ -114,8 +115,11 @@ impl FragmentTree {
 
     /// convert fragments to node, where cell_text and text may become
     /// css class of the contain fragment
-    pub(crate) fn fragments_to_node<MSG>(fragments: Vec<Fragment>) -> Vec<Node<MSG>> {
-        let fragment_trees: Vec<FragmentTree> = Self::enclose_fragments(fragments);
+    pub(crate) fn fragments_to_node<MSG>(
+        fragments: Vec<Fragment>,
+    ) -> Vec<Node<MSG>> {
+        let fragment_trees: Vec<FragmentTree> =
+            Self::enclose_fragments(fragments);
         fragment_trees
             .into_iter()
             .flat_map(|frag_tree| frag_tree.into_nodes())
@@ -163,9 +167,14 @@ mod tests {
 
     #[test]
     fn test_enclose_recursive() {
-        let rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
-        let rect2 = rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
-        let text1 = Fragment::CellText(CellText::new(Cell::new(2, 2), "{doc}".to_string()));
+        let rect1 =
+            rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
+        let rect2 =
+            rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
+        let text1 = Fragment::CellText(CellText::new(
+            Cell::new(2, 2),
+            "{doc}".to_string(),
+        ));
         let text2 = Fragment::CellText(CellText::new(
             Cell::new(2, 2),
             "This is a hello world!".to_string(),
@@ -179,10 +188,20 @@ mod tests {
             fragment_trees,
             vec![
                 FragmentTree {
-                    fragment: rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false),
+                    fragment: rect(
+                        Point::new(0.0, 0.0),
+                        Point::new(10.0, 10.0),
+                        false,
+                        false
+                    ),
                     css_tag: vec![],
                     enclosing: vec![FragmentTree {
-                        fragment: rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false),
+                        fragment: rect(
+                            Point::new(1.0, 1.0),
+                            Point::new(9.0, 9.0),
+                            false,
+                            false
+                        ),
                         css_tag: vec!["doc".to_string()],
                         enclosing: vec![],
                     },],
@@ -201,9 +220,14 @@ mod tests {
 
     #[test]
     fn test_enclose_recursive_different_order() {
-        let rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
-        let rect2 = rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
-        let text1 = Fragment::CellText(CellText::new(Cell::new(2, 2), "{doc}".to_string()));
+        let rect1 =
+            rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
+        let rect2 =
+            rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
+        let text1 = Fragment::CellText(CellText::new(
+            Cell::new(2, 2),
+            "{doc}".to_string(),
+        ));
         let text2 = Fragment::CellText(CellText::new(
             Cell::new(2, 2),
             "This is a hello world!".to_string(),
@@ -217,10 +241,20 @@ mod tests {
             fragment_trees,
             vec![
                 FragmentTree {
-                    fragment: rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false),
+                    fragment: rect(
+                        Point::new(0.0, 0.0),
+                        Point::new(10.0, 10.0),
+                        false,
+                        false
+                    ),
                     css_tag: vec![],
                     enclosing: vec![FragmentTree {
-                        fragment: rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false),
+                        fragment: rect(
+                            Point::new(1.0, 1.0),
+                            Point::new(9.0, 9.0),
+                            false,
+                            false
+                        ),
                         css_tag: vec!["doc".to_string()],
                         enclosing: vec![],
                     },],
