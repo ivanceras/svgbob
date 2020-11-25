@@ -96,7 +96,7 @@ impl Arc {
             || self.end == other.start
     }
 
-    pub(in crate) fn has_endpoint(&self, p: Point) -> bool {
+    pub fn has_endpoint(&self, p: Point) -> bool {
         self.start == p || self.end == p
     }
 

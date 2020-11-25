@@ -1,4 +1,4 @@
-use crate::{fragment::Line, Point};
+use crate::{Point};
 use ncollide2d::{
     bounding_volume::AABB, math::Isometry, query::point_internal::point_query::PointQuery,
 };
@@ -82,8 +82,8 @@ pub fn pad(v: f32) -> f32 {
 /// this is parser module which provides parsing for identifier for
 /// extracting the css tag of inside of a shape fragment
 pub mod parser {
-    use crate::Cell;
-    use pom::parser::{call, end, is_a, list, none_of, one_of, sym, tag, Parser};
+    
+    use pom::parser::{is_a, list, none_of, one_of, sym, tag, Parser};
     use std::iter::FromIterator;
 
     /// Parses a list with the defined separator, but will fail early when one of the
@@ -119,7 +119,7 @@ pub mod parser {
                                     }
                                 }
                             }
-                            Err(e) => {
+                            Err(_e) => {
                                 // the separator does not match, just break
                                 break;
                             }

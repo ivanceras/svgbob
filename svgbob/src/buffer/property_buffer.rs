@@ -6,7 +6,6 @@ use crate::{
 pub use property::{Property, Signal};
 use std::{
     collections::HashMap,
-    ops::{Deref, DerefMut},
 };
 
 mod property;
@@ -97,7 +96,7 @@ impl<'p> PropertyBuffer<'p> {
             signature_match
         } else {
             ASCII_PROPERTIES.iter().find_map(|(ch, property)| {
-                let mut behavioral_fragments = property.fragments(
+                let behavioral_fragments = property.fragments(
                     settings,
                     top_left,
                     top,
@@ -219,7 +218,7 @@ mod tests {
     #[test]
     fn test_match_char_with_surrounding_properties_with_diagonal_cross() {
         let k = CellGrid::k();
-        let m = CellGrid::m();
+        let _m = CellGrid::m();
         let o = CellGrid::o();
         let e = CellGrid::e();
         let u = CellGrid::u();
@@ -259,7 +258,7 @@ mod tests {
         let k = CellGrid::k();
         let o = CellGrid::o();
         let c = CellGrid::c();
-        let m = CellGrid::m();
+        let _m = CellGrid::m();
         let w = CellGrid::w();
         //      |
         //     -+-

@@ -6,7 +6,7 @@ pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
 pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;
-use sauron::{html::attributes::class, Node};
+use sauron::{Node};
 use std::{cmp::Ordering, fmt};
 pub use text::{CellText, Text};
 
@@ -604,7 +604,7 @@ mod tests {
         let c = CellGrid::c();
         let m = CellGrid::m();
         let w = CellGrid::w();
-        let mut fragments1 = vec![line(k, m), line(m, o), line(c, m), line(m, w)];
+        let fragments1 = vec![line(k, m), line(m, o), line(c, m), line(m, w)];
         println!("before merged:");
         for frag in &fragments1 {
             println!("{}", frag);

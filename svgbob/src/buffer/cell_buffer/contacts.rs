@@ -2,7 +2,6 @@ use super::endorse;
 use crate::buffer::{fragment::Fragment, Cell};
 use std::{
     fmt,
-    ops::{Deref, DerefMut},
 };
 
 /// Contains a group of fragments that are touching each other

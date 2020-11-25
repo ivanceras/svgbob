@@ -1,3 +1,5 @@
+#![deny(warnings)]
+#![allow(unused)]
 #![deny(clippy::all)]
 
 pub mod buffer;

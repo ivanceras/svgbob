@@ -1,8 +1,5 @@
 use crate::{
-    buffer::{
-        fragment_buffer::fragment::{polygon::Polygon, PolygonTag},
-        Cell, CellGrid, Fragment,
-    },
+    buffer::{fragment_buffer::fragment::polygon::Polygon, Cell, Fragment},
     fragment::{marker_line, Bounds, Circle, Marker, MarkerLine},
     util, Direction, Point,
 };
@@ -14,12 +11,7 @@ use ncollide2d::{
 use std::{cmp::Ordering, fmt};
 
 use crate::fragment::Arc;
-use sauron::{
-    html::attributes::*,
-    svg,
-    svg::{attributes::*, *},
-    Node,
-};
+use sauron::{html::attributes::*, svg, svg::attributes::*, Node};
 
 #[derive(Debug, Clone)]
 pub struct Line {
@@ -142,21 +134,21 @@ impl Line {
     ///
     ///
     fn line_angle(&self) -> f32 {
-        let angle = self.full_angle();
+        let angle = self.full_angle().round() as i32;
         match angle {
-            0.0..=10.0 => 0.0,
-            10.0..=50.0 => 63.435, //45.0,
-            50.0..=80.0 => 63.435,
-            80.0..=100.0 => 90.0,
-            100.0..=130.0 => 116.565,
-            130.0..=170.0 => 116.565, //135.0,
-            170.0..=190.0 => 180.0,
-            190.0..=230.0 => 243.435, //225.0,
-            230.0..=260.0 => 243.435,
-            260.0..=280.0 => 270.0,
-            280.0..=310.0 => 296.565,
-            310.0..=350.0 => 296.565, //315.0,
-            350.0..=360.0 => 0.0,
+            0..=10 => 0.0,
+            11..=50 => 63.435, //45.0,
+            51..=80 => 63.435,
+            81..=100 => 90.0,
+            101..=130 => 116.565,
+            131..=170 => 116.565, //135.0,
+            171..=190 => 180.0,
+            191..=230 => 243.435, //225.0,
+            231..=260 => 243.435,
+            261..=280 => 270.0,
+            281..=310 => 296.565,
+            311..=350 => 296.565, //315.0,
+            351..=360 => 0.0,
             _ => 0.0,
         }
     }
@@ -212,6 +204,7 @@ impl Line {
     }
     */
 
+    #[allow(unused)]
     pub(crate) fn merge_marker_line(&self, mline: &MarkerLine) -> Option<Fragment> {
         if mline.start_marker.is_none() {
             if self.end == mline.line.start {
@@ -265,7 +258,7 @@ impl Line {
         let distance_end_center = self.end.distance(&center);
         let distance_start_center = self.start.distance(&center);
 
-        let threshold_length = self.heading().threshold_length();
+        let _threshold_length = self.heading().threshold_length();
         let is_close_start_point = distance_start_center < (circle.radius);
         let is_close_end_point = distance_end_center < (circle.radius);
         is_close_start_point || is_close_end_point
@@ -324,7 +317,7 @@ impl Line {
             } else {
                 panic!("There is no endpoint of the line is that close to the arrow");
             };
-            let mut extended_line = new_line.extend(threshold_length);
+            let extended_line = new_line.extend(threshold_length);
 
             Some(marker_line(
                 extended_line.start,

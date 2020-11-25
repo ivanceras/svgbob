@@ -1,4 +1,4 @@
-use crate::{buffer::Settings, Fragment};
+use crate::{Fragment};
 use sauron::{html::attributes::*, Node};
 
 /// A tree of fragments where a fragment can contain other fragments
@@ -102,7 +102,7 @@ impl FragmentTree {
     fn into_nodes<MSG>(self) -> Vec<Node<MSG>> {
         let mut nodes = vec![];
         let mut fragment_node: Node<MSG> = self.fragment.into();
-        let css_tag_len = self.css_tag.len();
+        let _css_tag_len = self.css_tag.len();
         fragment_node = fragment_node.merge_attributes(vec![classes(self.css_tag)]);
 
         nodes.push(fragment_node);
@@ -163,7 +163,7 @@ mod tests {
 
     #[test]
     fn test_enclose_recursive() {
-        let mut rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
+        let rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
         let rect2 = rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
         let text1 = Fragment::CellText(CellText::new(Cell::new(2, 2), "{doc}".to_string()));
         let text2 = Fragment::CellText(CellText::new(
@@ -201,7 +201,7 @@ mod tests {
 
     #[test]
     fn test_enclose_recursive_different_order() {
-        let mut rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
+        let rect1 = rect(Point::new(0.0, 0.0), Point::new(10.0, 10.0), false, false);
         let rect2 = rect(Point::new(1.0, 1.0), Point::new(9.0, 9.0), false, false);
         let text1 = Fragment::CellText(CellText::new(Cell::new(2, 2), "{doc}".to_string()));
         let text2 = Fragment::CellText(CellText::new(

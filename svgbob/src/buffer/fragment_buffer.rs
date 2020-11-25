@@ -98,7 +98,7 @@ impl FragmentBuffer {
     }
 
     pub(crate) fn get_size(&self, settings: &Settings) -> (f32, f32) {
-        let (top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
+        let (_top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
         let w = settings.scale * (bottom_right.x + 2) as f32 * Cell::width();
         let h = settings.scale * (bottom_right.y + 2) as f32 * Cell::height();
         (w, h)

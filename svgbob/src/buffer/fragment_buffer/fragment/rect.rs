@@ -3,7 +3,7 @@ use std::fmt;
 
 use ncollide2d::shape::{Segment, Shape};
 use sauron::{
-    html::{attributes, attributes::*},
+    html::{attributes::*},
     svg::{attributes::*, *},
     Node,
 };

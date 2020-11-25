@@ -1,10 +1,6 @@
 use crate::Direction;
 use crate::{
-    buffer::CellGrid,
-    fragment::{
-        marker_line::{Marker, MarkerLine},
-        Bounds,
-    },
+    fragment::{marker_line::Marker, Bounds},
     Cell, Point,
 };
 use nalgebra::Point2;
@@ -14,7 +10,7 @@ use sauron::{
     svg::{attributes::*, *},
     Node,
 };
-use std::{cmp::Ordering, fmt, ops::Deref};
+use std::{cmp::Ordering, fmt};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum PolygonTag {

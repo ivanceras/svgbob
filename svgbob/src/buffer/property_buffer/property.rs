@@ -177,7 +177,7 @@ impl Property {
 
     /// evaluate this property together with the supplied surrounding
     /// to see if the resulting fragments is equal to the supplied fragments
-    pub(in crate) fn match_property(&self, fragments: &Vec<Fragment>) -> bool {
+    pub(in crate) fn match_property(&self, _fragments: &Vec<Fragment>) -> bool {
         false
     }
 

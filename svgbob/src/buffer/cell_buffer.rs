@@ -9,7 +9,6 @@ use itertools::Itertools;
 use sauron::{
     html,
     html::{attributes::*, *},
-    svg,
     svg::{attributes::*, *},
     Node,
 };
@@ -142,7 +141,7 @@ impl CellBuffer {
     /// calculate the appropriate size (w,h) in pixels for the whole cell buffer to fit
     /// appropriately
     pub(crate) fn get_size(&self, settings: &Settings) -> (f32, f32) {
-        let (top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
+        let (_top_left, bottom_right) = self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
         let w = settings.scale * (bottom_right.x + 2) as f32 * Cell::width();
         let h = settings.scale * (bottom_right.y + 2) as f32 * Cell::height();
         (w, h)
@@ -177,7 +176,7 @@ impl CellBuffer {
             .into_iter()
             .map(|contact| contact.0)
             .map(move |contacts| {
-                let mut group_members = contacts
+                let group_members = contacts
                     .iter()
                     .map(move |gfrag| {
                         let scaled = gfrag.scale(settings.scale);
@@ -192,7 +191,7 @@ impl CellBuffer {
         let mut fragments: Vec<Fragment> = vec_fragments.into_iter().flatten().collect();
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
-        let mut svg_node = Self::fragments_to_node(fragments, self.legend_css(), settings, w, h)
+        let svg_node = Self::fragments_to_node(fragments, self.legend_css(), settings, w, h)
             .add_children(group_nodes);
         (svg_node, w, h)
     }

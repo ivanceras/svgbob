@@ -1,11 +1,6 @@
 use crate::{
-    buffer::{
-        cell_buffer::Contacts,
-        fragment_buffer::fragment::{marker_line, Line, Polygon, PolygonTag},
-        CellGrid, FragmentBuffer, Property, PropertyBuffer, StringBuffer,
-    },
+    buffer::{cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer, StringBuffer},
     fragment,
-    fragment::{Circle, Marker},
     map::{circle_map, UNICODE_FRAGMENTS},
     Cell, Fragment, Settings,
 };
@@ -204,9 +199,9 @@ impl Span {
         let (top_left, _) = self.bounds().expect("mut have bounds");
         let groups: Vec<Contacts> = self.get_contacts(settings);
         // 1st phase, successful_endorses fragments, unendorsed one)
-        let (mut fragments, mut un_endorsed) = Self::endorse_rects(groups);
+        let (mut fragments, un_endorsed) = Self::endorse_rects(groups);
         // 2nd phase, try to endorse to circles and arcs from the rejects of the 1st phase
-        let (mut circle_fragments, mut un_endorsed) = Self::endorse_circles_and_arcs(un_endorsed);
+        let (circle_fragments, un_endorsed) = Self::endorse_circles_and_arcs(un_endorsed);
 
         fragments.extend(circle_fragments);
         (

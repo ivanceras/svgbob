@@ -252,14 +252,14 @@ lazy_static! {
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center_cell, center, radius)|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius)|{
             (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
 
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center_cell, center, radius)|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
@@ -408,7 +408,7 @@ pub fn endorse_circle(search: &Vec<Contacts>) -> Option<(&Circle, Vec<usize>)> {
 fn is_subset_of(subset: &Vec<Contacts>, big_set: &Vec<Contacts>) -> (bool, Vec<usize>) {
     let mut unmatched = vec![];
     let mut matched = 0;
-    for (i, set) in subset.iter().enumerate() {
+    for (_i, set) in subset.iter().enumerate() {
         if big_set.contains(set) {
             matched += 1;
         }

@@ -1,4 +1,4 @@
-use crate::point::Point;
+
 use std::ops::{Deref, DerefMut};
 use unicode_width::UnicodeWidthChar;
 
@@ -79,7 +79,7 @@ impl From<&str> for StringBuffer {
             for ch in line.chars() {
                 row.push(ch);
                 if let Some(width) = ch.width() {
-                    for i in 1..width {
+                    for _i in 1..width {
                         row.push('\0');
                     }
                 }
