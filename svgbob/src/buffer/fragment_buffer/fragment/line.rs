@@ -306,13 +306,15 @@ impl Line {
         let distance_end_center = self.end.distance(&poly_center);
         let distance_start_center = self.start.distance(&poly_center);
 
-        let threshold_length = self.heading().threshold_length();
+        let line_heading = self.heading();
+
+        let threshold_length = line_heading.threshold_length();
         let is_close_start_point = distance_start_center < threshold_length;
         let is_close_end_point = distance_end_center < threshold_length;
 
-        let is_same_direction = dbg!(polygon.matched_direction(self.heading()));
+        let is_same_direction = polygon.matched_direction(line_heading);
 
-        let is_opposite_direction = dbg!(polygon.matched_direction(self.heading().opposite()));
+        let is_opposite_direction = polygon.matched_direction(line_heading.opposite());
 
         let can_merge = (is_same_direction || is_opposite_direction)
             && (is_close_start_point || is_close_end_point);
@@ -340,16 +342,6 @@ impl Line {
         }
     }
 
-    pub(crate) fn can_merge_circle(&self, circle: &Circle) -> bool {
-        let distance_end_center = self.end.distance(&circle.center);
-        let distance_start_center = self.start.distance(&circle.center);
-
-        let threshold_length = self.heading().threshold_length();
-        let is_close_start_point = distance_start_center <= threshold_length * 0.75;
-        let is_close_end_point = distance_end_center <= threshold_length * 0.75;
-        circle.radius <= Cell::unit(3) && (is_close_start_point || is_close_end_point)
-    }
-
     pub(crate) fn merge_circle(&self, circle: &Circle) -> Option<Fragment> {
         let distance_end_center = self.end.distance(&circle.center);
         let distance_start_center = self.start.distance(&circle.center);
@@ -358,30 +350,37 @@ impl Line {
         let is_close_start_point = distance_start_center <= threshold_length * 0.75;
         let is_close_end_point = distance_end_center <= threshold_length * 0.75;
 
-        let marker = if circle.is_filled {
-            Some(Marker::Circle)
-        } else if circle.radius >= Cell::unit(2) {
-            Some(Marker::BigOpenCircle)
-        } else {
-            Some(Marker::OpenCircle)
-        };
-        let new_line = if is_close_end_point {
-            Line::new_noswap(self.start, circle.center, self.is_broken)
-        } else if is_close_start_point {
-            // if close to the start, swap the end points of the line
-            Line::new_noswap(self.end, circle.center, self.is_broken)
-        } else {
-            panic!("There is no endpoint of the line is that close to the arrow");
-        };
+        let can_merge =
+            circle.radius <= Cell::unit(3) && (is_close_start_point || is_close_end_point);
 
-        let marker_line = marker_line(
-            new_line.start,
-            new_line.end,
-            new_line.is_broken,
-            None,
-            marker,
-        );
-        Some(marker_line)
+        if can_merge {
+            let marker = if circle.is_filled {
+                Some(Marker::Circle)
+            } else if circle.radius >= Cell::unit(2) {
+                Some(Marker::BigOpenCircle)
+            } else {
+                Some(Marker::OpenCircle)
+            };
+            let new_line = if is_close_end_point {
+                Line::new_noswap(self.start, circle.center, self.is_broken)
+            } else if is_close_start_point {
+                // if close to the start, swap the end points of the line
+                Line::new_noswap(self.end, circle.center, self.is_broken)
+            } else {
+                panic!("There is no endpoint of the line is that close to the arrow");
+            };
+
+            let marker_line = marker_line(
+                new_line.start,
+                new_line.end,
+                new_line.is_broken,
+                None,
+                marker,
+            );
+            Some(marker_line)
+        } else {
+            None
+        }
     }
 
     /// check to see if any of the line endpoints is touching.

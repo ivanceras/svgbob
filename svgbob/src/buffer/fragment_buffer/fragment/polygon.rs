@@ -91,22 +91,6 @@ impl PolygonTag {
             true
         }
     }
-
-    /*
-    /// calculate the threshold length which is the basis
-    /// if the arrow and the line is connected
-    pub(crate) fn threshold_length(&self) -> f32 {
-        match self {
-            PolygonTag::ArrowTopRight
-            | PolygonTag::ArrowBottomRight
-            | PolygonTag::ArrowBottomLeft
-            | PolygonTag::ArrowTopLeft => CellGrid::diagonal_length(),
-            PolygonTag::ArrowBottom | PolygonTag::ArrowTop => CellGrid::height(),
-            PolygonTag::ArrowLeft | PolygonTag::ArrowRight => CellGrid::width(),
-            PolygonTag::DiamondBullet => CellGrid::diagonal_length(),
-        }
-    }
-    */
 }
 
 impl Polygon {

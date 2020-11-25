@@ -97,7 +97,8 @@ impl Fragment {
         }
     }
 
-    /// FIXME: This is only merging lines and text right now
+    /// merge this fragment to the other fragment if it is possible
+    /// returns None if the fragment can not be merge
     pub fn merge(&self, other: &Self) -> Option<Self> {
         match (self, other) {
             // line and line
@@ -118,9 +119,12 @@ impl Fragment {
             /*
             // line and marker_line
             (Fragment::Line(line), Fragment::MarkerLine(mline)) => line.merge_marker_line(mline),
-
+            */
+            /*
             // marker_line and line
             (Fragment::MarkerLine(mline), Fragment::Line(line)) => line.merge_marker_line(mline),
+            */
+            /*
             (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
                 mline.merge_polygon(polygon)
             }
@@ -654,6 +658,33 @@ mod tests {
             false,
             None,
             Some(Marker::Arrow),
+        );
+        assert_eq!(Some(expected), merged);
+    }
+
+    #[test]
+    fn merge_line_and_circle() {
+        let a = CellGrid::a();
+        let m = CellGrid::m();
+        let y = CellGrid::y();
+
+        let circle = circle(m, Cell::unit(2), false);
+
+        let circle = circle.absolute_position(Cell::new(0, 0));
+        let diagonal: Fragment = Line::new_noswap(a, y, false).into();
+        let diagonal = diagonal.absolute_position(Cell::new(1, 1));
+
+        println!("circle: {:#?}", circle);
+        println!("diagonal: {:#?}", diagonal);
+
+        let merged = circle.merge(&diagonal);
+
+        let expected = marker_line(
+            Point::new(2.0, 4.0),
+            Point::new(0.5, 1.0),
+            false,
+            None,
+            Some(Marker::BigOpenCircle),
         );
         assert_eq!(Some(expected), merged);
     }

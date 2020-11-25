@@ -80,41 +80,27 @@ impl MarkerLine {
         }
     }
 
-    /*
-    pub(crate) fn can_merge_polygon(&self, polygon: &Polygon) -> bool {
+    /// merge this marker line to the polygon
+    pub(crate) fn merge_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         let poly_center = polygon.center();
         let distance_end_center = self.line.end.distance(&poly_center);
         let distance_start_center = self.line.start.distance(&poly_center);
 
-        let threshold_length = self.line.heading().threshold_length();
+        let line_heading = self.line.heading();
+
+        let threshold_length = line_heading.threshold_length();
         let is_close_start_point = distance_start_center < threshold_length;
         let is_close_end_point = distance_end_center < threshold_length;
 
-        let can_connect_start = is_close_start_point && self.start_marker.is_none();
-        let can_connect_end = is_close_end_point && self.end_marker.is_none();
+        let is_same_direction = polygon.matched_direction(line_heading);
 
-        let is_same_direction = polygon
-            .tags
-            .iter()
-            .any(|tag| tag.matched_direction(self.line.heading()));
+        let is_opposite_direction = polygon.matched_direction(line_heading.opposite());
 
-        is_same_direction && (can_connect_start || can_connect_end)
-    }
-    */
+        let can_merge = (is_same_direction || is_opposite_direction)
+            && (is_close_start_point || is_close_end_point);
 
-    /*
-    /// merge this marker line to the polygon
-    pub(crate) fn merge_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
-        if self.can_merge_polygon(polygon) {
-            let marker = polygon.tags.get(0).map(|tag| tag.get_marker());
-            let direction = polygon.tags.get(0).map(|tag| tag.direction());
-            let poly_center = polygon.center();
-            let distance_end_center = self.line.end.distance(&poly_center);
-            let distance_start_center = self.line.start.distance(&poly_center);
-
-            let threshold_length = self.line.heading().threshold_length();
-            let is_close_start_point = distance_start_center < threshold_length;
-            let is_close_end_point = distance_end_center < threshold_length;
+        if can_merge {
+            let marker = polygon.get_marker();
 
             let start_marker = if is_close_start_point && self.start_marker.is_none() {
                 marker.clone()
@@ -146,7 +132,6 @@ impl MarkerLine {
             None
         }
     }
-    */
 }
 
 impl Bounds for MarkerLine {
