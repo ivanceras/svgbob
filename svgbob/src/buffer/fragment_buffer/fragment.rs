@@ -203,12 +203,12 @@ impl Fragment {
             Fragment::Line(line) => match other {
                 Fragment::Line(other) => line.is_touching(other),
                 Fragment::Arc(other_arc) => line.is_touching_arc(other_arc),
-                Fragment::Polygon(polygon) => line.can_merge_polygon(polygon),
+                Fragment::Polygon(polygon) => line.merge_line_polygon(polygon).is_some(),
                 Fragment::Circle(circle) => line.is_touching_circle(circle),
                 _ => false,
             },
             Fragment::Polygon(polygon) => match other {
-                Fragment::Line(other) => other.can_merge_polygon(polygon),
+                Fragment::Line(other) => other.merge_line_polygon(polygon).is_some(),
                 _ => false,
             },
             Fragment::Arc(arc) => match other {

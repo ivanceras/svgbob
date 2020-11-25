@@ -300,52 +300,24 @@ impl Line {
         }
     }
 
-    /// check if this line is touching the polygon with a polygon tag
-    /// This is used for checking the line to be endorsed as arrow_line
-    /// if the PolygonTag can connect to the angle of the line
-    pub(crate) fn can_merge_polygon(&self, polygon: &Polygon) -> bool {
-        // get the line angle can go alongside the polygon tag, arrow direction
-        // check also if the distance of this line end-point to the center
-        // of the polygon is less than the diagonal width of the cell grid.
+    /// merge this line to the marker line
+    pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
         let poly_center = polygon.center();
-
-        println!("poly_center: {:?}", poly_center);
         let distance_end_center = self.end.distance(&poly_center);
         let distance_start_center = self.start.distance(&poly_center);
 
-        let threshold_length = dbg!(self.heading().threshold_length());
-        let is_close_start_point = dbg!(distance_start_center < threshold_length);
-        let is_close_end_point = dbg!(distance_end_center < threshold_length);
+        let threshold_length = self.heading().threshold_length();
+        let is_close_start_point = distance_start_center < threshold_length;
+        let is_close_end_point = distance_end_center < threshold_length;
 
         let is_same_direction = dbg!(polygon.matched_direction(self.heading()));
 
         let is_opposite_direction = dbg!(polygon.matched_direction(self.heading().opposite()));
 
-        (is_same_direction || is_opposite_direction) && (is_close_start_point || is_close_end_point)
-    }
+        let can_merge = (is_same_direction || is_opposite_direction)
+            && (is_close_start_point || is_close_end_point);
 
-    /// TODO: the get_marker function don't take into account the direction
-    /// of the line from start to end. The direction is not followed.
-    /// TODO: If the marker direction is on opposite direction of the line
-    /// heading, swap the line start and end point
-    ///
-    /// merge this line to the marker line
-    pub(crate) fn merge_line_polygon(&self, polygon: &Polygon) -> Option<Fragment> {
-        if self.can_merge_polygon(polygon) {
-            let marker = polygon.get_marker();
-
-            let poly_center = polygon.center();
-            let distance_end_center = self.end.distance(&poly_center);
-            let distance_start_center = self.start.distance(&poly_center);
-
-            let threshold_length = self.heading().threshold_length();
-            let is_close_start_point = distance_start_center < threshold_length;
-            let is_close_end_point = distance_end_center < threshold_length;
-
-            let is_same_direction = dbg!(polygon.matched_direction(self.heading()));
-
-            let is_opposite_direction = dbg!(polygon.matched_direction(self.heading().opposite()));
-
+        if can_merge {
             let new_line = if is_close_end_point {
                 Line::new_noswap(self.start, self.end, self.is_broken)
             } else if is_close_start_point {
@@ -361,7 +333,7 @@ impl Line {
                 extended_line.end,
                 extended_line.is_broken,
                 None,
-                marker,
+                polygon.get_marker(),
             ))
         } else {
             None
@@ -651,7 +623,7 @@ mod tests {
         let polygon = Polygon::new(vec![p1, p2, p3], false, vec![PolygonTag::ArrowRight]);
 
         let line = Line::new(m, end, false);
-        assert!(line.can_merge_polygon(&polygon));
+        assert!(line.merge_line_polygon(&polygon).is_some());
     }
 
     #[test]
