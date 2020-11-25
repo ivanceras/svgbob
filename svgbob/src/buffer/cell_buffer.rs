@@ -249,6 +249,8 @@ impl CellBuffer {
                         }}
 
                     text {{
+                        /* This fix the spacing bug in svg text*/
+                        white-space: pre;
                         fill: {stroke_color};
                         }}
                         rect.backdrop{{
