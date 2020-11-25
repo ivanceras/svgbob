@@ -13,3 +13,5 @@
 - [ ] Add test cases
 - [ ] Re-implement the escape string with double quotes.
 - [ ] Use perfect hashmap [phf](https://crates.io/crates/phf) to efficiently build the maps(unicode_map, circle_map, ascii_map) at compile time.
+- [ ] Fix the double arrow issue
+        When there is 2 arrows in the middle of a line `---->>-------` or `----<<----`
