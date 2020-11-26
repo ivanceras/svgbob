@@ -8,3 +8,4 @@ Svgbob transform your ascii diagrams into a nice svg representation.
 
 [**Demo**](https://svgbob-editor.netlify.app/)
 
+[![Foo](https://xscode.com/assets/promo-banner.svg)](https://xscode.com/ivanceras/svgbob)
