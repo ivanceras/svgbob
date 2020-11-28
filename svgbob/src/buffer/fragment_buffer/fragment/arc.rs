@@ -81,7 +81,7 @@ impl Arc {
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub fn scale(&self, scale: f32) -> Self {
         Arc {
             start: self.start.scale(scale),
             end: self.end.scale(scale),
@@ -103,7 +103,7 @@ impl Arc {
     }
 
     /// calculate the center point this arc
-    fn center(&self) -> Point {
+    pub fn center(&self) -> Point {
         let start = self.start;
         let end = self.end;
         let q = start.distance(&end);

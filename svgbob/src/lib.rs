@@ -3,7 +3,7 @@
 #![deny(clippy::all)]
 
 pub mod buffer;
-mod map;
+pub mod map;
 mod point;
 pub mod util;
 

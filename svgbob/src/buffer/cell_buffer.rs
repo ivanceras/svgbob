@@ -325,7 +325,7 @@ impl CellBuffer {
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
     /// dimension
-    pub(crate) fn fragments_to_node<MSG>(
+    pub fn fragments_to_node<MSG>(
         fragments: Vec<Fragment>,
         legend_css: String,
         settings: &Settings,

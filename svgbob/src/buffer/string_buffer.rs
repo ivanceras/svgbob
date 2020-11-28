@@ -23,7 +23,7 @@ impl DerefMut for StringBuffer {
 }
 
 impl StringBuffer {
-    pub(in crate) fn new() -> Self {
+    pub fn new() -> Self {
         StringBuffer(vec![])
     }
 

@@ -132,10 +132,7 @@ impl Property {
     }
 
     /// derive a strong property with a strong signal
-    pub(in crate) fn with_strong_fragments(
-        ch: char,
-        fragments: Vec<Fragment>,
-    ) -> Self {
+    pub fn with_strong_fragments(ch: char, fragments: Vec<Fragment>) -> Self {
         Property {
             ch,
             signature: vec![(Signal::Strong, fragments)],
@@ -175,7 +172,7 @@ impl Property {
         self.ch.is_alphabetic() && self.ch != '_' // since space is used when a property is derived from strong
     }
 
-    pub(in crate) fn match_signature(&self, fragments: &Vec<Fragment>) -> bool {
+    pub fn match_signature(&self, fragments: &Vec<Fragment>) -> bool {
         let signature_fragments = self.signature_fragments_with_signal(Strong);
         signature_fragments == *fragments
     }

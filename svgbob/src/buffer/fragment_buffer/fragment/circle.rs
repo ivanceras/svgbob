@@ -41,7 +41,7 @@ impl Circle {
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub fn scale(&self, scale: f32) -> Self {
         Circle {
             center: self.center.scale(scale),
             radius: self.radius * scale,

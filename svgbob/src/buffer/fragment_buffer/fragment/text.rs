@@ -14,8 +14,8 @@ use std::{borrow::Cow, cmp::Ordering, fmt};
 /// track of the scale.
 #[derive(Debug, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub struct CellText {
-    pub(crate) start: Cell,
-    pub(crate) content: String,
+    pub start: Cell,
+    pub content: String,
 }
 
 impl CellText {

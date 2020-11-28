@@ -1,5 +1,8 @@
 pub use ascii_map::ASCII_PROPERTIES;
-pub use unicode_map::{UNICODE_FRAGMENTS, UNICODE_PROPERTIES};
+pub use circle_map::CIRCLES_SPAN;
+pub use unicode_map::{
+    FRAGMENTS_UNICODE, UNICODE_FRAGMENTS, UNICODE_PROPERTIES,
+};
 
 pub(in crate) mod ascii_map;
 pub(in crate) mod circle_map;

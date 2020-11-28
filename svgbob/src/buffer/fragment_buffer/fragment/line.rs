@@ -23,7 +23,7 @@ pub struct Line {
 impl Line {
     /// creates a new line and reorder the points swapping the end points if necessary
     /// such that the start is the most top-left and end point is the most bottom-right
-    pub(in crate) fn new(start: Point, end: Point, is_broken: bool) -> Self {
+    pub fn new(start: Point, end: Point, is_broken: bool) -> Self {
         let mut line = Line {
             start,
             end,
@@ -451,7 +451,7 @@ impl Line {
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub fn scale(&self, scale: f32) -> Self {
         Line {
             start: self.start.scale(scale),
             end: self.end.scale(scale),
@@ -463,7 +463,7 @@ impl Line {
         self.is_broken
     }
 
-    pub(crate) fn localize(&self, cell: Cell) -> Self {
+    pub fn localize(&self, cell: Cell) -> Self {
         Line {
             start: cell.localize_point(self.start),
             end: cell.localize_point(self.end),

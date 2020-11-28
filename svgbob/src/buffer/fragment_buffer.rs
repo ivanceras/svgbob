@@ -99,7 +99,7 @@ impl FragmentBuffer {
         }
     }
 
-    pub(crate) fn get_size(&self, settings: &Settings) -> (f32, f32) {
+    pub fn get_size(&self, settings: &Settings) -> (f32, f32) {
         let (_top_left, bottom_right) =
             self.bounds().unwrap_or((Cell::new(0, 0), Cell::new(0, 0)));
         let w = settings.scale * (bottom_right.x + 2) as f32 * Cell::width();
@@ -121,7 +121,7 @@ impl FragmentBuffer {
         self.sort_fragments_in_cell(cell);
     }
 
-    pub(crate) fn merge_fragments(&self) -> Vec<Fragment> {
+    pub fn merge_fragments(&self) -> Vec<Fragment> {
         let fragments = self.first_pass_merge();
         Self::merge_recursive(fragments)
     }
