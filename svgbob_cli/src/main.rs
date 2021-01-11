@@ -129,8 +129,10 @@ fn main() {
         settings.stroke_width = stroke_width;
     }
 
-    if let Some(scale) = parse_value_of(&args, "scale") {
-        settings.scale = scale;
+    let scale : Option<f32> = parse_value_of(&args, "scale");
+    match scale {
+        Some(s) => { settings.scale *= s; },
+        _ => {}
     }
 
     let svg = svgbob::to_svg_with_settings(&*bob, &settings);
