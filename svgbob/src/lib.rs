@@ -32,3 +32,17 @@ pub fn to_svg_with_settings(ascii: &str, settings: &Settings) -> String {
     node.render(&mut buffer).expect("must render");
     buffer
 }
+
+/// convert ascii art to svg using the size supplied
+pub fn to_svg_with_override_size(
+    ascii: &str,
+    settings: &Settings,
+    w: f32,
+    h: f32,
+) -> String {
+    let cb = CellBuffer::from(ascii);
+    let node: Node<()> = cb.get_node_override_size(settings, w, h);
+    let mut buffer = String::new();
+    node.render(&mut buffer).expect("must render");
+    buffer
+}

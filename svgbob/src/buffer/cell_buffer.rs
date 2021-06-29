@@ -157,6 +157,45 @@ impl CellBuffer {
         settings: &Settings,
     ) -> (Node<MSG>, f32, f32) {
         let (w, h) = self.get_size(&settings);
+
+        let (group_nodes, fragments) = self.group_nodes_and_fragments(settings);
+
+        let svg_node = Self::fragments_to_node(
+            fragments,
+            self.legend_css(),
+            settings,
+            w,
+            h,
+        )
+        .add_children(group_nodes);
+        (svg_node, w, h)
+    }
+
+    /// get all nodes and use the size supplied
+    pub fn get_node_override_size<MSG>(
+        &self,
+        settings: &Settings,
+        w: f32,
+        h: f32,
+    ) -> Node<MSG> {
+        let (group_nodes, fragments) = self.group_nodes_and_fragments(settings);
+
+        let svg_node = Self::fragments_to_node(
+            fragments,
+            self.legend_css(),
+            settings,
+            w,
+            h,
+        )
+        .add_children(group_nodes);
+
+        svg_node
+    }
+
+    fn group_nodes_and_fragments<MSG>(
+        &self,
+        settings: &Settings,
+    ) -> (Vec<Node<MSG>>, Vec<Fragment>) {
         // vec_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
@@ -205,15 +244,7 @@ impl CellBuffer {
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
 
-        let svg_node = Self::fragments_to_node(
-            fragments,
-            self.legend_css(),
-            settings,
-            w,
-            h,
-        )
-        .add_children(group_nodes);
-        (svg_node, w, h)
+        (group_nodes, fragments)
     }
 
     fn escaped_text_nodes(&self) -> Vec<Fragment> {
