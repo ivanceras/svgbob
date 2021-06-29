@@ -192,6 +192,7 @@ impl CellBuffer {
         svg_node
     }
 
+    /// group nodes that can be group and the rest will be fragments
     fn group_nodes_and_fragments<MSG>(
         &self,
         settings: &Settings,
