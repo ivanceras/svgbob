@@ -22,6 +22,12 @@ impl DerefMut for StringBuffer {
     }
 }
 
+impl Default for StringBuffer {
+    fn default() -> Self {
+        Self(vec![])
+    }
+}
+
 impl StringBuffer {
     pub fn new() -> Self {
         StringBuffer(vec![])
@@ -41,6 +47,8 @@ impl StringBuffer {
         }
     }
 
+    /// put a character in this x and y location, replacing the old character
+    /// if there is already
     /// x and y can also be negative
     pub fn add_char(&mut self, x: i32, y: i32, ch: char) {
         if x >= 0 && y >= 0 {
@@ -63,6 +71,7 @@ impl StringBuffer {
         }
     }
 
+    /// replace insert a string on this location
     pub fn add_str(&mut self, x: i32, y: i32, s: &str) {
         for (i, ch) in s.chars().enumerate() {
             self.add_char(x + i as i32, y, ch);
