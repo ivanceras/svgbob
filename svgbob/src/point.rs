@@ -1,3 +1,4 @@
+use crate::buffer::CellGrid;
 use crate::util;
 use nalgebra::{Point2, Vector2};
 use std::{
@@ -52,6 +53,25 @@ impl Point {
             self.y.round()
         };
         Point::new(x, y)
+    }
+
+    /// adjust x value by units specified
+    pub fn adjust_x(&self, units: f32) -> Self {
+        let t = units * CellGrid::unit_x();
+        Self::new(self.x + t, self.y)
+    }
+
+    /// adjust y value by units specified
+    pub fn adjust_y(&self, units: f32) -> Self {
+        let t = units * CellGrid::unit_y();
+        Self::new(self.x, self.y + t)
+    }
+
+    /// adjust both x and y value by units specified
+    pub fn adjust(&self, units: f32) -> Self {
+        let t = units * CellGrid::unit_x();
+        let u = units * CellGrid::unit_y();
+        Self::new(self.x + t, self.y + u)
     }
 }
 

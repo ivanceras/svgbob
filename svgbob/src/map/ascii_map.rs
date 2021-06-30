@@ -83,6 +83,7 @@ lazy_static! {
         let _47 = CellGrid::point(4, 7);
 
         let unit1 = Cell::unit(1); // 0.25
+        let unit1_5 = Cell::unit(1) * 1.5; // 0.375
         let unit2 = Cell::unit(2); // 0.5
         let unit3 = Cell::unit(3); // 0.75
         let unit4 = Cell::unit(4); // 1.0
@@ -311,7 +312,7 @@ lazy_static! {
             (
                 '*',
                 vec![
-                    (Strong, vec![circle(m, unit2, true)]),
+                    (Strong, vec![circle(m, unit1_5, true)]),
                     (Medium, vec![line(c,w),line(k,o)]),
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
@@ -327,7 +328,38 @@ lazy_static! {
                                 || left.line_strongly_overlap(n,o) || right.line_strongly_overlap(k,l)
                                 || top_left.line_strongly_overlap(s,y)|| bottom_right.line_strongly_overlap(a,g)
                               || bottom_left.line_strongly_overlap(u,q) || top_right.line_strongly_overlap(e,i),
-                                vec![circle(m,unit1,true)]),
+                                vec![circle(m,unit1_5,true)]),
+
+                            //   |
+                            //   *
+                            (top.line_strongly_overlap(r,w),
+                             vec![line(c,h)]
+                            ),
+                            //   *
+                            //   |
+                            (bottom.line_strongly_overlap(c,h),
+                             vec![line(w,r)]
+                            ),
+                            //  \
+                            //   *
+                            (top_left.line_strongly_overlap(s,y),
+                             vec![line(a,g)]
+                            ),
+                            //    /
+                            //   *
+                            (top_right.line_strongly_overlap(u,q),
+                             vec![line(e,i)]
+                            ),
+                            //    *
+                            //   /
+                            (bottom_left.line_strongly_overlap(e,i),
+                             vec![line(u,q)]
+                            ),
+                            //    *
+                            //     \
+                            (bottom_right.line_strongly_overlap(a,g),
+                             vec![line(s,y)]
+                            ),
                         ]
                     }
                 )
@@ -347,11 +379,11 @@ lazy_static! {
                     move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //
-                            //  |    #
-                            //  #    |  --#   #--
-                            //
+                            //      |
+                            //    --#--
+                            //      |
                             (top.line_overlap(r,w) || bottom.line_overlap(c,h)
-                                || left.line_overlap(n,o) || right.line_overlap(k,l),
+                             || left.line_overlap(n,o) || right.line_overlap(k,l),
                              vec![rect(f,t, true, false)]),
 
                             //
@@ -360,7 +392,41 @@ lazy_static! {
                             //
                             (top_left.line_overlap(s,y)|| bottom_right.line_overlap(a,g)
                               || bottom_left.line_overlap(u,q) || top_right.line_overlap(e,i),
-                             vec![polygon(vec![k,h,o,r,k],true, vec![DiamondBullet])]),
+                             vec![polygon(vec![m.adjust_x(1.4).adjust_y(2.0), m.adjust_x(1.4).adjust_y(-2.0), m.adjust_x(-1.4).adjust_y(-2.0),m.adjust_x(-1.4).adjust_y(2.0)], true, vec![DiamondBullet])]),
+                            //
+                            //  |
+                            //  #
+                            //
+                            (top.line_overlap(r,w),
+                             vec![line(c,h)]),
+
+                            //
+                            //     #
+                            //     |
+                            //
+                            ( bottom.line_overlap(c,h),
+                             vec![line(r,w)]),
+
+                            //  \
+                            //   #
+                            (top_left.line_strongly_overlap(s,y),
+                             vec![line(a,g)]
+                            ),
+                            //    /
+                            //   #
+                            (top_right.line_strongly_overlap(u,q),
+                             vec![line(e,i)]
+                            ),
+                            //    #
+                            //   /
+                            (bottom_left.line_strongly_overlap(e,i),
+                             vec![line(u,q)]
+                            ),
+                            //    #
+                            //     \
+                            (bottom_right.line_strongly_overlap(a,g),
+                             vec![line(s,y)]
+                            ),
                         ]
                     }
                 )
@@ -371,7 +437,7 @@ lazy_static! {
             (
                 'o',
                 vec![
-                    (Medium, vec![circle(m, unit1, false)]),
+                    (Medium, vec![circle(m, unit1_5, false)]),
                     (Medium, vec![line(k,o)]),
                     (Weak, vec![line(c,w)]),
                     (Weak, vec![line(a,y), line(u,e)]),
@@ -387,7 +453,38 @@ lazy_static! {
                                 || left.line_strongly_overlap(n,o) || right.line_strongly_overlap(k,l)
                                 || top_left.line_strongly_overlap(s,y)|| bottom_right.line_strongly_overlap(a,g)
                               || bottom_left.line_strongly_overlap(u,q) || top_right.line_strongly_overlap(e,i),
-                                vec![circle(m,unit1,false)]),
+                                vec![circle(m,unit1_5,false)]),
+
+                            //   |
+                            //   o
+                            (top.line_strongly_overlap(r,w),
+                             vec![line(c,h)]
+                            ),
+                            //   o
+                            //   |
+                            (bottom.line_strongly_overlap(c,h),
+                             vec![line(w,r)]
+                            ),
+                            //  \
+                            //   o
+                            (top_left.line_strongly_overlap(s,y),
+                             vec![line(a,g)]
+                            ),
+                            //    /
+                            //   o
+                            (top_right.line_strongly_overlap(u,q),
+                             vec![line(e,i)]
+                            ),
+                            //    o
+                            //   /
+                            (bottom_left.line_strongly_overlap(e,i),
+                             vec![line(u,q)]
+                            ),
+                            //    o
+                            //     \
+                            (bottom_right.line_strongly_overlap(a,g),
+                             vec![line(s,y)]
+                            ),
                         ]
                     }
                 )
@@ -414,6 +511,36 @@ lazy_static! {
                                 || left.line_strongly_overlap(n,o) || right.line_strongly_overlap(k,l)
                                 || top_left.line_strongly_overlap(s,y)|| bottom_right.line_strongly_overlap(a,g)
                               || bottom_left.line_strongly_overlap(u,q) || top_right.line_strongly_overlap(e,i), vec![circle(m,unit2,false)]),
+                            //   |
+                            //   O
+                            (top.line_strongly_overlap(r,w),
+                             vec![line(c,h)]
+                            ),
+                            //   O
+                            //   |
+                            (bottom.line_strongly_overlap(c,h),
+                             vec![line(w,r)]
+                            ),
+                            //  \
+                            //   O
+                            (top_left.line_strongly_overlap(s,y),
+                             vec![line(a,g)]
+                            ),
+                            //    /
+                            //   O
+                            (top_right.line_strongly_overlap(u,q),
+                             vec![line(e,i)]
+                            ),
+                            //    O
+                            //   /
+                            (bottom_left.line_strongly_overlap(e,i),
+                             vec![line(u,q)]
+                            ),
+                            //    O
+                            //     \
+                            (bottom_right.line_strongly_overlap(a,g),
+                             vec![line(s,y)]
+                            ),
                         ]
                     }
                 )
@@ -824,10 +951,10 @@ lazy_static! {
                                // \
                                //  V
                                //  TODO: use arrow function which alias to a polygon
-                               (top_left.line_overlap(s,y), vec![polygon(vec![f,s,_21], true, vec![ArrowBottomRight])]),
+                               (top_left.line_overlap(s,y), vec![polygon(vec![f.adjust_x(-0.5),s,d.adjust_y(0.5)], true, vec![ArrowBottomRight]), line(a,g)]),
                                //    /
                                //   V
-                               (top_right.line_overlap(u,q), vec![polygon(vec![j,q,_21], true, vec![ArrowBottomLeft])]),
+                               (top_right.line_overlap(u,q), vec![polygon(vec![j.adjust_x(0.5),q,b.adjust_y(0.5)], true, vec![ArrowBottomLeft]), line(e,i)]),
                                //  `.
                                //    V
                                (top_left.is('.'), vec![polygon(vec![f,o,c], true, vec![ArrowBottomRight])]),
@@ -856,10 +983,10 @@ lazy_static! {
                                (top.line_overlap(r,w), vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
                                // \
                                //  v
-                               (top_left.line_overlap(s,y), vec![polygon(vec![f,s,_21], true, vec![ArrowBottomRight])]),
+                               (top_left.line_overlap(s,y), vec![polygon(vec![f.adjust_x(-0.5),s,d.adjust_y(0.5)], true, vec![ArrowBottomRight]), line(a,g)]),
                                //    /
                                //   v
-                               (top_right.line_overlap(u,q), vec![polygon(vec![j,q,_21], true, vec![ArrowBottomLeft])]),
+                               (top_right.line_overlap(u,q), vec![polygon(vec![j.adjust_x(0.5),q,b.adjust_y(0.5)], true, vec![ArrowBottomLeft]), line(e,i)]),
                                //  `.
                                //    v
                                (top_left.is('.'), vec![polygon(vec![f,o,c], true, vec![ArrowBottomRight])]),
@@ -888,10 +1015,10 @@ lazy_static! {
                                (bottom.line_overlap(c,h), vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
                                //  ^
                                //   \
-                               (bottom_right.line_overlap(a,g) &&!bottom_left.is('/'), vec![polygon(vec![t,g,_27], true, vec![ArrowTopLeft])]),
+                               (bottom_right.line_overlap(a,g) &&!bottom_left.is('/'), vec![polygon(vec![t.adjust_x(0.5),g,v.adjust_y(-0.5)], true, vec![ArrowTopLeft]),line(s,y)]),
                                //   ^
                                //  /
-                               (bottom_left.line_overlap(e,i) && !bottom_right.is('\\'), vec![polygon(vec![p,i,_27], true, vec![ArrowTopRight])]),
+                               (bottom_left.line_overlap(e,i) && !bottom_right.is('\\'), vec![polygon(vec![p.adjust_x(-0.5),i,x.adjust_y(-0.5)], true, vec![ArrowTopRight]),line(u,q)]),
                                //   |
                                //   ^
                                (top.line_overlap(r,w) && !bottom.line_overlap(c,h), vec![line(c,u), line(c,y)]),

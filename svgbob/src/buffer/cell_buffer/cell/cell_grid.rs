@@ -170,7 +170,7 @@ impl CellGrid {
 
     /// 0.25
     #[inline]
-    fn unit_y() -> f32 {
+    pub fn unit_y() -> f32 {
         Self::height() / Self::vertical_slices() as f32
     }
 
