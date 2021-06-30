@@ -104,7 +104,7 @@ impl Span {
             (&localize_self).into_fragment_buffer(settings);
 
         let mut groups: Vec<Contacts> = vec![];
-        let merged_fragments = fb.merge_fragments();
+        let merged_fragments = fb.merge_fragments(settings);
         for fragment in merged_fragments.into_iter() {
             let belongs_to_group = groups.iter_mut().rev().any(|group| {
                 if group.is_contacting_frag(&fragment) {

@@ -23,6 +23,8 @@ pub struct Settings {
     pub include_styles: bool,
     /// flag whether to include the def of markers, etc in the svg
     pub include_defs: bool,
+    /// merge lines and shapes like triangle,circle,rect to form arrow lines or marker line
+    pub merge_line_with_shapes: bool,
 }
 impl Settings {
     /// the inverse of the default scale 10
@@ -45,6 +47,7 @@ impl Default for Settings {
             include_backdrop: true,
             include_styles: true,
             include_defs: true,
+            merge_line_with_shapes: false,
         }
     }
 }

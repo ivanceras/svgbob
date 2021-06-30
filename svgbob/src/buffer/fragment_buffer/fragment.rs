@@ -1,5 +1,5 @@
 use crate::{buffer::Cell, map::unicode_map::FRAGMENTS_UNICODE, Point};
-pub use crate::{Property, Signal};
+pub use crate::{Property, Settings, Signal};
 pub use arc::Arc;
 pub use circle::Circle;
 pub use line::Line;
@@ -99,7 +99,7 @@ impl Fragment {
 
     /// merge this fragment to the other fragment if it is possible
     /// returns None if the fragment can not be merge
-    pub fn merge(&self, other: &Self) -> Option<Self> {
+    pub fn merge(&self, other: &Self, settings: &Settings) -> Option<Self> {
         match (self, other) {
             // line and line
             (Fragment::Line(line), Fragment::Line(other_line)) => {
@@ -112,35 +112,61 @@ impl Fragment {
 
             // line and polygon
             (Fragment::Line(line), Fragment::Polygon(polygon)) => {
-                line.merge_line_polygon(polygon)
+                if settings.merge_line_with_shapes {
+                    line.merge_line_polygon(polygon)
+                } else {
+                    None
+                }
             }
 
             // polygon and line
             (Fragment::Polygon(polygon), Fragment::Line(line)) => {
-                line.merge_line_polygon(polygon)
+                if settings.merge_line_with_shapes {
+                    line.merge_line_polygon(polygon)
+                } else {
+                    None
+                }
             }
 
-            /*
             // line and marker_line
-            (Fragment::Line(line), Fragment::MarkerLine(mline)) => line.merge_marker_line(mline),
-            */
-            /*
-            // marker_line and line
-            (Fragment::MarkerLine(mline), Fragment::Line(line)) => line.merge_marker_line(mline),
-            */
-            /*
-            (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
-                mline.merge_polygon(polygon)
+            (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
+                if settings.merge_line_with_shapes {
+                    line.merge_marker_line(mline)
+                } else {
+                    None
+                }
             }
-            */
+            // marker_line and line
+            (Fragment::MarkerLine(mline), Fragment::Line(line)) => {
+                if settings.merge_line_with_shapes {
+                    line.merge_marker_line(mline)
+                } else {
+                    None
+                }
+            }
+            (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
+                if settings.merge_line_with_shapes {
+                    mline.merge_polygon(polygon)
+                } else {
+                    None
+                }
+            }
             // line and circle
             (Fragment::Line(line), Fragment::Circle(circle)) => {
-                line.merge_circle(circle)
+                if settings.merge_line_with_shapes {
+                    line.merge_circle(circle)
+                } else {
+                    None
+                }
             }
 
             // circle and line
             (Fragment::Circle(circle), Fragment::Line(line)) => {
-                line.merge_circle(circle)
+                if settings.merge_line_with_shapes {
+                    line.merge_circle(circle)
+                } else {
+                    None
+                }
             }
             // cell_text and cell_text
             (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
@@ -165,23 +191,29 @@ impl Fragment {
     }
 
     /// merge fragments recursively until it hasn't changed the number of fragments
-    pub(crate) fn merge_recursive(fragments: Vec<Self>) -> Vec<Self> {
+    pub(crate) fn merge_recursive(
+        fragments: Vec<Self>,
+        settings: &Settings,
+    ) -> Vec<Self> {
         let original_len = fragments.len();
-        let merged = Self::second_pass_merge(fragments);
+        let merged = Self::second_pass_merge(fragments, settings);
         // if has merged continue merging untila nothing can be merged
         if merged.len() < original_len {
-            Self::merge_recursive(merged)
+            Self::merge_recursive(merged, settings)
         } else {
             merged
         }
     }
 
     /// second pass merge is operating on fragments comparing to other spans
-    fn second_pass_merge(fragments: Vec<Self>) -> Vec<Self> {
+    fn second_pass_merge(
+        fragments: Vec<Self>,
+        settings: &Settings,
+    ) -> Vec<Self> {
         let mut new_groups: Vec<Self> = vec![];
         for fragment in fragments.into_iter() {
             let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if let Some(new_merged) = new_group.merge(&fragment) {
+                if let Some(new_merged) = new_group.merge(&fragment, settings) {
                     *new_group = new_merged;
                     true
                 } else {
@@ -682,7 +714,8 @@ mod tests {
         }
         let mut expected = vec![line(k, o), line(c, w)];
         expected.sort();
-        let mut merged_fragments1 = Fragment::merge_recursive(fragments1);
+        let mut merged_fragments1 =
+            Fragment::merge_recursive(fragments1, &Settings::default());
         merged_fragments1.sort();
         assert_eq!(merged_fragments1.len(), 2);
         println!("after merged:");
@@ -700,9 +733,12 @@ mod tests {
         let n = CellGrid::n();
         let o = CellGrid::o();
         let j = CellGrid::j();
-        assert!(line(k, m).merge(&line(m, o)).is_some()); // collinear and connected
-        assert!(!line(k, l).merge(&line(n, o)).is_some()); //collinear but not connected
-        assert!(!line(k, o).merge(&line(o, j)).is_some()); // connected but not collinear
+        let mut settings = Settings::default();
+        settings.merge_line_with_shapes = true;
+
+        assert!(line(k, m).merge(&line(m, o), &settings).is_some()); // collinear and connected
+        assert!(!line(k, l).merge(&line(n, o), &settings).is_some()); //collinear but not connected
+        assert!(!line(k, o).merge(&line(o, j), &settings).is_some()); // connected but not collinear
     }
 
     #[test]
@@ -720,8 +756,10 @@ mod tests {
 
         println!("polygon: {:#?}", polygon);
         println!("diagonal: {:#?}", diagonal);
+        let mut settings = Settings::default();
 
-        let merged = polygon.merge(&diagonal);
+        settings.merge_line_with_shapes = true;
+        let merged = polygon.merge(&diagonal, &settings);
 
         let expected = marker_line(
             Point::new(2.0, 4.0),
@@ -748,7 +786,9 @@ mod tests {
         println!("circle: {:#?}", circle);
         println!("diagonal: {:#?}", diagonal);
 
-        let merged = circle.merge(&diagonal);
+        let mut settings = Settings::default();
+        settings.merge_line_with_shapes = true;
+        let merged = circle.merge(&diagonal, &settings);
 
         let expected = marker_line(
             Point::new(2.0, 4.0),

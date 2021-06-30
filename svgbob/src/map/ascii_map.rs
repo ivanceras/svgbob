@@ -820,7 +820,7 @@ lazy_static! {
                             vec![
                                 //  |
                                 //  V
-                               (top.line_overlap(r,w), vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+                               (top.line_overlap(r,w), vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
                                // \
                                //  V
                                //  TODO: use arrow function which alias to a polygon
@@ -853,7 +853,7 @@ lazy_static! {
                             vec![
                                 // |
                                 // v
-                               (top.line_overlap(r,w), vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+                               (top.line_overlap(r,w), vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
                                // \
                                //  v
                                (top_left.line_overlap(s,y), vec![polygon(vec![f,s,_21], true, vec![ArrowBottomRight])]),
@@ -885,7 +885,7 @@ lazy_static! {
                             vec![
                                //   ^
                                //   |
-                               (bottom.line_overlap(c,h), vec![polygon(vec![p,c,t], true, vec![ArrowTop])]),
+                               (bottom.line_overlap(c,h), vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
                                //  ^
                                //   \
                                (bottom_right.line_overlap(a,g) &&!bottom_left.is('/'), vec![polygon(vec![t,g,_27], true, vec![ArrowTopLeft])]),

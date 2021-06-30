@@ -110,7 +110,7 @@ impl<'p> PropertyBuffer<'p> {
                     bottom_right,
                 );
                 let mut merged_behavioral_fragments =
-                    Fragment::merge_recursive(behavioral_fragments);
+                    Fragment::merge_recursive(behavioral_fragments, settings);
                 merged_behavioral_fragments.sort();
                 merged_behavioral_fragments.dedup();
                 //assert!(merged_behavioral_fragments.is_sorted());
@@ -174,7 +174,7 @@ impl<'p> PropertyBuffer<'p> {
                 //If no match make it a text fragment
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(&property.ch) {
                     let merged_fragments =
-                        Fragment::merge_recursive(fragments.clone());
+                        Fragment::merge_recursive(fragments.clone(), settings);
                     fb.add_fragments_to_cell(*cell, merged_fragments);
                 } else {
                     fb.add_fragment_to_cell(

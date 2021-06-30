@@ -121,15 +121,15 @@ impl FragmentBuffer {
         self.sort_fragments_in_cell(cell);
     }
 
-    pub fn merge_fragments(&self) -> Vec<Fragment> {
-        let fragments = self.first_pass_merge();
-        Self::merge_recursive(fragments)
+    pub fn merge_fragments(&self, settings: &Settings) -> Vec<Fragment> {
+        let fragments = self.first_pass_merge(settings);
+        Fragment::merge_recursive(fragments, settings)
     }
 
     /// merge fragments that can be merged.
     /// This is only merging the fragments that are in the same
     /// cell
-    fn first_pass_merge(&self) -> Vec<Fragment> {
+    fn first_pass_merge(&self, settings: &Settings) -> Vec<Fragment> {
         let mut merged: Vec<Fragment> = vec![];
         for (cell, fragments) in self.iter() {
             for frag in fragments.iter() {
@@ -137,7 +137,7 @@ impl FragmentBuffer {
                 // parameters and is derived from the cell position
                 let abs_frag = frag.absolute_position(*cell);
                 let had_merged = merged.iter_mut().rev().any(|mfrag| {
-                    if let Some(new_merge) = mfrag.merge(&abs_frag) {
+                    if let Some(new_merge) = mfrag.merge(&abs_frag, settings) {
                         *mfrag = new_merge;
                         true
                     } else {
@@ -150,33 +150,5 @@ impl FragmentBuffer {
             }
         }
         merged
-    }
-
-    fn merge_recursive(fragments: Vec<Fragment>) -> Vec<Fragment> {
-        let original_len = fragments.len();
-        let merged = Self::second_pass_merge(fragments);
-        if merged.len() < original_len {
-            Self::merge_recursive(merged)
-        } else {
-            merged
-        }
-    }
-
-    fn second_pass_merge(fragments: Vec<Fragment>) -> Vec<Fragment> {
-        let mut new_fragments: Vec<Fragment> = vec![];
-        for fragment in fragments.into_iter() {
-            let is_merged = new_fragments.iter_mut().rev().any(|new_frag| {
-                if let Some(new_merged) = new_frag.merge(&fragment) {
-                    *new_frag = new_merged;
-                    true
-                } else {
-                    false
-                }
-            });
-            if !is_merged {
-                new_fragments.push(fragment);
-            }
-        }
-        new_fragments
     }
 }
