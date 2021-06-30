@@ -257,6 +257,17 @@ lazy_static! {
         })
     );
 
+    /// map of circle spans and their radius
+    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,Span> =BTreeMap::from_iter(
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius)|{
+            let cb = CellBuffer::from(*art);
+            let mut spans = cb.group_adjacents();
+            assert_eq!(spans.len(), 1);
+            let span = spans.remove(0).localize();
+            ((*radius * 2.0) as i32, span)
+        })
+    );
+
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
         CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius)|{

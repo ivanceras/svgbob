@@ -17,3 +17,4 @@
         When there is 2 arrows in the middle of a line `---->>-------` or `----<<----`
 - [ ] Clean the project enforce deny warnings.
 - [ ] Fix a bug where an escaped text has whitespaces, the whitespaces are gone.
+- [ ] Remove support for circle art

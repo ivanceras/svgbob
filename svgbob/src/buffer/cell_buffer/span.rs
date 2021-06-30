@@ -15,7 +15,7 @@ use std::{
 
 /// A describes where a char came from relative to the source ascii text
 /// The primary purpose of span is to group adjacent cell together
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Span(Vec<(Cell, char)>);
 
 impl Deref for Span {
