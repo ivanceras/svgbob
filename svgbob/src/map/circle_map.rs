@@ -246,6 +246,38 @@ lazy_static! {
               `._           _.'
                  '-.......-'
             "#, Cell::new(10,5), Cell::new(10,5).m(), 10.0),
+
+            // CIRCLE_21
+            // center: 10,5,o radius: 10.5
+            (r#"
+                _.-''''''''-._
+              ,'              `.
+             /                  \
+            .                    .
+            |                    |
+            |                    |
+            |                    |
+            |                    |
+             \                  /
+              `._            _.'
+                 '-........-'
+            "#, Cell::new(10,5), Cell::new(10,5).o(), 10.5),
+
+            // CIRCLE_22
+            // center: 10,5,m radius: 11
+            (r#"
+                _.-'''''''''-._
+              ,'               `.
+             /                   \
+            .                     .
+            |                     |
+            |                     |
+            |                     |
+            |                     |
+             \                   /
+              `._             _.'
+                 '-.........-'
+            "#, Cell::new(11,5), Cell::new(11,5).m(), 11.0),
         ];
 
 
@@ -258,13 +290,13 @@ lazy_static! {
     );
 
     /// map of circle spans and their radius
-    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,Span> =BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius)|{
+    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,(Cell,Span)> =BTreeMap::from_iter(
+        CIRCLE_MAP.iter().map(|(art, center_cell, center, radius)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
-            ((*radius * 2.0) as i32, span)
+            ((*radius * 2.0) as i32, (center_cell.clone(), span))
         })
     );
 
