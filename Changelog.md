@@ -1,5 +1,16 @@
 # Changelog
 
+# 0.5.0
+- All the changes in 0.5.0-alpha.* is now on this version.
+
+## 0.5.0-alpha.12
+- Adds a parameter in the Settings to specify whether or not Arrow heads will merge with lines. The default value is false, hence the arrow heads will be rendered as polygons instead of a marker to a line
+    - Improve polygons for arrow, open circles, filled_circles, squares and diamonds
+    - Pass the settings to merge functions, so the user can opt to chose whether or not to allow mergin_line_with_shapes
+- Add DIAMETER_CIRCLE lookup and addition circle art.
+- Add a function to convert ascii to svg with an override size
+- Add default implementation for StringBuffer
+
 ## 0.5.0-alpha.11
 - Reinstated double quote escaping of text that are not meant to be interpreted as drawing element
 - Fix merging of polygons and lines, arrows and lines, circles and lines.
