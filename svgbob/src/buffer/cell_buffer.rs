@@ -192,11 +192,11 @@ impl CellBuffer {
         svg_node
     }
 
-    /// group nodes that can be group and the rest will be fragments
-    fn group_nodes_and_fragments<MSG>(
+    /// returns (single_member, grouped,  rest of the fragments
+    fn group_single_members_from_other_fragments(
         &self,
         settings: &Settings,
-    ) -> (Vec<Node<MSG>>, Vec<Fragment>) {
+    ) -> (Vec<Fragment>, Vec<Vec<Fragment>>, Vec<Fragment>) {
         // vec_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
@@ -223,11 +223,28 @@ impl CellBuffer {
             .flat_map(|contact| contact.0)
             .collect();
 
-        let group_nodes: Vec<Node<MSG>> = vec_groups
+        let vec_groups: Vec<Vec<Fragment>> =
+            vec_groups.into_iter().map(|contact| contact.0).collect();
+
+        let vec_fragments: Vec<Fragment> =
+            vec_fragments.into_iter().flatten().collect();
+
+        (single_member_fragments, vec_groups, vec_fragments)
+    }
+
+    /// group nodes that can be group and the rest will be fragments
+    fn group_nodes_and_fragments<MSG>(
+        &self,
+        settings: &Settings,
+    ) -> (Vec<Node<MSG>>, Vec<Fragment>) {
+        let (single_member_fragments, vec_group_fragments, vec_fragments) =
+            self.group_single_members_from_other_fragments(settings);
+
+        // grouped fragments will be rendered as svg groups
+        let group_nodes: Vec<Node<MSG>> = vec_group_fragments
             .into_iter()
-            .map(|contact| contact.0)
-            .map(move |contacts| {
-                let group_members = contacts
+            .map(move |fragments| {
+                let group_members = fragments
                     .iter()
                     .map(move |gfrag| {
                         let scaled = gfrag.scale(settings.scale);
@@ -239,8 +256,7 @@ impl CellBuffer {
             })
             .collect();
 
-        let mut fragments: Vec<Fragment> =
-            vec_fragments.into_iter().flatten().collect();
+        let mut fragments: Vec<Fragment> = vec_fragments;
 
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
