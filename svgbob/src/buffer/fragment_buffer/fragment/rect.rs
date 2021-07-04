@@ -1,7 +1,7 @@
 use crate::{fragment::Bounds, util, Cell, Point};
 use std::fmt;
 
-use ncollide2d::shape::{Segment, Shape};
+use ncollide2d::shape::{Polyline, Segment, Shape};
 use sauron::{
     html::attributes::*,
     svg::{attributes::*, *},
@@ -109,6 +109,20 @@ impl Bounds for Rect {
 impl fmt::Display for Rect {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "R {} {}", self.start, self.end)
+    }
+}
+
+impl Into<Polyline<f32>> for Rect {
+    fn into(self) -> Polyline<f32> {
+        Polyline::new(
+            vec![
+                *self.start,
+                *Point::new(self.end.x, self.start.y),
+                *self.end,
+                *Point::new(self.start.x, self.end.y),
+            ],
+            None,
+        )
     }
 }
 

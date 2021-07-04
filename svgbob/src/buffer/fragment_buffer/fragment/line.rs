@@ -3,9 +3,14 @@ use crate::{
     fragment::{marker_line, Bounds, Circle, Marker, MarkerLine},
     util, Direction, Point,
 };
+use ncollide2d::query::PointQuery;
+use ncollide2d::{
+    bounding_volume::AABB,
+    query::{proximity, Proximity},
+    shape::Polyline,
+};
 use ncollide2d::{
     math::Isometry,
-    query::point_internal::point_query::PointQuery,
     shape::{Segment, Shape},
 };
 use std::{cmp::Ordering, fmt};
@@ -527,6 +532,12 @@ impl<MSG> Into<Node<MSG>> for Line {
             ],
             vec![],
         )
+    }
+}
+
+impl Into<Segment<f32>> for Line {
+    fn into(self) -> Segment<f32> {
+        Segment::new(*self.start, *self.end)
     }
 }
 

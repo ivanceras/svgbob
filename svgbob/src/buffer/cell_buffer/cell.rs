@@ -1,4 +1,5 @@
 use crate::{util, Point};
+use ncollide2d::query::PointQuery;
 use ncollide2d::{
     bounding_volume::AABB,
     math::Isometry,

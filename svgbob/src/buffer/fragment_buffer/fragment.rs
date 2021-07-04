@@ -4,6 +4,13 @@ pub use arc::Arc;
 pub use circle::Circle;
 pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
+use ncollide2d::query::PointQuery;
+use ncollide2d::{
+    bounding_volume::AABB,
+    math::Isometry,
+    query::{proximity, Proximity},
+    shape::{Polyline, Segment},
+};
 pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;
 use sauron::Node;
@@ -281,6 +288,37 @@ impl Fragment {
                 }
                 _ => false,
             },
+            _ => false,
+        }
+    }
+
+    fn hit(&self, start: Point, end: Point) -> bool {
+        self.is_intersecting(AABB::new(*start, *end))
+    }
+
+    /// check if this fragment is intersecting with this bounding box
+    fn is_intersecting(&self, bbox: AABB<f32>) -> bool {
+        let bbox: Polyline<f32> = Polyline::new(
+            vec![
+                *bbox.mins(),
+                *Point::new(bbox.maxs().x, bbox.mins().y),
+                *bbox.maxs(),
+                *Point::new(bbox.mins().x, bbox.maxs().y),
+            ],
+            None,
+        );
+        let identity = Isometry::identity();
+        match self {
+            Fragment::Line(line) => {
+                let segment: Segment<f32> = line.clone().into();
+                proximity(&identity, &segment, &identity, &bbox, 0.0)
+                    == Proximity::Intersecting
+            }
+            Fragment::Rect(rect) => {
+                let polyline: Polyline<f32> = rect.clone().into();
+                proximity(&identity, &polyline, &identity, &bbox, 0.0)
+                    == Proximity::Intersecting
+            }
             _ => false,
         }
     }
@@ -871,5 +909,14 @@ mod tests {
         assert_ne!(lines1, sorted);
         lines1.sort();
         assert_eq!(lines1, sorted);
+    }
+
+    #[test]
+    fn test_hit() {
+        let line1 = line(CellGrid::a(), CellGrid::y());
+        assert!(line1.hit(CellGrid::g(), CellGrid::s()));
+
+        let rect1 = rect(CellGrid::a(), CellGrid::y(), false, false);
+        assert!(!rect1.hit(CellGrid::g(), CellGrid::s()));
     }
 }
