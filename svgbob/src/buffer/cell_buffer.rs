@@ -195,9 +195,6 @@ impl CellBuffer {
     /// return fragments that are Rect, Circle,
     pub fn get_shapes_fragment(&self, settings: &Settings) -> Vec<Fragment> {
         let (single_member, _, endorsed_fragments) = self.group_single_members_from_other_fragments(settings);
-        dbg!(&single_member);
-        dbg!(&endorsed_fragments);
-
         endorsed_fragments.into_iter().chain(single_member.into_iter()
             .filter(|frag|frag.is_rect() || frag.is_circle())
         ).collect()
@@ -244,6 +241,7 @@ impl CellBuffer {
     }
 
     /// group nodes that can be group and the rest will be fragments
+    /// Note: The grouped fragments is scaled here
     fn group_nodes_and_fragments<MSG>(
         &self,
         settings: &Settings,

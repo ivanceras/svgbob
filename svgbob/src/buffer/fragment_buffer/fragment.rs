@@ -297,7 +297,7 @@ impl Fragment {
     }
 
     /// check if this fragment is intersecting with this bounding box
-    fn is_intersecting(&self, bbox: AABB<f32>) -> bool {
+    pub fn is_intersecting(&self, bbox: AABB<f32>) -> bool {
         let bbox: Polyline<f32> = Polyline::new(
             vec![
                 *bbox.mins(),
@@ -316,6 +316,11 @@ impl Fragment {
             }
             Fragment::Rect(rect) => {
                 let polyline: Polyline<f32> = rect.clone().into();
+                proximity(&identity, &polyline, &identity, &bbox, 0.0)
+                    == Proximity::Intersecting
+            }
+            Fragment::Circle(circle) => {
+                let polyline: Polyline<f32> = circle.clone().into();
                 proximity(&identity, &polyline, &identity, &bbox, 0.0)
                     == Proximity::Intersecting
             }
@@ -410,6 +415,13 @@ impl Fragment {
     pub fn as_line(&self) -> Option<&Line> {
         match self {
             Fragment::Line(ref line) => Some(line),
+            _ => None,
+        }
+    }
+
+    pub fn as_rect(&self) -> Option<&Rect> {
+        match self {
+            Fragment::Rect(ref rect) => Some(rect),
             _ => None,
         }
     }

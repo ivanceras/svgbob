@@ -120,6 +120,7 @@ impl Into<Polyline<f32>> for Rect {
                 *Point::new(self.end.x, self.start.y),
                 *self.end,
                 *Point::new(self.start.x, self.end.y),
+                *self.start,
             ],
             None,
         )

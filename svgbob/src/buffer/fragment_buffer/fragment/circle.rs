@@ -1,4 +1,6 @@
 use crate::{fragment::Bounds, util, Cell, Point};
+use ncollide2d::procedural;
+use ncollide2d::shape::Polyline;
 use std::{cmp::Ordering, fmt};
 
 use sauron::{
@@ -102,5 +104,22 @@ impl PartialOrd for Circle {
 impl PartialEq for Circle {
     fn eq(&self, other: &Self) -> bool {
         self.cmp(other) == Ordering::Equal
+    }
+}
+
+impl Into<Polyline<f32>> for Circle {
+    fn into(self) -> Polyline<f32> {
+        use nalgebra::Point2;
+        let pl = procedural::circle(&(self.radius * 2.0), 64);
+        let mut points = pl.coords().to_vec();
+        let orig_len = points.len();
+        points.dedup();
+
+        let adjusted: Vec<Point2<f32>> = points
+            .into_iter()
+            .map(|p| *Point::new(p.x + self.center.x, p.y + self.center.y))
+            .collect();
+
+        Polyline::new(adjusted, None)
     }
 }
