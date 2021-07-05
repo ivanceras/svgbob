@@ -192,16 +192,27 @@ impl CellBuffer {
         svg_node
     }
 
+    /// return fragments that are Rect, Circle,
+    pub fn get_shapes_fragment(&self, settings: &Settings) -> Vec<Fragment> {
+        let (single_member, _, endorsed_fragments) = self.group_single_members_from_other_fragments(settings);
+        dbg!(&single_member);
+        dbg!(&endorsed_fragments);
+
+        endorsed_fragments.into_iter().chain(single_member.into_iter()
+            .filter(|frag|frag.is_rect() || frag.is_circle())
+        ).collect()
+    }
+
     /// returns (single_member, grouped,  rest of the fragments
     fn group_single_members_from_other_fragments(
         &self,
         settings: &Settings,
     ) -> (Vec<Fragment>, Vec<Vec<Fragment>>, Vec<Fragment>) {
-        // vec_fragments are the fragment result of successful endorsement
+        // endorsed_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
         // the svg node
-        let (vec_fragments, vec_contacts): (
+        let (endorsed_fragments, vec_contacts): (
             Vec<Vec<Fragment>>,
             Vec<Vec<Contacts>>,
         ) = self
@@ -226,10 +237,10 @@ impl CellBuffer {
         let vec_groups: Vec<Vec<Fragment>> =
             vec_groups.into_iter().map(|contact| contact.0).collect();
 
-        let vec_fragments: Vec<Fragment> =
-            vec_fragments.into_iter().flatten().collect();
+        let endorsed_fragments: Vec<Fragment> =
+            endorsed_fragments.into_iter().flatten().collect();
 
-        (single_member_fragments, vec_groups, vec_fragments)
+        (single_member_fragments, vec_groups, endorsed_fragments)
     }
 
     /// group nodes that can be group and the rest will be fragments
@@ -653,6 +664,41 @@ mod tests {
             println!("{}\n\n", span);
         }
         assert_eq!(adjacents.len(), 3);
+    }
+
+    #[test]
+    fn test_shapes_fragment() {
+        let art = r#"
+
+            +-------+
+ *----->    |       |
+            +-------+
+
+This is a text
+            .-.
+           (   )
+            `-'
+
+    "#;
+        let buffer = CellBuffer::from(art);
+        let shapes = buffer.get_shapes_fragment(&Settings::default());
+        println!("shapes: {:#?}", shapes);
+        assert_eq!(2, shapes.len());
+    }
+
+    #[test]
+    fn test_shapes_fragment_intersecting() {
+        let art = r#"
+            +-------+
+            |       |
+            +-------+
+
+    "#;
+        let buffer = CellBuffer::from(art);
+        let shapes = buffer.get_shapes_fragment(&Settings::default());
+        println!("shapes: {:#?}", shapes);
+        assert_eq!(1, shapes.len());
+        assert!(shapes[0].hit(Cell::new(15,1).a(), Cell::new(15,1).y()));
     }
 
     /// The . in .-/

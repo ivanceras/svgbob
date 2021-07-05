@@ -292,7 +292,7 @@ impl Fragment {
         }
     }
 
-    fn hit(&self, start: Point, end: Point) -> bool {
+    pub fn hit(&self, start: Point, end: Point) -> bool {
         self.is_intersecting(AABB::new(*start, *end))
     }
 
