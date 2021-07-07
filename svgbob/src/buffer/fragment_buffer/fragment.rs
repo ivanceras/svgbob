@@ -4,12 +4,13 @@ pub use arc::Arc;
 pub use circle::Circle;
 pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
+use ncollide2d::bounding_volume::BoundingVolume;
 use ncollide2d::query::PointQuery;
 use ncollide2d::{
     bounding_volume::AABB,
     math::Isometry,
     query::{proximity, Proximity},
-    shape::{Polyline, Segment},
+    shape::{Polyline, Segment, Shape},
 };
 pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;
@@ -293,11 +294,11 @@ impl Fragment {
     }
 
     pub fn hit(&self, start: Point, end: Point) -> bool {
-        self.is_intersecting(AABB::new(*start, *end))
+        self.is_intersecting(&AABB::new(*start, *end))
     }
 
     /// check if this fragment is intersecting with this bounding box
-    pub fn is_intersecting(&self, bbox: AABB<f32>) -> bool {
+    pub fn is_intersecting(&self, bbox: &AABB<f32>) -> bool {
         let bbox: Polyline<f32> = Polyline::new(
             vec![
                 *bbox.mins(),
@@ -320,12 +321,20 @@ impl Fragment {
                     == Proximity::Intersecting
             }
             Fragment::Circle(circle) => {
+                // do not include the small circles
                 let polyline: Polyline<f32> = circle.clone().into();
                 proximity(&identity, &polyline, &identity, &bbox, 0.0)
                     == Proximity::Intersecting
             }
             _ => false,
         }
+    }
+
+    /// check if this fragment can be contain in the specified bounding box `bbox`
+    pub fn is_inside(&self, bbox: &AABB<f32>) -> bool {
+        let (start, end) = self.bounds();
+        let frag_bound = AABB::new(*start, *end);
+        bbox.contains(&frag_bound)
     }
 
     /// recompute the end points of this fragment
