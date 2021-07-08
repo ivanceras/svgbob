@@ -192,6 +192,8 @@ impl Cell {
     }
 
     /// snap a point closest to any of the intersection of this cellgrid
+    /// Note: There are 4 horizontal mini cell for each cell
+    /// There are 8 vertical mini cell for each cell
     #[inline]
     fn snap_xy(x: f32, y: f32) -> Point {
         let tx = (x * 4.0).round() / 4.0;

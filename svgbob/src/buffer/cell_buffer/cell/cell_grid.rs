@@ -152,11 +152,15 @@ impl CellGrid {
         Self::point(4, 8)
     }
 
+    //TODO: use proper aspect ratio for width
+    //and height based on the text rendering
     #[inline]
     pub fn width() -> f32 {
         1.0
     }
 
+    //TODO: use proper aspect ratio for width
+    //and height based on the text rendering
     #[inline]
     pub fn height() -> f32 {
         2.0
