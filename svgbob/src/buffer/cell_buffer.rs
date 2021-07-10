@@ -122,7 +122,7 @@ impl CellBuffer {
         new_groups
     }
 
-    fn bounds(&self) -> Option<(Cell, Cell)> {
+    pub fn bounds(&self) -> Option<(Cell, Cell)> {
         let xlimits =
             self.iter().map(|(cell, _)| cell.x).minmax().into_option();
         let ylimits =
@@ -194,10 +194,16 @@ impl CellBuffer {
 
     /// return fragments that are Rect, Circle,
     pub fn get_shapes_fragment(&self, settings: &Settings) -> Vec<Fragment> {
-        let (single_member, _, endorsed_fragments) = self.group_single_members_from_other_fragments(settings);
-        endorsed_fragments.into_iter().chain(single_member.into_iter()
-            .filter(|frag|frag.is_rect() || frag.is_circle())
-        ).collect()
+        let (single_member, _, endorsed_fragments) =
+            self.group_single_members_from_other_fragments(settings);
+        endorsed_fragments
+            .into_iter()
+            .chain(
+                single_member
+                    .into_iter()
+                    .filter(|frag| frag.is_rect() || frag.is_circle()),
+            )
+            .collect()
     }
 
     /// returns (single_member, grouped,  rest of the fragments
@@ -696,7 +702,7 @@ This is a text
         let shapes = buffer.get_shapes_fragment(&Settings::default());
         println!("shapes: {:#?}", shapes);
         assert_eq!(1, shapes.len());
-        assert!(shapes[0].hit(Cell::new(15,1).a(), Cell::new(15,1).y()));
+        assert!(shapes[0].hit(Cell::new(15, 1).a(), Cell::new(15, 1).y()));
     }
 
     /// The . in .-/
