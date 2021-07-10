@@ -165,11 +165,15 @@ lazy_static! {
             //
             //  |
             //  ▾
-            ('▾', vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
+            ('▾', vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
+            ('▼', vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
+
             //
             //  ▴
             //  |
-            ('▴', vec![polygon(vec![p,c,t], true, vec![ArrowTop])]),
+            ('▴', vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
+            ('▲', vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
+
             //
             // --▸
             //
@@ -178,6 +182,17 @@ lazy_static! {
             // ◂--
             //
             ('◂', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
+
+            //
+            // --▶
+            //
+            ('▶', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
+            ('►', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
+            //
+            // ◀--
+            //
+            ('◀', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
+            ('◄', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
 
             ('◆', vec![polygon(vec![k,h,o,r,k], true, vec![DiamondBullet])]),
             ('▪', vec![rect(f,t,true, false)]),
@@ -199,17 +214,6 @@ lazy_static! {
             // 8/8
             ('█', vec![rect(a,y,true,false)]),
 
-            //              /
-            // --▶    ▶    ▶
-            //         \
-            //
-            ('▶', vec![polygon(vec![f,o,p], true, vec![ArrowRight, ArrowTopLeft, ArrowBottomLeft])]),
-
-            //      \
-            // ◀--   ◀    ◀
-            //           /
-            //
-            ('◀', vec![polygon(vec![j,k,t], true, vec![ArrowLeft, ArrowBottomRight, ArrowTopRight])]),
 
 
             // L shape bottom-left box
@@ -338,13 +342,6 @@ lazy_static! {
             //
             // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑↓ ∧ ∨ ≈ ± ∃ ∀ ⊃ ⊂ ∪ ∩ ⊖ ⊕ « »
 
-            // corners  ੮   ᓕ ᓕ ੭ ᜪ フ ᘄ  މ
-            //  ረ ᓚ ᘇ   د  ১  ১
-            //  ر ◞  ᓗ  ﺭ
-            //  ⁔  ⏝
-            //
-            //  𝁼  ⌣
-            //  メ
         ];
         // sort the fragments first before putting into the btreemap
         let mut btree = BTreeMap::new();
