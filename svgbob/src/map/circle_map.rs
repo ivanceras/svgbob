@@ -49,7 +49,7 @@ lazy_static! {
             //  vert_mid: half (0.5/1.0)
             (r#"
             ()
-            "#, Cell::new(0,0), Cell::new(0,0).o(), 0.5, EdgeCase::StartHalf, 0.5),
+            "#, Cell::new(1,0), Cell::new(1,0).k(), 0.5, EdgeCase::StartHalf, 0.5),
 
             // CIRCLE_2
             //center = 1,1,m radius = 1.0
@@ -67,7 +67,7 @@ lazy_static! {
             (r#"
              __
             (__)
-            "#, Cell::new(1,1), Cell::new(1,1).o(), 1.5, EdgeCase::StartHalf, 1.5),
+            "#, Cell::new(2,1), Cell::new(2,1).k(), 1.5, EdgeCase::StartHalf, 1.5),
 
             // CIRCLE_4
             //center: 2,1,m radius: 2.0
@@ -87,7 +87,7 @@ lazy_static! {
              .--.
             (    )
              `--'
-            "#, Cell::new(2,1), Cell::new(2,1).o(), 2.5, EdgeCase::StartHalf, 1.5),
+            "#, Cell::new(3,1), Cell::new(3,1).k(), 2.5, EdgeCase::StartHalf, 1.5),
 
             // CIRCLE_6
             //center: 3,2,m radius: 3.0
@@ -109,7 +109,7 @@ lazy_static! {
              ,'  '.
             (      )
              `.__.'
-            "#, Cell::new(3,2), Cell::new(3,2).o(), 3.5,EdgeCase::StartHalf, 2.5),
+            "#, Cell::new(4,2), Cell::new(4,2).k(), 3.5,EdgeCase::StartHalf, 2.5),
 
             // CIRCLE_8
             //center: 4,2,m radius:4.0
@@ -136,7 +136,7 @@ lazy_static! {
             /       \
             \       /
              `.___.'
-            "#, Cell::new(4,2), Cell::new(4,2).w(), 4.5, EdgeCase::StartEdge, 3.0 ),
+            "#, Cell::new(4,3), Cell::new(4,3).c(), 4.5, EdgeCase::StartEdge, 3.0 ),
 
             // CIRCLE_10
             //center: 4,2,y radius: 5.0
@@ -149,7 +149,7 @@ lazy_static! {
             /        \
             \        /
              `.____.'
-            "#, Cell::new(4,2), Cell::new(4,2).y(), 5.0, EdgeCase::StartEdge, 3.0),
+            "#, Cell::new(5,3), Cell::new(5,3).a(), 5.0, EdgeCase::StartEdge, 3.0),
 
             // CIRCLE_11
             //center:5,3,o radius: 5.5
@@ -162,7 +162,7 @@ lazy_static! {
             (          )
              \        /
               `.____.'
-            "#, Cell::new(5,3), Cell::new(5,3).o(), 5.5, EdgeCase::StartHalf , 3.5),
+            "#, Cell::new(6,3), Cell::new(6,3).k(), 5.5, EdgeCase::StartHalf , 3.5),
 
             // CIRCLE_12
             //center:6,3,m radius: 6.0
@@ -188,7 +188,7 @@ lazy_static! {
             |            |
              \          /
               `.______.'
-            "#, Cell::new(6,3), Cell::new(6,3).y(), 6.5, EdgeCase::StartHalf, 4.0),
+            "#, Cell::new(7,4), Cell::new(7,4).a(), 6.5, EdgeCase::StartHalf, 4.0),
 
             // CIRCLE_14
             //center: 7,3,w radius: 7.0
@@ -201,7 +201,7 @@ lazy_static! {
             |             |
              \           /
               `._______.'
-            "#, Cell::new(7,3), Cell::new(7,3).w(), 7.0, EdgeCase::StartHalf , 4.0),
+            "#, Cell::new(7,4), Cell::new(7,4).c(), 7.0, EdgeCase::StartHalf , 4.0),
 
 
             // CIRCLE_15
@@ -216,7 +216,7 @@ lazy_static! {
             |              |
              \            /
               `.________.'
-            "#, Cell::new(7,4), Cell::new(7,4).o(), 7.5, EdgeCase::StartHalf, 4.5),
+            "#, Cell::new(8,4), Cell::new(8,4).k(), 7.5, EdgeCase::StartHalf, 4.5),
 
             // CIRCLE_16
             //center: 8,4,m radius: 8.0
@@ -246,7 +246,7 @@ lazy_static! {
              \              /
               `.          .'
                 `--------'
-            "#, Cell::new(8,4), Cell::new(8,4).o(), 8.5, EdgeCase::StartHalf, 4.5),
+            "#, Cell::new(9,4), Cell::new(9,4).k(), 8.5, EdgeCase::StartHalf, 4.5),
 
             // CIRCLE_18
             //center:9,5,m radius: 9.0
@@ -278,7 +278,7 @@ lazy_static! {
              \                /
               `._          _.'
                  '-......-'
-            "#, Cell::new(9,5), Cell::new(9,5).o(), 9.5, EdgeCase::StartHalf, 5.5),
+            "#, Cell::new(10,5), Cell::new(10,5).k(), 9.5, EdgeCase::StartHalf, 5.5),
 
 
             // CIRCLE_20
@@ -312,7 +312,7 @@ lazy_static! {
              \                  /
               `._            _.'
                  '-........-'
-            "#, Cell::new(10,5), Cell::new(10,5).o(), 10.5, EdgeCase::StartHalf, 5.5),
+            "#, Cell::new(11,5), Cell::new(11,5).k(), 10.5, EdgeCase::StartHalf, 5.5),
 
             // CIRCLE_22
             // center: 10,5,m radius: 11
@@ -337,7 +337,7 @@ lazy_static! {
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
-        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, vedge_case)|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
             (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
@@ -377,8 +377,12 @@ lazy_static! {
 
                 let calc_center = Point::new(calc_center_x, calc_center_y);
                 dbg!(&calc_center);
-
                 assert_eq!(calc_center, *center);
+
+                let (calc_center_cell,_) = Cell::snap_point(calc_center);
+                dbg!(&calc_center_cell);
+                assert_eq!(calc_center_cell, *center_cell);
+
 
             }
 
@@ -391,7 +395,7 @@ lazy_static! {
 
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, vedge_case)|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
@@ -410,8 +414,15 @@ lazy_static! {
     ///  bottom_left arc: bottom_left to center_cell
     ///
     ///  bottom_right arc: bottom_right to center_cell
+    ///
+    /// if the number of horizontal cells are odd arc1 an arc2 will both have
+    /// the top_center character, so as arc3 and arc4 will have both the bottom_center character
+    ///
+    /// if the number of vertical cells are odd arc arc1 and arc3 will both have
+    /// the left_center character, so as arc3 and arc4 will have both the right_center character
+    ///
     pub static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
-            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center_cell, center, radius, edge_case, vedge_case)|{
+            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center_cell, center, radius, edge_case, offset_center_y)|{
                 let cb = CellBuffer::from(*art);
                 let mut spans = cb.group_adjacents();
                 assert_eq!(spans.len(), 1);
@@ -580,6 +591,8 @@ mod tests {
     fn access_circles() {
         let len = DIAMETER_CIRCLE.len();
         println!("len: {}", len);
+        let frag_len = FRAGMENTS_ARC.len();
+        println!("frag len: {}", frag_len);
     }
 
     #[test]
