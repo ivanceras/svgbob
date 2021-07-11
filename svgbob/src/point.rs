@@ -1,5 +1,6 @@
 use crate::buffer::CellGrid;
 use crate::util;
+use crate::Cell;
 use nalgebra::{Point2, Vector2};
 use std::{
     cmp::Ordering,
@@ -72,6 +73,27 @@ impl Point {
         let t = units * CellGrid::unit_x();
         let u = units * CellGrid::unit_y();
         Self::new(self.x + t, self.y + u)
+    }
+
+    /// test if the point lie on an edge of a cell
+    /// that is the fractional part is 0.0
+    pub fn is_edge_x(&self) -> bool {
+        self.x.fract() == 0.0
+    }
+    pub fn is_edge_y(&self) -> bool {
+        (self.y / 2.0).fract() == 0.0
+    }
+    pub fn is_mid_x(&self) -> bool {
+        self.x.fract() == 0.5
+    }
+    pub fn is_mid_y(&self) -> bool {
+        (self.y / 2.0).fract() == 0.5
+    }
+
+    /// return the cell where this point fall to
+    pub fn cell(&self) -> Cell {
+        let (cell, _) = Cell::snap_point(*self);
+        cell
     }
 }
 

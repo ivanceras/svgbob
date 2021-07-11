@@ -184,7 +184,7 @@ impl Cell {
 
     /// check if this cell is bounded by the lower bound and upper bound
     pub fn is_bounded(&self, bound1: Cell, bound2: Cell) -> bool {
-        let (lower_bound, upper_bound) = rearrange_bound(bound1, bound2);
+        let (lower_bound, upper_bound) = Self::rearrange_bound(bound1, bound2);
         self.x >= lower_bound.x
             && self.y >= lower_bound.y
             && self.x <= upper_bound.x
@@ -297,15 +297,15 @@ impl Cell {
             y: self.y + 1,
         }
     }
-}
 
-/// rearrange the bound of 2 cells
-pub fn rearrange_bound(bound1: Cell, bound2: Cell) -> (Cell, Cell) {
-    let min_x = cmp::min(bound1.x, bound2.x);
-    let min_y = cmp::min(bound1.y, bound2.y);
-    let max_x = cmp::max(bound1.x, bound2.x);
-    let max_y = cmp::max(bound1.y, bound2.y);
-    (Cell::new(min_x, min_y), Cell::new(max_x, max_y))
+    /// rearrange the bound of 2 cells
+    pub fn rearrange_bound(bound1: Cell, bound2: Cell) -> (Cell, Cell) {
+        let min_x = cmp::min(bound1.x, bound2.x);
+        let min_y = cmp::min(bound1.y, bound2.y);
+        let max_x = cmp::max(bound1.x, bound2.x);
+        let max_y = cmp::max(bound1.y, bound2.y);
+        (Cell::new(min_x, min_y), Cell::new(max_x, max_y))
+    }
 }
 
 #[cfg(test)]
