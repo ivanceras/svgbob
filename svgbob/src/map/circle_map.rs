@@ -603,10 +603,13 @@ fn is_subset_of(
 /// proportional, due to 1 of the arc not matching on the same arc level since the
 /// arc parameters is determine only by the contacts, and have no clue about it's radius.
 /// Multiple arc contacts can be the same while not having the same arc radius.
-pub fn endorse_arc(search: &Vec<Contacts>) -> Option<&fragment::Arc> {
+pub fn endorse_arc(
+    search: &Vec<Contacts>,
+) -> Option<(&fragment::Arc, Vec<usize>)> {
     FRAGMENTS_ARC.iter().rev().find_map(|(contacts, arc)| {
-        if contacts == search {
-            Some(arc)
+        let (matched, unmatched) = is_subset_of(contacts, search);
+        if matched {
+            Some((arc, unmatched))
         } else {
             None
         }

@@ -21,3 +21,4 @@
 - [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
 - [ ] Add more circle art
 - [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
+- [ ] Support for pills, elongated ovals

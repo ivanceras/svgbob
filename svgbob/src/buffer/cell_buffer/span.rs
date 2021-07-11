@@ -186,8 +186,12 @@ impl Span {
             for um in unmatched {
                 un_endorsed_circles.push(groups[um].clone());
             }
-        } else if let Some(arc) = circle_map::endorse_arc(&groups) {
+        } else if let Some((arc, unmatched)) = circle_map::endorse_arc(&groups)
+        {
             fragments.push(arc.clone().into());
+            for um in unmatched {
+                un_endorsed_circles.push(groups[um].clone());
+            }
         } else {
             un_endorsed_circles.extend(groups)
         }
