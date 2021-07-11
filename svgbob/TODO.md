@@ -22,3 +22,6 @@
 - [ ] Add more circle art
 - [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
 - [ ] Support for pills, elongated ovals
+- [ ] Update to library to latest version
+    - nalgebra
+    - ncollide2d -> parry2d
