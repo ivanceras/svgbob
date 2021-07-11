@@ -18,4 +18,6 @@
         When there is 2 arrows in the middle of a line `---->>-------` or `----<<----`
 - [ ] Clean the project enforce deny warnings.
 - [ ] Fix a bug where an escaped text has whitespaces, the whitespaces are gone.
-- [ ] Revise calculation of Circle and Arc center by basing on the number of chars/width
+- [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
+- [ ] Add more circle art
+- [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs

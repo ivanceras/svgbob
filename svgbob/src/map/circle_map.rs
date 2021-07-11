@@ -670,5 +670,67 @@ mod tests {
         assert_eq!(2, groups.len());
         let arc = endorse_arc(&groups);
         assert!(arc.is_some());
+        let arc = arc.unwrap();
+        assert_eq!(arc.radius, 5.0);
+    }
+
+    #[test]
+    fn test_arc5_top_right() {
+        let art = r#"
+            -.
+              )
+            "#;
+        let cell_buffer = CellBuffer::from(art);
+        let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+        assert_eq!(spans.len(), 1);
+        let span1 = spans.remove(0);
+        let groups = span1.get_contacts(&Settings::default());
+        for (i, group) in groups.iter().enumerate() {
+            println!("group{}\n{}", i, group);
+        }
+        let arc = endorse_arc(&groups);
+        assert!(arc.is_some());
+        let arc = arc.unwrap();
+        assert_eq!(arc.radius, 2.5);
+    }
+
+    #[test]
+    fn test_arc5_top_left() {
+        let art = r#"
+           .-
+          (
+            "#;
+        let cell_buffer = CellBuffer::from(art);
+        let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+        assert_eq!(spans.len(), 1);
+        let span1 = spans.remove(0);
+        let groups = span1.get_contacts(&Settings::default());
+        for (i, group) in groups.iter().enumerate() {
+            println!("group{}\n{}", i, group);
+        }
+        let arc = endorse_arc(&groups);
+        assert!(arc.is_some());
+        let arc = arc.unwrap();
+        assert_eq!(arc.radius, 2.5);
+    }
+
+    #[test]
+    fn test_arc5_bottom_left() {
+        let art = r#"
+          (
+           `-
+            "#;
+        let cell_buffer = CellBuffer::from(art);
+        let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+        assert_eq!(spans.len(), 1);
+        let span1 = spans.remove(0);
+        let groups = span1.get_contacts(&Settings::default());
+        for (i, group) in groups.iter().enumerate() {
+            println!("group{}\n{}", i, group);
+        }
+        let arc = endorse_arc(&groups);
+        assert!(arc.is_some());
+        let arc = arc.unwrap();
+        assert_eq!(arc.radius, 2.5);
     }
 }
