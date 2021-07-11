@@ -376,11 +376,12 @@ lazy_static! {
               `._             _.'
                  '-.........-'
             "#, EdgeCase::StartHalf, 5.5),
+
         ];
 
 
-    pub static ref CIRCLE_MAP: BTreeMap<&'static str,(Cell, Point, f32, EdgeCase, f32)> =BTreeMap::from_iter(
-        CIRCLE_ART_MAP.iter().map(|(art, edge_case, offset_center_y)|{
+    pub static ref CIRCLE_MAP: Vec<(&'static str,Cell, Point, f32, EdgeCase, f32)> =Vec::from_iter(
+        CIRCLE_ART_MAP.iter().enumerate().map(|(ndx, (art, edge_case, offset_center_y))|{
             let cb = CellBuffer::from(*art);
             let (lo, hi) = cb.bounds().expect("circle must have bounds");
 
@@ -394,6 +395,8 @@ lazy_static! {
            };
 
            let calc_radius = width / 2.0;
+           let index = (width - 1.0) as usize;
+           assert_eq!(ndx, index);
 
             let edge_inc_x = match edge_case{
                 EdgeCase::StartEdge => 0.0,
@@ -408,21 +411,21 @@ lazy_static! {
 
             let calc_center_cell = calc_center.cell();
 
-            (*art, (calc_center_cell, calc_center, calc_radius, *edge_case, *offset_center_y))
+            (*art, calc_center_cell, calc_center, calc_radius, *edge_case, *offset_center_y)
         })
     );
 
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
-        CIRCLE_MAP.iter().map(|(art, (_center_cell, center, radius, edge_case, offset_center_y))|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
             (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
 
     /// map of circle spans and their radius
     pub static ref DIAMETER_CIRCLE: BTreeMap<i32,(Cell,Span)> =BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, (center_cell, center, radius, edge_case, offset_center_y))|{
+        CIRCLE_MAP.iter().map(|(art, center_cell, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
@@ -433,7 +436,7 @@ lazy_static! {
 
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, (_center_cell, center, radius, edge_case, offset_center_y))|{
+        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
@@ -479,7 +482,7 @@ lazy_static! {
     ///     the center cell
     ///
     pub static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
-            CIRCLE_MAP.iter().skip(3).flat_map(|(art, (center_cell, center, radius, edge_case, offset_center_y))|{
+            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center_cell, center, radius, edge_case, offset_center_y)|{
                 let cb = CellBuffer::from(*art);
                 let mut spans = cb.group_adjacents();
                 assert_eq!(spans.len(), 1);
@@ -514,7 +517,6 @@ lazy_static! {
                 let arc2_span = span.extract(arc2_bounds.0, arc2_bounds.1);
                 let arc3_span = span.extract(arc3_bounds.0, arc3_bounds.1);
                 let arc4_span = span.extract(arc4_bounds.0, arc4_bounds.1);
-
 
                 let p1 = Point::new(center.x + radius, center.y);
                 let p2 = Point::new(center.x, center.y - radius);
