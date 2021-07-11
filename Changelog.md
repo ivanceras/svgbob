@@ -1,5 +1,15 @@
 # Changelog
 
+# 0.5.2
+- overhaul circle map algorithm calculating centers and radius based on the circle art(number of cells occupied horizontally), specified edge_case, and offset from top cell to the circle_radius
+
+# 0.5.1
+- Improve implementation of is_intersecting
+- Include circle in intersection test
+- Add a function to return regular shapes such as circle and rect, this will be used for testing hit, which fragment is hit
+- Initial implementation for testing hit/intersection AABB to any fragment
+- refactor group_node_and_fragments to clearly group the fragments first, as this will be used to test for fragment hit test
+
 # 0.5.0
 - All the changes in 0.5.0-alpha.* is now on this version.
 
