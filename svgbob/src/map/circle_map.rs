@@ -35,7 +35,7 @@ lazy_static! {
     ///     7├─┼─┼─┼─┤         │ │ │ │ │
     ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
     /// ```                      V W X
-    /// art, center_cell, center_point, radius, edge_case, top_offset to center point
+    /// art, edge_case, top_offset to center point
     static ref CIRCLE_ART_MAP: Vec<(&'static str, EdgeCase, f32)> =
         vec![
             // CIRCLE_1
@@ -380,7 +380,7 @@ lazy_static! {
         ];
 
 
-    pub static ref CIRCLE_MAP: Vec<(&'static str,Cell, Point, f32, EdgeCase, f32)> =Vec::from_iter(
+    pub static ref CIRCLE_MAP: Vec<(&'static str, Point, f32, EdgeCase, f32)> =Vec::from_iter(
         CIRCLE_ART_MAP.iter().enumerate().map(|(ndx, (art, edge_case, offset_center_y))|{
             let cb = CellBuffer::from(*art);
             let (lo, hi) = cb.bounds().expect("circle must have bounds");
@@ -404,39 +404,35 @@ lazy_static! {
             };
 
             let calc_center_x = calc_radius + edge_inc_x;
-
             let calc_center_y = offset_center_y * 2.0;
-
             let calc_center = Point::new(calc_center_x, calc_center_y);
 
-            let calc_center_cell = calc_center.cell();
-
-            (*art, calc_center_cell, calc_center, calc_radius, *edge_case, *offset_center_y)
+            (*art, calc_center, calc_radius, *edge_case, *offset_center_y)
         })
     );
 
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
-        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
+        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y)|{
             (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
 
     /// map of circle spans and their radius
-    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,(Cell,Span)> =BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center_cell, center, radius, edge_case, offset_center_y)|{
+    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,(Point,Span)> =BTreeMap::from_iter(
+        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
-            ((*radius * 2.0) as i32, (center_cell.clone(), span))
+            ((*radius * 2.0) as i32, (*center, span))
         })
     );
 
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, _center_cell, center, radius, edge_case, offset_center_y)|{
+        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
@@ -482,13 +478,15 @@ lazy_static! {
     ///     the center cell
     ///
     pub static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
-            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center_cell, center, radius, edge_case, offset_center_y)|{
+            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center, radius, edge_case, offset_center_y)|{
                 let cb = CellBuffer::from(*art);
                 let mut spans = cb.group_adjacents();
                 assert_eq!(spans.len(), 1);
                 let span = spans.remove(0).localize();
 
                 let (start_bound, end_bound) = span.bounds().expect("There should be bounds");
+
+                let center_cell = center.cell();
 
                 let right = Cell::new(end_bound.x, center_cell.y);
                 let top = Cell::new(center_cell.x, start_bound.y);
@@ -511,7 +509,7 @@ lazy_static! {
                 let arc1_bounds = Cell::rearrange_bound(Cell::new(center_cell.x, cy_adjusted), top_right);
                 let arc2_bounds = Cell::rearrange_bound(top_left, Cell::new( cx_adjusted, cy_adjusted));
                 let arc3_bounds = Cell::rearrange_bound(bottom_left, Cell::new(cx_adjusted, center_cell.y));
-                let arc4_bounds = Cell::rearrange_bound(*center_cell, bottom_right);
+                let arc4_bounds = Cell::rearrange_bound(center_cell, bottom_right);
 
                 let arc1_span = span.extract(arc1_bounds.0, arc1_bounds.1);
                 let arc2_span = span.extract(arc2_bounds.0, arc2_bounds.1);
