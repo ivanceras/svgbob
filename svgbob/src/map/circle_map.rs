@@ -671,9 +671,7 @@ mod tests {
             println!("group{}\n{}", i, group);
         }
         assert_eq!(2, groups.len());
-        let arc = endorse_arc(&groups);
-        assert!(arc.is_some());
-        let arc = arc.unwrap();
+        let (arc, _) = endorse_arc(&groups).unwrap();
         assert_eq!(arc.radius, 5.0);
     }
 
@@ -691,9 +689,7 @@ mod tests {
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
-        let arc = endorse_arc(&groups);
-        assert!(arc.is_some());
-        let arc = arc.unwrap();
+        let (arc, _) = endorse_arc(&groups).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -711,9 +707,7 @@ mod tests {
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
-        let arc = endorse_arc(&groups);
-        assert!(arc.is_some());
-        let arc = arc.unwrap();
+        let (arc, _) = endorse_arc(&groups).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -731,9 +725,7 @@ mod tests {
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
-        let arc = endorse_arc(&groups);
-        assert!(arc.is_some());
-        let arc = arc.unwrap();
+        let (arc, _) = endorse_arc(&groups).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 }
