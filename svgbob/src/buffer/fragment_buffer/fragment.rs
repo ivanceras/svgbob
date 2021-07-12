@@ -4,10 +4,10 @@ pub use arc::Arc;
 pub use circle::Circle;
 pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
-use ncollide2d::bounding_volume::BoundingVolume;
-use ncollide2d::query::PointQuery;
-use ncollide2d::shape::ConvexPolygon;
-use ncollide2d::{
+use parry2d::bounding_volume::BoundingVolume;
+use parry2d::query::PointQuery;
+use parry2d::shape::ConvexPolygon;
+use parry2d::{
     bounding_volume::AABB,
     math::Isometry,
     query::intersection_test,

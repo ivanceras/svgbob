@@ -1,6 +1,6 @@
 use crate::{util, Point};
-use ncollide2d::query::PointQuery;
-use ncollide2d::{
+use parry2d::query::PointQuery;
+use parry2d::{
     bounding_volume::AABB,
     math::Isometry,
     query::intersection_test,

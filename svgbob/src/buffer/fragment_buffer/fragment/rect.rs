@@ -1,6 +1,6 @@
 use crate::{fragment::Bounds, util, Cell, Point};
-use ncollide2d::shape::ConvexPolygon;
-use ncollide2d::shape::{Polyline, Segment, Shape};
+use parry2d::shape::ConvexPolygon;
+use parry2d::shape::{Polyline, Segment, Shape};
 use sauron::{
     html::attributes::*,
     svg::{attributes::*, *},

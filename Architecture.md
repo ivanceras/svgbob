@@ -10,7 +10,7 @@ are then merged to form lines and arcs. The lines and arcs are then endorsed int
    Bob Ross - a painter who like to draws happy little trees.
 
 ### Library used
-- [nalgebra](https://www.nalgebra.org/) and [ncollide2d](https://ncollide.org/) for geometric function calculations such as calculating whether lines are intersecting, collinear. Computing the clipping of lines and boxes.
+- [nalgebra](https://www.nalgebra.org/) and [parry2d](https://parry.rs/) for geometric function calculations such as calculating whether lines are intersecting, collinear. Computing the clipping of lines and boxes.
 - [pom](https://github.com/J-F-Liu/pom) for parsing the styling directives(Legend) at the bottom of the document
 - [sauron](https://github.com/ivanceras/sauron) for building the svg document object tree.
 

@@ -1,6 +1,6 @@
 use crate::Point;
-use ncollide2d::shape::Triangle;
-use ncollide2d::{bounding_volume::AABB, math::Isometry, query::PointQuery};
+use parry2d::shape::Triangle;
+use parry2d::{bounding_volume::AABB, math::Isometry, query::PointQuery};
 use std::cmp::Ordering;
 
 pub fn opt_ord(f1: Option<f32>, f2: Option<f32>) -> Ordering {

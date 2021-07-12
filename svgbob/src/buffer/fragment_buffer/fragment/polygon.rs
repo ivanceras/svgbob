@@ -4,7 +4,7 @@ use crate::{
     Cell, Point,
 };
 use nalgebra::Point2;
-use ncollide2d::shape::{shape::Shape, Polyline};
+use parry2d::shape::{shape::Shape, Polyline};
 use sauron::{
     html::attributes::*,
     svg::{attributes::*, *},
@@ -169,7 +169,7 @@ impl Polygon {
     pub(crate) fn center(&self) -> Point {
         let points: Vec<Point2<f32>> =
             self.points.iter().map(|p| **p).collect();
-        (ncollide2d::utils::center(&points)).into()
+        (parry2d::utils::center(&points)).into()
     }
 }
 

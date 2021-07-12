@@ -19,9 +19,9 @@
 - [ ] Clean the project enforce deny warnings.
 - [ ] Fix a bug where an escaped text has whitespaces, the whitespaces are gone.
 - [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
-- [ ] Add more circle art
+- [ ] Add more circle art, dynamically created
 - [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
 - [ ] Support for pills, elongated ovals
-- [ ] Update to library to latest version
+- [X] Update to library to latest version
     - nalgebra
     - ncollide2d -> parry2d

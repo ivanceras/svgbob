@@ -1,7 +1,7 @@
 use crate::{fragment::Bounds, util, Cell, Point};
 use nalgebra::Point2;
-use ncollide2d::shape::ConvexPolygon;
-use ncollide2d::shape::Polyline;
+use parry2d::shape::ConvexPolygon;
+use parry2d::shape::Polyline;
 use std::{cmp::Ordering, fmt};
 
 use sauron::{

@@ -1,5 +1,5 @@
 use crate::{buffer::Cell, fragment::Bounds, util, Point};
-use ncollide2d::shape::{Segment, Shape};
+use parry2d::shape::{Segment, Shape};
 use sauron::{
     html::attributes::*,
     svg::{attributes::*, *},
