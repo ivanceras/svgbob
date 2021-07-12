@@ -4,11 +4,7 @@ use crate::{
     util, Direction, Point,
 };
 use ncollide2d::query::PointQuery;
-use ncollide2d::{
-    bounding_volume::AABB,
-    query::{proximity, Proximity},
-    shape::Polyline,
-};
+use ncollide2d::{bounding_volume::AABB, shape::Polyline};
 use ncollide2d::{
     math::Isometry,
     shape::{Segment, Shape},
@@ -535,8 +531,8 @@ impl<MSG> Into<Node<MSG>> for Line {
     }
 }
 
-impl Into<Segment<f32>> for Line {
-    fn into(self) -> Segment<f32> {
+impl Into<Segment> for Line {
+    fn into(self) -> Segment {
         Segment::new(*self.start, *self.end)
     }
 }
@@ -638,18 +634,6 @@ mod tests {
         assert!(line2.is_touching(&line1));
         assert!(util::is_collinear(&line1.start, &line1.end, &line2.start));
         assert!(util::is_collinear(&line2.start, &line2.end, &line1.end));
-        let area1 = ncollide2d::utils::triangle_area(
-            &line1.start,
-            &line1.end,
-            &line2.start,
-        );
-        println!("area1: {}", area1);
-        let area2 = ncollide2d::utils::triangle_area(
-            &line1.start,
-            &line1.end,
-            &line2.end,
-        );
-        println!("area2: {}", area2);
         assert!(line1.can_merge(&line2));
     }
 

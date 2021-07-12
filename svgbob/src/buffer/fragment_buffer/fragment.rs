@@ -6,10 +6,11 @@ pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
 use ncollide2d::bounding_volume::BoundingVolume;
 use ncollide2d::query::PointQuery;
+use ncollide2d::shape::ConvexPolygon;
 use ncollide2d::{
     bounding_volume::AABB,
     math::Isometry,
-    query::{proximity, Proximity},
+    query::intersection_test,
     shape::{Polyline, Segment, Shape},
 };
 pub use polygon::{Polygon, PolygonTag};
@@ -298,40 +299,42 @@ impl Fragment {
     }
 
     /// check if this fragment is intersecting with this bounding box
-    pub fn is_intersecting(&self, bbox: &AABB<f32>) -> bool {
-        let bbox: Polyline<f32> = Polyline::new(
-            vec![
-                *Point::new(bbox.mins.x, bbox.mins.y),
-                *Point::new(bbox.maxs.x, bbox.mins.y),
-                *Point::new(bbox.maxs.x, bbox.maxs.y),
-                *Point::new(bbox.mins.x, bbox.maxs.y),
-            ],
-            None,
-        );
+    /// Note: if intersection logic requires testing the solid shape inside the polygon
+    /// use the ConvexPolygon of each shape instead of Polyline
+    pub fn is_intersecting(&self, bbox: &AABB) -> bool {
+        let points = vec![
+            *Point::new(bbox.mins.x, bbox.mins.y),
+            *Point::new(bbox.maxs.x, bbox.mins.y),
+            *Point::new(bbox.maxs.x, bbox.maxs.y),
+            *Point::new(bbox.mins.x, bbox.maxs.y),
+        ];
+        let bbox = Polyline::new(points, None);
         let identity = Isometry::identity();
         match self {
             Fragment::Line(line) => {
-                let segment: Segment<f32> = line.clone().into();
-                proximity(&identity, &segment, &identity, &bbox, 0.0)
-                    == Proximity::Intersecting
+                let segment: Segment = line.clone().into();
+                let res =
+                    intersection_test(&identity, &segment, &identity, &bbox)
+                        .expect("must pass");
+                println!("res: {}", res);
+                res
             }
             Fragment::Rect(rect) => {
-                let polyline: Polyline<f32> = rect.clone().into();
-                proximity(&identity, &polyline, &identity, &bbox, 0.0)
-                    == Proximity::Intersecting
+                let polyline: Polyline = rect.clone().into();
+                intersection_test(&identity, &polyline, &identity, &bbox)
+                    .expect("must pass")
             }
             Fragment::Circle(circle) => {
-                // do not include the small circles
-                let polyline: Polyline<f32> = circle.clone().into();
-                proximity(&identity, &polyline, &identity, &bbox, 0.0)
-                    == Proximity::Intersecting
+                let polyline: Polyline = circle.clone().into();
+                intersection_test(&identity, &polyline, &identity, &bbox)
+                    .expect("must pass")
             }
             _ => false,
         }
     }
 
     /// check if this fragment can be contain in the specified bounding box `bbox`
-    pub fn is_inside(&self, bbox: &AABB<f32>) -> bool {
+    pub fn is_inside(&self, bbox: &AABB) -> bool {
         let (start, end) = self.bounds();
         let frag_bound = AABB::new(*start, *end);
         bbox.contains(&frag_bound)
@@ -938,6 +941,9 @@ mod tests {
     fn test_hit() {
         let line1 = line(CellGrid::a(), CellGrid::y());
         assert!(line1.hit(CellGrid::g(), CellGrid::s()));
+
+        let rect_gs = rect(CellGrid::g(), CellGrid::s(), false, false);
+        assert!(!rect_gs.hit(CellGrid::a(), CellGrid::y()));
 
         let rect1 = rect(CellGrid::a(), CellGrid::y(), false, false);
         assert!(!rect1.hit(CellGrid::g(), CellGrid::s()));

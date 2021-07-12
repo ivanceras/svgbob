@@ -3,7 +3,7 @@ use ncollide2d::query::PointQuery;
 use ncollide2d::{
     bounding_volume::AABB,
     math::Isometry,
-    query::{proximity, Proximity},
+    query::intersection_test,
     shape::{Polyline, Segment},
 };
 use std::{cmp, cmp::Ordering, fmt};
@@ -125,7 +125,7 @@ impl Cell {
 
     /// the bounding box of this cell
     #[inline]
-    fn bounding_box(&self) -> AABB<f32> {
+    fn bounding_box(&self) -> AABB {
         let start = Point::new(
             self.x as f32 * Self::width(),
             self.y as f32 * Self::height(),
@@ -140,7 +140,7 @@ impl Cell {
     /// Convert the bounding box aabb to polyline segment
     /// the dots from top-left, top-right, bottom-right, bottom-left then closing to top-left
     /// The polyline is then used to testing for intersection with the line segment
-    fn polyline(&self) -> Polyline<f32> {
+    fn polyline(&self) -> Polyline {
         let aabb = self.bounding_box();
         let min = aabb.mins;
         let max = aabb.maxs;
@@ -172,14 +172,13 @@ impl Cell {
     pub fn is_intersected(&self, start: Point, end: Point) -> bool {
         let pl = self.polyline();
         let segment = Segment::new(*start, *end);
-        let prox = proximity(
+        intersection_test(
             &Isometry::identity(),
             &pl,
             &Isometry::identity(),
             &segment,
-            0.0,
-        );
-        prox == Proximity::Intersecting
+        )
+        .expect("must pass intersection test")
     }
 
     /// check if this cell is bounded by the lower bound and upper bound

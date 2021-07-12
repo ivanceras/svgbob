@@ -175,7 +175,7 @@ impl Polygon {
 
 impl Bounds for Polygon {
     fn bounds(&self) -> (Point, Point) {
-        let pl: Polyline<f32> = self.clone().into();
+        let pl: Polyline = self.clone().into();
         let aabb = pl.local_aabb();
         (Point::from(*aabb.mins), Point::from(*aabb.maxs))
     }
@@ -195,8 +195,8 @@ impl fmt::Display for Polygon {
     }
 }
 
-impl Into<Polyline<f32>> for Polygon {
-    fn into(self) -> Polyline<f32> {
+impl Into<Polyline> for Polygon {
+    fn into(self) -> Polyline {
         let points: Vec<Point2<f32>> =
             self.points.iter().map(|p| **p).collect();
         Polyline::new(points, None)

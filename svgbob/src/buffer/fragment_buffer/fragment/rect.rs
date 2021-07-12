@@ -1,6 +1,5 @@
 use crate::{fragment::Bounds, util, Cell, Point};
-use std::fmt;
-
+use ncollide2d::shape::ConvexPolygon;
 use ncollide2d::shape::{Polyline, Segment, Shape};
 use sauron::{
     html::attributes::*,
@@ -8,6 +7,7 @@ use sauron::{
     Node,
 };
 use std::cmp::Ordering;
+use std::fmt;
 
 #[derive(Debug, Clone)]
 pub struct Rect {
@@ -120,8 +120,8 @@ impl fmt::Display for Rect {
     }
 }
 
-impl Into<Polyline<f32>> for Rect {
-    fn into(self) -> Polyline<f32> {
+impl Into<Polyline> for Rect {
+    fn into(self) -> Polyline {
         Polyline::new(
             vec![
                 *self.start,
@@ -132,6 +132,18 @@ impl Into<Polyline<f32>> for Rect {
             ],
             None,
         )
+    }
+}
+
+impl Into<ConvexPolygon> for Rect {
+    fn into(self) -> ConvexPolygon {
+        ConvexPolygon::from_convex_polyline(vec![
+            *self.start,
+            *Point::new(self.end.x, self.start.y),
+            *self.end,
+            *Point::new(self.start.x, self.end.y),
+        ])
+        .expect("must create a convex polygon")
     }
 }
 

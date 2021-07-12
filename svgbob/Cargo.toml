@@ -11,7 +11,7 @@ license = "Apache-2.0"
 
 [dependencies]
 nalgebra = "0.28"
-ncollide2d = "0.31"
+ncollide2d = { version = "0.6", package = "parry2d"}
 lazy_static = "1.3.0"
 sauron = { version = "0.34" }
 unicode-width = "0.1.5"

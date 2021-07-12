@@ -1,5 +1,6 @@
 use crate::{fragment::Bounds, util, Cell, Point};
-use ncollide2d::procedural;
+use nalgebra::Point2;
+use ncollide2d::shape::ConvexPolygon;
 use ncollide2d::shape::Polyline;
 use std::{cmp::Ordering, fmt};
 
@@ -30,9 +31,16 @@ impl Circle {
     fn top_left_bound(&self) -> Point {
         Point::new(self.center.x - self.radius, self.center.y - self.radius)
     }
+    fn top_right_bound(&self) -> Point {
+        Point::new(self.center.x + self.radius, self.center.y - self.radius)
+    }
 
     fn bottom_right_bound(&self) -> Point {
         Point::new(self.center.x + self.radius, self.center.y + self.radius)
+    }
+
+    fn bottom_left_bound(&self) -> Point {
+        Point::new(self.center.x - self.radius, self.center.y + self.radius)
     }
 
     /// offset the circles parameter from the arg cell
@@ -107,19 +115,47 @@ impl PartialEq for Circle {
     }
 }
 
-impl Into<Polyline<f32>> for Circle {
-    fn into(self) -> Polyline<f32> {
-        use nalgebra::Point2;
-        let pl = procedural::circle(&(self.radius * 2.0), 64);
-        let mut points = pl.coords().to_vec();
-        let orig_len = points.len();
-        points.dedup();
-
-        let adjusted: Vec<Point2<f32>> = points
+impl Into<Polyline> for Circle {
+    fn into(self) -> Polyline {
+        let points: Vec<Point2<f32>> = extract_circle_points(self.radius, 64)
             .into_iter()
-            .map(|p| *Point::new(p.x + self.center.x, p.y + self.center.y))
+            .map(|p| Point2::new(p.x + self.center.x, p.y + self.center.y))
             .collect();
 
-        Polyline::new(adjusted, None)
+        Polyline::new(points, None)
     }
+}
+
+impl Into<ConvexPolygon> for Circle {
+    fn into(self) -> ConvexPolygon {
+        let points: Vec<Point2<f32>> = extract_circle_points(self.radius, 64)
+            .into_iter()
+            .map(|p| Point2::new(p.x + self.center.x, p.y + self.center.y))
+            .collect();
+
+        ConvexPolygon::from_convex_polyline(points)
+            .expect("must create a convex polygon")
+    }
+}
+
+fn extract_circle_points(radius: f32, nsubdivs: u32) -> Vec<Point> {
+    let two_pi = std::f32::consts::TAU;
+    let dtheta = two_pi / nsubdivs as f32;
+    push_xy_arc(radius, nsubdivs, dtheta)
+}
+
+/// Pushes a discretized counterclockwise circle to a buffer.
+/// The circle is contained on the plane spanned by the `x` and `y` axis.
+fn push_xy_arc(radius: f32, nsubdiv: u32, dtheta: f32) -> Vec<Point> {
+    let mut out: Vec<Point> = vec![];
+    let mut curr_theta: f32 = 0.0;
+
+    for _ in 0..nsubdiv {
+        let x = curr_theta.cos() * radius;
+        let y = curr_theta.sin() * radius;
+        out.push(Point::new(x, y));
+
+        curr_theta = curr_theta + dtheta;
+    }
+    out
 }

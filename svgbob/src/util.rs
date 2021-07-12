@@ -1,4 +1,5 @@
 use crate::Point;
+use ncollide2d::shape::Triangle;
 use ncollide2d::{bounding_volume::AABB, math::Isometry, query::PointQuery};
 use std::cmp::Ordering;
 
@@ -27,7 +28,7 @@ pub fn ord(f1: f32, f2: f32) -> Ordering {
 /// clips a line to the bounding box of this whole grid
 /// and approximate each point to the closes intersection
 fn clip_line_internal(
-    aabb: &AABB<f32>,
+    aabb: &AABB,
     start: Point,
     end: Point,
 ) -> Option<(Point, Point)> {
@@ -45,7 +46,7 @@ fn clip_line_internal(
 
 /// clip a line but do not extend the points
 pub fn clip_line(
-    aabb: &AABB<f32>,
+    aabb: &AABB,
     start: Point,
     end: Point,
 ) -> Option<(Point, Point)> {
@@ -74,7 +75,8 @@ pub fn clip_line(
 /// the threshold are of 0.01 is used since
 /// lines may not be very aligned.
 pub fn is_collinear(a: &Point, b: &Point, c: &Point) -> bool {
-    ncollide2d::utils::triangle_area(a, b, c) < 0.01
+    use std::ops::Deref;
+    Triangle::new(*a.deref(), *b.deref(), *c.deref()).area() < 0.01
 }
 
 pub fn pad(v: f32) -> f32 {
