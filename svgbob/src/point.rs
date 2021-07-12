@@ -70,9 +70,9 @@ impl Point {
     }
 
     /// adjust both x and y value by units specified
-    pub fn adjust(&self, units: f32) -> Self {
-        let t = units * CellGrid::unit_x();
-        let u = units * CellGrid::unit_y();
+    pub fn adjust(&self, units_x: f32, units_y: f32) -> Self {
+        let t = units_x * CellGrid::unit_x();
+        let u = units_y * CellGrid::unit_y();
         Self::new(self.x + t, self.y + u)
     }
 
