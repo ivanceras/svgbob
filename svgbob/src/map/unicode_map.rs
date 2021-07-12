@@ -337,7 +337,14 @@ lazy_static! {
 
             ('╨', vec![line(k, o), line(b, l), line(d, n)]),
 
+            ('⤹', vec![arc(j,r,unit2),polygon(vec![y.adjust(-0.5,-0.5),r.adjust(0.5,-0.5),r.adjust(-0.5,0.5)], true, vec![])]),
             // TODO:
+            // circular arcs with arrows:
+            //  ↺
+            //  ↻
+            //  ⟲
+            //  ⟳
+            //  ↶ ↷
             // parenthesis like: ⟮ ⟯（ ）
             //
             // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑↓ ∧ ∨ ≈ ± ∃ ∀ ⊃ ⊂ ∪ ∩ ⊖ ⊕ « »

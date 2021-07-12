@@ -392,7 +392,7 @@ lazy_static! {
                             //
                             (top_left.line_overlap(s,y)|| bottom_right.line_overlap(a,g)
                               || bottom_left.line_overlap(u,q) || top_right.line_overlap(e,i),
-                             vec![polygon(vec![m.adjust_x(1.4).adjust_y(2.0), m.adjust_x(1.4).adjust_y(-2.0), m.adjust_x(-1.4).adjust_y(-2.0),m.adjust_x(-1.4).adjust_y(2.0)], true, vec![DiamondBullet])]),
+                             vec![polygon(vec![m.adjust(1.4,2.0), m.adjust(1.4,-2.0), m.adjust(-1.4,-2.0),m.adjust(-1.4,2.0)], true, vec![DiamondBullet])]),
                             //
                             //  |
                             //  #
