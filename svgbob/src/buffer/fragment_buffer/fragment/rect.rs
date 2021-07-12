@@ -97,6 +97,14 @@ impl Rect {
     pub(crate) fn is_broken(&self) -> bool {
         self.is_broken
     }
+
+    pub fn is_rounded(&self) -> bool {
+        if let Some(ref r) = &self.radius {
+            *r > 0.0
+        } else {
+            false
+        }
+    }
 }
 
 impl Bounds for Rect {
