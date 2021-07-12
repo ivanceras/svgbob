@@ -142,8 +142,8 @@ impl Cell {
     /// The polyline is then used to testing for intersection with the line segment
     fn polyline(&self) -> Polyline<f32> {
         let aabb = self.bounding_box();
-        let min = aabb.mins();
-        let max = aabb.maxs();
+        let min = aabb.mins;
+        let max = aabb.maxs;
         let x1 = min.x;
         let y1 = min.y;
         let x2 = max.x;

@@ -1,8 +1,5 @@
 use crate::Point;
-use ncollide2d::{
-    bounding_volume::AABB, math::Isometry,
-    query::point_internal::point_query::PointQuery,
-};
+use ncollide2d::{bounding_volume::AABB, math::Isometry, query::PointQuery};
 use std::cmp::Ordering;
 
 pub fn opt_ord(f1: Option<f32>, f2: Option<f32>) -> Ordering {
@@ -38,8 +35,8 @@ fn clip_line_internal(
     let end_v = end.to_vector() - start_v;
     let clipped = aabb.clip_line(&start, &end_v);
     if let Some(clipped) = clipped {
-        let a = *clipped.a();
-        let b = *clipped.b();
+        let a = *clipped.a;
+        let b = *clipped.b;
         Some((a.into(), b.into()))
     } else {
         None

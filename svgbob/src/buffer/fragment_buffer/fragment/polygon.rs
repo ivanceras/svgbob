@@ -177,7 +177,7 @@ impl Bounds for Polygon {
     fn bounds(&self) -> (Point, Point) {
         let pl: Polyline<f32> = self.clone().into();
         let aabb = pl.local_aabb();
-        (Point::from(*aabb.mins()), Point::from(*aabb.maxs()))
+        (Point::from(*aabb.mins), Point::from(*aabb.maxs))
     }
 }
 

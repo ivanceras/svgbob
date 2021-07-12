@@ -1,6 +1,7 @@
 use crate::buffer::CellGrid;
 use crate::util;
 use crate::Cell;
+use nalgebra::coordinates::XY;
 use nalgebra::{Point2, Vector2};
 use std::{
     cmp::Ordering,
@@ -106,6 +107,18 @@ impl From<Point2<f32>> for Point {
 impl From<Point2<i32>> for Point {
     fn from(point: Point2<i32>) -> Self {
         Point::new(point.x as f32, point.y as f32)
+    }
+}
+
+impl From<XY<i32>> for Point {
+    fn from(point: XY<i32>) -> Self {
+        Point::new(point.x as f32, point.y as f32)
+    }
+}
+
+impl From<XY<f32>> for Point {
+    fn from(point: XY<f32>) -> Self {
+        Point::new(point.x, point.y)
     }
 }
 

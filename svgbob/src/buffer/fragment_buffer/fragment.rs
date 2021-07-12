@@ -301,10 +301,10 @@ impl Fragment {
     pub fn is_intersecting(&self, bbox: &AABB<f32>) -> bool {
         let bbox: Polyline<f32> = Polyline::new(
             vec![
-                *bbox.mins(),
-                *Point::new(bbox.maxs().x, bbox.mins().y),
-                *bbox.maxs(),
-                *Point::new(bbox.mins().x, bbox.maxs().y),
+                *Point::new(bbox.mins.x, bbox.mins.y),
+                *Point::new(bbox.maxs.x, bbox.mins.y),
+                *Point::new(bbox.maxs.x, bbox.maxs.y),
+                *Point::new(bbox.mins.x, bbox.maxs.y),
             ],
             None,
         );

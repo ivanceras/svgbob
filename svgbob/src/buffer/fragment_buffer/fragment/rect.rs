@@ -110,7 +110,7 @@ impl Rect {
 impl Bounds for Rect {
     fn bounds(&self) -> (Point, Point) {
         let aabb = Segment::new(*self.start, *self.end).local_aabb();
-        (Point::from(*aabb.mins()), Point::from(*aabb.maxs()))
+        (Point::from(*aabb.mins), Point::from(*aabb.maxs))
     }
 }
 
