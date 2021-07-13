@@ -4,8 +4,12 @@
 <img src="https://api.travis-ci.org/ivanceras/svgbob.svg"/>
 </a>
 
-Svgbob transform your ascii diagrams into a nice svg representation.
+Svgbob can create a nice graphical representation of your text diagrams.
 
-[**Demo**](https://svgbob-editor.netlify.app/)
+Svgbob provides a cli which takes text as an input and creates an svg image as an output.
 
-[![Foo](https://xscode.com/assets/promo-banner.svg)](https://xscode.com/ivanceras/svgbob)
+[**Demo**](https://ivanceras.github.io/svgbob-editor/)
+
+
+
+[Specification](https://ivanceras.github.io/content/Svgbob/Specification.html)
