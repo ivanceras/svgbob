@@ -1,0 +1,60 @@
+name: "Build"
+
+on: [push]
+
+# on:
+#   release:
+#     types: [created]
+
+jobs:
+  build:
+    runs-on: '${{ matrix.os }}'
+    name: "Build ${{ matrix.target }}"
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            suffix: ""
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            suffix: ".exe"
+          # - os: macos-latest
+          #   target: x86_64-apple-darwin
+          #   suffix: ""
+
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: '${{ runner.os }}-cargo-registry-${{ hashFiles(''**/Cargo.lock'') }}'
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: '${{ runner.os }}-cargo-index-${{ hashFiles(''**/Cargo.lock'') }}'
+      - uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install nightly
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: nightly
+            override: true
+            target: ${{ matrix.target }}
+
+      - name: Run cargo build --release
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+      - name: Archive Binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.target }}
+          path: ./target/release/svgbob${{ matrix.suffix}}
