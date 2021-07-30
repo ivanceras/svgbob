@@ -14,4 +14,4 @@ Svgbob provides a cli which takes text as an input and creates an svg image as a
 
 [Specification](https://ivanceras.github.io/content/Svgbob/Specification.html)
 
-<a href="https://liberapay.com/~27051/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+<a href="https://liberapay.com/ivanceras/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
