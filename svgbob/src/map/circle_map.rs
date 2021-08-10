@@ -5,7 +5,7 @@ use crate::{
     Cell, Point, Settings,
 };
 use lazy_static::lazy_static;
-use std::{collections::BTreeMap, iter::FromIterator};
+use std::{collections::BTreeMap, collections::HashMap, iter::FromIterator};
 
 #[derive(PartialEq, Debug, Clone, Copy)]
 /// edge cases of the circle art
@@ -380,7 +380,7 @@ lazy_static! {
         ];
 
 
-    pub static ref CIRCLE_MAP: Vec<(&'static str, Point, f32, EdgeCase, f32)> =Vec::from_iter(
+    static ref CIRCLE_MAP: Vec<(&'static str, Point, f32, EdgeCase, f32)> =Vec::from_iter(
         CIRCLE_ART_MAP.iter().enumerate().map(|(ndx, (art, edge_case, offset_center_y))|{
             let cb = CellBuffer::from(*art);
             let (lo, hi) = cb.bounds().expect("circle must have bounds");
@@ -413,14 +413,14 @@ lazy_static! {
 
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
-    pub static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
+    static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
         CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y)|{
             (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
         })
     );
 
     /// map of circle spans and their radius
-    pub static ref DIAMETER_CIRCLE: BTreeMap<i32,(Point,Span)> =BTreeMap::from_iter(
+    pub static ref DIAMETER_CIRCLE: HashMap<i32,(Point,Span)> = HashMap::from_iter(
         CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y)|{
             let cb = CellBuffer::from(*art);
             let mut spans = cb.group_adjacents();
@@ -477,7 +477,7 @@ lazy_static! {
     ///     otherwise if the center cell lies on the edge, then the cell coverage is exclusive of
     ///     the center cell
     ///
-    pub static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
+    static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
             CIRCLE_MAP.iter().skip(3).flat_map(|(art, center, radius, edge_case, offset_center_y)|{
                 let cb = CellBuffer::from(*art);
                 let mut spans = cb.group_adjacents();
