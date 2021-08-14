@@ -299,91 +299,90 @@ impl CellBuffer {
     }
 
     fn get_style<MSG>(settings: &Settings, legend_css: String) -> Node<MSG> {
-        html::tags::style(
-            vec![],
-            vec![text(format!(
-                "line, path, circle,rect,polygon {{
-                          stroke: {stroke_color};
-                          stroke-width: {stroke_width};
-                          stroke-opacity: 1;
-                          fill-opacity: 1;
-                          stroke-linecap: round;
-                          stroke-linejoin: miter;
-                        }}
+        use sauron::html::units::px;
 
-                    text {{
-                        /* This fix the spacing bug in svg text*/
-                        white-space: pre;
-                        fill: {stroke_color};
-                        }}
-                        rect.backdrop{{
-                            stroke: none;
-                            fill: {background};
-                        }}
-                        .broken{{
-                            stroke-dasharray: 8;
-                        }}
-                        .filled{{
-                            fill: {fill_color};
-                        }}
-                        .bg_filled{{
-                            fill: {background};
-                        }}
-                        .nofill{{
-                            fill: {background};
-                        }}
+        let element_styles = sauron::jss!({
+                "line, path, circle,rect,polygon": {
+                      "stroke": settings.stroke_color,
+                      "stroke-width": settings.stroke_width,
+                      "stroke-opacity": 1,
+                      "fill-opacity": 1,
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "miter",
+                },
 
-                        text {{
-                         font-family: {font_family};
-                         font-size: {font_size}px;
-                        }}
+                "text": {
+                    /* This fix the spacing bug in svg text*/
+                    "white-space": "pre",
+                    "fill": settings.stroke_color,
+                },
 
-                        .end_marked_arrow{{
-                            marker-end: url(#arrow);
-                         }}
-                        .start_marked_arrow{{
-                            marker-start: url(#arrow);
-                         }}
+               "rect.backdrop":{
+                    "stroke": "none",
+                    "fill": settings.background,
+                },
 
-                        .end_marked_diamond{{
-                            marker-end: url(#diamond);
-                         }}
-                        .start_marked_diamond{{
-                            marker-start: url(#diamond);
-                         }}
+                ".broken":{
+                    "stroke-dasharray": 8,
+                },
 
-                        .end_marked_circle{{
-                            marker-end: url(#circle);
-                         }}
-                        .start_marked_circle{{
-                            marker-start: url(#circle);
-                         }}
+                ".filled":{
+                    "fill": settings.fill_color,
+                },
 
-                        .end_marked_open_circle{{
-                            marker-end: url(#open_circle);
-                         }}
-                        .start_marked_open_circle{{
-                            marker-start: url(#open_circle);
-                         }}
+                ".bg_filled":{
+                    "fill": settings.background,
+                },
 
-                        .end_marked_big_open_circle{{
-                            marker-end: url(#big_open_circle);
-                         }}
-                        .start_marked_big_open_circle{{
-                            marker-start: url(#big_open_circle);
-                         }}
+                ".nofill":{
+                    "fill": settings.background,
+                },
 
-                         {legend_css}
-                        ",
-                background = settings.background,
-                fill_color = settings.fill_color,
-                stroke_color = settings.stroke_color,
-                stroke_width = settings.stroke_width,
-                font_size = settings.font_size,
-                font_family = settings.font_family,
-                legend_css = legend_css,
-            ))],
-        )
+                "text": {
+                 "font-family": settings.font_family,
+                 "font-size": px(settings.font_size),
+                },
+
+                ".end_marked_arrow":{
+                    "marker-end": "url(#arrow)",
+                 },
+
+                ".start_marked_arrow":{
+                    "marker-start": "url(#arrow)",
+                 },
+
+                ".end_marked_diamond":{
+                    "marker-end": "url(#diamond)",
+                 },
+                ".start_marked_diamond":{
+                    "marker-start": "url(#diamond)",
+                 },
+
+                ".end_marked_circle":{
+                    "marker-end": "url(#circle)",
+                 },
+
+                ".start_marked_circle":{
+                    "marker-start": "url(#circle)",
+                 },
+
+                ".end_marked_open_circle":{
+                    "marker-end": "url(#open_circle)",
+                 },
+
+                ".start_marked_open_circle":{
+                    "marker-start": "url(#open_circle)",
+                 },
+
+                ".end_marked_big_open_circle":{
+                    "marker-end": "url(#big_open_circle)",
+                 },
+
+                ".start_marked_big_open_circle": {
+                    "marker-start": "url(#big_open_circle)",
+                 }
+        });
+        html::tags::style(vec![], vec![text(element_styles), text(legend_css)])
     }
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
