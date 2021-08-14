@@ -15,13 +15,24 @@ pub use point::Point;
 pub use sauron;
 pub use sauron::{Node, Render};
 
-/// convert svgbob ascii art to svg
 pub fn to_svg(ascii: &str) -> String {
+    to_svg_string_pretty(ascii)
+}
+
+/// convert svgbob ascii art to svg string with indentions
+pub fn to_svg_string_pretty(ascii: &str) -> String {
     let cb = CellBuffer::from(ascii);
     let node: Node<()> = cb.get_node();
     let mut buffer = String::new();
     node.render(&mut buffer).expect("must render");
     buffer
+}
+
+/// convert svgbob ascii art to svg string
+pub fn to_svg_string_compressed(ascii: &str) -> String {
+    let cb = CellBuffer::from(ascii);
+    let node: Node<()> = cb.get_node();
+    node.render_to_string()
 }
 
 /// convert ascii art into an svg
