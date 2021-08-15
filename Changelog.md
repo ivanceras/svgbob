@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.4
+- Update sauron version to `0.40`
+- Use `sauron::jss` macro to simplify creating a css from settings
+- Add a compressed variant to the generated svg
+- Add a little arrowed arc in unicode map
+- Use the `parry2d` as a new new of the old library `ncollide2d`
+
+# 0.5.3
+- Update to the lastest version of `nalgebra` and `ncollide2d`.
+- Add a public function for Rect fragment to determine whether it is using a rounded rectangle or not
+
 # 0.5.2
 - overhaul circle map algorithm calculating centers and radius based on the circle art(number of cells occupied horizontally), specified edge_case, and offset from top cell to the circle_radius
 
