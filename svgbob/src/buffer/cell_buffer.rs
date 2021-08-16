@@ -538,8 +538,6 @@ impl CellBuffer {
         if char_locs.is_empty() {
             no_escaped_text = raw.to_string();
         } else {
-            println!("raw: {}", raw);
-            dbg!(&input_chars);
             for (start, end) in char_locs.iter() {
                 let escaped = input_chars[*start + 1..*end].iter().fold(
                     String::new(),
@@ -563,8 +561,14 @@ impl CellBuffer {
                 no_escaped_text += &" ".repeat(escaped_unicode_width + 2);
                 index = end + 1;
             }
-            // the rest of the text
-            no_escaped_text.push_str(&raw[index..raw.len()]);
+            // include the rest of the text
+            no_escaped_text += &input_chars[index..].iter().fold(
+                String::new(),
+                |mut acc, c| {
+                    acc.push(*c);
+                    acc
+                },
+            );
         }
         (escaped_text, no_escaped_text)
     }
@@ -664,6 +668,28 @@ mod tests {
         println!("escaped: {:#?}", escaped);
         println!("unescaped: {}", unescaped);
         assert_eq!(vec![(Cell::new(12, 0), "|      |".to_string())], escaped);
+        assert_eq!(ex2, unescaped);
+    }
+
+    #[test]
+    fn test_issue38_escaped_german_umlauts() {
+        let raw = r#"This is some german character "ÖÄÜ" and was escaped"#;
+        let ex2 = r#"This is some german character       and was escaped"#;
+        let (escaped, unescaped) = CellBuffer::escape_line(0, raw);
+        println!("escaped: {:#?}", escaped);
+        println!("unescaped: {}", unescaped);
+        assert_eq!(vec![(Cell::new(30, 0), "ÖÄÜ".to_string())], escaped);
+        assert_eq!(ex2, unescaped);
+    }
+
+    #[test]
+    fn test_issue38_escape_cjk() {
+        let raw = r#"This is some CJK "一" and was escaped"#;
+        let ex2 = r#"This is some CJK      and was escaped"#;
+        let (escaped, unescaped) = CellBuffer::escape_line(0, raw);
+        println!("escaped: {:#?}", escaped);
+        println!("unescaped: {}", unescaped);
+        assert_eq!(vec![(Cell::new(17, 0), r#"一"#.to_string())], escaped);
         assert_eq!(ex2, unescaped);
     }
 
