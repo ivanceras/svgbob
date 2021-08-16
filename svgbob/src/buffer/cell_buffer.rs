@@ -19,6 +19,7 @@ use std::{
     fmt,
     ops::{Deref, DerefMut},
 };
+use unicode_width::UnicodeWidthStr;
 
 mod cell;
 mod contacts;
@@ -537,13 +538,29 @@ impl CellBuffer {
         if char_locs.is_empty() {
             no_escaped_text = raw.to_string();
         } else {
+            println!("raw: {}", raw);
+            dbg!(&input_chars);
             for (start, end) in char_locs.iter() {
-                let escaped = raw[*start + 1..*end].to_string();
+                let escaped = input_chars[*start + 1..*end].iter().fold(
+                    String::new(),
+                    |mut acc, c| {
+                        acc.push(*c);
+                        acc
+                    },
+                );
+                let escaped_unicode_width = escaped.width();
                 let cell = Cell::new(*start as i32, line as i32);
                 escaped_text.push((cell, escaped));
+                no_escaped_text += &input_chars[index..*start].iter().fold(
+                    String::new(),
+                    |mut acc, c| {
+                        acc.push(*c);
+                        acc
+                    },
+                );
 
-                no_escaped_text.push_str(&raw[index..*start]);
-                no_escaped_text.push_str(&" ".repeat(end + 1 - start));
+                // we add 2 to account for the double quotes on end of the escaped string
+                no_escaped_text += &" ".repeat(escaped_unicode_width + 2);
                 index = end + 1;
             }
             // the rest of the text
