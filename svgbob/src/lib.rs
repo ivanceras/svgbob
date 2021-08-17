@@ -12,6 +12,7 @@ pub use buffer::{
     Property, Settings, Signal,
 };
 pub use point::Point;
+/// reexport sauron
 pub use sauron;
 pub use sauron::{Node, Render};
 
