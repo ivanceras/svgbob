@@ -7,4 +7,4 @@
 set -ev
 cd svgbob && cargo publish && cd - && \
 echo "sleeping for 5s" && sleep 5 &&\
-cargo publish
+cd svgbob_cli && cargo publish && cd - 
