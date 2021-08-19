@@ -302,10 +302,17 @@ impl CellBuffer {
     fn get_style<MSG>(settings: &Settings, legend_css: String) -> Node<MSG> {
         use sauron::html::units::px;
 
-        let element_styles = sauron::jss!({
+        let stroke_color = settings.stroke_color.to_owned();
+        let stroke_width = settings.stroke_width.to_owned();
+        let background = settings.background.to_owned();
+        let fill_color = settings.fill_color.to_owned();
+        let font_family = settings.font_family.to_owned();
+        let font_size = settings.font_size.to_owned();
+
+        let element_styles = sauron::jss::jss! {
                 "line, path, circle,rect,polygon": {
-                      "stroke": settings.stroke_color,
-                      "stroke-width": settings.stroke_width,
+                      "stroke": stroke_color.clone(),
+                      "stroke-width": stroke_width.clone(),
                       "stroke-opacity": 1,
                       "fill-opacity": 1,
                       "stroke-linecap": "round",
@@ -315,12 +322,12 @@ impl CellBuffer {
                 "text": {
                     /* This fix the spacing bug in svg text*/
                     "white-space": "pre",
-                    "fill": settings.stroke_color,
+                    "fill": stroke_color.clone(),
                 },
 
                "rect.backdrop":{
                     "stroke": "none",
-                    "fill": settings.background,
+                    "fill": background.clone(),
                 },
 
                 ".broken":{
@@ -328,20 +335,20 @@ impl CellBuffer {
                 },
 
                 ".filled":{
-                    "fill": settings.fill_color,
+                    "fill": fill_color.clone(),
                 },
 
                 ".bg_filled":{
-                    "fill": settings.background,
+                    "fill": background.clone(),
                 },
 
                 ".nofill":{
-                    "fill": settings.background,
+                    "fill": background.clone(),
                 },
 
                 "text": {
-                 "font-family": settings.font_family,
-                 "font-size": px(settings.font_size),
+                 "font-family": font_family.clone(),
+                 "font-size": px(font_size.clone()),
                 },
 
                 ".end_marked_arrow":{
@@ -382,7 +389,7 @@ impl CellBuffer {
                 ".start_marked_big_open_circle": {
                     "marker-start": "url(#big_open_circle)",
                  }
-        });
+        };
         html::tags::style(vec![], vec![text(element_styles), text(legend_css)])
     }
 
