@@ -533,7 +533,8 @@ lazy_static! {
     );
 
     pub static ref ARC_SPAN: BTreeMap<Arc,Span> = BTreeMap::from_iter(
-            QUARTER_ARC_SPAN.iter()
+        HALF_ARC_SPAN.iter()
+            .chain(QUARTER_ARC_SPAN.iter())
                 .flat_map(|(_diameter, arcs)|arcs.clone())
     );
 

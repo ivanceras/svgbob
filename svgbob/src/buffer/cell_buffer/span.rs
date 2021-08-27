@@ -568,11 +568,22 @@ mod tests {
         let rect = fragments.remove(0);
         dbg!(&rect);
         assert!(rect.is_rect());
+        /*
         assert_eq!(
             rect,
             Fragment::Rect(Rect::new(
                 Point::new(9.5, 9.0),
                 Point::new(19.5, 13.0),
+                false,
+                false
+            ))
+        );
+        */
+        assert_eq!(
+            rect,
+            Fragment::Rect(Rect::new(
+                Point::new(8.5, 3.0),
+                Point::new(18.5, 7.0),
                 false,
                 false
             ))
