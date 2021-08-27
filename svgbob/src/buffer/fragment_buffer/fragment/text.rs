@@ -247,7 +247,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
+        let groups = span1.localize().get_contacts(&Settings::default());
         for (i, group) in groups.iter().enumerate() {
             println!("group{}\n{}", i, group);
         }
@@ -293,8 +293,8 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 2);
         let settings = &Settings::default();
-        let groups2 = spans.remove(1).get_contacts(settings);
-        let groups1 = spans.remove(0).get_contacts(settings);
+        let groups2 = spans.remove(1).localize().get_contacts(settings);
+        let groups1 = spans.remove(0).localize().get_contacts(settings);
         println!("span1 groups:");
         for (i, group1) in groups1.iter().enumerate() {
             println!("\tgroup {} {}", i, group1);
