@@ -26,6 +26,11 @@ impl Deref for Span {
     }
 }
 
+pub struct Bounds {
+    top_left: Cell,
+    bottom_right: Cell,
+}
+
 impl DerefMut for Span {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
@@ -64,6 +69,17 @@ impl Span {
         self.extend_from_slice(&*other)
     }
 
+    /// paste the other Span at cell location `loc`
+    pub fn paste_at(&self, loc: Cell, other: &Self) -> Self {
+        let mut this = self.clone();
+        for (cell, ch) in other.deref() {
+            this.push((*cell + loc, *ch));
+        }
+        this.sort();
+        this.dedup();
+        this
+    }
+
     /// returns the top_left most cell which aligns the top most and the left most cell.
     pub(crate) fn bounds(&self) -> Option<(Cell, Cell)> {
         if let Some((min_y, max_y)) =
@@ -76,6 +92,14 @@ impl Span {
             } else {
                 None
             }
+        } else {
+            None
+        }
+    }
+
+    pub fn cell_bounds(&self) -> Option<Bounds> {
+        if let Some((top_left, top_right)) = self.bounds() {
+            Some(Bounds::new(top_left, top_right))
         } else {
             None
         }
@@ -231,6 +255,31 @@ impl Span {
                 .filter(|(cell, _ch)| cell.is_bounded(bound1, bound2))
                 .collect(),
         )
+    }
+}
+
+impl Bounds {
+    pub fn new(cell1: Cell, cell2: Cell) -> Self {
+        let (top_left, bottom_right) = Cell::rearrange_bound(cell1, cell2);
+        Self {
+            top_left,
+            bottom_right,
+        }
+    }
+
+    pub fn top_left(&self) -> Cell {
+        self.top_left
+    }
+
+    pub fn bottom_right(&self) -> Cell {
+        self.bottom_right
+    }
+
+    pub fn top_right(&self) -> Cell {
+        Cell::new(self.bottom_right.x, self.top_left.y)
+    }
+    pub fn bottom_left(&self) -> Cell {
+        Cell::new(self.top_left.x, self.bottom_right.y)
     }
 }
 
@@ -509,7 +558,15 @@ mod tests {
         let (mut fragments, _groups) = span1.endorse(&Settings::default());
         assert_eq!(fragments.len(), 2);
 
+        let circle = fragments.remove(0);
+        assert!(circle.is_circle());
+        assert_eq!(
+            circle,
+            Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false))
+        );
+
         let rect = fragments.remove(0);
+        dbg!(&rect);
         assert!(rect.is_rect());
         assert_eq!(
             rect,
@@ -519,13 +576,6 @@ mod tests {
                 false,
                 false
             ))
-        );
-
-        let circle = fragments.remove(0);
-        assert!(circle.is_circle());
-        assert_eq!(
-            circle,
-            Fragment::Circle(Circle::new(Point::new(11.0, 5.0), 2.5, false))
         );
     }
 
@@ -628,5 +678,47 @@ mod tests {
         let abs_since = since.absolute_position(top_left1);
         assert_eq!(abs_since.content, "since");
         assert_eq!(abs_since.start, Cell::new(28, 6));
+    }
+}
+
+#[cfg(test)]
+mod test_arcs {
+    use super::*;
+    use crate::{
+        buffer::{
+            fragment::{Arc, Circle, Rect},
+            CellBuffer,
+        },
+        Point,
+    };
+
+    #[test]
+    fn test_endorse_arc() {
+        let art = r#"
+         .-
+        (
+    "#;
+        let buffer = CellBuffer::from(art);
+        println!("buffer: {}", buffer);
+        let mut adjacents = buffer.group_adjacents();
+        println!("There are {} adjacents", adjacents.len());
+        assert_eq!(1, adjacents.len());
+        let span = adjacents.remove(0);
+        let (top_left, _) = span.bounds().unwrap();
+        assert_eq!(top_left, Cell::new(8, 1));
+        let (mut fragments, _groups) = span.endorse(&Settings::default());
+        for (i, frag) in fragments.iter().enumerate() {
+            println!("frag {}:\n{}", i, frag);
+        }
+        assert_eq!(fragments.len(), 1);
+        let arc = fragments.remove(0);
+        assert_eq!(
+            arc,
+            Fragment::Arc(Arc::new(
+                Point::new(11.0, 2.5),
+                Point::new(8.5, 5.0),
+                2.5
+            ))
+        );
     }
 }

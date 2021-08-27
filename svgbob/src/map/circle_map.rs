@@ -443,12 +443,25 @@ lazy_static! {
         })
     );
 
-    pub static ref ARC_SPAN: BTreeMap<Arc, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().skip(3).flat_map(|(art, center, radius, edge_case, offset_center_y)|{
+    /// top_left      top       top_right
+    ///               p2
+    ///          arc2  |    arc1
+    ///                |
+    ///    left  p3----+----- p1 right
+    ///                |
+    ///          arc3  |   arc4
+    ///               p4
+    /// bottom_left  bottom   bottom_right
+    ///
+    /// (diameter, quarter arcs)
+    pub static ref QUARTER_ARC_SPAN: BTreeMap<i32, [(Arc,Span);4]> = BTreeMap::from_iter(
+        CIRCLE_MAP.iter().skip(4).map(|(art, center, radius, edge_case, offset_center_y)|{
             let span = circle_art_to_span(art);
-            let (top_left, bottom_right) = span.bounds().expect("must have bounds");
-            let top_right = Cell::new(bottom_right.x, top_left.y);
-            let bottom_left = Cell::new(top_left.x, bottom_right.y);
+            let bounds = span.cell_bounds().expect("must have bounds");
+            let top_left = bounds.top_left();
+            let bottom_right = bounds.bottom_right();
+            let top_right = bounds.top_right();
+            let bottom_left = bounds.bottom_left();
 
             let p1 = Point::new(center.x + radius, center.y);
             let p2 = Point::new(center.x, center.y - radius);
@@ -491,130 +504,43 @@ lazy_static! {
 
             let arc1 = Arc::new(arc1_start, arc1_end, *radius);
             let arc2 = Arc::new(arc2_start, arc2_end, *radius);
-            let arc3 = Arc::new(arc3_start, arc3_end,  *radius);
+            let arc3 = Arc::new(arc3_start, arc3_end, *radius);
             let arc4 = Arc::new(arc4_start, arc4_end, *radius);
 
-            vec![(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)]
-
+            let diameter = (*radius * 2.0) as i32;
+            (diameter, [(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)])
         })
     );
 
+    pub static ref HALF_ARC_SPAN: BTreeMap<i32,[(Arc,Span);4]> = BTreeMap::from_iter(
+        QUARTER_ARC_SPAN.iter().map(|(diameter, [(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)])|{
+            let radius = (diameter / 2) as f32;
 
-    /// Simplified version of fragment arcs derived from CIRCLE_MAP
-    /// Algorithm:
-    /// 1. Locate the cells corresponding to the 4 quadrant boundary of the circle
-    ///
-    /// top_left      top       top_right
-    ///               p2
-    ///          arc2  |    arc1
-    ///                |
-    ///    left  p3----+----- p1 right
-    ///                |
-    ///          arc3  |   arc4
-    ///               p4
-    /// bottom_left  bottom   bottom_right
-    ///
-    ///   p1 = center.x + radius, center.y
-    ///   p2 = center.x, center.y - radius
-    ///   p3 = center.x - radius, center.y
-    ///   p4 = center.x + radius, center.y + radius
-    ///
-    ///  right,top,left,bottom, top_left, top_right,bottom_left,bottom_right are cells dervied from
-    ///  bounds.
-    ///
-    ///  assert that snapping points to cell corresponds respectively:
-    ///     p1 -> right cell
-    ///     p2 -> top cell
-    ///     p3 -> left cell
-    ///     p4 -> bottom cell
-    ///
-    /// 2. Locate the span of each quadrants
-    ///    arc4 span is always center_cell, to bottom_right
-    ///    arc2 span is conditional
-    ///     if center cell lies on mid, the span coverage is inclusive of the center cell.
-    ///     otherwise if the center cell lies on the edge, then the cell coverage is exclusive of
-    ///     the center cell
-    ///
-    static ref FRAGMENTS_ARC: Vec<(Vec<Contacts>,fragment::Arc)> =Vec::from_iter(
-            CIRCLE_MAP.iter().skip(3).flat_map(|(art, center, radius, edge_case, offset_center_y)|{
-                let cb = CellBuffer::from(*art);
-                let mut spans = cb.group_adjacents();
-                assert_eq!(spans.len(), 1);
-                let span = spans.remove(0).localize();
+            let half12 = Arc::new(arc1.start, arc2.end, radius);
+            let span12 = span2.paste_at(span2.cell_bounds().unwrap().top_right(), span1);
 
-                let (start_bound, end_bound) = span.bounds().expect("There should be bounds");
+            let half23 = Arc::new(arc2.start, arc3.end, radius);
+            let span23 = span2.paste_at(span2.cell_bounds().unwrap().bottom_left(), span3);
 
-                let center_cell = center.cell();
+            let half34 = Arc::new(arc3.start, arc4.end, radius);
+            let span34 = span3.paste_at(span3.cell_bounds().unwrap().top_right(), span4);
 
-                let right = Cell::new(end_bound.x, center_cell.y);
-                let top = Cell::new(center_cell.x, start_bound.y);
-                let left = Cell::new(start_bound.x, center_cell.y);
-                let bottom = Cell::new(center_cell.x, end_bound.y);
+            let half41 = Arc::new(arc4.start, arc1.end, radius);
+            let span41 = span1.paste_at(span1.cell_bounds().unwrap().bottom_left(), span4);
 
-                let top_left = Cell::new(left.x, top.y);
-                let top_right = Cell::new(right.x, top.y);
-                let bottom_left = Cell::new(left.x, bottom.y);
-                let bottom_right = Cell::new(right.x, bottom.y);
-                assert_eq!(top_left, start_bound);
-                assert_eq!(bottom_right, end_bound);
+            (*diameter, [(half12, span12), (half23, span23), (half34, span34), (half41, span41)])
+        })
+    );
 
-
-                // include cx if the center lies on the horizontal midline
-                // include cy if the center lies on the veritcal midline
-                let cx_adjusted = if !center.is_edge_x(){ center_cell.x }else{ center_cell.x - 1 };
-                let cy_adjusted = if !center.is_edge_y(){ center_cell.y }else{ center_cell.y - 1 };
-
-                let arc1_bounds = Cell::rearrange_bound(Cell::new(center_cell.x, cy_adjusted), top_right);
-                let arc2_bounds = Cell::rearrange_bound(top_left, Cell::new( cx_adjusted, cy_adjusted));
-                let arc3_bounds = Cell::rearrange_bound(bottom_left, Cell::new(cx_adjusted, center_cell.y));
-                let arc4_bounds = Cell::rearrange_bound(center_cell, bottom_right);
-
-                let arc1_span = span.extract(arc1_bounds.0, arc1_bounds.1);
-                let arc2_span = span.extract(arc2_bounds.0, arc2_bounds.1);
-                let arc3_span = span.extract(arc3_bounds.0, arc3_bounds.1);
-                let arc4_span = span.extract(arc4_bounds.0, arc4_bounds.1);
-
-                let p1 = Point::new(center.x + radius, center.y);
-                let p2 = Point::new(center.x, center.y - radius);
-                let p3 = Point::new(center.x - radius, center.y);
-                let p4 = Point::new(center.x, center.y + radius);
-
-                let arc1_start  = arc1_bounds.0.localize_point(p1);
-                let arc1_end = arc1_bounds.0.localize_point(p2);
-
-                let arc2_start = arc2_bounds.0.localize_point(p2);
-                let arc2_end = arc2_bounds.0.localize_point(p3);
-
-                let arc3_start = arc3_bounds.0.localize_point(p3);
-                let arc3_end = arc3_bounds.0.localize_point(p4);
-
-                let arc4_start = arc4_bounds.0.localize_point(p4);
-                let arc4_end = arc4_bounds.0.localize_point(p1);
-
-                let arc1  = fragment::Arc::new(arc1_start, arc1_end, *radius);
-                let arc2  = fragment::Arc::new(arc2_start, arc2_end, *radius);
-                let arc3  = fragment::Arc::new(arc3_start, arc3_end, *radius);
-                let arc4  = fragment::Arc::new(arc4_start, arc4_end, *radius);
-
-                //TODO: get the settings supplied by the user
-                let settings = &Settings::default();
-
-                vec![
-                    (arc1_span.get_contacts(settings), arc1),
-                    (arc2_span.get_contacts(settings), arc2),
-                    (arc3_span.get_contacts(settings), arc3),
-                    (arc4_span.get_contacts(settings), arc4),
-                ]
-            })
+    pub static ref ARC_SPAN: BTreeMap<Arc,Span> = BTreeMap::from_iter(
+            QUARTER_ARC_SPAN.iter()
+                .flat_map(|(_diameter, arcs)|arcs.clone())
     );
 
 }
 
 fn circle_art_to_group(art: &str, settings: &Settings) -> Vec<Contacts> {
-    let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.group_adjacents();
-    assert_eq!(spans.len(), 1);
-    let span1 = spans.remove(0);
+    let span1 = circle_art_to_span(art);
     span1.get_contacts(settings)
 }
 
@@ -649,7 +575,7 @@ pub fn endorse_circle_span(search: &Span) -> Option<(&Circle, Span)> {
 }
 
 pub fn endorse_arc_span(search: &Span) -> Option<(&Arc, Span)> {
-    ARC_SPAN.iter().rev().find_map(|(arc, span)| {
+    ARC_SPAN.iter().find_map(|(arc, span)| {
         let search_localized = search.clone().localize();
         let (matched, unmatched) = is_subset_of(span, &search_localized);
         if matched {
@@ -692,38 +618,9 @@ fn is_subset_of<T: PartialEq>(
     (matched == subset.len(), unmatched)
 }
 
-/// searches from the largest arc first
-/// [x](solved) ISSUE: An arc can have multiple matches at different radius.
-/// searching from the largest or from the smallest will still result in 4 parts not equally
-/// proportional, due to 1 of the arc not matching on the same arc level since the
-/// arc parameters is determine only by the contacts, and have no clue about it's radius.
-/// Multiple arc contacts can be the same while not having the same arc radius.
-pub fn endorse_arc(
-    search: &Vec<Contacts>,
-) -> Option<(&fragment::Arc, Vec<usize>)> {
-    FRAGMENTS_ARC.iter().rev().find_map(|(contacts, arc)| {
-        let (matched, unmatched) = is_subset_of(contacts, search);
-        if matched {
-            Some((arc, unmatched))
-        } else {
-            None
-        }
-    })
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn access_circles() {
-        let len = DIAMETER_CIRCLE.len();
-        println!("len: {}", len);
-        assert_eq!(len, 22);
-        let frag_len = FRAGMENTS_ARC.len();
-        println!("frag len: {}", frag_len);
-        assert_eq!(frag_len, 76);
-    }
 
     #[test]
     fn test_circle1() {
@@ -761,12 +658,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        assert_eq!(2, groups.len());
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 5.0);
     }
 
@@ -780,11 +672,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -798,11 +686,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -816,11 +700,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -834,11 +714,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 2.5);
     }
 
@@ -856,11 +732,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 10.5); //also matched the arc21 radius and since larger it will matched it instead of arc20
     }
 
@@ -878,11 +750,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 10.5); //also matched the arc21 radius and since larger it will matched it instead of arc20
     }
 
@@ -899,12 +767,8 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
-        assert_eq!(arc.radius, 10.0);
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
+        assert_eq!(arc.radius, 9.0);
     }
 
     #[test]
@@ -920,11 +784,7 @@ mod tests {
         let mut spans: Vec<Span> = cell_buffer.group_adjacents();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
-        let groups = span1.get_contacts(&Settings::default());
-        for (i, group) in groups.iter().enumerate() {
-            println!("group{}\n{}", i, group);
-        }
-        let (arc, _) = endorse_arc(&groups).unwrap();
+        let (arc, _) = endorse_arc_span(&span1).unwrap();
         assert_eq!(arc.radius, 10.0);
     }
 }

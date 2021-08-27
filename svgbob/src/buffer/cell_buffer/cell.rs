@@ -6,6 +6,7 @@ use parry2d::{
     query::intersection_test,
     shape::{Polyline, Segment},
 };
+use std::ops::{Add, Sub};
 use std::{cmp, cmp::Ordering, fmt};
 
 mod cell_grid;
@@ -304,6 +305,22 @@ impl Cell {
         let max_x = cmp::max(bound1.x, bound2.x);
         let max_y = cmp::max(bound1.y, bound2.y);
         (Cell::new(min_x, min_y), Cell::new(max_x, max_y))
+    }
+}
+
+impl Add for Cell {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self::Output {
+        Self::new(self.x + other.x, self.y + other.y)
+    }
+}
+
+impl Sub for Cell {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self::Output {
+        Self::new(self.x - other.x, self.y - other.y)
     }
 }
 
