@@ -1,6 +1,7 @@
 use crate::{
     buffer::{CellBuffer, Contacts, Span},
     fragment,
+    fragment::Arc,
     fragment::Circle,
     Cell, Point, Settings,
 };
@@ -411,6 +412,7 @@ lazy_static! {
         })
     );
 
+
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
@@ -438,6 +440,62 @@ lazy_static! {
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
             (Circle::new(*center, *radius, false), span)
+        })
+    );
+
+    pub static ref ARC_SPAN: BTreeMap<Arc, Span> = BTreeMap::from_iter(
+        CIRCLE_MAP.iter().skip(3).flat_map(|(art, center, radius, edge_case, offset_center_y)|{
+            let span = circle_art_to_span(art);
+            let (top_left, bottom_right) = span.bounds().expect("must have bounds");
+            let top_right = Cell::new(bottom_right.x, top_left.y);
+            let bottom_left = Cell::new(top_left.x, bottom_right.y);
+
+            let p1 = Point::new(center.x + radius, center.y);
+            let p2 = Point::new(center.x, center.y - radius);
+            let p3 = Point::new(center.x - radius, center.y);
+            let p4 = Point::new(center.x, center.y + radius);
+
+
+            let center_cell = center.cell();
+
+            // TODO: use the edge_case from the circle_art map
+            let cx_adjusted = if !center.is_edge_x(){ center_cell.x }else{ center_cell.x - 1 };
+            let cy_adjusted = if !center.is_edge_y(){ center_cell.y }else{ center_cell.y - 1 };
+
+            let span1_center = Cell::new(center_cell.x, cy_adjusted);
+            let span2_center = Cell::new(cx_adjusted, cy_adjusted);
+            let span3_center = Cell::new(cx_adjusted, center_cell.y);
+            let span4_center = center_cell;
+
+            let bounds1 = Cell::rearrange_bound(span1_center, top_right);
+            let bounds2 = Cell::rearrange_bound(top_left, span2_center);
+            let bounds3 = Cell::rearrange_bound(bottom_left, span3_center);
+            let bounds4 = Cell::rearrange_bound(span4_center, bottom_right);
+
+            let span1 = span.extract(bounds1.0, bounds1.1).localize();
+            let span2 = span.extract(bounds2.0, bounds2.1).localize();
+            let span3 = span.extract(bounds3.0, bounds3.1).localize();
+            let span4 = span.extract(bounds4.0, bounds4.1).localize();
+
+            let arc1_start  = bounds1.0.localize_point(p1);
+            let arc1_end = bounds1.0.localize_point(p2);
+
+            let arc2_start = bounds2.0.localize_point(p2);
+            let arc2_end = bounds2.0.localize_point(p3);
+
+            let arc3_start = bounds3.0.localize_point(p3);
+            let arc3_end = bounds3.0.localize_point(p4);
+
+            let arc4_start = bounds4.0.localize_point(p4);
+            let arc4_end = bounds4.0.localize_point(p1);
+
+            let arc1 = Arc::new(arc1_start, arc1_end, *radius);
+            let arc2 = Arc::new(arc2_start, arc2_end, *radius);
+            let arc3 = Arc::new(arc3_start, arc3_end,  *radius);
+            let arc4 = Arc::new(arc4_start, arc4_end, *radius);
+
+            vec![(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)]
+
         })
     );
 
@@ -560,27 +618,64 @@ fn circle_art_to_group(art: &str, settings: &Settings) -> Vec<Contacts> {
     span1.get_contacts(settings)
 }
 
-/// [X](Done) TODO: search only the subset of contacts that matches the circle.
-/// if it is a subset then the circle is matched and the non-matching ones are returned
-pub fn endorse_circle(search: &Vec<Contacts>) -> Option<(&Circle, Vec<usize>)> {
-    FRAGMENTS_CIRCLE
-        .iter()
-        .rev()
-        .find_map(|(contacts, circle)| {
-            let (matched, unmatched) = is_subset_of(contacts, search);
-            if matched {
-                Some((circle, unmatched))
-            } else {
-                None
-            }
-        })
+fn circle_art_to_span(art: &str) -> Span {
+    let cell_buffer = CellBuffer::from(art);
+    let mut spans = cell_buffer.group_adjacents();
+    assert_eq!(spans.len(), 1);
+    spans.remove(0).localize()
+}
+
+pub fn endorse_circle_span(search: &Span) -> Option<(&Circle, Span)> {
+    CIRCLES_SPAN.iter().rev().find_map(|(circle, span)| {
+        let search_localized = search.clone().localize();
+        let (matched, unmatched) = is_subset_of(span, &search_localized);
+        if matched {
+            let unmatched_cell_chars = search
+                .iter()
+                .enumerate()
+                .filter_map(|(i, cell_char)| {
+                    if unmatched.contains(&i) {
+                        Some(cell_char.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect::<Vec<_>>();
+            Some((circle, Span::from(unmatched_cell_chars)))
+        } else {
+            None
+        }
+    })
+}
+
+pub fn endorse_arc_span(search: &Span) -> Option<(&Arc, Span)> {
+    ARC_SPAN.iter().rev().find_map(|(arc, span)| {
+        let search_localized = search.clone().localize();
+        let (matched, unmatched) = is_subset_of(span, &search_localized);
+        if matched {
+            let unmatched_cell_chars = search
+                .iter()
+                .enumerate()
+                .filter_map(|(i, cell_char)| {
+                    if unmatched.contains(&i) {
+                        Some(cell_char.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect::<Vec<_>>();
+            Some((arc, Span::from(unmatched_cell_chars)))
+        } else {
+            None
+        }
+    })
 }
 
 /// returns true if all the contacts in subset is in big_set
 /// This also returns the indices of big_set that are not found in the subset
-fn is_subset_of(
-    subset: &Vec<Contacts>,
-    big_set: &Vec<Contacts>,
+fn is_subset_of<T: PartialEq>(
+    subset: &[T],
+    big_set: &[T],
 ) -> (bool, Vec<usize>) {
     let mut unmatched = vec![];
     let mut matched = 0;

@@ -32,6 +32,12 @@ impl DerefMut for Span {
     }
 }
 
+impl From<Vec<(Cell, char)>> for Span {
+    fn from(cell_chars: Vec<(Cell, char)>) -> Self {
+        Span(cell_chars)
+    }
+}
+
 impl Span {
     pub(super) fn new(cell: Cell, ch: char) -> Self {
         Span(vec![(cell, ch)])
@@ -169,35 +175,6 @@ impl Span {
         (fragments, un_endorsed_rect)
     }
 
-    /// [X](Done) TODO: this is trying to match all the members of this contact
-    /// to each specific circle, this can be improve by checking
-    /// subsets of the contacts to match the circles.
-    ///
-    /// This function is calling on endorse algorithmn on fragments that
-    /// are neighbors, but not necessarily touching to be promoted to a shape.
-    /// These includes: circle, arc, and line with arrow heads.
-    fn endorse_circles_and_arcs(
-        groups: Vec<Contacts>,
-    ) -> (Vec<Fragment>, Vec<Contacts>) {
-        let mut fragments = vec![];
-        let mut un_endorsed_circles: Vec<Contacts> = vec![];
-        if let Some((circle, unmatched)) = circle_map::endorse_circle(&groups) {
-            fragments.push(circle.clone().into());
-            for um in unmatched {
-                un_endorsed_circles.push(groups[um].clone());
-            }
-        } else if let Some((arc, unmatched)) = circle_map::endorse_arc(&groups)
-        {
-            fragments.push(arc.clone().into());
-            for um in unmatched {
-                un_endorsed_circles.push(groups[um].clone());
-            }
-        } else {
-            un_endorsed_circles.extend(groups)
-        }
-        (fragments, un_endorsed_circles)
-    }
-
     /// convert this span into fragments applying endorsement
     /// of group into fragments
     ///
@@ -212,15 +189,28 @@ impl Span {
         self,
         settings: &Settings,
     ) -> (Vec<Fragment>, Vec<Contacts>) {
-        let (top_left, _) = self.bounds().expect("mut have bounds");
-        let groups: Vec<Contacts> = self.get_contacts(settings);
-        // 1st phase, successful_endorses fragments, unendorsed one)
-        let (mut fragments, un_endorsed) = Self::endorse_rects(groups);
-        // 2nd phase, try to endorse to circles and arcs from the rejects of the 1st phase
-        let (circle_fragments, un_endorsed) =
-            Self::endorse_circles_and_arcs(un_endorsed);
+        let mut fragments = vec![];
+        let (top_left, _) = self.bounds().expect("must have bounds");
+        let un_endorsed_span = if let Some((circle, un_endorsed_span)) =
+            circle_map::endorse_circle_span(&self)
+        {
+            fragments.push(circle.clone().into());
+            un_endorsed_span
+        } else if let Some((arc, un_endorsed_span)) =
+            circle_map::endorse_arc_span(&self)
+        {
+            fragments.push(arc.clone().into());
+            un_endorsed_span
+        } else {
+            self
+        };
 
-        fragments.extend(circle_fragments);
+        let groups: Vec<Contacts> = un_endorsed_span.get_contacts(settings);
+        // 1st phase, successful_endorses fragments, unendorsed one)
+        let (rect_fragments, un_endorsed) = Self::endorse_rects(groups);
+
+        fragments.extend(rect_fragments);
+
         (
             fragments
                 .iter()
