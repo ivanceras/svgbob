@@ -25,3 +25,4 @@
 - [X] Update to library to latest version
     - nalgebra
     - ncollide2d -> parry2d
+- [ ] Make the top-level directory a workspace and put svgbob and cli into packages/

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.1
+Improve code readability on view by using arrays instead of vec
+Modify the algorithm for endorse such that circles and arcs are matched by their ascii art rather than their computed fragments, this way, it can intersect with other fragments
+
+## 0.6.0
+- Update to sauron 0.41.0
+- Fix jss
+## 0.5.5
+- issue#38
+- Add test for issue#38 and remove panicking code due to char boundary error
+
 ## 0.5.4
 - Update sauron version to `0.40`
 - Use `sauron::jss` macro to simplify creating a css from settings
