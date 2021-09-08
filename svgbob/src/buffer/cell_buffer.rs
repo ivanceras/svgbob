@@ -268,7 +268,7 @@ impl CellBuffer {
                         node
                     })
                     .collect::<Vec<Node<MSG>>>();
-                g(vec![], group_members)
+                g([], group_members)
             })
             .collect();
 
@@ -310,87 +310,87 @@ impl CellBuffer {
         let font_size = settings.font_size.to_owned();
 
         let element_styles = sauron::jss::jss! {
-                "line, path, circle,rect,polygon": {
-                      "stroke": stroke_color.clone(),
-                      "stroke-width": stroke_width.clone(),
-                      "stroke-opacity": 1,
-                      "fill-opacity": 1,
-                      "stroke-linecap": "round",
-                      "stroke-linejoin": "miter",
+                "line, path, circle, rect, polygon": {
+                      stroke: stroke_color.clone(),
+                      stroke_width: stroke_width.clone(),
+                      stroke_opacity: 1,
+                      fill_opacity: 1,
+                      stroke_linecap: "round",
+                      stroke_linejoin: "miter",
                 },
 
                 "text": {
                     /* This fix the spacing bug in svg text*/
-                    "white-space": "pre",
-                    "fill": stroke_color.clone(),
+                    white_space: "pre",
+                    fill: stroke_color.clone(),
                 },
 
                "rect.backdrop":{
-                    "stroke": "none",
-                    "fill": background.clone(),
+                    stroke: "none",
+                    fill: background.clone(),
                 },
 
                 ".broken":{
-                    "stroke-dasharray": 8,
+                    stroke_dasharray: 8,
                 },
 
                 ".filled":{
-                    "fill": fill_color.clone(),
+                    fill: fill_color.clone(),
                 },
 
                 ".bg_filled":{
-                    "fill": background.clone(),
+                    fill: background.clone(),
                 },
 
                 ".nofill":{
-                    "fill": background.clone(),
+                    fill: background.clone(),
                 },
 
                 "text": {
-                 "font-family": font_family.clone(),
-                 "font-size": px(font_size.clone()),
+                    font_family: font_family.clone(),
+                    font_size: px(font_size.clone()),
                 },
 
                 ".end_marked_arrow":{
-                    "marker-end": "url(#arrow)",
+                    marker_end: "url(#arrow)",
                  },
 
                 ".start_marked_arrow":{
-                    "marker-start": "url(#arrow)",
+                    marker_start: "url(#arrow)",
                  },
 
                 ".end_marked_diamond":{
-                    "marker-end": "url(#diamond)",
+                    marker_end: "url(#diamond)",
                  },
                 ".start_marked_diamond":{
-                    "marker-start": "url(#diamond)",
+                    marker_start: "url(#diamond)",
                  },
 
                 ".end_marked_circle":{
-                    "marker-end": "url(#circle)",
+                    marker_end: "url(#circle)",
                  },
 
                 ".start_marked_circle":{
-                    "marker-start": "url(#circle)",
+                    marker_start: "url(#circle)",
                  },
 
                 ".end_marked_open_circle":{
-                    "marker-end": "url(#open_circle)",
+                    marker_end: "url(#open_circle)",
                  },
 
                 ".start_marked_open_circle":{
-                    "marker-start": "url(#open_circle)",
+                    marker_start: "url(#open_circle)",
                  },
 
                 ".end_marked_big_open_circle":{
-                    "marker-end": "url(#big_open_circle)",
+                    marker_end: "url(#big_open_circle)",
                  },
 
                 ".start_marked_big_open_circle": {
-                    "marker-start": "url(#big_open_circle)",
+                    marker_start: "url(#big_open_circle)",
                  }
         };
-        html::tags::style(vec![], vec![text(element_styles), text(legend_css)])
+        html::tags::style([], [text(element_styles), text(legend_css)])
     }
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
@@ -422,23 +422,23 @@ impl CellBuffer {
         // in accordance to how z-index works
         if settings.include_backdrop {
             children.push(rect(
-                vec![class("backdrop"), x(0), y(0), width(w), height(h)],
-                vec![],
+                [class("backdrop"), x(0), y(0), width(w), height(h)],
+                [],
             ));
         }
 
         children.extend(fragment_nodes);
 
         svg(
-            vec![xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
+            [xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
             children,
         )
     }
 
     fn get_defs<MSG>() -> Node<MSG> {
         defs(
-            vec![],
-            vec![
+            [],
+            [
                 Self::arrow_marker(),
                 Self::diamond_marker(),
                 Self::circle_marker(),
@@ -450,7 +450,7 @@ impl CellBuffer {
 
     fn arrow_marker<MSG>() -> Node<MSG> {
         marker(
-            vec![
+            [
                 id("arrow"),
                 viewBox("-2 -2 8 8"),
                 refX(4),
@@ -459,13 +459,13 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![polygon(vec![points("0,0 0,4 4,2 0,0")], vec![])],
+            [polygon([points("0,0 0,4 4,2 0,0")], [])],
         )
     }
 
     fn diamond_marker<MSG>() -> Node<MSG> {
         marker(
-            vec![
+            [
                 id("diamond"),
                 viewBox("-2 -2 8 8"),
                 refX(4),
@@ -474,13 +474,13 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![polygon(vec![points("0,2 2,0 4,2 2,4 0,2")], vec![])],
+            [polygon([points("0,2 2,0 4,2 2,4 0,2")], [])],
         )
     }
 
     fn open_circle_marker<MSG>() -> Node<MSG> {
         marker(
-            vec![
+            [
                 id("open_circle"),
                 viewBox("0 0 8 8"),
                 refX(4),
@@ -489,16 +489,16 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(
-                vec![cx(4), cy(4), r(2), html::attributes::class("bg_filled")],
-                vec![],
+            [circle(
+                [cx(4), cy(4), r(2), html::attributes::class("bg_filled")],
+                [],
             )],
         )
     }
 
     fn circle_marker<MSG>() -> Node<MSG> {
         marker(
-            vec![
+            [
                 id("circle"),
                 viewBox("0 0 8 8"),
                 refX(4),
@@ -507,16 +507,16 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(
-                vec![cx(4), cy(4), r(2), html::attributes::class("filled")],
-                vec![],
+            [circle(
+                [cx(4), cy(4), r(2), html::attributes::class("filled")],
+                [],
             )],
         )
     }
 
     fn big_open_circle_marker<MSG>() -> Node<MSG> {
         marker(
-            vec![
+            [
                 id("big_open_circle"),
                 viewBox("0 0 8 8"),
                 refX(4),
@@ -525,9 +525,9 @@ impl CellBuffer {
                 markerHeight(7),
                 orient("auto-start-reverse"),
             ],
-            vec![circle(
-                vec![cx(4), cy(4), r(3), html::attributes::class("bg_filled")],
-                vec![],
+            [circle(
+                [cx(4), cy(4), r(3), html::attributes::class("bg_filled")],
+                [],
             )],
         )
     }

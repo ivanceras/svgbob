@@ -516,7 +516,7 @@ impl fmt::Display for Line {
 impl<MSG> Into<Node<MSG>> for Line {
     fn into(self) -> Node<MSG> {
         svg::line(
-            vec![
+            [
                 x1(self.start.x),
                 y1(self.start.y),
                 x2(self.end.x),
@@ -526,7 +526,7 @@ impl<MSG> Into<Node<MSG>> for Line {
                     ("solid", !self.is_broken),
                 ]),
             ],
-            vec![],
+            [],
         )
     }
 }

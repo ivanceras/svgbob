@@ -206,7 +206,7 @@ impl Into<Polyline> for Polygon {
 impl<MSG> Into<Node<MSG>> for Polygon {
     fn into(self) -> Node<MSG> {
         polygon(
-            vec![
+            [
                 points(
                     self.points
                         .iter()
@@ -219,7 +219,7 @@ impl<MSG> Into<Node<MSG>> for Polygon {
                     ("nofill", !self.is_filled),
                 ]),
             ],
-            vec![],
+            [],
         )
     }
 }

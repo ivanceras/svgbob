@@ -75,7 +75,7 @@ impl fmt::Display for Circle {
 impl<MSG> Into<Node<MSG>> for Circle {
     fn into(self) -> Node<MSG> {
         circle(
-            vec![
+            [
                 cx(self.center.x),
                 cy(self.center.y),
                 r(self.radius),
@@ -84,7 +84,7 @@ impl<MSG> Into<Node<MSG>> for Circle {
                     ("nofill", !self.is_filled),
                 ]),
             ],
-            vec![],
+            [],
         )
     }
 }

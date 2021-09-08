@@ -150,7 +150,7 @@ impl Into<ConvexPolygon> for Rect {
 impl<MSG> Into<Node<MSG>> for Rect {
     fn into(self) -> Node<MSG> {
         rect(
-            vec![
+            [
                 x(self.start.x),
                 y(self.start.y),
                 width(self.width()),
@@ -167,7 +167,7 @@ impl<MSG> Into<Node<MSG>> for Rect {
                     rx(0)
                 },
             ],
-            vec![],
+            [],
         )
     }
 }

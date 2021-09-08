@@ -165,11 +165,11 @@ impl fmt::Display for Text {
 impl<MSG> Into<Node<MSG>> for Text {
     fn into(self) -> Node<MSG> {
         svg::tags::text(
-            vec![x(self.start.x), y(self.start.y)],
+            [x(self.start.x), y(self.start.y)],
             #[cfg(not(feature = "with-dom"))]
-            vec![text(escape_html_text(&self.text))],
+            [text(escape_html_text(&self.text))],
             #[cfg(feature = "with-dom")]
-            vec![text(&self.text)],
+            [text(&self.text)],
         )
     }
 }
