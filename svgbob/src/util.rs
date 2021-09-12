@@ -12,6 +12,7 @@ pub fn opt_ord(f1: Option<f32>, f2: Option<f32>) -> Ordering {
     }
 }
 
+#[track_caller]
 pub fn ord(f1: f32, f2: f32) -> Ordering {
     if f1 == f2 {
         Ordering::Equal
@@ -21,6 +22,7 @@ pub fn ord(f1: f32, f2: f32) -> Ordering {
         Ordering::Less
     } else {
         println!("f1: {}, f2: {}", f1, f2);
+        log::error!("f1: {}, f2: {}", f1, f2);
         unreachable!("comparison should only be 3 possibilities")
     }
 }
