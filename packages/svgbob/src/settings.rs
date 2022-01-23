@@ -37,7 +37,7 @@ impl Default for Settings {
     fn default() -> Self {
         Settings {
             font_size: 14,
-            font_family: "monospace".into(),
+            font_family: "Iosevka Fixed, monospace".into(),
             fill_color: "black".into(),
             background: "white".into(),
             stroke_color: "black".into(),

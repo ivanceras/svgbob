@@ -1,4 +1,5 @@
-use crate::{buffer::Settings, Cell};
+use crate::Cell;
+use crate::Settings;
 pub use direction::Direction;
 pub use fragment::Fragment;
 pub use fragment_tree::FragmentTree;

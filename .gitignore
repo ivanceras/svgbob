@@ -1,8 +1,7 @@
 target/
 *.sw*
 *.bk
-Cargo.lock
-
+/Cargo.lock
 .DS_Store
 public/
 parts/

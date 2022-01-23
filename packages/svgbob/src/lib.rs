@@ -5,17 +5,19 @@
 pub mod buffer;
 pub mod map;
 mod point;
+mod settings;
 pub mod util;
 
 pub use buffer::{
     fragment, fragment::Fragment, Cell, CellBuffer, Direction, FragmentBuffer,
-    Property, Settings, Signal,
+    Property, Signal,
 };
 pub use nalgebra;
 pub use point::Point;
 /// reexport sauron
 pub use sauron;
 pub use sauron::{Node, Render};
+pub use settings::Settings;
 
 pub fn to_svg(ascii: &str) -> String {
     to_svg_string_pretty(ascii)

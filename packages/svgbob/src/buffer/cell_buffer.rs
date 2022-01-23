@@ -1,4 +1,5 @@
 use crate::fragment::CellText;
+use crate::Settings;
 use crate::{
     buffer::{fragment_buffer::FragmentTree, Fragment, StringBuffer},
     util::parser,
@@ -12,7 +13,6 @@ use sauron::{
     svg::{attributes::*, *},
     Node,
 };
-pub use settings::Settings;
 pub use span::Span;
 use std::{
     collections::BTreeMap,
@@ -24,7 +24,6 @@ use unicode_width::UnicodeWidthStr;
 mod cell;
 mod contacts;
 mod endorse;
-mod settings;
 mod span;
 
 /// The simplest buffer.

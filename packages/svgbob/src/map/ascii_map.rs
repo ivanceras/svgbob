@@ -4,10 +4,10 @@ use crate::{
             ArrowBottom, ArrowBottomLeft, ArrowBottomRight, ArrowLeft,
             ArrowRight, ArrowTop, ArrowTopLeft, ArrowTopRight, DiamondBullet,
         },
-        Cell, CellGrid, Settings,
+        Cell, CellGrid,
     },
     fragment::{arc, broken_line, circle, line, polygon, rect},
-    Fragment, Property,
+    Fragment, Property, Settings,
     Signal::{self, Medium, Strong, Weak},
 };
 use lazy_static::lazy_static;

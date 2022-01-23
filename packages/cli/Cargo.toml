@@ -14,7 +14,8 @@ svgbob = { path = "../svgbob", version = "0.6" }
 clap = "2.16"
 
 
-[[bin]]
-name = "svgbob"
-path = "src/main.rs"
+#[[bin]]
+#name = "svgbob"
+#path = "src/main.rs"
+
 

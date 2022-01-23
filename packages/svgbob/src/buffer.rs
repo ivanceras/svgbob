@@ -1,4 +1,4 @@
-pub use cell_buffer::{Cell, CellBuffer, CellGrid, Contacts, Settings, Span};
+pub use cell_buffer::{Cell, CellBuffer, CellGrid, Contacts, Span};
 pub use fragment_buffer::Direction;
 pub use fragment_buffer::{fragment, fragment::Fragment, FragmentBuffer};
 pub use property_buffer::{Property, PropertyBuffer, Signal};
