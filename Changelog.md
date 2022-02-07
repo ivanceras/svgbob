@@ -1,8 +1,15 @@
 # Changelog
 
+## 0.6.3
+- move Settings to the top level of this crate
+
+## 0.6.2
+- Reorganize directory structure, update to sauron 0.43.4
+- reexport nalgebra, add logging on points ord
+
 ## 0.6.1
-Improve code readability on view by using arrays instead of vec
-Modify the algorithm for endorse such that circles and arcs are matched by their ascii art rather than their computed fragments, this way, it can intersect with other fragments
+- Improve code readability on view by using arrays instead of vec
+- Modify the algorithm for endorse such that circles and arcs are matched by their ascii art rather than their computed fragments, this way, it can intersect with other fragments
 
 ## 0.6.0
 - Update to sauron 0.41.0
