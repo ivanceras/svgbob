@@ -49,7 +49,7 @@ lazy_static! {
             //  cy_lies: mid
             //
             //  edge_case: start_half = 0.5, start_edge = 0.0
-            //  if radius +  edge_case has 0.5 then mid, 0.0 them edge
+            //  if radius +  edge_case has 0.5 then mid, 0.0 then edge
             //
             //
             (r#"
