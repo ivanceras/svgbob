@@ -18,13 +18,74 @@ pub enum Horizontal {
     Half,
 }
 
-pub enum Vertical {
-    /// the top edge of the cell
-    TopEdge,
-    /// the vertical middle of the cell
-    Middle,
-    /// the bottom edge of the cell
-    BottomEdge,
+pub struct CircleArt {
+    /// the ascii art of the circel
+    /// empty lines are ignored
+    /// empty vertical columns are ignored
+    ascii_art: &'static str,
+    start_edge: Horizontal,
+    /// distance in cell units, from the left edge of the ascii art to the center.x of the circle
+    offset_center_x: f32,
+    /// distance in cell units, from the top edge of the ascii art to the center.y of the circle
+    offset_center_y: f32,
+}
+
+impl CircleArt {
+    /// calculate the centel cell of this circle art
+    /// based on offset center
+    fn center_cell(&self) -> Cell {
+        let mut center_cell_x = self.offset_center_x - self.edge_increment_x();
+
+        // if no shared x (meaning even number of ascii art along x axis)
+        // we want to use the cell before it as the center cell
+        if !self.is_shared_x() {
+            center_cell_x -= 0.5;
+        }
+        let mut center_cell_y = self.offset_center_y;
+        if !self.is_shared_y() {
+            center_cell_y -= 0.5;
+        }
+        Cell::new(center_cell_x.floor() as i32, center_cell_y.floor() as i32)
+    }
+
+    /// returns the width in cells of the ascii art of this circle
+    fn width(&self) -> f32 {
+        let cb = CellBuffer::from(self.ascii_art);
+        let (lo, hi) = cb.bounds().expect("circle must have bounds");
+        match self.start_edge {
+            Horizontal::LeftEdge => (hi.x - lo.x) as f32 + 1.0,
+            Horizontal::Half => (hi.x - lo.x) as f32,
+        }
+    }
+
+    fn center(&self) -> Point {
+        let center_x = self.radius() + self.edge_increment_x();
+        let center_y = self.offset_center_y * 2.0;
+        Point::new(center_x, center_y)
+    }
+
+    fn edge_increment_x(&self) -> f32 {
+        match self.start_edge {
+            Horizontal::LeftEdge => 0.0,
+            Horizontal::Half => 0.5,
+        }
+    }
+    fn radius(&self) -> f32 {
+        self.width() / 2.0
+    }
+    fn diameter(&self) -> i32 {
+        (self.radius() * 2.0).floor() as i32
+    }
+
+    /// center cell at x will be shared if it is on the odd count
+    fn is_shared_x(&self) -> bool {
+        self.offset_center_x * 2.0 % 2.0 == 1.0
+    }
+
+    /// center cell at y will be shared if it is on the odd count
+    fn is_shared_y(&self) -> bool {
+        self.offset_center_y * 2.0 % 2.0 == 1.0
+    }
 }
 
 // These are circle map, when a group is detected to have these set of characters
@@ -45,8 +106,14 @@ lazy_static! {
     ///     7├─┼─┼─┼─┤         │ │ │ │ │
     ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
     /// ```                      V W X
-    /// art, edge_case, top_offset to center point, and the center cell in arc2
-    static ref CIRCLE_ART_MAP: Vec<(&'static str, Horizontal,  f32, Cell)> =
+    /// (
+    /// art - the ascii art of the circle, the empty space is automatically removed
+    /// edge_case - where the edge from the left most cell of the circle
+    /// f32 - how many cell from the left most to the center.x of the circle
+    /// f32 - how many cell from the top most to the center.y of the circle,
+    /// Cell - center cell in arc2
+    /// )
+    static ref CIRCLE_ART_MAP: Vec<(&'static str, Horizontal,  f32, f32, Cell)> =
         vec![
             // CIRCLE_1
             //center 1,0,k, radius = 0.5
@@ -63,7 +130,7 @@ lazy_static! {
             //
             (r#"
             ()
-            "#, Horizontal::Half,  0.5, Cell::new(0,0)),
+            "#, Horizontal::Half, 1.0, 0.5, Cell::new(0,0)),
 
             // CIRCLE_2
             //center = 1,1,m radius = 1.0
@@ -73,7 +140,7 @@ lazy_static! {
             // cy_lies: mid
             (r#"
             (_)
-            "#, Horizontal::Half,  0.5, Cell::new(1,0)),
+            "#, Horizontal::Half, 1.5, 0.5, Cell::new(1,0)),
 
             // CIRCLE_3
             //center = 1,1,o radius = 1.5,
@@ -84,7 +151,7 @@ lazy_static! {
             (r#"
              __
             (__)
-            "#,  Horizontal::Half, 1.5, Cell::new(1,1)),
+            "#,  Horizontal::Half, 2.0, 1.5, Cell::new(1,1)),
 
             // CIRCLE_4
             //center: 2,1,m radius: 2.0
@@ -92,11 +159,14 @@ lazy_static! {
             //  vert_mid: half (1.5/3.0)
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x,  if starts at half and offset_center_x * 2.0 is odd
+            // shared y
             (r#"
              ,-.
             (   )
              `-'
-            "#,  Horizontal::Half,  1.5, Cell::new(2,1)),
+            "#,  Horizontal::Half, 2.5, 1.5, Cell::new(2,1)),
 
             // CIRCLE_5
             //center: 2,1,o radius: 2.5
@@ -104,11 +174,14 @@ lazy_static! {
             // vert_mid: half (1.5/3.0)
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            //   no shared x, offset_center_x * 2.0 is even
+            //   shared y
             (r#"
              .--.
             (    )
              `--'
-            "#, Horizontal::Half,  1.5, Cell::new(2,1)),
+            "#, Horizontal::Half, 3.0,  1.5, Cell::new(2,1)),
 
             // CIRCLE_6
             //center: 3,2,m radius: 3.0
@@ -116,12 +189,15 @@ lazy_static! {
             // vert_mid: 2.5/4
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                _
              .' '.
             (     )
              `._.'
-            "#, Horizontal::Half,  2.5, Cell::new(3,2)),
+            "#, Horizontal::Half, 3.5, 2.5, Cell::new(3,2)),
 
             // CIRCLE_7
             //center: 3,2,o radius: 3.5
@@ -129,12 +205,15 @@ lazy_static! {
             // vert_mid: 2.5/4
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            //  no shared x
+            //  shared y
             (r#"
                __
              ,'  '.
             (      )
              `.__.'
-            "#, Horizontal::Half,  2.5, Cell::new(3,2)),
+            "#, Horizontal::Half, 4.0, 2.5, Cell::new(3,2)),
 
             // CIRCLE_8
             //center: 4,2,m radius:4.0
@@ -142,13 +221,16 @@ lazy_static! {
             // vert_mid: half (2.5/5.0)
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                ___
              ,'   '.
             (       )
              `.   .'
                `-'
-            "#, Horizontal::Half,  2.5, Cell::new(4,2)),
+            "#, Horizontal::Half, 4.5, 2.5, Cell::new(4,2)),
 
             // circle 9 and up can be divided into 4 quadrants these quadrants can be arcs and can be used as
             // rounded edge with larger radius for rouded rect
@@ -159,13 +241,16 @@ lazy_static! {
             // vert_mid:  3.0/5.0
             //  cx_lies: mid
             //  cy_lies: edge
+            //
+            //  shared x
+            //  no shared y
             (r#"
                ___
              ,'   `.
             /       \
             \       /
              `.___.'
-            "#,  Horizontal::LeftEdge,  3.0, Cell::new(4,2) ),
+            "#,  Horizontal::LeftEdge, 4.5, 3.0, Cell::new(4,2) ),
 
             // CIRCLE_10
             //center: 4,2,y radius: 5.0
@@ -174,13 +259,16 @@ lazy_static! {
             // vert_mid:  3.0/5.0
             //  cx_lies: edge
             //  cy_lies: edge
+            //
+            //  no shared x, if offset_center_x * 2.0 is even
+            //  no shared y, if the offset_center_y * 2.0 is even
             (r#"
                ____
              ,'    `.
             /        \
             \        /
              `.____.'
-            "#,  Horizontal::LeftEdge, 3.0, Cell::new(4,2)),
+            "#,  Horizontal::LeftEdge, 5.0, 3.0, Cell::new(4,2)),
 
             // CIRCLE_11
             //center:5,3,o radius: 5.5
@@ -188,6 +276,9 @@ lazy_static! {
             // vert_mid:  3.5/6.0
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            //  no shared x
+            //  shared y
             (r#"
                 ____
               .'    `.
@@ -195,7 +286,7 @@ lazy_static! {
             (          )
              \        /
               `.____.'
-            "#, Horizontal::Half ,  3.5, Cell::new(5,3)),
+            "#, Horizontal::Half, 6.0, 3.5, Cell::new(5,3)),
 
             // CIRCLE_12
             //center:6,3,m radius: 6.0
@@ -203,6 +294,9 @@ lazy_static! {
             // vert_mid: 3.5/6.0
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                 _____
               ,'     `.
@@ -210,13 +304,16 @@ lazy_static! {
             (           )
              \         /
               `._____.'
-            "#, Horizontal::Half,  3.5, Cell::new(6,3)),
+            "#, Horizontal::Half, 6.5, 3.5, Cell::new(6,3)),
 
             // CIRCLE_13
             // center: 6,3,y radius: 6.5
             // vert_mid: 4.0/7.0
             //  cx_lies: edge
             //  cy_lies: edge
+            //
+            //  no shared x
+            //  no shared y
             (r#"
                 ______
               ,'      `.
@@ -225,13 +322,16 @@ lazy_static! {
             |            |
              \          /
               `.______.'
-            "#, Horizontal::Half,   4.0, Cell::new(6,3)),
+            "#, Horizontal::Half, 7.0, 4.0, Cell::new(6,3)),
 
             // CIRCLE_14
             //center: 7,3,w radius: 7.0
             //vert_mid: 4.0/7.0
             //  cx_lies: mid
             //  cy_lies: edge
+            //
+            //  shared x
+            //  no shared y
             (r#"
                 _______
               ,'       `.
@@ -240,7 +340,7 @@ lazy_static! {
             |             |
              \           /
               `._______.'
-            "#, Horizontal::Half ,  4.0, Cell::new(7,3)),
+            "#, Horizontal::Half, 7.5, 4.0, Cell::new(7,3)),
 
 
             // CIRCLE_15
@@ -248,6 +348,9 @@ lazy_static! {
             //vert_mid: 4.5/8.0
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            //  no shared x
+            //  shared y
             (r#"
                 ________
               ,'        `.
@@ -257,13 +360,16 @@ lazy_static! {
             |              |
              \            /
               `.________.'
-            "#, Horizontal::Half,  4.5, Cell::new(7,4)),
+            "#, Horizontal::Half, 8.0, 4.5, Cell::new(7,4)),
 
             // CIRCLE_16
             //center: 8,4,m radius: 8.0
             //vert_mid: 4.5/9.0
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                 __-----__
               ,'         `.
@@ -274,13 +380,16 @@ lazy_static! {
              \             /
               `.         .'
                 `-------'
-            "#, Horizontal::Half,  4.5, Cell::new(8,4)),
+            "#, Horizontal::Half, 8.5, 4.5, Cell::new(8,4)),
 
             // CIRCLE_17
             //center: 8,4,o radius: 8.5
             // vert_mid:  4.5/9.0
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            //  no shared x
+            //  shared y
             (r#"
                 .--------.
               ,'          `.
@@ -291,13 +400,16 @@ lazy_static! {
              \              /
               `.          .'
                 `--------'
-            "#, Horizontal::Half,  4.5, Cell::new(8,4)),
+            "#, Horizontal::Half, 9.0, 4.5, Cell::new(8,4)),
 
             // CIRCLE_18
             //center:9,5,m radius: 9.0
             //vert_mid: 5.5/10.0
             // cx_lies: mid
             // cy_lies: mid
+            //
+            //  shared x
+            //  shared y
             (r#"
                 _.-'''''-._
               ,'           `.
@@ -309,13 +421,17 @@ lazy_static! {
              \               /
               `._         _.'
                  '-.....-'
-            "#, Horizontal::Half,  5.5, Cell::new(9,5)),
+            "#, Horizontal::Half, 9.5,  5.5, Cell::new(9,5)),
 
             // CIRCLE_19
             // center: 9,5,o radius: 9.5
             // vert_mid:  5.5/10.0
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            // no shared x
+            // shared y
+            //
             (r#"
                 _.-''''''-._
               ,'            `.
@@ -327,7 +443,7 @@ lazy_static! {
              \                /
               `._          _.'
                  '-......-'
-            "#,  Horizontal::Half,  5.5, Cell::new(9,5)),
+            "#,  Horizontal::Half, 10.0, 5.5, Cell::new(9,5)),
 
 
             // CIRCLE_20
@@ -335,6 +451,9 @@ lazy_static! {
             // vert_mid: 5.5/10.0
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                 _.-'''''''-._
               ,'             `.
@@ -346,13 +465,16 @@ lazy_static! {
              \                 /
               `._           _.'
                  '-.......-'
-            "#, Horizontal::Half, 5.5, Cell::new(10,5)),
+            "#, Horizontal::Half, 10.5, 5.5, Cell::new(10,5)),
 
             // CIRCLE_21
             // center: 10,5,o radius: 10.5
             // vert_mid: 5.5/11.0
             //  cx_lies: edge
             //  cy_lies: mid
+            //
+            // no shared x
+            // shared y
             (r#"
                 _.-''''''''-._
               ,'              `.
@@ -365,7 +487,7 @@ lazy_static! {
              \                  /
               `._            _.'
                  '-........-'
-            "#, Horizontal::Half,  5.5, Cell::new(10,5)),
+            "#, Horizontal::Half, 11.0, 5.5, Cell::new(10,5)),
 
             // CIRCLE_22
             // center: 10,5,m radius: 11
@@ -373,6 +495,9 @@ lazy_static! {
             // vert_mid: 5.5/11.0
             // cx_lies: mid
             // cy_lies: mid
+            //
+            // shared x
+            // shared y
             (r#"
                 _.-'''''''''-._
               ,'               `.
@@ -385,39 +510,20 @@ lazy_static! {
              \                   /
               `._             _.'
                  '-.........-'
-            "#, Horizontal::Half, 5.5, Cell::new(11, 5)),
+            "#, Horizontal::Half, 11.5, 5.5, Cell::new(11, 5)),
 
         ];
 
 
-    static ref CIRCLE_MAP: Vec<(&'static str, Point, f32, Horizontal, f32, Cell)> =Vec::from_iter(
-        CIRCLE_ART_MAP.iter().enumerate().map(|(ndx, (art, edge_case, offset_center_y,arc2_center))|{
-            let cb = CellBuffer::from(*art);
-            let (lo, hi) = cb.bounds().expect("circle must have bounds");
+    static ref CIRCLE_MAP: Vec<CircleArt> =Vec::from_iter(
+        CIRCLE_ART_MAP.iter().enumerate().map(|(ndx, (art, edge_case, offset_center_x, offset_center_y,arc2_center))|{
+            CircleArt{
+                ascii_art: *art,
+                start_edge: *edge_case,
+                offset_center_x: *offset_center_x,
+                offset_center_y: *offset_center_y,
+            }
 
-           let width = match *edge_case {
-               Horizontal::LeftEdge => {
-                    (hi.x - lo.x) as f32 + 1.0
-               }
-               Horizontal::Half => {
-                    (hi.x - lo.x) as f32
-               }
-           };
-
-           let calc_radius = width / 2.0;
-           let index = (width - 1.0) as usize;
-           assert_eq!(ndx, index);
-
-            let edge_inc_x = match edge_case{
-                Horizontal::LeftEdge => 0.0,
-                Horizontal::Half => 0.5,
-            };
-
-            let calc_center_x = calc_radius + edge_inc_x;
-            let calc_center_y = offset_center_y * 2.0;
-            let calc_center = Point::new(calc_center_x, calc_center_y);
-
-            (*art, calc_center, calc_radius, *edge_case, *offset_center_y, *arc2_center)
         })
     );
 
@@ -425,30 +531,30 @@ lazy_static! {
     /// The fragments for each of the circle
     /// Calculate the span and get the group fragments
     static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y, arc2_center)|{
-            (circle_art_to_group(art, &Settings::default()), Circle::new(*center, *radius, false))
+        CIRCLE_MAP.iter().map(|circle_art|{
+            (circle_art_to_group(circle_art.ascii_art, &Settings::default()), Circle::new(circle_art.center(), circle_art.radius(), false))
         })
     );
 
     /// map of circle spans and their radius
     pub static ref DIAMETER_CIRCLE: HashMap<i32,(Point,Span)> = HashMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y, arc2_center)|{
-            let cb = CellBuffer::from(*art);
+        CIRCLE_MAP.iter().map(|circle_art|{
+            let cb = CellBuffer::from(circle_art.ascii_art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
-            ((*radius * 2.0) as i32, (*center, span))
+            (circle_art.diameter(), (circle_art.center(), span))
         })
     );
 
     /// There is only 1 span per circle, and localized
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().map(|(art, center, radius, edge_case, offset_center_y, arc2_center)|{
-            let cb = CellBuffer::from(*art);
+        CIRCLE_MAP.iter().map(|circle_art|{
+            let cb = CellBuffer::from(circle_art.ascii_art);
             let mut spans = cb.group_adjacents();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
-            (Circle::new(*center, *radius, false), span)
+            (Circle::new(circle_art.center(), circle_art.radius(), false), span)
         })
     );
 
@@ -464,22 +570,27 @@ lazy_static! {
     ///
     /// (diameter, quarter arcs)
     pub static ref QUARTER_ARC_SPAN: BTreeMap<i32, [(Arc,Span);4]> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().skip(3).map(|(art, center, radius, edge_case, offset_center_y, arc2_center)|{
-            let span = circle_art_to_span(art);
+        CIRCLE_MAP.iter().skip(3).map(|circle_art|{
+            let span = circle_art_to_span(circle_art.ascii_art);
             let bounds = span.cell_bounds().expect("must have bounds");
             let top_left = bounds.top_left();
             let bottom_right = bounds.bottom_right();
             let top_right = bounds.top_right();
             let bottom_left = bounds.bottom_left();
 
+            let center = circle_art.center();
+            let radius = circle_art.radius();
+
             let p1 = Point::new(center.x + radius, center.y);
             let p2 = Point::new(center.x, center.y - radius);
             let p3 = Point::new(center.x - radius, center.y);
             let p4 = Point::new(center.x, center.y + radius);
 
+            let arc2_center = circle_art.center_cell();
+
 
             let span1_center = Cell::new((center.x.floor() / Cell::width()) as i32, arc2_center.y);
-            let span2_center = *arc2_center;
+            let span2_center = arc2_center;
             let span3_center = Cell::new(arc2_center.x, (center.y.floor() / Cell::height()) as i32);
             let span4_center = Cell::new((center.x.floor() / Cell::width()) as i32, (center.y.floor() / Cell::height()) as i32);
 
@@ -507,12 +618,12 @@ lazy_static! {
             let arc4_start = bounds4.0.localize_point(p4);
             let arc4_end = bounds4.0.localize_point(p1);
 
-            let arc1 = Arc::new(arc1_start, arc1_end, *radius);
-            let arc2 = Arc::new(arc2_start, arc2_end, *radius);
-            let arc3 = Arc::new(arc3_start, arc3_end, *radius);
-            let arc4 = Arc::new(arc4_start, arc4_end, *radius);
+            let arc1 = Arc::new(arc1_start, arc1_end, radius);
+            let arc2 = Arc::new(arc2_start, arc2_end, radius);
+            let arc3 = Arc::new(arc3_start, arc3_end, radius);
+            let arc4 = Arc::new(arc4_start, arc4_end, radius);
 
-            let diameter = (*radius * 2.0) as i32;
+            let diameter = circle_art.diameter();
             (diameter, [(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)])
         })
     );
