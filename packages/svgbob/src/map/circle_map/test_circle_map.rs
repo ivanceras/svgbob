@@ -79,7 +79,7 @@ fn test_arc5_bottom_left() {
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_arc_span(&span1).unwrap();
-    assert_eq!(arc.radius, 2.0);
+    assert_eq!(arc.radius, 2.5);
 }
 
 #[test]
@@ -93,7 +93,7 @@ fn test_arc5_bottom_right() {
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_arc_span(&span1).unwrap();
-    assert_eq!(arc.radius, 2.0);
+    assert_eq!(arc.radius, 2.5);
 }
 
 #[test]
@@ -146,7 +146,7 @@ fn test_arc20_bottom_left() {
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_arc_span(&span1).unwrap();
-    assert_eq!(arc.radius, 9.0);
+    assert_eq!(arc.radius, 10.0);
 }
 
 #[test]
