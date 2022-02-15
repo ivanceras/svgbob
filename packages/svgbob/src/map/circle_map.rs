@@ -404,9 +404,7 @@ lazy_static! {
                }
            };
 
-           println!("width: {}", width);
            let calc_radius = width / 2.0;
-           println!("calc_radius: {}", calc_radius);
            let index = (width - 1.0) as usize;
            assert_eq!(ndx, index);
 
@@ -418,7 +416,6 @@ lazy_static! {
             let calc_center_x = calc_radius + edge_inc_x;
             let calc_center_y = offset_center_y * 2.0;
             let calc_center = Point::new(calc_center_x, calc_center_y);
-            println!("center for circle: {} is {}", ndx, calc_center);
 
             (*art, calc_center, calc_radius, *edge_case, *offset_center_y, *arc2_center)
         })
@@ -480,8 +477,6 @@ lazy_static! {
             let p3 = Point::new(center.x - radius, center.y);
             let p4 = Point::new(center.x, center.y + radius);
 
-            println!("Circle no: {}", radius * 2.0);
-
 
             let span1_center = Cell::new((center.x.floor() / Cell::width()) as i32, arc2_center.y);
             let span2_center = *arc2_center;
@@ -499,10 +494,6 @@ lazy_static! {
             let span3 = span.extract(bounds3.0, bounds3.1).localize();
             let span4 = span.extract(bounds4.0, bounds4.1).localize();
 
-            println!("span1: \n{}\n", span1);
-            println!("span2: \n{}\n", span2);
-            println!("span3: \n{}\n", span3);
-            println!("span4: \n{}\n", span4);
 
             let arc1_start  = bounds1.0.localize_point(p1);
             let arc1_end = bounds1.0.localize_point(p2);
