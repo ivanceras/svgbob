@@ -219,13 +219,15 @@ impl Span {
             let circle = circle.absolute_position(top_left);
             fragments.push(circle.into());
             un_endorsed_span
-        } else if let Some((arc, un_endorsed_span)) =
+        }
+        /*else if let Some((arc, un_endorsed_span)) =
             circle_map::endorse_half_arc_span(&self)
         {
             let arc = arc.absolute_position(top_left);
             fragments.push(arc.into());
             un_endorsed_span
-        } else if let Some((arc, un_endorsed_span)) =
+        } */
+        else if let Some((arc, un_endorsed_span)) =
             circle_map::endorse_quarter_arc_span(&self)
         {
             let arc = arc.absolute_position(top_left);
