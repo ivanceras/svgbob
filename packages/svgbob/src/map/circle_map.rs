@@ -8,6 +8,9 @@ use crate::{
 use lazy_static::lazy_static;
 use std::{collections::BTreeMap, collections::HashMap, iter::FromIterator};
 
+/// skip the first 3 circles for constructing our arcs, otherwise it will just be a mess
+pub const CIRCLES_TO_SKIP_FOR_ARC: usize = 3;
+
 #[derive(PartialEq, Debug, Clone, Copy)]
 /// edge cases of the circle art
 pub enum Horizontal {
@@ -86,6 +89,13 @@ impl CircleArt {
     fn is_shared_y(&self) -> bool {
         self.offset_center_y * 2.0 % 2.0 == 1.0
     }
+}
+
+pub struct ArcSpans {
+    diameter: i32,
+    arc_spans: Vec<(Arc, Span)>,
+    is_shared_x: bool,
+    is_shared_y: bool,
 }
 
 // These are circle map, when a group is detected to have these set of characters
@@ -569,8 +579,8 @@ lazy_static! {
     /// bottom_left  bottom   bottom_right
     ///
     /// (diameter, quarter arcs)
-    pub static ref QUARTER_ARC_SPAN: BTreeMap<i32, [(Arc,Span);4]> = BTreeMap::from_iter(
-        CIRCLE_MAP.iter().skip(3).map(|circle_art|{
+    pub static ref QUARTER_ARC_SPAN: BTreeMap<i32, ArcSpans> = BTreeMap::from_iter(
+        CIRCLE_MAP.iter().skip(CIRCLES_TO_SKIP_FOR_ARC).map(|circle_art|{
             let span = circle_art_to_span(circle_art.ascii_art);
             let bounds = span.cell_bounds().expect("must have bounds");
             let top_left = bounds.top_left();
@@ -624,42 +634,84 @@ lazy_static! {
             let arc4 = Arc::new(arc4_start, arc4_end, radius);
 
             let diameter = circle_art.diameter();
-            (diameter, [(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)])
+            (diameter,
+            ArcSpans{
+                diameter,
+                arc_spans: vec![(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)],
+                is_shared_x: circle_art.is_shared_x(),
+                is_shared_y: circle_art.is_shared_y(),
+            })
         })
     );
 
-    /*
-    pub static ref HALF_ARC_SPAN: BTreeMap<i32,[(Arc,Span);4]> = BTreeMap::from_iter(
-        QUARTER_ARC_SPAN.iter().map(|(diameter, [(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)])|{
+    pub static ref HALF_ARC_SPAN: BTreeMap<i32, ArcSpans> = BTreeMap::from_iter(
+        QUARTER_ARC_SPAN.iter().map(|(diameter, arc_spans)|{
+            println!("at circle: {}", diameter);
             let radius = (diameter / 2) as f32;
+            let (arc1, span1) = &arc_spans.arc_spans[0];
+            let (arc2, span2) = &arc_spans.arc_spans[1];
+            let (arc3, span3) = &arc_spans.arc_spans[2];
+            let (arc4, span4) = &arc_spans.arc_spans[3];
+
+
+            let paste_loc12 = span2.cell_bounds().unwrap().top_right();
 
             let half12 = Arc::new(arc1.start, arc2.end, radius);
-            let span12 = span2.paste_at(span2.cell_bounds().unwrap().top_right(), span1);
+            let span12 = span2.paste_at(paste_loc12, span1);
+            println!("span12: \n{}\n", span12);
+            println!("half12: {}", half12);
 
+            let paste_loc23 = span2.cell_bounds().unwrap().bottom_left();
             let half23 = Arc::new(arc2.start, arc3.end, radius);
-            let span23 = span2.paste_at(span2.cell_bounds().unwrap().bottom_left(), span3);
+            let span23 = span2.paste_at(paste_loc23, span3);
+            println!("span23: \n{}\n", span23);
+            println!("half23: {}", half23);
 
+            let paste_loc34 = span3.cell_bounds().unwrap().top_right();
             let half34 = Arc::new(arc3.start, arc4.end, radius);
-            let span34 = span3.paste_at(span3.cell_bounds().unwrap().top_right(), span4);
+            let span34 = span3.paste_at(paste_loc34, span4);
+            println!("span34: \n{}\n", span34);
+            println!("half34: {}", half34);
 
+            let paste_loc41 = span1.cell_bounds().unwrap().bottom_left();
             let half41 = Arc::new(arc4.start, arc1.end, radius);
-            let span41 = span1.paste_at(span1.cell_bounds().unwrap().bottom_left(), span4);
+            let span41 = span1.paste_at(paste_loc41, span4);
+            println!("span41: \n{}\n", span41);
+            println!("half41: {}", half41);
 
-            (*diameter, [(half12, span12), (half23, span23), (half34, span34), (half41, span41)])
+            (*diameter, ArcSpans{
+                diameter: *diameter,
+                arc_spans: vec![(half12, span12),(half23, span23),(half34, span34),(half41, span41)],
+                is_shared_x: arc_spans.is_shared_x,
+                is_shared_y: arc_spans.is_shared_y,
+            })
+
         })
     );
-    */
 
 
-    pub static ref ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
+
+    pub static ref FLATTENED_QUARTER_ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
             QUARTER_ARC_SPAN.iter().flat_map(|(diameter, arc_spans)|{
-                arc_spans.iter().enumerate().map(move|(arc_index, arc_span)|{
-                (
-                DiameterArc{
+                arc_spans.arc_spans.iter().enumerate().map(move|(arc_index, arc_span)|{
+                (DiameterArc{
                     diameter: *diameter,
                     arc: arc_index,
-                },
-                arc_span.clone()
+                    },
+                    arc_span.clone()
+                )
+            })
+        })
+    );
+
+    pub static ref FLATTENED_HALF_ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
+            HALF_ARC_SPAN.iter().flat_map(|(diameter, arc_spans)|{
+                arc_spans.arc_spans.iter().enumerate().map(move|(arc_index, arc_span)|{
+                (DiameterArc{
+                    diameter: *diameter,
+                    arc: arc_index,
+                    },
+                    arc_span.clone()
                 )
             })
         })
@@ -715,27 +767,55 @@ pub fn endorse_circle_span(search: &Span) -> Option<(&Circle, Span)> {
     })
 }
 
-pub fn endorse_arc_span(search: &Span) -> Option<(&Arc, Span)> {
-    ARC_SPAN.iter().rev().find_map(|(_diameter, (arc, span))| {
-        let search_localized = search.clone().localize();
-        let (matched, unmatched) = is_subset_of(span, &search_localized);
-        if matched {
-            let unmatched_cell_chars = search
-                .iter()
-                .enumerate()
-                .filter_map(|(i, cell_char)| {
-                    if unmatched.contains(&i) {
-                        Some(cell_char.clone())
-                    } else {
-                        None
-                    }
-                })
-                .collect::<Vec<_>>();
-            Some((arc, Span::from(unmatched_cell_chars)))
-        } else {
-            None
-        }
-    })
+pub fn endorse_quarter_arc_span(search: &Span) -> Option<(&Arc, Span)> {
+    FLATTENED_QUARTER_ARC_SPAN.iter().rev().find_map(
+        |(_diameter, (arc, span))| {
+            let search_localized = search.clone().localize();
+            let (matched, unmatched) = is_subset_of(span, &search_localized);
+            if matched {
+                let unmatched_cell_chars = search
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(i, cell_char)| {
+                        if unmatched.contains(&i) {
+                            Some(cell_char.clone())
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<_>>();
+                Some((arc, Span::from(unmatched_cell_chars)))
+            } else {
+                None
+            }
+        },
+    )
+}
+
+pub fn endorse_half_arc_span(search: &Span) -> Option<(&Arc, Span)> {
+    FLATTENED_HALF_ARC_SPAN
+        .iter()
+        .rev()
+        .find_map(|(_diameter, (arc, span))| {
+            let search_localized = search.clone().localize();
+            let (matched, unmatched) = is_subset_of(span, &search_localized);
+            if matched {
+                let unmatched_cell_chars = search
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(i, cell_char)| {
+                        if unmatched.contains(&i) {
+                            Some(cell_char.clone())
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<_>>();
+                Some((arc, Span::from(unmatched_cell_chars)))
+            } else {
+                None
+            }
+        })
 }
 
 /// returns true if all the contacts in subset is in big_set
