@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- simplify circle art
+- improve the implementation of quarter arc making them consistent and work correctly.
+
 ## 0.6.3
 - move Settings to the top level of this crate
 
