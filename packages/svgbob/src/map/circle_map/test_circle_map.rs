@@ -36,7 +36,7 @@ fn test_arc9_top_right() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 5.0);
 }
 
@@ -50,7 +50,7 @@ fn test_arc5_top_right() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 2.5);
 }
 
@@ -64,7 +64,7 @@ fn test_arc5_top_left() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 2.5);
 }
 
@@ -78,7 +78,7 @@ fn test_arc5_bottom_left() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 2.5);
 }
 
@@ -92,7 +92,7 @@ fn test_arc5_bottom_right() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 2.5);
 }
 
@@ -110,7 +110,7 @@ fn test_arc20_top_right() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 10.5); //also matched the arc21 radius and since larger it will matched it instead of arc20
 }
 
@@ -128,7 +128,7 @@ fn test_arc20_top_left() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 10.5); //also matched the arc21 radius and since larger it will matched it instead of arc20
 }
 
@@ -145,7 +145,7 @@ fn test_arc20_bottom_left() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 10.0);
 }
 
@@ -162,6 +162,6 @@ fn test_arc20_bottom_right() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let (arc, _) = endorse_arc_span(&span1).unwrap();
+    let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
     assert_eq!(arc.radius, 10.0);
 }
