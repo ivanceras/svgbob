@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.4
 
 - simplify circle art
 - improve the implementation of quarter arc making them consistent and work correctly.
