@@ -8,7 +8,7 @@ const PACKAGE_NAME: &str = env!("CARGO_PKG_NAME");
 const DEFAULT_PORT: u16 = 3000;
 
 async fn hello() -> String {
-    format!("Hello from svgbob_server {}", VERSION)
+    format!("{} {}", PACKAGE_NAME, VERSION)
 }
 
 async fn text_to_svgbob(body: Bytes) -> Result<String, StatusCode> {
@@ -31,7 +31,7 @@ async fn main() {
     let app = Router::new().route("/", get(hello).post(text_to_svgbob));
 
     let socket: SocketAddr = ([0, 0, 0, 0], port).into();
-    println!("Running {}{} at: http://{}", PACKAGE_NAME, VERSION, socket);
+    println!("Running {} {} at: http://{}", PACKAGE_NAME, VERSION, socket);
     axum::Server::bind(&socket)
         .serve(app.into_make_service())
         .await
