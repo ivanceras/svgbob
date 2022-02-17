@@ -1,0 +1,16 @@
+[package]
+name = "svgbob_server"
+version = "0.6.4"
+authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
+description = "Transform your ascii diagrams into happy little SVG"
+repository = "https://github.com/ivanceras/svgbob"
+documentation = "https://docs.rs/svgbob"
+keywords = ["ascii", "svg", "convert", "bob"]
+license = "Apache-2.0"
+edition = "2021"
+
+
+[dependencies]
+svgbob = { path = "../svgbob", version = "0.6" }
+axum = "0.4.5"
+tokio = { version = "1.0", features = ["full"] }
