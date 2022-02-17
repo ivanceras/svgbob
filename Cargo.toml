@@ -1,7 +1,8 @@
 [workspace]
 members = [
     "packages/svgbob",
-    "packages/cli",
+    "packages/svgbob_cli",
+    "packages/svgbob_server",
 ]
 
 [patch.crates-io]
