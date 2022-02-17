@@ -7,4 +7,4 @@
 set -ev
 cd packages/svgbob && cargo publish && cd - && \
 echo "sleeping" && sleep 20 &&\
-cd packages/cli && cargo publish && cd - 
+cd packages/svgbob_cli && cargo publish && cd - 
