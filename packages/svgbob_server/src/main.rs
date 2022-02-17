@@ -4,6 +4,7 @@ use axum::{routing::get, Router};
 use std::net::SocketAddr;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
+const PACKAGE_NAME: &str = env!("CARGO_PKG_NAME");
 const DEFAULT_PORT: u16 = 3000;
 
 async fn hello() -> String {
@@ -30,7 +31,7 @@ async fn main() {
     let app = Router::new().route("/", get(hello).post(text_to_svgbob));
 
     let socket: SocketAddr = ([0, 0, 0, 0], port).into();
-    println!("serving at: {}", socket);
+    println!("Running {}{} at: http://{}", PACKAGE_NAME, VERSION, socket);
     axum::Server::bind(&socket)
         .serve(app.into_make_service())
         .await
