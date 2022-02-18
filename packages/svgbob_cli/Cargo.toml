@@ -1,7 +1,7 @@
 
 [package]
 name = "svgbob_cli"
-version = "0.6.4"
+version = "0.6.5"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbob"
@@ -15,7 +15,4 @@ svgbob = { path = "../svgbob", version = "0.6" }
 clap = "2.16"
 
 
-#[[bin]]
-#name = "svgbob"
-#path = "src/main.rs"
 
