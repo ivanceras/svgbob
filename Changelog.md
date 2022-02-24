@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.6
+- bum dep sauron to 0.45.0
+
+## 0.6.5
+- added svgbob_server package for serving svgbob in a rest api call
+- bump dep sauron to 0.44.0
+
 ## 0.6.4
 
 - simplify circle art

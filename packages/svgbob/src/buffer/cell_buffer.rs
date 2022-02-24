@@ -308,7 +308,7 @@ impl CellBuffer {
         let font_family = settings.font_family.to_owned();
         let font_size = settings.font_size.to_owned();
 
-        let element_styles = sauron::jss::jss! {
+        let element_styles = sauron::jss! {
                 "line, path, circle, rect, polygon": {
                       stroke: stroke_color.clone(),
                       stroke_width: stroke_width.clone(),
