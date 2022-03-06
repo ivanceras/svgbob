@@ -15,3 +15,23 @@ Svgbob provides a cli which takes text as an input and creates an svg image as a
 [Specification](https://ivanceras.github.io/content/Svgbob/Specification.html)
 
 <a href="https://liberapay.com/ivanceras/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+## Getting started
+
+```powershell
+# To try svgbob without installation run via Docker
+docker build -t svgbob:local .
+docker run --rm svgbob:local svgbob_cli -s  "
+                                    .-------------------.
+                                    |   Hello svgbob !  |
+                                    '-------------------'
+
+           .-.           .-.           .-.           .-.           .-.           .-.
+          |   |         |   |         |   |         |   |         |   |         |   |
+       .---------.   .--+---+--.   .--+---+--.   .--|   |--.   .--+   +--.   .------|--.
+      |           | |           | |   |   |   | |   |   |   | |           | |   |   |   |
+       '---------'   '--+---+--'   '--+---+--'   '--|   |--'   '--+   +--'   '--|------'
+          |   |         |   |         |   |         |   |         |   |         |   |
+           '-'           '-'           '-'           '-'           '-'           '-'
+" > ./example.svg
+```
