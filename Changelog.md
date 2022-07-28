@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.6.7
+- bump dep sauron to 0.50.5
+
 ## 0.6.6
-- bum dep sauron to 0.45.0
+- bump dep sauron to 0.45.0
 
 ## 0.6.5
 - added svgbob_server package for serving svgbob in a rest api call
