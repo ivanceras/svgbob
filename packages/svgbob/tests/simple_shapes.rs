@@ -9,7 +9,7 @@ fn rect1() {
     "#;
 
     let expected = r#"<svg xmlns="http://www.w3.org/2000/svg" width="136" height="80">
-    <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="0"></rect>
+  <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="0"></rect>
 </svg>"#;
 
     let mut settings = Settings::default();
@@ -30,9 +30,9 @@ fn escaped_shape() {
     "#;
 
     let expected = r#"<svg xmlns="http://www.w3.org/2000/svg" width="16" height="32">
-    <text x="34" y="28" >+----------+</text>
-    <text x="34" y="44" >|          |</text>
-    <text x="34" y="60" >+----------+</text>
+  <text x="34" y="28" >+----------+</text>
+  <text x="34" y="44" >|          |</text>
+  <text x="34" y="60" >+----------+</text>
 </svg>"#;
 
     let mut settings = Settings::default();
@@ -53,7 +53,7 @@ fn rounded_rect() {
     "#;
 
     let expected = r#"<svg xmlns="http://www.w3.org/2000/svg" width="136" height="80">
-    <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="4"></rect>
+  <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="4"></rect>
 </svg>"#;
 
     let mut settings = Settings::default();
