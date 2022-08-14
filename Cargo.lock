@@ -778,8 +778,6 @@ dependencies = [
 [[package]]
 name = "sauron"
 version = "0.50.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea5affd2c239ace0bf3828cafa98311b1e9199a9efa89abe251bb0a2f371cf46"
 dependencies = [
  "cfg-if 0.1.10",
  "sauron-component-macro",
@@ -789,8 +787,6 @@ dependencies = [
 [[package]]
 name = "sauron-component-macro"
 version = "0.50.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2eccd1fd094a64195bbbb2e0b2b2b8ea0494f70ecb6c7aa65e38b9b657cd155d"
 dependencies = [
  "proc-macro-crate",
  "proc-macro2",
@@ -801,8 +797,6 @@ dependencies = [
 [[package]]
 name = "sauron-core"
 version = "0.50.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd1315f5904bc3895dbe901e34f6d8d9a98f15d4c9535d9164bec44c0c2367e5"
 dependencies = [
  "cfg-if 0.1.10",
  "doc-comment",
@@ -912,7 +906,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.6.6"
+version = "0.6.7"
 dependencies = [
  "itertools",
  "lazy_static",
