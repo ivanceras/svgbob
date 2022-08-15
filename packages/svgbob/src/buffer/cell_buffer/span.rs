@@ -257,9 +257,9 @@ impl Span {
 
     /// returns true if any cell on this span
     /// is within the bounds of `bound1` and `bound2`
-    pub fn intersects_bound(&self, bound1: Cell, bound2: Cell) -> bool {
+    pub fn is_bounded(&self, bound1: Cell, bound2: Cell) -> bool {
         self.iter()
-            .any(|(cell, ch)| cell.is_bounded(bound1, bound2))
+            .all(|(cell, ch)| cell.is_bounded(bound1, bound2))
     }
 }
 
