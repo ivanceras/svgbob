@@ -295,7 +295,6 @@ impl<'p> Into<PropertyBuffer<'p>> for &Span {
         for (cell, ch) in self.iter() {
             if let Some(property) = Property::from_char(*ch) {
                 pb.as_mut().insert(*cell, property);
-            } else {
             }
         }
         pb
