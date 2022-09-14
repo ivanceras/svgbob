@@ -261,6 +261,10 @@ impl Span {
         self.iter()
             .all(|(cell, ch)| cell.is_bounded(bound1, bound2))
     }
+
+    pub fn hit_cell(&self, needle: Cell) -> bool {
+        self.iter().any(|(cell, ch)| *cell == needle)
+    }
 }
 
 impl Bounds {
