@@ -2,6 +2,7 @@ use crate::Cell;
 use crate::Settings;
 pub use direction::Direction;
 pub use fragment::Fragment;
+pub use fragment_span::FragmentSpan;
 pub use fragment_tree::FragmentTree;
 use itertools::Itertools;
 use std::{
@@ -11,6 +12,7 @@ use std::{
 
 pub mod direction;
 pub mod fragment;
+mod fragment_span;
 mod fragment_tree;
 
 /// Fragment buffer contains the drawing fragments for each cell
@@ -125,6 +127,41 @@ impl FragmentBuffer {
     pub fn merge_fragments(&self, settings: &Settings) -> Vec<Fragment> {
         let fragments = self.first_pass_merge(settings);
         Fragment::merge_recursive(fragments, settings)
+    }
+
+    pub fn merge_fragment_spans(
+        &self,
+        settings: &Settings,
+    ) -> Vec<FragmentSpan> {
+        let fragment_spans = self.into_fragment_spans(settings);
+        FragmentSpan::merge_recursive(fragment_spans, settings)
+    }
+
+    /// create a merged of fragments while preserving their cells
+    fn into_fragment_spans(&self, settings: &Settings) -> Vec<FragmentSpan> {
+        let mut fragment_spans: Vec<FragmentSpan> = vec![];
+        for (cell, fragments) in self.iter() {
+            for frag in fragments.iter() {
+                let abs_frag = frag.absolute_position(*cell);
+                let abs_frag = FragmentSpan::new(*cell, abs_frag);
+                let had_merged =
+                    fragment_spans.iter_mut().rev().any(|frag_span| {
+                        if let Some(new_merge) =
+                            frag_span.merge(&abs_frag, settings)
+                        {
+                            *frag_span = new_merge;
+                            true
+                        } else {
+                            false
+                        }
+                    });
+
+                if !had_merged {
+                    fragment_spans.push(abs_frag);
+                }
+            }
+        }
+        fragment_spans
     }
 
     /// merge fragments that can be merged.
