@@ -29,6 +29,10 @@ impl Contacts {
         self.0.iter().map(|fs| &fs.fragment).collect()
     }
 
+    pub fn cells(&self) -> Vec<Cell> {
+        self.0.iter().flat_map(|fs| fs.cells.clone()).collect()
+    }
+
     /// Check if any fragment can be group with any of the other fragment
     /// We use `.rev()` on this list of fragment since it has a high change of matching at the last
     /// added fragment of the next fragments to be checked.
@@ -70,6 +74,16 @@ impl Contacts {
                 .map(|frag| frag.absolute_position(cell))
                 .collect(),
         )
+    }
+
+    pub fn is_bounded(&self, bound1: Cell, bound2: Cell) -> bool {
+        self.cells()
+            .iter()
+            .all(|cell| cell.is_bounded(bound1, bound2))
+    }
+
+    pub fn hit_cell(&self, needle: Cell) -> bool {
+        self.cells().iter().any(|cell| *cell == needle)
     }
 }
 
