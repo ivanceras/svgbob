@@ -124,11 +124,6 @@ impl FragmentBuffer {
         self.sort_fragments_in_cell(cell);
     }
 
-    pub fn merge_fragments(&self, settings: &Settings) -> Vec<Fragment> {
-        let fragments = self.first_pass_merge(settings);
-        Fragment::merge_recursive(fragments, settings)
-    }
-
     pub fn merge_fragment_spans(
         &self,
         settings: &Settings,
@@ -162,31 +157,5 @@ impl FragmentBuffer {
             }
         }
         fragment_spans
-    }
-
-    /// merge fragments that can be merged.
-    /// This is only merging the fragments that are in the same
-    /// cell
-    fn first_pass_merge(&self, settings: &Settings) -> Vec<Fragment> {
-        let mut merged: Vec<Fragment> = vec![];
-        for (cell, fragments) in self.iter() {
-            for frag in fragments.iter() {
-                //Note: The fragments are calculated with their absolute
-                // parameters and is derived from the cell position
-                let abs_frag = frag.absolute_position(*cell);
-                let had_merged = merged.iter_mut().rev().any(|mfrag| {
-                    if let Some(new_merge) = mfrag.merge(&abs_frag, settings) {
-                        *mfrag = new_merge;
-                        true
-                    } else {
-                        false
-                    }
-                });
-                if !had_merged {
-                    merged.push(abs_frag);
-                }
-            }
-        }
-        merged
     }
 }

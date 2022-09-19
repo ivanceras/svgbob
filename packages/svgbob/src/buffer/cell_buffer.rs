@@ -91,6 +91,14 @@ impl CellBuffer {
         Self::merge_recursive(adjacents)
     }
 
+    /// return the group of contacting fragments
+    pub fn group_contacts(&self, settings: &Settings) -> Vec<Contacts> {
+        self.group_adjacents()
+            .into_iter()
+            .flat_map(|span| span.get_contacts(settings))
+            .collect()
+    }
+
     /// merge span recursively until it hasn't changed the number of spans
     fn merge_recursive(adjacents: Vec<Span>) -> Vec<Span> {
         let original_len = adjacents.len();
@@ -234,11 +242,25 @@ impl CellBuffer {
 
         let single_member_fragments: Vec<Fragment> = single_member
             .into_iter()
-            .flat_map(|contact| contact.0)
+            .flat_map(|contact| {
+                contact
+                    .fragments()
+                    .into_iter()
+                    .map(|frag| frag.clone())
+                    .collect::<Vec<Fragment>>()
+            })
             .collect();
 
-        let vec_groups: Vec<Vec<Fragment>> =
-            vec_groups.into_iter().map(|contact| contact.0).collect();
+        let vec_groups: Vec<Vec<Fragment>> = vec_groups
+            .into_iter()
+            .map(|contact| {
+                contact
+                    .fragments()
+                    .into_iter()
+                    .map(|frag| frag.clone())
+                    .collect::<Vec<Fragment>>()
+            })
+            .collect();
 
         let endorsed_fragments: Vec<Fragment> =
             endorsed_fragments.into_iter().flatten().collect();

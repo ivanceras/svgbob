@@ -1,10 +1,21 @@
 use crate::Cell;
 use crate::Fragment;
 use crate::Settings;
+use std::fmt;
 
+#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Clone)]
 pub struct FragmentSpan {
-    cells: Vec<Cell>,
-    fragment: Fragment,
+    pub cells: Vec<Cell>,
+    pub fragment: Fragment,
+}
+
+impl fmt::Display for FragmentSpan {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for cell in &self.cells {
+            write!(f, "{}: ", cell);
+        }
+        writeln!(f, "{}", self.fragment)
+    }
 }
 
 impl FragmentSpan {
@@ -61,5 +72,16 @@ impl FragmentSpan {
             }
         }
         new_groups
+    }
+
+    pub(crate) fn is_contacting(&self, other: &Self) -> bool {
+        self.fragment.is_contacting(&other.fragment)
+    }
+
+    pub fn absolute_position(&self, cell: Cell) -> Self {
+        Self {
+            cells: self.cells.clone(),
+            fragment: self.fragment.absolute_position(cell),
+        }
     }
 }

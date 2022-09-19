@@ -1,33 +1,38 @@
 use super::endorse;
+use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::buffer::{fragment::Fragment, Cell};
 use std::fmt;
 
 /// Contains a group of fragments that are touching each other
 /// The purpose of Contacts is to group fragments together
 #[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Clone)]
-pub struct Contacts(pub Vec<Fragment>);
+pub struct Contacts(pub Vec<FragmentSpan>);
 
-impl AsRef<Vec<Fragment>> for Contacts {
-    fn as_ref(&self) -> &Vec<Fragment> {
+impl AsRef<Vec<FragmentSpan>> for Contacts {
+    fn as_ref(&self) -> &Vec<FragmentSpan> {
         &self.0
     }
 }
 
-impl AsMut<Vec<Fragment>> for Contacts {
-    fn as_mut(&mut self) -> &mut Vec<Fragment> {
+impl AsMut<Vec<FragmentSpan>> for Contacts {
+    fn as_mut(&mut self) -> &mut Vec<FragmentSpan> {
         &mut self.0
     }
 }
 
 impl Contacts {
-    pub(crate) fn new(fragment: Fragment) -> Self {
+    pub(crate) fn new(fragment: FragmentSpan) -> Self {
         Contacts(vec![fragment])
+    }
+
+    pub fn fragments(&self) -> Vec<&Fragment> {
+        self.0.iter().map(|fs| &fs.fragment).collect()
     }
 
     /// Check if any fragment can be group with any of the other fragment
     /// We use `.rev()` on this list of fragment since it has a high change of matching at the last
     /// added fragment of the next fragments to be checked.
-    pub(crate) fn is_contacting_frag(&self, other_frag: &Fragment) -> bool {
+    pub(crate) fn is_contacting_frag(&self, other_frag: &FragmentSpan) -> bool {
         self.as_ref()
             .iter()
             .rev()
@@ -46,10 +51,11 @@ impl Contacts {
     ///  - rect
     ///  - rounded_rect
     pub(crate) fn endorse_rects(&self) -> Option<Fragment> {
-        if let Some(rect) = endorse::endorse_rect(self.as_ref()) {
+        let fragments = self.fragments();
+        if let Some(rect) = endorse::endorse_rect(&fragments) {
             Some(rect.into())
         } else if let Some(rounded_rect) =
-            endorse::endorse_rounded_rect(self.as_ref())
+            endorse::endorse_rounded_rect(&fragments)
         {
             Some(rounded_rect.into())
         } else {

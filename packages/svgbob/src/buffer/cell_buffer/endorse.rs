@@ -5,7 +5,7 @@ use crate::{
 
 /// if a group of fragment can be endorse as rect, return the bounds point for the
 /// rectangle
-pub fn endorse_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
+pub fn endorse_rect(fragments: &[&Fragment]) -> Option<Rect> {
     if is_rect(fragments) {
         let is_any_broken =
             fragments.iter().any(|fragment| fragment.is_broken());
@@ -29,7 +29,7 @@ pub fn endorse_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
 
 /// group of fragments can be check if they form:
 /// - rectangle
-fn is_rect(fragments: &Vec<Fragment>) -> bool {
+fn is_rect(fragments: &[&Fragment]) -> bool {
     if fragments.len() == 4 {
         let parallels = parallel_aabb_group(fragments);
         if parallels.len() == 2 {
@@ -54,7 +54,7 @@ fn is_rect(fragments: &Vec<Fragment>) -> bool {
 ///  - 2 parallell pair
 ///  - 4 aabb right angle arc (top_left, top_right, bottom_left, bottom_right)
 ///  - each of the right angle touches 2 lines that are aabb_perpendicular
-pub fn endorse_rounded_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
+pub fn endorse_rounded_rect(fragments: &[&Fragment]) -> Option<Rect> {
     if let (true, arc_radius) = is_rounded_rect(fragments) {
         let is_any_broken =
             fragments.iter().any(|fragment| fragment.is_broken());
@@ -83,7 +83,7 @@ pub fn endorse_rounded_rect(fragments: &Vec<Fragment>) -> Option<Rect> {
     }
 }
 
-fn is_rounded_rect(fragments: &Vec<Fragment>) -> (bool, Option<f32>) {
+fn is_rounded_rect(fragments: &[&Fragment]) -> (bool, Option<f32>) {
     if fragments.len() == 8 {
         let parallels = parallel_aabb_group(fragments);
         let right_arcs = right_angle_arcs(fragments);
@@ -112,7 +112,7 @@ fn is_rounded_rect(fragments: &Vec<Fragment>) -> (bool, Option<f32>) {
 }
 
 /// return the index of the fragments that are right angle arc
-fn right_angle_arcs(fragments: &Vec<Fragment>) -> Vec<usize> {
+fn right_angle_arcs(fragments: &[&Fragment]) -> Vec<usize> {
     fragments
         .iter()
         .enumerate()
@@ -131,7 +131,7 @@ fn right_angle_arcs(fragments: &Vec<Fragment>) -> Vec<usize> {
 }
 
 /// return the indexes of the fragments that are aabb parallel
-fn parallel_aabb_group(fragments: &Vec<Fragment>) -> Vec<(usize, usize)> {
+fn parallel_aabb_group(fragments: &[&Fragment]) -> Vec<(usize, usize)> {
     let mut parallels = vec![];
     for (index1, frag1) in fragments.iter().enumerate() {
         for (index2, frag2) in fragments.iter().enumerate() {
