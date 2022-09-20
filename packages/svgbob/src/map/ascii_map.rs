@@ -340,6 +340,11 @@ lazy_static! {
                             (bottom.line_strongly_overlap(c,h),
                              vec![line(w,r)]
                             ),
+                            // -*
+                            (left.line_overlap(n,o), vec![line(k,m)]),
+                            //  *-
+                            (right.line_overlap(k,l), vec![line(m,o)]),
+
                             //  \
                             //   *
                             (top_left.line_strongly_overlap(s,y),
