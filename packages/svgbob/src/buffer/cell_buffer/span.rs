@@ -16,7 +16,7 @@ use std::{
 /// A describes where a char came from relative to the source ascii text
 /// The primary purpose of span is to group adjacent cell together
 #[derive(Debug, Clone)]
-pub struct Span(Vec<(Cell, char)>);
+pub struct Span(pub Vec<(Cell, char)>);
 
 impl Deref for Span {
     type Target = Vec<(Cell, char)>;
@@ -44,7 +44,7 @@ impl From<Vec<(Cell, char)>> for Span {
 }
 
 impl Span {
-    pub(super) fn new(cell: Cell, ch: char) -> Self {
+    pub(crate) fn new(cell: Cell, ch: char) -> Self {
         Span(vec![(cell, ch)])
     }
 
@@ -65,7 +65,7 @@ impl Span {
         })
     }
 
-    pub(super) fn merge(&mut self, other: &Self) {
+    pub(crate) fn merge(&mut self, other: &Self) {
         self.extend_from_slice(&*other)
     }
 
@@ -146,55 +146,7 @@ impl Span {
                 groups.push(Contacts::new(fragment))
             }
         }
-        Self::group_recursive(groups)
-    }
-
-    fn group_recursive(groups: Vec<Contacts>) -> Vec<Contacts> {
-        let original_len = groups.len();
-        let grouped = Self::second_pass_groupable(groups);
-        // continue calling group recursive until the original len
-        // has not decreased
-        if grouped.len() < original_len {
-            Self::group_recursive(grouped)
-        } else {
-            grouped
-        }
-    }
-
-    fn second_pass_groupable(groups: Vec<Contacts>) -> Vec<Contacts> {
-        let mut new_groups: Vec<Contacts> = vec![];
-        for group in groups.into_iter() {
-            let is_grouped = new_groups.iter_mut().any(|new_group| {
-                if new_group.is_contacting(&group) {
-                    new_group.as_mut().extend_from_slice(group.as_ref());
-                    true
-                } else {
-                    false
-                }
-            });
-            if !is_grouped {
-                new_groups.push(group);
-            }
-        }
-        new_groups
-    }
-
-    /// First phase of endorsing to shapes, in this case, rects and rounded_rects
-    ///
-    /// This function is calling on endorse methods that is applicable
-    /// to fragments that are touching, to be promoted to a shape.
-    /// These includes: rect, roundedrect,
-    fn endorse_rects(groups: Vec<Contacts>) -> (Vec<Fragment>, Vec<Contacts>) {
-        let mut fragments = vec![];
-        let mut un_endorsed_rect: Vec<Contacts> = vec![];
-        for group in groups {
-            if let Some(fragment) = group.endorse_rects() {
-                fragments.push(fragment);
-            } else {
-                un_endorsed_rect.push(group);
-            }
-        }
-        (fragments, un_endorsed_rect)
+        Contacts::group_recursive(groups)
     }
 
     /// convert this span into fragments applying endorsement
@@ -238,7 +190,7 @@ impl Span {
         };
 
         let groups: Vec<Contacts> = un_endorsed_span.get_contacts(settings);
-        let (rect_fragments, un_endorsed) = Self::endorse_rects(groups);
+        let (rect_fragments, un_endorsed) = Contacts::endorse_rects(groups);
 
         fragments.extend(rect_fragments);
 
@@ -317,9 +269,13 @@ impl Span {
         for (cell, ch) in self.iter() {
             if pb.as_ref().get(cell).is_none() {
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(ch) {
-                    fb.add_fragments_to_cell(*cell, fragments.clone());
+                    fb.add_fragments_to_cell(*cell, *ch, fragments.clone());
                 } else {
-                    fb.add_fragment_to_cell(*cell, fragment::cell_text(*ch));
+                    fb.add_fragment_to_cell(
+                        *cell,
+                        *ch,
+                        fragment::cell_text(*ch),
+                    );
                 }
             }
         }

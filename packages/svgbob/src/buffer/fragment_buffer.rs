@@ -1,3 +1,4 @@
+use crate::buffer::Span;
 use crate::Cell;
 use crate::Settings;
 pub use direction::Direction;
@@ -38,10 +39,10 @@ mod fragment_tree;
 ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
 /// ```                      V W X
 #[derive(Debug)]
-pub struct FragmentBuffer(BTreeMap<Cell, Vec<Fragment>>);
+pub struct FragmentBuffer(BTreeMap<Cell, (char, Vec<Fragment>)>);
 
 impl Deref for FragmentBuffer {
-    type Target = BTreeMap<Cell, Vec<Fragment>>;
+    type Target = BTreeMap<Cell, (char, Vec<Fragment>)>;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -63,7 +64,7 @@ impl FragmentBuffer {
     /// printling the fragments on this fragment buffer
     pub fn dump(&self) -> String {
         let mut buff = String::new();
-        for (cell, shapes) in self.iter() {
+        for (cell, (_ch, shapes)) in self.iter() {
             buff.push_str(&format!("\ncell: {} ", cell));
             for shape in shapes {
                 buff.push_str(&format!("\n    {}", shape));
@@ -72,19 +73,9 @@ impl FragmentBuffer {
         buff
     }
 
-    /// Add a single fragment to this cell
-    pub fn add_fragment_to_cell(&mut self, cell: Cell, fragment: Fragment) {
-        if let Some(existing) = self.get_mut(&cell) {
-            existing.push(fragment);
-        } else {
-            self.insert(cell, vec![fragment]);
-        }
-        self.sort_fragments_in_cell(cell);
-    }
-
     /// sort the fragments content in this cell
     fn sort_fragments_in_cell(&mut self, cell: Cell) {
-        if let Some(fragments) = &mut self.get_mut(&cell) {
+        if let Some((_ch, fragments)) = &mut self.get_mut(&cell) {
             (*fragments).sort();
         }
     }
@@ -110,16 +101,32 @@ impl FragmentBuffer {
         (w, h)
     }
 
+    /// Add a single fragment to this cell
+    pub fn add_fragment_to_cell(
+        &mut self,
+        cell: Cell,
+        ch: char,
+        fragment: Fragment,
+    ) {
+        if let Some((_ch, existing)) = self.get_mut(&cell) {
+            existing.push(fragment);
+        } else {
+            self.insert(cell, (ch, vec![fragment]));
+        }
+        self.sort_fragments_in_cell(cell);
+    }
+
     /// add multiple fragments to cell
     pub fn add_fragments_to_cell(
         &mut self,
         cell: Cell,
+        ch: char,
         fragments: Vec<Fragment>,
     ) {
-        if let Some(existing) = self.get_mut(&cell) {
+        if let Some((_ch, existing)) = self.get_mut(&cell) {
             existing.extend(fragments);
         } else {
-            self.insert(cell, fragments);
+            self.insert(cell, (ch, fragments));
         }
         self.sort_fragments_in_cell(cell);
     }
@@ -135,10 +142,11 @@ impl FragmentBuffer {
     /// create a merged of fragments while preserving their cells
     fn into_fragment_spans(&self, settings: &Settings) -> Vec<FragmentSpan> {
         let mut fragment_spans: Vec<FragmentSpan> = vec![];
-        for (cell, fragments) in self.iter() {
+        for (cell, (ch, fragments)) in self.iter() {
             for frag in fragments.iter() {
                 let abs_frag = frag.absolute_position(*cell);
-                let abs_frag = FragmentSpan::new(*cell, abs_frag);
+                let span = Span::new(*cell, *ch);
+                let abs_frag = FragmentSpan::new(span, abs_frag);
                 let had_merged =
                     fragment_spans.iter_mut().rev().any(|frag_span| {
                         if let Some(new_merge) =

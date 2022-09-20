@@ -169,16 +169,21 @@ impl<'p> PropertyBuffer<'p> {
                 bottom_right,
             );
             if !cell_fragments.is_empty() {
-                fb.add_fragments_to_cell(*cell, cell_fragments);
+                fb.add_fragments_to_cell(*cell, property.ch, cell_fragments);
             } else {
                 //If no match make it a text fragment
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(&property.ch) {
                     let merged_fragments =
                         Fragment::merge_recursive(fragments.clone(), settings);
-                    fb.add_fragments_to_cell(*cell, merged_fragments);
+                    fb.add_fragments_to_cell(
+                        *cell,
+                        property.ch,
+                        merged_fragments,
+                    );
                 } else {
                     fb.add_fragment_to_cell(
                         *cell,
+                        property.ch,
                         fragment::cell_text(property.ch),
                     );
                 }

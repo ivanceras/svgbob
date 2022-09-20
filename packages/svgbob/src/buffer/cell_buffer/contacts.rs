@@ -5,7 +5,7 @@ use std::fmt;
 
 /// Contains a group of fragments that are touching each other
 /// The purpose of Contacts is to group fragments together
-#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Clone)]
+#[derive(Debug, Clone)]
 pub struct Contacts(pub Vec<FragmentSpan>);
 
 impl AsRef<Vec<FragmentSpan>> for Contacts {
@@ -30,7 +30,7 @@ impl Contacts {
     }
 
     pub fn cells(&self) -> Vec<Cell> {
-        self.0.iter().flat_map(|fs| fs.cells.clone()).collect()
+        self.0.iter().flat_map(|fs| fs.cells()).collect()
     }
 
     /// Check if any fragment can be group with any of the other fragment
@@ -50,11 +50,12 @@ impl Contacts {
             .any(|other_frag| self.is_contacting_frag(other_frag))
     }
 
+    ///TODO: return the FragmentSpan
     /// Endorse if the fragments in this group
     /// can be:
     ///  - rect
     ///  - rounded_rect
-    pub(crate) fn endorse_rects(&self) -> Option<Fragment> {
+    pub(crate) fn endorse_rect(&self) -> Option<Fragment> {
         let fragments = self.fragments();
         if let Some(rect) = endorse::endorse_rect(&fragments) {
             Some(rect.into())
@@ -65,6 +66,56 @@ impl Contacts {
         } else {
             None
         }
+    }
+
+    pub(crate) fn group_recursive(groups: Vec<Contacts>) -> Vec<Contacts> {
+        let original_len = groups.len();
+        let grouped = Self::second_pass_groupable(groups);
+        // continue calling group recursive until the original len
+        // has not decreased
+        if grouped.len() < original_len {
+            Self::group_recursive(grouped)
+        } else {
+            grouped
+        }
+    }
+
+    fn second_pass_groupable(groups: Vec<Contacts>) -> Vec<Contacts> {
+        let mut new_groups: Vec<Contacts> = vec![];
+        for group in groups.into_iter() {
+            let is_grouped = new_groups.iter_mut().any(|new_group| {
+                if new_group.is_contacting(&group) {
+                    new_group.as_mut().extend_from_slice(group.as_ref());
+                    true
+                } else {
+                    false
+                }
+            });
+            if !is_grouped {
+                new_groups.push(group);
+            }
+        }
+        new_groups
+    }
+
+    /// First phase of endorsing to shapes, in this case, rects and rounded_rects
+    ///
+    /// This function is calling on endorse methods that is applicable
+    /// to fragments that are touching, to be promoted to a shape.
+    /// These includes: rect, roundedrect,
+    pub(crate) fn endorse_rects(
+        groups: Vec<Contacts>,
+    ) -> (Vec<Fragment>, Vec<Contacts>) {
+        let mut fragments = vec![];
+        let mut un_endorsed_rect: Vec<Contacts> = vec![];
+        for group in groups {
+            if let Some(fragment) = group.endorse_rect() {
+                fragments.push(fragment);
+            } else {
+                un_endorsed_rect.push(group);
+            }
+        }
+        (fragments, un_endorsed_rect)
     }
 
     pub(crate) fn absolute_position(&self, cell: Cell) -> Self {

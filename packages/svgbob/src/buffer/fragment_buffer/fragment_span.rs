@@ -1,36 +1,37 @@
+use crate::buffer::Span;
 use crate::Cell;
 use crate::Fragment;
 use crate::Settings;
 use std::fmt;
 
-#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Clone)]
+#[derive(Debug, Clone)]
 pub struct FragmentSpan {
-    pub cells: Vec<Cell>,
+    pub span: Span,
     pub fragment: Fragment,
 }
 
 impl fmt::Display for FragmentSpan {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for cell in &self.cells {
-            write!(f, "{}: ", cell);
-        }
         writeln!(f, "{}", self.fragment)
     }
 }
 
 impl FragmentSpan {
-    pub fn new(cell: Cell, fragment: Fragment) -> Self {
-        Self {
-            cells: vec![cell],
-            fragment,
-        }
+    pub fn new(span: Span, fragment: Fragment) -> Self {
+        Self { span, fragment }
+    }
+
+    pub fn cells(&self) -> Vec<Cell> {
+        self.span.0.iter().map(|(cell, _ch)| *cell).collect()
     }
 
     pub fn merge(&self, other: &Self, settings: &Settings) -> Option<Self> {
         if let Some(new_merge) = self.fragment.merge(&other.fragment, settings)
         {
+            let mut new_span = self.span.clone();
+            new_span.merge(&other.span);
             Some(Self {
-                cells: [self.cells.clone(), other.cells.clone()].concat(),
+                span: new_span,
                 fragment: new_merge,
             })
         } else {
@@ -80,7 +81,7 @@ impl FragmentSpan {
 
     pub fn absolute_position(&self, cell: Cell) -> Self {
         Self {
-            cells: self.cells.clone(),
+            span: self.span.clone(),
             fragment: self.fragment.absolute_position(cell),
         }
     }
