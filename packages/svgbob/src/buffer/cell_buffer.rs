@@ -262,6 +262,21 @@ impl CellBuffer {
         (single_member_fragments, vec_groups, endorsed_fragments)
     }
 
+    /// return the fragments that are (close objects, touching grouped fragments)
+    pub fn get_fragment_spans(
+        &self,
+        settings: &Settings,
+    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
+        let (single_member_fragments, vec_group_fragments, vec_fragments) =
+            self.group_single_members_from_other_fragments(settings);
+
+        let escaped_text = self.escaped_text_nodes();
+        let regulars =
+            [vec_fragments, single_member_fragments, escaped_text].concat();
+
+        (regulars, vec_group_fragments)
+    }
+
     /// group nodes that can be group and the rest will be fragments
     /// Note: The grouped fragments is scaled here
     fn group_nodes_and_fragments<MSG>(
