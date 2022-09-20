@@ -88,46 +88,34 @@ impl CellBuffer {
                 adjacents.push(Span::new(*cell, *ch));
             }
         }
-        Self::merge_recursive(adjacents)
+        Span::merge_recursive(adjacents)
     }
 
     /// return the group of contacting fragments
-    pub fn group_contacts(&self, settings: &Settings) -> Vec<Contacts> {
-        self.group_adjacents()
+    pub fn group_contacts(
+        &self,
+        settings: &Settings,
+    ) -> (Vec<Span>, Vec<Contacts>) {
+        let groups: Vec<(Vec<Span>, Vec<Contacts>)> = self
+            .group_adjacents()
             .into_iter()
-            .flat_map(|span| span.get_contacts(settings))
-            .collect()
-    }
-
-    /// merge span recursively until it hasn't changed the number of spans
-    fn merge_recursive(adjacents: Vec<Span>) -> Vec<Span> {
-        let original_len = adjacents.len();
-        let merged = Self::second_pass_merge(adjacents);
-        // if has merged continue merging until nothing can be merged
-        if merged.len() < original_len {
-            Self::merge_recursive(merged)
-        } else {
-            merged
-        }
-    }
-
-    /// second pass merge is operating on span comparing to other spans
-    fn second_pass_merge(adjacents: Vec<Span>) -> Vec<Span> {
-        let mut new_groups: Vec<Span> = vec![];
-        for span in adjacents.into_iter() {
-            let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if new_group.can_merge(&span) {
-                    new_group.merge(&span);
-                    true
+            .map(|span| {
+                let contacts = span.get_contacts(settings);
+                if contacts.is_empty() {
+                    (vec![span], vec![])
                 } else {
-                    false
+                    (vec![], contacts)
                 }
-            });
-            if !is_merged {
-                new_groups.push(span);
-            }
-        }
-        new_groups
+            })
+            .collect();
+
+        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) =
+            groups.into_iter().unzip();
+
+        let spans: Vec<Span> = spans.into_iter().flatten().collect();
+        let contacts: Vec<Contacts> = contacts.into_iter().flatten().collect();
+
+        (spans, contacts)
     }
 
     pub fn bounds(&self) -> Option<(Cell, Cell)> {
