@@ -194,10 +194,8 @@ impl CellBuffer {
         &self,
         settings: &Settings,
     ) -> Vec<FragmentSpan> {
-        log::warn!("Getting shapes fragment..");
         let (single_member, _, endorsed_fragments) =
             self.group_single_members_from_other_fragments(settings);
-        log::info!("single_members: {:#?}", single_member);
         endorsed_fragments
             .into_iter()
             .chain(single_member.into_iter().filter(|frag| {
@@ -223,8 +221,6 @@ impl CellBuffer {
             .into_iter()
             .map(|span| span.endorse(settings))
             .unzip();
-
-        log::info!("endorsed fragments: {:#?}", endorsed_fragments);
 
         // partition the vec_groups into groups that is alone and the group
         // that is contacting their parts

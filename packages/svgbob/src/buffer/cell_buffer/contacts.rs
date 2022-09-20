@@ -117,7 +117,6 @@ impl Contacts {
         let mut un_endorsed_rect: Vec<Contacts> = vec![];
         for group in groups {
             if let Some(fragment) = group.endorse_rect() {
-                log::info!("got some endoresed rect..");
                 let span = group.span();
                 let fragment_span = FragmentSpan::new(span, fragment);
                 fragments.push(fragment_span);
