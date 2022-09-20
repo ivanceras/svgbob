@@ -1,3 +1,4 @@
+use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::fragment::CellText;
 use crate::Settings;
 use crate::{
@@ -189,16 +190,19 @@ impl CellBuffer {
     }
 
     /// return fragments that are Rect, Circle,
-    pub fn get_shapes_fragment(&self, settings: &Settings) -> Vec<Fragment> {
+    pub fn get_shapes_fragment(
+        &self,
+        settings: &Settings,
+    ) -> Vec<FragmentSpan> {
+        log::warn!("Getting shapes fragment..");
         let (single_member, _, endorsed_fragments) =
             self.group_single_members_from_other_fragments(settings);
+        log::info!("single_members: {:#?}", single_member);
         endorsed_fragments
             .into_iter()
-            .chain(
-                single_member
-                    .into_iter()
-                    .filter(|frag| frag.is_rect() || frag.is_circle()),
-            )
+            .chain(single_member.into_iter().filter(|frag| {
+                frag.fragment.is_rect() || frag.fragment.is_circle()
+            }))
             .collect()
     }
 
@@ -206,19 +210,21 @@ impl CellBuffer {
     fn group_single_members_from_other_fragments(
         &self,
         settings: &Settings,
-    ) -> (Vec<Fragment>, Vec<Vec<Fragment>>, Vec<Fragment>) {
+    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>, Vec<FragmentSpan>) {
         // endorsed_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
         // the svg node
         let (endorsed_fragments, vec_contacts): (
-            Vec<Vec<Fragment>>,
+            Vec<Vec<FragmentSpan>>,
             Vec<Vec<Contacts>>,
         ) = self
             .group_adjacents()
             .into_iter()
             .map(|span| span.endorse(settings))
             .unzip();
+
+        log::info!("endorsed fragments: {:#?}", endorsed_fragments);
 
         // partition the vec_groups into groups that is alone and the group
         // that is contacting their parts
@@ -228,29 +234,29 @@ impl CellBuffer {
                 .flatten()
                 .partition(move |contacts| contacts.0.len() == 1);
 
-        let single_member_fragments: Vec<Fragment> = single_member
+        let single_member_fragments: Vec<FragmentSpan> = single_member
             .into_iter()
             .flat_map(|contact| {
                 contact
-                    .fragments()
+                    .as_ref()
                     .into_iter()
                     .map(|frag| frag.clone())
-                    .collect::<Vec<Fragment>>()
+                    .collect::<Vec<FragmentSpan>>()
             })
             .collect();
 
-        let vec_groups: Vec<Vec<Fragment>> = vec_groups
+        let vec_groups: Vec<Vec<FragmentSpan>> = vec_groups
             .into_iter()
             .map(|contact| {
                 contact
-                    .fragments()
+                    .as_ref()
                     .into_iter()
                     .map(|frag| frag.clone())
-                    .collect::<Vec<Fragment>>()
+                    .collect::<Vec<FragmentSpan>>()
             })
             .collect();
 
-        let endorsed_fragments: Vec<Fragment> =
+        let endorsed_fragments: Vec<FragmentSpan> =
             endorsed_fragments.into_iter().flatten().collect();
 
         (single_member_fragments, vec_groups, endorsed_fragments)
@@ -261,7 +267,7 @@ impl CellBuffer {
     fn group_nodes_and_fragments<MSG>(
         &self,
         settings: &Settings,
-    ) -> (Vec<Node<MSG>>, Vec<Fragment>) {
+    ) -> (Vec<Node<MSG>>, Vec<FragmentSpan>) {
         let (single_member_fragments, vec_group_fragments, vec_fragments) =
             self.group_single_members_from_other_fragments(settings);
 
@@ -273,7 +279,7 @@ impl CellBuffer {
                     .iter()
                     .map(move |gfrag| {
                         let scaled = gfrag.scale(settings.scale);
-                        let node: Node<MSG> = scaled.into();
+                        let node: Node<MSG> = scaled.fragment.into();
                         node
                     })
                     .collect::<Vec<Node<MSG>>>();
@@ -281,7 +287,7 @@ impl CellBuffer {
             })
             .collect();
 
-        let mut fragments: Vec<Fragment> = vec_fragments;
+        let mut fragments: Vec<FragmentSpan> = vec_fragments;
 
         fragments.extend(single_member_fragments);
         fragments.extend(self.escaped_text_nodes());
@@ -289,11 +295,15 @@ impl CellBuffer {
         (group_nodes, fragments)
     }
 
-    fn escaped_text_nodes(&self) -> Vec<Fragment> {
+    fn escaped_text_nodes(&self) -> Vec<FragmentSpan> {
         let mut fragments = vec![];
         for (cell, text) in &self.escaped_text {
             let cell_text = CellText::new(*cell, text.to_string());
-            fragments.push(cell_text.into());
+            let cells: Vec<(Cell, char)> =
+                text.chars().into_iter().map(|ch| (*cell, ch)).collect();
+            let span = Span::from(cells);
+            let frag_span_text = FragmentSpan::new(span, cell_text.into());
+            fragments.push(frag_span_text);
         }
         fragments
     }
@@ -405,13 +415,13 @@ impl CellBuffer {
     /// convert the fragments into svg nodes using the supplied settings, with size for the
     /// dimension
     pub fn fragments_to_node<MSG>(
-        fragments: Vec<Fragment>,
+        fragments: Vec<FragmentSpan>,
         legend_css: String,
         settings: &Settings,
         w: f32,
         h: f32,
     ) -> Node<MSG> {
-        let fragments_scaled: Vec<Fragment> = fragments
+        let fragments_scaled: Vec<FragmentSpan> = fragments
             .into_iter()
             .map(|frag| frag.scale(settings.scale))
             .collect();

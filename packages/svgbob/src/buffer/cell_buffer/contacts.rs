@@ -1,5 +1,6 @@
 use super::endorse;
 use crate::buffer::fragment_buffer::FragmentSpan;
+use crate::buffer::Span;
 use crate::buffer::{fragment::Fragment, Cell};
 use std::fmt;
 
@@ -31,6 +32,12 @@ impl Contacts {
 
     pub fn cells(&self) -> Vec<Cell> {
         self.0.iter().flat_map(|fs| fs.cells()).collect()
+    }
+
+    pub fn span(&self) -> Span {
+        let cell_chars: Vec<(Cell, char)> =
+            self.0.iter().flat_map(|fs| fs.span.0.clone()).collect();
+        cell_chars.into()
     }
 
     /// Check if any fragment can be group with any of the other fragment
@@ -105,12 +112,15 @@ impl Contacts {
     /// These includes: rect, roundedrect,
     pub(crate) fn endorse_rects(
         groups: Vec<Contacts>,
-    ) -> (Vec<Fragment>, Vec<Contacts>) {
+    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
         let mut fragments = vec![];
         let mut un_endorsed_rect: Vec<Contacts> = vec![];
         for group in groups {
             if let Some(fragment) = group.endorse_rect() {
-                fragments.push(fragment);
+                log::info!("got some endoresed rect..");
+                let span = group.span();
+                let fragment_span = FragmentSpan::new(span, fragment);
+                fragments.push(fragment_span);
             } else {
                 un_endorsed_rect.push(group);
             }

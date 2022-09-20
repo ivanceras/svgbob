@@ -108,7 +108,8 @@ impl FragmentBuffer {
         ch: char,
         fragment: Fragment,
     ) {
-        if let Some((_ch, existing)) = self.get_mut(&cell) {
+        if let Some((ex_ch, existing)) = self.get_mut(&cell) {
+            assert_eq!(*ex_ch, ch);
             existing.push(fragment);
         } else {
             self.insert(cell, (ch, vec![fragment]));
@@ -123,7 +124,8 @@ impl FragmentBuffer {
         ch: char,
         fragments: Vec<Fragment>,
     ) {
-        if let Some((_ch, existing)) = self.get_mut(&cell) {
+        if let Some((ex_ch, existing)) = self.get_mut(&cell) {
+            assert_eq!(*ex_ch, ch);
             existing.extend(fragments);
         } else {
             self.insert(cell, (ch, fragments));

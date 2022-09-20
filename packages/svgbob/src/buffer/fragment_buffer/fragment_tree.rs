@@ -1,3 +1,4 @@
+use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::Fragment;
 use sauron::{html::attributes::*, Node};
 
@@ -6,15 +7,15 @@ use sauron::{html::attributes::*, Node};
 /// The main purpose of this struct is for tagging fragments
 /// such as rect and circles to have a CellText fragment inside that are special
 /// text commands such as css classes, which the user can style the containing fragment
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 pub struct FragmentTree {
-    fragment: Fragment,
+    fragment: FragmentSpan,
     css_tag: Vec<String>,
     enclosing: Vec<FragmentTree>,
 }
 
 impl FragmentTree {
-    pub(crate) fn new(fragment: Fragment) -> Self {
+    pub(crate) fn new(fragment: FragmentSpan) -> Self {
         FragmentTree {
             fragment,
             css_tag: vec![],
@@ -23,7 +24,7 @@ impl FragmentTree {
     }
 
     fn can_fit(&self, other: &Self) -> bool {
-        self.fragment.can_fit(&other.fragment)
+        self.fragment.fragment.can_fit(&other.fragment.fragment)
     }
 
     /// check if this fragment can fit to this fragment tree.
@@ -53,7 +54,7 @@ impl FragmentTree {
             }
         }
         if self.can_fit(other) {
-            let css_tags = other.fragment.as_css_tag();
+            let css_tags = other.fragment.fragment.as_css_tag();
             if !css_tags.is_empty() {
                 self.css_tag.extend(css_tags);
             } else {
@@ -65,7 +66,7 @@ impl FragmentTree {
         }
     }
 
-    pub(crate) fn enclose_fragments(fragments: Vec<Fragment>) -> Vec<Self> {
+    pub(crate) fn enclose_fragments(fragments: Vec<FragmentSpan>) -> Vec<Self> {
         let fragment_trees: Vec<Self> = fragments
             .into_iter()
             .map(|frag| FragmentTree::new(frag))
@@ -101,7 +102,7 @@ impl FragmentTree {
     /// convert back into fragments
     fn into_nodes<MSG>(self) -> Vec<Node<MSG>> {
         let mut nodes = vec![];
-        let mut fragment_node: Node<MSG> = self.fragment.into();
+        let mut fragment_node: Node<MSG> = self.fragment.fragment.into();
         let _css_tag_len = self.css_tag.len();
         fragment_node =
             fragment_node.merge_attributes(vec![classes(self.css_tag)]);
@@ -116,7 +117,7 @@ impl FragmentTree {
     /// convert fragments to node, where cell_text and text may become
     /// css class of the contain fragment
     pub(crate) fn fragments_to_node<MSG>(
-        fragments: Vec<Fragment>,
+        fragments: Vec<FragmentSpan>,
     ) -> Vec<Node<MSG>> {
         let fragment_trees: Vec<FragmentTree> =
             Self::enclose_fragments(fragments);

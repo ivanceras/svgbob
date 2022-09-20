@@ -25,6 +25,13 @@ impl FragmentSpan {
         self.span.0.iter().map(|(cell, _ch)| *cell).collect()
     }
 
+    pub fn scale(&self, scale: f32) -> Self {
+        Self {
+            span: self.span.clone(),
+            fragment: self.fragment.scale(scale),
+        }
+    }
+
     pub fn merge(&self, other: &Self, settings: &Settings) -> Option<Self> {
         if let Some(new_merge) = self.fragment.merge(&other.fragment, settings)
         {
@@ -84,5 +91,13 @@ impl FragmentSpan {
             span: self.span.clone(),
             fragment: self.fragment.absolute_position(cell),
         }
+    }
+
+    pub fn is_bounded(&self, bound1: Cell, bound2: Cell) -> bool {
+        self.span.is_bounded(bound1, bound2)
+    }
+
+    pub fn hit_cell(&self, needle: Cell) -> bool {
+        self.span.hit_cell(needle)
     }
 }

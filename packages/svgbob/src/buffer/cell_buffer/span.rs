@@ -1,3 +1,4 @@
+use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::{
     buffer::{
         cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer,
@@ -15,7 +16,7 @@ use std::{
 
 /// A describes where a char came from relative to the source ascii text
 /// The primary purpose of span is to group adjacent cell together
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Span(pub Vec<(Cell, char)>);
 
 impl Deref for Span {
@@ -162,14 +163,16 @@ impl Span {
     pub(crate) fn endorse(
         self,
         settings: &Settings,
-    ) -> (Vec<Fragment>, Vec<Contacts>) {
+    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
         let mut fragments = vec![];
         let (top_left, _) = self.bounds().expect("must have bounds");
         let un_endorsed_span = if let Some((circle, un_endorsed_span)) =
             circle_map::endorse_circle_span(&self)
         {
             let circle = circle.absolute_position(top_left);
-            fragments.push(circle.into());
+            let circle_frag_span =
+                FragmentSpan::new(self.clone(), circle.into());
+            fragments.push(circle_frag_span);
             un_endorsed_span
         }
         /*else if let Some((arc, un_endorsed_span)) =
@@ -183,7 +186,8 @@ impl Span {
             circle_map::endorse_quarter_arc_span(&self)
         {
             let arc = arc.absolute_position(top_left);
-            fragments.push(arc.into());
+            let arc_frag_span = FragmentSpan::new(self.clone(), arc.into());
+            fragments.push(arc_frag_span);
             un_endorsed_span
         } else {
             self

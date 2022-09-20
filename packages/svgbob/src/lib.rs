@@ -10,7 +10,7 @@ pub mod util;
 
 pub use buffer::{
     fragment, fragment::Fragment, Cell, CellBuffer, Direction, FragmentBuffer,
-    Property, Signal,
+    FragmentSpan, Property, Signal,
 };
 pub use nalgebra;
 pub use point::Point;
