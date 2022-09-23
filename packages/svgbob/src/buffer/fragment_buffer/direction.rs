@@ -1,6 +1,6 @@
 use crate::buffer::CellGrid;
 
-#[derive(Debug, Clone, PartialEq, Copy)]
+#[derive(Debug, Clone, PartialEq, Eq, Copy)]
 pub enum Direction {
     TopLeft,
     Top,
@@ -26,41 +26,6 @@ impl Direction {
             Direction::BottomRight => Direction::TopLeft,
         }
     }
-    /*
-    pub(crate) fn any_along_side(&self, tags: &[PolygonTag]) -> bool {
-        tags.iter().any(|tag| self.is_along_side(tag))
-    }
-    /// diamon matches alongside for everything.
-    pub(crate) fn is_along_side(&self, tag: &PolygonTag) -> bool {
-        if *tag == PolygonTag::DiamondBullet {
-            return true;
-        }
-        match self {
-            Direction::TopLeft | Direction::BottomRight => match tag {
-                PolygonTag::ArrowTopLeft
-                | PolygonTag::ArrowBottomRight
-                | PolygonTag::ArrowTop
-                | PolygonTag::ArrowBottom => true,
-                _ => false,
-            },
-            Direction::Top | Direction::Bottom => match tag {
-                PolygonTag::ArrowTop | PolygonTag::ArrowBottom => true,
-                _ => false,
-            },
-            Direction::TopRight | Direction::BottomLeft => match tag {
-                PolygonTag::ArrowTopRight
-                | PolygonTag::ArrowBottomLeft
-                | PolygonTag::ArrowTop
-                | PolygonTag::ArrowBottom => true,
-                _ => false,
-            },
-            Direction::Left | Direction::Right => match tag {
-                PolygonTag::ArrowLeft | PolygonTag::ArrowRight => true,
-                _ => false,
-            },
-        }
-    }
-    */
 
     /// calculate the threshold length which is the basis
     /// if the arrow and the line is connected

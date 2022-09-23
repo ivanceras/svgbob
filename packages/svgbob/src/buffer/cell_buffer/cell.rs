@@ -29,7 +29,7 @@ pub use cell_grid::CellGrid;
 /// A single element in the terminal that
 /// can fit 1 character.
 /// Describe the exact location of a point/subcell in a grid.
-#[derive(Debug, PartialEq, Hash, PartialOrd, Clone, Copy)]
+#[derive(Debug, PartialEq, Hash, Clone, Copy, Eq)]
 pub struct Cell {
     pub x: i32,
     pub y: i32,
@@ -41,7 +41,11 @@ impl fmt::Display for Cell {
     }
 }
 
-impl Eq for Cell {}
+impl PartialOrd for Cell {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
 impl Ord for Cell {
     fn cmp(&self, other: &Self) -> Ordering {
         self.y.cmp(&other.y).then(self.x.cmp(&other.x))

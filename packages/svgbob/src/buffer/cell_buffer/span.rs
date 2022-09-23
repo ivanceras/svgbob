@@ -284,10 +284,10 @@ impl Bounds {
 }
 
 /// create a property buffer for all the cells of this span
-impl<'p> Into<PropertyBuffer<'p>> for Span {
-    fn into(self) -> PropertyBuffer<'p> {
+impl<'p> From<Span> for PropertyBuffer<'p> {
+    fn from(span: Span) -> Self {
         let mut pb = PropertyBuffer::new();
-        for (cell, ch) in self.iter() {
+        for (cell, ch) in span.iter() {
             if let Some(property) = Property::from_char(*ch) {
                 pb.as_mut().insert(*cell, property);
             }

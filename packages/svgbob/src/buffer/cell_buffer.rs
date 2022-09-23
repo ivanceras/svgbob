@@ -30,7 +30,7 @@ mod span;
 
 /// The simplest buffer.
 /// This is maps which char belong to which cell skipping the whitespaces
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct CellBuffer {
     map: BTreeMap<Cell, char>,
     /// class, <style>
@@ -59,11 +59,7 @@ impl DerefMut for CellBuffer {
 
 impl CellBuffer {
     pub fn new() -> Self {
-        CellBuffer {
-            map: BTreeMap::new(),
-            css_styles: vec![],
-            escaped_text: vec![],
-        }
+        Self::default()
     }
 
     pub fn add_css_styles(&mut self, css_styles: Vec<(String, String)>) {
@@ -95,7 +91,7 @@ impl CellBuffer {
 
     /// return the group of contacting fragments
     pub fn group_contacts(&self) -> (Vec<Span>, Vec<Contacts>) {
-        let groups: Vec<(Vec<Span>, Vec<Contacts>)> = self
+        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) = self
             .group_adjacents()
             .into_iter()
             .map(|span| {
@@ -106,10 +102,7 @@ impl CellBuffer {
                     (vec![], contacts)
                 }
             })
-            .collect();
-
-        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) =
-            groups.into_iter().unzip();
+            .unzip();
 
         let spans: Vec<Span> = spans.into_iter().flatten().collect();
         let contacts: Vec<Contacts> = contacts.into_iter().flatten().collect();
@@ -151,7 +144,7 @@ impl CellBuffer {
         &self,
         settings: &Settings,
     ) -> (Node<MSG>, f32, f32) {
-        let (w, h) = self.get_size(&settings);
+        let (w, h) = self.get_size(settings);
 
         let (group_nodes, fragments) = self.group_nodes_and_fragments(settings);
 
@@ -226,24 +219,12 @@ impl CellBuffer {
 
         let single_member_fragments: Vec<FragmentSpan> = single_member
             .into_iter()
-            .flat_map(|contact| {
-                contact
-                    .as_ref()
-                    .into_iter()
-                    .map(|frag| frag.clone())
-                    .collect::<Vec<FragmentSpan>>()
-            })
+            .flat_map(|contact| contact.as_ref().to_vec())
             .collect();
 
         let vec_groups: Vec<Vec<FragmentSpan>> = vec_groups
             .into_iter()
-            .map(|contact| {
-                contact
-                    .as_ref()
-                    .into_iter()
-                    .map(|frag| frag.clone())
-                    .collect::<Vec<FragmentSpan>>()
-            })
+            .map(|contact| contact.as_ref().to_vec())
             .collect();
 
         let endorsed_fragments: Vec<FragmentSpan> =
@@ -329,7 +310,7 @@ impl CellBuffer {
         let element_styles = sauron::jss! {
                 "line, path, circle, rect, polygon": {
                       stroke: stroke_color.clone(),
-                      stroke_width: stroke_width.clone(),
+                      stroke_width: stroke_width,
                       stroke_opacity: 1,
                       fill_opacity: 1,
                       stroke_linecap: "round",
@@ -339,7 +320,7 @@ impl CellBuffer {
                 "text": {
                     /* This fix the spacing bug in svg text*/
                     white_space: "pre",
-                    fill: stroke_color.clone(),
+                    fill: stroke_color,
                 },
 
                "rect.backdrop":{
@@ -352,7 +333,7 @@ impl CellBuffer {
                 },
 
                 ".filled":{
-                    fill: fill_color.clone(),
+                    fill: fill_color,
                 },
 
                 ".bg_filled":{
@@ -360,12 +341,12 @@ impl CellBuffer {
                 },
 
                 ".nofill":{
-                    fill: background.clone(),
+                    fill: background,
                 },
 
                 "text": {
-                    font_family: font_family.clone(),
-                    font_size: px(font_size.clone()),
+                    font_family: font_family,
+                    font_size: px(font_size),
                 },
 
                 ".end_marked_arrow":{

@@ -12,7 +12,7 @@ use sauron::{
 };
 use std::{cmp::Ordering, fmt};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PolygonTag {
     //    ^
     //     \
@@ -90,7 +90,7 @@ impl PolygonTag {
 }
 
 impl Polygon {
-    pub(in crate) fn new(
+    pub(crate) fn new(
         points: Vec<Point>,
         is_filled: bool,
         tags: Vec<PolygonTag>,
@@ -102,7 +102,7 @@ impl Polygon {
         }
     }
 
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         let points: Vec<Point> = self
             .points
             .iter()
@@ -147,7 +147,7 @@ impl Polygon {
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub(crate) fn scale(&self, scale: f32) -> Self {
         let points: Vec<Point> =
             self.points.iter().map(|p| p.scale(scale)).collect();
         Polygon {
@@ -195,28 +195,28 @@ impl fmt::Display for Polygon {
     }
 }
 
-impl Into<Polyline> for Polygon {
-    fn into(self) -> Polyline {
+impl From<Polygon> for Polyline {
+    fn from(polygon: Polygon) -> Polyline {
         let points: Vec<Point2<f32>> =
-            self.points.iter().map(|p| **p).collect();
+            polygon.points.iter().map(|p| **p).collect();
         Polyline::new(points, None)
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Polygon {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Polygon> for Node<MSG> {
+    fn from(pl: Polygon) -> Node<MSG> {
         polygon(
             [
                 points(
-                    self.points
+                    pl.points
                         .iter()
                         .map(|p| format!("{},{}", p.x, p.y))
                         .collect::<Vec<String>>()
                         .join(" "),
                 ),
                 classes_flag([
-                    ("filled", self.is_filled),
-                    ("nofill", !self.is_filled),
+                    ("filled", pl.is_filled),
+                    ("nofill", !pl.is_filled),
                 ]),
             ],
             [],

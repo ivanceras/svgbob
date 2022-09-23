@@ -56,9 +56,7 @@ impl Line {
     }
 
     fn swap(&mut self) {
-        let tmp_start = self.start;
-        self.start = self.end;
-        self.end = tmp_start;
+        std::mem::swap(&mut self.start, &mut self.end);
     }
 
     /// does this line can completely cover line a b?
@@ -511,17 +509,17 @@ impl fmt::Display for Line {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Line {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Line> for Node<MSG> {
+    fn from(line: Line) -> Node<MSG> {
         svg::line(
             [
-                x1(self.start.x),
-                y1(self.start.y),
-                x2(self.end.x),
-                y2(self.end.y),
+                x1(line.start.x),
+                y1(line.start.y),
+                x2(line.end.x),
+                y2(line.end.y),
                 classes_flag([
-                    ("broken", self.is_broken),
-                    ("solid", !self.is_broken),
+                    ("broken", line.is_broken),
+                    ("solid", !line.is_broken),
                 ]),
             ],
             [],
@@ -529,9 +527,9 @@ impl<MSG> Into<Node<MSG>> for Line {
     }
 }
 
-impl Into<Segment> for Line {
-    fn into(self) -> Segment {
-        Segment::new(*self.start, *self.end)
+impl From<Line> for Segment {
+    fn from(line: Line) -> Segment {
+        Segment::new(*line.start, *line.end)
     }
 }
 

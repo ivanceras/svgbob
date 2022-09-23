@@ -20,7 +20,7 @@ pub struct Arc {
 impl Arc {
     /// create an arc from start to end with a radius
     /// direction is counter clock wise
-    pub(in crate) fn new(start: Point, end: Point, radius: f32) -> Self {
+    pub(crate) fn new(start: Point, end: Point, radius: f32) -> Self {
         let mut arc = Arc {
             start,
             end,
@@ -36,14 +36,14 @@ impl Arc {
 
     /// check if this arcs to point a, b
     /// disregarding radius
-    pub(in crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
         let arc = Arc::new(a, b, 1.0);
         self.start == arc.start
             && self.end == arc.end
             && self.sweep_flag == arc.sweep_flag
     }
 
-    pub(in crate) fn new_with_sweep(
+    pub(crate) fn new_with_sweep(
         start: Point,
         end: Point,
         radius: f32,
@@ -62,7 +62,7 @@ impl Arc {
         arc
     }
 
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         Arc {
             start: cell.absolute_position(self.start),
             end: cell.absolute_position(self.end),
@@ -72,11 +72,9 @@ impl Arc {
 
     /// reverse the order of points and also set the flag to true, to
     /// make the rotation clockwise
-    pub(in crate) fn sort_reorder_end_points(&mut self) {
+    pub(crate) fn sort_reorder_end_points(&mut self) {
         if self.start > self.end {
-            let tmp_start = self.start;
-            self.start = self.end;
-            self.end = tmp_start;
+            std::mem::swap(&mut self.start, &mut self.end);
             self.sweep_flag = !self.sweep_flag;
         }
     }
@@ -91,7 +89,7 @@ impl Arc {
     }
 
     /// check to see of this arc is touching the other arc
-    pub(in crate) fn is_touching(&self, other: &Self) -> bool {
+    pub(crate) fn is_touching(&self, other: &Self) -> bool {
         self.start == other.start
             || self.end == other.end
             || self.start == other.end
@@ -158,19 +156,19 @@ impl fmt::Display for Arc {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Arc {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Arc> for Node<MSG> {
+    fn from(arc: Arc) -> Node<MSG> {
         let dv = format!(
             "M {},{} A {},{} {},{},{} {},{}",
-            self.start.x,
-            self.start.y,
-            self.radius,
-            self.radius,
-            self.rotation_flag as u8,
-            self.major_flag as u8,
-            self.sweep_flag as u8,
-            self.end.x,
-            self.end.y
+            arc.start.x,
+            arc.start.y,
+            arc.radius,
+            arc.radius,
+            arc.rotation_flag as u8,
+            arc.major_flag as u8,
+            arc.sweep_flag as u8,
+            arc.end.x,
+            arc.end.y
         );
         path(vec![d(dv), class("nofill")], vec![])
     }

@@ -12,23 +12,26 @@
 - [x] Support for geometric shapes https://en.wikipedia.org/wiki/Geometric_Shapes
 - [x] Add enhance circle, detect circles then enhance it.
 - [ ] Add test cases
-- [ ] Re-implement the escape string with double quotes.
+- [X] Re-implement the escape string with double quotes.
 - [ ] Use perfect hashmap [phf](https://crates.io/crates/phf) to efficiently build the maps(unicode_map, circle_map, ascii_map) at compile time.
 - [ ] Fix the double arrow issue
         When there is 2 arrows in the middle of a line `---->>-------` or `----<<----`
-- [ ] Clean the project enforce deny warnings.
-- [ ] Fix a bug where an escaped text has whitespaces, the whitespaces are gone.
+- [X] Clean the project enforce deny warnings.
+- [~] Fix a bug where an escaped text has whitespaces, the whitespaces are gone.
+    - ~~This is a rendering bug in the browser where spaces are compressed into narrow widths~~
 - [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
 - [ ] Add more circle art, dynamically created
+    - use `ito-canvas`
 - [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
 - [ ] Support for pills, elongated ovals
 - [X] Update to library to latest version
     - nalgebra
     - ncollide2d -> parry2d
-- [ ] Make the top-level directory a workspace and put svgbob and cli into packages/
-- [ ] Make a trait for the merging algorithmns
-    - [ ] merge_recursive
-    - [ ] first_pass_merge
-    - [ ] second_pass_merge
+- [X] Make the top-level directory a workspace and put svgbob and cli into packages/
+- [X] Make a trait for the merging algorithmns
+    - [X] merge_recursive
+    - [X] first_pass_merge
+    - [X] second_pass_merge
 - [ ] Try again to endorse the span of the grouped fragments that are in the same span
     but not reduces into a single shape
+- [ ] Move the modules into flat structure as possible rather than deep

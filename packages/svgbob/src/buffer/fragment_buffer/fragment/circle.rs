@@ -18,7 +18,7 @@ pub struct Circle {
 }
 
 impl Circle {
-    pub(in crate) fn new(center: Point, radius: f32, is_filled: bool) -> Self {
+    pub(crate) fn new(center: Point, radius: f32, is_filled: bool) -> Self {
         Circle {
             center,
             radius,
@@ -44,7 +44,7 @@ impl Circle {
     }
 
     /// offset the circles parameter from the arg cell
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         Circle {
             center: cell.absolute_position(self.center),
             ..*self
@@ -72,16 +72,16 @@ impl fmt::Display for Circle {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Circle {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Circle> for Node<MSG> {
+    fn from(c: Circle) -> Node<MSG> {
         circle(
             [
-                cx(self.center.x),
-                cy(self.center.y),
-                r(self.radius),
+                cx(c.center.x),
+                cy(c.center.y),
+                r(c.radius),
                 classes_flag([
-                    ("filled", self.is_filled),
-                    ("nofill", !self.is_filled),
+                    ("filled", c.is_filled),
+                    ("nofill", !c.is_filled),
                 ]),
             ],
             [],
@@ -115,22 +115,22 @@ impl PartialEq for Circle {
     }
 }
 
-impl Into<Polyline> for Circle {
-    fn into(self) -> Polyline {
-        let points: Vec<Point2<f32>> = extract_circle_points(self.radius, 64)
+impl From<Circle> for Polyline {
+    fn from(c: Circle) -> Polyline {
+        let points: Vec<Point2<f32>> = extract_circle_points(c.radius, 64)
             .into_iter()
-            .map(|p| Point2::new(p.x + self.center.x, p.y + self.center.y))
+            .map(|p| Point2::new(p.x + c.center.x, p.y + c.center.y))
             .collect();
 
         Polyline::new(points, None)
     }
 }
 
-impl Into<ConvexPolygon> for Circle {
-    fn into(self) -> ConvexPolygon {
-        let points: Vec<Point2<f32>> = extract_circle_points(self.radius, 64)
+impl From<Circle> for ConvexPolygon {
+    fn from(c: Circle) -> ConvexPolygon {
+        let points: Vec<Point2<f32>> = extract_circle_points(c.radius, 64)
             .into_iter()
-            .map(|p| Point2::new(p.x + self.center.x, p.y + self.center.y))
+            .map(|p| Point2::new(p.x + c.center.x, p.y + c.center.y))
             .collect();
 
         ConvexPolygon::from_convex_polyline(points)
@@ -155,7 +155,7 @@ fn push_xy_arc(radius: f32, nsubdiv: u32, dtheta: f32) -> Vec<Point> {
         let y = curr_theta.sin() * radius;
         out.push(Point::new(x, y));
 
-        curr_theta = curr_theta + dtheta;
+        curr_theta += dtheta;
     }
     out
 }

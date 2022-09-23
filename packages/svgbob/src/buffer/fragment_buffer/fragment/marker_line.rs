@@ -5,7 +5,7 @@ use crate::{
 use sauron::{html::attributes::class, Node};
 use std::fmt;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Marker {
     //   -->
     Arrow,
@@ -27,14 +27,11 @@ pub enum Marker {
 
 impl Marker {
     fn is_arrow(&self) -> bool {
-        match self {
-            Marker::Arrow | Marker::ClearArrow => true,
-            _ => false,
-        }
+        matches!(self, Marker::Arrow | Marker::ClearArrow)
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MarkerLine {
     pub line: Line,
     pub start_marker: Option<Marker>,
@@ -167,14 +164,14 @@ impl fmt::Display for MarkerLine {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for MarkerLine {
-    fn into(self) -> Node<MSG> {
-        let node: Node<MSG> = self.line.into();
+impl<MSG> From<MarkerLine> for Node<MSG> {
+    fn from(ml: MarkerLine) -> Node<MSG> {
+        let node: Node<MSG> = ml.line.into();
         let mut classes = vec![];
-        if let Some(start_marker) = self.start_marker {
+        if let Some(start_marker) = ml.start_marker {
             classes.push(class(format!("start_marked_{}", start_marker)));
         }
-        if let Some(end_marker) = self.end_marker {
+        if let Some(end_marker) = ml.end_marker {
             classes.push(class(format!("end_marked_{}", end_marker)));
         }
         node.add_attributes(classes)
