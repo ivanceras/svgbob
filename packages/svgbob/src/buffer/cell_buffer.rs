@@ -1,5 +1,6 @@
 use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::fragment::CellText;
+use crate::Merge;
 use crate::Settings;
 use crate::{
     buffer::{fragment_buffer::FragmentTree, Fragment, StringBuffer},

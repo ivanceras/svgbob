@@ -225,6 +225,7 @@ impl PartialEq for Text {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use crate::{
         buffer::{Cell, CellBuffer, Contacts, Span},
         fragment::CellText,
@@ -271,9 +272,10 @@ mod tests {
         assert_eq!(15, groups.len());
         assert_eq!(
             groups[0],
-            Contacts::new(
-                CellText::new(Cell::new(0, 0), "This".to_string()).into()
-            )
+            Contacts::new(Into::<FragmentSpan>::into(CellText::new(
+                Cell::new(0, 0),
+                "This".to_string()
+            )))
         );
         assert_eq!(
             groups[5],

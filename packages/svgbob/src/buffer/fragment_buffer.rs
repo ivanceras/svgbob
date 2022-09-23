@@ -1,5 +1,6 @@
 use crate::buffer::Span;
 use crate::Cell;
+use crate::Merge;
 use crate::Settings;
 pub use direction::Direction;
 pub use fragment::Fragment;
@@ -137,12 +138,12 @@ impl FragmentBuffer {
         &self,
         settings: &Settings,
     ) -> Vec<FragmentSpan> {
-        let fragment_spans = self.into_fragment_spans(settings);
-        FragmentSpan::merge_recursive(fragment_spans, settings)
+        let fragment_spans = self.into_fragment_spans();
+        FragmentSpan::merge_recursive(fragment_spans)
     }
 
     /// create a merged of fragments while preserving their cells
-    fn into_fragment_spans(&self, settings: &Settings) -> Vec<FragmentSpan> {
+    fn into_fragment_spans(&self) -> Vec<FragmentSpan> {
         let mut fragment_spans: Vec<FragmentSpan> = vec![];
         for (cell, (ch, fragments)) in self.iter() {
             for frag in fragments.iter() {
@@ -151,9 +152,7 @@ impl FragmentBuffer {
                 let abs_frag = FragmentSpan::new(span, abs_frag);
                 let had_merged =
                     fragment_spans.iter_mut().rev().any(|frag_span| {
-                        if let Some(new_merge) =
-                            frag_span.merge(&abs_frag, settings)
-                        {
+                        if let Some(new_merge) = frag_span.merge(&abs_frag) {
                             *frag_span = new_merge;
                             true
                         } else {

@@ -13,6 +13,7 @@ pub use buffer::{
     fragment, fragment::Fragment, Cell, CellBuffer, Direction, FragmentBuffer,
     FragmentSpan, Property, Signal,
 };
+pub use merge::Merge;
 pub use nalgebra;
 pub use point::Point;
 /// reexport sauron

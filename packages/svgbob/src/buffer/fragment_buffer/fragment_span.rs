@@ -1,6 +1,7 @@
 use crate::buffer::Span;
 use crate::Cell;
 use crate::Fragment;
+use crate::Merge;
 use crate::Settings;
 use std::fmt;
 
@@ -32,56 +33,6 @@ impl FragmentSpan {
         }
     }
 
-    pub fn merge(&self, other: &Self, settings: &Settings) -> Option<Self> {
-        if let Some(new_merge) = self.fragment.merge(&other.fragment, settings)
-        {
-            let mut new_span = self.span.clone();
-            new_span.merge(&other.span);
-            Some(Self {
-                span: new_span,
-                fragment: new_merge,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub(crate) fn merge_recursive(
-        fragment_spans: Vec<Self>,
-        settings: &Settings,
-    ) -> Vec<Self> {
-        let original_len = fragment_spans.len();
-        let merged = Self::second_pass_merge(fragment_spans, settings);
-        if merged.len() < original_len {
-            Self::merge_recursive(merged, settings)
-        } else {
-            merged
-        }
-    }
-
-    fn second_pass_merge(
-        fragment_spans: Vec<Self>,
-        settings: &Settings,
-    ) -> Vec<Self> {
-        let mut new_groups: Vec<Self> = vec![];
-        for fragment_span in fragment_spans.into_iter() {
-            let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if let Some(new_merged) =
-                    new_group.merge(&fragment_span, settings)
-                {
-                    *new_group = new_merged;
-                    true
-                } else {
-                    false
-                }
-            });
-            if !is_merged {
-                new_groups.push(fragment_span);
-            }
-        }
-        new_groups
-    }
-
     pub(crate) fn is_contacting(&self, other: &Self) -> bool {
         self.fragment.is_contacting(&other.fragment)
     }
@@ -99,5 +50,20 @@ impl FragmentSpan {
 
     pub fn hit_cell(&self, needle: Cell) -> bool {
         self.span.hit_cell(needle)
+    }
+}
+
+impl Merge for FragmentSpan {
+    fn merge(&self, other: &Self) -> Option<Self> {
+        if let Some(new_merge) = self.fragment.merge(&other.fragment) {
+            let new_span =
+                self.span.merge(&other.span).expect("must merge the spans");
+            Some(Self {
+                span: new_span,
+                fragment: new_merge,
+            })
+        } else {
+            None
+        }
     }
 }

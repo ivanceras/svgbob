@@ -1,7 +1,7 @@
 use crate::{
     fragment,
     map::{ASCII_PROPERTIES, UNICODE_FRAGMENTS},
-    Cell, Fragment, FragmentBuffer, Settings,
+    Cell, Fragment, FragmentBuffer, Merge, Settings,
 };
 pub use property::{Property, Signal};
 use std::collections::HashMap;
@@ -110,7 +110,7 @@ impl<'p> PropertyBuffer<'p> {
                     bottom_right,
                 );
                 let mut merged_behavioral_fragments =
-                    Fragment::merge_recursive(behavioral_fragments, settings);
+                    Fragment::merge_recursive(behavioral_fragments);
                 merged_behavioral_fragments.sort();
                 merged_behavioral_fragments.dedup();
                 //assert!(merged_behavioral_fragments.is_sorted());
@@ -174,7 +174,7 @@ impl<'p> PropertyBuffer<'p> {
                 //If no match make it a text fragment
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(&property.ch) {
                     let merged_fragments =
-                        Fragment::merge_recursive(fragments.clone(), settings);
+                        Fragment::merge_recursive(fragments.clone());
                     fb.add_fragments_to_cell(
                         *cell,
                         property.ch,

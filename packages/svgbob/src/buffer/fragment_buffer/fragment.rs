@@ -1,3 +1,4 @@
+use crate::Merge;
 use crate::{buffer::Cell, map::unicode_map::FRAGMENTS_UNICODE, Point};
 pub use crate::{Property, Settings, Signal};
 pub use arc::Arc;
@@ -81,7 +82,7 @@ impl Fragment {
     /// check to see if this fragment is a line and that line
     /// can completely overlap line a b
     /// TODO: only checking for solid, also expose API for broken
-    pub(in crate) fn line_overlap(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn line_overlap(&self, a: Point, b: Point) -> bool {
         match self {
             Fragment::Line(line) => line.overlaps(a, b),
             _ => false,
@@ -89,7 +90,7 @@ impl Fragment {
     }
 
     /// check if any of the fragment end point is touching p
-    pub(in crate) fn has_endpoint(&self, p: Point) -> bool {
+    pub(crate) fn has_endpoint(&self, p: Point) -> bool {
         match self {
             Fragment::Line(line) => line.has_endpoint(p),
             Fragment::Arc(arc) => arc.has_endpoint(p),
@@ -99,93 +100,10 @@ impl Fragment {
 
     /// check to see if this fragment is an arc
     /// overlaps from point a to b
-    pub(in crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
         match self {
             Fragment::Arc(arc) => arc.arcs_to(a, b),
             _ => false,
-        }
-    }
-
-    /// merge this fragment to the other fragment if it is possible
-    /// returns None if the fragment can not be merge
-    pub fn merge(&self, other: &Self, settings: &Settings) -> Option<Self> {
-        match (self, other) {
-            // line and line
-            (Fragment::Line(line), Fragment::Line(other_line)) => {
-                if let Some(merged_line) = line.merge(other_line) {
-                    Some(Fragment::Line(merged_line))
-                } else {
-                    None
-                }
-            }
-
-            // line and polygon
-            (Fragment::Line(line), Fragment::Polygon(polygon)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_line_polygon(polygon)
-                } else {
-                    None
-                }
-            }
-
-            // polygon and line
-            (Fragment::Polygon(polygon), Fragment::Line(line)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_line_polygon(polygon)
-                } else {
-                    None
-                }
-            }
-
-            // line and marker_line
-            (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_marker_line(mline)
-                } else {
-                    None
-                }
-            }
-            // marker_line and line
-            (Fragment::MarkerLine(mline), Fragment::Line(line)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_marker_line(mline)
-                } else {
-                    None
-                }
-            }
-            (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
-                if settings.merge_line_with_shapes {
-                    mline.merge_polygon(polygon)
-                } else {
-                    None
-                }
-            }
-            // line and circle
-            (Fragment::Line(line), Fragment::Circle(circle)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_circle(circle)
-                } else {
-                    None
-                }
-            }
-
-            // circle and line
-            (Fragment::Circle(circle), Fragment::Line(line)) => {
-                if settings.merge_line_with_shapes {
-                    line.merge_circle(circle)
-                } else {
-                    None
-                }
-            }
-            // cell_text and cell_text
-            (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
-                if let Some(merged_ctext) = ctext.merge(other_ctext) {
-                    Some(Fragment::CellText(merged_ctext))
-                } else {
-                    None
-                }
-            }
-            _ => None,
         }
     }
 
@@ -199,45 +117,8 @@ impl Fragment {
             && br.y >= other_br.y
     }
 
-    /// merge fragments recursively until it hasn't changed the number of fragments
-    pub(crate) fn merge_recursive(
-        fragments: Vec<Self>,
-        settings: &Settings,
-    ) -> Vec<Self> {
-        let original_len = fragments.len();
-        let merged = Self::second_pass_merge(fragments, settings);
-        // if has merged continue merging untila nothing can be merged
-        if merged.len() < original_len {
-            Self::merge_recursive(merged, settings)
-        } else {
-            merged
-        }
-    }
-
-    /// second pass merge is operating on fragments comparing to other spans
-    fn second_pass_merge(
-        fragments: Vec<Self>,
-        settings: &Settings,
-    ) -> Vec<Self> {
-        let mut new_groups: Vec<Self> = vec![];
-        for fragment in fragments.into_iter() {
-            let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if let Some(new_merged) = new_group.merge(&fragment, settings) {
-                    *new_group = new_merged;
-                    true
-                } else {
-                    false
-                }
-            });
-            if !is_merged {
-                new_groups.push(fragment);
-            }
-        }
-        new_groups
-    }
-
     /// are lines axis align and parallel
-    pub(in crate) fn is_aabb_parallel(&self, other: &Self) -> bool {
+    pub(crate) fn is_aabb_parallel(&self, other: &Self) -> bool {
         match (self, other) {
             (Fragment::Line(line), Fragment::Line(other)) => {
                 line.is_aabb_parallel(other)
@@ -247,7 +128,7 @@ impl Fragment {
     }
 
     #[allow(unused)]
-    pub(in crate) fn is_aabb_perpendicular(&self, other: &Self) -> bool {
+    pub(crate) fn is_aabb_perpendicular(&self, other: &Self) -> bool {
         match (self, other) {
             (Fragment::Line(line), Fragment::Line(other)) => {
                 line.is_aabb_perpendicular(other)
@@ -258,7 +139,7 @@ impl Fragment {
 
     /// check if this fragment is touching the other fragment
     /// therefore can be in a group together
-    pub(in crate) fn is_contacting(&self, other: &Self) -> bool {
+    pub(crate) fn is_contacting(&self, other: &Self) -> bool {
         match self {
             Fragment::Line(line) => match other {
                 Fragment::Line(other) => line.is_touching(other),
@@ -533,6 +414,63 @@ impl Fragment {
     }
 }
 
+impl Merge for Fragment {
+    /// merge this fragment to the other fragment if it is possible
+    /// returns None if the fragment can not be merge
+    fn merge(&self, other: &Self) -> Option<Self> {
+        match (self, other) {
+            // line and line
+            (Fragment::Line(line), Fragment::Line(other_line)) => {
+                if let Some(merged_line) = line.merge(other_line) {
+                    Some(Fragment::Line(merged_line))
+                } else {
+                    None
+                }
+            }
+
+            // line and polygon
+            (Fragment::Line(line), Fragment::Polygon(polygon)) => {
+                line.merge_line_polygon(polygon)
+            }
+
+            // polygon and line
+            (Fragment::Polygon(polygon), Fragment::Line(line)) => {
+                line.merge_line_polygon(polygon)
+            }
+
+            // line and marker_line
+            (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
+                line.merge_marker_line(mline)
+            }
+            // marker_line and line
+            (Fragment::MarkerLine(mline), Fragment::Line(line)) => {
+                line.merge_marker_line(mline)
+            }
+            (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
+                mline.merge_polygon(polygon)
+            }
+            // line and circle
+            (Fragment::Line(line), Fragment::Circle(circle)) => {
+                line.merge_circle(circle)
+            }
+
+            // circle and line
+            (Fragment::Circle(circle), Fragment::Line(line)) => {
+                line.merge_circle(circle)
+            }
+            // cell_text and cell_text
+            (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
+                if let Some(merged_ctext) = ctext.merge(other_ctext) {
+                    Some(Fragment::CellText(merged_ctext))
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+}
+
 impl Bounds for Fragment {
     fn bounds(&self) -> (Point, Point) {
         match self {
@@ -776,8 +714,7 @@ mod tests {
         }
         let mut expected = vec![line(k, o), line(c, w)];
         expected.sort();
-        let mut merged_fragments1 =
-            Fragment::merge_recursive(fragments1, &Settings::default());
+        let mut merged_fragments1 = Fragment::merge_recursive(fragments1);
         merged_fragments1.sort();
         assert_eq!(merged_fragments1.len(), 2);
         println!("after merged:");
@@ -795,45 +732,11 @@ mod tests {
         let n = CellGrid::n();
         let o = CellGrid::o();
         let j = CellGrid::j();
-        let mut settings = Settings::default();
-        settings.merge_line_with_shapes = true;
 
-        assert!(line(k, m).merge(&line(m, o), &settings).is_some()); // collinear and connected
-        assert!(!line(k, l).merge(&line(n, o), &settings).is_some()); //collinear but not connected
-        assert!(!line(k, o).merge(&line(o, j), &settings).is_some()); // connected but not collinear
+        assert!(line(k, m).merge(&line(m, o),).is_some()); // collinear and connected
+        assert!(!line(k, l).merge(&line(n, o),).is_some()); //collinear but not connected
+        assert!(!line(k, o).merge(&line(o, j),).is_some()); // connected but not collinear
     }
-
-    /*
-    #[test]
-    fn merge_unicode_triangle_and_line() {
-        let arrow = '▶';
-        let entry = crate::map::UNICODE_FRAGMENTS
-            .get(&arrow)
-            .expect("must have a fragement");
-        let a = CellGrid::a();
-        let y = CellGrid::y();
-
-        let polygon = entry[0].absolute_position(Cell::new(0, 0));
-        let diagonal: Fragment = Line::new_noswap(y, a, false).into();
-        let diagonal = diagonal.absolute_position(Cell::new(1, 1));
-
-        println!("polygon: {:#?}", polygon);
-        println!("diagonal: {:#?}", diagonal);
-        let mut settings = Settings::default();
-
-        settings.merge_line_with_shapes = true;
-        let merged = polygon.merge(&diagonal, &settings);
-
-        let expected = marker_line(
-            Point::new(2.0, 4.0),
-            Point::new(0.0, 0.0),
-            false,
-            None,
-            Some(Marker::Arrow),
-        );
-        assert_eq!(Some(expected), merged);
-    }
-    */
 
     #[test]
     fn merge_line_and_circle() {
@@ -850,9 +753,7 @@ mod tests {
         println!("circle: {:#?}", circle);
         println!("diagonal: {:#?}", diagonal);
 
-        let mut settings = Settings::default();
-        settings.merge_line_with_shapes = true;
-        let merged = circle.merge(&diagonal, &settings);
+        let merged = circle.merge(&diagonal);
 
         let expected = marker_line(
             Point::new(2.0, 4.0),

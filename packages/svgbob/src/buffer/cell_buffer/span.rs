@@ -6,7 +6,7 @@ use crate::{
     },
     fragment,
     map::{circle_map, UNICODE_FRAGMENTS},
-    Cell, Fragment, Settings,
+    Cell, Fragment, Merge, Settings,
 };
 use itertools::Itertools;
 use std::{
@@ -66,9 +66,17 @@ impl Span {
         })
     }
 
-    pub(crate) fn merge(&mut self, other: &Self) {
-        self.extend_from_slice(&*other)
+    /*
+    pub(crate) fn merge(&self, other: &Self) -> Option<Self> {
+        if self.can_merge(other) {
+            let mut cells = self.0.clone();
+            cells.extend(&other.0);
+            Some(Span(cells))
+        } else {
+            None
+        }
     }
+    */
 
     /// paste the other Span at cell location `loc`
     pub fn paste_at(&self, loc: Cell, other: &Self) -> Self {
@@ -214,37 +222,6 @@ impl Span {
         self.iter().any(|(cell, ch)| *cell == needle)
     }
 
-    /// merge span recursively until it hasn't changed the number of spans
-    pub(crate) fn merge_recursive(adjacents: Vec<Span>) -> Vec<Span> {
-        let original_len = adjacents.len();
-        let merged = Self::second_pass_merge(adjacents);
-        // if has merged continue merging until nothing can be merged
-        if merged.len() < original_len {
-            Self::merge_recursive(merged)
-        } else {
-            merged
-        }
-    }
-
-    /// second pass merge is operating on span comparing to other spans
-    fn second_pass_merge(adjacents: Vec<Span>) -> Vec<Span> {
-        let mut new_groups: Vec<Span> = vec![];
-        for span in adjacents.into_iter() {
-            let is_merged = new_groups.iter_mut().rev().any(|new_group| {
-                if new_group.can_merge(&span) {
-                    new_group.merge(&span);
-                    true
-                } else {
-                    false
-                }
-            });
-            if !is_merged {
-                new_groups.push(span);
-            }
-        }
-        new_groups
-    }
-
     /// Convert a group of fragment span
     /// that didn't make it into an endorsed single shape fragment
     /// We try it again for endorsing to circle
@@ -275,6 +252,18 @@ impl Span {
             .into_iter()
             .flat_map(|group| group.into_iter().map(|frag_span| frag_span.span))
             .collect()
+    }
+}
+
+impl Merge for Span {
+    fn merge(&self, other: &Self) -> Option<Self> {
+        if self.can_merge(other) {
+            let mut cells = self.0.clone();
+            cells.extend(&other.0);
+            Some(Span(cells))
+        } else {
+            None
+        }
     }
 }
 
