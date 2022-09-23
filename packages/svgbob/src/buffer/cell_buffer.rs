@@ -66,28 +66,6 @@ impl CellBuffer {
         self.css_styles.extend(css_styles);
     }
 
-    /// return the group of contacting fragments
-    pub fn group_contacts(self) -> (Vec<Span>, Vec<Contacts>) {
-        let group_adjacents: Vec<Span> = self.into();
-        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) =
-            group_adjacents
-                .into_iter()
-                .map(|span| {
-                    let contacts: Vec<Contacts> = span.clone().into();
-                    if contacts.is_empty() {
-                        (vec![span], vec![])
-                    } else {
-                        (vec![], contacts)
-                    }
-                })
-                .unzip();
-
-        let spans: Vec<Span> = spans.into_iter().flatten().collect();
-        let contacts: Vec<Contacts> = contacts.into_iter().flatten().collect();
-
-        (spans, contacts)
-    }
-
     pub fn bounds(&self) -> Option<(Cell, Cell)> {
         let xlimits =
             self.iter().map(|(cell, _)| cell.x).minmax().into_option();
@@ -150,6 +128,20 @@ impl CellBuffer {
         svg_node
     }
 
+    /// return the fragments that are (close objects, touching grouped fragments)
+    pub fn get_fragment_spans(
+        self,
+    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
+        let (single_member_fragments, vec_group_fragments, vec_fragments) =
+            self.clone().group_single_members_from_other_fragments();
+
+        let escaped_text = self.escaped_text_nodes();
+        let regulars =
+            [vec_fragments, single_member_fragments, escaped_text].concat();
+
+        (regulars, vec_group_fragments)
+    }
+
     /// return fragments that are Rect, Circle,
     pub fn get_shapes_fragment(self) -> Vec<FragmentSpan> {
         let (single_member, _, endorsed_fragments) =
@@ -201,20 +193,6 @@ impl CellBuffer {
             endorsed_fragments.into_iter().flatten().collect();
 
         (single_member_fragments, vec_groups, endorsed_fragments)
-    }
-
-    /// return the fragments that are (close objects, touching grouped fragments)
-    pub fn get_fragment_spans(
-        self,
-    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
-        let (single_member_fragments, vec_group_fragments, vec_fragments) =
-            self.clone().group_single_members_from_other_fragments();
-
-        let escaped_text = self.escaped_text_nodes();
-        let regulars =
-            [vec_fragments, single_member_fragments, escaped_text].concat();
-
-        (regulars, vec_group_fragments)
     }
 
     /// group nodes that can be group and the rest will be fragments
