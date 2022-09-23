@@ -1,5 +1,6 @@
 use crate::buffer::cell_buffer::Endorse;
 use crate::buffer::fragment_buffer::FragmentSpan;
+use crate::fragment::Circle;
 use crate::{
     buffer::{
         cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer,
@@ -180,38 +181,6 @@ impl Span {
 
     pub fn hit_cell(&self, needle: Cell) -> bool {
         self.iter().any(|(cell, ch)| *cell == needle)
-    }
-
-    /// Convert a group of fragment span
-    /// that didn't make it into an endorsed single shape fragment
-    /// We try it again for endorsing to circle
-    pub fn re_endorse(
-        grouped: Vec<Vec<FragmentSpan>>,
-    ) -> Endorse<FragmentSpan, Contacts> {
-        let spans: Vec<Span> = Self::extract_spans(grouped);
-        log::info!("spans: {:#?}", spans);
-        let merge_spans = Span::merge_recursive(spans);
-        log::info!("merg_spans: {:#?}", merge_spans);
-
-        let (accepted, rejects): (Vec<Vec<FragmentSpan>>, Vec<Vec<Contacts>>) =
-            merge_spans
-                .into_iter()
-                .map(|span| span.endorse())
-                .map(|endorse| (endorse.accepted, endorse.rejects))
-                .unzip();
-
-        Endorse {
-            accepted: accepted.into_iter().flatten().collect(),
-            rejects: rejects.into_iter().flatten().collect(),
-        }
-    }
-
-    //TODO: The absolute position is wrong here
-    fn extract_spans(grouped: Vec<Vec<FragmentSpan>>) -> Vec<Span> {
-        grouped
-            .into_iter()
-            .flat_map(|group| group.into_iter().map(|frag_span| frag_span.span))
-            .collect()
     }
 }
 

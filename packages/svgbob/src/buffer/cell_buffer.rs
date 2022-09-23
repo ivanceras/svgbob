@@ -197,32 +197,6 @@ impl CellBuffer {
             .chain(single_member_fragments.into_iter())
             .collect();
         Endorse { accepted, rejects }
-
-        /*
-        log::info!("rejects: {:#?}", rejects);
-        let re_endorsed = Span::re_endorse(rejects);
-        log::info!("re_endorsed: {:#?}", re_endorsed);
-        log::info!(
-            "got some accepted re_endorsed: {}",
-            re_endorsed.accepted.len()
-        );
-
-        let accepted: Vec<FragmentSpan> = endorsed_fragments
-            .into_iter()
-            .flatten()
-            .chain(single_member_fragments.into_iter())
-            .chain(re_endorsed.accepted.into_iter())
-            .collect();
-
-        Endorse {
-            accepted,
-            rejects: re_endorsed
-                .rejects
-                .into_iter()
-                .map(|contacts| contacts.0)
-                .collect(),
-        }
-        */
     }
 
     /// group nodes that can be group and the rest will be fragments
