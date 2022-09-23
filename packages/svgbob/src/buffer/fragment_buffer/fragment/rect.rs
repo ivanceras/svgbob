@@ -61,9 +61,7 @@ impl Rect {
     /// start < end
     pub(in crate) fn sort_reorder_end_points(&mut self) {
         if self.start > self.end {
-            let tmp_start = self.start;
-            self.start = self.end;
-            self.end = tmp_start;
+            std::mem::swap(&mut self.start, &mut self.end);
         }
     }
 

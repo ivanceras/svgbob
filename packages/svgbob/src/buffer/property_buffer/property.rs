@@ -22,7 +22,7 @@ use std::{cmp, fmt, sync::Arc};
 /// At least sum = 6
 /// Medium + Medium connects (3 + 3)
 /// Strong + Weak connects ( 4 + 2 )
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum Signal {
     Faint,
     Weak,

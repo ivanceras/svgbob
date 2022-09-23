@@ -76,7 +76,7 @@ impl Fragment {
         let mut sorted_shapes = fragments.clone();
         sorted_shapes.sort();
         //assert!(sorted_shapes.is_sorted());
-        FRAGMENTS_UNICODE.get(&sorted_shapes).map(|c| *c)
+        FRAGMENTS_UNICODE.get(&sorted_shapes).copied()
     }
 
     /// check to see if this fragment is a line and that line
@@ -360,7 +360,7 @@ impl Fragment {
             };
 
         if let Some(input_text) = input_text {
-            if let Ok(tags) = crate::util::parser::parse_css_tag(&input_text) {
+            if let Ok(tags) = crate::util::parser::parse_css_tag(input_text) {
                 tags
             } else {
                 vec![]
@@ -421,11 +421,7 @@ impl Merge for Fragment {
         match (self, other) {
             // line and line
             (Fragment::Line(line), Fragment::Line(other_line)) => {
-                if let Some(merged_line) = line.merge(other_line) {
-                    Some(Fragment::Line(merged_line))
-                } else {
-                    None
-                }
+                line.merge(other_line).map(Fragment::Line)
             }
 
             // line and polygon
@@ -460,11 +456,7 @@ impl Merge for Fragment {
             }
             // cell_text and cell_text
             (Fragment::CellText(ctext), Fragment::CellText(other_ctext)) => {
-                if let Some(merged_ctext) = ctext.merge(other_ctext) {
-                    Some(Fragment::CellText(merged_ctext))
-                } else {
-                    None
-                }
+                ctext.merge(other_ctext).map(Fragment::CellText)
             }
             _ => None,
         }
@@ -596,7 +588,7 @@ pub fn text(s: String) -> Fragment {
 }
 
 pub fn lines_to_fragments(lines: Vec<Line>) -> Vec<Fragment> {
-    lines.into_iter().map(|line| Fragment::Line(line)).collect()
+    lines.into_iter().map(Fragment::Line).collect()
 }
 
 impl From<Line> for Fragment {
@@ -734,8 +726,8 @@ mod tests {
         let j = CellGrid::j();
 
         assert!(line(k, m).merge(&line(m, o),).is_some()); // collinear and connected
-        assert!(!line(k, l).merge(&line(n, o),).is_some()); //collinear but not connected
-        assert!(!line(k, o).merge(&line(o, j),).is_some()); // connected but not collinear
+        assert!(line(k, l).merge(&line(n, o),).is_none()); //collinear but not connected
+        assert!(line(k, o).merge(&line(o, j),).is_none()); // connected but not collinear
     }
 
     #[test]

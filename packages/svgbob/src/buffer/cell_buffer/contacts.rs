@@ -6,7 +6,7 @@ use std::fmt;
 
 /// Contains a group of fragments that are touching each other
 /// The purpose of Contacts is to group fragments together
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Contacts(pub Vec<FragmentSpan>);
 
 impl AsRef<Vec<FragmentSpan>> for Contacts {

@@ -170,7 +170,7 @@ fn replace_html_char<'a>(ch: char) -> Cow<'a, str> {
 }
 
 fn escape_html_text(s: &str) -> String {
-    s.chars().map(|ch| replace_html_char(ch)).collect()
+    s.chars().map(replace_html_char).collect()
 }
 
 impl fmt::Display for Text {

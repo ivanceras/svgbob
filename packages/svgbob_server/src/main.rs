@@ -24,8 +24,7 @@ async fn text_to_svgbob(body: Bytes) -> Result<String, StatusCode> {
 async fn main() {
     let port = std::env::var("PORT")
         .ok()
-        .map(|port| port.parse::<u16>().ok())
-        .flatten()
+        .and_then(|port| port.parse::<u16>().ok())
         .unwrap_or(DEFAULT_PORT);
 
     let app = Router::new().route("/", get(hello).post(text_to_svgbob));

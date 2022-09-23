@@ -56,7 +56,7 @@ impl<'p> PropertyBuffer<'p> {
                 self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
 
             Self::match_char_with_surrounding_properties(
-                &fragments,
+                fragments,
                 top_left,
                 top,
                 top_right,

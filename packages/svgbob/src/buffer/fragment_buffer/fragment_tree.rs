@@ -33,7 +33,7 @@ impl FragmentTree {
     fn enclose(&mut self, other: &Self) -> bool {
         if self.can_fit(other) {
             self.enclosing.push(other.clone());
-            return true;
+            true
         } else {
             for child in &mut self.enclosing {
                 if child.enclose(other) {
@@ -69,7 +69,7 @@ impl FragmentTree {
     pub(crate) fn enclose_fragments(fragments: Vec<FragmentSpan>) -> Vec<Self> {
         let fragment_trees: Vec<Self> = fragments
             .into_iter()
-            .map(|frag| FragmentTree::new(frag))
+            .map(FragmentTree::new)
             .collect();
         Self::enclose_recursive(fragment_trees)
     }

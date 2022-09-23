@@ -11,7 +11,7 @@ use std::{collections::BTreeMap, collections::HashMap, iter::FromIterator};
 /// skip the first 3 circles for constructing our arcs, otherwise it will just be a mess
 pub const CIRCLES_TO_SKIP_FOR_ARC: usize = 3;
 
-#[derive(PartialEq, Debug, Clone, Copy)]
+#[derive(PartialEq, Eq, Debug, Clone, Copy)]
 /// edge cases of the circle art
 pub enum Horizontal {
     /// circle arc is touching the left edge of the first cell
@@ -754,7 +754,7 @@ pub fn endorse_circle_span(search: &Span) -> Option<(&Circle, Span)> {
                 .enumerate()
                 .filter_map(|(i, cell_char)| {
                     if unmatched.contains(&i) {
-                        Some(cell_char.clone())
+                        Some(*cell_char)
                     } else {
                         None
                     }
@@ -778,7 +778,7 @@ pub fn endorse_quarter_arc_span(search: &Span) -> Option<(&Arc, Span)> {
                     .enumerate()
                     .filter_map(|(i, cell_char)| {
                         if unmatched.contains(&i) {
-                            Some(cell_char.clone())
+                            Some(*cell_char)
                         } else {
                             None
                         }
@@ -805,7 +805,7 @@ pub fn endorse_half_arc_span(search: &Span) -> Option<(&Arc, Span)> {
                     .enumerate()
                     .filter_map(|(i, cell_char)| {
                         if unmatched.contains(&i) {
-                            Some(cell_char.clone())
+                            Some(*cell_char)
                         } else {
                             None
                         }

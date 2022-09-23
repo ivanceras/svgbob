@@ -182,19 +182,19 @@ mod tests {
         let line_au = line(a, u);
         let line_ey = line(e, y);
         let group = parallel_aabb_group(&[
-            &line_ae.clone(),
-            &line_au.clone(),
-            &line_uy.clone(),
-            &line_ey.clone(),
+            &line_ae,
+            &line_au,
+            &line_uy,
+            &line_ey,
         ]);
         println!("group: {:#?}", group);
         assert_eq!(group, vec![(0, 2), (1, 3)]);
 
         let rect = endorse_rect(&[
-            &line_ae.clone(),
-            &line_au.clone(),
-            &line_uy.clone(),
-            &line_ey.clone(),
+            &line_ae,
+            &line_au,
+            &line_uy,
+            &line_ey,
         ]);
         assert!(rect.is_some());
         assert_eq!(rect, Some(Rect::new(a, y, false, false)));

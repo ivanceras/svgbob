@@ -81,30 +81,28 @@ fn main() {
             .value_of("input")
             .unwrap()
             .replace("\\n", "\n")
-            .to_string();
-    } else {
-        if let Some(file) = args.value_of("input") {
-            match File::open(file) {
-                Ok(mut f) => {
-                    f.read_to_string(&mut bob).unwrap();
-                }
-                Err(e) => {
-                    use std::io::Write;
-
-                    writeln!(
-                        &mut std::io::stderr(),
-                        "Failed to open input file {}: {}",
-                        file,
-                        e
-                    )
-                    .unwrap();
-                    exit(1);
-                }
+            ;
+    } else if let Some(file) = args.value_of("input") {
+        match File::open(file) {
+            Ok(mut f) => {
+                f.read_to_string(&mut bob).unwrap();
             }
-        } else {
-            use std::io;
-            io::stdin().read_to_string(&mut bob).unwrap();
+            Err(e) => {
+                use std::io::Write;
+
+                writeln!(
+                    &mut std::io::stderr(),
+                    "Failed to open input file {}: {}",
+                    file,
+                    e
+                )
+                .unwrap();
+                exit(1);
+            }
         }
+    } else {
+        use std::io;
+        io::stdin().read_to_string(&mut bob).unwrap();
     }
 
     let mut settings = Settings::default();
@@ -161,8 +159,8 @@ where
 {
     return args
         .value_of(arg_name)
-        .and_then(|arg| match arg.parse::<T>() {
-            Ok(a) => Some(a),
+        .map(|arg| match arg.parse::<T>() {
+            Ok(a) => a,
             Err(e) => {
                 use std::io::Write;
 
@@ -186,7 +184,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
     let input_path = Path::new(files_pattern);
     let ext = input_path
         .extension()
-        .unwrap_or(&"bob".as_ref())
+        .unwrap_or("bob".as_ref())
         .to_str()
         .unwrap();
 
@@ -204,7 +202,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
     }
 
     let mut out_path = PathBuf::new();
-    if outdir == "" {
+    if outdir.is_empty() {
         out_path = input_dir.to_path_buf();
     } else {
         out_path.push(outdir)
@@ -220,7 +218,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
         if tmp_path.is_file() {
             let tmp_ext = tmp_path
                 .extension()
-                .unwrap_or(&"".as_ref())
+                .unwrap_or("".as_ref())
                 .to_str()
                 .unwrap();
             if tmp_ext == ext {
