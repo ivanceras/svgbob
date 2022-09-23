@@ -550,7 +550,7 @@ lazy_static! {
     pub static ref DIAMETER_CIRCLE: HashMap<i32,(Point,Span)> = HashMap::from_iter(
         CIRCLE_MAP.iter().map(|circle_art|{
             let cb = CellBuffer::from(circle_art.ascii_art);
-            let mut spans = cb.group_adjacents();
+            let mut spans:Vec<Span> = cb.into();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
             (circle_art.diameter(), (circle_art.center(), span))
@@ -561,7 +561,7 @@ lazy_static! {
     pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
         CIRCLE_MAP.iter().map(|circle_art|{
             let cb = CellBuffer::from(circle_art.ascii_art);
-            let mut spans = cb.group_adjacents();
+            let mut spans:Vec<Span> = cb.into();
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
             (Circle::new(circle_art.center(), circle_art.radius(), false), span)
@@ -744,7 +744,7 @@ fn circle_art_to_group(art: &str) -> Vec<Contacts> {
 
 fn circle_art_to_span(art: &str) -> Span {
     let cell_buffer = CellBuffer::from(art);
-    let mut spans = cell_buffer.group_adjacents();
+    let mut spans: Vec<Span> = cell_buffer.into();
     assert_eq!(spans.len(), 1);
     spans.remove(0).localize()
 }

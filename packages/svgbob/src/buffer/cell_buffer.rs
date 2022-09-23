@@ -30,7 +30,7 @@ mod span;
 
 /// The simplest buffer.
 /// This is maps which char belong to which cell skipping the whitespaces
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct CellBuffer {
     map: BTreeMap<Cell, char>,
     /// class, <style>
@@ -66,43 +66,21 @@ impl CellBuffer {
         self.css_styles.extend(css_styles);
     }
 
-    /// Groups cell that are adjacents (cells that are next to each other, horizontally or
-    /// vertically)
-    /// Note: using .rev() since this has a high change that the last cell is adjacent with the
-    /// current cell tested
-    pub fn group_adjacents(&self) -> Vec<Span> {
-        let mut adjacents: Vec<Span> = vec![];
-        for (cell, ch) in self.iter() {
-            let belongs_to_adjacents =
-                adjacents.iter_mut().rev().any(|contacts| {
-                    if contacts.is_adjacent(cell) {
-                        contacts.push((*cell, *ch));
-                        true
-                    } else {
-                        false
-                    }
-                });
-            if !belongs_to_adjacents {
-                adjacents.push(Span::new(*cell, *ch));
-            }
-        }
-        Span::merge_recursive(adjacents)
-    }
-
     /// return the group of contacting fragments
-    pub fn group_contacts(&self) -> (Vec<Span>, Vec<Contacts>) {
-        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) = self
-            .group_adjacents()
-            .into_iter()
-            .map(|span| {
-                let contacts: Vec<Contacts> = span.clone().into();
-                if contacts.is_empty() {
-                    (vec![span], vec![])
-                } else {
-                    (vec![], contacts)
-                }
-            })
-            .unzip();
+    pub fn group_contacts(self) -> (Vec<Span>, Vec<Contacts>) {
+        let group_adjacents: Vec<Span> = self.into();
+        let (spans, contacts): (Vec<Vec<Span>>, Vec<Vec<Contacts>>) =
+            group_adjacents
+                .into_iter()
+                .map(|span| {
+                    let contacts: Vec<Contacts> = span.clone().into();
+                    if contacts.is_empty() {
+                        (vec![span], vec![])
+                    } else {
+                        (vec![], contacts)
+                    }
+                })
+                .unzip();
 
         let spans: Vec<Span> = spans.into_iter().flatten().collect();
         let contacts: Vec<Contacts> = contacts.into_iter().flatten().collect();
@@ -124,7 +102,7 @@ impl CellBuffer {
     }
 
     /// get the svg node of this cell buffer, using the default settings for the sizes
-    pub fn get_node<MSG>(&self) -> Node<MSG> {
+    pub fn get_node<MSG>(self) -> Node<MSG> {
         let (node, _w, _h) = self.get_node_with_size(&Settings::default());
         node
     }
@@ -141,47 +119,39 @@ impl CellBuffer {
 
     /// get all nodes of this cell buffer
     pub fn get_node_with_size<MSG>(
-        &self,
+        self,
         settings: &Settings,
     ) -> (Node<MSG>, f32, f32) {
         let (w, h) = self.get_size(settings);
 
+        let legend_css = self.legend_css();
         let (group_nodes, fragments) = self.group_nodes_and_fragments(settings);
 
-        let svg_node = Self::fragments_to_node(
-            fragments,
-            self.legend_css(),
-            settings,
-            w,
-            h,
-        )
-        .add_children(group_nodes);
+        let svg_node =
+            Self::fragments_to_node(fragments, legend_css, settings, w, h)
+                .add_children(group_nodes);
         (svg_node, w, h)
     }
 
     /// get all nodes and use the size supplied
     pub fn get_node_override_size<MSG>(
-        &self,
+        self,
         settings: &Settings,
         w: f32,
         h: f32,
     ) -> Node<MSG> {
+        let legend_css = self.legend_css();
         let (group_nodes, fragments) = self.group_nodes_and_fragments(settings);
 
-        let svg_node = Self::fragments_to_node(
-            fragments,
-            self.legend_css(),
-            settings,
-            w,
-            h,
-        )
-        .add_children(group_nodes);
+        let svg_node =
+            Self::fragments_to_node(fragments, legend_css, settings, w, h)
+                .add_children(group_nodes);
 
         svg_node
     }
 
     /// return fragments that are Rect, Circle,
-    pub fn get_shapes_fragment(&self) -> Vec<FragmentSpan> {
+    pub fn get_shapes_fragment(self) -> Vec<FragmentSpan> {
         let (single_member, _, endorsed_fragments) =
             self.group_single_members_from_other_fragments();
         endorsed_fragments
@@ -194,17 +164,17 @@ impl CellBuffer {
 
     /// returns (single_member, grouped,  rest of the fragments
     fn group_single_members_from_other_fragments(
-        &self,
+        self,
     ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>, Vec<FragmentSpan>) {
         // endorsed_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
         // the svg node
+        let group_adjacents: Vec<Span> = self.into();
         let (endorsed_fragments, vec_contacts): (
             Vec<Vec<FragmentSpan>>,
             Vec<Vec<Contacts>>,
-        ) = self
-            .group_adjacents()
+        ) = group_adjacents
             .into_iter()
             .map(|span| span.endorse())
             .unzip();
@@ -235,10 +205,10 @@ impl CellBuffer {
 
     /// return the fragments that are (close objects, touching grouped fragments)
     pub fn get_fragment_spans(
-        &self,
+        self,
     ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
         let (single_member_fragments, vec_group_fragments, vec_fragments) =
-            self.group_single_members_from_other_fragments();
+            self.clone().group_single_members_from_other_fragments();
 
         let escaped_text = self.escaped_text_nodes();
         let regulars =
@@ -250,9 +220,10 @@ impl CellBuffer {
     /// group nodes that can be group and the rest will be fragments
     /// Note: The grouped fragments is scaled here
     fn group_nodes_and_fragments<MSG>(
-        &self,
+        self,
         settings: &Settings,
     ) -> (Vec<Node<MSG>>, Vec<FragmentSpan>) {
+        let escaped_text_nodes = self.escaped_text_nodes();
         let (single_member_fragments, vec_group_fragments, vec_fragments) =
             self.group_single_members_from_other_fragments();
 
@@ -275,7 +246,7 @@ impl CellBuffer {
         let mut fragments: Vec<FragmentSpan> = vec_fragments;
 
         fragments.extend(single_member_fragments);
-        fragments.extend(self.escaped_text_nodes());
+        fragments.extend(escaped_text_nodes);
 
         (group_nodes, fragments)
     }
@@ -297,7 +268,7 @@ impl CellBuffer {
         classes.join("\n")
     }
 
-    fn get_style<MSG>(settings: &Settings, legend_css: String) -> Node<MSG> {
+    fn style<MSG>(settings: &Settings, legend_css: String) -> Node<MSG> {
         use sauron::html::units::px;
 
         let stroke_color = settings.stroke_color.to_owned();
@@ -409,7 +380,7 @@ impl CellBuffer {
 
         let mut children = vec![];
         if settings.include_styles {
-            children.push(Self::get_style(settings, legend_css));
+            children.push(Self::style(settings, legend_css));
         }
         if settings.include_defs {
             children.push(Self::get_defs());
@@ -632,6 +603,18 @@ impl From<StringBuffer> for CellBuffer {
     }
 }
 
+/// Groups cell that are adjacents (cells that are next to each other, horizontally or
+/// vertically)
+/// Note: using .rev() since this has a high change that the last cell is adjacent with the
+/// current cell tested
+impl From<CellBuffer> for Vec<Span> {
+    fn from(cb: CellBuffer) -> Vec<Span> {
+        let spans: Vec<Span> =
+            cb.iter().map(|(cell, ch)| Span::new(*cell, *ch)).collect();
+        Span::merge_recursive(spans)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -709,7 +692,7 @@ mod tests {
 |________|
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents = buffer.group_adjacents();
+        let adjacents: Vec<Span> = buffer.into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);
@@ -771,7 +754,7 @@ This is a text
        '
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents = buffer.group_adjacents();
+        let adjacents: Vec<Span> = buffer.into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);
@@ -794,7 +777,7 @@ This is a text
 
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents = buffer.group_adjacents();
+        let adjacents: Vec<Span> = buffer.into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);

@@ -260,7 +260,7 @@ mod tests {
         and pneumonoultramicrospocisilicovulcanoconiosis
             "#;
         let cell_buffer = CellBuffer::from(art);
-        let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+        let mut spans: Vec<Span> = cell_buffer.into();
         assert_eq!(spans.len(), 1);
         let span1 = spans.remove(0);
         let groups: Vec<Contacts> = span1.localize().into();
@@ -307,7 +307,7 @@ mod tests {
         neighbor cell
             "#;
         let cell_buffer = CellBuffer::from(art);
-        let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+        let mut spans: Vec<Span> = cell_buffer.into();
         assert_eq!(spans.len(), 2);
         let groups2: Vec<Contacts> = spans.remove(1).localize().into();
         let groups1: Vec<Contacts> = spans.remove(0).localize().into();

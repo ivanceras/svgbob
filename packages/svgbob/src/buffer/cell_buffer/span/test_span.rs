@@ -14,7 +14,7 @@ fn test_bounds() {
 |________|
     "#;
     let buffer = CellBuffer::from(art);
-    let adjacents = buffer.group_adjacents();
+    let adjacents: Vec<Span> = buffer.into();
     assert_eq!(1, adjacents.len());
     let (min, max) = adjacents[0].bounds().unwrap();
     assert_eq!(min, Cell::new(0, 1));
@@ -31,7 +31,7 @@ fn test_localize() {
         |________|
     "#;
     let buffer = CellBuffer::from(art);
-    let adjacents = buffer.group_adjacents();
+    let adjacents: Vec<Span> = buffer.into();
     assert_eq!(1, adjacents.len());
     let (min, max) = adjacents[0].bounds().unwrap();
     assert_eq!(min, Cell::new(8, 4));
@@ -52,7 +52,7 @@ fn test_1span_1group() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(1, adjacents.len());
     let span = adjacents.remove(0);
@@ -87,7 +87,7 @@ fn test_2spans_1group_for_each_span() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut spans = buffer.group_adjacents();
+    let mut spans: Vec<Span> = buffer.into();
     println!("There are {} adjacents", spans.len());
     assert_eq!(2, spans.len());
     let span2 = spans.remove(1);
@@ -137,7 +137,7 @@ fn test_1spans_2group_for_each_span() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut spans = buffer.group_adjacents();
+    let mut spans: Vec<Span> = buffer.into();
     println!("There are {} adjacents", spans.len());
     assert_eq!(1, spans.len());
     let span1 = spans.remove(0);
@@ -179,7 +179,7 @@ fn test_endorse_circle() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(1, adjacents.len());
     let span = adjacents.remove(0);
@@ -210,7 +210,7 @@ fn test_endorse_circle_with_rect() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(1, adjacents.len());
     let span1 = adjacents.remove(0);
@@ -259,7 +259,7 @@ fn test_endorse_with_big_circle() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(1, adjacents.len());
     let span1 = adjacents.remove(0);
@@ -295,7 +295,7 @@ fn test_endorse_with_big_circle_extra_match() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(2, adjacents.len());
     let span1 = adjacents.remove(0);
@@ -323,7 +323,7 @@ fn test_absolute_positions() {
         neighbor cell
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.group_adjacents();
+    let mut spans: Vec<Span> = cell_buffer.into();
     assert_eq!(spans.len(), 2);
     let span1 = spans.remove(1);
     let span0 = spans.remove(0);
@@ -348,7 +348,7 @@ fn test_endorse_arc() {
     "#;
     let buffer = CellBuffer::from(art);
     println!("buffer: {}", buffer);
-    let mut adjacents = buffer.group_adjacents();
+    let mut adjacents: Vec<Span> = buffer.into();
     println!("There are {} adjacents", adjacents.len());
     assert_eq!(1, adjacents.len());
     let span = adjacents.remove(0);
