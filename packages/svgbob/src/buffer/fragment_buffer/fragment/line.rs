@@ -258,7 +258,8 @@ impl Line {
                 None
             }
         } else {
-            panic!("marker line should have at least one marker");
+            println!("marker line should have at least one marker");
+            None
         }
     }
 
