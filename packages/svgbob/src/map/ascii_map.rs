@@ -7,7 +7,7 @@ use crate::{
         Cell, CellGrid,
     },
     fragment::{arc, broken_line, circle, line, polygon, rect},
-    Fragment, Property, Settings,
+    Fragment, Property,
     Signal::{self, Medium, Strong, Weak},
 };
 use lazy_static::lazy_static;
@@ -99,7 +99,7 @@ lazy_static! {
         let map: Vec<(
             char,
             Vec<(Signal, Vec<Fragment>)>,
-            Arc<dyn Fn(&Settings, &Property, &Property, &Property, &Property, &Property, &Property, &Property, &Property) -> Vec<(bool, Vec<Fragment>)> + Sync + Send >,
+            Arc<dyn Fn(&Property, &Property, &Property, &Property, &Property, &Property, &Property, &Property) -> Vec<(bool, Vec<Fragment>)> + Sync + Send >,
         )> = vec![
             ///////////////
             // dash -
@@ -110,17 +110,9 @@ lazy_static! {
                     (Strong, vec![line(k, o)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (true, vec![line(k,o)]),
-                            /*
-                            //   |
-                            //  .-.
-                            //   |
-                            (settings.enhance_circuitries && left.is('.') && right.is('.') && top.line_strongly_overlap(r,w) && bottom.line_strongly_overlap(c,h),
-                                vec![arc(o,k,unit4),line(c,w)]
-                            ),
-                            */
                         ]
                     }
                 )
@@ -134,7 +126,7 @@ lazy_static! {
                     (Strong, vec![broken_line(k, o)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (true, vec![broken_line(k, o)]),
                         ]
@@ -150,7 +142,7 @@ lazy_static! {
                     (Strong, vec![line(c,w)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (!bottom_left.is('/') && !bottom_right.is('\\') && !top_left.is('\\') && !top_right.is('/'), vec![line(c,w)]),
                             //   _
@@ -193,7 +185,7 @@ lazy_static! {
                     (Strong, vec![broken_line(c,w)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (top.line_strongly_overlap(r,w) || bottom.line_strongly_overlap(c,h), vec![broken_line(c,w)]),
                         ]
@@ -209,7 +201,7 @@ lazy_static! {
                     (Strong, vec![broken_line(c,w)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             (top.line_strongly_overlap(r,w) || bottom.line_strongly_overlap(c,h), vec![broken_line(c,w)]),
                         ]
@@ -226,7 +218,7 @@ lazy_static! {
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  |
                             //  +
@@ -269,7 +261,7 @@ lazy_static! {
                     (Strong, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             /*
                             // \    X
@@ -317,7 +309,7 @@ lazy_static! {
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
 
                             //  must have at least one connection
@@ -381,7 +373,7 @@ lazy_static! {
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //
                             //      |
@@ -448,7 +440,7 @@ lazy_static! {
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  must have at least one connection
                             //   \|/
@@ -506,7 +498,7 @@ lazy_static! {
                     (Weak, vec![line(a,y), line(u,e)]),
                 ],
                 Arc::new(
-                    move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                    move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  must have at least one connection
                             //   \|/
@@ -559,7 +551,7 @@ lazy_static! {
                     (Strong, vec![line(u, y)])
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                              (true, vec![line(u,y)]),
                              //   /_
@@ -581,7 +573,7 @@ lazy_static! {
                     (Weak, vec![line(m,o)]), // connects right
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             // .
                             // |
@@ -668,7 +660,7 @@ lazy_static! {
                     (Weak, vec![line(m,o)]), // connects right
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  ,-
                             //  |
@@ -693,7 +685,7 @@ lazy_static! {
                     (Weak, vec![line(m,o)]), // connects right
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  |
                             //  '
@@ -762,7 +754,7 @@ lazy_static! {
                     (Weak, vec![line(m,o)]), // connects right
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  |
                             //  ’-
@@ -819,7 +811,7 @@ lazy_static! {
                     (Weak, vec![line(m,o)]), // connects right
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                             //  |
                             //  `-
@@ -854,16 +846,16 @@ lazy_static! {
                     (Strong, vec![line(u,e)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                         vec![
                              (!bottom.line_strongly_overlap(c,h), vec![line(u,e)]),
                              //    /-
-                             (settings.enhance_circuitries && right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                             ( right.line_strongly_overlap(k,l), vec![line(m,o)]),
                              //    -/
-                             (settings.enhance_circuitries && left.line_strongly_overlap(n,o), vec![line(m,k)]),
+                             ( left.line_strongly_overlap(n,o), vec![line(m,k)]),
                              //    /
                              //    |
-                             (settings.enhance_circuitries && bottom.line_strongly_overlap(c,h), vec![line(e,m),line(m,w)]),
+                             (bottom.line_strongly_overlap(c,h), vec![line(e,m),line(m,w)]),
                         ]}
                     )
             ),
@@ -876,23 +868,17 @@ lazy_static! {
                     (Strong, vec![line(a,y)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 (!bottom.is('|'), vec![line(a,y)]),
-                                /*
-                                //  .
-                                //   \
-                                //    |
-                                (top_left.is('.') && bottom_right.is('|'),  vec![arc(cell.bottom_right().w(),a, unit8 * 4.0)]),
-                                */
 
                                 //    \
                                 //    |
                                 (bottom.line_overlap(c,m), vec![line(a,m),line(m,w)]),
                                 //    \-
-                                (settings.enhance_circuitries && right.line_strongly_overlap(k,l), vec![line(m,o)]),
+                                ( right.line_strongly_overlap(k,l), vec![line(m,o)]),
                                 //    -\
-                                (settings.enhance_circuitries && left.line_strongly_overlap(n,o), vec![line(m,k)]),
+                                (left.line_strongly_overlap(n,o), vec![line(m,k)]),
                             ]
                         }
                     )
@@ -905,15 +891,15 @@ lazy_static! {
                   (Medium, vec![arc(e,y, unit8)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 (!top.line_overlap(r,w) && !bottom.line_overlap(c,h),  vec![arc(e,y,unit8)]),
                                 //   |
                                 //   (
                                 //   |
-                                (settings.enhance_circuitries && top.line_overlap(r,w) && bottom.line_overlap(c,h), vec![arc(c,w,unit6)]),
+                                ( bottom.line_overlap(c,h), vec![arc(c,w,unit6)]),
                                 //   -(-
-                                (settings.enhance_circuitries && left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
+                                ( left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
                             ]
                         }
                     )
@@ -926,15 +912,15 @@ lazy_static! {
                   (Medium, vec![arc(u,a, unit8)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 (!top.line_overlap(r,w) && !bottom.line_overlap(c,h), vec![arc(u,a,unit8)]),
                                 //   |
                                 //   )
                                 //   |
-                                (settings.enhance_circuitries && top.line_overlap(r,w) && bottom.line_overlap(c,h), vec![arc(w,c,unit6)]),
+                                (top.line_overlap(r,w) && bottom.line_overlap(c,h), vec![arc(w,c,unit6)]),
                                 //   -)-
-                                (settings.enhance_circuitries && left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
+                                (left.line_overlap(m,o) && right.line_overlap(k,l), vec![line(k,o)]),
                             ]
                         }
                     )
@@ -948,7 +934,7 @@ lazy_static! {
                   (Weak, vec![line(m,w)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move| top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 //  |
                                 //  V
@@ -981,7 +967,7 @@ lazy_static! {
                   (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom, ArrowBottomLeft, ArrowBottomRight])]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 // |
                                 // v
@@ -1013,7 +999,7 @@ lazy_static! {
                   (Medium, vec![polygon(vec![p,c,t], true, vec![ArrowTop, ArrowTopLeft, ArrowTopRight])]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                //   ^
                                //   |
@@ -1042,7 +1028,7 @@ lazy_static! {
                   (Medium, vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 //   --->
                                (left.line_overlap(n,o), vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
@@ -1067,7 +1053,7 @@ lazy_static! {
                   (Medium, vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 //    <--
                                (right.line_overlap(k,l), vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
@@ -1092,7 +1078,7 @@ lazy_static! {
                     (Medium, vec![line(_03, _43), line(_05, _45)]),
                 ],
                 Arc::new(
-                        move|settings, top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
+                        move|top_left, top, top_right, left, right, bottom_left, bottom, bottom_right| {
                             vec![
                                 (true, vec![line(_03, _43), line(_05, _45)]),
                             ]

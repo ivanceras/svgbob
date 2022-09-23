@@ -58,8 +58,7 @@ fn test_1span_1group() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(0, 1));
-    let groups: Vec<Contacts> =
-        span.localize().get_contacts(&Settings::default());
+    let groups: Vec<Contacts> = span.localize().get_contacts();
     for (i, group) in groups.iter().enumerate() {
         println!("group {} is: \n{}", i, group);
     }
@@ -98,9 +97,8 @@ fn test_2spans_1group_for_each_span() {
     let (bound2, _) = span2.bounds().unwrap();
     assert_eq!(bound1, Cell::new(0, 1));
     assert_eq!(bound2, Cell::new(0, 5));
-    let settings = &Settings::default();
-    let groups1: Vec<Contacts> = span1.localize().get_contacts(settings);
-    let groups2: Vec<Contacts> = span2.localize().get_contacts(settings);
+    let groups1: Vec<Contacts> = span1.localize().get_contacts();
+    let groups2: Vec<Contacts> = span2.localize().get_contacts();
     assert_eq!(groups1.len(), 1);
     assert_eq!(groups2.len(), 1);
 
@@ -145,8 +143,7 @@ fn test_1spans_2group_for_each_span() {
     let span1 = spans.remove(0);
     let (bound1, _) = span1.bounds().unwrap();
     assert_eq!(bound1, Cell::new(0, 1));
-    let groups: Vec<Contacts> =
-        span1.localize().get_contacts(&Settings::default());
+    let groups: Vec<Contacts> = span1.localize().get_contacts();
     assert_eq!(groups.len(), 2);
 
     let rect1 = groups[0].endorse_rect().unwrap();
@@ -188,7 +185,7 @@ fn test_endorse_circle() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(8, 1));
-    let (mut fragments, _groups) = span.endorse(&Settings::default());
+    let (mut fragments, _groups) = span.endorse();
     for (i, frag) in fragments.iter().enumerate() {
         println!("frag {}:\n{}", i, frag);
     }
@@ -219,7 +216,7 @@ fn test_endorse_circle_with_rect() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(8, 1));
-    let (mut fragments, _groups) = span1.endorse(&Settings::default());
+    let (mut fragments, _groups) = span1.endorse();
     assert_eq!(fragments.len(), 2);
 
     let circle = fragments.remove(0);
@@ -268,7 +265,7 @@ fn test_endorse_with_big_circle() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(12, 3));
-    let (mut fragments, _groups) = span1.endorse(&Settings::default());
+    let (mut fragments, _groups) = span1.endorse();
     assert_eq!(fragments.len(), 1);
 
     let circle = fragments.remove(0);
@@ -304,7 +301,7 @@ fn test_endorse_with_big_circle_extra_match() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(12, 3));
-    let (fragments, groups) = span1.endorse(&Settings::default());
+    let (fragments, groups) = span1.endorse();
     assert_eq!(fragments.len(), 1);
     assert_eq!(groups.len(), 0);
     for (i, fragment) in groups.iter().enumerate() {
@@ -335,7 +332,7 @@ fn test_absolute_positions() {
     let (top_left1, _br) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(8, 5));
 
-    let groups1 = span1.localize().get_contacts(&Settings::default());
+    let groups1 = span1.localize().get_contacts();
     let since = groups1[11].as_ref()[0].fragment.as_cell_text().unwrap();
     assert_eq!(since.content, "since");
     assert_eq!(since.start, Cell::new(20, 1));
@@ -357,7 +354,7 @@ fn test_endorse_arc() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(8, 1));
-    let (mut fragments, _groups) = span.endorse(&Settings::default());
+    let (mut fragments, _groups) = span.endorse();
     for (i, frag) in fragments.iter().enumerate() {
         println!("frag {}:\n{}", i, frag);
     }

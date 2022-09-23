@@ -1,7 +1,7 @@
 use self::Signal::Strong;
 use crate::{
     map::{ASCII_PROPERTIES, UNICODE_PROPERTIES},
-    Fragment, Point, Settings,
+    Fragment, Point,
 };
 use std::{cmp, fmt, sync::Arc};
 
@@ -58,7 +58,6 @@ pub struct Property {
     /// depending on flag that is meet when checked agains the surrounding characters
     pub behavior: Arc<
         dyn Fn(
-                &Settings,
                 &Property,
                 &Property,
                 &Property,
@@ -90,7 +89,6 @@ impl Property {
         signature: Vec<(Signal, Vec<Fragment>)>,
         behavior: Arc<
             dyn Fn(
-                    &Settings,
                     &Property,
                     &Property,
                     &Property,
@@ -114,7 +112,7 @@ impl Property {
     /// get the matching property of this char
     /// start from the ascii_map lookup
     /// then to the unicode_map lookup when it can't find from the first map.
-    pub(in crate) fn from_char<'a>(ch: char) -> Option<&'a Property> {
+    pub(crate) fn from_char<'a>(ch: char) -> Option<&'a Property> {
         match ASCII_PROPERTIES.get(&ch) {
             Some(property) => Some(property),
             None => UNICODE_PROPERTIES.get(&ch),
@@ -127,7 +125,7 @@ impl Property {
         Property {
             ch: ' ',
             signature: vec![],
-            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| vec![]),
+            behavior: Arc::new(|_, _, _, _, _, _, _, _| vec![]),
         }
     }
 
@@ -137,9 +135,7 @@ impl Property {
             ch,
             signature: vec![(Signal::Strong, fragments)],
             //TODO find a way to move the fragments here
-            behavior: Arc::new(|_, _, _, _, _, _, _, _, _| {
-                vec![(true, vec![])]
-            }),
+            behavior: Arc::new(|_, _, _, _, _, _, _, _| vec![(true, vec![])]),
         }
     }
 
@@ -164,7 +160,7 @@ impl Property {
 
     /// Check if the property is exactly this character
     /// returns true if this property is derive from character `ch`
-    pub(in crate) fn is(&self, ch: char) -> bool {
+    pub(crate) fn is(&self, ch: char) -> bool {
         self.ch == ch
     }
 
@@ -179,25 +175,25 @@ impl Property {
 
     /// evaluate this property together with the supplied surrounding
     /// to see if the resulting fragments is equal to the supplied fragments
-    pub(in crate) fn match_property(&self, _fragments: &Vec<Fragment>) -> bool {
+    pub(crate) fn match_property(&self, _fragments: &Vec<Fragment>) -> bool {
         false
     }
 
     /// Check to see if this spot can overal the line a b with at least Medium signal
-    pub(in crate) fn line_overlap(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn line_overlap(&self, a: Point, b: Point) -> bool {
         self.line_overlap_with_signal(a, b, Signal::Medium)
     }
 
-    pub(in crate) fn line_strongly_overlap(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn line_strongly_overlap(&self, a: Point, b: Point) -> bool {
         self.line_overlap_with_signal(a, b, Signal::Strong)
     }
 
-    pub(in crate) fn line_weakly_overlap(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn line_weakly_overlap(&self, a: Point, b: Point) -> bool {
         self.line_overlap_with_signal(a, b, Signal::Weak)
     }
 
     /// Check to see if this spot has an endpoint to p
-    pub(in crate) fn has_endpoint(&self, p: Point) -> bool {
+    pub(crate) fn has_endpoint(&self, p: Point) -> bool {
         self.signature.iter().any(|(_signal, signature)| {
             signature.iter().any(|fragment| fragment.has_endpoint(p))
         })
@@ -221,16 +217,15 @@ impl Property {
 
     /// Check to see if any fragment that is generated in this character
     /// can arc from a to b regardless of the radius
-    pub(in crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn arcs_to(&self, a: Point, b: Point) -> bool {
         self.signature.iter().any(|(_signal, signature)| {
             signature.iter().any(|fragment| fragment.arcs_to(a, b))
         })
     }
 
     /// the fragments of this property when the surrounding properties is supplied
-    pub(in crate) fn fragments(
+    pub(crate) fn fragments(
         &self,
-        settings: &Settings,
         top_left: &Property,
         top: &Property,
         top_right: &Property,
@@ -241,7 +236,6 @@ impl Property {
         bottom_right: &Property,
     ) -> Vec<Fragment> {
         let bool_fragments = self.behavior.as_ref()(
-            settings,
             top_left,
             top,
             top_right,

@@ -142,7 +142,7 @@ fn parallel_aabb_group(fragments: &[&Fragment]) -> Vec<(usize, usize)> {
                         || index2 == *pair1
                         || index2 == *pair2
                 })
-                && frag1.is_aabb_parallel(&frag2)
+                && frag1.is_aabb_parallel(frag2)
             {
                 parallels.push((index1, index2));
             }

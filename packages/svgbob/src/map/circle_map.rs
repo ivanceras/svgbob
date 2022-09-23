@@ -542,7 +542,7 @@ lazy_static! {
     /// Calculate the span and get the group fragments
     static ref FRAGMENTS_CIRCLE: Vec<(Vec<Contacts>,Circle)> = Vec::from_iter(
         CIRCLE_MAP.iter().map(|circle_art|{
-            (circle_art_to_group(circle_art.ascii_art, &Settings::default()), Circle::new(circle_art.center(), circle_art.radius(), false))
+            (circle_art_to_group(circle_art.ascii_art), Circle::new(circle_art.center(), circle_art.radius(), false))
         })
     );
 
@@ -732,9 +732,9 @@ impl Ord for DiameterArc {
     }
 }
 
-fn circle_art_to_group(art: &str, settings: &Settings) -> Vec<Contacts> {
+fn circle_art_to_group(art: &str) -> Vec<Contacts> {
     let span1 = circle_art_to_span(art);
-    span1.get_contacts(settings)
+    span1.get_contacts()
 }
 
 fn circle_art_to_span(art: &str) -> Span {

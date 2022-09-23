@@ -86,18 +86,14 @@ impl Cell {
     }
 
     pub fn snap_group(points: &[Point]) -> Self {
-        let snaps: Vec<(Self, Point)> = points
-            .iter()
-            .map(|point| Self::snap_point(*point))
-            .collect();
         let (cells, _snap_points): (Vec<Self>, Vec<Point>) =
-            snaps.into_iter().unzip();
+            points.iter().map(|point| Self::snap_point(*point)).unzip();
         let min_cell: Self =
             cells.into_iter().min().expect("should have a min cell");
         min_cell
     }
 
-    pub(in crate) fn absolute_position(&self, point: Point) -> Point {
+    pub(crate) fn absolute_position(&self, point: Point) -> Point {
         self.top_left_most() + point
     }
 

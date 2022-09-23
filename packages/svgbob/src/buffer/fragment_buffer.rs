@@ -134,10 +134,7 @@ impl FragmentBuffer {
         self.sort_fragments_in_cell(cell);
     }
 
-    pub fn merge_fragment_spans(
-        &self,
-        settings: &Settings,
-    ) -> Vec<FragmentSpan> {
+    pub fn merge_fragment_spans(&self) -> Vec<FragmentSpan> {
         let fragment_spans = self.into_fragment_spans();
         FragmentSpan::merge_recursive(fragment_spans)
     }

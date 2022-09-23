@@ -66,12 +66,9 @@ impl Contacts {
         let fragments = self.fragments();
         if let Some(rect) = endorse::endorse_rect(&fragments) {
             Some(rect.into())
-        } else if let Some(rounded_rect) =
-            endorse::endorse_rounded_rect(&fragments)
-        {
-            Some(rounded_rect.into())
         } else {
-            None
+            endorse::endorse_rounded_rect(&fragments)
+                .map(|rounded_rect| rounded_rect.into())
         }
     }
 

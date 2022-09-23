@@ -35,7 +35,7 @@ impl Line {
     }
 
     /// creates a new line, but don't reorder the points
-    pub(in crate) fn new_noswap(
+    pub(crate) fn new_noswap(
         start: Point,
         end: Point,
         is_broken: bool,
@@ -49,7 +49,7 @@ impl Line {
 
     /// reorder the end points swap end points such that
     /// start < end
-    pub(in crate) fn sort_reorder_end_points(&mut self) {
+    pub(crate) fn sort_reorder_end_points(&mut self) {
         if self.start > self.end {
             self.swap()
         }
@@ -62,7 +62,7 @@ impl Line {
     }
 
     /// does this line can completely cover line a b?
-    pub(in crate) fn overlaps(&self, a: Point, b: Point) -> bool {
+    pub(crate) fn overlaps(&self, a: Point, b: Point) -> bool {
         let segment = Segment::new(*self.start, *self.end);
         let identity = &Isometry::identity();
         segment.contains_point(identity, &a)
@@ -133,10 +133,10 @@ impl Line {
     /// round angle closest to
     ///
     /// slash line is not really 60% but 63.435
-    /// 63.435	0	63.435
-    ///         180	116.565
-    ///         180	243.435
-    ///         360	296.565
+    /// 63.435  0   63.435
+    ///         180 116.565
+    ///         180 243.435
+    ///         360 296.565
     ///
     ///
     fn line_angle(&self) -> f32 {
@@ -159,19 +159,19 @@ impl Line {
         }
     }
 
-    /// 0	0
-    /// 45	45
-    /// 63.435	63
-    /// 90	90
-    /// 116.565	117
-    /// 135	135
-    /// 180	180
-    /// 225	225
-    /// 243.435	243
-    /// 270	270
-    /// 296.565	297
-    /// 315	315
-    /// 360	360
+    /// 0   0
+    /// 45  45
+    /// 63.435  63
+    /// 90  90
+    /// 116.565 117
+    /// 135 135
+    /// 180 180
+    /// 225 225
+    /// 243.435 243
+    /// 270 270
+    /// 296.565 297
+    /// 315 315
+    /// 360 360
     pub(crate) fn heading(&self) -> Direction {
         match self.line_angle().round() as i32 {
             0 => Direction::Right,
@@ -278,7 +278,7 @@ impl Line {
     /// and are collinear ( lies on the same line) can be test by computing the triangle area which
     /// should be equal to 0.
     /// therefore can merge
-    pub(in crate) fn can_merge(&self, other: &Self) -> bool {
+    pub(crate) fn can_merge(&self, other: &Self) -> bool {
         self.is_touching(other)
             && util::is_collinear(&self.start, &self.end, &other.start)
             && util::is_collinear(&self.start, &self.end, &other.end)
@@ -287,7 +287,7 @@ impl Line {
     /// check if this line and the other can merge
     /// returns None if it can not merge
     /// the merged line used the starting_point of self and the end_point of other
-    pub(in crate) fn merge(&self, other: &Self) -> Option<Self> {
+    pub(crate) fn merge(&self, other: &Self) -> Option<Self> {
         if self.can_merge(other) {
             let start = std::cmp::min(self.start, other.start);
             let end = std::cmp::max(self.end, other.end);
@@ -389,15 +389,15 @@ impl Line {
     /// check to see if any of the line endpoints is touching.
     /// this will be used to group lines together
     /// This does not check if the lines are intersecting
-    pub(in crate) fn is_touching(&self, other: &Self) -> bool {
+    pub(crate) fn is_touching(&self, other: &Self) -> bool {
         self.touching_line(other) || other.touching_line(self)
     }
 
-    pub(in crate) fn has_endpoint(&self, p: Point) -> bool {
+    pub(crate) fn has_endpoint(&self, p: Point) -> bool {
         self.start == p || self.end == p
     }
 
-    pub(in crate) fn is_touching_arc(&self, other: &Arc) -> bool {
+    pub(crate) fn is_touching_arc(&self, other: &Arc) -> bool {
         self.start == other.start
             || self.end == other.end
             || self.start == other.end
@@ -416,7 +416,7 @@ impl Line {
 
     /// check if 2 lines are parallel in axis align box
     /// for the purpose of promoting lines into rect
-    pub(in crate) fn is_aabb_parallel(&self, other: &Self) -> bool {
+    pub(crate) fn is_aabb_parallel(&self, other: &Self) -> bool {
         (self.is_horizontal()
             && other.is_horizontal()
             && self.start.x == other.start.x
@@ -429,22 +429,19 @@ impl Line {
 
     /// check if 2 lines are perpendicular in axis align box only
     /// for the purpose of promoting lines into rect
-    pub(in crate) fn is_aabb_perpendicular(&self, other: &Self) -> bool {
+    pub(crate) fn is_aabb_perpendicular(&self, other: &Self) -> bool {
         (self.is_horizontal() && other.is_vertical())
             || (self.is_vertical() && other.is_horizontal())
     }
 
     /// check if 2 lines are touching and aabb perpendicular at the same time
-    pub(in crate) fn is_touching_aabb_perpendicular(
-        &self,
-        other: &Self,
-    ) -> bool {
+    pub(crate) fn is_touching_aabb_perpendicular(&self, other: &Self) -> bool {
         self.is_touching(other) && self.is_aabb_perpendicular(other)
     }
 
     /// recompute the line with start and end point offset by the cell
     /// location
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         Line {
             start: cell.absolute_position(self.start),
             end: cell.absolute_position(self.end),

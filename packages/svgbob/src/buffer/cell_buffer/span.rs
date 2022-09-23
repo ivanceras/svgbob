@@ -16,7 +16,7 @@ use std::{
 
 /// A describes where a char came from relative to the source ascii text
 /// The primary purpose of span is to group adjacent cell together
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Span(pub Vec<(Cell, char)>);
 
 impl Deref for Span {
@@ -137,11 +137,11 @@ impl Span {
     /// Only elements on the same span are checked to see if they
     /// belong on the same group
     ///
-    pub(crate) fn get_contacts(&self, settings: &Settings) -> Vec<Contacts> {
-        let fb: FragmentBuffer = self.into_fragment_buffer(settings);
+    pub(crate) fn get_contacts(&self) -> Vec<Contacts> {
+        let fb: FragmentBuffer = self.clone().into_fragment_buffer();
 
         let mut groups: Vec<Contacts> = vec![];
-        let merged_fragments = fb.merge_fragment_spans(settings);
+        let merged_fragments = fb.merge_fragment_spans();
         for fragment in merged_fragments.into_iter() {
             let belongs_to_group = groups.iter_mut().rev().any(|group| {
                 if group.is_contacting_frag(&fragment) {
@@ -168,10 +168,7 @@ impl Span {
     /// The second element of the tuple: `contacts` are fragments that are touching together
     /// but can not form a fragment shape. These will be grouped in the svg nodes
     /// to keep them go together, when dragged (editing)
-    pub(crate) fn endorse(
-        self,
-        settings: &Settings,
-    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
+    pub(crate) fn endorse(self) -> (Vec<FragmentSpan>, Vec<Contacts>) {
         let mut fragments = vec![];
         let (top_left, _) = self.bounds().expect("must have bounds");
         let un_endorsed_span = if let Some((circle, un_endorsed_span)) =
@@ -193,7 +190,7 @@ impl Span {
             self
         };
 
-        let groups: Vec<Contacts> = un_endorsed_span.get_contacts(settings);
+        let groups: Vec<Contacts> = un_endorsed_span.get_contacts();
         let (rect_fragments, un_endorsed) = Contacts::endorse_rects(groups);
 
         fragments.extend(rect_fragments);
@@ -227,20 +224,14 @@ impl Span {
     /// We try it again for endorsing to circle
     fn re_endorsed(
         grouped: Vec<Vec<FragmentSpan>>,
-        settings: &Settings,
     ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
         let spans = Self::extract_spans(grouped);
         let merged_spans: Vec<Span> = Self::merge_recursive(spans);
-        let endorsed_spans: Vec<(Vec<FragmentSpan>, Vec<Contacts>)> =
-            merged_spans
-                .into_iter()
-                .map(|span| span.endorse(settings))
-                .collect();
 
         let (endorsed_frag_spans, endorsed_contacts): (
             Vec<Vec<FragmentSpan>>,
             Vec<Vec<Contacts>>,
-        ) = endorsed_spans.into_iter().unzip();
+        ) = merged_spans.into_iter().map(|span| span.endorse()).unzip();
 
         (
             endorsed_frag_spans.into_iter().flatten().collect(),
@@ -293,7 +284,7 @@ impl Bounds {
 }
 
 /// create a property buffer for all the cells of this span
-impl<'p> Into<PropertyBuffer<'p>> for &Span {
+impl<'p> Into<PropertyBuffer<'p>> for Span {
     fn into(self) -> PropertyBuffer<'p> {
         let mut pb = PropertyBuffer::new();
         for (cell, ch) in self.iter() {
@@ -311,9 +302,9 @@ impl<'p> Into<PropertyBuffer<'p>> for &Span {
 /// If a character has no property, try to see if has equivalent fragments from unicode_map
 /// otherwise add it to the fragment_buffer as a text fragment
 impl Span {
-    fn into_fragment_buffer(&self, settings: &Settings) -> FragmentBuffer {
-        let pb: PropertyBuffer = self.into();
-        let mut fb: FragmentBuffer = pb.into_fragment_buffer(settings);
+    fn into_fragment_buffer(self) -> FragmentBuffer {
+        let pb: PropertyBuffer = self.clone().into();
+        let mut fb: FragmentBuffer = pb.into_fragment_buffer();
         for (cell, ch) in self.iter() {
             if pb.as_ref().get(cell).is_none() {
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(ch) {
