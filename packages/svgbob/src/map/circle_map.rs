@@ -739,8 +739,7 @@ impl PartialOrd for DiameterArc {
 }
 
 fn circle_art_to_group(art: &str) -> Vec<Contacts> {
-    let span1 = circle_art_to_span(art);
-    span1.get_contacts()
+    circle_art_to_span(art).into()
 }
 
 fn circle_art_to_span(art: &str) -> Span {

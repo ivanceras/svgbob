@@ -18,7 +18,7 @@ fn test_circle1() {
     let mut spans: Vec<Span> = cell_buffer.group_adjacents();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
-    let groups = span1.get_contacts();
+    let groups: Vec<Contacts> = span1.into();
     for (i, group) in groups.iter().enumerate() {
         println!("group{}\n{}", i, group);
     }

@@ -58,7 +58,7 @@ fn test_1span_1group() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(0, 1));
-    let groups: Vec<Contacts> = span.localize().get_contacts();
+    let groups: Vec<Contacts> = span.localize().into();
     for (i, group) in groups.iter().enumerate() {
         println!("group {} is: \n{}", i, group);
     }
@@ -97,8 +97,8 @@ fn test_2spans_1group_for_each_span() {
     let (bound2, _) = span2.bounds().unwrap();
     assert_eq!(bound1, Cell::new(0, 1));
     assert_eq!(bound2, Cell::new(0, 5));
-    let groups1: Vec<Contacts> = span1.localize().get_contacts();
-    let groups2: Vec<Contacts> = span2.localize().get_contacts();
+    let groups1: Vec<Contacts> = span1.localize().into();
+    let groups2: Vec<Contacts> = span2.localize().into();
     assert_eq!(groups1.len(), 1);
     assert_eq!(groups2.len(), 1);
 
@@ -143,7 +143,7 @@ fn test_1spans_2group_for_each_span() {
     let span1 = spans.remove(0);
     let (bound1, _) = span1.bounds().unwrap();
     assert_eq!(bound1, Cell::new(0, 1));
-    let groups: Vec<Contacts> = span1.localize().get_contacts();
+    let groups: Vec<Contacts> = span1.localize().into();
     assert_eq!(groups.len(), 2);
 
     let rect1 = groups[0].endorse_rect().unwrap();
@@ -332,7 +332,7 @@ fn test_absolute_positions() {
     let (top_left1, _br) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(8, 5));
 
-    let groups1 = span1.localize().get_contacts();
+    let groups1: Vec<Contacts> = span1.localize().into();
     let since = groups1[11].as_ref()[0].fragment.as_cell_text().unwrap();
     assert_eq!(since.content, "since");
     assert_eq!(since.start, Cell::new(20, 1));

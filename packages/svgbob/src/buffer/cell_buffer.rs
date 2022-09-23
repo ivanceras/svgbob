@@ -95,7 +95,7 @@ impl CellBuffer {
             .group_adjacents()
             .into_iter()
             .map(|span| {
-                let contacts = span.get_contacts();
+                let contacts: Vec<Contacts> = span.clone().into();
                 if contacts.is_empty() {
                     (vec![span], vec![])
                 } else {

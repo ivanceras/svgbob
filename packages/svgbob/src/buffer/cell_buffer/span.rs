@@ -116,36 +116,6 @@ impl Span {
         }
     }
 
-    /// Grouping cell by adjacents are not enough
-    ///
-    /// grouping them together when they are actually connected
-    /// is the most approprivate way of grouping
-    /// Span just provides an optimization of the number
-    /// of elements to be checked.
-    /// Only elements on the same span are checked to see if they
-    /// belong on the same group
-    ///
-    pub(crate) fn get_contacts(&self) -> Vec<Contacts> {
-        let fb: FragmentBuffer = self.clone().into();
-
-        let mut groups: Vec<Contacts> = vec![];
-        let merged_fragments = fb.merge_fragment_spans();
-        for fragment in merged_fragments.into_iter() {
-            let belongs_to_group = groups.iter_mut().rev().any(|group| {
-                if group.is_contacting_frag(&fragment) {
-                    group.as_mut().push(fragment.clone());
-                    true
-                } else {
-                    false
-                }
-            });
-            if !belongs_to_group {
-                groups.push(Contacts::new(fragment))
-            }
-        }
-        Contacts::group_recursive(groups)
-    }
-
     /// convert this span into fragments applying endorsement
     /// of group into fragments
     ///
@@ -178,7 +148,7 @@ impl Span {
             self
         };
 
-        let groups: Vec<Contacts> = un_endorsed_span.get_contacts();
+        let groups: Vec<Contacts> = un_endorsed_span.into();
         let (rect_fragments, un_endorsed) = Contacts::endorse_rects(groups);
 
         fragments.extend(rect_fragments);
@@ -281,6 +251,27 @@ impl<'p> From<Span> for PropertyBuffer<'p> {
             }
         }
         pb
+    }
+}
+
+/// Grouping cell by adjacents are not enough
+///
+/// grouping them together when they are actually connected
+/// is the most approprivate way of grouping
+/// Span just provides an optimization of the number
+/// of elements to be checked.
+/// Only elements on the same span are checked to see if they
+/// belong on the same group
+///
+impl From<Span> for Vec<Contacts> {
+    fn from(span: Span) -> Vec<Contacts> {
+        let fb = FragmentBuffer::from(span);
+        let merged_fragments: Vec<FragmentSpan> = fb.merge_fragment_spans();
+        let contacts: Vec<Contacts> = merged_fragments
+            .into_iter()
+            .map(|frag| Contacts::new(frag))
+            .collect();
+        Contacts::merge_recursive(contacts)
     }
 }
 
