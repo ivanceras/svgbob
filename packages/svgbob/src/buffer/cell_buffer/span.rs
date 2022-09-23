@@ -174,15 +174,7 @@ impl Span {
                 FragmentSpan::new(self.clone(), circle.into());
             fragments.push(circle_frag_span);
             un_endorsed_span
-        }
-        /*else if let Some((arc, un_endorsed_span)) =
-            circle_map::endorse_half_arc_span(&self)
-        {
-            let arc = arc.absolute_position(top_left);
-            fragments.push(arc.into());
-            un_endorsed_span
-        } */
-        else if let Some((arc, un_endorsed_span)) =
+        } else if let Some((arc, un_endorsed_span)) =
             circle_map::endorse_quarter_arc_span(&self)
         {
             let arc = arc.absolute_position(top_left);
@@ -251,6 +243,38 @@ impl Span {
             }
         }
         new_groups
+    }
+
+    /// Convert a group of fragment span
+    /// that didn't make it into an endorsed single shape fragment
+    /// We try it again for endorsing to circle
+    fn re_endorsed(
+        grouped: Vec<Vec<FragmentSpan>>,
+        settings: &Settings,
+    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
+        let spans = Self::extract_spans(grouped);
+        let merged_spans: Vec<Span> = Self::merge_recursive(spans);
+        let endorsed_spans: Vec<(Vec<FragmentSpan>, Vec<Contacts>)> =
+            merged_spans
+                .into_iter()
+                .map(|span| span.endorse(settings))
+                .collect();
+
+        let (endorsed_frag_spans, endorsed_contacts): (
+            Vec<Vec<FragmentSpan>>,
+            Vec<Vec<Contacts>>,
+        ) = endorsed_spans.into_iter().unzip();
+
+        (
+            endorsed_frag_spans.into_iter().flatten().collect(),
+            endorsed_contacts.into_iter().flatten().collect(),
+        )
+    }
+    fn extract_spans(grouped: Vec<Vec<FragmentSpan>>) -> Vec<Self> {
+        grouped
+            .into_iter()
+            .flat_map(|group| group.into_iter().map(|frag_span| frag_span.span))
+            .collect()
     }
 }
 
