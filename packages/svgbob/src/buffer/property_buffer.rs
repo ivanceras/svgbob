@@ -136,22 +136,37 @@ impl<'p> AsMut<HashMap<Cell, &'p Property>> for PropertyBuffer<'p> {
 }
 
 /// convert property buffer to fragment buffer
-impl<'p> PropertyBuffer<'p> {
-    pub(crate) fn into_fragment_buffer(self) -> FragmentBuffer {
+impl<'p> From<PropertyBuffer<'p>> for FragmentBuffer {
+    fn from(property_buffer: PropertyBuffer<'p>) -> FragmentBuffer {
         let mut fb = FragmentBuffer::new();
-        for (cell, property) in self.as_ref() {
+        for (cell, property) in property_buffer.as_ref() {
             let empty = &&Property::empty();
-            let top_left = self.as_ref().get(&cell.top_left()).unwrap_or(empty);
-            let top = self.as_ref().get(&cell.top()).unwrap_or(empty);
-            let top_right =
-                self.as_ref().get(&cell.top_right()).unwrap_or(empty);
-            let left = self.as_ref().get(&cell.left()).unwrap_or(empty);
-            let right = self.as_ref().get(&cell.right()).unwrap_or(empty);
-            let bottom_left =
-                self.as_ref().get(&cell.bottom_left()).unwrap_or(empty);
-            let bottom = self.as_ref().get(&cell.bottom()).unwrap_or(empty);
-            let bottom_right =
-                self.as_ref().get(&cell.bottom_right()).unwrap_or(empty);
+            let top_left = property_buffer
+                .as_ref()
+                .get(&cell.top_left())
+                .unwrap_or(empty);
+            let top =
+                property_buffer.as_ref().get(&cell.top()).unwrap_or(empty);
+            let top_right = property_buffer
+                .as_ref()
+                .get(&cell.top_right())
+                .unwrap_or(empty);
+            let left =
+                property_buffer.as_ref().get(&cell.left()).unwrap_or(empty);
+            let right =
+                property_buffer.as_ref().get(&cell.right()).unwrap_or(empty);
+            let bottom_left = property_buffer
+                .as_ref()
+                .get(&cell.bottom_left())
+                .unwrap_or(empty);
+            let bottom = property_buffer
+                .as_ref()
+                .get(&cell.bottom())
+                .unwrap_or(empty);
+            let bottom_right = property_buffer
+                .as_ref()
+                .get(&cell.bottom_right())
+                .unwrap_or(empty);
             let cell_fragments = property.fragments(
                 top_left,
                 top,

@@ -3,6 +3,7 @@ use crate::Cell;
 use crate::Fragment;
 use crate::Merge;
 use crate::Settings;
+use std::cmp::Ordering;
 use std::fmt;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -14,6 +15,18 @@ pub struct FragmentSpan {
 impl fmt::Display for FragmentSpan {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, "{}", self.fragment)
+    }
+}
+
+impl Ord for FragmentSpan {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.fragment.cmp(&other.fragment)
+    }
+}
+
+impl PartialOrd for FragmentSpan {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
     }
 }
 

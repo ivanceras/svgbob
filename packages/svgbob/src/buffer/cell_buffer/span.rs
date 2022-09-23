@@ -138,7 +138,7 @@ impl Span {
     /// belong on the same group
     ///
     pub(crate) fn get_contacts(&self) -> Vec<Contacts> {
-        let fb: FragmentBuffer = self.clone().into_fragment_buffer();
+        let fb: FragmentBuffer = self.clone().into();
 
         let mut groups: Vec<Contacts> = vec![];
         let merged_fragments = fb.merge_fragment_spans();
@@ -301,11 +301,11 @@ impl<'p> From<Span> for PropertyBuffer<'p> {
 ///
 /// If a character has no property, try to see if has equivalent fragments from unicode_map
 /// otherwise add it to the fragment_buffer as a text fragment
-impl Span {
-    fn into_fragment_buffer(self) -> FragmentBuffer {
-        let pb: PropertyBuffer = self.clone().into();
-        let mut fb: FragmentBuffer = pb.clone().into_fragment_buffer();
-        for (cell, ch) in self.iter() {
+impl From<Span> for FragmentBuffer {
+    fn from(span: Span) -> FragmentBuffer {
+        let pb = PropertyBuffer::from(span.clone());
+        let mut fb = FragmentBuffer::from(pb.clone());
+        for (cell, ch) in span.iter() {
             if pb.as_ref().get(cell).is_none() {
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(ch) {
                     fb.add_fragments_to_cell(*cell, *ch, fragments.clone());

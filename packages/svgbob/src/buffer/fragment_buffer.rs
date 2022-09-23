@@ -41,10 +41,10 @@ mod fragment_tree;
 ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
 /// ```                      V W X
 #[derive(Debug, Default)]
-pub struct FragmentBuffer(BTreeMap<Cell, (char, Vec<Fragment>)>);
+pub struct FragmentBuffer(BTreeMap<Cell, Vec<FragmentSpan>>);
 
 impl Deref for FragmentBuffer {
-    type Target = BTreeMap<Cell, (char, Vec<Fragment>)>;
+    type Target = BTreeMap<Cell, Vec<FragmentSpan>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -66,10 +66,10 @@ impl FragmentBuffer {
     /// printling the fragments on this fragment buffer
     pub fn dump(&self) -> String {
         let mut buff = String::new();
-        for (cell, (_ch, shapes)) in self.iter() {
+        for (cell, shapes) in self.iter() {
             write!(buff, "\ncell: {} ", cell);
             for shape in shapes {
-                write!(buff, "\n    {}", shape);
+                write!(buff, "\n    {}", shape.fragment);
             }
         }
         buff
@@ -77,7 +77,7 @@ impl FragmentBuffer {
 
     /// sort the fragments content in this cell
     fn sort_fragments_in_cell(&mut self, cell: Cell) {
-        if let Some((_ch, fragments)) = &mut self.get_mut(&cell) {
+        if let Some(fragments) = &mut self.get_mut(&cell) {
             (*fragments).sort();
         }
     }
@@ -103,6 +103,19 @@ impl FragmentBuffer {
         (w, h)
     }
 
+    fn add_fragment_span_to_cell(
+        &mut self,
+        cell: Cell,
+        fragment_span: FragmentSpan,
+    ) {
+        if let Some(existing) = self.get_mut(&cell) {
+            existing.push(fragment_span)
+        } else {
+            self.insert(cell, vec![fragment_span]);
+        }
+        self.sort_fragments_in_cell(cell);
+    }
+
     /// Add a single fragment to this cell
     pub fn add_fragment_to_cell(
         &mut self,
@@ -110,13 +123,8 @@ impl FragmentBuffer {
         ch: char,
         fragment: Fragment,
     ) {
-        if let Some((ex_ch, existing)) = self.get_mut(&cell) {
-            assert_eq!(*ex_ch, ch);
-            existing.push(fragment);
-        } else {
-            self.insert(cell, (ch, vec![fragment]));
-        }
-        self.sort_fragments_in_cell(cell);
+        let fragment_span = FragmentSpan::new(Span::new(cell, ch), fragment);
+        self.add_fragment_span_to_cell(cell, fragment_span);
     }
 
     /// add multiple fragments to cell
@@ -126,43 +134,25 @@ impl FragmentBuffer {
         ch: char,
         fragments: Vec<Fragment>,
     ) {
-        if let Some((ex_ch, existing)) = self.get_mut(&cell) {
-            assert_eq!(*ex_ch, ch);
-            existing.extend(fragments);
-        } else {
-            self.insert(cell, (ch, fragments));
+        for fragment in fragments {
+            self.add_fragment_to_cell(cell, ch, fragment);
         }
-        self.sort_fragments_in_cell(cell);
     }
 
-    pub fn merge_fragment_spans(self) -> Vec<FragmentSpan> {
-        let fragment_spans = self.into_fragment_spans();
+    pub fn merge_fragment_spans(&self) -> Vec<FragmentSpan> {
+        let fragment_spans = self.abs_fragment_spans();
         FragmentSpan::merge_recursive(fragment_spans)
     }
 
-    /// create a merged of fragments while preserving their cells
-    fn into_fragment_spans(self) -> Vec<FragmentSpan> {
-        let mut fragment_spans: Vec<FragmentSpan> = vec![];
-        for (cell, (ch, fragments)) in self.iter() {
-            for frag in fragments.iter() {
-                let abs_frag = frag.absolute_position(*cell);
-                let span = Span::new(*cell, *ch);
-                let abs_frag = FragmentSpan::new(span, abs_frag);
-                let had_merged =
-                    fragment_spans.iter_mut().rev().any(|frag_span| {
-                        if let Some(new_merge) = frag_span.merge(&abs_frag) {
-                            *frag_span = new_merge;
-                            true
-                        } else {
-                            false
-                        }
-                    });
-
-                if !had_merged {
-                    fragment_spans.push(abs_frag);
-                }
-            }
-        }
-        fragment_spans
+    /// Collect all the fragment span where all fragment spans of each cell
+    /// are converted to their absolute position
+    fn abs_fragment_spans(&self) -> Vec<FragmentSpan> {
+        self.iter()
+            .flat_map(|(cell, fragment_spans)| {
+                fragment_spans
+                    .iter()
+                    .map(|frag_span| frag_span.absolute_position(*cell))
+            })
+            .collect()
     }
 }
