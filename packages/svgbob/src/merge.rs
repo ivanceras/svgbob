@@ -28,15 +28,14 @@ pub trait Merge {
     {
         let mut new_groups: Vec<Self> = vec![];
         for item in items.into_iter() {
-            let is_merged = new_groups.iter_mut().rev().any(|new_group| {
+            if !new_groups.iter_mut().rev().any(|new_group| {
                 if let Some(new_merged) = new_group.merge(&item) {
                     *new_group = new_merged;
                     true
                 } else {
                     false
                 }
-            });
-            if !is_merged {
+            }) {
                 new_groups.push(item)
             }
         }
