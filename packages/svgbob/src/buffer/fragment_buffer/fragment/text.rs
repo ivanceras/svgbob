@@ -91,31 +91,29 @@ impl Bounds for CellText {
     }
 }
 
-impl Into<Text> for CellText {
-    fn into(self) -> Text {
-        Text::new(self.start.q(), self.content)
+impl From<CellText> for Text {
+    fn from(ct: CellText) -> Text {
+        Text::new(ct.start.q(), ct.content)
     }
 }
 
-impl<MSG> Into<Node<MSG>> for CellText {
-    fn into(self) -> Node<MSG> {
-        let text: Text = self.into();
+impl<MSG> From<CellText> for Node<MSG> {
+    fn from(ct: CellText) -> Node<MSG> {
+        let text: Text = ct.into();
         text.into()
     }
 }
 
-impl Into<FragmentSpan> for CellText {
-    fn into(self) -> FragmentSpan {
-        let cells: Vec<(Cell, char)> = self
+impl From<CellText> for FragmentSpan {
+    fn from(ct: CellText) -> FragmentSpan {
+        let cells: Vec<(Cell, char)> = ct
             .content
             .chars()
             .into_iter()
             .enumerate()
-            .map(|(i, ch)| {
-                (Cell::new(self.start.x + i as i32, self.start.y), ch)
-            })
+            .map(|(i, ch)| (Cell::new(ct.start.x + i as i32, ct.start.y), ch))
             .collect();
-        FragmentSpan::new(Span::from(cells), self.into())
+        FragmentSpan::new(Span::from(cells), ct.into())
     }
 }
 
@@ -179,14 +177,14 @@ impl fmt::Display for Text {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Text {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Text> for Node<MSG> {
+    fn from(t: Text) -> Node<MSG> {
         svg::tags::text(
-            [x(self.start.x), y(self.start.y)],
+            [x(t.start.x), y(t.start.y)],
             #[cfg(not(feature = "with-dom"))]
-            [text(escape_html_text(&self.text))],
+            [text(escape_html_text(&t.text))],
             #[cfg(feature = "with-dom")]
-            [text(&self.text)],
+            [text(&t.text)],
         )
     }
 }

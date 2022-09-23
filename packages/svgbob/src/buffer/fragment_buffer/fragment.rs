@@ -72,10 +72,9 @@ pub trait Bounds {
 
 impl Fragment {
     /// get the character that matches the shape present on this cell
-    pub fn match_unicode(fragments: &Vec<Self>) -> Option<char> {
-        let mut sorted_shapes = fragments.clone();
+    pub fn match_unicode(fragments: &[Fragment]) -> Option<char> {
+        let mut sorted_shapes: Vec<Fragment> = fragments.to_vec();
         sorted_shapes.sort();
-        //assert!(sorted_shapes.is_sorted());
         FRAGMENTS_UNICODE.get(&sorted_shapes).copied()
     }
 

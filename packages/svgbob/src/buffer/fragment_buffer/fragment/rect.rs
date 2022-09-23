@@ -22,7 +22,7 @@ pub struct Rect {
 impl Rect {
     /// creates a new rect and reorder the points swapping the end points if necessary
     /// such that the start is the most top-left and end point is the most bottom-right
-    pub(in crate) fn new(
+    pub(crate) fn new(
         start: Point,
         end: Point,
         is_filled: bool,
@@ -39,7 +39,7 @@ impl Rect {
         rect
     }
 
-    pub(in crate) fn rounded_new(
+    pub(crate) fn rounded_new(
         start: Point,
         end: Point,
         is_filled: bool,
@@ -59,7 +59,7 @@ impl Rect {
 
     /// reorder the end points swap end points such that
     /// start < end
-    pub(in crate) fn sort_reorder_end_points(&mut self) {
+    pub(crate) fn sort_reorder_end_points(&mut self) {
         if self.start > self.end {
             std::mem::swap(&mut self.start, &mut self.end);
         }
@@ -67,7 +67,7 @@ impl Rect {
 
     /// recompute the rect with start and end point offset by the cell
     /// location
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         Rect {
             start: cell.absolute_position(self.start),
             end: cell.absolute_position(self.end),
@@ -75,7 +75,7 @@ impl Rect {
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub(crate) fn scale(&self, scale: f32) -> Self {
         Rect {
             start: self.start.scale(scale),
             end: self.end.scale(scale),
@@ -118,48 +118,48 @@ impl fmt::Display for Rect {
     }
 }
 
-impl Into<Polyline> for Rect {
-    fn into(self) -> Polyline {
+impl From<Rect> for Polyline {
+    fn from(rect: Rect) -> Polyline {
         Polyline::new(
             vec![
-                *self.start,
-                *Point::new(self.end.x, self.start.y),
-                *self.end,
-                *Point::new(self.start.x, self.end.y),
-                *self.start,
+                *rect.start,
+                *Point::new(rect.end.x, rect.start.y),
+                *rect.end,
+                *Point::new(rect.start.x, rect.end.y),
+                *rect.start,
             ],
             None,
         )
     }
 }
 
-impl Into<ConvexPolygon> for Rect {
-    fn into(self) -> ConvexPolygon {
+impl From<Rect> for ConvexPolygon {
+    fn from(rect: Rect) -> ConvexPolygon {
         ConvexPolygon::from_convex_polyline(vec![
-            *self.start,
-            *Point::new(self.end.x, self.start.y),
-            *self.end,
-            *Point::new(self.start.x, self.end.y),
+            *rect.start,
+            *Point::new(rect.end.x, rect.start.y),
+            *rect.end,
+            *Point::new(rect.start.x, rect.end.y),
         ])
         .expect("must create a convex polygon")
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Rect {
-    fn into(self) -> Node<MSG> {
+impl<MSG> From<Rect> for Node<MSG> {
+    fn from(r: Rect) -> Node<MSG> {
         rect(
             [
-                x(self.start.x),
-                y(self.start.y),
-                width(self.width()),
-                height(self.height()),
+                x(r.start.x),
+                y(r.start.y),
+                width(r.width()),
+                height(r.height()),
                 classes_flag([
-                    ("broken", self.is_broken),
-                    ("solid", !self.is_broken),
-                    ("filled", self.is_filled),
-                    ("nofill", !self.is_filled),
+                    ("broken", r.is_broken),
+                    ("solid", !r.is_broken),
+                    ("filled", r.is_filled),
+                    ("nofill", !r.is_filled),
                 ]),
-                if let Some(radius) = self.radius {
+                if let Some(radius) = r.radius {
                     rx(radius)
                 } else {
                     rx(0)
