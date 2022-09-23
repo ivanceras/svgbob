@@ -308,18 +308,10 @@ impl CellBuffer {
     }
 
     fn escaped_text_nodes(&self) -> Vec<FragmentSpan> {
-        let mut fragments = vec![];
-        for (cell, text) in &self.escaped_text {
-            let cell_text = CellText::new(*cell, text.to_string());
-            /*
-            let cells: Vec<(Cell, char)> =
-                text.chars().into_iter().map(|ch| (*cell, ch)).collect();
-            let span = Span::from(cells);
-            let frag_span_text = FragmentSpan::new(span, cell_text.into());
-            */
-            fragments.push(cell_text.into());
-        }
-        fragments
+        self.escaped_text
+            .iter()
+            .map(|(cell, text)| CellText::new(*cell, text.clone()).into())
+            .collect()
     }
 
     /// construct the css from the # Legend: of the diagram
