@@ -40,6 +40,7 @@ mod fragment_tree;
 ///     7├─┼─┼─┼─┤         │ │ │ │ │
 ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
 /// ```                      V W X
+/// TODO: rename this to FragmentSpan Buffer
 #[derive(Debug, Default)]
 pub struct FragmentBuffer(BTreeMap<Cell, Vec<FragmentSpan>>);
 
@@ -109,7 +110,11 @@ impl FragmentBuffer {
         fragment_span: FragmentSpan,
     ) {
         if let Some(existing) = self.get_mut(&cell) {
-            existing.push(fragment_span)
+            if !existing.contains(&fragment_span) {
+                existing.push(fragment_span);
+            } else {
+                println!("already contain a same fragment_span");
+            }
         } else {
             self.insert(cell, vec![fragment_span]);
         }

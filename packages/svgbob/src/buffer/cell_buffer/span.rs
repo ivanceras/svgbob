@@ -149,8 +149,9 @@ impl Span {
             self
         };
 
-        let groups: Vec<Contacts> = un_endorsed_span.into();
-        let rect_endorse = Contacts::endorse_rects(groups);
+        let un_endorsed_contacts: Vec<Contacts> = un_endorsed_span.into();
+        let rect_endorse: Endorse<FragmentSpan, Contacts> =
+            Contacts::endorse_rects(un_endorsed_contacts);
 
         let mut endorse = Endorse {
             accepted,
@@ -188,7 +189,9 @@ impl Span {
         grouped: Vec<Vec<FragmentSpan>>,
     ) -> Endorse<FragmentSpan, Contacts> {
         let spans: Vec<Span> = Self::extract_spans(grouped);
+        log::info!("spans: {:#?}", spans);
         let merge_spans = Span::merge_recursive(spans);
+        log::info!("merg_spans: {:#?}", merge_spans);
 
         let (accepted, rejects): (Vec<Vec<FragmentSpan>>, Vec<Vec<Contacts>>) =
             merge_spans
@@ -203,6 +206,7 @@ impl Span {
         }
     }
 
+    //TODO: The absolute position is wrong here
     fn extract_spans(grouped: Vec<Vec<FragmentSpan>>) -> Vec<Span> {
         grouped
             .into_iter()

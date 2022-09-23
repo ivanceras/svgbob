@@ -185,7 +185,10 @@ fn test_endorse_circle() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(8, 1));
-    let (mut fragments, _groups) = span.endorse();
+    let Endorse {
+        accepted: mut fragments,
+        rejects: _groups,
+    } = span.endorse();
     for (i, frag) in fragments.iter().enumerate() {
         println!("frag {}:\n{}", i, frag);
     }
@@ -216,7 +219,10 @@ fn test_endorse_circle_with_rect() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(8, 1));
-    let (mut fragments, _groups) = span1.endorse();
+    let Endorse {
+        accepted: mut fragments,
+        rejects: _groups,
+    } = span1.endorse();
     assert_eq!(fragments.len(), 2);
 
     let circle = fragments.remove(0);
@@ -265,7 +271,10 @@ fn test_endorse_with_big_circle() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(12, 3));
-    let (mut fragments, _groups) = span1.endorse();
+    let Endorse {
+        accepted: mut fragments,
+        rejects: _groups,
+    } = span1.endorse();
     assert_eq!(fragments.len(), 1);
 
     let circle = fragments.remove(0);
@@ -301,7 +310,10 @@ fn test_endorse_with_big_circle_extra_match() {
     let span1 = adjacents.remove(0);
     let (top_left1, _) = span1.bounds().unwrap();
     assert_eq!(top_left1, Cell::new(12, 3));
-    let (fragments, groups) = span1.endorse();
+    let Endorse {
+        accepted: fragments,
+        rejects: groups,
+    } = span1.endorse();
     assert_eq!(fragments.len(), 1);
     assert_eq!(groups.len(), 0);
     for (i, fragment) in groups.iter().enumerate() {
@@ -354,7 +366,10 @@ fn test_endorse_arc() {
     let span = adjacents.remove(0);
     let (top_left, _) = span.bounds().unwrap();
     assert_eq!(top_left, Cell::new(8, 1));
-    let (mut fragments, _groups) = span.endorse();
+    let Endorse {
+        accepted: mut fragments,
+        rejects: _groups,
+    } = span.endorse();
     for (i, frag) in fragments.iter().enumerate() {
         println!("frag {}:\n{}", i, frag);
     }

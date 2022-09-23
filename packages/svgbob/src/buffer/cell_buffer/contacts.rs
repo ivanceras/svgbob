@@ -86,6 +86,7 @@ impl Contacts {
         let mut rejects: Vec<Contacts> = vec![];
         for group in groups {
             if let Some(fragment) = group.endorse_rect() {
+                //TODO: use the fragment span at group.0
                 let span = group.span();
                 let fragment_span = FragmentSpan::new(span, fragment);
                 accepted.push(fragment_span);

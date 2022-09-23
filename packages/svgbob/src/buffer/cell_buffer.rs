@@ -147,6 +147,7 @@ impl CellBuffer {
     /// return fragments that are Rect, Circle,
     pub(crate) fn into_shapes_fragment(self) -> Vec<FragmentSpan> {
         let endorse = self.endorse_to_fragment_spans();
+        println!("endorsed: {:#?}", endorse);
         endorse
             .accepted
             .into_iter()
@@ -190,6 +191,14 @@ impl CellBuffer {
             .map(|contact| contact.as_ref().to_vec())
             .collect();
 
+        let accepted: Vec<FragmentSpan> = endorsed_fragments
+            .into_iter()
+            .flatten()
+            .chain(single_member_fragments.into_iter())
+            .collect();
+        Endorse { accepted, rejects }
+
+        /*
         log::info!("rejects: {:#?}", rejects);
         let re_endorsed = Span::re_endorse(rejects);
         log::info!("re_endorsed: {:#?}", re_endorsed);
@@ -213,6 +222,7 @@ impl CellBuffer {
                 .map(|contacts| contacts.0)
                 .collect(),
         }
+        */
     }
 
     /// group nodes that can be group and the rest will be fragments
@@ -706,7 +716,7 @@ mod tests {
 
 This is a text
 
-            .-.
+            ,-.
            (   )
             `-'
 
