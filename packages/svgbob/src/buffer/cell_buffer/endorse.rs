@@ -165,7 +165,7 @@ mod tests {
 
         let line_ae = line(a, e);
         let line_uy = line(u, y);
-        let group = parallel_aabb_group(&vec![line_ae, line_uy]);
+        let group = parallel_aabb_group(&[&line_ae, &line_uy]);
         println!("group: {:#?}", group);
         assert_eq!(group, vec![(0, 1)])
     }
@@ -181,24 +181,24 @@ mod tests {
         let line_uy = line(u, y);
         let line_au = line(a, u);
         let line_ey = line(e, y);
-        let group = parallel_aabb_group(&vec![
-            line_ae.clone(),
-            line_au.clone(),
-            line_uy.clone(),
-            line_ey.clone(),
+        let group = parallel_aabb_group(&[
+            &line_ae.clone(),
+            &line_au.clone(),
+            &line_uy.clone(),
+            &line_ey.clone(),
         ]);
         println!("group: {:#?}", group);
         assert_eq!(group, vec![(0, 2), (1, 3)]);
 
-        let rect = endorse_rect(&vec![
-            line_ae.clone(),
-            line_au.clone(),
-            line_uy.clone(),
-            line_ey.clone(),
+        let rect = endorse_rect(&[
+            &line_ae.clone(),
+            &line_au.clone(),
+            &line_uy.clone(),
+            &line_ey.clone(),
         ]);
         assert!(rect.is_some());
         assert_eq!(rect, Some(Rect::new(a, y, false, false)));
-        assert!(is_rect(&vec![line_ae, line_au, line_uy, line_ey]));
+        assert!(is_rect(&[&line_ae, &line_au, &line_uy, &line_ey]));
     }
 
     #[test]
@@ -217,6 +217,6 @@ mod tests {
         let line_gq = line(g, q);
         let line_is = line(i, s);
 
-        assert!(!is_rect(&vec![line_ae, line_uy, line_gq, line_is]));
+        assert!(!is_rect(&[&line_ae, &line_uy, &line_gq, &line_is]));
     }
 }

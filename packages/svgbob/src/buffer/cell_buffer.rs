@@ -310,11 +310,13 @@ impl CellBuffer {
         let mut fragments = vec![];
         for (cell, text) in &self.escaped_text {
             let cell_text = CellText::new(*cell, text.to_string());
+            /*
             let cells: Vec<(Cell, char)> =
                 text.chars().into_iter().map(|ch| (*cell, ch)).collect();
             let span = Span::from(cells);
             let frag_span_text = FragmentSpan::new(span, cell_text.into());
-            fragments.push(frag_span_text);
+            */
+            fragments.push(cell_text.into());
         }
         fragments
     }
@@ -758,6 +760,7 @@ mod tests {
             +-------+
 
 This is a text
+
             .-.
            (   )
             `-'
@@ -781,7 +784,9 @@ This is a text
         let shapes = buffer.get_shapes_fragment(&Settings::default());
         println!("shapes: {:#?}", shapes);
         assert_eq!(1, shapes.len());
-        assert!(shapes[0].hit(Cell::new(15, 1).a(), Cell::new(15, 1).y()));
+        assert!(shapes[0]
+            .fragment
+            .hit(Cell::new(15, 1).a(), Cell::new(15, 1).y()));
     }
 
     /// The . in .-/

@@ -4,6 +4,7 @@
 
 pub mod buffer;
 pub mod map;
+mod merge;
 mod point;
 mod settings;
 pub mod util;

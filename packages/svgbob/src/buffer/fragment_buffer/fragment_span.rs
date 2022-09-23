@@ -4,7 +4,7 @@ use crate::Fragment;
 use crate::Settings;
 use std::fmt;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct FragmentSpan {
     pub span: Span,
     pub fragment: Fragment,

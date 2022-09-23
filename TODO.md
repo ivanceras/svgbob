@@ -26,3 +26,9 @@
     - nalgebra
     - ncollide2d -> parry2d
 - [ ] Make the top-level directory a workspace and put svgbob and cli into packages/
+- [ ] Make a trait for the merging algorithmns
+    - [ ] merge_recursive
+    - [ ] first_pass_merge
+    - [ ] second_pass_merge
+- [ ] Try again to endorse the span of the grouped fragments that are in the same span
+    but not reduces into a single shape

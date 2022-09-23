@@ -1,3 +1,5 @@
+use crate::buffer::Span;
+use crate::FragmentSpan;
 use crate::{
     buffer::{Cell, CellGrid},
     fragment::Bounds,
@@ -48,13 +50,13 @@ impl CellText {
     }
 
     /// text can merge if they are next to each other and at the same line
-    pub(in crate) fn can_merge(&self, other: &Self) -> bool {
+    pub(crate) fn can_merge(&self, other: &Self) -> bool {
         self.start.y == other.start.y
             && (self.start.x + self.content.len() as i32 == other.start.x
                 || other.start.x + other.content.len() as i32 == self.start.x)
     }
 
-    pub(in crate) fn merge(&self, other: &Self) -> Option<Self> {
+    pub(crate) fn merge(&self, other: &Self) -> Option<Self> {
         if self.can_merge(other) {
             if self.start.x < other.start.x {
                 Some(CellText::new(
@@ -72,7 +74,7 @@ impl CellText {
         }
     }
 
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         CellText {
             start: Cell::new(self.start.x + cell.x, self.start.y + cell.y),
             ..self.clone()
@@ -102,6 +104,21 @@ impl<MSG> Into<Node<MSG>> for CellText {
     }
 }
 
+impl Into<FragmentSpan> for CellText {
+    fn into(self) -> FragmentSpan {
+        let cells: Vec<(Cell, char)> = self
+            .content
+            .chars()
+            .into_iter()
+            .enumerate()
+            .map(|(i, ch)| {
+                (Cell::new(self.start.x + i as i32, self.start.y), ch)
+            })
+            .collect();
+        FragmentSpan::new(Span::from(cells), self.into())
+    }
+}
+
 impl fmt::Display for CellText {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "CT {} {}", self.start, self.content)
@@ -125,14 +142,14 @@ impl Text {
         self.text.len() as f32 * CellGrid::width()
     }
 
-    pub(in crate) fn absolute_position(&self, cell: Cell) -> Self {
+    pub(crate) fn absolute_position(&self, cell: Cell) -> Self {
         Text {
             start: cell.absolute_position(self.start),
             ..self.clone()
         }
     }
 
-    pub(in crate) fn scale(&self, scale: f32) -> Self {
+    pub(crate) fn scale(&self, scale: f32) -> Self {
         Text {
             start: self.start.scale(scale),
             ..self.clone()
@@ -306,11 +323,19 @@ mod tests {
         assert_eq!(groups1.len(), 15);
         assert_eq!(groups2.len(), 33);
         assert_eq!(
-            groups1[0].as_ref()[0].as_cell_text().unwrap().start,
+            groups1[0].as_ref()[0]
+                .fragment
+                .as_cell_text()
+                .unwrap()
+                .start,
             Cell::new(0, 0)
         );
         assert_eq!(
-            groups2[0].as_ref()[0].as_cell_text().unwrap().start,
+            groups2[0].as_ref()[0]
+                .fragment
+                .as_cell_text()
+                .unwrap()
+                .start,
             Cell::new(0, 0)
         );
     }
