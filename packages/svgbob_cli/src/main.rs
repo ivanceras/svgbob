@@ -77,11 +77,7 @@ fn main() {
     let mut bob = String::new();
 
     if args.is_present("inline") {
-        bob = args
-            .value_of("input")
-            .unwrap()
-            .replace("\\n", "\n")
-            ;
+        bob = args.value_of("input").unwrap().replace("\\n", "\n");
     } else if let Some(file) = args.value_of("input") {
         match File::open(file) {
             Ok(mut f) => {
@@ -127,10 +123,9 @@ fn main() {
         settings.stroke_width = stroke_width;
     }
 
-    let scale : Option<f32> = parse_value_of(&args, "scale");
-    match scale {
-        Some(s) => { settings.scale *= s; },
-        _ => {}
+    let scale: Option<f32> = parse_value_of(&args, "scale");
+    if let Some(s) = scale {
+        settings.scale *= s;
     }
 
     let svg = svgbob::to_svg_with_settings(&*bob, &settings);
@@ -157,23 +152,21 @@ fn parse_value_of<T: FromStr>(args: &ArgMatches, arg_name: &str) -> Option<T>
 where
     <T as std::str::FromStr>::Err: std::fmt::Display,
 {
-    return args
-        .value_of(arg_name)
-        .map(|arg| match arg.parse::<T>() {
-            Ok(a) => a,
-            Err(e) => {
-                use std::io::Write;
+    return args.value_of(arg_name).map(|arg| match arg.parse::<T>() {
+        Ok(a) => a,
+        Err(e) => {
+            use std::io::Write;
 
-                writeln!(
-                    &mut std::io::stderr(),
-                    "Illegal value for argument {}: {}",
-                    arg_name,
-                    e
-                )
-                .unwrap();
-                exit(1);
-            }
-        });
+            writeln!(
+                &mut std::io::stderr(),
+                "Illegal value for argument {}: {}",
+                arg_name,
+                e
+            )
+            .unwrap();
+            exit(1);
+        }
+    });
 }
 
 // Batch convert files to svg
@@ -184,12 +177,12 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
     let input_path = Path::new(files_pattern);
     let ext = input_path
         .extension()
-        .unwrap_or("bob".as_ref())
+        .unwrap_or_else(|| "bob".as_ref())
         .to_str()
         .unwrap();
 
     let input_dir = if input_path.is_dir() {
-        input_path.clone()
+        input_path
     } else {
         input_path.parent().unwrap()
     };
@@ -218,7 +211,7 @@ fn build(args: &ArgMatches) -> Result<(), Box<dyn Error>> {
         if tmp_path.is_file() {
             let tmp_ext = tmp_path
                 .extension()
-                .unwrap_or("".as_ref())
+                .unwrap_or_else(|| "".as_ref())
                 .to_str()
                 .unwrap();
             if tmp_ext == ext {

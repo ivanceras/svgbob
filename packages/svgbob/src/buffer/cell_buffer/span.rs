@@ -304,7 +304,7 @@ impl<'p> From<Span> for PropertyBuffer<'p> {
 impl Span {
     fn into_fragment_buffer(self) -> FragmentBuffer {
         let pb: PropertyBuffer = self.clone().into();
-        let mut fb: FragmentBuffer = pb.into_fragment_buffer();
+        let mut fb: FragmentBuffer = pb.clone().into_fragment_buffer();
         for (cell, ch) in self.iter() {
             if pb.as_ref().get(cell).is_none() {
                 if let Some(fragments) = UNICODE_FRAGMENTS.get(ch) {

@@ -377,31 +377,19 @@ impl Fragment {
     }
 
     pub fn is_circle(&self) -> bool {
-        match self {
-            Fragment::Circle(_) => true,
-            _ => false,
-        }
+        matches!(self, Fragment::Circle(_))
     }
 
     pub fn is_rect(&self) -> bool {
-        match self {
-            Fragment::Rect(_) => true,
-            _ => false,
-        }
+        matches!(self, Fragment::Rect(_))
     }
 
     pub fn is_text(&self) -> bool {
-        match self {
-            Fragment::Text(_) => true,
-            _ => false,
-        }
+        matches!(self, Fragment::Text(_))
     }
 
     pub fn is_cell_text(&self) -> bool {
-        match self {
-            Fragment::CellText(_) => true,
-            _ => false,
-        }
+        matches!(self, Fragment::CellText(_))
     }
 
     pub fn is_broken(&self) -> bool {
@@ -478,9 +466,9 @@ impl Bounds for Fragment {
     }
 }
 
-impl<MSG> Into<Node<MSG>> for Fragment {
-    fn into(self) -> Node<MSG> {
-        match self {
+impl<MSG> From<Fragment> for Node<MSG> {
+    fn from(fragment: Fragment) -> Node<MSG> {
+        match fragment {
             Fragment::Line(line) => line.into(),
             Fragment::MarkerLine(marker_line) => marker_line.into(),
             Fragment::Circle(circle) => circle.into(),
@@ -608,9 +596,9 @@ impl From<Text> for Fragment {
     }
 }
 
-impl Into<Fragment> for CellText {
-    fn into(self) -> Fragment {
-        Fragment::CellText(self)
+impl From<CellText> for Fragment {
+    fn from(ct: CellText) -> Fragment {
+        Fragment::CellText(ct)
     }
 }
 

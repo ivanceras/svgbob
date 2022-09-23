@@ -6,6 +6,7 @@ use unicode_width::UnicodeWidthChar;
 /// each cell can be assigned with a string
 /// taking into account utf8 code which can not be char
 /// including but not limited to multi-width chars
+#[derive(Default)]
 pub struct StringBuffer(Vec<Vec<char>>);
 
 impl Deref for StringBuffer {
@@ -22,15 +23,9 @@ impl DerefMut for StringBuffer {
     }
 }
 
-impl Default for StringBuffer {
-    fn default() -> Self {
-        Self(vec![])
-    }
-}
-
 impl StringBuffer {
     pub fn new() -> Self {
-        StringBuffer(vec![])
+        StringBuffer::default()
     }
 
     /// add rows to this buffer

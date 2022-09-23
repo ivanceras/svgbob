@@ -719,7 +719,7 @@ lazy_static! {
 
 }
 
-#[derive(Default, Hash, PartialEq, PartialOrd, Eq)]
+#[derive(Default, Hash, PartialEq, Eq)]
 pub struct DiameterArc {
     diameter: i32,
     arc: usize,
@@ -729,6 +729,12 @@ impl Ord for DiameterArc {
         self.diameter
             .cmp(&other.diameter)
             .then(self.arc.cmp(&other.arc))
+    }
+}
+
+impl PartialOrd for DiameterArc {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
     }
 }
 

@@ -7,6 +7,7 @@ pub use fragment::Fragment;
 pub use fragment_span::FragmentSpan;
 pub use fragment_tree::FragmentTree;
 use itertools::Itertools;
+use std::fmt::Write;
 use std::{
     collections::BTreeMap,
     ops::{Deref, DerefMut},
@@ -39,7 +40,7 @@ mod fragment_tree;
 ///     7├─┼─┼─┼─┤         │ │ │ │ │
 ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
 /// ```                      V W X
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct FragmentBuffer(BTreeMap<Cell, (char, Vec<Fragment>)>);
 
 impl Deref for FragmentBuffer {
@@ -58,7 +59,7 @@ impl DerefMut for FragmentBuffer {
 
 impl FragmentBuffer {
     pub fn new() -> Self {
-        FragmentBuffer(BTreeMap::new())
+        FragmentBuffer::default()
     }
 
     /// dump for debugging purpose only
@@ -66,9 +67,9 @@ impl FragmentBuffer {
     pub fn dump(&self) -> String {
         let mut buff = String::new();
         for (cell, (_ch, shapes)) in self.iter() {
-            buff.push_str(&format!("\ncell: {} ", cell));
+            write!(buff, "\ncell: {} ", cell);
             for shape in shapes {
-                buff.push_str(&format!("\n    {}", shape));
+                write!(buff, "\n    {}", shape);
             }
         }
         buff
@@ -134,13 +135,13 @@ impl FragmentBuffer {
         self.sort_fragments_in_cell(cell);
     }
 
-    pub fn merge_fragment_spans(&self) -> Vec<FragmentSpan> {
+    pub fn merge_fragment_spans(self) -> Vec<FragmentSpan> {
         let fragment_spans = self.into_fragment_spans();
         FragmentSpan::merge_recursive(fragment_spans)
     }
 
     /// create a merged of fragments while preserving their cells
-    fn into_fragment_spans(&self) -> Vec<FragmentSpan> {
+    fn into_fragment_spans(self) -> Vec<FragmentSpan> {
         let mut fragment_spans: Vec<FragmentSpan> = vec![];
         for (cell, (ch, fragments)) in self.iter() {
             for frag in fragments.iter() {

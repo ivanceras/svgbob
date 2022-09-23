@@ -13,11 +13,12 @@ mod property;
 /// This will be used in the first phase of converting ascii diagrams into fragment buffer
 /// The properties are generated once and will be repeatedly used for the second phase
 /// where testing the neighboring charaters to determine the fragment to be drawn for that cell.
+#[derive(Default, Clone)]
 pub struct PropertyBuffer<'p>(HashMap<Cell, &'p Property>);
 
 impl<'p> PropertyBuffer<'p> {
     pub fn new() -> Self {
-        PropertyBuffer(HashMap::new())
+        PropertyBuffer::default()
     }
 
     /// get the appropriate character for this cell
@@ -71,6 +72,7 @@ impl<'p> PropertyBuffer<'p> {
 
     /// if the fragments match to the return fragments
     /// of the property behavior, then it is a match
+    #[allow(clippy::too_many_arguments)]
     pub fn match_char_with_surrounding_properties(
         fragments: &Vec<Fragment>,
         top_left: &Property,
@@ -135,7 +137,7 @@ impl<'p> AsMut<HashMap<Cell, &'p Property>> for PropertyBuffer<'p> {
 
 /// convert property buffer to fragment buffer
 impl<'p> PropertyBuffer<'p> {
-    pub(crate) fn into_fragment_buffer(&self) -> FragmentBuffer {
+    pub(crate) fn into_fragment_buffer(self) -> FragmentBuffer {
         let mut fb = FragmentBuffer::new();
         for (cell, property) in self.as_ref() {
             let empty = &&Property::empty();

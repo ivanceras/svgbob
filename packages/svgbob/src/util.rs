@@ -113,25 +113,18 @@ pub mod parser {
                 Ok((first_item, first_pos)) => {
                     items.push(first_item);
                     pos = first_pos;
-                    loop {
-                        match (separator.method)(input, pos) {
-                            Ok((_, sep_pos)) => {
-                                match (parser.method)(input, sep_pos) {
-                                    Ok((more_item, more_pos)) => {
-                                        items.push(more_item);
-                                        pos = more_pos;
-                                    }
-                                    Err(e) => {
-                                        // return early when there is an
-                                        // error matching the succeeding
-                                        // items
-                                        return Err(e);
-                                    }
-                                }
+                    while let Ok((_, sep_pos)) = (separator.method)(input, pos)
+                    {
+                        match (parser.method)(input, sep_pos) {
+                            Ok((more_item, more_pos)) => {
+                                items.push(more_item);
+                                pos = more_pos;
                             }
-                            Err(_e) => {
-                                // the separator does not match, just break
-                                break;
+                            Err(e) => {
+                                // return early when there is an
+                                // error matching the succeeding
+                                // items
+                                return Err(e);
                             }
                         }
                     }

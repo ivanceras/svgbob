@@ -1,3 +1,4 @@
+#![allow(clippy::type_complexity)]
 use self::Signal::Strong;
 use crate::{
     map::{ASCII_PROPERTIES, UNICODE_PROPERTIES},
@@ -168,14 +169,14 @@ impl Property {
         self.ch.is_alphabetic() && self.ch != '_' // since space is used when a property is derived from strong
     }
 
-    pub fn match_signature(&self, fragments: &Vec<Fragment>) -> bool {
+    pub fn match_signature(&self, fragments: &[Fragment]) -> bool {
         let signature_fragments = self.signature_fragments_with_signal(Strong);
         signature_fragments == *fragments
     }
 
     /// evaluate this property together with the supplied surrounding
     /// to see if the resulting fragments is equal to the supplied fragments
-    pub(crate) fn match_property(&self, _fragments: &Vec<Fragment>) -> bool {
+    pub(crate) fn match_property(&self, _fragments: &[Fragment]) -> bool {
         false
     }
 
@@ -224,6 +225,7 @@ impl Property {
     }
 
     /// the fragments of this property when the surrounding properties is supplied
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn fragments(
         &self,
         top_left: &Property,
