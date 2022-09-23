@@ -66,18 +66,6 @@ impl Span {
         })
     }
 
-    /*
-    pub(crate) fn merge(&self, other: &Self) -> Option<Self> {
-        if self.can_merge(other) {
-            let mut cells = self.0.clone();
-            cells.extend(&other.0);
-            Some(Span(cells))
-        } else {
-            None
-        }
-    }
-    */
-
     /// paste the other Span at cell location `loc`
     pub fn paste_at(&self, loc: Cell, other: &Self) -> Self {
         let mut this = self.clone();

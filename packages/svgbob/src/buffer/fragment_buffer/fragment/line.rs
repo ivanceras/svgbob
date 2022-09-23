@@ -188,27 +188,6 @@ impl Line {
         }
     }
 
-    /*
-    /// if this line is colliean with the marker line and the
-    pub(crate) fn can_merge_marker_line(&self, mline: &MarkerLine) -> bool {
-        if self.can_merge(&mline.line) {
-            // if there is no marker at the start
-            if mline.start_marker.is_none() {
-                self.end == mline.line.start || self.start == mline.line.start
-            }
-            // if there is no marker at the end
-            else if mline.end_marker.is_none() {
-                self.end == mline.line.end || self.start == mline.line.end
-            } else {
-                false
-            }
-        } else {
-            false
-        }
-    }
-    */
-
-    #[allow(unused)]
     pub(crate) fn merge_marker_line(
         &self,
         mline: &MarkerLine,
