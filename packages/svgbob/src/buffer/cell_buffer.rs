@@ -132,10 +132,10 @@ impl CellBuffer {
     pub fn get_fragment_spans(
         self,
     ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
-        let (single_member_fragments, vec_group_fragments, vec_fragments) =
-            self.clone().group_single_members_from_other_fragments();
-
         let escaped_text = self.escaped_text_nodes();
+        let (single_member_fragments, vec_group_fragments, vec_fragments) =
+            self.group_single_members_from_other_fragments();
+
         let regulars =
             [vec_fragments, single_member_fragments, escaped_text].concat();
 
@@ -143,7 +143,7 @@ impl CellBuffer {
     }
 
     /// return fragments that are Rect, Circle,
-    pub fn get_shapes_fragment(self) -> Vec<FragmentSpan> {
+    pub(crate) fn get_shapes_fragment(self) -> Vec<FragmentSpan> {
         let (single_member, _, endorsed_fragments) =
             self.group_single_members_from_other_fragments();
         endorsed_fragments
