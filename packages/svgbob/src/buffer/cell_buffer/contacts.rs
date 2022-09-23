@@ -1,4 +1,5 @@
 use super::endorse;
+use super::endorse::Endorse;
 use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::buffer::Span;
 use crate::buffer::{fragment::Fragment, Cell};
@@ -80,19 +81,19 @@ impl Contacts {
     /// These includes: rect, roundedrect,
     pub(crate) fn endorse_rects(
         groups: Vec<Contacts>,
-    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
-        let mut fragments = vec![];
-        let mut un_endorsed_rect: Vec<Contacts> = vec![];
+    ) -> Endorse<FragmentSpan, Contacts> {
+        let mut accepted = vec![];
+        let mut rejects: Vec<Contacts> = vec![];
         for group in groups {
             if let Some(fragment) = group.endorse_rect() {
                 let span = group.span();
                 let fragment_span = FragmentSpan::new(span, fragment);
-                fragments.push(fragment_span);
+                accepted.push(fragment_span);
             } else {
-                un_endorsed_rect.push(group);
+                rejects.push(group);
             }
         }
-        (fragments, un_endorsed_rect)
+        Endorse { accepted, rejects }
     }
 
     pub(crate) fn absolute_position(&self, cell: Cell) -> Self {

@@ -8,6 +8,7 @@ use crate::{
 };
 pub use cell::{Cell, CellGrid};
 pub use contacts::Contacts;
+pub use endorse::Endorse;
 use itertools::Itertools;
 use sauron::{
     html,
@@ -133,31 +134,30 @@ impl CellBuffer {
         self,
     ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
         let escaped_text = self.escaped_text_nodes();
-        let (single_member_fragments, vec_group_fragments, vec_fragments) =
-            self.group_single_members_from_other_fragments();
+        let Endorse {
+            mut accepted,
+            rejects,
+        } = self.endorse_to_fragment_spans();
 
-        let regulars =
-            [vec_fragments, single_member_fragments, escaped_text].concat();
+        accepted.extend(escaped_text);
 
-        (regulars, vec_group_fragments)
+        (accepted, rejects)
     }
 
     /// return fragments that are Rect, Circle,
-    pub(crate) fn get_shapes_fragment(self) -> Vec<FragmentSpan> {
-        let (single_member, _, endorsed_fragments) =
-            self.group_single_members_from_other_fragments();
-        endorsed_fragments
+    pub(crate) fn into_shapes_fragment(self) -> Vec<FragmentSpan> {
+        let endorse = self.endorse_to_fragment_spans();
+        endorse
+            .accepted
             .into_iter()
-            .chain(single_member.into_iter().filter(|frag| {
-                frag.fragment.is_rect() || frag.fragment.is_circle()
-            }))
+            .filter(|frag| frag.fragment.is_rect() || frag.fragment.is_circle())
             .collect()
     }
 
     /// returns (single_member, grouped,  rest of the fragments
-    fn group_single_members_from_other_fragments(
+    fn endorse_to_fragment_spans(
         self,
-    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>, Vec<FragmentSpan>) {
+    ) -> Endorse<FragmentSpan, Vec<FragmentSpan>> {
         // endorsed_fragments are the fragment result of successful endorsement
         //
         // vec_groups are not endorsed, but are still touching, these will be grouped together in
@@ -169,6 +169,7 @@ impl CellBuffer {
         ) = group_adjacents
             .into_iter()
             .map(|span| span.endorse())
+            .map(|endorse| (endorse.accepted, endorse.rejects))
             .unzip();
 
         // partition the vec_groups into groups that is alone and the group
@@ -184,15 +185,34 @@ impl CellBuffer {
             .flat_map(|contact| contact.as_ref().to_vec())
             .collect();
 
-        let vec_groups: Vec<Vec<FragmentSpan>> = vec_groups
+        let rejects: Vec<Vec<FragmentSpan>> = vec_groups
             .into_iter()
             .map(|contact| contact.as_ref().to_vec())
             .collect();
 
-        let endorsed_fragments: Vec<FragmentSpan> =
-            endorsed_fragments.into_iter().flatten().collect();
+        log::info!("rejects: {:#?}", rejects);
+        let re_endorsed = Span::re_endorse(rejects);
+        log::info!("re_endorsed: {:#?}", re_endorsed);
+        log::info!(
+            "got some accepted re_endorsed: {}",
+            re_endorsed.accepted.len()
+        );
 
-        (single_member_fragments, vec_groups, endorsed_fragments)
+        let accepted: Vec<FragmentSpan> = endorsed_fragments
+            .into_iter()
+            .flatten()
+            .chain(single_member_fragments.into_iter())
+            .chain(re_endorsed.accepted.into_iter())
+            .collect();
+
+        Endorse {
+            accepted,
+            rejects: re_endorsed
+                .rejects
+                .into_iter()
+                .map(|contacts| contacts.0)
+                .collect(),
+        }
     }
 
     /// group nodes that can be group and the rest will be fragments
@@ -202,11 +222,10 @@ impl CellBuffer {
         settings: &Settings,
     ) -> (Vec<Node<MSG>>, Vec<FragmentSpan>) {
         let escaped_text_nodes = self.escaped_text_nodes();
-        let (single_member_fragments, vec_group_fragments, vec_fragments) =
-            self.group_single_members_from_other_fragments();
+        let Endorse { accepted, rejects } = self.endorse_to_fragment_spans();
 
         // grouped fragments will be rendered as svg groups
-        let group_nodes: Vec<Node<MSG>> = vec_group_fragments
+        let group_nodes: Vec<Node<MSG>> = rejects
             .into_iter()
             .map(move |fragments| {
                 let group_members = fragments
@@ -221,9 +240,8 @@ impl CellBuffer {
             })
             .collect();
 
-        let mut fragments: Vec<FragmentSpan> = vec_fragments;
+        let mut fragments: Vec<FragmentSpan> = accepted;
 
-        fragments.extend(single_member_fragments);
         fragments.extend(escaped_text_nodes);
 
         (group_nodes, fragments)
@@ -694,7 +712,7 @@ This is a text
 
     "#;
         let buffer = CellBuffer::from(art);
-        let shapes = buffer.get_shapes_fragment();
+        let shapes = buffer.into_shapes_fragment();
         println!("shapes: {:#?}", shapes);
         assert_eq!(2, shapes.len());
     }
@@ -708,7 +726,7 @@ This is a text
 
     "#;
         let buffer = CellBuffer::from(art);
-        let shapes = buffer.get_shapes_fragment();
+        let shapes = buffer.into_shapes_fragment();
         println!("shapes: {:#?}", shapes);
         assert_eq!(1, shapes.len());
         assert!(shapes[0]

@@ -1,3 +1,4 @@
+use crate::buffer::cell_buffer::Endorse;
 use crate::buffer::fragment_buffer::FragmentSpan;
 use crate::{
     buffer::{
@@ -126,34 +127,37 @@ impl Span {
     /// The second element of the tuple: `contacts` are fragments that are touching together
     /// but can not form a fragment shape. These will be grouped in the svg nodes
     /// to keep them go together, when dragged (editing)
-    pub(crate) fn endorse(self) -> (Vec<FragmentSpan>, Vec<Contacts>) {
-        let mut fragments = vec![];
+    pub(crate) fn endorse(self) -> Endorse<FragmentSpan, Contacts> {
+        let mut accepted = vec![];
         let (top_left, _) = self.bounds().expect("must have bounds");
-        let un_endorsed_span = if let Some((circle, un_endorsed_span)) =
+        let un_endorsed_span: Span = if let Some((circle, un_endorsed_span)) =
             circle_map::endorse_circle_span(&self)
         {
             let circle = circle.absolute_position(top_left);
             let circle_frag_span =
                 FragmentSpan::new(self.clone(), circle.into());
-            fragments.push(circle_frag_span);
+            accepted.push(circle_frag_span);
             un_endorsed_span
         } else if let Some((arc, un_endorsed_span)) =
             circle_map::endorse_quarter_arc_span(&self)
         {
             let arc = arc.absolute_position(top_left);
             let arc_frag_span = FragmentSpan::new(self.clone(), arc.into());
-            fragments.push(arc_frag_span);
+            accepted.push(arc_frag_span);
             un_endorsed_span
         } else {
             self
         };
 
         let groups: Vec<Contacts> = un_endorsed_span.into();
-        let (rect_fragments, un_endorsed) = Contacts::endorse_rects(groups);
+        let rect_endorse = Contacts::endorse_rects(groups);
 
-        fragments.extend(rect_fragments);
-
-        (fragments, un_endorsed)
+        let mut endorse = Endorse {
+            accepted,
+            rejects: vec![],
+        };
+        endorse.extend(rect_endorse);
+        endorse
     }
 
     /// create a span of the cells that is inside of the start and end bound cells
@@ -180,23 +184,26 @@ impl Span {
     /// Convert a group of fragment span
     /// that didn't make it into an endorsed single shape fragment
     /// We try it again for endorsing to circle
-    fn re_endorsed(
+    pub fn re_endorse(
         grouped: Vec<Vec<FragmentSpan>>,
-    ) -> (Vec<FragmentSpan>, Vec<Contacts>) {
-        let spans = Self::extract_spans(grouped);
-        let merged_spans: Vec<Span> = Self::merge_recursive(spans);
+    ) -> Endorse<FragmentSpan, Contacts> {
+        let spans: Vec<Span> = Self::extract_spans(grouped);
+        let merge_spans = Span::merge_recursive(spans);
 
-        let (endorsed_frag_spans, endorsed_contacts): (
-            Vec<Vec<FragmentSpan>>,
-            Vec<Vec<Contacts>>,
-        ) = merged_spans.into_iter().map(|span| span.endorse()).unzip();
+        let (accepted, rejects): (Vec<Vec<FragmentSpan>>, Vec<Vec<Contacts>>) =
+            merge_spans
+                .into_iter()
+                .map(|span| span.endorse())
+                .map(|endorse| (endorse.accepted, endorse.rejects))
+                .unzip();
 
-        (
-            endorsed_frag_spans.into_iter().flatten().collect(),
-            endorsed_contacts.into_iter().flatten().collect(),
-        )
+        Endorse {
+            accepted: accepted.into_iter().flatten().collect(),
+            rejects: rejects.into_iter().flatten().collect(),
+        }
     }
-    fn extract_spans(grouped: Vec<Vec<FragmentSpan>>) -> Vec<Self> {
+
+    fn extract_spans(grouped: Vec<Vec<FragmentSpan>>) -> Vec<Span> {
         grouped
             .into_iter()
             .flat_map(|group| group.into_iter().map(|frag_span| frag_span.span))

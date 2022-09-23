@@ -3,6 +3,22 @@ use crate::{
     Fragment,
 };
 
+/// Result of endorsing processes
+#[derive(Debug)]
+pub struct Endorse<T, E> {
+    /// The result that passed the endorsed
+    pub accepted: Vec<T>,
+    /// The objects that didn't pass the endorsement
+    pub rejects: Vec<E>,
+}
+
+impl<T, E> Endorse<T, E> {
+    pub fn extend(&mut self, other: Self) {
+        self.accepted.extend(other.accepted);
+        self.rejects.extend(other.rejects);
+    }
+}
+
 /// if a group of fragment can be endorse as rect, return the bounds point for the
 /// rectangle
 pub fn endorse_rect(fragments: &[&Fragment]) -> Option<Rect> {
@@ -181,21 +197,12 @@ mod tests {
         let line_uy = line(u, y);
         let line_au = line(a, u);
         let line_ey = line(e, y);
-        let group = parallel_aabb_group(&[
-            &line_ae,
-            &line_au,
-            &line_uy,
-            &line_ey,
-        ]);
+        let group =
+            parallel_aabb_group(&[&line_ae, &line_au, &line_uy, &line_ey]);
         println!("group: {:#?}", group);
         assert_eq!(group, vec![(0, 2), (1, 3)]);
 
-        let rect = endorse_rect(&[
-            &line_ae,
-            &line_au,
-            &line_uy,
-            &line_ey,
-        ]);
+        let rect = endorse_rect(&[&line_ae, &line_au, &line_uy, &line_ey]);
         assert!(rect.is_some());
         assert_eq!(rect, Some(Rect::new(a, y, false, false)));
         assert!(is_rect(&[&line_ae, &line_au, &line_uy, &line_ey]));
