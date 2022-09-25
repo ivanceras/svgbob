@@ -139,6 +139,14 @@ impl Span {
                 FragmentSpan::new(self.clone(), circle.into());
             accepted.push(circle_frag_span);
             un_endorsed_span
+        } else if let Some((half_arc, un_endorsed_span)) =
+            circle_map::endorse_half_arc_span(&self)
+        {
+            let half_arc = half_arc.absolute_position(top_left);
+            let half_arc_frag_span =
+                FragmentSpan::new(self.clone(), half_arc.into());
+            accepted.push(half_arc_frag_span);
+            un_endorsed_span
         } else if let Some((arc, un_endorsed_span)) =
             circle_map::endorse_quarter_arc_span(&self)
         {

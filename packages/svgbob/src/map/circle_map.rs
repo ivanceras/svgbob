@@ -645,47 +645,66 @@ lazy_static! {
     );
 
     pub static ref HALF_ARC_SPAN: BTreeMap<i32, ArcSpans> = BTreeMap::from_iter(
-        QUARTER_ARC_SPAN.iter().map(|(diameter, arc_spans)|{
-            println!("at circle: {}", diameter);
-            let radius = (diameter / 2) as f32;
-            let (arc1, span1) = &arc_spans.arc_spans[0];
-            let (arc2, span2) = &arc_spans.arc_spans[1];
-            let (arc3, span3) = &arc_spans.arc_spans[2];
-            let (arc4, span4) = &arc_spans.arc_spans[3];
+        CIRCLE_MAP.iter().skip(CIRCLES_TO_SKIP_FOR_ARC).map(|circle_art|{
+            let span = circle_art_to_span(circle_art.ascii_art);
+            let bounds = span.cell_bounds().expect("must have bounds");
+
+            let top_left = bounds.top_left();
+            let bottom_right = bounds.bottom_right();
+            let top_right = bounds.top_right();
+            let bottom_left = bounds.bottom_left();
+
+            let center_cell = circle_art.center_cell();
+
+            // cells tangent to the circle
+            let top_tangent = Cell::new(center_cell.x, top_left.y);
+            let bottom_tangent = Cell::new(center_cell.x, bottom_left.y);
+            let left_tangent = Cell::new(top_left.x, center_cell.y);
+            let right_tangent = Cell::new(top_right.x, center_cell.y);
+
+            let center = circle_art.center();
+            let radius = circle_art.radius();
+
+            let p1 = Point::new(center.x + radius, center.y);
+            let p2 = Point::new(center.x, center.y - radius);
+            let p3 = Point::new(center.x - radius, center.y);
+            let p4 = Point::new(center.x, center.y + radius);
 
 
-            let paste_loc12 = span2.cell_bounds().unwrap().top_right();
+            let arc2_center = center_cell;
 
-            let half12 = Arc::new(arc1.start, arc2.end, radius);
-            let span12 = span2.paste_at(paste_loc12, span1);
-            println!("span12: \n{}\n", span12);
-            println!("half12: {}", half12);
 
-            let paste_loc23 = span2.cell_bounds().unwrap().bottom_left();
-            let half23 = Arc::new(arc2.start, arc3.end, radius);
-            let span23 = span2.paste_at(paste_loc23, span3);
-            println!("span23: \n{}\n", span23);
-            println!("half23: {}", half23);
 
-            let paste_loc34 = span3.cell_bounds().unwrap().top_right();
-            let half34 = Arc::new(arc3.start, arc4.end, radius);
-            let span34 = span3.paste_at(paste_loc34, span4);
-            println!("span34: \n{}\n", span34);
-            println!("half34: {}", half34);
+            let span1_center = Cell::new((center.x.floor() / Cell::width()) as i32, arc2_center.y);
+            let span2_center = arc2_center;
+            let span3_center = Cell::new(arc2_center.x, (center.y.floor() / Cell::height()) as i32);
+            let span4_center = Cell::new((center.x.floor() / Cell::width()) as i32, (center.y.floor() / Cell::height()) as i32);
 
-            let paste_loc41 = span1.cell_bounds().unwrap().bottom_left();
-            let half41 = Arc::new(arc4.start, arc1.end, radius);
-            let span41 = span1.paste_at(paste_loc41, span4);
-            println!("span41: \n{}\n", span41);
-            println!("half41: {}", half41);
 
-            (*diameter, ArcSpans{
-                diameter: *diameter,
-                arc_spans: vec![(half12, span12),(half23, span23),(half34, span34),(half41, span41)],
-                is_shared_x: arc_spans.is_shared_x,
-                is_shared_y: arc_spans.is_shared_y,
+            let bounds_top_half = Cell::rearrange_bound(top_left, right_tangent);
+            let bounds_bottom_half = Cell::rearrange_bound(left_tangent, bottom_right);
+            let bounds_left_half = Cell::rearrange_bound(top_left, bottom_tangent);
+            let bounds_right_half = Cell::rearrange_bound(top_tangent, bottom_right);
+
+            let span_top_half = span.extract(bounds_top_half.0, bounds_top_half.1).localize();
+            let span_bottom_half = span.extract(bounds_bottom_half.0, bounds_bottom_half.1).localize();
+            let span_left_half = span.extract(bounds_left_half.0, bounds_left_half.1).localize();
+            let span_right_half = span.extract(bounds_right_half.0, bounds_right_half.1).localize();
+
+
+            let arc_top_half = Arc::new(p1, p3, radius);
+            let arc_bottom_half = Arc::new(p3, p1, radius);
+            let arc_left_half = Arc::new(p2, p4, radius);
+            let arc_right_half = Arc::new(p4, p2, radius);
+
+            let diameter = circle_art.diameter();
+            (diameter,
+            ArcSpans{
+                diameter,
+                arc_spans: vec![(arc_top_half, span_top_half), (arc_bottom_half, span_bottom_half), (arc_left_half, span_left_half), (arc_right_half, span_right_half)],
+                is_shared_x: circle_art.is_shared_x(),
+                is_shared_y: circle_art.is_shared_y(),
             })
-
         })
     );
 
