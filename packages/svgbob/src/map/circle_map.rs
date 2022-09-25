@@ -656,11 +656,6 @@ lazy_static! {
 
             let center_cell = circle_art.center_cell();
 
-            // cells tangent to the circle
-            let top_tangent = Cell::new(center_cell.x, top_left.y);
-            let bottom_tangent = Cell::new(center_cell.x, bottom_left.y);
-            let left_tangent = Cell::new(top_left.x, center_cell.y);
-            let right_tangent = Cell::new(top_right.x, center_cell.y);
 
             let center = circle_art.center();
             let radius = circle_art.radius();
@@ -681,10 +676,10 @@ lazy_static! {
             let span4_center = Cell::new((center.x.floor() / Cell::width()) as i32, (center.y.floor() / Cell::height()) as i32);
 
 
-            let bounds_top_half = Cell::rearrange_bound(top_left, right_tangent);
-            let bounds_bottom_half = Cell::rearrange_bound(left_tangent, bottom_right);
-            let bounds_left_half = Cell::rearrange_bound(top_left, bottom_tangent);
-            let bounds_right_half = Cell::rearrange_bound(top_tangent, bottom_right);
+            let bounds_top_half = Cell::rearrange_bound(top_left, Cell::new(top_right.x, span1_center.y));
+            let bounds_bottom_half = Cell::rearrange_bound(Cell::new(bottom_left.x, span3_center.y), bottom_right);
+            let bounds_left_half = Cell::rearrange_bound(Cell::new(span2_center.x, top_left.y), bottom_left);
+            let bounds_right_half = Cell::rearrange_bound(Cell::new(span1_center.x, top_right.y), bottom_right);
 
             let span_top_half = span.extract(bounds_top_half.0, bounds_top_half.1).localize();
             let span_bottom_half = span.extract(bounds_bottom_half.0, bounds_bottom_half.1).localize();
@@ -746,7 +741,9 @@ lazy_static! {
 
 #[derive(Default, Hash, PartialEq, Eq)]
 pub struct DiameterArc {
+    /// the arc diameter
     diameter: i32,
+    /// arc number
     arc: usize,
 }
 impl Ord for DiameterArc {

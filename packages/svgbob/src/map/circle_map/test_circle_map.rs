@@ -27,6 +27,11 @@ fn test_circle1() {
 
 #[test]
 fn test_half_arc_span5_top() {
+    for (diameter, (arc, span)) in FLATTENED_HALF_ARC_SPAN.iter() {
+        println!("diameter: {}", diameter.diameter);
+        println!("{}", span);
+        println!();
+    }
     let art = r#"
            ___
          ,'   `.
@@ -38,31 +43,29 @@ fn test_half_arc_span5_top() {
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_half_arc_span(&span1).unwrap();
-    assert_eq!(arc.radius, 5.0);
+    assert_eq!(arc.radius, 4.5);
 }
 
 #[test]
 fn test_half_arc_span5_bottom() {
     let art = r#"
-
             \       /
              `.___.'
 
             "#;
+    for (diameter, (arc, span)) in FLATTENED_HALF_ARC_SPAN.iter() {
+        println!("diameter: {}", diameter.diameter);
+        println!("{}", span);
+        println!();
+    }
     let cell_buffer = CellBuffer::from(art);
     let mut spans: Vec<Span> = cell_buffer.into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_half_arc_span(&span1).unwrap();
-    assert_eq!(arc.radius, 5.0);
+    assert_eq!(arc.radius, 4.5);
 }
 
-//   half12: A (0,1) (0,6) 5 -> 0 0 0
-//   span23:
-//      __
-//    ,'
-//   \
-//    `.__
 #[test]
 fn test_half_arc_span5_left() {
     let art = r#"
@@ -82,13 +85,6 @@ fn test_half_arc_span5_left() {
     assert_eq!(arc.radius, 5.0);
 }
 
-//   half34: A (0,0) (0,5) 5 -> 0 0 0
-//   span41:
-//   __
-//     `.
-//       \
-//   __.'
-//
 #[test]
 fn test_half_arc_span5_right() {
     let art = r#"
