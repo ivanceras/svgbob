@@ -768,6 +768,8 @@ dependencies = [
 [[package]]
 name = "sauron"
 version = "0.51.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72fdab903ddb1a159f609103bce0fcc4573a6fa02b413e7316170bed4e5b8137"
 dependencies = [
  "cfg-if 0.1.10",
  "sauron-core",
@@ -776,6 +778,8 @@ dependencies = [
 [[package]]
 name = "sauron-core"
 version = "0.51.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6069f6eca98b672ceefa2d00bbe1ad527fb932217868ea6ac2e331c8dc523a2f"
 dependencies = [
  "cfg-if 0.1.10",
  "doc-comment",

@@ -35,3 +35,4 @@
 - [ ] Try again to endorse the span of the grouped fragments that are in the same span
     but not reduces into a single shape
 - [ ] Move the modules into flat structure as possible rather than deep
+- [ ] Make use of dot canvas for circles that are larger than radius 10.

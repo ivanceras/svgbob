@@ -80,18 +80,17 @@ impl Contacts {
     /// to fragments that are touching, to be promoted to a shape.
     /// These includes: rect, roundedrect,
     pub(crate) fn endorse_rects(
-        groups: Vec<Contacts>,
+        spans: Vec<Contacts>,
     ) -> Endorse<FragmentSpan, Contacts> {
         let mut accepted = vec![];
         let mut rejects: Vec<Contacts> = vec![];
-        for group in groups {
-            if let Some(fragment) = group.endorse_rect() {
-                //TODO: use the fragment span at group.0
-                let span = group.span();
+        for span in spans {
+            if let Some(fragment) = span.endorse_rect() {
+                let span = span.span();
                 let fragment_span = FragmentSpan::new(span, fragment);
                 accepted.push(fragment_span);
             } else {
-                rejects.push(group);
+                rejects.push(span);
             }
         }
         Endorse { accepted, rejects }
