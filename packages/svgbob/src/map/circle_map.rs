@@ -691,11 +691,17 @@ lazy_static! {
             let span_left_half = span.extract(bounds_left_half.0, bounds_left_half.1).localize();
             let span_right_half = span.extract(bounds_right_half.0, bounds_right_half.1).localize();
 
+            let bottom_half_start = bounds_bottom_half.0.localize_point(p3);
+            let bottom_half_end = bounds_bottom_half.0.localize_point(p1);
+
+            let right_half_start = bounds_right_half.0.localize_point(p4);
+            let right_half_end = bounds_right_half.0.localize_point(p2);
+
 
             let arc_top_half = Arc::new(p1, p3, radius);
-            let arc_bottom_half = Arc::new(p3, p1, radius);
+            let arc_bottom_half = Arc::new(bottom_half_start, bottom_half_end, radius);
             let arc_left_half = Arc::new(p2, p4, radius);
-            let arc_right_half = Arc::new(p4, p2, radius);
+            let arc_right_half = Arc::new(right_half_start, right_half_end, radius);
 
             let diameter = circle_art.diameter();
             (diameter,
