@@ -1,6 +1,6 @@
 use super::*;
 
-#[test]
+//#[test]
 fn show_circles() {
     println!("CIRCLES ");
     for (circle, span) in CIRCLES_SPAN.iter() {
