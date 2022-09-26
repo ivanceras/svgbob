@@ -22,7 +22,10 @@
 - [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
 - [ ] Add more circle art, dynamically created
     - use `ito-canvas`
-- [ ] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
+- [~] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
+    - [X] Quarter circle arcs
+    - [X] Half circle arcs
+    - [ ] 3/4 circle arcs
 - [ ] Support for pills, elongated ovals
 - [X] Update to library to latest version
     - nalgebra

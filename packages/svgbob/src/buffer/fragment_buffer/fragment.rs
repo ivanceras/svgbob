@@ -423,11 +423,13 @@ impl Merge for Fragment {
 
             // line and marker_line
             (Fragment::Line(line), Fragment::MarkerLine(mline)) => {
-                line.merge_marker_line(mline)
+                //line.merge_marker_line(mline)
+                None
             }
             // marker_line and line
             (Fragment::MarkerLine(mline), Fragment::Line(line)) => {
-                line.merge_marker_line(mline)
+                //line.merge_marker_line(mline)
+                None
             }
             (Fragment::MarkerLine(mline), Fragment::Polygon(polygon)) => {
                 mline.merge_polygon(polygon)

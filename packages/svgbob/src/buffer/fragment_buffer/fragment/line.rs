@@ -188,6 +188,7 @@ impl Line {
         }
     }
 
+    // TODO This is still very buggy
     pub(crate) fn merge_marker_line(
         &self,
         mline: &MarkerLine,
