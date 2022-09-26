@@ -190,14 +190,19 @@ impl Span {
     pub fn hit_cell(&self, needle: Cell) -> bool {
         self.iter().any(|(cell, ch)| *cell == needle)
     }
+
+    /// merge as is without checking it it can
+    pub fn merge_no_check(&self, other: &Self) -> Self {
+        let mut cells = self.0.clone();
+        cells.extend(&other.0);
+        Span(cells)
+    }
 }
 
 impl Merge for Span {
     fn merge(&self, other: &Self) -> Option<Self> {
         if self.can_merge(other) {
-            let mut cells = self.0.clone();
-            cells.extend(&other.0);
-            Some(Span(cells))
+            Some(self.merge_no_check(other))
         } else {
             None
         }

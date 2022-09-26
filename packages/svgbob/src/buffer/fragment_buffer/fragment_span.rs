@@ -69,14 +69,11 @@ impl FragmentSpan {
 impl Merge for FragmentSpan {
     fn merge(&self, other: &Self) -> Option<Self> {
         if let Some(new_merge) = self.fragment.merge(&other.fragment) {
-            if let Some(new_span) = self.span.merge(&other.span) {
-                Some(Self {
-                    span: new_span,
-                    fragment: new_merge,
-                })
-            } else {
-                None
-            }
+            let new_span = self.span.merge_no_check(&other.span);
+            Some(Self {
+                span: new_span,
+                fragment: new_merge,
+            })
         } else {
             None
         }

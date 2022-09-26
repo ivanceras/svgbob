@@ -104,17 +104,16 @@ impl FragmentBuffer {
         (w, h)
     }
 
+    /// Note: Same fragment span can be stored in the same cell
+    /// as it simplifies the algorithm for mergin marker line (lines with dots, and arrows)
+    /// Since they will be attached to each other at the cell level
     fn add_fragment_span_to_cell(
         &mut self,
         cell: Cell,
         fragment_span: FragmentSpan,
     ) {
         if let Some(existing) = self.get_mut(&cell) {
-            if !existing.contains(&fragment_span) {
-                existing.push(fragment_span);
-            } else {
-                println!("already contain a same fragment_span");
-            }
+            existing.push(fragment_span);
         } else {
             self.insert(cell, vec![fragment_span]);
         }
@@ -139,9 +138,19 @@ impl FragmentBuffer {
         ch: char,
         fragments: Vec<Fragment>,
     ) {
-        for fragment in fragments {
-            self.add_fragment_to_cell(cell, ch, fragment);
+        let fragment_spans = fragments
+            .into_iter()
+            .map(|fragment| FragmentSpan {
+                span: Span::new(cell, ch),
+                fragment,
+            })
+            .collect();
+        if let Some(existing) = self.get_mut(&cell) {
+            existing.extend(fragment_spans);
+        } else {
+            self.insert(cell, fragment_spans);
         }
+        self.sort_fragments_in_cell(cell);
     }
 
     pub fn merge_fragment_spans(&self) -> Vec<FragmentSpan> {

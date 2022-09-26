@@ -188,59 +188,6 @@ impl Line {
         }
     }
 
-    // TODO This is still very buggy
-    pub(crate) fn merge_marker_line(
-        &self,
-        mline: &MarkerLine,
-    ) -> Option<Fragment> {
-        if mline.start_marker.is_none() {
-            if self.end == mline.line.start {
-                Some(marker_line(
-                    self.start,
-                    mline.line.end,
-                    mline.line.is_broken,
-                    None,
-                    mline.end_marker.clone(),
-                ))
-            } else if self.start == mline.line.start {
-                Some(marker_line(
-                    self.end,
-                    mline.line.end,
-                    mline.line.is_broken,
-                    None,
-                    mline.end_marker.clone(),
-                ))
-            } else {
-                None
-            }
-        } else if mline.end_marker.is_none() {
-            if self.end == mline.line.end {
-                println!("success 3");
-                Some(marker_line(
-                    self.start,
-                    mline.line.start,
-                    mline.line.is_broken,
-                    mline.start_marker.clone(),
-                    None,
-                ))
-            } else if self.start == mline.line.end {
-                println!("success 4");
-                Some(marker_line(
-                    self.end,
-                    mline.line.start,
-                    mline.line.is_broken,
-                    mline.start_marker.clone(),
-                    None,
-                ))
-            } else {
-                None
-            }
-        } else {
-            println!("marker line should have at least one marker");
-            None
-        }
-    }
-
     pub(crate) fn is_touching_circle(&self, circle: &Circle) -> bool {
         let center = circle.center;
         let distance_end_center = self.end.distance(&center);
