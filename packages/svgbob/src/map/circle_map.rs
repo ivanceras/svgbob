@@ -655,6 +655,12 @@ lazy_static! {
             let top_right = bounds.top_right();
             let bottom_left = bounds.bottom_left();
 
+            assert_eq!(top_left.y, top_right.y);
+            assert_eq!(top_left.x, bottom_left.x);
+            assert_eq!(top_right.x, bottom_right.x);
+            assert_eq!(bottom_left.y, bottom_right.y);
+
+
             let center_cell = circle_art.center_cell();
 
 
@@ -676,11 +682,15 @@ lazy_static! {
             let span3_center = Cell::new(arc2_center.x, (center.y.floor() / Cell::height()) as i32);
             let span4_center = Cell::new((center.x.floor() / Cell::width()) as i32, (center.y.floor() / Cell::height()) as i32);
 
+            let top_tangent = Cell::new(top_right.x, span1_center.y);
+            let bottom_tangent = Cell::new(bottom_left.x, span3_center.y);
+            let left_tangent = Cell::new(span2_center.x, top_left.y);
+            let right_tangent = Cell::new(span1_center.x, top_right.y);
 
-            let bounds_top_half = Cell::rearrange_bound(top_left, Cell::new(top_right.x, span1_center.y));
-            let bounds_bottom_half = Cell::rearrange_bound(Cell::new(bottom_left.x, span3_center.y), bottom_right);
-            let bounds_left_half = Cell::rearrange_bound(Cell::new(span2_center.x, top_left.y), bottom_left);
-            let bounds_right_half = Cell::rearrange_bound(Cell::new(span1_center.x, top_right.y), bottom_right);
+            let bounds_top_half = Cell::rearrange_bound(top_left, top_tangent);
+            let bounds_bottom_half = Cell::rearrange_bound(bottom_tangent, bottom_right);
+            let bounds_left_half = Cell::rearrange_bound(left_tangent, bottom_left);
+            let bounds_right_half = Cell::rearrange_bound(right_tangent, bottom_right);
 
             let span_top_half = span.extract(bounds_top_half.0, bounds_top_half.1).localize();
             let span_bottom_half = span.extract(bounds_bottom_half.0, bounds_bottom_half.1).localize();
