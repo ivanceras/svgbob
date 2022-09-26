@@ -5,6 +5,7 @@ use crate::{
     fragment::Circle,
     Cell, Point, Settings,
 };
+use indexmap::IndexMap;
 use lazy_static::lazy_static;
 use std::{collections::BTreeMap, collections::HashMap, iter::FromIterator};
 
@@ -558,7 +559,7 @@ lazy_static! {
     );
 
     /// There is only 1 span per circle, and localized
-    pub static ref CIRCLES_SPAN: BTreeMap<Circle, Span> = BTreeMap::from_iter(
+    pub static ref CIRCLES_SPAN: IndexMap<Circle, Span> = IndexMap::from_iter(
         CIRCLE_MAP.iter().map(|circle_art|{
             let cb = CellBuffer::from(circle_art.ascii_art);
             let mut spans:Vec<Span> = cb.into();

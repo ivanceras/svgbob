@@ -2,6 +2,7 @@ use crate::{fragment::Bounds, util, Cell, Point};
 use nalgebra::Point2;
 use parry2d::shape::ConvexPolygon;
 use parry2d::shape::Polyline;
+use std::hash::{Hash, Hasher};
 use std::{cmp::Ordering, fmt};
 
 use sauron::{
@@ -15,6 +16,12 @@ pub struct Circle {
     pub radius: f32,
     pub center: Point,
     pub is_filled: bool,
+}
+
+impl Hash for Circle {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        ((self.radius * 2.0) as i32).hash(state);
+    }
 }
 
 impl Circle {

@@ -1,6 +1,35 @@
 use super::*;
 
 #[test]
+fn show_circles() {
+    println!("CIRCLES ");
+    for (circle, span) in CIRCLES_SPAN.iter() {
+        println!("diameter: {}", circle.radius * 2.0);
+        println!();
+        println!("{}", span);
+        println!();
+        println!();
+    }
+    println!("QUARTER ARCS:");
+    for (diameter, (arc, span)) in FLATTENED_QUARTER_ARC_SPAN.iter() {
+        println!("diameter: {}", diameter.diameter);
+        println!();
+        println!("{}", span);
+        println!();
+        println!();
+    }
+    println!("HALF ARCS:");
+    for (diameter, (arc, span)) in FLATTENED_HALF_ARC_SPAN.iter() {
+        println!("diameter: {}", diameter.diameter);
+        println!();
+        println!("{}", span);
+        println!();
+        println!();
+    }
+    panic!();
+}
+
+#[test]
 fn test_circle1() {
     let art = r#"
                 _.-'''''''-._
@@ -27,11 +56,6 @@ fn test_circle1() {
 
 #[test]
 fn test_half_arc_span5_top() {
-    for (diameter, (arc, span)) in FLATTENED_HALF_ARC_SPAN.iter() {
-        println!("diameter: {}", diameter.diameter);
-        println!("{}", span);
-        println!();
-    }
     let art = r#"
            ___
          ,'   `.
@@ -53,11 +77,6 @@ fn test_half_arc_span5_bottom() {
              `.___.'
 
             "#;
-    for (diameter, (arc, span)) in FLATTENED_HALF_ARC_SPAN.iter() {
-        println!("diameter: {}", diameter.diameter);
-        println!("{}", span);
-        println!();
-    }
     let cell_buffer = CellBuffer::from(art);
     let mut spans: Vec<Span> = cell_buffer.into();
     assert_eq!(spans.len(), 1);

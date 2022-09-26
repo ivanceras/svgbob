@@ -820,22 +820,624 @@
                  '-.... ....-'
 
 
+diameter: 4
+
+-.
+  )
+
+
+diameter: 4
+
+ ,-
+(
+
+
+diameter: 4
+
+(
+ `-
+
+
+diameter: 4
+
+  )
+-'
+
+
+diameter: 5
+
+-.
+  )
+
+
+diameter: 5
+
+ .-
+(
+
+
+diameter: 5
+
+(
+ `-
+
+
+diameter: 5
+
+  )
+-'
+
+
+diameter: 6
+
+_
+ '.
+   )
+
+
+diameter: 6
+
+   _
+ .'
+(
+
+
+diameter: 6
+
+(
+ `._
+
+
+diameter: 6
+
+   )
+_.'
+
+
+diameter: 7
+
+_
+ '.
+   )
+
+
+diameter: 7
+
+   _
+ ,'
+(
+
+
+diameter: 7
+
+(
+ `._
+
+
+diameter: 7
+
+   )
+_.'
+
+
+diameter: 8
+
+__
+  '.
+    )
+
+
+diameter: 8
+
+   __
+ ,'
+(
+
+
+diameter: 8
+
+(
+ `.
+   `-
+
+
+diameter: 8
+
+    )
+  .'
+-'
+
+
+diameter: 9
+
+__
+  `.
+    \
+
+
+diameter: 9
+
+   __
+ ,'
+/
+
+
+diameter: 9
+
+\
+ `.__
+
+
+diameter: 9
+
+    /
+__.'
+
+
+diameter: 10
+
+__
+  `.
+    \
+
+
+diameter: 10
+
+   __
+ ,'
+/
+
+
+diameter: 10
+
+\
+ `.__
+
+
+diameter: 10
+
+    /
+__.'
+
+
+diameter: 11
+
+__
+  `.
+    \
+     )
+
+
+diameter: 11
+
+    __
+  .'
+ /
+(
+
+
+diameter: 11
+
+(
+ \
+  `.__
+
+
+diameter: 11
+
+     )
+    /
+__.'
+
+
+diameter: 12
+
+___
+   `.
+     \
+      )
+
+
+diameter: 12
+
+    ___
+  ,'
+ /
+(
+
+
+diameter: 12
+
+(
+ \
+  `.___
+
+
+diameter: 12
+
+      )
+     /
+___.'
+
+
+diameter: 13
+
+___
+   `.
+     \
+      |
+
+
+diameter: 13
+
+    ___
+  ,'
+ /
+|
+
+
+diameter: 13
+
+|
+ \
+  `.___
+
+
+diameter: 13
+
+      |
+     /
+___.'
+
+
+diameter: 14
+
+____
+    `.
+      \
+       |
+
+
+diameter: 14
+
+    ____
+  ,'
+ /
+|
+
+
+diameter: 14
+
+|
+ \
+  `.____
+
+
+diameter: 14
+
+       |
+      /
+____.'
+
+
+diameter: 15
+
+____
+    `.
+      \
+       |
+       |
+
+
+diameter: 15
+
+    ____
+  ,'
+ /
+|
+|
+
+
+diameter: 15
+
+|
+|
+ \
+  `.____
+
+
+diameter: 15
+
+       |
+       |
+      /
+____.'
+
+
+diameter: 16
+
+---__
+     `.
+       \
+        |
+        |
+
+
+diameter: 16
+
+    __---
+  ,'
+ /
+|
+|
+
+
+diameter: 16
+
+|
+|
+ \
+  `.
+    `----
+
+
+diameter: 16
+
+        |
+        |
+       /
+     .'
+----'
+
+
+diameter: 17
+
+----.
+     `.
+       \
+        |
+        |
+
+
+diameter: 17
+
+    .----
+  ,'
+ /
+|
+|
+
+
+diameter: 17
+
+|
+|
+ \
+  `.
+    `----
+
+
+diameter: 17
+
+        |
+        |
+       /
+     .'
+----'
+
+
+diameter: 18
+
+'''-._
+      `.
+        \
+         .
+         |
+         |
+
+
+diameter: 18
+
+    _.-'''
+  ,'
+ /
+.
+|
+|
+
+
+diameter: 18
+
+|
+|
+ \
+  `._
+     '-...
+
+
+diameter: 18
+
+         |
+         |
+        /
+     _.'
+...-'
+
+
+diameter: 19
+
+'''-._
+      `.
+        \
+         .
+         |
+         |
+
+
+diameter: 19
+
+    _.-'''
+  ,'
+ /
+.
+|
+|
+
+
+diameter: 19
+
+|
+|
+ \
+  `._
+     '-...
+
+
+diameter: 19
+
+         |
+         |
+        /
+     _.'
+...-'
+
+
+diameter: 20
+
+''''-._
+       `.
+         \
+          .
+          |
+          |
+
+
+diameter: 20
+
+    _.-''''
+  ,'
+ /
+.
+|
+|
+
+
+diameter: 20
+
+|
+|
+ \
+  `._
+     '-....
+
+
+diameter: 20
+
+          |
+          |
+         /
+      _.'
+....-'
+
+
+diameter: 21
+
+''''-._
+       `.
+         \
+          .
+          |
+          |
+
+
+diameter: 21
+
+    _.-''''
+  ,'
+ /
+.
+|
+|
+
+
+diameter: 21
+
+|
+|
+|
+ \
+  `._
+     '-....
+
+
+diameter: 21
+
+          |
+          |
+          |
+         /
+      _.'
+....-'
+
+
+diameter: 22
+
+'''''-._
+        `.
+          \
+           .
+           |
+           |
+
+
+diameter: 22
+
+    _.-'''''
+  ,'
+ /
+.
+|
+|
+
+
+diameter: 22
+
+|
+|
+|
+ \
+  `._
+     '-.....
+
+
+diameter: 22
+
+           |
+           |
+           |
+          /
+       _.'
+.....-'
+
 
 diameter: 4
 
  ,-.
 (   )
 
+
 diameter: 4
 
 (   )
  `-'
+
 
 diameter: 4
 
  ,-
 (
  `-
+
 
 diameter: 4
 
@@ -950,6 +1552,7 @@ diameter: 8
  `.
    `-
 
+
 diameter: 8
 
 __
@@ -967,7 +1570,6 @@ diameter: 9
 
 
 diameter: 9
-
 
 \       /
  `.___.'
@@ -999,7 +1601,6 @@ diameter: 10
 
 
 diameter: 10
-
 
 \        /
  `.____.'
@@ -1057,6 +1658,7 @@ __
     /
 __.'
 
+
 diameter: 12
 
     _____
@@ -1099,9 +1701,9 @@ diameter: 13
  /          \
 |            |
 
+
 diameter: 13
 
-|            |
 |            |
  \          /
   `.______.'
@@ -1139,7 +1741,6 @@ diameter: 14
 
 diameter: 14
 
-|             |
 |             |
  \           /
   `._______.'
@@ -1216,6 +1817,7 @@ diameter: 16
 |               |
 |               |
 
+
 diameter: 16
 
 |               |
@@ -1223,6 +1825,7 @@ diameter: 16
  \             /
   `.         .'
     `-------'
+
 
 diameter: 16
 
@@ -1236,6 +1839,7 @@ diameter: 16
   `.
     `----
 
+
 diameter: 16
 
 ---__
@@ -1248,6 +1852,7 @@ diameter: 16
      .'
 ----'
 
+
 diameter: 17
 
     .--------.
@@ -1256,6 +1861,7 @@ diameter: 17
 |                |
 |                |
 
+
 diameter: 17
 
 |                |
@@ -1263,6 +1869,7 @@ diameter: 17
  \              /
   `.          .'
     `--------'
+
 
 diameter: 17
 
@@ -1276,6 +1883,7 @@ diameter: 17
   `.
     `----
 
+
 diameter: 17
 
 ----.
@@ -1288,6 +1896,7 @@ diameter: 17
      .'
 ----'
 
+
 diameter: 18
 
     _.-'''''-._
@@ -1296,6 +1905,7 @@ diameter: 18
 .                 .
 |                 |
 |                 |
+
 
 diameter: 18
 
@@ -1332,6 +1942,7 @@ diameter: 18
         /
      _.'
 ...-'
+
 
 diameter: 19
 
@@ -1392,7 +2003,6 @@ diameter: 20
 
 diameter: 20
 
-
 |                   |
 |                   |
  \                 /
@@ -1437,6 +2047,7 @@ diameter: 21
 |                    |
 |                    |
 
+
 diameter: 21
 
 |                    |
@@ -1445,6 +2056,7 @@ diameter: 21
  \                  /
   `._            _.'
      '-........-'
+
 
 diameter: 21
 
@@ -1475,6 +2087,7 @@ diameter: 21
       _.'
 ....-'
 
+
 diameter: 22
 
     _.-'''''''''-._
@@ -1483,6 +2096,7 @@ diameter: 22
 .                     .
 |                     |
 |                     |
+
 
 diameter: 22
 
@@ -1521,3 +2135,5 @@ diameter: 22
            |
           /
        _.'
+.....-'
+
