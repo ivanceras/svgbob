@@ -39,3 +39,14 @@ impl Default for Settings {
         }
     }
 }
+
+impl Settings {
+    pub fn for_debug() -> Self {
+        Self {
+            include_backdrop: false,
+            include_styles: false,
+            include_defs: false,
+            ..Default::default()
+        }
+    }
+}

@@ -130,14 +130,6 @@ impl CellBuffer {
     }
 
     /// return the fragments that are (close objects, touching grouped fragments)
-    ///
-    /// TODO, this should return (Vec<FragmentSpan>, Vec<Span>),
-    /// The rejects span must been retried for a circle_spans
-    /// since there is a change that it was right next to a rect, which
-    /// prevents if from matching any circle.
-    ///
-    /// Once the rects has been matches, then what's left in the span
-    /// could match to be a circle
     pub fn get_fragment_spans(self) -> (Vec<FragmentSpan>, Vec<Span>) {
         let escaped_text = self.escaped_text_nodes();
 

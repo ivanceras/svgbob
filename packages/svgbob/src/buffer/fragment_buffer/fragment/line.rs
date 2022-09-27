@@ -224,52 +224,6 @@ impl Line {
         }
     }
 
-    /// merge this line to the marker line
-    pub(crate) fn merge_line_polygon(
-        &self,
-        polygon: &Polygon,
-    ) -> Option<Fragment> {
-        let poly_center = polygon.center();
-        let distance_end_center = self.end.distance(&poly_center);
-        let distance_start_center = self.start.distance(&poly_center);
-
-        let line_heading = self.heading();
-
-        let threshold_length = line_heading.threshold_length();
-        let is_close_start_point = distance_start_center < threshold_length;
-        let is_close_end_point = distance_end_center < threshold_length;
-
-        let is_same_direction = polygon.matched_direction(line_heading);
-
-        let is_opposite_direction =
-            polygon.matched_direction(line_heading.opposite());
-
-        let can_merge = (is_same_direction || is_opposite_direction)
-            && (is_close_start_point || is_close_end_point);
-
-        if can_merge {
-            let new_line = if is_close_end_point {
-                Line::new_noswap(self.start, self.end, self.is_broken)
-            } else if is_close_start_point {
-                // if close to the start, swap the end points of the line
-                Line::new_noswap(self.end, self.start, self.is_broken)
-            } else {
-                panic!("There is no endpoint of the line is that close to the arrow");
-            };
-            let extended_line = new_line.extend(threshold_length);
-
-            Some(marker_line(
-                extended_line.start,
-                extended_line.end,
-                extended_line.is_broken,
-                None,
-                polygon.get_marker(),
-            ))
-        } else {
-            None
-        }
-    }
-
     pub(crate) fn merge_circle(&self, circle: &Circle) -> Option<Fragment> {
         let distance_end_center = self.end.distance(&circle.center);
         let distance_start_center = self.start.distance(&circle.center);
@@ -558,21 +512,6 @@ mod tests {
         assert!(util::is_collinear(&line1.start, &line1.end, &line2.start));
         assert!(util::is_collinear(&line2.start, &line2.end, &line1.end));
         assert!(line1.can_merge(&line2));
-    }
-
-    #[test]
-    fn is_touching_arrow() {
-        let m = CellGrid::m();
-        let end = Cell::new(10, 0).o();
-        let p1 = Cell::new(11, 0).f();
-        let p2 = Cell::new(11, 0).o();
-        let p3 = Cell::new(11, 0).p();
-
-        let polygon =
-            Polygon::new(vec![p1, p2, p3], false, vec![PolygonTag::ArrowRight]);
-
-        let line = Line::new(m, end, false);
-        assert!(line.merge_line_polygon(&polygon).is_some());
     }
 
     #[test]

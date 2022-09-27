@@ -113,7 +113,11 @@ impl FragmentBuffer {
         fragment_span: FragmentSpan,
     ) {
         if let Some(existing) = self.get_mut(&cell) {
-            existing.push(fragment_span);
+            if !existing.contains(&fragment_span) {
+                existing.push(fragment_span);
+            } else {
+                println!("already contain fragment span..");
+            }
         } else {
             self.insert(cell, vec![fragment_span]);
         }

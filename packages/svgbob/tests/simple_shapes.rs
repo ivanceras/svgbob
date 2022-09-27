@@ -12,11 +12,7 @@ fn rect1() {
   <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="0"></rect>
 </svg>"#;
 
-    let mut settings = Settings::default();
-    settings.include_backdrop = false;
-    settings.include_styles = false;
-    settings.include_defs = false;
-    let svg = svgbob::to_svg_with_settings(bob, &settings);
+    let svg = svgbob::to_svg_with_settings(bob, &Settings::for_debug());
     println!("{}", svg);
     assert_eq!(expected, svg);
 }
@@ -35,11 +31,7 @@ fn escaped_shape() {
   <text x="34" y="60" >+----------+</text>
 </svg>"#;
 
-    let mut settings = Settings::default();
-    settings.include_backdrop = false;
-    settings.include_styles = false;
-    settings.include_defs = false;
-    let svg = svgbob::to_svg_with_settings(bob, &settings);
+    let svg = svgbob::to_svg_with_settings(bob, &Settings::for_debug());
     println!("{}", svg);
     assert_eq!(expected, svg);
 }
@@ -56,11 +48,7 @@ fn rounded_rect() {
   <rect x="36" y="24" width="88" height="32" class="solid nofill" rx="4"></rect>
 </svg>"#;
 
-    let mut settings = Settings::default();
-    settings.include_backdrop = false;
-    settings.include_styles = false;
-    settings.include_defs = false;
-    let svg = svgbob::to_svg_with_settings(bob, &settings);
+    let svg = svgbob::to_svg_with_settings(bob, &Settings::for_debug());
     println!("{}", svg);
     assert_eq!(expected, svg);
 }
