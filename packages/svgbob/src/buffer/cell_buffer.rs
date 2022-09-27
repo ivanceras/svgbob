@@ -130,14 +130,31 @@ impl CellBuffer {
     }
 
     /// return the fragments that are (close objects, touching grouped fragments)
-    pub fn get_fragment_spans(
-        self,
-    ) -> (Vec<FragmentSpan>, Vec<Vec<FragmentSpan>>) {
+    ///
+    /// TODO, this should return (Vec<FragmentSpan>, Vec<Span>),
+    /// The rejects span must been retried for a circle_spans
+    /// since there is a change that it was right next to a rect, which
+    /// prevents if from matching any circle.
+    ///
+    /// Once the rects has been matches, then what's left in the span
+    /// could match to be a circle
+    pub fn get_fragment_spans(self) -> (Vec<FragmentSpan>, Vec<Span>) {
         let escaped_text = self.escaped_text_nodes();
-        let Endorse {
-            mut accepted,
-            rejects,
-        } = self.endorse_to_fragment_spans();
+
+        let group_adjacents: Vec<Span> = self.into();
+        let (endorsed_fragments, vec_spans): (
+            Vec<Vec<FragmentSpan>>,
+            Vec<Vec<Span>>,
+        ) = group_adjacents
+            .into_iter()
+            .map(|span| span.endorse())
+            .map(|endorse| (endorse.accepted, endorse.rejects))
+            .unzip();
+
+        let mut accepted: Vec<FragmentSpan> =
+            endorsed_fragments.into_iter().flatten().collect();
+
+        let rejects: Vec<Span> = vec_spans.into_iter().flatten().collect();
 
         accepted.extend(escaped_text);
 
@@ -147,7 +164,6 @@ impl CellBuffer {
     /// return fragments that are Rect, Circle,
     pub(crate) fn into_shapes_fragment(self) -> Vec<FragmentSpan> {
         let endorse = self.endorse_to_fragment_spans();
-        println!("endorsed: {:#?}", endorse);
         endorse
             .accepted
             .into_iter()
@@ -170,7 +186,16 @@ impl CellBuffer {
         ) = group_adjacents
             .into_iter()
             .map(|span| span.endorse())
-            .map(|endorse| (endorse.accepted, endorse.rejects))
+            .map(|endorse| {
+                (
+                    endorse.accepted,
+                    endorse
+                        .rejects
+                        .into_iter()
+                        .flat_map(|span| <Vec<Contacts>>::from(span))
+                        .collect::<Vec<Contacts>>(),
+                )
+            })
             .unzip();
 
         // partition the vec_groups into groups that is alone and the group
