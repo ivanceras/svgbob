@@ -126,7 +126,7 @@ lazy_static! {
     /// )
     static ref CIRCLE_ART_MAP: Vec<(&'static str, Horizontal,  f32, f32, Cell)> =
         vec![
-            // CIRCLE_1
+            // CIRCLE_0
             //center 1,0,k, radius = 0.5
             // 2 cell width , radius formula: (n-1)/2 = (2-1)/2 = 0.5
             // where n is the number of cells used
@@ -143,7 +143,7 @@ lazy_static! {
             ()
             "#, Horizontal::Half, 1.0, 0.5, Cell::new(0,0)),
 
-            // CIRCLE_2
+            // CIRCLE_1
             //center = 1,1,m radius = 1.0
             // 3 cell width, (n-1)/2 = (3-1)/2  = 1.0
             // vert_mid: half  (0.5/1.0)
@@ -153,7 +153,7 @@ lazy_static! {
             (_)
             "#, Horizontal::Half, 1.5, 0.5, Cell::new(1,0)),
 
-            // CIRCLE_3
+            // CIRCLE_2
             //center = 1,1,o radius = 1.5,
             // 4 cell width, (n-1)/2 = (4-1)/2 = 1.5
             // vert_mid: 3/4 (1.5/2.0)
@@ -164,7 +164,7 @@ lazy_static! {
             (__)
             "#,  Horizontal::Half, 2.0, 1.5, Cell::new(1,1)),
 
-            // CIRCLE_4
+            // CIRCLE_3
             //center: 2,1,m radius: 2.0
             //  5 cell width, (n-1)/2 = (5-1)/2 = 2.0
             //  vert_mid: half (1.5/3.0)
@@ -179,7 +179,7 @@ lazy_static! {
              `-'
             "#,  Horizontal::Half, 2.5, 1.5, Cell::new(2,1)),
 
-            // CIRCLE_5
+            // CIRCLE_4
             //center: 2,1,o radius: 2.5
             // 6 cell width, (n-1)/2 = (6-1)/2 = 2.5
             // vert_mid: half (1.5/3.0)
@@ -194,7 +194,7 @@ lazy_static! {
              `--'
             "#, Horizontal::Half, 3.0,  1.5, Cell::new(2,1)),
 
-            // CIRCLE_6
+            // CIRCLE_5
             //center: 3,2,m radius: 3.0
             // 7 cell width, (n-1)/2 = (7-1)/2 = 3.0
             // vert_mid: 2.5/4
@@ -210,7 +210,7 @@ lazy_static! {
              `._.'
             "#, Horizontal::Half, 3.5, 2.5, Cell::new(3,2)),
 
-            // CIRCLE_7
+            // CIRCLE_6
             //center: 3,2,o radius: 3.5
             // 8 cell width, (n-1)/2 = (8-1)/2 = 3.5
             // vert_mid: 2.5/4
@@ -226,7 +226,7 @@ lazy_static! {
              `.__.'
             "#, Horizontal::Half, 4.0, 2.5, Cell::new(3,2)),
 
-            // CIRCLE_8
+            // CIRCLE_7
             //center: 4,2,m radius:4.0
             // 9 cell width, (n-1)/2 = (9-1)/2 = 4.0
             // vert_mid: half (2.5/5.0)
@@ -243,9 +243,9 @@ lazy_static! {
                `-'
             "#, Horizontal::Half, 4.5, 2.5, Cell::new(4,2)),
 
-            // circle 9 and up can be divided into 4 quadrants these quadrants can be arcs and can be used as
+            // circle 8 and up can be divided into 4 quadrants these quadrants can be arcs and can be used as
             // rounded edge with larger radius for rouded rect
-            // CIRCLE_9
+            // CIRCLE_8
             //center: 4,2,w radius: 4.5
             // start_edge: true
             // 9 cell width, (n-0)/2 = (9-0)/2 = 4.5
@@ -263,7 +263,7 @@ lazy_static! {
              `.___.'
             "#,  Horizontal::LeftEdge, 4.5, 3.0, Cell::new(4,2) ),
 
-            // CIRCLE_10
+            // CIRCLE_9
             //center: 4,2,y radius: 5.0
             //start_edge: true
             // 10 cell width, (n-0)/2 = (10-0)/2 = 5.0
@@ -281,7 +281,7 @@ lazy_static! {
              `.____.'
             "#,  Horizontal::LeftEdge, 5.0, 3.0, Cell::new(4,2)),
 
-            // CIRCLE_11
+            // CIRCLE_10
             //center:5,3,o radius: 5.5
             // 12 cell width, (n-1)/2 = (12-1)/2 = 5.5
             // vert_mid:  3.5/6.0
@@ -299,7 +299,7 @@ lazy_static! {
               `.____.'
             "#, Horizontal::Half, 6.0, 3.5, Cell::new(5,3)),
 
-            // CIRCLE_12
+            // CIRCLE_11
             //center:6,3,m radius: 6.0
             // 13 cell width, (n-1)/2 = (13-1)/2 = 6.0
             // vert_mid: 3.5/6.0
@@ -317,7 +317,7 @@ lazy_static! {
               `._____.'
             "#, Horizontal::Half, 6.5, 3.5, Cell::new(6,3)),
 
-            // CIRCLE_13
+            // CIRCLE_12
             // center: 6,3,y radius: 6.5
             // vert_mid: 4.0/7.0
             //  cx_lies: edge
@@ -335,7 +335,7 @@ lazy_static! {
               `.______.'
             "#, Horizontal::Half, 7.0, 4.0, Cell::new(6,3)),
 
-            // CIRCLE_14
+            // CIRCLE_13
             //center: 7,3,w radius: 7.0
             //vert_mid: 4.0/7.0
             //  cx_lies: mid
@@ -354,7 +354,7 @@ lazy_static! {
             "#, Horizontal::Half, 7.5, 4.0, Cell::new(7,3)),
 
 
-            // CIRCLE_15
+            // CIRCLE_14
             //center: 7,4,o radius: 7.5
             //vert_mid: 4.5/8.0
             //  cx_lies: edge
@@ -373,7 +373,7 @@ lazy_static! {
               `.________.'
             "#, Horizontal::Half, 8.0, 4.5, Cell::new(7,4)),
 
-            // CIRCLE_16
+            // CIRCLE_15
             //center: 8,4,m radius: 8.0
             //vert_mid: 4.5/9.0
             // cx_lies: mid
@@ -393,7 +393,7 @@ lazy_static! {
                 `-------'
             "#, Horizontal::Half, 8.5, 4.5, Cell::new(8,4)),
 
-            // CIRCLE_17
+            // CIRCLE_16
             //center: 8,4,o radius: 8.5
             // vert_mid:  4.5/9.0
             //  cx_lies: edge
@@ -413,7 +413,7 @@ lazy_static! {
                 `--------'
             "#, Horizontal::Half, 9.0, 4.5, Cell::new(8,4)),
 
-            // CIRCLE_18
+            // CIRCLE_17
             //center:9,5,m radius: 9.0
             //vert_mid: 5.5/10.0
             // cx_lies: mid
@@ -434,7 +434,7 @@ lazy_static! {
                  '-.....-'
             "#, Horizontal::Half, 9.5,  5.5, Cell::new(9,5)),
 
-            // CIRCLE_19
+            // CIRCLE_18
             // center: 9,5,o radius: 9.5
             // vert_mid:  5.5/10.0
             //  cx_lies: edge
@@ -457,7 +457,7 @@ lazy_static! {
             "#,  Horizontal::Half, 10.0, 5.5, Cell::new(9,5)),
 
 
-            // CIRCLE_20
+            // CIRCLE_19
             // center: 10,5,m radius: 10
             // vert_mid: 5.5/10.0
             // cx_lies: mid
@@ -478,7 +478,7 @@ lazy_static! {
                  '-.......-'
             "#, Horizontal::Half, 10.5, 5.5, Cell::new(10,5)),
 
-            // CIRCLE_21
+            // CIRCLE_20
             // center: 10,5,o radius: 10.5
             // vert_mid: 5.5/11.0
             //  cx_lies: edge
@@ -500,7 +500,7 @@ lazy_static! {
                  '-........-'
             "#, Horizontal::Half, 11.0, 5.5, Cell::new(10,5)),
 
-            // CIRCLE_22
+            // CIRCLE_21
             // center: 10,5,m radius: 11
             // radius = (n-1)/2 = (23-1)/2 = 11
             // vert_mid: 5.5/11.0
