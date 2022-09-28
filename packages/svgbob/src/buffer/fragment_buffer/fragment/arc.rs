@@ -7,6 +7,7 @@ use sauron::{
 };
 use std::{cmp::Ordering, fmt};
 
+/// TODO: Add an is_broken field when there is a presense of `~` or `!` in the span
 #[derive(Debug, Clone)]
 pub struct Arc {
     pub start: Point,

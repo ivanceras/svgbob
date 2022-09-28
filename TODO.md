@@ -39,3 +39,4 @@
     but not reduces into a single shape
 - [ ] Move the modules into flat structure as possible rather than deep
 - [ ] Make use of dot canvas for circles that are larger than radius 10.
+- [ ] Use `jss` and json syntax for the legen to allow more flexibility with layered class names.
