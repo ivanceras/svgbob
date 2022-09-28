@@ -95,8 +95,6 @@ impl CircleArt {
 pub struct ArcSpans {
     diameter: i32,
     arc_spans: Vec<(Arc, Span)>,
-    is_shared_x: bool,
-    is_shared_y: bool,
 }
 
 // These are circle map, when a group is detected to have these set of characters
@@ -639,8 +637,6 @@ lazy_static! {
             ArcSpans{
                 diameter,
                 arc_spans: vec![(arc1, span1), (arc2, span2), (arc3, span3), (arc4, span4)],
-                is_shared_x: circle_art.is_shared_x(),
-                is_shared_y: circle_art.is_shared_y(),
             })
         })
     );
@@ -714,8 +710,6 @@ lazy_static! {
             ArcSpans{
                 diameter,
                 arc_spans: vec![(arc_top_half, span_top_half), (arc_bottom_half, span_bottom_half), (arc_left_half, span_left_half), (arc_right_half, span_right_half)],
-                is_shared_x: circle_art.is_shared_x(),
-                is_shared_y: circle_art.is_shared_y(),
             })
         })
     );
@@ -777,8 +771,6 @@ lazy_static! {
             ArcSpans{
                 diameter,
                 arc_spans: vec![(arc_123, span_123), (arc_234, span_234), (arc_341, span_341), (arc_412, span_412)],
-                is_shared_x: circle_art.is_shared_x(),
-                is_shared_y: circle_art.is_shared_y(),
             })
         })
     );
