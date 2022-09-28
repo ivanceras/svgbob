@@ -34,6 +34,19 @@ impl Arc {
         arc
     }
 
+    pub(crate) fn major(start: Point, end: Point, radius: f32) -> Self {
+        let mut arc = Arc {
+            start,
+            end,
+            radius,
+            major_flag: true,
+            sweep_flag: false,
+            rotation_flag: false,
+        };
+        arc.sort_reorder_end_points();
+        arc
+    }
+
     /// check if this arcs to point a, b
     /// disregarding radius
     pub(crate) fn arcs_to(&self, a: Point, b: Point) -> bool {

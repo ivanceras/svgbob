@@ -8,7 +8,7 @@ use crate::{
     },
     fragment,
     map::{circle_map, UNICODE_FRAGMENTS},
-    Cell, Fragment, Merge, Settings,
+    Cell, Fragment, Merge, Point, Settings,
 };
 use itertools::Itertools;
 use std::{
@@ -77,6 +77,15 @@ impl Span {
         this.sort();
         this.dedup();
         this
+    }
+
+    fn top_left(&self) -> Cell {
+        let bounds = self.bounds().expect("must have bounds");
+        bounds.0
+    }
+
+    pub fn localize_point(&self, point: Point) -> Point {
+        self.top_left().localize_point(point)
     }
 
     /// returns the top_left most cell which aligns the top most and the left most cell.
@@ -179,6 +188,15 @@ impl Span {
             let circle_frag_span =
                 FragmentSpan::new(self.clone(), circle.into());
             accepted.push(circle_frag_span);
+            un_endorsed_span
+        } else if let Some((three_quarters_arc, un_endorsed_span)) =
+            circle_map::endorse_three_quarters_arc_span(&self)
+        {
+            let three_quarters_arc =
+                three_quarters_arc.absolute_position(top_left);
+            let three_quarters_arc_frag_span =
+                FragmentSpan::new(self.clone(), three_quarters_arc.into());
+            accepted.push(three_quarters_arc_frag_span);
             un_endorsed_span
         } else if let Some((half_arc, un_endorsed_span)) =
             circle_map::endorse_half_arc_span(&self)

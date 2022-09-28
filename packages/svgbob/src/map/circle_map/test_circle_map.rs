@@ -26,6 +26,14 @@ fn show_circles() {
         println!();
         println!();
     }
+    println!("THREE QUARTERS ARCS:");
+    for (diameter, (arc, span)) in FLATTENED_THREE_QUARTERS_ARC_SPAN.iter() {
+        println!("diameter: {}", diameter.diameter);
+        println!();
+        println!("{}", span);
+        println!();
+        println!();
+    }
     panic!();
 }
 

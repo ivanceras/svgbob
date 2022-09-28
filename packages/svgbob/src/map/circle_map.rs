@@ -720,6 +720,69 @@ lazy_static! {
         })
     );
 
+    pub static ref THREE_QUARTERS_ARC_SPAN: BTreeMap<i32, ArcSpans> = BTreeMap::from_iter(
+        CIRCLE_MAP.iter().skip(CIRCLES_TO_SKIP_FOR_ARC).map(|circle_art|{
+            let span = circle_art_to_span(circle_art.ascii_art);
+            let bounds = span.cell_bounds().expect("must have bounds");
+            let top_left = bounds.top_left();
+            let bottom_right = bounds.bottom_right();
+            let top_right = bounds.top_right();
+            let bottom_left = bounds.bottom_left();
+
+            let center = circle_art.center();
+            let radius = circle_art.radius();
+
+            let p1 = Point::new(center.x + radius, center.y);
+            let p2 = Point::new(center.x, center.y - radius);
+            let p3 = Point::new(center.x - radius, center.y);
+            let p4 = Point::new(center.x, center.y + radius);
+
+            let arc2_center = circle_art.center_cell();
+
+
+            let span1_center = Cell::new((center.x.floor() / Cell::width()) as i32, arc2_center.y);
+            let span2_center = arc2_center;
+            let span3_center = Cell::new(arc2_center.x, (center.y.floor() / Cell::height()) as i32);
+            let span4_center = Cell::new((center.x.floor() / Cell::width()) as i32, (center.y.floor() / Cell::height()) as i32);
+
+            let top_tangent = Cell::new(top_right.x, span1_center.y);
+            let bottom_tangent = Cell::new(bottom_left.x, span3_center.y);
+            let left_tangent = Cell::new(span2_center.x, top_left.y);
+            let right_tangent = Cell::new(span1_center.x, top_right.y);
+
+
+            let bounds1 = Cell::rearrange_bound(span1_center, top_right);
+            let bounds2 = Cell::rearrange_bound(top_left, span2_center);
+            let bounds3 = Cell::rearrange_bound(bottom_left, span3_center);
+            let bounds4 = Cell::rearrange_bound(span4_center, bottom_right);
+
+            let span1 = span.extract(bounds1.0, bounds1.1);
+            let span2 = span.extract(bounds2.0, bounds2.1);
+            let span3 = span.extract(bounds3.0, bounds3.1);
+            let span4 = span.extract(bounds4.0, bounds4.1);
+
+            let span_123 = span1.merge_no_check(&span2).merge_no_check(&span3).localize();
+            let span_234 = span2.merge_no_check(&span3).merge_no_check(&span4).localize();
+            let span_341 = span3.merge_no_check(&span4).merge_no_check(&span1).localize();
+            let span_412 = span4.merge_no_check(&span1).merge_no_check(&span2).localize();
+
+
+            let arc_123 = Arc::major(p1, p4, radius);
+            let arc_234 = Arc::major(p2, p1, radius);
+            let arc_341 = Arc::major(p3, p2, radius);
+            let arc_412 = Arc::major(p4, p3, radius);
+
+            let diameter = circle_art.diameter();
+            (diameter,
+            ArcSpans{
+                diameter,
+                arc_spans: vec![(arc_123, span_123), (arc_234, span_234), (arc_341, span_341), (arc_412, span_412)],
+                is_shared_x: circle_art.is_shared_x(),
+                is_shared_y: circle_art.is_shared_y(),
+            })
+        })
+    );
+
 
 
     pub static ref FLATTENED_QUARTER_ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
@@ -737,6 +800,19 @@ lazy_static! {
 
     pub static ref FLATTENED_HALF_ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
             HALF_ARC_SPAN.iter().flat_map(|(diameter, arc_spans)|{
+                arc_spans.arc_spans.iter().enumerate().map(move|(arc_index, arc_span)|{
+                (DiameterArc{
+                    diameter: *diameter,
+                    arc: arc_index,
+                    },
+                    arc_span.clone()
+                )
+            })
+        })
+    );
+
+    pub static ref FLATTENED_THREE_QUARTERS_ARC_SPAN: BTreeMap<DiameterArc, (Arc,Span)> = BTreeMap::from_iter(
+            THREE_QUARTERS_ARC_SPAN.iter().flat_map(|(diameter, arc_spans)|{
                 arc_spans.arc_spans.iter().enumerate().map(move|(arc_index, arc_span)|{
                 (DiameterArc{
                     diameter: *diameter,
@@ -854,6 +930,31 @@ pub fn endorse_half_arc_span(search: &Span) -> Option<(&Arc, Span)> {
                 None
             }
         })
+}
+
+pub fn endorse_three_quarters_arc_span(search: &Span) -> Option<(&Arc, Span)> {
+    FLATTENED_THREE_QUARTERS_ARC_SPAN.iter().rev().find_map(
+        |(_diameter, (arc, span))| {
+            let search_localized = search.clone().localize();
+            let (matched, unmatched) = is_subset_of(span, &search_localized);
+            if matched {
+                let unmatched_cell_chars = search
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(i, cell_char)| {
+                        if unmatched.contains(&i) {
+                            Some(*cell_char)
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<_>>();
+                Some((arc, Span::from(unmatched_cell_chars)))
+            } else {
+                None
+            }
+        },
+    )
 }
 
 /// returns true if all the contacts in subset is in big_set
