@@ -48,13 +48,16 @@ impl PartialOrd for Signal {
     }
 }
 
+/// TODO: Maybe rename to Characteristic
 #[derive(Clone)]
 pub struct Property {
     pub ch: char,
+
     /// the signal signature and the corresponding fragment with that signal
     /// This is used in the first pass of checking the surrounding characters for properties
     /// if it meets the required condition of the character in spot
     signature: Vec<(Signal, Vec<Fragment>)>,
+
     /// behavior is the final output of fragments of the spot character
     /// depending on flag that is meet when checked agains the surrounding characters
     pub behavior: Arc<
@@ -169,15 +172,10 @@ impl Property {
         self.ch.is_alphabetic() && self.ch != '_' // since space is used when a property is derived from strong
     }
 
+    /// TODO: maybe rename to match_profile
     pub fn match_signature(&self, fragments: &[Fragment]) -> bool {
         let signature_fragments = self.signature_fragments_with_signal(Strong);
         signature_fragments == *fragments
-    }
-
-    /// evaluate this property together with the supplied surrounding
-    /// to see if the resulting fragments is equal to the supplied fragments
-    pub(crate) fn match_property(&self, _fragments: &[Fragment]) -> bool {
-        false
     }
 
     /// Check to see if this spot can overal the line a b with at least Medium signal
