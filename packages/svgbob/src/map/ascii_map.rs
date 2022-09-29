@@ -16,6 +16,7 @@ use std::{collections::BTreeMap, sync::Arc};
 
 lazy_static! {
 
+    /// The figure below is a Cell that can contain 1 character, divided into 32 equal small rectangles called CellGrid.
     /// ```ignore
     ///      0 1 2 3 4           B C D
     ///     0┌─┬─┬─┬─┐        A┌─┬─┬─┬─┐E
@@ -96,7 +97,7 @@ lazy_static! {
         // in between 1 and 2
         let between1_2 = (unit1 + unit2) / 2.0; // 0.375
 
-        /// char, default fragments, conditional fragments
+        /// char, default static fragments, conditional fragments
         let map: Vec<(
             char,
             Vec<(Signal, Vec<Fragment>)>,
@@ -931,7 +932,7 @@ lazy_static! {
             ////////////////////////
             ('V',
                 vec![
-                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom, ArrowBottomLeft, ArrowBottomRight])]),
+                  (Medium, vec![polygon(vec![f,j,w], true, vec![ArrowBottom])]),
                   (Weak, vec![line(m,w)]),
                 ],
                 Arc::new(

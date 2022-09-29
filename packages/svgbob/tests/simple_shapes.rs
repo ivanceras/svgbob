@@ -52,3 +52,35 @@ fn rounded_rect() {
     println!("{}", svg);
     assert_eq!(expected, svg);
 }
+
+#[test]
+fn just_v() {
+    let bob = r#"
+        V
+    "#;
+
+    let expected = r#"<svg xmlns="http://www.w3.org/2000/svg" width="80" height="48">
+  <text x="66" y="28" >V</text>
+</svg>"#;
+
+    let svg = svgbob::to_svg_with_settings(bob, &Settings::for_debug());
+    println!("{}", svg);
+    assert_eq!(expected, svg);
+}
+
+#[test]
+fn arrow_down() {
+    let bob = r#"
+        |
+        V
+    "#;
+
+    let expected = r#"<svg xmlns="http://www.w3.org/2000/svg" width="80" height="64">
+  <line x1="68" y1="16" x2="68" y2="36" class="solid"></line>
+  <polygon points="64,36 72,36 68,48" class="filled"></polygon>
+</svg>"#;
+
+    let svg = svgbob::to_svg_with_settings(bob, &Settings::for_debug());
+    println!("{}", svg);
+    assert_eq!(expected, svg);
+}
