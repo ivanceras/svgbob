@@ -86,7 +86,7 @@ impl<'p> PropertyBuffer<'p> {
     ) -> Option<char> {
         let signature_match =
             ASCII_PROPERTIES.iter().find_map(|(ch, property)| {
-                if property.match_signature(fragments) {
+                if property.match_profile(fragments) {
                     Some(*ch)
                 } else {
                     None

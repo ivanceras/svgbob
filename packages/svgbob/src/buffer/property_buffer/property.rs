@@ -173,7 +173,7 @@ impl Property {
     }
 
     /// TODO: maybe rename to match_profile
-    pub fn match_signature(&self, fragments: &[Fragment]) -> bool {
+    pub fn match_profile(&self, fragments: &[Fragment]) -> bool {
         let signature_fragments = self.signature_fragments_with_signal(Strong);
         signature_fragments == *fragments
     }
