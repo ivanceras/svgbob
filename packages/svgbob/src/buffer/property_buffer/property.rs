@@ -54,8 +54,8 @@ pub struct Property {
     pub ch: char,
 
     /// the signal signature and the corresponding fragment with that signal
-    /// This is used in the first pass of checking the surrounding characters for properties
-    /// if it meets the required condition of the character in spot
+    /// This is used in the first pass of checking the surrounding characters of a property in
+    /// context if it meets the required condition
     signature: Vec<(Signal, Vec<Fragment>)>,
 
     /// behavior is the final output of fragments of the spot character
@@ -134,12 +134,16 @@ impl Property {
     }
 
     /// derive a strong property with a strong signal
-    pub fn with_strong_fragments(ch: char, fragments: Vec<Fragment>) -> Self {
+    pub(crate) fn with_strong_fragments(
+        ch: char,
+        fragments: Vec<Fragment>,
+    ) -> Self {
         Property {
             ch,
-            signature: vec![(Signal::Strong, fragments)],
-            //TODO find a way to move the fragments here
-            behavior: Arc::new(|_, _, _, _, _, _, _, _| vec![(true, vec![])]),
+            signature: vec![(Signal::Strong, fragments.clone())],
+            behavior: Arc::new(move |_, _, _, _, _, _, _, _| {
+                vec![(true, fragments.clone())]
+            }),
         }
     }
 
@@ -172,7 +176,8 @@ impl Property {
         self.ch.is_alphabetic() && self.ch != '_' // since space is used when a property is derived from strong
     }
 
-    /// TODO: maybe rename to match_profile
+    /// returns true of the fragments parameters match the fragments with strong signal in this
+    /// property
     pub fn match_profile(&self, fragments: &[Fragment]) -> bool {
         let signature_fragments = self.signature_fragments_with_signal(Strong);
         signature_fragments == *fragments
