@@ -1,13 +1,15 @@
 use crate::{
     buffer::{CellBuffer, Contacts, Span},
     fragment,
-    fragment::Arc,
-    fragment::Circle,
+    fragment::{Arc, Circle},
     Cell, Point, Settings,
 };
 use indexmap::IndexMap;
 use lazy_static::lazy_static;
-use std::{collections::BTreeMap, collections::HashMap, iter::FromIterator};
+use std::{
+    collections::{BTreeMap, HashMap},
+    iter::FromIterator,
+};
 
 /// skip the first 3 circles for constructing our arcs, otherwise it will just be a mess
 pub const CIRCLES_TO_SKIP_FOR_ARC: usize = 3;
@@ -74,9 +76,11 @@ impl CircleArt {
             Horizontal::Half => 0.5,
         }
     }
+
     fn radius(&self) -> f32 {
         self.width() / 2.0
     }
+
     fn diameter(&self) -> i32 {
         (self.radius() * 2.0).floor() as i32
     }

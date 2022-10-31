@@ -1,13 +1,16 @@
 use crate::{util, Point};
-use parry2d::query::PointQuery;
 use parry2d::{
     bounding_volume::AABB,
     math::Isometry,
-    query::intersection_test,
+    query::{intersection_test, PointQuery},
     shape::{Polyline, Segment},
 };
-use std::ops::{Add, Sub};
-use std::{cmp, cmp::Ordering, fmt};
+use std::{
+    cmp,
+    cmp::Ordering,
+    fmt,
+    ops::{Add, Sub},
+};
 
 mod cell_grid;
 

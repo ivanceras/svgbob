@@ -1,8 +1,5 @@
-use crate::buffer::CellGrid;
-use crate::util;
-use crate::Cell;
-use nalgebra::coordinates::XY;
-use nalgebra::{Point2, Vector2};
+use crate::{buffer::CellGrid, util, Cell};
+use nalgebra::{coordinates::XY, Point2, Vector2};
 use std::{
     cmp::Ordering,
     fmt,
@@ -81,12 +78,15 @@ impl Point {
     pub fn is_edge_x(&self) -> bool {
         self.x.fract() == 0.0
     }
+
     pub fn is_edge_y(&self) -> bool {
         (self.y / 2.0).fract() == 0.0
     }
+
     pub fn is_mid_x(&self) -> bool {
         self.x.fract() == 0.5
     }
+
     pub fn is_mid_y(&self) -> bool {
         (self.y / 2.0).fract() == 0.5
     }

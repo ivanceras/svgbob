@@ -1,7 +1,6 @@
 pub use cell_buffer::{Cell, CellBuffer, CellGrid, Contacts, Span};
-pub use fragment_buffer::Direction;
 pub use fragment_buffer::{
-    fragment, fragment::Fragment, FragmentBuffer, FragmentSpan,
+    fragment, fragment::Fragment, Direction, FragmentBuffer, FragmentSpan,
 };
 pub use property_buffer::{Property, PropertyBuffer, Signal};
 pub use string_buffer::StringBuffer;

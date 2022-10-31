@@ -1,12 +1,11 @@
-use crate::buffer::cell_buffer::Endorse;
-use crate::buffer::fragment_buffer::FragmentSpan;
-use crate::fragment::Circle;
 use crate::{
     buffer::{
-        cell_buffer::Contacts, FragmentBuffer, Property, PropertyBuffer,
-        StringBuffer,
+        cell_buffer::{Contacts, Endorse},
+        fragment_buffer::FragmentSpan,
+        FragmentBuffer, Property, PropertyBuffer, StringBuffer,
     },
     fragment,
+    fragment::Circle,
     map::{circle_map, UNICODE_FRAGMENTS},
     Cell, Fragment, Merge, Point, Settings,
 };
@@ -278,6 +277,7 @@ impl Bounds {
     pub fn top_right(&self) -> Cell {
         Cell::new(self.bottom_right.x, self.top_left.y)
     }
+
     pub fn bottom_left(&self) -> Cell {
         Cell::new(self.top_left.x, self.bottom_right.y)
     }

@@ -1,15 +1,12 @@
-use crate::buffer::Span;
-use crate::Cell;
-use crate::Merge;
-use crate::Settings;
+use crate::{buffer::Span, Cell, Merge, Settings};
 pub use direction::Direction;
 pub use fragment::Fragment;
 pub use fragment_span::FragmentSpan;
 pub use fragment_tree::FragmentTree;
 use itertools::Itertools;
-use std::fmt::Write;
 use std::{
     collections::BTreeMap,
+    fmt::Write,
     ops::{Deref, DerefMut},
 };
 

@@ -1,5 +1,4 @@
-use crate::buffer::fragment_buffer::FragmentSpan;
-use crate::Fragment;
+use crate::{buffer::fragment_buffer::FragmentSpan, Fragment};
 use sauron::{html::attributes::*, Node};
 
 /// A tree of fragments where a fragment can contain other fragments
@@ -67,10 +66,8 @@ impl FragmentTree {
     }
 
     pub(crate) fn enclose_fragments(fragments: Vec<FragmentSpan>) -> Vec<Self> {
-        let fragment_trees: Vec<Self> = fragments
-            .into_iter()
-            .map(FragmentTree::new)
-            .collect();
+        let fragment_trees: Vec<Self> =
+            fragments.into_iter().map(FragmentTree::new).collect();
         Self::enclose_recursive(fragment_trees)
     }
 

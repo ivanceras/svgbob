@@ -1,10 +1,11 @@
-use crate::buffer::fragment_buffer::FragmentSpan;
-use crate::fragment::CellText;
-use crate::Merge;
-use crate::Settings;
 use crate::{
-    buffer::{fragment_buffer::FragmentTree, Fragment, StringBuffer},
+    buffer::{
+        fragment_buffer::{FragmentSpan, FragmentTree},
+        Fragment, StringBuffer,
+    },
+    fragment::CellText,
     util::parser,
+    Merge, Settings,
 };
 pub use cell::{Cell, CellGrid};
 pub use contacts::Contacts;

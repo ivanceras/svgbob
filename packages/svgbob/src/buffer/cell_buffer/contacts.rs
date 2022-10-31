@@ -1,9 +1,8 @@
-use super::endorse;
-use super::endorse::Endorse;
-use crate::buffer::fragment_buffer::FragmentSpan;
-use crate::buffer::Span;
-use crate::buffer::{fragment::Fragment, Cell};
-use crate::Merge;
+use super::{endorse, endorse::Endorse};
+use crate::{
+    buffer::{fragment::Fragment, fragment_buffer::FragmentSpan, Cell, Span},
+    Merge,
+};
 use std::fmt;
 
 /// Contains a group of fragments that are touching each other

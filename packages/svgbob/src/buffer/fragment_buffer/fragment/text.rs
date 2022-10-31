@@ -1,9 +1,7 @@
-use crate::buffer::Span;
-use crate::FragmentSpan;
 use crate::{
-    buffer::{Cell, CellGrid},
+    buffer::{Cell, CellGrid, Span},
     fragment::Bounds,
-    Point,
+    FragmentSpan, Point,
 };
 use sauron::{html::*, svg, svg::attributes::*, Node};
 use std::{borrow::Cow, cmp::Ordering, fmt};

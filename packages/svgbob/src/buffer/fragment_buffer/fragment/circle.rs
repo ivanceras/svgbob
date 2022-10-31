@@ -1,9 +1,11 @@
 use crate::{fragment::Bounds, util, Cell, Point};
 use nalgebra::Point2;
-use parry2d::shape::ConvexPolygon;
-use parry2d::shape::Polyline;
-use std::hash::{Hash, Hasher};
-use std::{cmp::Ordering, fmt};
+use parry2d::shape::{ConvexPolygon, Polyline};
+use std::{
+    cmp::Ordering,
+    fmt,
+    hash::{Hash, Hasher},
+};
 
 use sauron::{
     html::attributes::*,
@@ -39,6 +41,7 @@ impl Circle {
     fn top_left_bound(&self) -> Point {
         Point::new(self.center.x - self.radius, self.center.y - self.radius)
     }
+
     fn top_right_bound(&self) -> Point {
         Point::new(self.center.x + self.radius, self.center.y - self.radius)
     }

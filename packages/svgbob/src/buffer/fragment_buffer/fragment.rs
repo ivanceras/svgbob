@@ -1,18 +1,14 @@
-use crate::Merge;
-use crate::{buffer::Cell, map::unicode_map::FRAGMENTS_UNICODE, Point};
+use crate::{buffer::Cell, map::unicode_map::FRAGMENTS_UNICODE, Merge, Point};
 pub use crate::{Property, Settings, Signal};
 pub use arc::Arc;
 pub use circle::Circle;
 pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
-use parry2d::bounding_volume::BoundingVolume;
-use parry2d::query::PointQuery;
-use parry2d::shape::ConvexPolygon;
 use parry2d::{
-    bounding_volume::AABB,
+    bounding_volume::{BoundingVolume, AABB},
     math::Isometry,
-    query::intersection_test,
-    shape::{Polyline, Segment, Shape},
+    query::{intersection_test, PointQuery},
+    shape::{ConvexPolygon, Polyline, Segment, Shape},
 };
 pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;

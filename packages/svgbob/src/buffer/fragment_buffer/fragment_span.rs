@@ -1,10 +1,5 @@
-use crate::buffer::Span;
-use crate::Cell;
-use crate::Fragment;
-use crate::Merge;
-use crate::Settings;
-use std::cmp::Ordering;
-use std::fmt;
+use crate::{buffer::Span, Cell, Fragment, Merge, Settings};
+use std::{cmp::Ordering, fmt};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct FragmentSpan {

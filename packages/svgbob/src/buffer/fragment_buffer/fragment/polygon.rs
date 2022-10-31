@@ -1,7 +1,6 @@
-use crate::Direction;
 use crate::{
     fragment::{marker_line::Marker, Bounds},
-    Cell, Point,
+    Cell, Direction, Point,
 };
 use nalgebra::Point2;
 use parry2d::shape::{shape::Shape, Polyline};
