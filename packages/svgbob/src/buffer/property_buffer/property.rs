@@ -59,7 +59,7 @@ pub struct Property {
     signature: Vec<(Signal, Vec<Fragment>)>,
 
     /// behavior is the final output of fragments of the spot character
-    /// depending on flag that is meet when checked agains the surrounding characters
+    /// depending on flag that is meet when checked against the surrounding characters
     pub behavior: Arc<
         dyn Fn(
                 &Property,
@@ -123,7 +123,7 @@ impl Property {
         }
     }
 
-    /// empty property serves as a substitue for None property for simplicity in
+    /// empty property serves as a substitute for None property for simplicity in
     /// the behavior code, never have to deal with Option
     pub fn empty() -> Self {
         Property {

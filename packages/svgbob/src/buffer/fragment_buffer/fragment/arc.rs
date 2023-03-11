@@ -7,7 +7,7 @@ use sauron::{
 };
 use std::{cmp::Ordering, fmt};
 
-/// TODO: Add an is_broken field when there is a presense of `~` or `!` in the span
+/// TODO: Add an is_broken field when there is a presence of `~` or `!` in the span
 #[derive(Debug, Clone)]
 pub struct Arc {
     pub start: Point,
@@ -139,7 +139,7 @@ impl Arc {
     }
 
     /// check to see if the arc is aabb right angle
-    /// that is the center x and y coordinate is alinged to both of the end points
+    /// that is the center x and y coordinate is aligned to both of the end points
     /// This will be used for checking if group of fragments can be a rounded rect
     pub fn is_aabb_right_angle_arc(&self) -> bool {
         let center = self.center();

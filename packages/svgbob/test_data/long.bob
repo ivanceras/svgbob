@@ -620,15 +620,15 @@ test测试--> 测试test
 
          .                     .
          |\       /\          /|
-    _____| \_____/  \________/ |__________
-  ,' -> create Ascii art                  `.
- /  -> draw sketches for e-mails            \
-|  -> comment source code of programs        |
-| -> diagrams for visually handicaped people (
-| -> more dialogs                             >
-|                                            (
- \  -> ...                                  /
-  `._______  ____   ____   ___  __________,'
+    _____| \_____/  \________/ |___________
+  ,' -> create Ascii art                   `.
+ /  -> draw sketches for e-mails             \
+|  -> comment source code of programs         |
+| -> diagrams for visually handicapped people (
+| -> more dialogs                              >
+|                                             (
+ \  -> ...                                   /
+  `._______  ____   ____   ___  ___________,'
           /,'    | /    \ |   `.\
          /'      |/      \|     `\
                  .        .
@@ -864,7 +864,7 @@ What can it do?
                      V /|                \ '-----> Reception
                 Team  / .                 \
                      v /|                  \
-             Worklaod / .                   '-->> Career change
+             Workload / .                   '-->> Career change
                      V /
                  PTO  /
                      V
@@ -1036,7 +1036,7 @@ Board    `-------------------
      _______           _
 _.-'|+__|__-|'-._,.-(((_)
 
-There,a battery powering a tessla coil.
+There, a battery powering a tesla coil.
 
 
  +10-15V           ___0,047R
@@ -1512,7 +1512,7 @@ IN>----||------+-------|  2N2222    O<--||---> High impedance output
              |
              |
             ---
-            \ / LED   (glows when 555 ouput is high)
+            \ / LED   (glows when 555 output is high)
              V
             ---
              |

@@ -57,7 +57,7 @@ impl Ord for Cell {
 
 macro_rules! cell_grid {
     ($($a:ident),*) => {
-        /// The point at sepcific cell grid of this cell
+        /// The point at specific cell grid of this cell
         $(pub fn $a(&self) -> Point {
             self.top_left_most() + CellGrid::$a()
         })*

@@ -67,7 +67,7 @@ fn is_rect(fragments: &[&Fragment]) -> bool {
 
 /// qualifications:
 ///  - 8 fragments
-///  - 2 parallell pair
+///  - 2 parallel pair
 ///  - 4 aabb right angle arc (top_left, top_right, bottom_left, bottom_right)
 ///  - each of the right angle touches 2 lines that are aabb_perpendicular
 pub fn endorse_rounded_rect(fragments: &[&Fragment]) -> Option<Rect> {

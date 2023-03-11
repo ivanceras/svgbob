@@ -12,7 +12,7 @@ mod property;
 /// which contains the property of each cell
 /// This will be used in the first phase of converting ascii diagrams into fragment buffer
 /// The properties are generated once and will be repeatedly used for the second phase
-/// where testing the neighboring charaters to determine the fragment to be drawn for that cell.
+/// where testing the neighboring characters to determine the fragment to be drawn for that cell.
 #[derive(Default, Clone)]
 pub struct PropertyBuffer<'p>(HashMap<Cell, &'p Property>);
 
