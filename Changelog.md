@@ -2,10 +2,12 @@
 
 ## Unreleased
 - feat: **Breaking** make all the styles be contained under a .svgbob class, in order to prevent the other svg elements from clashing with other svg elements in the document outside of svgbob svg
+   - Fixes [Issue #100](https://github.com/ivanceras/svgbob/issues/100)
 - feat: remove multiple Polygon tag for arrow characters
 - refactor: remove is_shared_x and is_shared_y since it is not used
 - refactor: change the names of the circle according to their index instead of their diameter
 - feat: implement THREE_QUARTERS_ARC circles, you can now draw circles 3/4 through
+   ![svgbob-circles](https://user-images.githubusercontent.com/7972655/232184480-b20bc2c3-10f7-4467-8598-ef497122e3c9.png)
 - feat: remove merge_line_with_polygon as it is buggy as well
 - feat: improve endorse function to use re_endorse
 - feat: use the old algorithmn for adding multiple fragments, remove buggy code for merging line and marker_line
