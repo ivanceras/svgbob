@@ -786,6 +786,8 @@ dependencies = [
 [[package]]
 name = "sauron"
 version = "0.52.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0a6576ae34423bc0171e617c09ec8de5d5d445a777904ba1ee379665e9c9ab5"
 dependencies = [
  "cfg-if 0.1.10",
  "sauron-core",
@@ -794,6 +796,8 @@ dependencies = [
 [[package]]
 name = "sauron-core"
 version = "0.52.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51e4d50a7637c385e762f91ebe9b33b2fc1d2a38605f8d9c4753573ba849f215"
 dependencies = [
  "cfg-if 0.1.10",
  "doc-comment",
@@ -904,7 +908,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.6.7"
+version = "0.7.0"
 dependencies = [
  "indexmap",
  "itertools",
@@ -919,7 +923,7 @@ dependencies = [
 
 [[package]]
 name = "svgbob_cli"
-version = "0.6.6"
+version = "0.7.0"
 dependencies = [
  "clap",
  "svgbob",
@@ -927,7 +931,7 @@ dependencies = [
 
 [[package]]
 name = "svgbob_server"
-version = "0.6.6"
+version = "0.7.0"
 dependencies = [
  "axum",
  "svgbob",
