@@ -449,9 +449,9 @@ dependencies = [
 
 [[package]]
 name = "mt-dom"
-version = "0.21.1"
+version = "0.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3fb0a2d92c97f3db160522190c65c4c122873cfc2568013a4e89b2ac178c8a2b"
+checksum = "7add6759e7306e5b7e4bd4d63bb0f39442921baf32e5c326a9b9bc0743002fc3"
 dependencies = [
  "log",
 ]
@@ -785,7 +785,7 @@ dependencies = [
 
 [[package]]
 name = "sauron"
-version = "0.51.0"
+version = "0.52.0"
 dependencies = [
  "cfg-if 0.1.10",
  "sauron-core",
@@ -793,9 +793,8 @@ dependencies = [
 
 [[package]]
 name = "sauron-core"
-version = "0.51.0"
+version = "0.52.0"
 dependencies = [
- "async-trait",
  "cfg-if 0.1.10",
  "doc-comment",
  "js-sys",
