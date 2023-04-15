@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
 - feat: **Breaking** make all the styles be contained under a .svgbob class, in order to prevent the other svg elements from clashing with other svg elements in the document outside of svgbob svg
    - Fixes [Issue #100](https://github.com/ivanceras/svgbob/issues/100)
 - feat: remove multiple Polygon tag for arrow characters
