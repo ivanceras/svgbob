@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+- Fix: the legend css should also be under `.svgbob` namespace for it to take effect
+- Fix: the overly thick marker width of big_open circle letter `O` with stroke-width:1 instead of 2.
+
 ## 0.7.0
 - feat: **Breaking** make all the styles be contained under a .svgbob class, in order to prevent the other svg elements from clashing with other svg elements in the document outside of svgbob svg
    - Fixes [Issue #100](https://github.com/ivanceras/svgbob/issues/100)
