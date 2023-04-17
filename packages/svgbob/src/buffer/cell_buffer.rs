@@ -261,7 +261,9 @@ impl CellBuffer {
         let classes: Vec<String> = self
             .css_styles
             .iter()
-            .map(|(class, styles)| format!(".{}{{ {} }}", class, styles))
+            .map(|(class, styles)| {
+                format!(".svgbob .{}{{ {} }}", class, styles)
+            })
             .collect();
         classes.join("\n")
     }
@@ -312,6 +314,7 @@ impl CellBuffer {
 
                 ".svgbob .bg_filled":{
                     fill: background.clone(),
+                    stroke_width: 1,
                 },
 
                 ".svgbob .nofill":{
