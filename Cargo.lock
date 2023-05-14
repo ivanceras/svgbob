@@ -908,7 +908,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.7.0"
+version = "0.7.1"
 dependencies = [
  "indexmap",
  "itertools",
