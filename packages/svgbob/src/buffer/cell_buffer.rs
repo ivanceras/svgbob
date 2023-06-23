@@ -13,7 +13,8 @@ pub use endorse::Endorse;
 use itertools::Itertools;
 use sauron::{
     html,
-    html::{attributes::*, *},
+    html::attributes::{class, id},
+    html::*,
     svg::{attributes::*, *},
     Node,
 };
