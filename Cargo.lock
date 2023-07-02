@@ -406,6 +406,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b06a4cde4c0f271a446782e3eff8de789548ce57dbc8eca9292c27f4a42004b4"
 
 [[package]]
+name = "longest-increasing-subsequence"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3bd0dd2cd90571056fdb71f6275fada10131182f84899f4b2a916e565d81d86"
+
+[[package]]
 name = "matchit"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -446,11 +452,10 @@ dependencies = [
 
 [[package]]
 name = "mt-dom"
-version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7add6759e7306e5b7e4bd4d63bb0f39442921baf32e5c326a9b9bc0743002fc3"
+version = "0.54.0"
 dependencies = [
  "log",
+ "longest-increasing-subsequence",
 ]
 
 [[package]]
@@ -782,7 +787,7 @@ dependencies = [
 
 [[package]]
 name = "sauron"
-version = "0.52.0"
+version = "0.54.1"
 dependencies = [
  "cfg-if 0.1.10",
  "sauron-core",
@@ -790,7 +795,7 @@ dependencies = [
 
 [[package]]
 name = "sauron-core"
-version = "0.52.0"
+version = "0.54.1"
 dependencies = [
  "cfg-if 0.1.10",
  "doc-comment",
@@ -799,6 +804,7 @@ dependencies = [
  "log",
  "mt-dom",
  "once_cell",
+ "serde-wasm-bindgen",
  "thiserror",
  "wasm-bindgen",
  "wasm-bindgen-futures",
@@ -816,6 +822,17 @@ name = "serde"
 version = "1.0.164"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9e8c8cf938e98f769bc164923b06dce91cea1751522f46f8466461af04c9027d"
+
+[[package]]
+name = "serde-wasm-bindgen"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f3b143e2833c57ab9ad3ea280d21fd34e285a42837aeb0ee301f4f41890fa00e"
+dependencies = [
+ "js-sys",
+ "serde",
+ "wasm-bindgen",
+]
 
 [[package]]
 name = "serde_json"
