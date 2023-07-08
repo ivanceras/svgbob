@@ -428,11 +428,11 @@ impl CellBuffer {
         marker(
             [
                 id("arrow"),
-                viewBox("-2 -2 8 8"),
-                refX(4),
-                refY(2),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("-2 -2 8 8"),
+                ref_x(4),
+                ref_y(2),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [polygon([points("0,0 0,4 4,2 0,0")], [])],
@@ -443,11 +443,11 @@ impl CellBuffer {
         marker(
             [
                 id("diamond"),
-                viewBox("-2 -2 8 8"),
-                refX(4),
-                refY(2),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("-2 -2 8 8"),
+                ref_x(4),
+                ref_y(2),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [polygon([points("0,2 2,0 4,2 2,4 0,2")], [])],
@@ -458,11 +458,11 @@ impl CellBuffer {
         marker(
             [
                 id("open_circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(
@@ -476,11 +476,11 @@ impl CellBuffer {
         marker(
             [
                 id("circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(
@@ -494,11 +494,11 @@ impl CellBuffer {
         marker(
             [
                 id("big_open_circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(
