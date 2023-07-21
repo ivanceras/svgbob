@@ -174,6 +174,6 @@ impl<MSG> From<MarkerLine> for Node<MSG> {
         if let Some(end_marker) = ml.end_marker {
             classes.push(class(format!("end_marked_{}", end_marker)));
         }
-        node.add_attributes(classes)
+        node.with_attributes(classes)
     }
 }

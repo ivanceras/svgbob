@@ -110,7 +110,7 @@ impl CellBuffer {
 
         let svg_node =
             Self::fragments_to_node(fragments, legend_css, settings, w, h)
-                .add_children(group_nodes);
+                .with_children(group_nodes);
         (svg_node, w, h)
     }
 
@@ -126,7 +126,7 @@ impl CellBuffer {
 
         let svg_node =
             Self::fragments_to_node(fragments, legend_css, settings, w, h)
-                .add_children(group_nodes);
+                .with_children(group_nodes);
 
         svg_node
     }
