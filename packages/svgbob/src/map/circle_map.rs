@@ -14,93 +14,6 @@ use std::{
 /// skip the first 3 circles for constructing our arcs, otherwise it will just be a mess
 pub const CIRCLES_TO_SKIP_FOR_ARC: usize = 3;
 
-#[derive(PartialEq, Eq, Debug, Clone, Copy)]
-/// edge cases of the circle art
-pub enum Horizontal {
-    /// circle arc is touching the left edge of the first cell
-    /// ie: if the left most cell is `/` then it is touching the dge
-    LeftEdge,
-    /// if the left most cell is `(` or `|` then it starts at half the cell
-    Half,
-}
-
-pub struct CircleArt {
-    /// the ascii art of the circel
-    /// empty lines are ignored
-    /// empty vertical columns are ignored
-    ascii_art: &'static str,
-    start_edge: Horizontal,
-    /// distance in cell units, from the left edge of the ascii art to the center.x of the circle
-    offset_center_x: f32,
-    /// distance in cell units, from the top edge of the ascii art to the center.y of the circle
-    offset_center_y: f32,
-}
-
-impl CircleArt {
-    /// calculate the centel cell of this circle art
-    /// based on offset center
-    fn center_cell(&self) -> Cell {
-        let mut center_cell_x = self.offset_center_x - self.edge_increment_x();
-
-        // if no shared x (meaning even number of ascii art along x axis)
-        // we want to use the cell before it as the center cell
-        if !self.is_shared_x() {
-            center_cell_x -= 0.5;
-        }
-        let mut center_cell_y = self.offset_center_y;
-        if !self.is_shared_y() {
-            center_cell_y -= 0.5;
-        }
-        Cell::new(center_cell_x.floor() as i32, center_cell_y.floor() as i32)
-    }
-
-    /// returns the width in cells of the ascii art of this circle
-    fn width(&self) -> f32 {
-        let cb = CellBuffer::from(self.ascii_art);
-        let (lo, hi) = cb.bounds().expect("circle must have bounds");
-        match self.start_edge {
-            Horizontal::LeftEdge => (hi.x - lo.x) as f32 + 1.0,
-            Horizontal::Half => (hi.x - lo.x) as f32,
-        }
-    }
-
-    fn center(&self) -> Point {
-        let center_x = self.radius() + self.edge_increment_x();
-        let center_y = self.offset_center_y * 2.0;
-        Point::new(center_x, center_y)
-    }
-
-    fn edge_increment_x(&self) -> f32 {
-        match self.start_edge {
-            Horizontal::LeftEdge => 0.0,
-            Horizontal::Half => 0.5,
-        }
-    }
-
-    fn radius(&self) -> f32 {
-        self.width() / 2.0
-    }
-
-    fn diameter(&self) -> i32 {
-        (self.radius() * 2.0).floor() as i32
-    }
-
-    /// center cell at x will be shared if it is on the odd count
-    fn is_shared_x(&self) -> bool {
-        self.offset_center_x * 2.0 % 2.0 == 1.0
-    }
-
-    /// center cell at y will be shared if it is on the odd count
-    fn is_shared_y(&self) -> bool {
-        self.offset_center_y * 2.0 % 2.0 == 1.0
-    }
-}
-
-pub struct ArcSpans {
-    diameter: i32,
-    arc_spans: Vec<(Arc, Span)>,
-}
-
 // These are circle map, when a group is detected to have these set of characters
 // arrange together in such this way, then endorse them as a circle
 // Each of these character formation will have a certain circle parameters: center, and radius.
@@ -635,6 +548,93 @@ static CIRCLE_ART_MAP: Lazy<Vec<(&'static str, Horizontal, f32, f32, Cell)>> =
             ),
         ]
     });
+
+#[derive(PartialEq, Eq, Debug, Clone, Copy)]
+/// edge cases of the circle art
+pub enum Horizontal {
+    /// circle arc is touching the left edge of the first cell
+    /// ie: if the left most cell is `/` then it is touching the dge
+    LeftEdge,
+    /// if the left most cell is `(` or `|` then it starts at half the cell
+    Half,
+}
+
+pub struct CircleArt {
+    /// the ascii art of the circel
+    /// empty lines are ignored
+    /// empty vertical columns are ignored
+    ascii_art: &'static str,
+    start_edge: Horizontal,
+    /// distance in cell units, from the left edge of the ascii art to the center.x of the circle
+    offset_center_x: f32,
+    /// distance in cell units, from the top edge of the ascii art to the center.y of the circle
+    offset_center_y: f32,
+}
+
+impl CircleArt {
+    /// calculate the centel cell of this circle art
+    /// based on offset center
+    fn center_cell(&self) -> Cell {
+        let mut center_cell_x = self.offset_center_x - self.edge_increment_x();
+
+        // if no shared x (meaning even number of ascii art along x axis)
+        // we want to use the cell before it as the center cell
+        if !self.is_shared_x() {
+            center_cell_x -= 0.5;
+        }
+        let mut center_cell_y = self.offset_center_y;
+        if !self.is_shared_y() {
+            center_cell_y -= 0.5;
+        }
+        Cell::new(center_cell_x.floor() as i32, center_cell_y.floor() as i32)
+    }
+
+    /// returns the width in cells of the ascii art of this circle
+    fn width(&self) -> f32 {
+        let cb = CellBuffer::from(self.ascii_art);
+        let (lo, hi) = cb.bounds().expect("circle must have bounds");
+        match self.start_edge {
+            Horizontal::LeftEdge => (hi.x - lo.x) as f32 + 1.0,
+            Horizontal::Half => (hi.x - lo.x) as f32,
+        }
+    }
+
+    fn center(&self) -> Point {
+        let center_x = self.radius() + self.edge_increment_x();
+        let center_y = self.offset_center_y * 2.0;
+        Point::new(center_x, center_y)
+    }
+
+    fn edge_increment_x(&self) -> f32 {
+        match self.start_edge {
+            Horizontal::LeftEdge => 0.0,
+            Horizontal::Half => 0.5,
+        }
+    }
+
+    fn radius(&self) -> f32 {
+        self.width() / 2.0
+    }
+
+    fn diameter(&self) -> i32 {
+        (self.radius() * 2.0).floor() as i32
+    }
+
+    /// center cell at x will be shared if it is on the odd count
+    fn is_shared_x(&self) -> bool {
+        self.offset_center_x * 2.0 % 2.0 == 1.0
+    }
+
+    /// center cell at y will be shared if it is on the odd count
+    fn is_shared_y(&self) -> bool {
+        self.offset_center_y * 2.0 % 2.0 == 1.0
+    }
+}
+
+pub struct ArcSpans {
+    diameter: i32,
+    arc_spans: Vec<(Arc, Span)>,
+}
 
 static CIRCLE_MAP: Lazy<Vec<CircleArt>> = Lazy::new(|| {
     Vec::from_iter(CIRCLE_ART_MAP.iter().enumerate().map(
