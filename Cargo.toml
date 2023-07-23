@@ -5,11 +5,6 @@ members = [
     "packages/svgbob_server",
 ]
 
-[patch.crates-io]
-#mt-dom = { git = "https://github.com/ivanceras/mt-dom.git", branch = "master" }
-#sauron = { git = "https://github.com/ivanceras/sauron.git", branch = "develop" }
-#jss = { path = "../jss" }
-
 [profile.release]
 opt-level = 3
 lto = true

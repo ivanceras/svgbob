@@ -5,7 +5,7 @@ pub use circle::Circle;
 pub use line::Line;
 pub use marker_line::{Marker, MarkerLine};
 use parry2d::{
-    bounding_volume::{BoundingVolume, AABB},
+    bounding_volume::{Aabb, BoundingVolume},
     math::Isometry,
     query::{intersection_test, PointQuery},
     shape::{ConvexPolygon, Polyline, Segment, Shape},
@@ -167,13 +167,13 @@ impl Fragment {
     }
 
     pub fn hit(&self, start: Point, end: Point) -> bool {
-        self.is_intersecting(&AABB::new(*start, *end))
+        self.is_intersecting(&Aabb::new(*start, *end))
     }
 
     /// check if this fragment is intersecting with this bounding box
     /// Note: if intersection logic requires testing the solid shape inside the polygon
     /// use the ConvexPolygon of each shape instead of Polyline
-    pub fn is_intersecting(&self, bbox: &AABB) -> bool {
+    pub fn is_intersecting(&self, bbox: &Aabb) -> bool {
         let points = vec![
             *Point::new(bbox.mins.x, bbox.mins.y),
             *Point::new(bbox.maxs.x, bbox.mins.y),
@@ -206,9 +206,9 @@ impl Fragment {
     }
 
     /// check if this fragment can be contain in the specified bounding box `bbox`
-    pub fn is_inside(&self, bbox: &AABB) -> bool {
+    pub fn is_inside(&self, bbox: &Aabb) -> bool {
         let (start, end) = self.bounds();
-        let frag_bound = AABB::new(*start, *end);
+        let frag_bound = Aabb::new(*start, *end);
         bbox.contains(&frag_bound)
     }
 

@@ -10,8 +10,8 @@ license = "Apache-2.0"
 edition = "2021"
 
 [dependencies]
-nalgebra = "0.30.1"
-parry2d = "0.8.0"
+nalgebra = "0.32.1"
+parry2d = "0.13.5"
 lazy_static = "1.3.0"
 sauron = { version = "0.57.0", default-features = false}
 #sauron = { path = "../../../sauron", default-features = false}
