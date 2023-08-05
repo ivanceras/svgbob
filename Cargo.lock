@@ -486,9 +486,9 @@ dependencies = [
 
 [[package]]
 name = "mt-dom"
-version = "0.55.2"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b9f171d731d6f989f693effd37dcc2159767ea210a623e6ae384be609daee6e4"
+checksum = "0a34f3bde12ffe7b33b3e4bcbb3fb4f8e9cf535020619a295ca073d30f7a8cac"
 dependencies = [
  "longest-increasing-subsequence",
 ]
@@ -836,18 +836,18 @@ dependencies = [
 
 [[package]]
 name = "sauron"
-version = "0.57.1"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "310f088de5fc8c6c8154f621809ce19e96147fde5b23083414ef2b603ae3c6a3"
+checksum = "88f5a81c3119d0a4ca696c4a00699d3e40f1f6cebb8f6ba24cfa59a4b61787bd"
 dependencies = [
  "sauron-core",
 ]
 
 [[package]]
 name = "sauron-core"
-version = "0.57.1"
+version = "0.59.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e3b862be1ea59993de5ce930a70defc19aca8f6f65f32d2e43da13ffeeee47c"
+checksum = "fd25a6eae408b33dc4f86c1d01255d5ad64ebb6f0cc4a17a76b02ef7341ea94a"
 dependencies = [
  "cfg-if",
  "doc-comment",
