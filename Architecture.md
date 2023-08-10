@@ -427,7 +427,7 @@ PropertyBuffer is calculated only once for each character, so the succeeding loo
 
 **How the fragments are conceived based on a character?**
 
-**Neighbor character:** There are 8 neighbors of a character and each character on the input is checked agains this 8 neighbor for appropriate drawing element
+**Neighbor character:** There are 8 neighbors of a character and each character on the input is checked against this 8 neighbor for appropriate drawing element
 
 ```bob
   +---------+  +------+  +--------+
@@ -621,7 +621,7 @@ These fragments are processed such as merging collinear lines that are touching 
 
     ...
 
-    /// This function is calling on endorse algorithmn on fragments that
+    /// This function is calling on endorse algorithm on fragments that
     /// are neighbors, but not necessarily touching to be promoted to a shape.
     /// These includes: circle, arc, and line with arrow heads.
     fn endorse_circles_and_arcs(groups: Vec<Contacts>) -> (Vec<Fragment>, Vec<Contacts>) {

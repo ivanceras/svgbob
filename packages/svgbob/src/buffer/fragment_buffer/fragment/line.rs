@@ -366,7 +366,7 @@ impl Line {
         Line::new_noswap(self.start, Point::new(cx, cy), self.is_broken)
     }
 
-    /// extend but on the oposite direction
+    /// extend but on the opposite direction
     /// TODO: This implementation is hacky
     pub fn extend_start(&self, length: f32) -> Self {
         let mut tmp_line = self.clone();

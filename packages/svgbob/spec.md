@@ -6,7 +6,7 @@ Svgbob is a diagramming model which uses common typing characters to approximate
 
 |characters| names                | description              
 |----------|----------------------|------------
-|   `-`    | dash, hypen, minus   | for horizontal lines
+|   `-`    | dash, hyphen, minus  | for horizontal lines
 |   `_`    | underscore           | for horizontal lines
 |   `\|`     | pipe, or             | for vertical lines
 |   `/`    | forward slash        | for lines slanted to the right

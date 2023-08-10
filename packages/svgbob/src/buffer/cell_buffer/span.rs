@@ -57,7 +57,7 @@ impl Span {
     }
 
     /// if any cell of this span is adjacent to any cell of the other
-    /// Use .rev() to check the last cell of this Span agains the first cell of the other Span
+    /// Use .rev() to check the last cell of this Span against the first cell of the other Span
     /// They have a high change of matching faster
     pub(super) fn can_merge(&self, other: &Self) -> bool {
         self.iter().rev().any(|(cell, _)| {

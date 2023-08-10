@@ -31,7 +31,7 @@
     - nalgebra
     - ncollide2d -> parry2d
 - [X] Make the top-level directory a workspace and put svgbob and cli into packages/
-- [X] Make a trait for the merging algorithmns
+- [X] Make a trait for the merging algorithms
     - [X] merge_recursive
     - [X] first_pass_merge
     - [X] second_pass_merge
