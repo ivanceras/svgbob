@@ -1,6 +1,6 @@
 use crate::{util, Point};
 use parry2d::{
-    bounding_volume::AABB,
+    bounding_volume::Aabb,
     math::Isometry,
     query::{intersection_test, PointQuery},
     shape::{Polyline, Segment},
@@ -129,7 +129,7 @@ impl Cell {
 
     /// the bounding box of this cell
     #[inline]
-    fn bounding_box(&self) -> AABB {
+    fn bounding_box(&self) -> Aabb {
         let start = Point::new(
             self.x as f32 * Self::width(),
             self.y as f32 * Self::height(),
@@ -138,7 +138,7 @@ impl Cell {
             (self.x + 1) as f32 * Self::width(),
             (self.y + 1) as f32 * Self::height(),
         );
-        AABB::new(*start, *end)
+        Aabb::new(*start, *end)
     }
 
     /// Convert the bounding box aabb to polyline segment
@@ -433,7 +433,7 @@ mod tests {
     #[test]
     fn test_aabb() {
         assert_eq!(
-            AABB::new(*Point::new(0.0, 0.0), *Point::new(1.0, 2.0)),
+            Aabb::new(*Point::new(0.0, 0.0), *Point::new(1.0, 2.0)),
             Cell::new(0, 0).bounding_box()
         );
     }

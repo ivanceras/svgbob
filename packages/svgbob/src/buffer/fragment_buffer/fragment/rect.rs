@@ -1,7 +1,7 @@
 use crate::{fragment::Bounds, util, Cell, Point};
 use parry2d::shape::{ConvexPolygon, Polyline, Segment, Shape};
 use sauron::{
-    html::attributes::*,
+    html::attributes::{class, classes_flag},
     svg::{attributes::*, *},
     Node,
 };

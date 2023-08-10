@@ -1,6 +1,6 @@
 use crate::Point;
 use parry2d::{
-    bounding_volume::AABB, math::Isometry, query::PointQuery, shape::Triangle,
+    bounding_volume::Aabb, math::Isometry, query::PointQuery, shape::Triangle,
 };
 use std::cmp::Ordering;
 
@@ -31,7 +31,7 @@ pub fn ord(f1: f32, f2: f32) -> Ordering {
 /// clips a line to the bounding box of this whole grid
 /// and approximate each point to the closes intersection
 fn clip_line_internal(
-    aabb: &AABB,
+    aabb: &Aabb,
     start: Point,
     end: Point,
 ) -> Option<(Point, Point)> {
@@ -49,7 +49,7 @@ fn clip_line_internal(
 
 /// clip a line but do not extend the points
 pub fn clip_line(
-    aabb: &AABB,
+    aabb: &Aabb,
     start: Point,
     end: Point,
 ) -> Option<(Point, Point)> {
@@ -476,7 +476,7 @@ mod tests {
     fn test_clip_line() {
         let a = CellGrid::a();
         let b = CellGrid::b();
-        let bounds = AABB::new(*a, *b);
+        let bounds = Aabb::new(*a, *b);
         let clip = clip_line(&bounds, a, b);
         println!("clip: {:#?}", clip);
         assert_eq!(clip, Some((a, b)));
@@ -487,7 +487,7 @@ mod tests {
         let c = CellGrid::c();
         let m = CellGrid::m();
         let w = CellGrid::w();
-        let bounds = AABB::new(*m, *w);
+        let bounds = Aabb::new(*m, *w);
         let clip = clip_line(&bounds, c, w);
         println!("clip: {:#?}", clip);
         assert_eq!(clip, Some((m, w)));

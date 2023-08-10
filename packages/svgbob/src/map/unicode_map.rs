@@ -9,38 +9,36 @@ use crate::{
     fragment::{arc, broken_line, circle, line, polygon, rect, Fragment},
     Property,
 };
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use std::collections::{BTreeMap, HashMap};
 
-lazy_static! {
-    /// a lookup table for character and their corresponding shapes
-    /// static ref to provide a one time processing
-    /// Characters found in
-    /// - https://en.wikipedia.org/wiki/Box-drawing_character
-    /// - http://asciimath.org/
-    /// - https://en.wikipedia.org/wiki/Geometric_Shapes
-    /// - https://www.unicode-search.net/unicode-namesearch.pl?term=CIRCLE
-    /// - http://xahlee.info/comp/unicode_common_symbols.html
-    /// - http://shapecatcher.com/
-    ///
-    /// # Inspect unicode character online:
-    ///  https://apps.timwhitlock.info/unicode/inspect
-    ///
-    /// ```ignore
-    ///      0 1 2 3 4           B C D
-    ///     0┌─┬─┬─┬─┐        A┌─┬─┬─┬─┐E
-    ///     1├─┼─┼─┼─┤         │ │ │ │ │
-    ///     2├─┼─┼─┼─┤        F├─G─H─I─┤J
-    ///     3├─┼─┼─┼─┤         │ │ │ │ │
-    ///     4├─┼─┼─┼─┤        K├─L─M─N─┤O
-    ///     5├─┼─┼─┼─┤         │ │ │ │ │
-    ///     6├─┼─┼─┼─┤        P├─Q─R─S─┤T
-    ///     7├─┼─┼─┼─┤         │ │ │ │ │
-    ///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
-    /// ```                      V W X
-    pub static ref UNICODE_FRAGMENTS : BTreeMap<char, Vec<Fragment>>  =  {
-        #![allow(unused)]
-
+/// a lookup table for character and their corresponding shapes
+/// static ref to provide a one time processing
+/// Characters found in
+/// - https://en.wikipedia.org/wiki/Box-drawing_character
+/// - http://asciimath.org/
+/// - https://en.wikipedia.org/wiki/Geometric_Shapes
+/// - https://www.unicode-search.net/unicode-namesearch.pl?term=CIRCLE
+/// - http://xahlee.info/comp/unicode_common_symbols.html
+/// - http://shapecatcher.com/
+///
+/// # Inspect unicode character online:
+///  https://apps.timwhitlock.info/unicode/inspect
+///
+/// ```ignore
+///      0 1 2 3 4           B C D
+///     0┌─┬─┬─┬─┐        A┌─┬─┬─┬─┐E
+///     1├─┼─┼─┼─┤         │ │ │ │ │
+///     2├─┼─┼─┼─┤        F├─G─H─I─┤J
+///     3├─┼─┼─┼─┤         │ │ │ │ │
+///     4├─┼─┼─┼─┤        K├─L─M─N─┤O
+///     5├─┼─┼─┼─┤         │ │ │ │ │
+///     6├─┼─┼─┼─┤        P├─Q─R─S─┤T
+///     7├─┼─┼─┼─┤         │ │ │ │ │
+///     8└─┴─┴─┴─┘        U└─┴─┴─┴─┘Y
+/// ```                      V W X
+pub static UNICODE_FRAGMENTS: Lazy<BTreeMap<char, Vec<Fragment>>> =
+    Lazy::new(|| {
         let a = CellGrid::a();
         let b = CellGrid::b();
         let c = CellGrid::c();
@@ -100,154 +98,136 @@ lazy_static! {
         let unit8 = Cell::unit(8);
 
         let map = vec![
-
             // dash
             ('─', vec![line(k, o)]),
-
             // en dash, E2 80 93
             ('–', vec![line(k, o)]),
-
             // em dash, E2 80 94
             ('—', vec![line(k, o)]),
-
             // broken horizontal line
             ('┄', vec![broken_line(k, o)]),
-
             // vertical line
             ('│', vec![line(c, w)]),
-
             // broken vertical line
             ('╎', vec![broken_line(c, w)]),
-
             // alternate broken vertical line
             ('┊', vec![broken_line(c, w)]),
-
             // alternate broken vertical line
             ('┆', vec![broken_line(c, w)]),
-
             // slant left
             ('╲', vec![line(a, y)]),
-
             // slant right
             ('╱', vec![line(e, u)]),
-
             // X line
             ('╳', vec![line(a, y), line(e, u)]),
-
             // cross line, plus
-            ('┼', vec![line(c,w), line(k,o)]),
-
+            ('┼', vec![line(c, w), line(k, o)]),
             // parallel horizontal line, equal
             ('═', vec![line(_03, _43), line(_05, _45)]),
-
             // square box
-            ('□', vec![line(a,e), line(d,x),line(y,u), line(b,v)]),
-
+            ('□', vec![line(a, e), line(d, x), line(y, u), line(b, v)]),
             // vertical line left
-            ('▏', vec![line(b,v)]),
-
+            ('▏', vec![line(b, v)]),
             // vertical line right
-            ('▕', vec![line(d,x)]),
-
+            ('▕', vec![line(d, x)]),
             // double vertical line
-            ('║', vec![line(b,v), line(d,x)]),
-
+            ('║', vec![line(b, v), line(d, x)]),
             // angle left
-            ('∠', vec![line(e,u), line(u,y)]),
-
+            ('∠', vec![line(e, u), line(u, y)]),
             // angle top
-            ('⋀', vec![line(u,c), line(c,y)]),
-
+            ('⋀', vec![line(u, c), line(c, y)]),
             // triangle
-            ('△', vec![line(c,y), line(y,u), line(u,c)]),
-
+            ('△', vec![line(c, y), line(y, u), line(u, c)]),
             // arrow down matching v
             //
             //  |
             //  ▾
-            ('▾', vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
-            ('▼', vec![polygon(vec![f,j,w], true, vec![ArrowBottom]), line(c,h)]),
-
+            (
+                '▾',
+                vec![
+                    polygon(vec![f, j, w], true, vec![ArrowBottom]),
+                    line(c, h),
+                ],
+            ),
+            (
+                '▼',
+                vec![
+                    polygon(vec![f, j, w], true, vec![ArrowBottom]),
+                    line(c, h),
+                ],
+            ),
             //
             //  ▴
             //  |
-            ('▴', vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
-            ('▲', vec![polygon(vec![p,c,t], true, vec![ArrowTop]),line(r,w)]),
-
+            (
+                '▴',
+                vec![polygon(vec![p, c, t], true, vec![ArrowTop]), line(r, w)],
+            ),
+            (
+                '▲',
+                vec![polygon(vec![p, c, t], true, vec![ArrowTop]), line(r, w)],
+            ),
             //
             // --▸
             //
-            ('▸', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
+            ('▸', vec![polygon(vec![f, o, p], true, vec![ArrowRight])]),
             //
             // ◂--
             //
-            ('◂', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
-
+            ('◂', vec![polygon(vec![j, k, t], true, vec![ArrowLeft])]),
             //
             // --▶
             //
-            ('▶', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
-            ('►', vec![polygon(vec![f,o,p], true, vec![ArrowRight])]),
+            ('▶', vec![polygon(vec![f, o, p], true, vec![ArrowRight])]),
+            ('►', vec![polygon(vec![f, o, p], true, vec![ArrowRight])]),
             //
             // ◀--
             //
-            ('◀', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
-            ('◄', vec![polygon(vec![j,k,t], true, vec![ArrowLeft])]),
-
-            ('◆', vec![polygon(vec![k,h,o,r,k], true, vec![DiamondBullet])]),
-            ('▪', vec![rect(f,t,true, false)]),
-
+            ('◀', vec![polygon(vec![j, k, t], true, vec![ArrowLeft])]),
+            ('◄', vec![polygon(vec![j, k, t], true, vec![ArrowLeft])]),
+            (
+                '◆',
+                vec![polygon(vec![k, h, o, r, k], true, vec![DiamondBullet])],
+            ),
+            ('▪', vec![rect(f, t, true, false)]),
             // 1/8
-            ('▁',vec![rect(_01,y,true,false)]),
+            ('▁', vec![rect(_01, y, true, false)]),
             // 2/8
-            ('▂',vec![rect(p,y,true,false)]),
+            ('▂', vec![rect(p, y, true, false)]),
             // 3/8
-            ('▃',vec![rect(_05,y,true,false)]),
+            ('▃', vec![rect(_05, y, true, false)]),
             // 4/8
-            ('▄',vec![rect(k,y,true,false)]),
+            ('▄', vec![rect(k, y, true, false)]),
             // 5/8
-            ('▅',vec![rect(_03,y,true,false)]),
+            ('▅', vec![rect(_03, y, true, false)]),
             // 6/8
-            ('▆',vec![rect(f,y,true,false)]),
+            ('▆', vec![rect(f, y, true, false)]),
             // 7/8
-            ('▇', vec![rect(_01,y,true,false)]),
+            ('▇', vec![rect(_01, y, true, false)]),
             // 8/8
-            ('█', vec![rect(a,y,true,false)]),
-
-
-
+            ('█', vec![rect(a, y, true, false)]),
             // L shape bottom-left box
-            ('⌊', vec![line(a,u), line(u,w)]),
-
+            ('⌊', vec![line(a, u), line(u, w)]),
             // not equal sign
-            ('≠', vec![line(_03,_43), line(_05, _45), line(e,u)]),
-
+            ('≠', vec![line(_03, _43), line(_05, _45), line(e, u)]),
             // cross with double horizontal
-            ('╪', vec![line(_03, _43), line(_05, _45), line(c,w)]),
+            ('╪', vec![line(_03, _43), line(_05, _45), line(c, w)]),
             // cross with double vertical
-            ('╫', vec![line(k,o), line(b,v), line(d,x)]),
-
-            ('⊕', vec![line(c,w), line(k, o), circle(m, unit2, false)]),
+            ('╫', vec![line(k, o), line(b, v), line(d, x)]),
+            ('⊕', vec![line(c, w), line(k, o), circle(m, unit2, false)]),
             // Big O
             ('○', vec![circle(m, unit2, false)]),
-            ('⦵', vec![circle(m, unit2, false), line(k,o)]),
+            ('⦵', vec![circle(m, unit2, false), line(k, o)]),
             ('●', vec![circle(m, unit2, true)]),
             ('￮', vec![circle(m, unit1, true)]),
-            ('┌', vec![line(m,o), line(m,w)]),
-            ('┐', vec![line(m,k), line(m,w)]),
-
-            ('┘', vec![line(c,m), line(k,m)]),
-
-            ('└', vec![line(c,m), line(m,o)]),
-
-            ('├', vec![line(c,w), line(m,o)]),
-
-            ('┤', vec![line(c,w), line(k,m)]),
-
-            ('┬', vec![line(k,o), line(m,w)]),
-
-            ('┴', vec![line(k,o), line(c,m)]),
-
+            ('┌', vec![line(m, o), line(m, w)]),
+            ('┐', vec![line(m, k), line(m, w)]),
+            ('┘', vec![line(c, m), line(k, m)]),
+            ('└', vec![line(c, m), line(m, o)]),
+            ('├', vec![line(c, w), line(m, o)]),
+            ('┤', vec![line(c, w), line(k, m)]),
+            ('┬', vec![line(k, o), line(m, w)]),
+            ('┴', vec![line(k, o), line(c, m)]),
             /// rounded top left
             ('╭', vec![arc(o, r, unit2), line(r, w)]),
             /// rounded top right
@@ -256,7 +236,6 @@ lazy_static! {
             ('╰', vec![line(c, h), arc(h, o, unit2)]),
             /// rounded bottom-right
             ('╯', vec![line(c, h), arc(k, h, unit2)]),
-
             // ◜
             ('◜', vec![arc(e, m, unit4), line(m, w)]),
             // ◝
@@ -265,79 +244,100 @@ lazy_static! {
             ('◟', vec![arc(m, y, unit4), line(c, m)]),
             // ◞
             ('◞', vec![arc(u, m, unit4), line(m, c)]),
-
             ('║', vec![line(b, v), line(v, b), line(d, x), line(x, d)]),
-
             ('═', vec![line(k, o), line(p, t)]),
-
             ('╔', vec![line(o, l), line(l, v), line(t, s), line(s, x)]),
-
             ('╗', vec![line(k, n), line(n, x), line(p, q), line(q, v)]),
-
             ('╚', vec![line(b, q), line(q, t), line(d, n), line(n, o)]),
-
             ('╝', vec![line(p, s), line(s, d), line(k, l), line(l, b)]),
-
             ('╒', vec![line(m, w), line(m, o), line(r, t)]),
-
             ('╓', vec![line(l, o), line(l, v), line(n, x)]),
-
-            ('╬', vec![
-                        line(b, l),
-                        line(l, k),
-                        line(p, q),
-                        line(q, v),
-                        line(d, n),
-                        line(n, o),
-                        line(t, s),
-                        line(s, x),
-                    ]),
-
-            ('╦', vec![line(k, o), line(p, q), line(q, v), line(t, s), line(s, x)]),
-
-            ('╩', vec![line(p, t), line(k, l), line(l, b), line(d, n), line(n, o)]),
-
-            ('╠', vec![line(b, v), line(d, n), line(n, o), line(t, s), line(s, x)]),
-
-            ('╣', vec![line(d, x), line(b, l), line(l, k), line(p, q), line(q, v)]),
-
+            (
+                '╬',
+                vec![
+                    line(b, l),
+                    line(l, k),
+                    line(p, q),
+                    line(q, v),
+                    line(d, n),
+                    line(n, o),
+                    line(t, s),
+                    line(s, x),
+                ],
+            ),
+            (
+                '╦',
+                vec![
+                    line(k, o),
+                    line(p, q),
+                    line(q, v),
+                    line(t, s),
+                    line(s, x),
+                ],
+            ),
+            (
+                '╩',
+                vec![
+                    line(p, t),
+                    line(k, l),
+                    line(l, b),
+                    line(d, n),
+                    line(n, o),
+                ],
+            ),
+            (
+                '╠',
+                vec![
+                    line(b, v),
+                    line(d, n),
+                    line(n, o),
+                    line(t, s),
+                    line(s, x),
+                ],
+            ),
+            (
+                '╣',
+                vec![
+                    line(d, x),
+                    line(b, l),
+                    line(l, k),
+                    line(p, q),
+                    line(q, v),
+                ],
+            ),
             ('╒', vec![line(m, w), line(m, o), line(r, t)]),
-
             ('╓', vec![line(l, o), line(l, v), line(n, x)]),
-
             ('╞', vec![line(c, w), line(m, o), line(r, t)]),
-
             ('╡', vec![line(c, w), line(k, m), line(p, r)]),
-
             ('╤', vec![line(k, o), line(p, t), line(r, w)]),
-
             ('╥', vec![line(k, o), line(l, v), line(n, x)]),
-
             ('╖', vec![line(k, n), line(n, x), line(l, v)]),
-
             ('╙', vec![line(l, o), line(l, b), line(n, d)]),
-
             ('╜', vec![line(k, n), line(l, b), line(n, d)]),
-
             ('╕', vec![line(m, w), line(k, m), line(p, r)]),
-
             ('╛', vec![line(c, r), line(r, p), line(k, m)]),
-
             ('╘', vec![line(c, r), line(m, o), line(r, t)]),
-
             ('╢', vec![line(d, x), line(b, v), line(k, l)]),
-
             ('╟', vec![line(d, x), line(b, v), line(n, o)]),
-
             ('╪', vec![line(c, w), line(k, o), line(p, t)]),
-
             ('╧', vec![line(k, o), line(p, t), line(c, m)]),
-
             ('╫', vec![line(k, o), line(b, v), line(d, x)]),
-
             ('╨', vec![line(k, o), line(b, l), line(d, n)]),
-
-            ('⤹', vec![arc(j,r,unit2),polygon(vec![y.adjust(-0.5,-0.5),r.adjust(0.5,-0.5),r.adjust(-0.5,0.5)], true, vec![])]),
+            (
+                '⤹',
+                vec![
+                    arc(j, r, unit2),
+                    polygon(
+                        vec![
+                            y.adjust(-0.5, -0.5),
+                            r.adjust(0.5, -0.5),
+                            r.adjust(-0.5, 0.5),
+                        ],
+                        true,
+                        vec![],
+                    ),
+                ],
+            ),
             // TODO:
             // circular arcs with arrows:
             //  ↺
@@ -348,24 +348,37 @@ lazy_static! {
             // parenthesis like: ⟮ ⟯（ ）
             //
             // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑↓ ∧ ∨ ≈ ± ∃ ∀ ⊃ ⊂ ∪ ∩ ⊖ ⊕ « »
-
         ];
         // sort the fragments first before putting into the btreemap
         let mut btree = BTreeMap::new();
-        for (ch,mut fragments) in map.into_iter(){
+        for (ch, mut fragments) in map.into_iter() {
             fragments.sort();
             btree.insert(ch, fragments);
         }
         btree
-    };
+    });
 
-    /// the reverse of shape to character lookup
-    pub static ref FRAGMENTS_UNICODE: BTreeMap<&'static Vec<Fragment>, char> =
-        UNICODE_FRAGMENTS.iter()
-            .fold(BTreeMap::new(), |mut acc, (ch, shapes)| {acc.insert(shapes, *ch); acc});
+/// the reverse of shape to character lookup
+pub static FRAGMENTS_UNICODE: Lazy<BTreeMap<&'static Vec<Fragment>, char>> =
+    Lazy::new(|| {
+        UNICODE_FRAGMENTS.iter().fold(
+            BTreeMap::new(),
+            |mut acc, (ch, shapes)| {
+                acc.insert(shapes, *ch);
+                acc
+            },
+        )
+    });
 
-    pub static ref UNICODE_PROPERTIES: HashMap<char, Property> =
-        UNICODE_FRAGMENTS.iter()
-            .fold(HashMap::new(), |mut acc, (ch, frags)| {acc.insert(*ch, Property::with_strong_fragments(*ch, frags.clone())); acc});
-
-}
+pub static UNICODE_PROPERTIES: Lazy<HashMap<char, Property>> =
+    Lazy::new(|| {
+        UNICODE_FRAGMENTS
+            .iter()
+            .fold(HashMap::new(), |mut acc, (ch, frags)| {
+                acc.insert(
+                    *ch,
+                    Property::with_strong_fragments(*ch, frags.clone()),
+                );
+                acc
+            })
+    });

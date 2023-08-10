@@ -13,7 +13,8 @@ pub use endorse::Endorse;
 use itertools::Itertools;
 use sauron::{
     html,
-    html::{attributes::*, *},
+    html::attributes::{class, id},
+    html::*,
     svg::{attributes::*, *},
     Node,
 };
@@ -109,7 +110,7 @@ impl CellBuffer {
 
         let svg_node =
             Self::fragments_to_node(fragments, legend_css, settings, w, h)
-                .add_children(group_nodes);
+                .with_children(group_nodes);
         (svg_node, w, h)
     }
 
@@ -125,7 +126,7 @@ impl CellBuffer {
 
         let svg_node =
             Self::fragments_to_node(fragments, legend_css, settings, w, h)
-                .add_children(group_nodes);
+                .with_children(group_nodes);
 
         svg_node
     }
@@ -261,7 +262,9 @@ impl CellBuffer {
         let classes: Vec<String> = self
             .css_styles
             .iter()
-            .map(|(class, styles)| format!(".{}{{ {} }}", class, styles))
+            .map(|(class, styles)| {
+                format!(".svgbob .{}{{ {} }}", class, styles)
+            })
             .collect();
         classes.join("\n")
     }
@@ -276,8 +279,11 @@ impl CellBuffer {
         let font_family = settings.font_family.to_owned();
         let font_size = settings.font_size.to_owned();
 
-        let element_styles = sauron::jss! {
-                "line, path, circle, rect, polygon": {
+        // we put a .svgbob class in order to avoid clashing with other svg in the document
+        // since the style element in this svg also affects the other svg element in the whole
+        // document
+        let element_styles = sauron::jss_pretty! {
+                ".svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon": {
                       stroke: stroke_color.clone(),
                       stroke_width: stroke_width,
                       stroke_opacity: 1,
@@ -286,76 +292,74 @@ impl CellBuffer {
                       stroke_linejoin: "miter",
                 },
 
-                "text": {
+                ".svgbob text": {
                     /* This fix the spacing bug in svg text*/
                     white_space: "pre",
                     fill: stroke_color,
-                },
-
-               "rect.backdrop":{
-                    stroke: "none",
-                    fill: background.clone(),
-                },
-
-                ".broken":{
-                    stroke_dasharray: 8,
-                },
-
-                ".filled":{
-                    fill: fill_color,
-                },
-
-                ".bg_filled":{
-                    fill: background.clone(),
-                },
-
-                ".nofill":{
-                    fill: background,
-                },
-
-                "text": {
                     font_family: font_family,
                     font_size: px(font_size),
                 },
 
-                ".end_marked_arrow":{
+                ".svgbob rect.backdrop":{
+                    stroke: "none",
+                    fill: background.clone(),
+                },
+
+                ".svgbob .broken":{
+                    stroke_dasharray: 8,
+                },
+
+                ".svgbob .filled":{
+                    fill: fill_color,
+                },
+
+                ".svgbob .bg_filled":{
+                    fill: background.clone(),
+                    stroke_width: 1,
+                },
+
+                ".svgbob .nofill":{
+                    fill: background,
+                },
+
+                ".svgbob .end_marked_arrow":{
                     marker_end: "url(#arrow)",
-                 },
+                },
 
-                ".start_marked_arrow":{
+                ".svgbob .start_marked_arrow":{
                     marker_start: "url(#arrow)",
-                 },
+                },
 
-                ".end_marked_diamond":{
+                ".svgbob .end_marked_diamond":{
                     marker_end: "url(#diamond)",
-                 },
-                ".start_marked_diamond":{
+                },
+                ".svgbob .start_marked_diamond":{
                     marker_start: "url(#diamond)",
-                 },
+                },
 
-                ".end_marked_circle":{
+                ".svgbob .end_marked_circle":{
                     marker_end: "url(#circle)",
-                 },
+                },
 
-                ".start_marked_circle":{
+                ".svgbob .start_marked_circle":{
                     marker_start: "url(#circle)",
-                 },
+                },
 
-                ".end_marked_open_circle":{
+                ".svgbob .end_marked_open_circle":{
                     marker_end: "url(#open_circle)",
-                 },
+                },
 
-                ".start_marked_open_circle":{
+                ".svgbob .start_marked_open_circle":{
                     marker_start: "url(#open_circle)",
-                 },
+                },
 
-                ".end_marked_big_open_circle":{
+                ".svgbob .end_marked_big_open_circle":{
                     marker_end: "url(#big_open_circle)",
-                 },
+                },
 
-                ".start_marked_big_open_circle": {
+                ".svgbob .start_marked_big_open_circle": {
                     marker_start: "url(#big_open_circle)",
-                 }
+                }
         };
         html::tags::style([], [text(element_styles), text(legend_css)])
     }
@@ -397,7 +401,12 @@ impl CellBuffer {
         children.extend(fragment_nodes);
 
         svg(
-            [xmlns("http://www.w3.org/2000/svg"), width(w), height(h)],
+            [
+                xmlns("http://www.w3.org/2000/svg"),
+                width(w),
+                height(h),
+                class("svgbob"),
+            ],
             children,
         )
     }
@@ -419,11 +428,11 @@ impl CellBuffer {
         marker(
             [
                 id("arrow"),
-                viewBox("-2 -2 8 8"),
-                refX(4),
-                refY(2),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("-2 -2 8 8"),
+                ref_x(4),
+                ref_y(2),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [polygon([points("0,0 0,4 4,2 0,0")], [])],
@@ -434,11 +443,11 @@ impl CellBuffer {
         marker(
             [
                 id("diamond"),
-                viewBox("-2 -2 8 8"),
-                refX(4),
-                refY(2),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("-2 -2 8 8"),
+                ref_x(4),
+                ref_y(2),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [polygon([points("0,2 2,0 4,2 2,4 0,2")], [])],
@@ -449,11 +458,11 @@ impl CellBuffer {
         marker(
             [
                 id("open_circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(
@@ -467,11 +476,11 @@ impl CellBuffer {
         marker(
             [
                 id("circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(
@@ -485,11 +494,11 @@ impl CellBuffer {
         marker(
             [
                 id("big_open_circle"),
-                viewBox("0 0 8 8"),
-                refX(4),
-                refY(4),
-                markerWidth(7),
-                markerHeight(7),
+                view_box("0 0 8 8"),
+                ref_x(4),
+                ref_y(4),
+                marker_width(7),
+                marker_height(7),
                 orient("auto-start-reverse"),
             ],
             [circle(

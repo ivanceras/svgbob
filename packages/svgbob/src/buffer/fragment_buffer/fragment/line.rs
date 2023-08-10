@@ -4,7 +4,7 @@ use crate::{
     util, Direction, Point,
 };
 use parry2d::{
-    bounding_volume::AABB,
+    bounding_volume::Aabb,
     math::Isometry,
     query::PointQuery,
     shape::{Polyline, Segment, Shape},

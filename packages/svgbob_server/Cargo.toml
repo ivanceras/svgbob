@@ -1,6 +1,6 @@
 [package]
 name = "svgbob_server"
-version = "0.6.6"
+version = "0.7.0"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbob"
@@ -11,6 +11,6 @@ edition = "2021"
 
 
 [dependencies]
-svgbob = { path = "../svgbob", version = "0.6" }
-axum = "0.4.5"
+svgbob = { path = "../svgbob", version = "0.7" }
+axum = "0.6.19"
 tokio = { version = "1.0", features = ["full"] }

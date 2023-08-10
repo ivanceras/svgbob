@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.7.1
+- Fix: the legend css should also be under `.svgbob` namespace for it to take effect
+- Fix: the overly thick marker width of big_open circle letter `O` with stroke-width:1 instead of 2.
+
+## 0.7.0
+- feat: **Breaking** make all the styles be contained under a .svgbob class, in order to prevent the other svg elements from clashing with other svg elements in the document outside of svgbob svg
+   - Fixes [Issue #100](https://github.com/ivanceras/svgbob/issues/100)
+- feat: remove multiple Polygon tag for arrow characters
+- refactor: remove is_shared_x and is_shared_y since it is not used
+- refactor: change the names of the circle according to their index instead of their diameter
+- feat: implement THREE_QUARTERS_ARC circles, you can now draw circles 3/4 through
+   ![svgbob-circles](https://user-images.githubusercontent.com/7972655/232184480-b20bc2c3-10f7-4467-8598-ef497122e3c9.png)
+- feat: remove merge_line_with_polygon as it is buggy as well
+- feat: improve endorse function to use re_endorse
+- feat: use the old algorithmn for adding multiple fragments, remove buggy code for merging line and marker_line
+- refactor: give a name to the cells in the half arc first
+- disable merge_marker_line since it is buggy
+- refactor: use index_map for the Circle span to preserve the order of the circles being inserted
+- feat: fix and improve spans for HALF_ARC_SPAN
+- fix: localize points to bottom_half and right_half of HALF_ARCS
+- improvement on the HALF ARC span, extracted from the circle_art instead of assembling it from the QUARTER_ARCS
+- refactor: use correct names of variables
+- fix: remove panicking in the fragment_span merge
+- refactor: convert group_recursive into using Merge trait
+- convert into_<..> methods to impl From
+- refactor: improve second_pass_merge
+- breaking: remove settings from the low-level function calls
+- refactor: improve the code by unifying the algorithmn of merging objects using the Merge trait
+- feat: add a trait Merge to unify common algorithmns for merging fragments
+- feat: add re_endorse function for retrying re-endorsing the rest of the fragments into possible shapes
+- feat: add dynamic behavior for asterisk with horizontal dashes
+- feat: add a new function which returns regular fragments and touching fragments
+- feat: use FragmentSpan for most fragments
+- refactor: move the functions to their modules
+- feat: make fragment buffer contains the original char
+- feat: add a function to test bounding cells for contacts
+- feat: add FragmentSpan
+- feat: add a method to check if a cell hits a span
+- feat: rename intersects_bounds to is_bounded and checking must be all cells are inside the bounds specified
+- feature: add intersect_bounds method for Span
+
 ## 0.6.7
 - bump dep sauron to 0.50.5
 

@@ -1,6 +1,6 @@
 [package]
 name = "svgbob"
-version = "0.6.7"
+version = "0.7.1"
 authors = ["Jovansonlee Cesar <ivanceras@gmail.com>"]
 description = "Transform your ascii diagrams into happy little SVG"
 repository = "https://github.com/ivanceras/svgbob"
@@ -10,16 +10,16 @@ license = "Apache-2.0"
 edition = "2021"
 
 [dependencies]
-nalgebra = "0.30.1"
-parry2d = "0.8.0"
-lazy_static = "1.3.0"
-sauron = { version = "0.51", default-features = false}
+nalgebra = "0.32.1"
+parry2d = "0.13.5"
+once_cell = "1.18.0"
+sauron = { version = "0.59.0", default-features = false}
 #sauron = { path = "../../../sauron", default-features = false}
 unicode-width = "0.1.9"
-itertools = "0.10.3"
+itertools = "0.11.0"
 pom = { version = "3.2.0" }
 log = "0.4.14"
-indexmap = "1.9.1"
+indexmap = "2.0"
 
 
 
