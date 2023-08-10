@@ -43,10 +43,14 @@ fn main() {
              .long("font-size")
              .takes_value(true)
              .help("text will be rendered with this font size (default: 14)"))
-        .arg(Arg::with_name("stroke-width")
+         .arg(Arg::with_name("stroke-width")
              .long("stroke-width")
              .takes_value(true)
              .help("stroke width for all lines (default: 2)"))
+        .arg(Arg::with_name("stroke-color")
+             .long("stroke-color")
+             .takes_value(true)
+             .help("stroke color for all lines (default: 'black')"))
         .arg(Arg::with_name("scale")
              .long("scale")
              .takes_value(true)
@@ -121,6 +125,10 @@ fn main() {
 
     if let Some(stroke_width) = parse_value_of(&args, "stroke-width") {
         settings.stroke_width = stroke_width;
+    }
+
+    if let Some(stroke_color) = parse_value_of(&args, "stroke-color") {
+        settings.stroke_color = stroke_color;
     }
 
     let scale: Option<f32> = parse_value_of(&args, "scale");
