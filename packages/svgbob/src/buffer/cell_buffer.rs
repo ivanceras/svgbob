@@ -282,7 +282,7 @@ impl CellBuffer {
         // we put a .svgbob class in order to avoid clashing with other svg in the document
         // since the style element in this svg also affects the other svg element in the whole
         // document
-        let element_styles = sauron::jss_pretty! {
+        let element_styles = sauron::jss! {
                 ".svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon": {
                       stroke: stroke_color.clone(),
                       stroke_width: stroke_width,
