@@ -871,6 +871,8 @@ dependencies = [
 [[package]]
 name = "sauron"
 version = "0.60.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9fc023c46aece3d9c0817dfd2f8731185d377adcbcdda3818db80d37b63e72d"
 dependencies = [
  "sauron-core",
  "sauron-macro",
@@ -879,6 +881,8 @@ dependencies = [
 [[package]]
 name = "sauron-core"
 version = "0.60.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e4996589255eaded656695b4ad63370c3141455198f032825286c6132aff6ce5"
 dependencies = [
  "cfg-if",
  "doc-comment",
@@ -897,6 +901,8 @@ dependencies = [
 [[package]]
 name = "sauron-macro"
 version = "0.60.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b840b18d527a01ba3c9f0d115a87f0005f52a832d35c176ac11d87e08094ac5b"
 dependencies = [
  "once_cell",
  "phf",

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.7.2
+- update to sauron 0.60
+- fix: [issue#89](https://github.com/ivanceras/svgbob/issues/89)
+- fix: due to changes in sauron jss
+- local develop branch usually uses local dep version
+- Merge pull request #99 from deining/bump-workflow-actions
+- Merge pull request #101 from Neo-J-A/master
+- use the latest published sauron crate
+- update axum in svgbob server
+- refactor: organize `circle_map`, show the map at the top most
+- chore: replace `lazy_static` with once_cell::Lazy
+- update dep `itertools` and `indexmap`
+- chore: update `nalgebra` 0.30 -> 0.32, `parry2d` 0.8 -> 0.13
+- chore: use the published sauron 0.57.0 version
+- ix: update to newest version of sauron
+- fix: follow the rust conventions for svg tags and attributes
+- update to new version of sauron
+- fix imports due to changes in newest sauron
+- feat: Added `stroke_color` option to CLI
+
 ## 0.7.1
 - Fix: the legend css should also be under `.svgbob` namespace for it to take effect
 - Fix: the overly thick marker width of big_open circle letter `O` with stroke-width:1 instead of 2.
