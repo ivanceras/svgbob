@@ -361,7 +361,11 @@ impl CellBuffer {
                     marker_start: "url(#big_open_circle)",
                 }
         };
-        html::tags::style([], [text(element_styles), text(legend_css)])
+
+        // Combine the css, so as not to have a <!-- separator --> comment which
+        // was intended only for text node added after a previous text node.
+        let css = [element_styles, legend_css].join("\n");
+        html::tags::style([], [text(css)])
     }
 
     /// convert the fragments into svg nodes using the supplied settings, with size for the
