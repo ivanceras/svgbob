@@ -870,7 +870,7 @@ dependencies = [
 
 [[package]]
 name = "sauron"
-version = "0.59.0"
+version = "0.60.0"
 dependencies = [
  "sauron-core",
  "sauron-macro",
@@ -878,7 +878,7 @@ dependencies = [
 
 [[package]]
 name = "sauron-core"
-version = "0.59.2"
+version = "0.60.0"
 dependencies = [
  "cfg-if",
  "doc-comment",
@@ -896,7 +896,7 @@ dependencies = [
 
 [[package]]
 name = "sauron-macro"
-version = "0.59.0"
+version = "0.60.0"
 dependencies = [
  "once_cell",
  "phf",
