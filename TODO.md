@@ -22,10 +22,10 @@
 - [X] Revise calculation of Circle and Arc center by basing on the number of chars/width
 - [ ] Add more circle art, dynamically created
     - use `ito-canvas`
-- [~] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
+- [X] Enhance quarter arc to be able to merge 2 or 3 quarters to form bigger arcs
     - [X] Quarter circle arcs
     - [X] Half circle arcs
-    - [ ] 3/4 circle arcs
+    - [X] 3/4 circle arcs
 - [ ] Support for pills, elongated ovals
 - [X] Update to library to latest version
     - nalgebra
@@ -39,4 +39,4 @@
     but not reduces into a single shape
 - [ ] Move the modules into flat structure as possible rather than deep
 - [ ] Make use of dot canvas for circles that are larger than radius 10.
-- [ ] Use `jss` and json syntax for the legen to allow more flexibility with layered class names.
+- [ ] Use `jss` and json syntax for the legend to allow more flexibility with layered class names.
