@@ -7,7 +7,7 @@ use std::{
 };
 
 #[derive(Clone, Copy, Debug)]
-pub struct Point(Point2<f32>);
+pub struct Point(pub Point2<f32>);
 
 impl Deref for Point {
     type Target = Point2<f32>;

@@ -7,7 +7,7 @@ use sauron::{
 };
 use std::{cmp::Ordering, fmt};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Rect {
     pub start: Point,
     pub end: Point,
