@@ -14,7 +14,7 @@ use sauron::{
 };
 
 /// TODO: Add an is_broken field when there is a presence of `~` or `!` in the span
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub struct Circle {
     pub radius: f32,
     pub center: Point,
