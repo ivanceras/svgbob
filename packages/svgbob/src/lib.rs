@@ -18,7 +18,7 @@ pub use nalgebra;
 pub use point::Point;
 /// reexport sauron
 pub use sauron;
-pub use sauron::{Node, Render};
+pub use sauron::Node;
 pub use settings::Settings;
 
 pub fn to_svg(ascii: &str) -> String {
