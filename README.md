@@ -1,8 +1,10 @@
 # Svgbob
 
-<a href="https://crates.io/crates/svgbob"><img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge"></a><a href="https://travis-ci.org/ivanceras/svgbob">
-<img src="https://api.travis-ci.org/ivanceras/svgbob.svg"/>
-</a>
+<a href="https://crates.io/crates/svgbob"><img src="https://img.shields.io/crates/v/svgbob.svg" alt="svgbob’s current version badge" title="svgbob’s current version badge"></a>
+[![Documentation](https://docs.rs/svgbob/badge.svg)](https://docs.rs/svgbob/)
+[![Test Status](https://img.shields.io/github/actions/workflow/status/ivanceras/svgbob/rust.yml?branch=master&event=push&label=test)](https://github.com/ivanceras/svgbob/actions)
+[![License](https://img.shields.io/crates/l/svgbob.svg)](https://github.com/ivanceras/svgbob/blob/master/LICENSE)
+
 
 Svgbob can create a nice graphical representation of your text diagrams.
 
