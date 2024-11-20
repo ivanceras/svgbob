@@ -15,3 +15,12 @@ Svgbob provides a cli which takes text as an input and creates an svg image as a
 [Specification](https://ivanceras.github.io/content/Svgbob/Specification.html)
 
 <a href="https://liberapay.com/ivanceras/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+## Used by:
+
+- [google/comprehensive-rust](https://github.com/google/comprehensive-rust) via [markdown-svgbob](https://github.com/boozook/mdbook-svgbob)
+- [asciidoctor](https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/svgbob/)
+- [discourse](https://meta.discourse.org/t/discourse-svgbob/223573)
+- [typst/bob-draw](https://typst.app/universe/package/bob-draw/)
+- [zola](https://zola.discourse.group/t/diagramming-tool-integrations-plantuml-svgbob-graphviz-etc/269)
+- [kroki](https://kroki.io/)
