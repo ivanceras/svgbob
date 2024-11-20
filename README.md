@@ -11,6 +11,7 @@ Svgbob provides a cli which takes text as an input and creates an svg image as a
 [**Demo**](https://ivanceras.github.io/svgbob-editor/)
 
 
+![Screenshot from 2024-11-20 19-27-42](https://github.com/user-attachments/assets/d882e4ae-4c2a-474f-a1d2-3e50536cb222)
 
 [Specification](https://ivanceras.github.io/content/Svgbob/Specification.html)
 
