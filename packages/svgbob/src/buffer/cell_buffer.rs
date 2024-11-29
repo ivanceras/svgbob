@@ -703,7 +703,7 @@ mod tests {
 |________|
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents: Vec<Span> = buffer.into();
+        let adjacents: Vec<Span> = (&buffer).into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);
@@ -765,7 +765,7 @@ This is a text
        '
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents: Vec<Span> = buffer.into();
+        let adjacents: Vec<Span> = (&buffer).into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);
@@ -788,7 +788,7 @@ This is a text
 
     "#;
         let buffer = CellBuffer::from(art);
-        let adjacents: Vec<Span> = buffer.into();
+        let adjacents: Vec<Span> = (&buffer).into();
         for (i, span) in adjacents.iter().enumerate() {
             println!("span: {}", i);
             println!("{}\n\n", span);

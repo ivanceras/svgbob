@@ -52,7 +52,7 @@ fn test_circle1() {
                  '-.......-'
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let groups: Vec<Contacts> = span1.into();
@@ -71,7 +71,7 @@ fn test_half_arc_span5_top() {
 
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_half_arc_span(&span1).unwrap();
@@ -86,7 +86,7 @@ fn test_half_arc_span5_bottom() {
 
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_half_arc_span(&span1).unwrap();
@@ -103,7 +103,7 @@ fn test_half_arc_span5_left() {
   `.__
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let result = endorse_half_arc_span(&span1);
@@ -123,7 +123,7 @@ fn test_half_arc_span5_right() {
 
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let result = endorse_half_arc_span(&span1);
@@ -140,7 +140,7 @@ fn test_arc9_top_right() {
                 \
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -154,7 +154,7 @@ fn test_arc5_top_right() {
               )
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -168,7 +168,7 @@ fn test_arc5_top_left() {
           (
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -182,7 +182,7 @@ fn test_arc5_bottom_left() {
            `-
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -196,7 +196,7 @@ fn test_arc5_bottom_right() {
             -'
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -214,7 +214,7 @@ fn test_arc20_top_right() {
                       |
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -232,7 +232,7 @@ fn test_arc20_top_left() {
                 |
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -249,7 +249,7 @@ fn test_arc20_bottom_left() {
                      '-....
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
@@ -266,7 +266,7 @@ fn test_arc20_bottom_right() {
                 ....-'
             "#;
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans: Vec<Span> = (&cell_buffer).into();
     assert_eq!(spans.len(), 1);
     let span1 = spans.remove(0);
     let (arc, _) = endorse_quarter_arc_span(&span1).unwrap();
