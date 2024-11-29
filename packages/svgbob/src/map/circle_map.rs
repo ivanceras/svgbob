@@ -668,7 +668,7 @@ pub static DIAMETER_CIRCLE: Lazy<HashMap<i32, (Point, Span)>> =
     Lazy::new(|| {
         HashMap::from_iter(CIRCLE_MAP.iter().map(|circle_art| {
             let cb = CellBuffer::from(circle_art.ascii_art);
-            let mut spans: Vec<Span> = cb.into();
+            let mut spans= Vec::<Span>::from(&cb);
             assert_eq!(spans.len(), 1);
             let span = spans.remove(0).localize();
             (circle_art.diameter(), (circle_art.center(), span))
@@ -679,7 +679,7 @@ pub static DIAMETER_CIRCLE: Lazy<HashMap<i32, (Point, Span)>> =
 pub static CIRCLES_SPAN: Lazy<IndexMap<Circle, Span>> = Lazy::new(|| {
     IndexMap::from_iter(CIRCLE_MAP.iter().map(|circle_art| {
         let cb = CellBuffer::from(circle_art.ascii_art);
-        let mut spans: Vec<Span> = cb.into();
+        let mut spans =  Vec::<Span>::from(&cb);
         assert_eq!(spans.len(), 1);
         let span = spans.remove(0).localize();
         (
@@ -1058,7 +1058,7 @@ fn circle_art_to_group(art: &str) -> Vec<Contacts> {
 
 fn circle_art_to_span(art: &str) -> Span {
     let cell_buffer = CellBuffer::from(art);
-    let mut spans: Vec<Span> = cell_buffer.into();
+    let mut spans = Vec::<Span>::from(&cell_buffer);
     assert_eq!(spans.len(), 1);
     spans.remove(0).localize()
 }

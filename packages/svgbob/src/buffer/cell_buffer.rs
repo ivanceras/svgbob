@@ -83,7 +83,7 @@ impl CellBuffer {
     }
 
     /// get the svg node of this cell buffer, using the default settings for the sizes
-    pub fn get_node<MSG>(self) -> Node<MSG> {
+    pub fn get_node<MSG>(&self) -> Node<MSG> {
         let (node, _w, _h) = self.get_node_with_size(&Settings::default());
         node
     }
@@ -100,7 +100,7 @@ impl CellBuffer {
 
     /// get all nodes of this cell buffer
     pub fn get_node_with_size<MSG>(
-        self,
+        &self,
         settings: &Settings,
     ) -> (Node<MSG>, f32, f32) {
         let (w, h) = self.get_size(settings);
@@ -116,7 +116,7 @@ impl CellBuffer {
 
     /// get all nodes and use the size supplied
     pub fn get_node_override_size<MSG>(
-        self,
+        &self,
         settings: &Settings,
         w: f32,
         h: f32,
@@ -132,10 +132,10 @@ impl CellBuffer {
     }
 
     /// return the fragments that are (close objects, touching grouped fragments)
-    pub fn get_fragment_spans(self) -> (Vec<FragmentSpan>, Vec<Span>) {
+    pub fn get_fragment_spans(&self) -> (Vec<FragmentSpan>, Vec<Span>) {
         let escaped_text = self.escaped_text_nodes();
 
-        let group_adjacents: Vec<Span> = self.into();
+        let group_adjacents = Vec::<Span>::from(self);
         let (endorsed_fragments, vec_spans): (
             Vec<Vec<FragmentSpan>>,
             Vec<Vec<Span>>,
@@ -156,7 +156,7 @@ impl CellBuffer {
     }
 
     /// return fragments that are Rect, Circle,
-    pub(crate) fn into_shapes_fragment(self) -> Vec<FragmentSpan> {
+    pub(crate) fn into_shapes_fragment(&self) -> Vec<FragmentSpan> {
         let endorse = self.endorse_to_fragment_spans();
         endorse
             .accepted
@@ -167,7 +167,7 @@ impl CellBuffer {
 
     /// returns (single_member, grouped,  rest of the fragments
     fn endorse_to_fragment_spans(
-        self,
+        &self,
     ) -> Endorse<FragmentSpan, Vec<FragmentSpan>> {
         // endorsed_fragments are the fragment result of successful endorsement
         //
@@ -221,7 +221,7 @@ impl CellBuffer {
     /// group nodes that can be group and the rest will be fragments
     /// Note: The grouped fragments is scaled here
     fn group_nodes_and_fragments<MSG>(
-        self,
+        &self,
         settings: &Settings,
     ) -> (Vec<Node<MSG>>, Vec<FragmentSpan>) {
         let escaped_text_nodes = self.escaped_text_nodes();
@@ -618,8 +618,8 @@ impl From<StringBuffer> for CellBuffer {
 /// vertically)
 /// Note: using .rev() since this has a high change that the last cell is adjacent with the
 /// current cell tested
-impl From<CellBuffer> for Vec<Span> {
-    fn from(cb: CellBuffer) -> Vec<Span> {
+impl From<&CellBuffer> for Vec<Span> {
+    fn from(cb: &CellBuffer) -> Vec<Span> {
         let spans: Vec<Span> =
             cb.iter().map(|(cell, ch)| Span::new(*cell, *ch)).collect();
         Span::merge_recursive(spans)
