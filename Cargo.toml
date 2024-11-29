@@ -1,9 +1,9 @@
 [workspace]
 resolver = "2"
 members = [
-    "packages/svgbob",
-    "packages/svgbob_cli",
-    "packages/svgbob_server",
+    "crates/svgbob",
+    "crates/svgbob_cli",
+    "crates/svgbob_server",
 ]
 
 [profile.release]
