@@ -13,7 +13,7 @@ pub struct Arc {
     pub start: Point,
     pub end: Point,
     pub radius: f32,
-    major_flag: bool,
+    pub major_flag: bool,
     pub sweep_flag: bool,
     rotation_flag: bool,
 }

@@ -1128,7 +1128,7 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "svgbob"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "indexmap",
  "itertools",
@@ -1143,7 +1143,7 @@ dependencies = [
 
 [[package]]
 name = "svgbob_cli"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "clap",
  "svgbob",
@@ -1151,7 +1151,7 @@ dependencies = [
 
 [[package]]
 name = "svgbob_server"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "axum",
  "svgbob",
