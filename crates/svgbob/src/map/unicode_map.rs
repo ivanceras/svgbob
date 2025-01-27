@@ -98,6 +98,11 @@ pub static UNICODE_FRAGMENTS: Lazy<BTreeMap<char, Vec<Fragment>>> =
         let unit8 = Cell::unit(8);
 
         let map = vec![
+            // TODO: add Arc connections, like underscore, for macron/overline
+            // overline, U+203E
+            ('‾', vec![line(a, e)]),
+            // macron, U+00AF
+            ('¯', vec![line(a, e)]),
             // dash
             ('─', vec![line(k, o)]),
             // en dash, E2 80 93
