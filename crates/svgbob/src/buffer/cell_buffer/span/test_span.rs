@@ -8,6 +8,29 @@ use crate::{
 };
 
 #[test]
+fn indexed_merge_finds_transitive_adjacency() {
+    let spans = vec![
+        Span::new(Cell::new(0, 0), 'a'),
+        Span::new(Cell::new(2, 0), 'b'),
+        Span::new(Cell::new(1, 0), 'c'),
+        Span::new(Cell::new(10, 0), 'd'),
+    ];
+
+    let merged = Span::merge_recursive(spans);
+
+    assert_eq!(merged.len(), 2);
+    assert_eq!(
+        merged[0].0,
+        vec![
+            (Cell::new(0, 0), 'a'),
+            (Cell::new(2, 0), 'b'),
+            (Cell::new(1, 0), 'c')
+        ]
+    );
+    assert_eq!(merged[1].0, vec![(Cell::new(10, 0), 'd')]);
+}
+
+#[test]
 fn test_bounds() {
     let art = r#"
 .--------.

@@ -11,6 +11,7 @@ use crate::{
 };
 use itertools::Itertools;
 use std::{
+    collections::HashMap,
     fmt,
     ops::{Deref, DerefMut},
 };
@@ -46,6 +47,88 @@ impl From<Vec<(Cell, char)>> for Span {
 }
 
 impl Span {
+    /// Merge spans that contain adjacent cells.
+    ///
+    /// The generic `Merge` implementation repeatedly compares every group
+    /// with every other group.  Spans have a much cheaper exact predicate: a
+    /// component is connected when any of its cells are in one of the eight
+    /// neighboring cells.  Index the cells and build the components directly,
+    /// preserving input order within each component.
+    pub(crate) fn merge_recursive(
+        items: impl IntoIterator<Item = Self>,
+    ) -> Vec<Self> {
+        let items: Vec<Self> = items.into_iter().collect();
+        if items.len() < 2 {
+            return items;
+        }
+
+        let mut parents: Vec<usize> = (0..items.len()).collect();
+        let mut ranks = vec![0usize; items.len()];
+        let mut cells = HashMap::<Cell, usize>::new();
+
+        fn find(parents: &mut [usize], mut index: usize) -> usize {
+            while parents[index] != index {
+                parents[index] = parents[parents[index]];
+                index = parents[index];
+            }
+            index
+        }
+
+        fn union(
+            parents: &mut [usize],
+            ranks: &mut [usize],
+            left: usize,
+            right: usize,
+        ) {
+            let mut left = find(parents, left);
+            let mut right = find(parents, right);
+            if left == right {
+                return;
+            }
+            if ranks[left] < ranks[right] {
+                std::mem::swap(&mut left, &mut right);
+            }
+            parents[right] = left;
+            if ranks[left] == ranks[right] {
+                ranks[left] += 1;
+            }
+        }
+
+        for (index, span) in items.iter().enumerate() {
+            for (cell, _) in span.iter() {
+                for y in (cell.y - 1)..=(cell.y + 1) {
+                    for x in (cell.x - 1)..=(cell.x + 1) {
+                        if let Some(&other) = cells.get(&Cell::new(x, y)) {
+                            union(&mut parents, &mut ranks, index, other);
+                        }
+                    }
+                }
+                cells.entry(*cell).or_insert(index);
+            }
+        }
+
+        let mut groups = Vec::<Option<Self>>::new();
+        let mut group_by_root = HashMap::<usize, usize>::new();
+        for (index, span) in items.into_iter().enumerate() {
+            let root = find(&mut parents, index);
+            if let Some(&group_index) = group_by_root.get(&root) {
+                groups[group_index]
+                    .as_mut()
+                    .expect("span group must exist")
+                    .0
+                    .extend(span.0);
+            } else {
+                group_by_root.insert(root, groups.len());
+                groups.push(Some(span));
+            }
+        }
+
+        groups
+            .into_iter()
+            .map(|span| span.expect("span group must exist"))
+            .collect()
+    }
+
     pub(crate) fn new(cell: Cell, ch: char) -> Self {
         Span(vec![(cell, ch)])
     }
