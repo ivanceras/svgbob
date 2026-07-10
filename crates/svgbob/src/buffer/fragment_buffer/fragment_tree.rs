@@ -1,4 +1,7 @@
-use crate::{buffer::fragment_buffer::FragmentSpan, Fragment};
+use crate::{
+    buffer::fragment_buffer::{fragment::Bounds, FragmentSpan},
+    Fragment, Point,
+};
 use sauron::{html::attributes::*, Node};
 
 /// A tree of fragments where a fragment can contain other fragments
@@ -9,21 +12,29 @@ use sauron::{html::attributes::*, Node};
 #[derive(Debug, Clone)]
 pub struct FragmentTree {
     fragment: FragmentSpan,
+    bounds: (Point, Point),
     css_tag: Vec<String>,
     enclosing: Vec<FragmentTree>,
 }
 
 impl FragmentTree {
     pub(crate) fn new(fragment: FragmentSpan) -> Self {
+        let bounds = fragment.fragment.bounds();
         FragmentTree {
             fragment,
+            bounds,
             css_tag: vec![],
             enclosing: vec![],
         }
     }
 
     fn can_fit(&self, other: &Self) -> bool {
-        self.fragment.fragment.can_fit(&other.fragment.fragment)
+        let ((top_left, bottom_right), (other_top_left, other_bottom_right)) =
+            (self.bounds, other.bounds);
+        top_left.x <= other_top_left.x
+            && top_left.y <= other_top_left.y
+            && bottom_right.x >= other_bottom_right.x
+            && bottom_right.y >= other_bottom_right.y
     }
 
     /// check if this fragment can fit to this fragment tree.
