@@ -169,6 +169,16 @@ fn escape_html_text(s: &str) -> String {
     s.chars().map(replace_html_char).collect()
 }
 
+pub(crate) fn escape_text_nodes<MSG>(node: &mut Node<MSG>) {
+    let is_text = node.tag() == Some(&"text");
+    for child in node.children_mut().into_iter().flatten() {
+        match child.as_text().filter(|_| is_text).map(escape_html_text) {
+            Some(escaped) => *child = text(escaped),
+            None => escape_text_nodes(child),
+        }
+    }
+}
+
 impl fmt::Display for Text {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "T {} {}", self.start, self.text)

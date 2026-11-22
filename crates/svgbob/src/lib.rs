@@ -28,7 +28,9 @@ pub fn to_svg(ascii: &str) -> String {
 /// convert svgbob ascii art to svg string with indentions
 pub fn to_svg_string_pretty(ascii: &str) -> String {
     let cb = CellBuffer::from(ascii);
-    let node: Node<()> = cb.get_node();
+    let mut node: Node<()> = cb.get_node();
+    #[cfg(feature = "with-dom")]
+    fragment::escape_text_nodes(&mut node);
     let mut buffer = String::new();
     node.render(&mut buffer).expect("must render");
     buffer
@@ -37,14 +39,19 @@ pub fn to_svg_string_pretty(ascii: &str) -> String {
 /// convert svgbob ascii art to svg string
 pub fn to_svg_string_compressed(ascii: &str) -> String {
     let cb = CellBuffer::from(ascii);
-    let node: Node<()> = cb.get_node();
+    let mut node: Node<()> = cb.get_node();
+    #[cfg(feature = "with-dom")]
+    fragment::escape_text_nodes(&mut node);
     node.render_to_string()
 }
 
 /// convert ascii art into an svg
 pub fn to_svg_with_settings(ascii: &str, settings: &Settings) -> String {
     let cb = CellBuffer::from(ascii);
-    let (node, _w, _h): (Node<()>, f32, f32) = cb.get_node_with_size(settings);
+    let (mut node, _w, _h): (Node<()>, f32, f32) =
+        cb.get_node_with_size(settings);
+    #[cfg(feature = "with-dom")]
+    fragment::escape_text_nodes(&mut node);
     let mut buffer = String::new();
     node.render(&mut buffer).expect("must render");
     buffer
@@ -58,7 +65,9 @@ pub fn to_svg_with_override_size(
     h: f32,
 ) -> String {
     let cb = CellBuffer::from(ascii);
-    let node: Node<()> = cb.get_node_override_size(settings, w, h);
+    let mut node: Node<()> = cb.get_node_override_size(settings, w, h);
+    #[cfg(feature = "with-dom")]
+    fragment::escape_text_nodes(&mut node);
     let mut buffer = String::new();
     node.render(&mut buffer).expect("must render");
     buffer
