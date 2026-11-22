@@ -14,6 +14,7 @@ pub use polygon::{Polygon, PolygonTag};
 pub use rect::Rect;
 use sauron::Node;
 use std::{cmp::Ordering, fmt};
+pub(crate) use text::escape_text_nodes;
 pub use text::{CellText, Text};
 
 mod arc;
